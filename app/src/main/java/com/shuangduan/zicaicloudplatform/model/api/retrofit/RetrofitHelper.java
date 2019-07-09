@@ -29,7 +29,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 public class RetrofitHelper {
 
     private static String BASE_URL = "";
-    private static String BASE_TEST_URL_1 = "";
+    private static String BASE_TEST_URL = "http://47.104.64.194:3000/mock/43/district/province/";
     private static ApiService apiService;
 
     private static void init(){
@@ -39,17 +39,14 @@ public class RetrofitHelper {
                 .readTimeout(60, TimeUnit.SECONDS)
                 .writeTimeout(60, TimeUnit.SECONDS)
                 .retryOnConnectionFailure(true)
-                .addInterceptor(new Interceptor() {
-                    @Override
-                    public Response intercept(Chain chain) throws IOException {
-                        Request original = chain.request();
-                        // Request customization: add request headers
-                        Request.Builder requestBuilder = original.newBuilder()
-                                .addHeader("X-App-Token", SPUtils.getInstance().getString(SpConfig.TOKEN))
-                                .addHeader("X-App-Version", "1.0.0");
-                        Request request = requestBuilder.build();
-                        return chain.proceed(request);
-                    }
+                .addInterceptor(chain -> {
+                    Request original = chain.request();
+                    // Request customization: add request headers
+                    Request.Builder requestBuilder = original.newBuilder()
+                            .addHeader("X-App-Token", SPUtils.getInstance().getString(SpConfig.TOKEN))
+                            .addHeader("X-App-Version", "1.0.0");
+                    Request request = requestBuilder.build();
+                    return chain.proceed(request);
                 });
 
         if (BuildConfig.IS_SHOW_LOG){
@@ -60,7 +57,7 @@ public class RetrofitHelper {
                 .client(builder.build())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(MyGsonConverterFactory.create())
-                .baseUrl(BuildConfig.IS_DEBUG?BASE_TEST_URL_1:BASE_URL)
+                .baseUrl(BuildConfig.IS_DEBUG? BASE_TEST_URL :BASE_URL)
                 .build();
 
         apiService = build.create(ApiService.class);

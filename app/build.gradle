@@ -76,5 +76,6 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
     implementation 'com.github.tbruyelle:rxpermissions:0.10.2'
     implementation 'com.google.android:flexbox:1.1.0'
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.45-androidx'
 
 }

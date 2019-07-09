@@ -74,6 +74,21 @@ public abstract class BaseDialog extends Dialog {
     }
 
     /**
+     * 高度
+     * @return
+     */
+    public BaseDialog setHeight(int height){
+        if (getWindow() != null){
+            getWindow().getDecorView().setPadding(0,0,0,0);
+            getWindow().getDecorView().setBackgroundResource(R.drawable.shape_fff_2);
+            WindowManager.LayoutParams attributes = getWindow().getAttributes();
+            attributes.height = height;
+            getWindow().setAttributes(attributes);
+        }
+        return this;
+    }
+
+    /**
      * 点击外部消失
      * @param isCancel
      * @return
@@ -125,7 +140,7 @@ public abstract class BaseDialog extends Dialog {
 
     public interface CallBack{
         void cancel();
-        void ok();
+        void ok(String s);
     }
 
     public BaseDialog setCallBack(CallBack callBack){

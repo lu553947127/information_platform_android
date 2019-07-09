@@ -9,8 +9,10 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zicaicloudplatform.R;
 import com.shuangduan.zicaicloudplatform.app.CustomConfig;
+import com.shuangduan.zicaicloudplatform.app.SpConfig;
 import com.shuangduan.zicaicloudplatform.base.BaseActivity;
 
 import butterknife.BindView;
@@ -55,12 +57,12 @@ public class UpdateResultActivity extends BaseActivity {
             case CustomConfig.updateTypePhone:
                 tvBarTitle.setText(getString(R.string.phone));
                 ivPhone.setImageResource(R.drawable.icon_phone);
-                tvPhone.setText(String.format(getString(R.string.format_mobile), "13333333333"));
+                tvPhone.setText(String.format(getString(R.string.format_mobile), SPUtils.getInstance().getString(SpConfig.MOBILE)));
                 break;
             case CustomConfig.updateTypeEmail:
                 tvBarTitle.setText(getString(R.string.email));
                 ivPhone.setImageResource(R.drawable.icon_email);
-                tvPhone.setText(String.format(getString(R.string.format_email), "shuangduan@163.com"));
+                tvPhone.setText(String.format(getString(R.string.format_email), SPUtils.getInstance().getString(SpConfig.EMAIL)));
                 break;
         }
     }

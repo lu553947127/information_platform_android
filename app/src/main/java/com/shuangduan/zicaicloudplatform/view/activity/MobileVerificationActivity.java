@@ -10,8 +10,12 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.StringUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zicaicloudplatform.R;
 import com.shuangduan.zicaicloudplatform.app.CustomConfig;
+import com.shuangduan.zicaicloudplatform.app.SpConfig;
 import com.shuangduan.zicaicloudplatform.base.BaseActivity;
 import com.shuangduan.zicaicloudplatform.vm.LoginVm;
 
@@ -57,12 +61,12 @@ public class MobileVerificationActivity extends BaseActivity {
         switch (type){
             case CustomConfig.updateTypePhone:
                 tvBarTitle.setText(getString(R.string.mobile_verification));
-                tvTip.setText(String.format(getString(R.string.format_update_mobile_tip), "13333333333"));
+                tvTip.setText(String.format(getString(R.string.format_update_mobile_tip), SPUtils.getInstance().getString(SpConfig.MOBILE)));
                 edtPwd.setHint(getString(R.string.hint_SMS_verification_code));
                 break;
             case CustomConfig.updateTypeEmail:
                 tvBarTitle.setText(getString(R.string.email_verification));
-                tvTip.setText(String.format(getString(R.string.format_update_email_tip), "shuangduan@163.com"));
+                tvTip.setText(String.format(getString(R.string.format_update_email_tip), SPUtils.getInstance().getString(SpConfig.EMAIL)));
                 edtPwd.setHint(getString(R.string.hint_email_verification_code));
                 break;
         }
@@ -89,20 +93,32 @@ public class MobileVerificationActivity extends BaseActivity {
                 loginVm.sendVerificationCode();
                 switch (type){
                     case CustomConfig.updateTypePhone:
+                        loginVm.sendVerificationCode();
                         break;
                     case CustomConfig.updateTypeEmail:
+                        loginVm.sendVerificationCode();
                         break;
                 }
                 break;
             case R.id.tv_confirm:
+                String verificationCode = edtPwd.getText().toString();
                 switch (type){
                     case CustomConfig.updateTypePhone:
+                        if (StringUtils.isTrimEmpty(verificationCode)){
+                            ToastUtils.showShort(getString(R.string.hint_SMS_verification_code));
+                            return;
+                        }
                         ActivityUtils.startActivity(UpdateMobileActivity.class);
                         break;
                     case CustomConfig.updateTypeEmail:
+                        if (StringUtils.isTrimEmpty(verificationCode)){
+                            ToastUtils.showShort(getString(R.string.hint_email_verification_code));
+                            return;
+                        }
                         ActivityUtils.startActivity(UpdateEmailActivity.class);
                         break;
                 }
+                finish();
                 break;
         }
     }

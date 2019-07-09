@@ -10,10 +10,17 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.StringUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zicaicloudplatform.R;
 import com.shuangduan.zicaicloudplatform.app.CustomConfig;
+import com.shuangduan.zicaicloudplatform.app.SpConfig;
 import com.shuangduan.zicaicloudplatform.base.BaseActivity;
+import com.shuangduan.zicaicloudplatform.model.event.MobileEvent;
 import com.shuangduan.zicaicloudplatform.vm.LoginVm;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -67,14 +74,33 @@ public class UpdateMobileActivity extends BaseActivity {
 
     @OnClick({R.id.iv_bar_back, R.id.tv_send_verification_code, R.id.tv_confirm})
     void onClick(View view){
+        String mobile;
         switch (view.getId()){
             case R.id.iv_bar_back:
                 finish();
                 break;
             case R.id.tv_send_verification_code:
+                mobile = edtAccount.getText().toString();
+                if (StringUtils.isTrimEmpty(mobile)){
+                    ToastUtils.showShort(getString(R.string.hint_new_mobile));
+                    return;
+                }
                 loginVm.sendVerificationCode();
                 break;
             case R.id.tv_confirm:
+                mobile = edtAccount.getText().toString();
+                if (StringUtils.isTrimEmpty(mobile)){
+                    ToastUtils.showShort(getString(R.string.hint_new_mobile));
+                    return;
+                }
+                String verificationCode = edtPwd.getText().toString();
+                if (StringUtils.isTrimEmpty(verificationCode)){
+                    ToastUtils.showShort(getString(R.string.hint_SMS_verification_code));
+                    return;
+                }
+
+                SPUtils.getInstance().put(SpConfig.MOBILE, mobile);
+                EventBus.getDefault().post(new MobileEvent(mobile));
                 Bundle bundle = new Bundle();
                 bundle.putString(CustomConfig.UPDATE_TYPE, CustomConfig.updateTypePhone);
                 ActivityUtils.startActivity(bundle, UpdateResultActivity.class);

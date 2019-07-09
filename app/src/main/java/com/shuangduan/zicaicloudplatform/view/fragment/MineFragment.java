@@ -8,9 +8,14 @@ import androidx.appcompat.widget.AppCompatTextView;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.shuangduan.zicaicloudplatform.R;
 import com.shuangduan.zicaicloudplatform.base.BaseFragment;
+import com.shuangduan.zicaicloudplatform.dialog.BaseDialog;
+import com.shuangduan.zicaicloudplatform.dialog.SubscriptionTypeDialog;
+import com.shuangduan.zicaicloudplatform.model.event.UserNameEvent;
 import com.shuangduan.zicaicloudplatform.utils.BarUtils;
 import com.shuangduan.zicaicloudplatform.view.activity.UserInfoActivity;
 import com.shuangduan.zicaicloudplatform.weight.CircleImageView;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -81,14 +86,34 @@ public class MineFragment extends BaseFragment {
 
     }
 
-    @OnClick({R.id.tv_username, R.id.iv_user})
+    @OnClick({R.id.tv_username, R.id.iv_user, R.id.tv_my_subscription})
     void onClick(View view){
         switch (view.getId()) {
             case R.id.tv_username:
             case R.id.iv_user:
                 ActivityUtils.startActivity(UserInfoActivity.class);
                 break;
+            case R.id.tv_my_subscription:
+                new SubscriptionTypeDialog(mActivity)
+                        .setCallBack(new BaseDialog.CallBack() {
+                            @Override
+                            public void cancel() {
+
+                            }
+
+                            @Override
+                            public void ok(String s) {
+
+                            }
+                        })
+                        .showDialog();
+                break;
         }
+    }
+
+    @Subscribe()
+    void updateUserName(UserNameEvent event){
+        tvUsername.setText(event.username);
     }
 
 }

@@ -7,8 +7,15 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 
 import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.StringUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zicaicloudplatform.R;
+import com.shuangduan.zicaicloudplatform.app.SpConfig;
 import com.shuangduan.zicaicloudplatform.base.BaseActivity;
+import com.shuangduan.zicaicloudplatform.model.event.UserNameEvent;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -40,6 +47,9 @@ public class UpdateNameActivity extends BaseActivity {
     protected void initDataAndEvent() {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.name));
+
+        String username = SPUtils.getInstance().getString(SpConfig.USERNAME);
+        edtName.setText(username);
     }
 
     @OnClick({R.id.iv_bar_back, R.id.tv_save})
@@ -49,7 +59,14 @@ public class UpdateNameActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_save:
-
+                String username = edtName.getText().toString();
+                if (StringUtils.isTrimEmpty(username)){
+                    ToastUtils.showShort(getString(R.string.hint_real_name));
+                    return;
+                }
+                SPUtils.getInstance().put(SpConfig.USERNAME, username);
+                EventBus.getDefault().post(new UserNameEvent(username));
+                finish();
                 break;
         }
     }

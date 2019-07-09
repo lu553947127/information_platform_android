@@ -38,6 +38,7 @@
         <activity android:name="com.shuangduan.zicaicloudplatform.view.activity.AuthenticationActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zicaicloudplatform.view.activity.BindBankCardActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zicaicloudplatform.view.activity.CompanySearchActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.shuangduan.zicaicloudplatform.view.activity.BusinessAreaActivity" android:screenOrientation="portrait"/>
 
         <provider
             android:name="androidx.core.content.FileProvider"

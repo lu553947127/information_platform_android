@@ -3,14 +3,22 @@ package com.shuangduan.zicaicloudplatform.view.activity;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.StringUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zicaicloudplatform.R;
 import com.shuangduan.zicaicloudplatform.app.CustomConfig;
+import com.shuangduan.zicaicloudplatform.app.SpConfig;
 import com.shuangduan.zicaicloudplatform.base.BaseActivity;
+import com.shuangduan.zicaicloudplatform.model.event.EmailEvent;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -31,6 +39,8 @@ public class UpdateEmailActivity extends BaseActivity {
     AppCompatTextView tvBarTitle;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.edt_email)
+    AppCompatEditText edtEmail;
 
     @Override
     protected int initLayoutRes() {
@@ -44,12 +54,20 @@ public class UpdateEmailActivity extends BaseActivity {
     }
 
     @OnClick({R.id.iv_bar_back, R.id.tv_confirm})
-    void onClick(View view){
-        switch (view.getId()){
+    void onClick(View view) {
+        switch (view.getId()) {
             case R.id.iv_bar_back:
                 finish();
                 break;
             case R.id.tv_confirm:
+                String email = edtEmail.getText().toString();
+                if (StringUtils.isTrimEmpty(email)) {
+                    ToastUtils.showShort(getString(R.string.hint_new_email));
+                    return;
+                }
+
+                SPUtils.getInstance().put(SpConfig.EMAIL, email);
+                EventBus.getDefault().post(new EmailEvent(email));
                 Bundle bundle = new Bundle();
                 bundle.putString(CustomConfig.UPDATE_TYPE, CustomConfig.updateTypeEmail);
                 ActivityUtils.startActivity(bundle, UpdateResultActivity.class);
@@ -57,4 +75,5 @@ public class UpdateEmailActivity extends BaseActivity {
                 break;
         }
     }
+
 }

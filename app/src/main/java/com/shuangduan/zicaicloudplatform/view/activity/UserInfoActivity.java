@@ -12,14 +12,18 @@ import androidx.lifecycle.ViewModelProviders;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.LogUtils;
-import com.blankj.utilcode.util.ToastUtils;
+import com.blankj.utilcode.util.StringUtils;
 import com.shuangduan.zicaicloudplatform.R;
 import com.shuangduan.zicaicloudplatform.app.CustomConfig;
+import com.shuangduan.zicaicloudplatform.app.SpConfig;
 import com.shuangduan.zicaicloudplatform.base.BaseActivity;
 import com.shuangduan.zicaicloudplatform.dialog.BaseDialog;
 import com.shuangduan.zicaicloudplatform.dialog.BusinessExpDialog;
 import com.shuangduan.zicaicloudplatform.dialog.PhotoDialog;
 import com.shuangduan.zicaicloudplatform.dialog.SexDialog;
+import com.shuangduan.zicaicloudplatform.model.event.EmailEvent;
+import com.shuangduan.zicaicloudplatform.model.event.MobileEvent;
+import com.shuangduan.zicaicloudplatform.model.event.UserNameEvent;
 import com.shuangduan.zicaicloudplatform.utils.matisse.Glide4Engine;
 import com.shuangduan.zicaicloudplatform.utils.matisse.MatisseCamera;
 import com.shuangduan.zicaicloudplatform.vm.PhotoVm;
@@ -28,6 +32,8 @@ import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
@@ -173,6 +179,7 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
                 ActivityUtils.startActivity(bundle, CompanySearchActivity.class);
                 break;
             case R.id.tv_business_area:
+                ActivityUtils.startActivity(BusinessAreaActivity.class);
                 break;
             case R.id.tv_business_exp:
                 new BusinessExpDialog(this)
@@ -204,5 +211,20 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
     @Override
     public void album() {
         photoVm.getPermissionAlbum(rxPermissions);
+    }
+
+    @Subscribe()
+    void updateUserName(UserNameEvent event){
+        tvName.setText(event.username);
+    }
+
+    @Subscribe()
+    void updateMobile(MobileEvent event){
+        tvMobile.setText(event.mobile);
+    }
+
+    @Subscribe()
+    void updateEmail(EmailEvent event){
+        tvEmail.setText(event.email);
     }
 }

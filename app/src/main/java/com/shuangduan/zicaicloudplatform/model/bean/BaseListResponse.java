@@ -16,6 +16,7 @@ public class BaseListResponse<T> {
 
     private int code;
     private String msg;
+    private int time;
     private List<T> data;
 
     public int getCode() {
@@ -32,6 +33,14 @@ public class BaseListResponse<T> {
 
     public void setMessage(String message) {
         this.msg = message;
+    }
+
+    public int getTime() {
+        return time;
+    }
+
+    public void setTime(int time) {
+        this.time = time;
     }
 
     public List<T> getData() {
