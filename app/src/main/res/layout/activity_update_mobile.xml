@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/toolbar"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorFFF"
+        android:paddingTop="10dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="15dp">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edt_account"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:drawableLeft="@drawable/icon_username"
+            android:drawablePadding="9dp"
+            android:inputType="phone"
+            android:singleLine="true"
+            android:textColorHint="@color/colorTvHint"
+            android:textColor="@color/colorTv"
+            android:textSize="13sp"
+            android:hint="@string/hint_new_mobile"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorDivider"
+            android:layout_below="@+id/edt_account"/>
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edt_pwd"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:layout_below="@+id/edt_account"
+            android:layout_marginTop="14dp"
+            android:drawableLeft="@drawable/icon_verification_code"
+            android:drawablePadding="9dp"
+            android:inputType="textPassword"
+            android:singleLine="true"
+            android:textColorHint="@color/colorTvHint"
+            android:textColor="@color/colorTv"
+            android:textSize="12sp"
+            android:hint="@string/hint_SMS_verification_code"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_send_verification_code"
+            android:layout_width="90dp"
+            android:layout_height="28dp"
+            android:layout_marginTop="24dp"
+            android:layout_below="@+id/edt_account"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:background="@color/color_DDDDDD"
+            android:textColor="@color/color_999999"
+            android:textSize="12sp"
+            android:text="@string/send_verification_code" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorDivider"
+            android:layout_below="@+id/edt_pwd"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_confirm"
+        style="@style/BtnConfirm"
+        android:layout_width="335dp"
+        android:layout_marginTop="30dp"
+        android:text="@string/submit"/>
+
+</LinearLayout>

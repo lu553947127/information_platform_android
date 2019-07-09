@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#6a5ff8</color>
+    <color name="colorPrimaryDark">#6a5ff8</color>
+    <color name="colorAccent">#D81B60</color>
+
+    <color name="colorStatusBar">#6a5ff8</color>
+    <color name="bgTimer">#6a5ff8</color>
+    <color name="colorTvStates">#B1B1B1</color>
+    <color name="colorFFF">#fff</color>
+    <color name="color_6a5ff8">#6a5ff8</color>
+    <color name="colorTv">#333333</color>
+    <color name="colorTvHint">#B1B1B1</color>
+    <color name="colorDivider">#DDDDDD</color>
+    <color name="color_DDDDDD">#DDDDDD</color>
+    <color name="color_999999">#999999</color>
+    <color name="color_666666">#666666</color>
+    <color name="color_F42121">#F42121</color>
+    <color name="colorBgDark">#F7F5FA</color>
+    <color name="colorAlbumPop">#574BF1</color>
+
+    <!--时间选择器颜色-->
+    <color name="text1">#6a5ff8</color>
+    <color name="text2">#B1B1B1</color>
+    <color name="background">#FFFFFF</color>
+    <color name="split_line">#00000000</color>
+
+</resources>

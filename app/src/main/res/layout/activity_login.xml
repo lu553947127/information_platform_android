@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:layout_marginBottom="160dp"
+        android:src="@drawable/top_img"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_login_account"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="25dp"
+        android:gravity="bottom"
+        android:layout_above="@+id/edt_account"
+        android:layout_marginBottom="66dp"
+        android:layout_marginLeft="42dp"
+        android:textColor="@color/colorTv"
+        android:textSize="19sp"
+        android:text="@string/login_account"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_login_verification_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="25dp"
+        android:gravity="bottom"
+        android:layout_above="@+id/edt_account"
+        android:layout_marginBottom="66dp"
+        android:layout_toRightOf="@+id/tv_login_account"
+        android:layout_marginLeft="11dp"
+        android:textColor="@color/colorTvHint"
+        android:textSize="13sp"
+        android:text="@string/login_verification_code"/>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/edt_account"
+        style="@style/MessageHint"
+        android:layout_below="@+id/iv_top"
+        android:drawableLeft="@drawable/icon_username"
+        android:inputType="phone"
+        android:hint="@string/hint_mobile_code"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_account_null"
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/edt_account"
+        android:layout_marginBottom="13dp"
+        android:layout_marginLeft="180dp"
+        android:textColor="@color/color_F42121"
+        android:textSize="12sp"
+        android:text="@string/account_null"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorDivider"
+        android:layout_below="@+id/edt_account"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"/>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/edt_pwd"
+        style="@style/MessageHint"
+        android:layout_below="@+id/edt_account"
+        android:layout_marginTop="14dp"
+        android:drawableLeft="@drawable/icon_verification_code"
+        android:inputType="textPassword"
+        android:hint="@string/hint_pwd"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_send_verification_code"
+        android:visibility="invisible"
+        android:layout_width="90dp"
+        android:layout_height="28dp"
+        android:layout_marginRight="46dp"
+        android:layout_marginTop="24dp"
+        android:layout_below="@+id/edt_account"
+        android:layout_alignParentRight="true"
+        android:gravity="center"
+        android:background="@color/color_DDDDDD"
+        android:textColor="@color/color_999999"
+        android:textSize="12sp"
+        android:text="@string/send_verification_code" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/edt_pwd"
+        android:background="@color/colorDivider"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_forget_pwd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edt_pwd"
+        android:layout_alignParentRight="true"
+        android:padding="8dp"
+        android:layout_marginRight="45dp"
+        android:textColor="@color/colorTvHint"
+        android:textSize="12sp"
+        android:text="@string/forget_pwd"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_login"
+        style="@style/BtnConfirm"
+        android:layout_below="@+id/tv_forget_pwd"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="28dp"
+        android:text="@string/login"/>
+
+</RelativeLayout>

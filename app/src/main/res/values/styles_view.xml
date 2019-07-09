@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="MainRb">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_gravity">bottom</item>
+        <item name="android:gravity">center</item>
+        <item name="android:button">@null</item>
+        <item name="android:paddingTop">3dp</item>
+        <item name="android:textColor">@color/selector_main_rb</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="BtnConfirm">
+        <item name="android:layout_width">295dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:background">@drawable/shape_btn_confirm</item>
+        <item name="android:textColor">@color/colorFFF</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="BtnConfirmWhite" parent="BtnConfirm">
+        <item name="android:background">@drawable/shape_btn_confirm_white</item>
+        <item name="android:textColor">@color/color_6a5ff8</item>
+    </style>
+
+    <style name="MessageHint">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">46dp</item>
+        <item name="android:layout_marginLeft">40dp</item>
+        <item name="android:layout_marginRight">45dp</item>
+        <item name="android:drawablePadding">9dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:background">@null</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColorHint">@color/colorTvHint</item>
+        <item name="android:textColor">@color/colorTv</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+
+</resources>

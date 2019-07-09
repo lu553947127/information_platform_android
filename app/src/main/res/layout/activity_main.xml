@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.activity.MainActivity">
+
+    <FrameLayout
+        android:id="@+id/frame_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorBgDark"
+        android:layout_above="@+id/line1">
+
+    </FrameLayout>
+
+    <View
+        android:id="@+id/line1"
+        android:background="@color/colorDivider"
+        android:layout_above="@+id/rg_main"
+        android:layout_width="match_parent"
+        android:layout_height="1px"/>
+
+    <RadioGroup
+        android:id="@+id/rg_main"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorFFF">
+
+        <androidx.appcompat.widget.AppCompatRadioButton
+            android:id="@+id/rb_home"
+            style="@style/MainRb"
+            android:checked="true"
+            android:drawableTop="@drawable/selector_home"
+            android:text="@string/home"/>
+
+        <androidx.appcompat.widget.AppCompatRadioButton
+            android:id="@+id/rb_release"
+            style="@style/MainRb"
+            android:drawableTop="@drawable/selector_release"
+            android:text="@string/release"/>
+
+        <androidx.appcompat.widget.AppCompatRadioButton
+            android:id="@+id/rb_people"
+            style="@style/MainRb"
+            android:drawableTop="@drawable/selector_people"
+            android:text="@string/people"/>
+
+        <androidx.appcompat.widget.AppCompatRadioButton
+            android:id="@+id/rb_mine"
+            style="@style/MainRb"
+            android:drawableTop="@drawable/selector_mine"
+            android:text="@string/mine"/>
+
+    </RadioGroup>
+
+</RelativeLayout>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:src="@drawable/top_img"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="23dp"
+        android:layout_marginLeft="42dp"
+        android:textColor="@color/colorTv"
+        android:textSize="19sp"
+        android:text="@string/register"/>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/edt_mobile"
+        style="@style/MessageHint"
+        android:layout_marginTop="29dp"
+        android:drawableLeft="@drawable/icon_username"
+        android:inputType="phone"
+        android:hint="@string/hint_mobile_code"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorDivider"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="11dp">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edt_verification_code"
+            style="@style/MessageHint"
+            android:layout_marginTop="3dp"
+            android:drawableLeft="@drawable/icon_verification_code"
+            android:inputType="number"
+            android:hint="@string/hint_SMS_verification_code"/>
+
+        <include layout="@layout/layout_verification_code"/>
+
+    </FrameLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorDivider"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"/>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/edt_pwd"
+        style="@style/MessageHint"
+        android:layout_marginTop="14dp"
+        android:drawableLeft="@drawable/icon_pwd"
+        android:inputType="textPassword"
+        android:hint="@string/hint_pwd"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorDivider"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"/>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/edt_mobile_invite"
+        style="@style/MessageHint"
+        android:layout_marginTop="14dp"
+        android:drawableLeft="@drawable/icon_fly"
+        android:inputType="phone"
+        android:hint="@string/hint_mobile_invite"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorDivider"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_register"
+        style="@style/BtnConfirm"
+        android:layout_marginTop="40dp"
+        android:text="@string/register"/>
+
+</LinearLayout>

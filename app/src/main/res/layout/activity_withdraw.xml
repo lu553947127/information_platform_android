@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/toolbar"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:padding="25dp"
+        android:background="@drawable/shape_fff_7">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorTv"
+            android:textSize="13sp"
+            android:text="@string/arrival_bank_card"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="89dp"
+            android:textColor="@color/color_6a5ff8"
+            android:textSize="13sp"
+            android:text="@string/please_bind_bank_card"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="89dp"
+            android:layout_marginTop="24dp"
+            android:textColor="@color/colorTvHint"
+            android:textSize="12sp"
+            android:text="@string/arrival_two_hours"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="72dp"
+            android:textColor="@color/colorTv"
+            android:textSize="13sp"
+            android:text="@string/withdrawal_amount"/>
+
+        <TextView
+            android:id="@+id/tv_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="110dp"
+            android:textColor="@color/colorTv"
+            android:textSize="30sp"
+            android:text="￥"/>
+
+        <EditText
+            android:id="@+id/edt_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tv_money"
+            android:layout_marginLeft="60dp"
+            android:background="@null"
+            android:singleLine="true"
+            android:inputType="number"
+            android:textColor="@color/colorTv"
+            android:textSize="30sp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorDivider"
+            android:layout_below="@+id/edt_money"/>
+
+        <TextView
+            android:id="@+id/tv_withdrawal_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edt_money"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/colorTvHint"
+            android:textSize="12sp"/>
+
+        <TextView
+            android:id="@+id/tv_confirm"
+            style="@style/BtnConfirm"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="191dp"
+            android:text="@string/withdraw"/>
+
+    </RelativeLayout>
+
+</LinearLayout>
