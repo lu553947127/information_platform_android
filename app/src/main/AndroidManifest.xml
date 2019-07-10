@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.shuangduan.zicaicloudplatform">
+    package="com.shuangduan.zcy">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.CAMERA"/>
@@ -9,7 +9,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
-        android:name="com.shuangduan.zicaicloudplatform.app.MyApplication"
+        android:name="com.shuangduan.zcy.app.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -17,32 +17,39 @@
         android:supportsRtl="true"
         android:theme="@style/BaseAppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name="com.shuangduan.zicaicloudplatform.view.activity.MainActivity" android:theme="@style/SplashTheme" android:screenOrientation="portrait">
+        <activity android:name="com.shuangduan.zcy.view.activity.MainActivity" android:theme="@style/SplashTheme" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.shuangduan.zicaicloudplatform.view.activity.RegisterActivity" android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustPan" />
-        <activity android:name="com.shuangduan.zicaicloudplatform.view.activity.LoginActivity" android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustPan" />
-        <activity android:name="com.shuangduan.zicaicloudplatform.view.activity.UserInfoInputActivity" android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustPan" />
-        <activity android:name="com.shuangduan.zicaicloudplatform.view.activity.UserInfoActivity" android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustPan" />
-        <activity android:name="com.shuangduan.zicaicloudplatform.view.activity.WithdrawActivity" android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustPan" android:theme="@style/AppThemeBgGray" />
-        <activity android:name="com.shuangduan.zicaicloudplatform.view.activity.FirstActivity" android:screenOrientation="portrait" />
-        <activity android:name="com.shuangduan.zicaicloudplatform.view.activity.UpdateNameActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
-        <activity android:name="com.shuangduan.zicaicloudplatform.view.activity.UpdateMobileActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
-        <activity android:name="com.shuangduan.zicaicloudplatform.view.activity.MobileVerificationActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
-        <activity android:name="com.shuangduan.zicaicloudplatform.view.activity.UpdateResultActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
-        <activity android:name="com.shuangduan.zicaicloudplatform.view.activity.UpdateEmailActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
-        <activity android:name="com.shuangduan.zicaicloudplatform.view.activity.AuthenticationActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zicaicloudplatform.view.activity.BindBankCardActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zicaicloudplatform.view.activity.CompanySearchActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zicaicloudplatform.view.activity.BusinessAreaActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.shuangduan.zcy.view.activity.RegisterActivity" android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity android:name="com.shuangduan.zcy.view.activity.LoginActivity" android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity android:name="com.shuangduan.zcy.view.activity.UserInfoInputActivity" android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity android:name="com.shuangduan.zcy.view.activity.UserInfoActivity" android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity android:name="com.shuangduan.zcy.view.activity.WithdrawActivity" android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustPan" android:theme="@style/AppThemeBgGray" />
+        <activity android:name="com.shuangduan.zcy.view.activity.FirstActivity" android:screenOrientation="portrait" />
+        <activity android:name="com.shuangduan.zcy.view.activity.UpdateNameActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
+        <activity android:name="com.shuangduan.zcy.view.activity.UpdateMobileActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
+        <activity android:name="com.shuangduan.zcy.view.activity.UpdatePwdActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
+        <activity android:name="com.shuangduan.zcy.view.activity.MobileVerificationActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
+        <activity android:name="com.shuangduan.zcy.view.activity.UpdateResultActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
+        <activity android:name="com.shuangduan.zcy.view.activity.UpdateEmailActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
+        <activity android:name="com.shuangduan.zcy.view.activity.AuthenticationActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.shuangduan.zcy.view.activity.BindBankCardActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.shuangduan.zcy.view.activity.CompanySearchActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.shuangduan.zcy.view.activity.BusinessAreaActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.shuangduan.zcy.view.activity.HelperActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.shuangduan.zcy.view.activity.SetActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
+        <activity android:name="com.shuangduan.zcy.view.activity.AboutOursActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.shuangduan.zcy.view.activity.RecommendFriendsActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.shuangduan.zcy.view.activity.FeedbackActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.shuangduan.zcy.view.activity.ReadHistoryActivity" android:screenOrientation="portrait"/>
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.shuangduan.zicaicloudplatform.fileprovider"
+            android:authorities="com.shuangduan.zcy.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

@@ -18,6 +18,7 @@
     <color name="color_F42121">#F42121</color>
     <color name="colorBgDark">#F7F5FA</color>
     <color name="colorAlbumPop">#574BF1</color>
+    <color name="color_F0F2F5">#F0F2F5</color>
 
     <!--时间选择器颜色-->
     <color name="text1">#6a5ff8</color>

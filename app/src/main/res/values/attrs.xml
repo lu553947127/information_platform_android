@@ -133,4 +133,8 @@
         <attr name="corner_color" format="color"/>
     </declare-styleable>
 
+    <declare-styleable name="SliderLayout">
+        <attr name="slider_drawable" format="reference"/>
+    </declare-styleable>
+
 </resources>

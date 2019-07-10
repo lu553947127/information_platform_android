@@ -1,10 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="40dp"
-    android:background="@drawable/selector_bg_city"
-    android:gravity="center"
-    android:textColor="@color/selector_province"
-    android:textSize="14sp"
-    android:id="@+id/tv_city">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="50dp">
 
-</TextView>
+    <TextView
+        android:id="@+id/tv_city"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/selector_bg_city"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/selector_province"
+        android:textSize="14sp"/>
+
+    <ImageView
+        android:id="@+id/iv_mark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|end"
+        android:layout_marginRight="15dp"
+        android:src="@drawable/selector_sex"/>
+
+</FrameLayout>

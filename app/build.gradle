@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion rootProject.ext.targetSdkVersion
     defaultConfig {
-        applicationId "com.example.zicaicloudplatform"
+        applicationId "com.example.zcy"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode rootProject.ext.versionCode
@@ -43,6 +43,7 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     implementation 'androidx.recyclerview:recyclerview:1.1.0-beta01'
+    implementation 'com.android.support:design:28.0.0'
 
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
     implementation 'io.reactivex.rxjava2:rxjava:2.1.12'

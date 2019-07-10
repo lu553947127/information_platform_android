@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/toolbar"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorFFF">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="16dp"
+            android:textColor="@color/colorTv"
+            android:textSize="14sp"
+            android:text="@string/sounds_set"/>
+        
+        <Switch
+            android:id="@+id/switch_sound"
+            android:layout_width="55dp"
+            android:layout_height="27dp"
+            android:layout_marginRight="15dp"
+            android:layout_gravity="center_vertical|end"
+            android:switchMinWidth="55dp"
+            android:showText="false"
+            android:track="@drawable/selector_switch"
+            android:thumb="@drawable/icon_switch_thumb" />
+
+    </FrameLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/divider_15"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorFFF">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="16dp"
+            android:textColor="@color/colorTv"
+            android:textSize="14sp"
+            android:text="@string/dark_model"/>
+
+        <Switch
+            android:id="@+id/switch_model"
+            android:layout_width="55dp"
+            android:layout_height="27dp"
+            android:layout_marginRight="15dp"
+            android:layout_gravity="center_vertical|end"
+            android:switchMinWidth="55dp"
+            android:showText="false"
+            android:track="@drawable/selector_switch"
+            android:thumb="@drawable/icon_switch_thumb"/>
+
+    </FrameLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_update_pwd"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorFFF"
+        android:drawableRight="@drawable/icon_next"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/color_666666"
+        android:textSize="16sp"
+        android:text="@string/update_pwd"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/divider_15"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_about_ours"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorFFF"
+        android:drawableRight="@drawable/icon_next"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/color_666666"
+        android:textSize="16sp"
+        android:text="@string/about_ours"/>
+
+</LinearLayout>

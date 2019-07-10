@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">紫菜云平台</string>
+    <string name="official_name">济南双端数字科技有限公司版权所有</string>
+    <string name="official_email">邮箱：shuangduan@boyuan.com</string>
+    <string name="official_phone">客服电话：0543-7097099</string>
 
     <string name="home">首页</string>
     <string name="release">发布信息</string>
@@ -91,7 +94,17 @@
     <string name="please_be_accurate_to_the_branch">请准确到支行</string>
     <string name="hint_bank_card_number">请填写银行卡号</string>
     <string name="hint_identity_number">请填写18位身份证号</string>
+    <string name="sounds_set">声音设置</string>
+    <string name="dark_model">夜间模式</string>
+    <string name="update_pwd">修改密码</string>
+    <string name="about_ours">关于我们</string>
+    <string name="set_new_pwd">请设置新的密码</string>
+    <string name="hint_new_pwd">请输入新的密码</string>
+    <string name="hint_opinion">请在此输入您的意见</string>
+    <string name="share_url">http://www.shuangduan.com</string>
+    <string name="share">分享</string>
 
+    <string name="format_version_name">当前版本号：v%1$s</string>
     <string name="format_get_verification_code_again">重新获取 (%1$ds)</string>
     <string name="format_balance">余额:%1$d元</string>
     <string name="format_num_of_people">人脉数量: %1$d人</string>
@@ -100,6 +113,7 @@
     <string name="format_update_email_tip">为了您的信息安全，请务必使用%1$s号码获取 验证码之后，再修改邮箱</string>
     <string name="format_mobile">您的手机号为：%1$s</string>
     <string name="format_email">您的邮箱为：%1$s</string>
+    <string name="format_read_num">%1$s 浏览</string>
 
     <string name="please_select_time">请选择时间</string>
     <string name="year">年</string>

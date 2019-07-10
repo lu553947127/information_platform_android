@@ -20,7 +20,7 @@
             android:layout_height="130dp"
             android:background="@drawable/shape_bg_mine">
 
-            <com.shuangduan.zicaicloudplatform.weight.CircleImageView
+            <com.shuangduan.zcy.weight.CircleImageView
                 android:id="@+id/iv_user"
                 android:layout_width="73dp"
                 android:layout_height="73dp"

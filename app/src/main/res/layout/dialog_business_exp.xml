@@ -17,7 +17,7 @@
         android:layout_height="105dp"
         android:gravity="center_horizontal">
 
-        <com.shuangduan.zicaicloudplatform.weight.datepicker.DatePickerView
+        <com.shuangduan.zcy.weight.datepicker.DatePickerView
             android:id="@+id/dp_exp"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

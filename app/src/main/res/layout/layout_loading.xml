@@ -8,12 +8,13 @@
         android:orientation="vertical"
         android:layout_gravity="center">
 
-        <com.lanhui.tamas.happy_poetry_school.weight.LoadingView
+        <ProgressBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal">
-
-        </com.lanhui.tamas.happy_poetry_school.weight.LoadingView>
+            android:indeterminateTint="@color/colorPrimary"
+            android:indeterminateTintMode="src_atop"
+            android:layout_gravity="center"
+            android:padding="20dp"/>
 
         <TextView
             android:layout_width="wrap_content"
