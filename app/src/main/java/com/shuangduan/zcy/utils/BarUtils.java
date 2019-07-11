@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
+import androidx.annotation.ColorInt;
+import androidx.annotation.ColorRes;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 
@@ -45,22 +47,26 @@ public class BarUtils {
         fakeStatusBar.setBackgroundResource(drawable);
     }
 
-    private static void transparentStatusBar(final Activity activity) {
+    /**
+     * Set the status bar's color.
+     *
+     * @param fakeStatusBar The fake status bar view.
+     * @param color         The status bar's color.
+     */
+    public static void setStatusBarColorRes(@NonNull final View fakeStatusBar, @ColorInt final int color) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) return;
-        Window window = activity.getWindow();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            int option = View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                int vis = window.getDecorView().getSystemUiVisibility() & View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
-                window.getDecorView().setSystemUiVisibility(option | vis);
-            } else {
-                window.getDecorView().setSystemUiVisibility(option);
-            }
-            window.setStatusBarColor(Color.TRANSPARENT);
-        } else {
-            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        }
+        Activity activity = getActivityByView(fakeStatusBar);
+        if (activity == null) return;
+        transparentStatusBar(activity);
+        fakeStatusBar.setVisibility(View.VISIBLE);
+        ViewGroup.LayoutParams layoutParams = fakeStatusBar.getLayoutParams();
+        layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+        layoutParams.height = getStatusBarHeight();
+        fakeStatusBar.setBackgroundColor(color);
+    }
+
+    private static void transparentStatusBar(final Activity activity) {
+        com.blankj.utilcode.util.BarUtils.setStatusBarColor(activity, activity.getResources().getColor(android.R.color.transparent));
     }
 
 }

@@ -14,6 +14,7 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.base.BaseActivity;
+import com.shuangduan.zcy.utils.AndroidBug5497Workaround;
 import com.shuangduan.zcy.vm.LoginVm;
 
 import java.util.Objects;
@@ -68,6 +69,8 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void initDataAndEvent() {
+        AndroidBug5497Workaround.assistActivity(findViewById(android.R.id.content));
+
         loginVm = ViewModelProviders.of(this).get(LoginVm.class);
         loginVm.getChangeData().observe(this, integer -> {
 

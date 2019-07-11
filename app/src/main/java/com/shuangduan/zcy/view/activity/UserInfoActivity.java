@@ -5,6 +5,7 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
@@ -22,6 +23,7 @@ import com.shuangduan.zcy.dialog.SexDialog;
 import com.shuangduan.zcy.model.event.EmailEvent;
 import com.shuangduan.zcy.model.event.MobileEvent;
 import com.shuangduan.zcy.model.event.UserNameEvent;
+import com.shuangduan.zcy.utils.AndroidBug5497Workaround;
 import com.shuangduan.zcy.utils.matisse.Glide4Engine;
 import com.shuangduan.zcy.utils.matisse.MatisseCamera;
 import com.shuangduan.zcy.vm.PhotoVm;
@@ -74,6 +76,8 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
     AppCompatTextView tvBusinessArea;
     @BindView(R.id.tv_business_exp)
     AppCompatTextView tvBusinessExp;
+    @BindView(R.id.edt_production)
+    AppCompatEditText edtProduction;
 
     private int sex = -1;
     private PhotoVm photoVm;
@@ -88,6 +92,7 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
     protected void initDataAndEvent() {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.base_info));
+        AndroidBug5497Workaround.assistActivity(findViewById(android.R.id.content));
         ivUser.setImageResource(R.drawable.default_head);
         tvName.setText("王某某");
         tvSex.setText("王某某");
@@ -122,8 +127,8 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
         });
     }
 
-    @OnClick({R.id.iv_bar_back, R.id.iv_user, R.id.tv_name, R.id.tv_sex, R.id.tv_mobile, R.id.tv_email, R.id.tv_id_card,
-            R.id.tv_company, R.id.tv_office, R.id.tv_business_area, R.id.tv_business_exp})
+    @OnClick({R.id.iv_bar_back, R.id.iv_user, R.id.fl_name, R.id.fl_sex, R.id.fl_mobile, R.id.fl_email, R.id.fl_id_card,
+            R.id.fl_company, R.id.fl_office, R.id.fl_business_area, R.id.fl_business_exp})
     void onClick(View view){
         Bundle bundle = new Bundle();
         switch (view.getId()){
@@ -135,10 +140,10 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
                         .setPhotoCallBack(this)
                         .showDialog();
                 break;
-            case R.id.tv_name:
+            case R.id.fl_name:
                 ActivityUtils.startActivity(UpdateNameActivity.class);
                 break;
-            case R.id.tv_sex:
+            case R.id.fl_sex:
                 new SexDialog(this)
                         .setSex(sex)
                         .setOnSexSelectListener(new SexDialog.OnSexSelectListener() {
@@ -156,30 +161,30 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
                         })
                         .showDialog();
                 break;
-            case R.id.tv_mobile:
+            case R.id.fl_mobile:
                 bundle.putString(CustomConfig.UPDATE_TYPE, CustomConfig.updateTypePhone);
                 ActivityUtils.startActivity(bundle, MobileVerificationActivity.class);
                 break;
-            case R.id.tv_email:
+            case R.id.fl_email:
                 bundle.putString(CustomConfig.UPDATE_TYPE, CustomConfig.updateTypeEmail);
                 ActivityUtils.startActivity(bundle, MobileVerificationActivity.class);
                 break;
-            case R.id.tv_id_card:
+            case R.id.fl_id_card:
                 bundle.putString(CustomConfig.UPLOAD_TYPE, CustomConfig.uploadTypeIdCard);
                 ActivityUtils.startActivity(bundle, AuthenticationActivity.class);
                 break;
-            case R.id.tv_company:
+            case R.id.fl_company:
                 bundle.putString(CustomConfig.SEARCH_TYPE, CustomConfig.searchTypeCompany);
                 ActivityUtils.startActivity(bundle, CompanySearchActivity.class);
                 break;
-            case R.id.tv_office:
+            case R.id.fl_office:
                 bundle.putString(CustomConfig.SEARCH_TYPE, CustomConfig.searchTypeOffice);
                 ActivityUtils.startActivity(bundle, CompanySearchActivity.class);
                 break;
-            case R.id.tv_business_area:
+            case R.id.fl_business_area:
                 ActivityUtils.startActivity(BusinessAreaActivity.class);
                 break;
-            case R.id.tv_business_exp:
+            case R.id.fl_business_exp:
                 new BusinessExpDialog(this)
                         .setSingleCallBack(item -> tvBusinessExp.setText(item))
                         .showDialog();

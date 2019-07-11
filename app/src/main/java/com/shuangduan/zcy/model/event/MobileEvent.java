@@ -10,7 +10,7 @@ package com.shuangduan.zcy.model.event;
  * @chang time
  * @class describe
  */
-public class MobileEvent {
+public class MobileEvent extends BaseEvent {
     public String mobile;
 
     public MobileEvent(String mobile) {

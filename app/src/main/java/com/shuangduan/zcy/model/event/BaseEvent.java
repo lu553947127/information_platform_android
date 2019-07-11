@@ -10,5 +10,5 @@ package com.shuangduan.zcy.model.event;
  * @chang time
  * @class describe
  */
-public class NormalEvent {
+public class BaseEvent {
 }

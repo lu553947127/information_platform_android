@@ -63,19 +63,8 @@ public class MineFragment extends BaseFragment {
     }
 
     @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        if (!hidden) {
-            com.blankj.utilcode.util.BarUtils.setStatusBarLightMode(mActivity, false);
-        }
-    }
-
-    @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
-        com.blankj.utilcode.util.BarUtils.setStatusBarLightMode(mActivity, false);
-        com.blankj.utilcode.util.BarUtils.setStatusBarColor(mActivity, getResources().getColor(android.R.color.transparent));
         BarUtils.setStatusBarColor(fakeStatusBar, R.drawable.shape_bg_mine);
-
 
         ivUser.setImageResource(R.drawable.default_head);
         tvUsername.setText("王某某");
@@ -89,7 +78,7 @@ public class MineFragment extends BaseFragment {
 
     }
 
-    @OnClick({R.id.tv_username, R.id.iv_user, R.id.tv_my_subscription, R.id.iv_order, R.id.tv_order, R.id.iv_income, R.id.tv_income,
+    @OnClick({R.id.tv_username, R.id.iv_user, R.id.tv_my_subscription, R.id.fl_order, R.id.fl_income,
             R.id.tv_read_history, R.id.tv_feedback, R.id.tv_recommend_friends, R.id.tv_my_collection, R.id.tv_set, R.id.tv_helper})
     void onClick(View view){
         switch (view.getId()) {
@@ -97,11 +86,9 @@ public class MineFragment extends BaseFragment {
             case R.id.iv_user:
                 ActivityUtils.startActivity(UserInfoActivity.class);
                 break;
-            case R.id.iv_order:
-            case R.id.tv_order:
+            case R.id.fl_order:
                 break;
-            case R.id.iv_income:
-            case R.id.tv_income:
+            case R.id.fl_income:
                 break;
             case R.id.tv_my_subscription:
                 break;

@@ -33,17 +33,8 @@ public class ReleaseFragment extends BaseFragment {
     }
 
     @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        if (!hidden) {
-            BarUtils.setStatusBarLightMode(mActivity, true);
-        }
-    }
-
-    @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
-        BarUtils.setStatusBarLightMode(mActivity, true);
-        BarUtils.setStatusBarColor(mActivity, getResources().getColor(android.R.color.transparent));
+
     }
 
     @Override

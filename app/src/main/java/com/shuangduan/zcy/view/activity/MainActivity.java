@@ -13,10 +13,14 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.base.BaseActivity;
+import com.shuangduan.zcy.model.event.BaseEvent;
 import com.shuangduan.zcy.view.fragment.HomeFragment;
 import com.shuangduan.zcy.view.fragment.MineFragment;
 import com.shuangduan.zcy.view.fragment.PeopleFragment;
 import com.shuangduan.zcy.view.fragment.ReleaseFragment;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 

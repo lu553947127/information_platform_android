@@ -10,6 +10,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.blankj.utilcode.util.BarUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.base.BaseActivity;
+import com.shuangduan.zcy.utils.AndroidBug5497Workaround;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -44,6 +45,9 @@ public class WithdrawActivity extends BaseActivity {
     @Override
     protected void initDataAndEvent() {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
+        tvBarTitle.setText(getString(R.string.withdraw));
+        tvBarRight.setText(getString(R.string.bind_bank_card));
+        AndroidBug5497Workaround.assistActivity(findViewById(android.R.id.content));
 
         tvWithdrawalAmount.setText(String.format(getString(R.string.format_withdraw_now), 10000));
     }

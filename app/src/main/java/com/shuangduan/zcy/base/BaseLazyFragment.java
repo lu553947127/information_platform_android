@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.shuangduan.zcy.dialog.LoadDialog;
-import com.shuangduan.zcy.model.event.NormalEvent;
+import com.shuangduan.zcy.model.event.BaseEvent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -108,7 +108,7 @@ public abstract class BaseLazyFragment extends Fragment implements IView {
     }
 
     @Subscribe()
-    public void onNormalEvent(NormalEvent normalEvent){
+    public void onNormalEvent(BaseEvent normalEvent){
 
     }
 

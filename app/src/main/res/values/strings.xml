@@ -104,6 +104,8 @@
     <string name="share_url">http://www.shuangduan.com</string>
     <string name="share">分享</string>
 
+    <string name="subscribe_message">订阅信息</string>
+
     <string name="format_version_name">当前版本号：v%1$s</string>
     <string name="format_get_verification_code_again">重新获取 (%1$ds)</string>
     <string name="format_balance">余额:%1$d元</string>
@@ -121,5 +123,16 @@
     <string name="day">日</string>
     <string name="hour">时</string>
     <string name="minute">分</string>
+
+    <string-array name="classify">
+        <item>工程信息</item>
+        <item>招采信息</item>
+        <item>基建物资</item>
+        <item>品权中心</item>
+        <item>优质供应商</item>
+        <item>我的收益</item>
+        <item>发布消息</item>
+        <item>基建头条</item>
+    </string-array>
 
 </resources>

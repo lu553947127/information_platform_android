@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.base.BaseActivity;
+import com.shuangduan.zcy.utils.AndroidBug5497Workaround;
 import com.shuangduan.zcy.vm.LoginVm;
 
 import butterknife.BindView;
@@ -45,6 +46,8 @@ public class RegisterActivity extends BaseActivity {
 
     @Override
     protected void initDataAndEvent() {
+        AndroidBug5497Workaround.assistActivity(findViewById(android.R.id.content));
+
         loginVm = ViewModelProviders.of(this).get(LoginVm.class);
         loginVm.getTimeLiveData().observe(this, aLong -> {
             if (aLong == -1) {

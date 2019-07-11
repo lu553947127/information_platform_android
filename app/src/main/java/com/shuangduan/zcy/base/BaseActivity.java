@@ -15,11 +15,12 @@ import com.blankj.utilcode.util.Utils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.MyApplication;
 import com.shuangduan.zcy.dialog.LoadDialog;
-import com.shuangduan.zcy.model.event.NormalEvent;
+import com.shuangduan.zcy.model.event.BaseEvent;
 import com.shuangduan.zcy.utils.AutoUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -79,8 +80,8 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
 
     }
 
-    @Subscribe()
-    public void onNormalEvent(NormalEvent normalEvent){
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onBaseEvent(BaseEvent normalEvent) {
 
     }
 

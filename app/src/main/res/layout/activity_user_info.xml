@@ -34,9 +34,10 @@
                 android:layout_height="10dp" />
 
             <FrameLayout
+                android:id="@+id/fl_name"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="@color/colorFFF"
+                android:background="@drawable/selector_bg_custom"
                 android:paddingLeft="14dp"
                 android:paddingRight="14dp">
 
@@ -55,7 +56,6 @@
                     android:drawableRight="@drawable/icon_next"
                     android:gravity="center_vertical"
                     android:layout_marginLeft="87dp"
-                    android:background="@null"
                     android:singleLine="true"
                     android:textColor="@color/color_666666"
                     android:textSize="14sp"/>
@@ -69,9 +69,10 @@
             </FrameLayout>
 
             <FrameLayout
+                android:id="@+id/fl_sex"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="@color/colorFFF"
+                android:background="@drawable/selector_bg_custom"
                 android:paddingLeft="14dp"
                 android:paddingRight="14dp">
 
@@ -90,7 +91,6 @@
                     android:drawableRight="@drawable/icon_next"
                     android:gravity="center_vertical"
                     android:layout_marginLeft="87dp"
-                    android:background="@null"
                     android:textColor="@color/color_666666"
                     android:textSize="14sp"/>
 
@@ -103,9 +103,10 @@
             </FrameLayout>
 
             <FrameLayout
+                android:id="@+id/fl_mobile"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="@color/colorFFF"
+                android:background="@drawable/selector_bg_custom"
                 android:paddingLeft="14dp"
                 android:paddingRight="14dp">
 
@@ -124,9 +125,7 @@
                     android:drawableRight="@drawable/icon_next"
                     android:gravity="center_vertical"
                     android:layout_marginLeft="87dp"
-                    android:background="@null"
                     android:singleLine="true"
-                    android:inputType="phone"
                     android:textColor="@color/color_666666"
                     android:textSize="14sp"/>
 
@@ -139,9 +138,10 @@
             </FrameLayout>
 
             <FrameLayout
+                android:id="@+id/fl_id_card"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="@color/colorFFF"
+                android:background="@drawable/selector_bg_custom"
                 android:paddingLeft="14dp"
                 android:paddingRight="14dp">
 
@@ -161,7 +161,6 @@
                     android:gravity="center_vertical"
                     android:layout_marginLeft="87dp"
                     android:background="@null"
-                    android:inputType="text"
                     android:singleLine="true"
                     android:textColor="@color/color_666666"
                     android:textSize="14sp"/>
@@ -175,9 +174,10 @@
             </FrameLayout>
 
             <FrameLayout
+                android:id="@+id/fl_email"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="@color/colorFFF"
+                android:background="@drawable/selector_bg_custom"
                 android:paddingLeft="14dp"
                 android:paddingRight="14dp">
 
@@ -196,9 +196,7 @@
                     android:drawableRight="@drawable/icon_next"
                     android:gravity="center_vertical"
                     android:layout_marginLeft="87dp"
-                    android:background="@null"
                     android:singleLine="true"
-                    android:inputType="textEmailSubject"
                     android:textColor="@color/color_666666"
                     android:textSize="14sp"/>
 
@@ -211,9 +209,10 @@
             </FrameLayout>
 
             <FrameLayout
+                android:id="@+id/fl_company"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="@color/colorFFF"
+                android:background="@drawable/selector_bg_custom"
                 android:paddingLeft="14dp"
                 android:paddingRight="14dp">
 
@@ -248,9 +247,10 @@
             </FrameLayout>
 
             <FrameLayout
+                android:id="@+id/fl_office"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="@color/colorFFF"
+                android:background="@drawable/selector_bg_custom"
                 android:paddingLeft="14dp"
                 android:paddingRight="14dp">
 
@@ -283,9 +283,10 @@
             </FrameLayout>
 
             <FrameLayout
+                android:id="@+id/fl_business_area"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="@color/colorFFF"
+                android:background="@drawable/selector_bg_custom"
                 android:paddingLeft="14dp"
                 android:paddingRight="14dp">
 
@@ -320,9 +321,10 @@
             </FrameLayout>
 
             <FrameLayout
+                android:id="@+id/fl_business_exp"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="@color/colorFFF"
+                android:background="@drawable/selector_bg_custom"
                 android:paddingLeft="14dp"
                 android:paddingRight="14dp">
 
@@ -362,6 +364,7 @@
                 android:text="@string/product"/>
 
             <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edt_production"
                 android:layout_width="match_parent"
                 android:layout_height="92dp"
                 android:background="@color/colorFFF"

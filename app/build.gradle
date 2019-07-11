@@ -1,9 +1,17 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('D:\\Android\\apk\\zcy\\zcy.jks')
+            storePassword 'boyuan123456'
+            keyAlias = 'boyuan'
+            keyPassword 'boyuan123456'
+        }
+    }
     compileSdkVersion rootProject.ext.targetSdkVersion
     defaultConfig {
-        applicationId "com.example.zcy"
+        applicationId "com.shuangduan.zcy"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode rootProject.ext.versionCode
@@ -12,7 +20,7 @@ android {
 
         ndk {
             //设置支持的SO库架构
-//            abiFilters 'armeabi', "armeabi-v7a", 'x86'
+            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86","x86_64"
         }
 
         resConfigs "zh-rCN", "zh-rHK", "zh-rTW", "en"
@@ -23,6 +31,12 @@ android {
             shrinkResources true
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+
+        debug {
+            shrinkResources false
+            minifyEnabled false
         }
     }
 
@@ -30,6 +44,12 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    //解决error app:lintClassPath
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
     }
 }
 
@@ -78,5 +98,8 @@ dependencies {
     implementation 'com.github.tbruyelle:rxpermissions:0.10.2'
     implementation 'com.google.android:flexbox:1.1.0'
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.45-androidx'
+    implementation 'com.youth.banner:banner:1.4.10'
+    implementation 'com.amap.api:3dmap:latest.integration'
+    implementation 'com.amap.api:search:latest.integration'
 
 }

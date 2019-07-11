@@ -12,6 +12,7 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.SubscriptionTypeDialog;
+import com.shuangduan.zcy.utils.AndroidBug5497Workaround;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -61,6 +62,7 @@ public class UserInfoInputActivity extends BaseActivity {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.base_info));
         tvBarRight.setText(getString(R.string.save));
+        AndroidBug5497Workaround.assistActivity(findViewById(android.R.id.content));
     }
 
     @OnClick({R.id.iv_bar_back, R.id.tv_bar_right, R.id.tv_sex, R.id.tv_business_area, R.id.tv_business_exp})
