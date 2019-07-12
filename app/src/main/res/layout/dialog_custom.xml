@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="15dp">
+
+    <TextView
+        android:id="@+id/tv_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/color_666666"
+        android:textSize="14sp"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp">
+
+        <TextView
+            android:id="@+id/tv_negative"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/selector_btn_confirm_gray"
+            android:gravity="center"
+            android:textColor="@color/color_666666"
+            android:textSize="14sp"
+            android:text="@string/negative"/>
+
+        <TextView
+            android:id="@+id/tv_positive"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:layout_gravity="end"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/selector_btn_confirm"
+            android:gravity="center"
+            android:textColor="@color/colorFFF"
+            android:textSize="14sp"
+            android:text="@string/positive"/>
+
+    </FrameLayout>
+
+</LinearLayout>

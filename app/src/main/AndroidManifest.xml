@@ -30,38 +30,42 @@
 
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="de7ee18d8f457bd5916865fdc141894b"/>
+            android:value="0c36af45d9d91702919613d75a2f53a2"/>
 
-        <activity android:name="com.shuangduan.zcy.view.activity.MainActivity" android:theme="@style/SplashTheme" android:screenOrientation="portrait">
+        <activity android:name="com.shuangduan.zcy.view.MainActivity" android:theme="@style/SplashTheme" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.shuangduan.zcy.view.activity.RegisterActivity" android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity android:name="com.shuangduan.zcy.view.activity.LoginActivity" android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity android:name="com.shuangduan.zcy.view.activity.UserInfoInputActivity" android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity android:name="com.shuangduan.zcy.view.activity.UserInfoActivity" android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity android:name="com.shuangduan.zcy.view.activity.WithdrawActivity" android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustResize" android:theme="@style/AppThemeBgGray" />
-        <activity android:name="com.shuangduan.zcy.view.activity.FirstActivity" android:screenOrientation="portrait" />
-        <activity android:name="com.shuangduan.zcy.view.activity.UpdateNameActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
-        <activity android:name="com.shuangduan.zcy.view.activity.UpdateMobileActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
-        <activity android:name="com.shuangduan.zcy.view.activity.UpdatePwdActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
-        <activity android:name="com.shuangduan.zcy.view.activity.MobileVerificationActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
-        <activity android:name="com.shuangduan.zcy.view.activity.UpdateResultActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
-        <activity android:name="com.shuangduan.zcy.view.activity.UpdateEmailActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
-        <activity android:name="com.shuangduan.zcy.view.activity.AuthenticationActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.view.activity.BindBankCardActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.view.activity.CompanySearchActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.view.activity.BusinessAreaActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.view.activity.HelperActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.view.activity.SetActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
-        <activity android:name="com.shuangduan.zcy.view.activity.AboutOursActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.view.activity.RecommendFriendsActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.view.activity.FeedbackActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.view.activity.ReadHistoryActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.view.activity.ProjectInfoActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.shuangduan.zcy.view.login.RegisterActivity" android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity android:name="com.shuangduan.zcy.view.login.LoginActivity" android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity android:name="com.shuangduan.zcy.view.login.UserInfoInputActivity" android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity android:name="com.shuangduan.zcy.view.mine.UserInfoActivity" android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity android:name="com.shuangduan.zcy.view.mine.WithdrawActivity" android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustResize" android:theme="@style/AppThemeBgGray" />
+        <activity android:name="com.shuangduan.zcy.view.login.FirstActivity" android:screenOrientation="portrait" />
+        <activity android:name="com.shuangduan.zcy.view.mine.UpdateNameActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
+        <activity android:name="com.shuangduan.zcy.view.mine.UpdateMobileActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
+        <activity android:name="com.shuangduan.zcy.view.mine.UpdatePwdActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
+        <activity android:name="com.shuangduan.zcy.view.login.MobileVerificationActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
+        <activity android:name="com.shuangduan.zcy.view.mine.UpdateResultActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
+        <activity android:name="com.shuangduan.zcy.view.mine.UpdateEmailActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
+        <activity android:name="com.shuangduan.zcy.view.mine.AuthenticationActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.shuangduan.zcy.view.mine.BindBankCardActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.shuangduan.zcy.view.mine.CompanySearchActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.shuangduan.zcy.view.mine.BusinessAreaActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.shuangduan.zcy.view.mine.HelperActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.shuangduan.zcy.view.mine.SetActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
+        <activity android:name="com.shuangduan.zcy.view.mine.AboutOursActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.shuangduan.zcy.view.mine.RecommendFriendsActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.shuangduan.zcy.view.mine.FeedbackActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.shuangduan.zcy.view.mine.ReadHistoryActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.shuangduan.zcy.view.projectinfo.ProjectInfoActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.shuangduan.zcy.view.projectinfo.ProjectInfoListActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.shuangduan.zcy.view.projectinfo.ProjectDetailActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.shuangduan.zcy.view.recruit.RecruitActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.shuangduan.zcy.view.recruit.RecruitDetailActivity" android:screenOrientation="portrait"/>
 
         <provider
             android:name="androidx.core.content.FileProvider"

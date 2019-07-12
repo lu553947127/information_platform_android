@@ -105,17 +105,30 @@
     <string name="share">分享</string>
 
     <string name="subscribe_message">订阅信息</string>
+    <string name="model_list">列表模式</string>
+    <string name="collection">收藏</string>
+    <string name="read_detail">查看详情</string>
+    <string name="message_detail">信息详情</string>
+    <string name="area">区域</string>
+    <string name="type">类型</string>
+    <string name="stage">阶段</string>
+    <string name="time">时间</string>
+    <string name="unsubscribe">未认购</string>
+    <string name="subscribe">已认购</string>
 
     <string name="format_version_name">当前版本号：v%1$s</string>
     <string name="format_get_verification_code_again">重新获取 (%1$ds)</string>
     <string name="format_balance">余额:%1$d元</string>
     <string name="format_num_of_people">人脉数量: %1$d人</string>
+    <string name="format_num_of_readers">订阅人数: %1$d人</string>
     <string name="format_withdraw_now">当前可提现金额为:%1$d元</string>
     <string name="format_update_mobile_tip">为了您的信息安全，请务必使用%1$s号码获取验证码之后，再修改手机号</string>
     <string name="format_update_email_tip">为了您的信息安全，请务必使用%1$s号码获取 验证码之后，再修改邮箱</string>
     <string name="format_mobile">您的手机号为：%1$s</string>
     <string name="format_email">您的邮箱为：%1$s</string>
     <string name="format_read_num">%1$s 浏览</string>
+    <string name="format_update_time">更新时间：%1$s</string>
+    <string name="format_release_time">发布时间：%1$s</string>
 
     <string name="please_select_time">请选择时间</string>
     <string name="year">年</string>
@@ -133,6 +146,10 @@
         <item>我的收益</item>
         <item>发布消息</item>
         <item>基建头条</item>
+    </string-array>
+
+    <string-array name="recruit_detail">
+        <item>招标简介</item>
     </string-array>
 
 </resources>
