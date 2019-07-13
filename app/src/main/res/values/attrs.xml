@@ -42,61 +42,6 @@
         <attr name="SoreNumber" format="integer" />
     </declare-styleable>
 
-    <declare-styleable name="MarqueeView">
-        <attr name="marqueeAnimDuration" format="integer" />
-    </declare-styleable>
-
-    <declare-styleable name="SimpleMarqueeView">
-        <attr name="smvTextColor" format="reference|color" />
-        <attr name="smvTextSize" format="dimension" />
-        <!--https://github.com/android/platform_frameworks_base/blob/master/core/res/res/values/attrs.xml-->
-        <attr name="smvTextGravity">
-            <!-- Push object to the top of its container, not changing its size. -->
-            <flag name="top" value="0x30" />
-            <!-- Push object to the bottom of its container, not changing its size. -->
-            <flag name="bottom" value="0x50" />
-            <!-- Push object to the left of its container, not changing its size. -->
-            <flag name="left" value="0x03" />
-            <!-- Push object to the right of its container, not changing its size. -->
-            <flag name="right" value="0x05" />
-            <!-- Place object in the vertical center of its container, not changing its size. -->
-            <flag name="center_vertical" value="0x10" />
-            <!-- Grow the vertical size of the object if needed so it completely fills its container. -->
-            <flag name="fill_vertical" value="0x70" />
-            <!-- Place object in the horizontal center of its container, not changing its size. -->
-            <flag name="center_horizontal" value="0x01" />
-            <!-- Grow the horizontal size of the object if needed so it completely fills its container. -->
-            <flag name="fill_horizontal" value="0x07" />
-            <!-- Place the object in the center of its container in both the vertical and horizontal axis, not changing its size. -->
-            <flag name="center" value="0x11" />
-            <!-- Grow the horizontal and vertical size of the object if needed so it completely fills its container. -->
-            <flag name="fill" value="0x77" />
-            <!-- Additional option that can be set to have the top and/or bottom edges of
-                 the child clipped to its container's bounds.
-                 The clip will be based on the vertical gravity: a top gravity will clip the bottom
-                 edge, a bottom gravity will clip the top edge, and neither will clip both edges. -->
-            <flag name="clip_vertical" value="0x80" />
-            <!-- Additional option that can be set to have the left and/or right edges of
-                 the child clipped to its container's bounds.
-                 The clip will be based on the horizontal gravity: a left gravity will clip the right
-                 edge, a right gravity will clip the left edge, and neither will clip both edges. -->
-            <flag name="clip_horizontal" value="0x08" />
-            <!-- Push object to the beginning of its container, not changing its size. -->
-            <flag name="start" value="0x00800003" />
-            <!-- Push object to the end of its container, not changing its size. -->
-            <flag name="end" value="0x00800005" />
-        </attr>
-        <attr name="smvTextSingleLine" format="boolean" />
-        <!-- Where to ellipsize text. -->
-        <attr name="smvTextEllipsize">
-            <enum name="none" value="0" />
-            <enum name="start" value="1" />
-            <enum name="middle" value="2" />
-            <enum name="end" value="3" />
-        </attr>
-
-    </declare-styleable>
-
     <declare-styleable name="BGANinePhotoLayout">
         <!-- Item 条目圆角尺寸，默认值为 0dp -->
         <attr name="bga_npl_itemCornerRadius" format="dimension|reference"/>
@@ -129,12 +74,19 @@
         <attr name="bga_iv_borderColor" format="reference|color"/>
     </declare-styleable>
 
-    <declare-styleable name="BannerOverView">
-        <attr name="corner_color" format="color"/>
-    </declare-styleable>
-
-    <declare-styleable name="SliderLayout">
-        <attr name="slider_drawable" format="reference"/>
+    <declare-styleable name="MarqueeView">
+        <attr name="marqueeview_repet_type" format="enum">
+            <enum name="repet_oncetime" value="0"/><!-- 播放一次 -->
+            <enum name="repet_interval" value="1"/>  <!--连续播放 循环结束再继续下次循环-->
+            <enum name="repet_continuous" value="2"/>  <!--连续播放 到末尾直接继续下次循环-->
+        </attr><!--循环模式-->
+        <attr name="marqueeview_text_distance" format="integer"/><!--每个item之间的距离-->
+        <attr name="marqueeview_text_startlocationdistance" format="float"/><!--开始的起始位置 按距离控件左边的百分比 0~1之间 -->
+        <attr name="marqueeview_text_speed" format="float"/><!--播放速度 也就是文字滚动速度-->
+        <attr name="marqueeview_text_color" format="color|reference"/><!-- 文字颜色 -->
+        <attr name="marqueeview_text_size" format="float"/><!-- 文字大小 -->
+        <attr name="marqueeview_isclickalbe_stop" format="boolean"/><!--是否点击暂停-->
+        <attr name="marqueeview_is_resetLocation" format="boolean"/><!--重新改变内容的时候 ， 是否初始化 位置，默认为true，改变-->
     </declare-styleable>
 
 </resources>

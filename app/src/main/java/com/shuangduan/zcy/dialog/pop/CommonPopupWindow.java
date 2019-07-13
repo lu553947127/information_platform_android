@@ -35,6 +35,7 @@ public class CommonPopupWindow extends PopupWindow {
         controller = new PopupController(context, this);
     }
 
+
     @Override
     public void dismiss() {
         super.dismiss();

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:orientation="horizontal">
+
+        <com.shuangduan.zcy.weight.selectorview.SelectorParentView
+            android:id="@+id/rv_province"
+            android:layout_width="125dp"
+            android:layout_height="match_parent">
+
+        </com.shuangduan.zcy.weight.selectorview.SelectorParentView>
+
+        <com.shuangduan.zcy.weight.selectorview.SelectorChildView
+            android:id="@+id/rv_city"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </com.shuangduan.zcy.weight.selectorview.SelectorChildView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="42dp">
+
+        <TextView
+            android:id="@+id/tv_negative"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:background="#E0E0E5"
+            android:gravity="center"
+            android:textColor="@color/color_666666"
+            android:textSize="16sp"
+            android:text="@string/negative"/>
+
+        <TextView
+            android:id="@+id/tv_positive"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:textColor="@color/colorFFF"
+            android:textSize="16sp"
+            android:text="@string/positive"/>
+
+    </LinearLayout>
+
+</LinearLayout>

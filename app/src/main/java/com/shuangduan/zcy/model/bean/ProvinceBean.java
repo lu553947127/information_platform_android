@@ -3,6 +3,8 @@ package com.shuangduan.zcy.model.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.shuangduan.zcy.weight.selectorview.BaseSelectorBean;
+
 import java.util.List;
 
 /**
@@ -15,16 +17,20 @@ import java.util.List;
  * @chang time
  * @class describe
  */
-public class ProvinceBean implements Parcelable {
+public class ProvinceBean extends BaseSelectorBean implements Parcelable {
     /**
      * id : 110000
      * name : 北京市
      */
-
     private int id;
     private String name;
-    private int isSelect;
     private List<CityBean> cityList;
+
+    public ProvinceBean(int id, String name, List<CityBean> cityList) {
+        this.id = id;
+        this.name = name;
+        this.cityList = cityList;
+    }
 
     protected ProvinceBean(Parcel in) {
         id = in.readInt();
@@ -72,14 +78,6 @@ public class ProvinceBean implements Parcelable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public int getIsSelect() {
-        return isSelect;
-    }
-
-    public void setIsSelect(int isSelect) {
-        this.isSelect = isSelect;
     }
 
     public List<CityBean> getCityList() {

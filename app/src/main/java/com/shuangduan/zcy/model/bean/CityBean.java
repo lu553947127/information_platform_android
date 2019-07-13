@@ -3,6 +3,8 @@ package com.shuangduan.zcy.model.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.shuangduan.zcy.weight.selectorview.BaseSelectorBean;
+
 /**
  * @author 宁文强 QQ:858777523
  * @name information_platform_android
@@ -13,7 +15,7 @@ import android.os.Parcelable;
  * @chang time
  * @class describe
  */
-public class CityBean implements Parcelable {
+public class CityBean extends BaseSelectorBean implements Parcelable {
 
     /**
      * id : 110100
@@ -21,9 +23,13 @@ public class CityBean implements Parcelable {
      */
     private int id;
     private String name;
-    private int isSelect;
 
     public CityBean() {
+    }
+
+    public CityBean(int id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
     protected CityBean(Parcel in) {
@@ -58,14 +64,6 @@ public class CityBean implements Parcelable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public int getIsSelect() {
-        return isSelect;
-    }
-
-    public void setIsSelect(int isSelect) {
-        this.isSelect = isSelect;
     }
 
     @Override

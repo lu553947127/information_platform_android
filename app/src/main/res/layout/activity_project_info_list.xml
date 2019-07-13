@@ -133,10 +133,24 @@
     </LinearLayout>
 
     <View
+        android:id="@+id/line"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/colorDivider"/>
 
-    <include layout="@layout/layout_refresh_rv"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include layout="@layout/layout_refresh_rv"/>
+
+        <View
+            android:id="@+id/over"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#66000000"/>
+
+    </FrameLayout>
 
 </LinearLayout>

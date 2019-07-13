@@ -83,7 +83,7 @@ public class BusinessAreaActivity extends BaseActivity {
         provinceAdapter.setOnItemChildClickListener((baseQuickAdapter, view, i) -> {
             if (positionProvinceNow == i) return;
             //点击新的省份，直接清空上一个选择的省份
-            setCitySelectState(positionProvinceNow);
+            setCitySelectState(0);
 
             setCityData(i);
             cityAdapter.setNewData(dataCity);

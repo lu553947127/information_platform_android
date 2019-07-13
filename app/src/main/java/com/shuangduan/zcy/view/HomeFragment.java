@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ClassifyAdapter;
 import com.shuangduan.zcy.adapter.IncomeStatementAdapter;
@@ -21,12 +23,15 @@ import com.shuangduan.zcy.utils.BarUtils;
 import com.shuangduan.zcy.utils.image.GlideImageLoader;
 import com.shuangduan.zcy.view.projectinfo.ProjectInfoActivity;
 import com.shuangduan.zcy.view.recruit.RecruitActivity;
+import com.shuangduan.zcy.weight.MarqueeView;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 import butterknife.BindView;
 
@@ -40,7 +45,7 @@ import butterknife.BindView;
  * @chang time
  * @class describe
  */
-public class HomeFragment extends BaseFragment {
+public class HomeFragment extends BaseFragment implements Observer {
 
     @BindView(R.id.fake_status_bar)
     View fakeStatusBar;
@@ -58,6 +63,10 @@ public class HomeFragment extends BaseFragment {
     RecyclerView rvIncomeStatement;
     @BindView(R.id.banner)
     Banner banner;
+    @BindView(R.id.marquee)
+    MarqueeView marqueeView;
+
+    Integer[] icons = {};
 
     public static HomeFragment newInstance() {
 
@@ -120,6 +129,16 @@ public class HomeFragment extends BaseFragment {
         rvIncomeStatement.setAdapter(new IncomeStatementAdapter(R.layout.item_income_statement, list2));
 
         initBanner();
+
+        List<String> marquee = new ArrayList<>();
+        marquee.add("让我们荡起双桨");
+        marquee.add("让小船推开波浪");
+        marquee.add("从前有座山，山上有座庙，庙里有个老和尚讲故事，讲的是什么？‘山下的女人是老虎，见到要躲开’");
+        marquee.add("花儿为什么这样红");
+        marquee.add("我等的花都谢了");
+        marquee.add("老铁666");
+        marqueeView.getLocationObservable().addObserver(this);
+        marqueeView.setContent(marquee);
     }
 
     @Override
@@ -165,4 +184,18 @@ public class HomeFragment extends BaseFragment {
         banner.start();
     }
 
+    @Override
+    public void update(Observable o, Object arg) {
+        LogUtils.i("接受到消息",arg);
+        if (arg instanceof Integer){
+            switch ((int)arg){
+                case 0:
+                    LogUtils.i("文字进来了");
+                    break;
+                case 1:
+                    LogUtils.i("文字又走了");
+                    break;
+            }
+        }
+    }
 }
