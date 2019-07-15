@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ripple xmlns:android="http://schemas.android.com/apk/res/android" android:color="@color/colorDivider">
+<ripple xmlns:android="http://schemas.android.com/apk/res/android" android:color="@color/colorRipple">
     <!--给item设置系统maskId，限制水波纹不越界，-->
     <item>
         <!--如果需要改变使用水波纹控件的圆角，需要用到shape-->

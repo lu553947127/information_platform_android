@@ -25,7 +25,6 @@ public class MainActivity extends BaseActivity {
 
     private String[] tags = {
             "home",
-            "release",
             "people",
             "mine"
     };
@@ -43,12 +42,10 @@ public class MainActivity extends BaseActivity {
     public void onAttachFragment(@NonNull Fragment fragment) {
         if (fragments[0] == null && fragment instanceof HomeFragment)
             fragments[0] = fragment;
-        if (fragments[1] == null && fragment instanceof ReleaseFragment)
+        if (fragments[1] == null && fragment instanceof PeopleFragment)
             fragments[1] = fragment;
-        if (fragments[2] == null && fragment instanceof PeopleFragment)
+        if (fragments[2] == null && fragment instanceof MineFragment)
             fragments[2] = fragment;
-        if (fragments[3] == null && fragment instanceof MineFragment)
-            fragments[3] = fragment;
     }
 
     @Override
@@ -62,13 +59,10 @@ public class MainActivity extends BaseActivity {
             fragments[0] = HomeFragment.newInstance();
         }
         if (fragments[1] == null) {
-            fragments[1] = ReleaseFragment.newInstance();
+            fragments[1] = PeopleFragment.newInstance();
         }
         if (fragments[2] == null) {
-            fragments[2] = PeopleFragment.newInstance();
-        }
-        if (fragments[3] == null) {
-            fragments[3] = MineFragment.newInstance();
+            fragments[2] = MineFragment.newInstance();
         }
 
         //初始化选中首页
@@ -83,14 +77,11 @@ public class MainActivity extends BaseActivity {
                 case R.id.rb_home:
                     currentChecked = 0;
                     break;
-                case R.id.rb_release:
+                case R.id.rb_people:
                     currentChecked = 1;
                     break;
-                case R.id.rb_people:
-                    currentChecked = 2;
-                    break;
                 case R.id.rb_mine:
-                    currentChecked = 3;
+                    currentChecked = 2;
                     break;
             }
             //选中项不变不做处理

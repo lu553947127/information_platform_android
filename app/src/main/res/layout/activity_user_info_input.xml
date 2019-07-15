@@ -124,6 +124,7 @@
             </FrameLayout>
 
             <FrameLayout
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@color/colorFFF"
@@ -161,6 +162,7 @@
             </FrameLayout>
 
             <FrameLayout
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@color/colorFFF"

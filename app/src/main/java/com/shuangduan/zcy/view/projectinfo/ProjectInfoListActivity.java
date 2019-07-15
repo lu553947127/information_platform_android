@@ -11,9 +11,11 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.LogUtils;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -27,8 +29,6 @@ import com.shuangduan.zcy.model.bean.ProvinceBean;
 import com.shuangduan.zcy.utils.AlphaUtils;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 import com.shuangduan.zcy.weight.datepicker.CustomDatePicker;
-import com.shuangduan.zcy.weight.selectorview.BaseSelectorAdapter;
-import com.shuangduan.zcy.weight.selectorview.BaseSelectorBean;
 import com.shuangduan.zcy.weight.selectorview.SelectorChildView;
 import com.shuangduan.zcy.weight.selectorview.SelectorParentView;
 
@@ -107,10 +107,15 @@ public class ProjectInfoListActivity extends BaseActivity {
         rv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
         ProjectInfoAdapter projectInfoAdapter = new ProjectInfoAdapter(R.layout.item_project_info, list);
         rv.setAdapter(projectInfoAdapter);
+        projectInfoAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                ActivityUtils.startActivity(ProjectDetailActivity.class);
+            }
+        });
 
         refresh.setEnableLoadMore(false);
         refresh.setEnableRefresh(false);
-        AlphaUtils.getAlpha();
     }
 
     @OnClick({R.id.iv_bar_back, R.id.iv_bar_right, R.id.ll_area, R.id.ll_stage, R.id.ll_type, R.id.ll_time, R.id.ll_subscribe, R.id.over})

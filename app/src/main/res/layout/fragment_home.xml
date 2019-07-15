@@ -21,25 +21,31 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/tv_subscription_msg"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+            <ImageView
+                android:id="@+id/iv_subscription_msg"
+                android:layout_width="36dp"
+                android:layout_height="25dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
                 android:background="@drawable/selector_toolbar"
-                android:gravity="center_vertical"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:textColor="@color/colorFFF"
-                android:textSize="13sp"/>
+                android:scaleType="centerInside"
+                android:src="@drawable/icon_cloud"/>
 
             <TextView
                 android:id="@+id/tv_bar_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="250dp"
+                android:layout_height="30dp"
                 android:layout_centerInParent="true"
+                android:gravity="center_vertical"
+                android:background="@drawable/shape_search"
+                android:drawableLeft="@drawable/icon_search"
+                android:drawablePadding="6dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 android:singleLine="true"
-                android:textColor="@color/colorFFF"
-                android:textSize="18sp"/>
+                android:textColorHint="@color/colorFFF"
+                android:textSize="12sp"
+                android:hint="@string/hint_keyword"/>
 
             <ImageView
                 android:id="@+id/iv_search"
@@ -51,7 +57,7 @@
                 android:scaleType="centerInside"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
-                android:src="@drawable/icon_pwd"/>
+                android:src="@drawable/icon_record"/>
 
         </RelativeLayout>
 
@@ -72,14 +78,60 @@
                 android:layout_width="match_parent"
                 android:layout_height="160dp" />
 
-            <com.shuangduan.zcy.weight.MarqueeView
-                android:id="@+id/marquee"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp" />
+                android:layout_height="34dp"
+                android:orientation="horizontal"
+                android:background="@color/colorFFF">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="13dp"
+                    android:src="@drawable/icon_horn"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="6dp"
+                    android:textColor="@color/colorTv"
+                    android:textSize="12sp"
+                    android:text="@string/subscribe_push"/>
+
+                <com.shuangduan.zcy.weight.MarqueeListView
+                    android:id="@+id/marquee"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="6dp"
+                    app:marqueeview_text_color="@color/color_666666"/>
+
+                <TextView
+                    android:id="@+id/tv_subscribe_state"
+                    android:layout_width="56dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:paddingLeft="6dp"
+                    android:textColor="@color/color_666666"
+                    android:textSize="12sp"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@drawable/divider_15"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/colorFFF"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="3dp"
+                android:paddingRight="3dp"
                 android:id="@+id/rv_classify">
 
             </androidx.recyclerview.widget.RecyclerView>
@@ -88,15 +140,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:gravity="center_vertical"
+                android:drawableLeft="@drawable/shape_home_mark"
+                android:drawablePadding="7dp"
                 android:paddingLeft="16dp"
                 android:textColor="@color/colorTv"
-                android:textSize="14sp"
+                android:textSize="15sp"
                 android:text="收益说明"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_income_statement"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="@color/colorFFF">
 
             </androidx.recyclerview.widget.RecyclerView>
 

@@ -6,7 +6,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,10 +18,13 @@ import com.shuangduan.zcy.adapter.ClassifyAdapter;
 import com.shuangduan.zcy.adapter.IncomeStatementAdapter;
 import com.shuangduan.zcy.base.BaseFragment;
 import com.shuangduan.zcy.model.bean.ClassifyBean;
+import com.shuangduan.zcy.utils.AlphaUtils;
 import com.shuangduan.zcy.utils.BarUtils;
 import com.shuangduan.zcy.utils.image.GlideImageLoader;
 import com.shuangduan.zcy.view.projectinfo.ProjectInfoActivity;
 import com.shuangduan.zcy.view.recruit.RecruitActivity;
+import com.shuangduan.zcy.weight.DividerItemDecoration;
+import com.shuangduan.zcy.weight.MarqueeListView;
 import com.shuangduan.zcy.weight.MarqueeView;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -45,12 +47,10 @@ import butterknife.BindView;
  * @chang time
  * @class describe
  */
-public class HomeFragment extends BaseFragment implements Observer {
+public class HomeFragment extends BaseFragment {
 
     @BindView(R.id.fake_status_bar)
     View fakeStatusBar;
-    @BindView(R.id.tv_subscription_msg)
-    TextView tvSubscriptionMsg;
     @BindView(R.id.tv_bar_title)
     TextView tvBarTitle;
     @BindView(R.id.iv_search)
@@ -64,9 +64,9 @@ public class HomeFragment extends BaseFragment implements Observer {
     @BindView(R.id.banner)
     Banner banner;
     @BindView(R.id.marquee)
-    MarqueeView marqueeView;
-
-    Integer[] icons = {};
+    MarqueeListView marqueeView;
+    @BindView(R.id.tv_subscribe_state)
+    TextView tvSubscribeState;
 
     public static HomeFragment newInstance() {
 
@@ -86,14 +86,8 @@ public class HomeFragment extends BaseFragment implements Observer {
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.setStatusBarColorRes(fakeStatusBar, getResources().getColor(R.color.colorPrimary));
         tvBarTitle.setText(getString(R.string.home));
-        tvSubscriptionMsg.setText(getString(R.string.subscribe_message));
 
-        List<ClassifyBean> list = new ArrayList<>();
-        String[] classifys = getResources().getStringArray(R.array.classify);
-        for (int i = 0; i < classifys.length; i++) {
-            String classify = classifys[i];
-            list.add(new ClassifyBean(R.drawable.default_head, classify, i+1));
-        }
+        List<ClassifyBean> list = getClassify();
         rvClassify.setLayoutManager(new GridLayoutManager(mContext, 4));
         ClassifyAdapter classifyAdapter = new ClassifyAdapter(list);
         rvClassify.setAdapter(classifyAdapter);
@@ -125,7 +119,7 @@ public class HomeFragment extends BaseFragment implements Observer {
             list2.add("各种各样的收益说明");
         }
         rvIncomeStatement.setLayoutManager(new LinearLayoutManager(mContext));
-        rvIncomeStatement.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
+        rvIncomeStatement.addItemDecoration(new com.shuangduan.zcy.weight.DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
         rvIncomeStatement.setAdapter(new IncomeStatementAdapter(R.layout.item_income_statement, list2));
 
         initBanner();
@@ -133,11 +127,23 @@ public class HomeFragment extends BaseFragment implements Observer {
         List<String> marquee = new ArrayList<>();
         marquee.add("让我们荡起双桨");
         marquee.add("让小船推开波浪");
-        marquee.add("从前有座山，山上有座庙，庙里有个老和尚讲故事，讲的是什么？‘山下的女人是老虎，见到要躲开’");
+        marquee.add("从前有座山，山上有座庙，庙里有个老和尚讲故事，讲的是什么？");
         marquee.add("花儿为什么这样红");
         marquee.add("我等的花都谢了");
         marquee.add("老铁666");
-        marqueeView.getLocationObservable().addObserver(this);
+
+        //添加走马灯变化监听
+        marqueeView.setLocationListener(new MarqueeListView.LocationListener() {
+            @Override
+            public void start(int position) {
+                tvSubscribeState.setText(position%2 == 0?"已认购":"未认购");
+            }
+
+            @Override
+            public void end() {
+
+            }
+        });
         marqueeView.setContent(marquee);
     }
 
@@ -156,6 +162,20 @@ public class HomeFragment extends BaseFragment implements Observer {
     public void onStop() {
         super.onStop();
         banner.stopAutoPlay();
+    }
+
+    private List<ClassifyBean> getClassify(){
+        List<ClassifyBean> list = new ArrayList<>();
+        String[] classifys = getResources().getStringArray(R.array.classify);
+        list.add(new ClassifyBean(R.drawable.classify_xxgc, classifys[0], 1));
+        list.add(new ClassifyBean(R.drawable.classify_zcxx, classifys[1], 2));
+        list.add(new ClassifyBean(R.drawable.classify_jjwz, classifys[2], 3));
+        list.add(new ClassifyBean(R.drawable.classify_pqzx, classifys[3], 4));
+        list.add(new ClassifyBean(R.drawable.classify_gys, classifys[4], 5));
+        list.add(new ClassifyBean(R.drawable.classify_wdsy, classifys[5], 6));
+        list.add(new ClassifyBean(R.drawable.classify_fbxx, classifys[6], 7));
+        list.add(new ClassifyBean(R.drawable.classify_jjtt, classifys[7], 8));
+        return list;
     }
 
     private void initBanner(){
@@ -184,18 +204,4 @@ public class HomeFragment extends BaseFragment implements Observer {
         banner.start();
     }
 
-    @Override
-    public void update(Observable o, Object arg) {
-        LogUtils.i("接受到消息",arg);
-        if (arg instanceof Integer){
-            switch ((int)arg){
-                case 0:
-                    LogUtils.i("文字进来了");
-                    break;
-                case 1:
-                    LogUtils.i("文字又走了");
-                    break;
-            }
-        }
-    }
 }

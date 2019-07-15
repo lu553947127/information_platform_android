@@ -9,6 +9,7 @@ import android.view.animation.LinearInterpolator;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 
@@ -29,6 +30,7 @@ import com.blankj.utilcode.util.LogUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.pop.CommonPopupWindow;
+import com.shuangduan.zcy.view.SearchActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +53,10 @@ public class ProjectInfoActivity extends BaseActivity {
     AppCompatTextView tvBarTitle;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.iv_bar_right)
+    AppCompatImageView ivBarRight;
+    @BindView(R.id.tv_bar_right)
+    AppCompatTextView tvBarRight;
 
     MapView mMapView = null;
     AMap aMap = null;
@@ -67,6 +73,8 @@ public class ProjectInfoActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getResources().getStringArray(R.array.classify)[0]);
+        ivBarRight.setImageResource(R.drawable.icon_search);
+        tvBarRight.setVisibility(View.GONE);
 
         mMapView = findViewById(R.id.map);
         mMapView.onCreate(savedInstanceState);// 此方法必须重写
@@ -89,7 +97,7 @@ public class ProjectInfoActivity extends BaseActivity {
         if (aMap == null) {
             aMap = mMapView.getMap();
             setUpMap();
-            new Thread(){
+            new Thread() {
                 @Override
                 public void run() {
                     try {
@@ -124,7 +132,7 @@ public class ProjectInfoActivity extends BaseActivity {
     /**
      * 设置自定义定位蓝点
      */
-    private void setupLocationStyle(){
+    private void setupLocationStyle() {
         // 自定义系统定位蓝点
         MyLocationStyle myLocationStyle = new MyLocationStyle();
         // 自定义定位蓝点图标
@@ -144,14 +152,14 @@ public class ProjectInfoActivity extends BaseActivity {
         setMarker();
     }
 
-    private void setMarker(){
+    private void setMarker() {
         //marker集合
         ArrayList<MarkerOptions> markers = new ArrayList<>();
         for (int i = 0; i < throughPointList.size(); i++) {
             MarkerOptions markerOptions = new MarkerOptions()
                     .position(new LatLng(throughPointList.get(i).getLatitude(), throughPointList.get(i).getLongitude()))
                     .visible(true)
-                    .title("济南莱芜" + i+1 + "期")
+                    .title("济南莱芜" + i + 1 + "期")
                     .infoWindowEnable(false)
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_marker));
             markers.add(markerOptions);
@@ -163,16 +171,16 @@ public class ProjectInfoActivity extends BaseActivity {
             //点击的marker是定位的小蓝点，不走动画和弹窗
             if ("Marker1".equals(marker.getId())) return true;
             //上一个标记marker
-            if (targetMarker != null){
-                setMarkerAnim(targetMarker, 1.5f,1,1.5f,1);
+            if (targetMarker != null) {
+                setMarkerAnim(targetMarker, 1.5f, 1, 1.5f, 1);
             }
-            setMarkerAnim(marker, 1,1.5f,1,1.5f);
+            setMarkerAnim(marker, 1, 1.5f, 1, 1.5f);
             showPopWindow(marker.getTitle());
             return true;
         });
     }
 
-    private void setMarkerAnim(Marker marker, float v, float v1, float v2, float v3){
+    private void setMarkerAnim(Marker marker, float v, float v1, float v2, float v3) {
         Animation animation = new ScaleAnimation(v, v1, v2, v3);
         long duration = 300L;
         animation.setDuration(duration);
@@ -190,8 +198,9 @@ public class ProjectInfoActivity extends BaseActivity {
     TextView tvType;
     TextView tvReaders;
     TextView tvTime;
-    private void showPopWindow(String title){
-        if (popupWindow == null){
+
+    private void showPopWindow(String title) {
+        if (popupWindow == null) {
             popupWindow = new CommonPopupWindow.Builder(this)
                     .setView(R.layout.dialog_project_info)
                     .setOutsideTouchable(false)
@@ -216,15 +225,15 @@ public class ProjectInfoActivity extends BaseActivity {
         tvReaders.setText(String.format(getString(R.string.format_num_of_readers), 12));
         tvTime.setText(String.format(getString(R.string.format_update_time), "2018-6-9 15:55"));
 
-        if (!popupWindow.isShowing()){
+        if (!popupWindow.isShowing()) {
             popupWindow.showAtLocation(findViewById(android.R.id.content), Gravity.BOTTOM, 0, ConvertUtils.dp2px(45));
         }
     }
 
     @Override
     protected void onDestroy() {
-        if (popupWindow != null){
-            if (popupWindow.isShowing()){
+        if (popupWindow != null) {
+            if (popupWindow.isShowing()) {
                 popupWindow.dismiss();
             }
             popupWindow = null;
@@ -260,11 +269,14 @@ public class ProjectInfoActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.iv_bar_back, R.id.fl_list})
-    void onClick(View view){
-        switch (view.getId()){
+    @OnClick({R.id.iv_bar_back, R.id.iv_bar_right, R.id.fl_list})
+    void onClick(View view) {
+        switch (view.getId()) {
             case R.id.iv_bar_back:
                 finish();
+                break;
+            case R.id.iv_bar_right:
+                ActivityUtils.startActivity(SearchActivity.class);
                 break;
             case R.id.fl_list:
                 ActivityUtils.startActivity(ProjectInfoListActivity.class);

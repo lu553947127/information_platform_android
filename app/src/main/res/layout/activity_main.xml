@@ -37,12 +37,6 @@
             android:text="@string/home"/>
 
         <androidx.appcompat.widget.AppCompatRadioButton
-            android:id="@+id/rb_release"
-            style="@style/MainRb"
-            android:drawableTop="@drawable/selector_release"
-            android:text="@string/release"/>
-
-        <androidx.appcompat.widget.AppCompatRadioButton
             android:id="@+id/rb_people"
             style="@style/MainRb"
             android:drawableTop="@drawable/selector_people"

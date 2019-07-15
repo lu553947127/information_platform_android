@@ -5,17 +5,22 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.graphics.Rect;
+import android.os.Build;
 import android.text.TextPaint;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 
 import androidx.appcompat.widget.TintTypedArray;
 
+import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ScreenUtils;
+import com.blankj.utilcode.util.Utils;
 import com.shuangduan.zcy.R;
 
 import java.util.List;
@@ -78,6 +83,8 @@ public class MarqueeView extends View implements Runnable {
 
     public MarqueeView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        textDistance1 = ConvertUtils.px2dp(getScreenWidth());
+        LogUtils.i(getScreenWidth(), textDistance1);
         initAttrs(attrs);
         initPaint();
         initClick();
@@ -194,6 +201,7 @@ public class MarqueeView extends View implements Runnable {
                 break;
         }
 
+        LogUtils.i(xLocation);
         //文字显露
         if (xLocation == ScreenUtils.getScreenWidth()){
             LogUtils.i("发出显露消息");
@@ -451,6 +459,24 @@ public class MarqueeView extends View implements Runnable {
 
     public void appendContent(String appendContent) {
         //有兴趣的朋友可以自己完善，在现有的基础之上，静默追加新的 公告
+    }
+
+    /**
+     * Return the width of screen, in pixel.
+     *
+     * @return the width of screen, in pixel
+     */
+    private int getScreenWidth() {
+        WindowManager wm = (WindowManager) Utils.getApp().getSystemService(Context.WINDOW_SERVICE);
+        Point point = new Point();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            //noinspection ConstantConditions
+            wm.getDefaultDisplay().getRealSize(point);
+        } else {
+            //noinspection ConstantConditions
+            wm.getDefaultDisplay().getSize(point);
+        }
+        return point.x;
     }
 
     private LocationObservable locationObservable;

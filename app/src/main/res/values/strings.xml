@@ -115,6 +115,15 @@
     <string name="time">时间</string>
     <string name="unsubscribe">未认购</string>
     <string name="subscribe">已认购</string>
+    <string name="subscribe_push">认购推送</string>
+    <string name="error_correction">纠错</string>
+    <string name="contact">联系人</string>
+    <string name="read_contact">查看联系人</string>
+    <string name="detail">详情：</string>
+    <string name="material">用材：</string>
+    <string name="search_hot">热门搜索</string>
+    <string name="search_history">搜索历史</string>
+    <string name="search">搜索</string>
 
     <string name="format_version_name">当前版本号：v%1$s</string>
     <string name="format_get_verification_code_again">重新获取 (%1$ds)</string>
@@ -129,6 +138,16 @@
     <string name="format_read_num">%1$s 浏览</string>
     <string name="format_update_time">更新时间：%1$s</string>
     <string name="format_release_time">发布时间：%1$s</string>
+    <string name="format_unit">单位：%1$s</string>
+    <string name="format_principal">负责人：%1$s</string>
+    <string name="format_phone">手机号：%1$s</string>
+    <string name="format_address">地址：%1$s</string>
+    <string name="format_update">更新：%1$s</string>
+    <string name="format_stage">阶段：%1$s</string>
+    <string name="format_type">类别：%1$s</string>
+    <string name="format_cycle">周期：%1$s</string>
+    <string name="format_acreage">面积：%1$s</string>
+    <string name="format_price">估价：%1$s</string>
 
     <string name="please_select_time">请选择时间</string>
     <string name="year">年</string>
@@ -150,6 +169,13 @@
 
     <string-array name="recruit_detail">
         <item>招标简介</item>
+    </string-array>
+
+    <string-array name="project_detail">
+        <item>概况</item>
+        <item>轨迹</item>
+        <item>已查看</item>
+        <item>消费列表</item>
     </string-array>
 
 </resources>
