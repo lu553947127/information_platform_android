@@ -48,7 +48,7 @@ public class UpdateEmailActivity extends BaseActivity {
     }
 
     @Override
-    protected void initDataAndEvent() {
+    protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.update_email));
     }

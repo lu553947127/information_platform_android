@@ -69,7 +69,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     @Override
-    protected void initDataAndEvent() {
+    protected void initDataAndEvent(Bundle savedInstanceState) {
         AndroidBug5497Workaround.assistActivity(findViewById(android.R.id.content));
 
         loginVm = ViewModelProviders.of(this).get(LoginVm.class);

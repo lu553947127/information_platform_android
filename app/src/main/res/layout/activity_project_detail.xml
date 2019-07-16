@@ -17,6 +17,7 @@
             android:layout_height="wrap_content"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             android:background="@color/colorFFF"
+            app:elevation="0dp"
             android:id="@+id/appbar">
 
             <com.amap.api.maps.MapView
@@ -59,6 +60,7 @@
                 android:id="@+id/tab_layout"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
+                app:elevation="0dp"
                 app:tabMode="scrollable"
                 app:tabPaddingTop="12dp"
                 app:tabRippleColor="@color/colorFFF"
@@ -89,6 +91,7 @@
         android:background="@color/colorDivider"/>
 
     <LinearLayout
+        android:id="@+id/ll_operate"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:orientation="horizontal"
@@ -172,6 +175,32 @@
                 android:textColor="@color/color_666666"
                 android:textSize="13sp"
                 android:text="@string/unsubscribe"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/fl_release"
+            android:visibility="gone"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:background="@drawable/selector_bg_custom"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/icon_footprint"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/color_666666"
+                android:textSize="13sp"
+                android:text="@string/release_footprint"/>
 
         </LinearLayout>
 

@@ -51,7 +51,7 @@ public class RecruitActivity extends BaseActivity {
     }
 
     @Override
-    protected void initDataAndEvent() {
+    protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getResources().getStringArray(R.array.classify)[1]);
 

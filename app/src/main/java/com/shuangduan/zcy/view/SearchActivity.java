@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.WorkerThread;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
@@ -52,15 +53,25 @@ public class SearchActivity extends BaseActivity {
     }
 
     @Override
-    protected void initDataAndEvent() {
+    protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.search));
 
-        for (int i = 0; i < 4; i++) {
-            TextView itemHot = (TextView) LayoutInflater.from(this).inflate(R.layout.item_fl_search, flHot, false);
-            itemHot.setText("热热热");
-            flHot.addView(itemHot);
-        }
+        TextView itemHot = (TextView) LayoutInflater.from(this).inflate(R.layout.item_fl_search, flHot, false);
+        itemHot.setText("热热热");
+        flHot.addView(itemHot);
+        TextView itemHot1 = (TextView) LayoutInflater.from(this).inflate(R.layout.item_fl_search, flHot, false);
+        itemHot1.setText("热热热热热热热热热");
+        flHot.addView(itemHot1);
+        TextView itemHot2 = (TextView) LayoutInflater.from(this).inflate(R.layout.item_fl_search, flHot, false);
+        itemHot2.setText("热热热热热热");
+        flHot.addView(itemHot2);
+        TextView itemHot3 = (TextView) LayoutInflater.from(this).inflate(R.layout.item_fl_search, flHot, false);
+        itemHot3.setText("热热热热热热热热热热热热热热热");
+        flHot.addView(itemHot3);
+        TextView itemHot4 = (TextView) LayoutInflater.from(this).inflate(R.layout.item_fl_search, flHot, false);
+        itemHot4.setText("热热热热热热热热热");
+        flHot.addView(itemHot4);
     }
 
     @OnClick(R.id.iv_bar_back)

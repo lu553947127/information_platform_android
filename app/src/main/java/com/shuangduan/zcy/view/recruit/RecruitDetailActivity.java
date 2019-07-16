@@ -1,5 +1,6 @@
 package com.shuangduan.zcy.view.recruit;
 
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -57,7 +58,7 @@ public class RecruitDetailActivity extends BaseActivity {
     }
 
     @Override
-    protected void initDataAndEvent() {
+    protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.message_detail));
 

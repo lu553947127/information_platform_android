@@ -9,6 +9,25 @@
         android:layout_height="match_parent"
         android:orientation="vertical" >
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorFFF">
+
+            <TextView
+                android:id="@+id/tv_read_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="10dp"
+                android:textColor="@color/colorPrimary"
+                android:textSize="12sp"
+                android:text="@string/read_detail"/>
+
+        </FrameLayout>
+
         <TextView
             android:id="@+id/tv_update_time"
             android:layout_width="match_parent"
@@ -16,7 +35,7 @@
             android:background="@color/colorFFF"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
-            android:paddingTop="15dp"
+            android:paddingTop="20dp"
             android:textColor="@color/color_646464"
             android:textSize="13sp"/>
 
@@ -134,9 +153,10 @@
             android:layout_width="match_parent"
             android:layout_height="10dp" />
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:background="@color/colorFFF"
             android:paddingTop="20dp"
             android:paddingLeft="15dp"
@@ -149,72 +169,20 @@
                 android:textSize="14sp"
                 android:text="@string/contact"/>
 
-            <TextView
-                android:id="@+id/tv_read_contact"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:textColor="@color/colorPrimary"
-                android:textSize="14sp"
-                android:text="@string/read_contact"/>
-
             <View
                 android:layout_width="38dp"
                 android:layout_height="3dp"
-                android:layout_below="@+id/tv_read_contact"
                 android:layout_marginTop="2dp"
                 android:background="@color/colorPrimary"/>
 
-        </RelativeLayout>
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/tv_unit"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_contact"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorFFF"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:paddingTop="10dp"
-            android:textColor="@color/color_646464"
-            android:textSize="13sp"/>
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/tv_principal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorFFF"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:paddingTop="10dp"
-            android:textColor="@color/color_646464"
-            android:textSize="13sp"/>
-
-        <TextView
-            android:id="@+id/tv_phone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorFFF"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:paddingTop="10dp"
-            android:textColor="@color/color_646464"
-            android:textSize="13sp"/>
-
-        <TextView
-            android:id="@+id/tv_address"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorFFF"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:paddingTop="10dp"
-            android:textColor="@color/color_646464"
-            android:textSize="13sp"/>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:background="@color/colorFFF"/>
+        </androidx.recyclerview.widget.RecyclerView>
 
     </LinearLayout>
 

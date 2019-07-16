@@ -1,5 +1,6 @@
 package com.shuangduan.zcy.view;
 
+import android.os.Bundle;
 import android.os.Handler;
 import android.view.KeyEvent;
 import android.widget.RadioGroup;
@@ -54,7 +55,7 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-    protected void initDataAndEvent() {
+    protected void initDataAndEvent(Bundle savedInstanceState) {
         if (fragments[0] == null) {
             fragments[0] = HomeFragment.newInstance();
         }

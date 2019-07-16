@@ -47,7 +47,7 @@ public class CompanySearchActivity extends BaseActivity {
     }
 
     @Override
-    protected void initDataAndEvent() {
+    protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         type = getIntent().getStringExtra(CustomConfig.SEARCH_TYPE);
         switch (type) {

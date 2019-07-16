@@ -1,5 +1,6 @@
 package com.shuangduan.zcy.view.mine;
 
+import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.widget.AppCompatEditText;
@@ -51,7 +52,7 @@ public class UpdatePwdActivity extends BaseActivity {
     }
 
     @Override
-    protected void initDataAndEvent() {
+    protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.update_pwd));
 

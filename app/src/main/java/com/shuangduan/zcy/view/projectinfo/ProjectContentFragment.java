@@ -11,11 +11,22 @@ import android.text.style.ClickableSpan;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SpanUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
+import com.shuangduan.zcy.adapter.ContactAdapter;
 import com.shuangduan.zcy.base.BaseFragment;
+import com.shuangduan.zcy.dialog.BaseDialog;
+import com.shuangduan.zcy.dialog.CustomDialog;
+import com.shuangduan.zcy.model.bean.ProjectContentBean;
+import com.shuangduan.zcy.weight.DividerItemDecoration;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -32,14 +43,6 @@ import butterknife.OnClick;
  */
 public class ProjectContentFragment extends BaseFragment {
 
-    @BindView(R.id.tv_unit)
-    TextView tvUnit;
-    @BindView(R.id.tv_principal)
-    TextView tvPrincipal;
-    @BindView(R.id.tv_phone)
-    TextView tvPhone;
-    @BindView(R.id.tv_address)
-    TextView tvAddress;
     @BindView(R.id.tv_update_time)
     TextView tvUpdateTime;
     @BindView(R.id.tv_stage)
@@ -56,8 +59,8 @@ public class ProjectContentFragment extends BaseFragment {
     TextView tvDetail;
     @BindView(R.id.tv_material)
     TextView tvMaterial;
-    @BindView(R.id.tv_read_contact)
-    TextView tvReadContact;
+    @BindView(R.id.rv_contact)
+    RecyclerView rvContact;
 
     public static ProjectContentFragment newInstance() {
 
@@ -83,38 +86,17 @@ public class ProjectContentFragment extends BaseFragment {
         tvAcreage.setText(String.format(getString(R.string.format_acreage), "11230㎡"));
         tvPrice.setText(String.format(getString(R.string.format_price), "3.8亿"));
 
-        SpanUtils.with(tvDetail)
-                .append("项目为政府规划用地，占地11230㎡，项目为政府规划用地，占地...")
-                .append("查看详情").setForegroundColor(getResources().getColor(R.color.colorPrimary))
-                .setClickSpan(new ClickableSpan() {
-                    @Override
-                    public void onClick(View widget) {
-                        ToastUtils.showShort("详情");
-                    }
+        tvDetail.setText("项目为政府规划用地，占地11230㎡，项目为政府规划用地，占地...");
+        tvMaterial.setText("门窗玻璃、外墙装饰、防水防腐、油...");
 
-                    @Override
-                    public void updateDrawState(TextPaint ds) {
-                        //重写此方法屏蔽点击自带的样式，setForegroundColor才能生效
-                    }
-                }).create();
-        SpanUtils.with(tvMaterial)
-                .append("门窗玻璃、外墙装饰、防水防腐、油...")
-                .append("查看详情").setForegroundColor(getResources().getColor(R.color.colorPrimary))
-                .setClickSpan(new ClickableSpan() {
-                    @Override
-                    public void onClick(View widget) {
-                        ToastUtils.showShort("详情");
-                    }
-
-                    @Override
-                    public void updateDrawState(TextPaint ds) {
-                        //重写此方法屏蔽点击自带的样式，setForegroundColor才能生效
-                    }
-                }).create();
-        tvUnit.setText(String.format(getString(R.string.format_unit), "滨州市*****单位"));
-        tvPrincipal.setText(String.format(getString(R.string.format_principal), "王女士"));
-        tvPhone.setText(String.format(getString(R.string.format_phone), "151****1232 "));
-        tvAddress.setText(String.format(getString(R.string.format_address), "山东省济南市莱芜区"));
+        List<ProjectContentBean> list = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            list.add(new ProjectContentBean());
+        }
+        rvContact.setLayoutManager(new LinearLayoutManager(mContext));
+        rvContact.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
+        ContactAdapter contactAdapter = new ContactAdapter(R.layout.item_contact, list);
+        rvContact.setAdapter(contactAdapter);
     }
 
     @Override
@@ -122,10 +104,24 @@ public class ProjectContentFragment extends BaseFragment {
 
     }
 
-    @OnClick({R.id.tv_read_contact})
+    @OnClick({R.id.tv_read_detail})
     void onClick(View view) {
         switch (view.getId()) {
-            case R.id.tv_read_contact:
+            case R.id.tv_read_detail:
+                new CustomDialog(mActivity)
+                        .setTip("查看此消息请支付1亿元")
+                        .setCallBack(new BaseDialog.CallBack() {
+                            @Override
+                            public void cancel() {
+
+                            }
+
+                            @Override
+                            public void ok(String s) {
+
+                            }
+                        })
+                        .showDialog();
                 break;
         }
     }

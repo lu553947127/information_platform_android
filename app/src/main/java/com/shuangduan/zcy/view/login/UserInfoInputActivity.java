@@ -1,5 +1,6 @@
 package com.shuangduan.zcy.view.login;
 
+import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.widget.AppCompatEditText;
@@ -59,7 +60,7 @@ public class UserInfoInputActivity extends BaseActivity {
     }
 
     @Override
-    protected void initDataAndEvent() {
+    protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.base_info));
         tvBarRight.setText(getString(R.string.save));

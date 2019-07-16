@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    
+    <include layout="@layout/toolbar"/>
+    
+    <TextView
+        android:id="@+id/tv_price"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:gravity="center"
+        android:padding="15dp"
+        android:textColor="@color/colorTv"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="14dp"
+        android:textColor="@color/color_666666"
+        android:textSize="13sp"
+        android:text="@string/select_pay"/>
+
+    <TextView
+        android:id="@+id/tv_ali"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:drawableLeft="@drawable/icon_ali"
+        android:drawablePadding="10dp"
+        android:drawableRight="@drawable/icon_next"
+        android:layout_marginRight="14dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginTop="15dp"
+        android:textColor="@color/color_666666"
+        android:textSize="14sp"
+        android:text="@string/ali_pay"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/divider_15"/>
+
+    <TextView
+        android:id="@+id/tv_wechat"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:drawableLeft="@drawable/icon_wechat"
+        android:drawablePadding="10dp"
+        android:drawableRight="@drawable/icon_next"
+        android:layout_marginRight="14dp"
+        android:layout_marginLeft="14dp"
+        android:textColor="@color/color_666666"
+        android:textSize="14sp"
+        android:text="@string/wechat_pay"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/divider_15"/>
+
+</LinearLayout>

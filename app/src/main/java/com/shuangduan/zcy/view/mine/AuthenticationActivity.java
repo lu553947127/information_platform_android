@@ -2,6 +2,7 @@ package com.shuangduan.zcy.view.mine;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,7 +20,7 @@ import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.PhotoDialog;
 import com.shuangduan.zcy.utils.matisse.Glide4Engine;
 import com.shuangduan.zcy.utils.matisse.MatisseCamera;
-import com.shuangduan.zcy.vm.PhotoVm;
+import com.shuangduan.zcy.vm.PermissionVm;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
@@ -58,7 +59,7 @@ public class AuthenticationActivity extends BaseActivity implements BaseDialog.P
     TextView tvIdCardNegative;
 
     private String type;
-    private PhotoVm photoVm;
+    private PermissionVm photoVm;
     private RxPermissions rxPermissions;
 
     @Override
@@ -67,7 +68,7 @@ public class AuthenticationActivity extends BaseActivity implements BaseDialog.P
     }
 
     @Override
-    protected void initDataAndEvent() {
+    protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarRight.setText(getString(R.string.save));
         type = getIntent().getStringExtra(CustomConfig.UPLOAD_TYPE);
@@ -89,12 +90,12 @@ public class AuthenticationActivity extends BaseActivity implements BaseDialog.P
         }
 
         rxPermissions = new RxPermissions(this);
-        photoVm = ViewModelProviders.of(this).get(PhotoVm.class);
-        photoVm.getPhotoLiveData().observe(this, integer -> {
-            if (integer == 1){
+        photoVm = ViewModelProviders.of(this).get(PermissionVm.class);
+        photoVm.getLiveData().observe(this, integer -> {
+            if (integer == PermissionVm.PERMISSION_CAMERA){
                 MatisseCamera.from(this)
-                        .forResult(PhotoVm.REQUEST_CODE_HEAD, "com.shuangduan.zcy.fileprovider");
-            }else if (integer == 2){
+                        .forResult(PermissionVm.REQUEST_CODE_HEAD, "com.shuangduan.zcy.fileprovider");
+            }else if (integer == PermissionVm.PERMISSION_STORAGE){
                 Matisse.from(this)
                         .choose(MimeType.ofImage())
                         .showSingleMediaType(true)
@@ -106,7 +107,7 @@ public class AuthenticationActivity extends BaseActivity implements BaseDialog.P
                         .captureStrategy(
                                 new CaptureStrategy(true, "com.shuangduan.zcy.fileprovider"))
                         .imageEngine(new Glide4Engine())
-                        .forResult(PhotoVm.REQUEST_CODE_CHOOSE_HEAD);
+                        .forResult(PermissionVm.REQUEST_CODE_CHOOSE_HEAD);
             }
         });
     }
@@ -141,12 +142,12 @@ public class AuthenticationActivity extends BaseActivity implements BaseDialog.P
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PhotoVm.REQUEST_CODE_CHOOSE_AUTHENTICATION && resultCode == RESULT_OK) {
+        if (requestCode == PermissionVm.REQUEST_CODE_CHOOSE_AUTHENTICATION && resultCode == RESULT_OK) {
             List<String> mSelected = Matisse.obtainPathResult(data);
 //            photoVm.upLoadImg(mSelected.get(0));
         }
 
-        if (requestCode == PhotoVm.REQUEST_CODE_AUTHENTICATION && resultCode == RESULT_OK) {
+        if (requestCode == PermissionVm.REQUEST_CODE_AUTHENTICATION && resultCode == RESULT_OK) {
 //            photoVm.upLoadImg(MatisseCamera.obtainPathResult());
             LogUtils.i(MatisseCamera.obtainPathResult(), MatisseCamera.obtainUriResult());
         }

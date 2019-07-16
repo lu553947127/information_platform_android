@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/colorFFF"
+    android:layout_height="66dp">
+
+    <com.shuangduan.zcy.weight.CircleImageView
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:layout_marginLeft="16dp"
+        android:layout_centerVertical="true"
+        android:id="@+id/iv_header"/>
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="72dp"
+        android:layout_marginTop="16dp"
+        android:textColor="@color/colorTv"
+        android:textSize="13sp"/>
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="72dp"
+        android:layout_marginTop="35dp"
+        android:textColor="@color/color_666666"
+        android:textSize="12sp"/>
+
+    <TextView
+        android:id="@+id/tv_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/tv_title"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dp"
+        android:textColor="@color/colorTv"
+        android:textSize="13sp"/>
+
+</RelativeLayout>

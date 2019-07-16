@@ -55,7 +55,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
             BarUtils.setStatusBarColor(this, ContextCompat.getColor(Utils.getApp(), android.R.color.transparent), false);
         }
 
-        initDataAndEvent();
+        initDataAndEvent(savedInstanceState);
     }
 
     @Override
@@ -109,7 +109,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
 
     protected abstract int initLayoutRes();
 
-    protected abstract void initDataAndEvent();
+    protected abstract void initDataAndEvent(Bundle savedInstanceState);
 
     private boolean isShouldHideInput(View v, MotionEvent event) {
         if (v != null && (v instanceof EditText)) { //如果点击的view是EditText

@@ -1,5 +1,6 @@
 package com.shuangduan.zcy.view.mine;
 
+import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
@@ -38,11 +39,11 @@ public class AboutOursActivity extends BaseActivity {
     }
 
     @Override
-    protected void initDataAndEvent() {
+    protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.about_ours));
 
-        tvAppVersion.setText(String.format(getString(R.string.format_version_name, VersionUtils.getVerName(this))));
+        tvAppVersion.setText(String.format(getString(R.string.format_version_name), VersionUtils.getVerName(this)));
     }
 
     @OnClick({R.id.iv_bar_back})

@@ -1,5 +1,6 @@
 package com.shuangduan.zcy.view.login;
 
+import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.widget.AppCompatEditText;
@@ -45,7 +46,7 @@ public class RegisterActivity extends BaseActivity {
     }
 
     @Override
-    protected void initDataAndEvent() {
+    protected void initDataAndEvent(Bundle savedInstanceState) {
         AndroidBug5497Workaround.assistActivity(findViewById(android.R.id.content));
 
         loginVm = ViewModelProviders.of(this).get(LoginVm.class);

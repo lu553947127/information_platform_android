@@ -28,6 +28,11 @@
         <item name="android:textColor">@color/color_6a5ff8</item>
     </style>
 
+    <style name="BtnConfirmGray" parent="BtnConfirm">
+        <item name="android:background">@drawable/shape_btn_confirm_gray_20</item>
+        <item name="android:textColor">@color/color_666666</item>
+    </style>
+
     <style name="MessageHint">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">46dp</item>

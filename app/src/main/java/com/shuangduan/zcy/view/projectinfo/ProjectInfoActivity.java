@@ -12,6 +12,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.MapView;
@@ -31,6 +33,8 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.pop.CommonPopupWindow;
 import com.shuangduan.zcy.view.SearchActivity;
+import com.shuangduan.zcy.vm.PermissionVm;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,6 +62,7 @@ public class ProjectInfoActivity extends BaseActivity {
     @BindView(R.id.tv_bar_right)
     AppCompatTextView tvBarRight;
 
+    private PermissionVm permissionVm;
     MapView mMapView = null;
     AMap aMap = null;
     private List<LatLonPoint> throughPointList;
@@ -78,7 +83,17 @@ public class ProjectInfoActivity extends BaseActivity {
 
         mMapView = findViewById(R.id.map);
         mMapView.onCreate(savedInstanceState);// 此方法必须重写
-        init();
+
+        permissionVm = ViewModelProviders.of(this).get(PermissionVm.class);
+        permissionVm.getLiveData().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                if (integer == PermissionVm.PERMISSION_LOCATION){
+                    init();
+                }
+            }
+        });
+        permissionVm.getPermissionLocation(new RxPermissions(this));
     }
 
     /**
@@ -238,34 +253,38 @@ public class ProjectInfoActivity extends BaseActivity {
             }
             popupWindow = null;
         }
-        super.onDestroy();
         //在activity执行onDestroy时执行mMapView.onDestroy()，销毁地图
-        mMapView.onDestroy();
+        if (mMapView != null)
+            mMapView.onDestroy();
+        super.onDestroy();
     }
 
     @Override
     protected void onResume() {
-        super.onResume();
         //在activity执行onResume时执行mMapView.onResume ()，重新绘制加载地图
-        mMapView.onResume();
+        if (mMapView != null)
+            mMapView.onResume();
+        super.onResume();
     }
 
     @Override
     protected void onPause() {
-        super.onPause();
         //在activity执行onPause时执行mMapView.onPause ()，暂停地图的绘制
-        mMapView.onPause();
+        if (mMapView != null)
+            mMapView.onPause();
+        super.onPause();
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
         //在activity执行onSaveInstanceState时执行mMapView.onSaveInstanceState (outState)，保存地图当前的状态
-        mMapView.onSaveInstanceState(outState);
+        if (mMapView != null)
+            mMapView.onSaveInstanceState(outState);
+        super.onSaveInstanceState(outState);
     }
 
     @Override
-    protected void initDataAndEvent() {
+    protected void initDataAndEvent(Bundle savedInstanceState) {
 
     }
 

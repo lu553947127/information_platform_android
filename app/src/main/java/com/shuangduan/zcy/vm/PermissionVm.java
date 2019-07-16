@@ -19,7 +19,7 @@ import com.tbruyelle.rxpermissions2.RxPermissions;
  * @chang time
  * @class describe
  */
-public class PhotoVm extends BaseViewModel {
+public class PermissionVm extends BaseViewModel {
 
     /*身份认证部分*/
     public static final int REQUEST_CODE_CHOOSE_AUTHENTICATION = 100;
@@ -30,10 +30,18 @@ public class PhotoVm extends BaseViewModel {
     /*银行卡上传部分*/
     public static final int REQUEST_CODE_CHOOSE_BANK_CARD = 300;
     public static final int REQUEST_CODE_BANK_CARD = 301;
-    private MutableLiveData<Integer> photoLiveData = new MutableLiveData<>();
 
-    public PhotoVm() {
-        addLiveData(photoLiveData);
+    /*拍照*/
+    public static final int PERMISSION_CAMERA = 1;
+    /*内存*/
+    public static final int PERMISSION_STORAGE = 2;
+    /*定位*/
+    public static final int PERMISSION_LOCATION = 3;
+
+    private MutableLiveData<Integer> liveData = new MutableLiveData<>();
+
+    public PermissionVm() {
+        addLiveData(liveData);
     }
 
     @SuppressLint("CheckResult")
@@ -44,7 +52,7 @@ public class PhotoVm extends BaseViewModel {
         )
                 .subscribe(aBoolean -> {
                     if (aBoolean){
-                        photoLiveData.postValue(1);
+                        liveData.postValue(PERMISSION_CAMERA);
                     }
                 }, LogUtils::i, () -> LogUtils.i("OnComplete"));
     }
@@ -55,12 +63,23 @@ public class PhotoVm extends BaseViewModel {
                 Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 .subscribe(aBoolean -> {
                     if (aBoolean){
-                       photoLiveData.postValue(2);
+                       liveData.postValue(PERMISSION_STORAGE);
                     }
                 }, LogUtils::i, () -> LogUtils.i("OnComplete"));
     }
 
-    public MutableLiveData<Integer> getPhotoLiveData() {
-        return photoLiveData;
+    @SuppressLint("CheckResult")
+    public void getPermissionLocation(RxPermissions rxPermissions){
+        rxPermissions.request(
+                Manifest.permission.ACCESS_COARSE_LOCATION)
+                .subscribe(aBoolean -> {
+                    if (aBoolean){
+                        liveData.postValue(PERMISSION_LOCATION);
+                    }
+                }, LogUtils::i, () -> LogUtils.i("OnComplete"));
+    }
+
+    public MutableLiveData<Integer> getLiveData() {
+        return liveData;
     }
 }

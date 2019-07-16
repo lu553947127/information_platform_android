@@ -1,5 +1,6 @@
 package com.shuangduan.zcy.view.login;
 
+import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
@@ -55,7 +56,7 @@ public class MobileVerificationActivity extends BaseActivity {
     }
 
     @Override
-    protected void initDataAndEvent() {
+    protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         type = getIntent().getStringExtra(CustomConfig.UPDATE_TYPE);
 

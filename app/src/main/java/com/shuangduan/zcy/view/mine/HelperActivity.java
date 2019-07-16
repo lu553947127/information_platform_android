@@ -1,5 +1,7 @@
 package com.shuangduan.zcy.view.mine;
 
+import android.os.Bundle;
+
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 
@@ -32,7 +34,7 @@ public class HelperActivity extends BaseActivity {
     }
 
     @Override
-    protected void initDataAndEvent() {
+    protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.helper));
     }

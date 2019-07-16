@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ClassifyAdapter;
 import com.shuangduan.zcy.adapter.IncomeStatementAdapter;
@@ -22,7 +23,9 @@ import com.shuangduan.zcy.utils.AlphaUtils;
 import com.shuangduan.zcy.utils.BarUtils;
 import com.shuangduan.zcy.utils.image.GlideImageLoader;
 import com.shuangduan.zcy.view.projectinfo.ProjectInfoActivity;
+import com.shuangduan.zcy.view.projectinfo.SubInfoActivity;
 import com.shuangduan.zcy.view.recruit.RecruitActivity;
+import com.shuangduan.zcy.view.release.ReleaseListActivity;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 import com.shuangduan.zcy.weight.MarqueeListView;
 import com.shuangduan.zcy.weight.MarqueeView;
@@ -108,6 +111,7 @@ public class HomeFragment extends BaseFragment {
                 case ClassifyBean.WDSY:
                     break;
                 case ClassifyBean.FBXX:
+                    ActivityUtils.startActivity(ReleaseListActivity.class);
                     break;
                 case ClassifyBean.JJTT:
                     break;
@@ -120,7 +124,11 @@ public class HomeFragment extends BaseFragment {
         }
         rvIncomeStatement.setLayoutManager(new LinearLayoutManager(mContext));
         rvIncomeStatement.addItemDecoration(new com.shuangduan.zcy.weight.DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
-        rvIncomeStatement.setAdapter(new IncomeStatementAdapter(R.layout.item_income_statement, list2));
+        IncomeStatementAdapter incomeStatementAdapter = new IncomeStatementAdapter(R.layout.item_income_statement, list2);
+        rvIncomeStatement.setAdapter(incomeStatementAdapter);
+        incomeStatementAdapter.setOnItemClickListener((adapter, view, position) -> {
+            ActivityUtils.startActivity(SubInfoActivity.class);
+        });
 
         initBanner();
 
