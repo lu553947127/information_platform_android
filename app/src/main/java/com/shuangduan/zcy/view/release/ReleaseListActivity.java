@@ -6,8 +6,10 @@ import android.view.View;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.google.android.material.tabs.TabLayout;
 import com.shuangduan.zcy.R;
@@ -68,6 +70,7 @@ public class ReleaseListActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_bar_right:
+                ActivityUtils.startActivity(ReleaseProjectActivity.class);
                 break;
         }
     }

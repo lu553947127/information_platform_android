@@ -102,6 +102,7 @@
     <string name="hint_opinion">请在此输入您的意见</string>
     <string name="share_url">http://www.shuangduan.com</string>
     <string name="share">分享</string>
+    <string name="mobile">电话</string>
 
     <string name="subscribe_message">订阅信息</string>
     <string name="model_list">列表模式</string>
@@ -150,6 +151,16 @@
 
     <string name="release_msg">发布信息</string>
     <string name="release">发布</string>
+    <string name="principle">负责人</string>
+    <string name="project_content">项目概况</string>
+    <string name="project_address">项目地址</string>
+    <string name="project_names">项目名称</string>
+    <string name="project_type">项目类型</string>
+    <string name="project_schedule">项目进度</string>
+    <string name="visitor">拜访人</string>
+    <string name="update_time">更新时间</string>
+    <string name="upload_photo">上传照片</string>
+    <string name="not_required">(非必填项)</string>
 
     <string name="format_version_name">当前版本号：v%1$s</string>
     <string name="format_get_verification_code_again">重新获取 (%1$ds)</string>

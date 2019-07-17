@@ -24,12 +24,7 @@ import io.reactivex.disposables.Disposable;
 public class BaseViewModel extends ViewModel {
 
     private CompositeDisposable compositeDisposable;
-    public ErrorHandlerFactory errorHandlerFactory;
     private SparseArray<MutableLiveData> liveDataSparseArray;
-
-    public BaseViewModel() {
-        errorHandlerFactory = new ErrorHandlerFactory(new ResponseErrorListenerImpl());
-    }
 
     @Override
     protected void onCleared() {

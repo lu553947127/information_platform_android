@@ -26,7 +26,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 public class RetrofitHelper {
 
     private static String BASE_URL = "";
-    private static String BASE_TEST_URL = "http://47.104.64.194:3000/mock/43/district/province/";
+    private static String BASE_TEST_URL = "http://xx.yijijian.com/";
     private static ApiService apiService;
 
     private static void init(){
@@ -40,8 +40,7 @@ public class RetrofitHelper {
                     Request original = chain.request();
                     // Request customization: add request headers
                     Request.Builder requestBuilder = original.newBuilder()
-                            .addHeader("X-App-Token", SPUtils.getInstance().getString(SpConfig.TOKEN))
-                            .addHeader("X-App-Version", "1.0.0");
+                            .addHeader("X-App-Token", SPUtils.getInstance().getString(SpConfig.TOKEN));
                     Request request = requestBuilder.build();
                     return chain.proceed(request);
                 });

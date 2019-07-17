@@ -12,6 +12,8 @@ import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.utils.AndroidBug5497Workaround;
 import com.shuangduan.zcy.vm.LoginVm;
 
+import java.util.concurrent.Executors;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -59,6 +61,7 @@ public class RegisterActivity extends BaseActivity {
                 tvSendVerificationCode.setText(String.format(getString(R.string.format_get_verification_code_again), aLong));
             }
         });
+
     }
 
     @OnClick({R.id.tv_send_verification_code, R.id.tv_register})

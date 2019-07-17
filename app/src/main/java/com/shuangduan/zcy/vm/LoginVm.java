@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import androidx.lifecycle.MutableLiveData;
 
 import com.shuangduan.zcy.base.BaseViewModel;
+import com.shuangduan.zcy.model.api.DataManager;
 
 import java.util.concurrent.TimeUnit;
 
@@ -58,6 +59,10 @@ public class LoginVm extends BaseViewModel {
                     timeLiveData.postValue((long) -1);
                 });
 
+    }
+
+    public void smsCode(String tel, int type){
+        DataManager.getInstance().smsCode(tel, type);
     }
 
 }
