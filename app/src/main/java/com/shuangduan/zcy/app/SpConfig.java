@@ -24,6 +24,9 @@ public class SpConfig {
     /*用户手机号*/
     public static final String MOBILE = "mobile";
 
+    /*用户信息第一次录入是否完成*/
+    public static final String INFO_STATUS = "info_status";
+
     /*用户id*/
     public static final String USER_ID = "user_id";
 

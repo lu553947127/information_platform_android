@@ -1,6 +1,7 @@
 package com.shuangduan.zcy.view.login;
 
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.view.View;
@@ -8,14 +9,18 @@ import android.view.View;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatTextView;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.DeviceUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
+import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.utils.AndroidBug5497Workaround;
-import com.shuangduan.zcy.view.login.UserInfoInputActivity;
+import com.shuangduan.zcy.view.MainActivity;
 import com.shuangduan.zcy.vm.LoginVm;
 
 import java.util.Objects;
@@ -73,10 +78,8 @@ public class LoginActivity extends BaseActivity {
         AndroidBug5497Workaround.assistActivity(findViewById(android.R.id.content));
 
         loginVm = ViewModelProviders.of(this).get(LoginVm.class);
-        loginVm.getChangeData().observe(this, integer -> {
 
-        });
-        loginVm.getTimeLiveData().observe(this, aLong -> {
+        loginVm.timeLiveDataLiveData.observe(this, aLong -> {
             if (aLong == -1) {
                 //重新获取
                 tvSendVerificationCode.setText(getString(R.string.send_again));
@@ -97,19 +100,59 @@ public class LoginActivity extends BaseActivity {
                 changeLoginStyle(LOGIN_VERIFICATION_CODE);
                 break;
             case R.id.tv_send_verification_code:
-                tvSendVerificationCode.setClickable(false);
-                loginVm.sendVerificationCode();
+                smsCode();
                 break;
             case R.id.tv_login:
-                if (TextUtils.isEmpty(Objects.requireNonNull(edtAccount.getText()).toString())) {
-                    ToastUtils.showShort("手机号错误");
-                    return;
-                }
-                ActivityUtils.startActivity(UserInfoInputActivity.class);
+                login();
                 break;
         }
     }
 
+    private void smsCode(){
+        if (TextUtils.isEmpty(edtAccount.getText())){
+            ToastUtils.showShort(getString(R.string.mobile_error));
+            return;
+        }
+        loginVm.smsCode(edtAccount.getText().toString(), LoginVm.SMS_LOGIN);
+        loginVm.smsDataLiveData.observe(this, new Observer() {
+            @Override
+            public void onChanged(Object o) {
+                tvSendVerificationCode.setClickable(false);
+                loginVm.sendVerificationCode();
+            }
+        });
+    }
+
+    private void login() {
+        if (TextUtils.isEmpty(edtAccount.getText())) {
+            ToastUtils.showShort(getString(loginStyle == LOGIN_ACCOUNT ? R.string.account_error:R.string.mobile_error));
+            return;
+        }
+        if (TextUtils.isEmpty(edtPwd.getText())) {
+            ToastUtils.showShort(getString(loginStyle == LOGIN_ACCOUNT ? R.string.pwd_error:R.string.sms_error));
+            return;
+        }
+        String account = Objects.requireNonNull(edtAccount.getText()).toString();
+        String pwd = Objects.requireNonNull(edtPwd.getText()).toString();
+        if (loginStyle == LOGIN_ACCOUNT){
+            loginVm.accountLogin(account, pwd, DeviceUtils.getAndroidID());
+        }else {
+            loginVm.codeLogin(account, pwd, DeviceUtils.getAndroidID());
+        }
+        loginVm.accountLoginLiveData.observe(this, loginBean -> {
+            SPUtils.getInstance().put(SpConfig.USER_ID, loginBean.getUser_id());
+            SPUtils.getInstance().put(SpConfig.TOKEN, loginBean.getToken());
+            SPUtils.getInstance().put(SpConfig.MOBILE, loginBean.getTel());
+            SPUtils.getInstance().put(SpConfig.INFO_STATUS, loginBean.getInfo_status());
+            ActivityUtils.startActivity(MainActivity.class);
+            finish();
+        });
+    }
+
+    /**
+     * 切换登录方式
+     * @param type
+     */
     private void changeLoginStyle(int type){
         if (loginStyle == type) return;
         switch (type) {
@@ -118,9 +161,11 @@ public class LoginActivity extends BaseActivity {
                 tvLoginVerificationCode.setTextColor(getResources().getColor(R.color.colorTvHint));
                 tvLoginAccount.setTextSize(19);
                 tvLoginVerificationCode.setTextSize(13);
-                edtPwd.setHint(getString(R.string.hint_pwd));
-                tvSendVerificationCode.setVisibility(View.INVISIBLE);
                 edtPwd.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                edtPwd.setText("");
+                edtPwd.setHint(getString(R.string.hint_pwd));
+                edtPwd.setFilters(new InputFilter[]{new InputFilter.LengthFilter(20)});
+                tvSendVerificationCode.setVisibility(View.INVISIBLE);
                 tvForgetPwd.setVisibility(View.VISIBLE);
                 break;
             case LOGIN_VERIFICATION_CODE:
@@ -128,8 +173,10 @@ public class LoginActivity extends BaseActivity {
                 tvLoginVerificationCode.setTextColor(getResources().getColor(R.color.colorTv));
                 tvLoginAccount.setTextSize(13);
                 tvLoginVerificationCode.setTextSize(19);
+                edtPwd.setInputType(InputType.TYPE_CLASS_NUMBER);
+                edtPwd.setText("");
                 edtPwd.setHint(getString(R.string.hint_SMS_verification_code));
-                edtPwd.setInputType(InputType.TYPE_NUMBER_VARIATION_NORMAL);
+                edtPwd.setFilters(new InputFilter[]{new InputFilter.LengthFilter(6)});
                 tvSendVerificationCode.setVisibility(View.VISIBLE);
                 tvForgetPwd.setVisibility(View.INVISIBLE);
                 break;

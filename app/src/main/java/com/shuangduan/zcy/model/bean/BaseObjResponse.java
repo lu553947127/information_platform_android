@@ -1,5 +1,7 @@
 package com.shuangduan.zcy.model.bean;
 
+import java.util.List;
+
 /**
  * <pre>
  *     author : 宁文强
@@ -10,7 +12,7 @@ package com.shuangduan.zcy.model.bean;
  * </pre>
  */
 
-public class BaseResponse<T> {
+public class BaseObjResponse<T> {
 
     private int code;
     private String msg;

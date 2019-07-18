@@ -24,15 +24,11 @@ import io.reactivex.disposables.Disposable;
 public class BaseViewModel extends ViewModel {
 
     private CompositeDisposable compositeDisposable;
-    private SparseArray<MutableLiveData> liveDataSparseArray;
 
     @Override
     protected void onCleared() {
         if (compositeDisposable != null){
             compositeDisposable.clear();
-        }
-        if (liveDataSparseArray != null) {
-            liveDataSparseArray.clear();
         }
         super.onCleared();
     }
@@ -46,17 +42,6 @@ public class BaseViewModel extends ViewModel {
             compositeDisposable = new CompositeDisposable();
         }
         compositeDisposable.add(disposable);
-    }
-
-    /**
-     * 将每一个LiveData保存，clear方法清空
-     * @param liveData
-     */
-    protected void addLiveData(MutableLiveData liveData){
-        if (liveDataSparseArray == null){
-             liveDataSparseArray = new SparseArray<>();
-        }
-        liveDataSparseArray.put(liveDataSparseArray.size(), liveData);
     }
 
 }

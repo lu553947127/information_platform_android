@@ -49,8 +49,6 @@ public class LoggingIntercepter implements Interceptor {
             body = buffer.readString(charset);
         }
 
-        LogUtils.i(String.format("发送请求\nmethod：%s\nurl：%s\nheaders: %s \nbody：%s", request.method(), request.url(), request.headers(), body));
-
         long startNs = System.nanoTime();
         Response response = chain.proceed(request);
         long tookMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNs);
@@ -76,8 +74,8 @@ public class LoggingIntercepter implements Interceptor {
             rBody = buffer.clone().readString(charset);
         }
 
-        LogUtils.i(String.format("收到响应 %s %s \n时间 %s ms\n请求url：%s\n请求body：", response.code(), response.message(), tookMs, response.request().url()));
-        // TODO: 2019/1/19 json类型的响应数据，一些手机上显示不出来，不知道什么鸡毛问题，手头的手机显示不出来就把rBody放到上一行显示String类型去
+        LogUtils.i(String.format("发送请求\nmethod：%s\nurl：%s\nheaders: %s \nbody：%s\n收到响应\ncode: %s %s \n时间 %s ms", request.method(), request.url(), request.headers(), body, response.code(), response.message(), tookMs));
+        //json类型的响应数据，一些手机上显示不出来，不知道什么鸡毛问题，手头的手机显示不出来就把rBody放到上一行显示String类型去
         LogUtils.json(rBody);
 
         return response;

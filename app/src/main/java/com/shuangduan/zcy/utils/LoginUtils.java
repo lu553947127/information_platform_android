@@ -1,8 +1,10 @@
 package com.shuangduan.zcy.utils;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.shuangduan.zcy.app.SpConfig;
+import com.shuangduan.zcy.view.login.LoginActivity;
 
 /**
  * <pre>
@@ -23,7 +25,7 @@ public class LoginUtils {
     public static boolean checkLogin(){
         String token = SPUtils.getInstance().getString(SpConfig.TOKEN);
         if (StringUtils.isTrimEmpty(token)){
-//            ActivityUtils.startActivity(LoginActivity.class);
+            ActivityUtils.startActivity(LoginActivity.class);
             return false;
         }
         return true;

@@ -58,7 +58,7 @@ public class BusinessExpDialog extends BaseDialog {
         });
         dpExp.setOnSelectListener((text, position) -> {
             if (singleCallBack != null){
-                singleCallBack.click(text);
+                singleCallBack.click(text, position);
             }
         });
     }

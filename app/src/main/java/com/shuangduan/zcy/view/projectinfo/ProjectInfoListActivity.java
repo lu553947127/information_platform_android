@@ -217,7 +217,7 @@ public class ProjectInfoListActivity extends BaseActivity {
                 CityBean cityBean = new CityBean(0, "子阶段" + j + ":" + (i + 1));
                 list.add(cityBean);
             }
-            ProvinceBean provinceBean = new ProvinceBean(0, "主阶段" + (j + 1), list);
+            ProvinceBean provinceBean = new ProvinceBean(0, "主阶段" + (j + 1), 0, list);
             data.add(provinceBean);
         }
 

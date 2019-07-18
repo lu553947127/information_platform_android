@@ -5,21 +5,30 @@ import android.view.View;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.CityAdapter;
 import com.shuangduan.zcy.adapter.ProvinceAdapter;
+import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
+import com.shuangduan.zcy.model.bean.BaseListResponse;
 import com.shuangduan.zcy.model.bean.CityBean;
 import com.shuangduan.zcy.model.bean.ProvinceBean;
+import com.shuangduan.zcy.model.event.CityEvent;
+import com.shuangduan.zcy.vm.AreaVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -54,7 +63,9 @@ public class BusinessAreaActivity extends BaseActivity {
     private List<ProvinceBean> data;
     private List<CityBean> dataCity;
     private int positionProvinceNow = 0;
-    private int positionProvincePrevious = -1;
+    private AreaVm areaVm;
+    private int userId;
+    private CityAdapter cityAdapter;
 
     @Override
     protected int initLayoutRes() {
@@ -67,42 +78,40 @@ public class BusinessAreaActivity extends BaseActivity {
         tvBarTitle.setText(getString(R.string.business_area));
         tvBarRight.setText(getString(R.string.save));
 
-        getData();
-        setCityData(positionProvinceNow);
-
         LinearLayoutManager managerProvence = new LinearLayoutManager(this);
         rvProvince.setLayoutManager(managerProvence);
         rvProvince.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_province));
-        ProvinceAdapter provinceAdapter = new ProvinceAdapter(R.layout.item_province, data);
+        ProvinceAdapter provinceAdapter = new ProvinceAdapter(R.layout.item_province, null);
         rvProvince.setAdapter(provinceAdapter);
 
         LinearLayoutManager managerCity = new LinearLayoutManager(this);
         rvCity.setLayoutManager(managerCity);
-        CityAdapter cityAdapter = new CityAdapter(R.layout.item_city, dataCity);
+        cityAdapter = new CityAdapter(R.layout.item_city, null);
         rvCity.setAdapter(cityAdapter);
+
+        areaVm = ViewModelProviders.of(this).get(AreaVm.class);
+        areaVm.getProvince();
+        areaVm.provinceLiveData.observe(this, provinceBeans -> {
+            data = provinceBeans;
+            //初始化数据默认选中第一个
+            data.get(0).setIsSelect(1);
+            provinceAdapter.setNewData(provinceBeans);
+            setCityData(positionProvinceNow);
+        });
 
         provinceAdapter.setOnItemChildClickListener((baseQuickAdapter, view, i) -> {
             if (positionProvinceNow == i) return;
-            //点击新的省份，直接清空上一个选择的省份
-            setCitySelectState(0);
 
             setCityData(i);
-            cityAdapter.setNewData(dataCity);
             //选中状态：未选中0，选中1
             data.get(positionProvinceNow).setIsSelect(0);
             data.get(i).setIsSelect(1);
             provinceAdapter.notifyDataSetChanged();
 
-            positionProvincePrevious = positionProvinceNow;
             positionProvinceNow = i;
         });
 
         cityAdapter.setOnItemChildClickListener((baseQuickAdapter, view, i) -> {
-            /*//点击城市后，如果存在上一个选择的省份，则将上一个省份的选中城市清空
-            if (positionProvincePrevious >= 0){
-                setCitySelectState(positionProvincePrevious);
-            }*/
-
             if (i == 0) {
                 //选全部
                 if (dataCity.get(0).getIsSelect() == 1){
@@ -112,7 +121,6 @@ public class BusinessAreaActivity extends BaseActivity {
                     //非全部选中，修改全部为选中状态
                     setCitySelectState(1);
                 }
-                cityAdapter.notifyDataSetChanged();
             }else {
                 //单一选项
                 dataCity.get(i).setIsSelect(dataCity.get(i).getIsSelect() == 1?0:1);
@@ -134,40 +142,29 @@ public class BusinessAreaActivity extends BaseActivity {
                         }
                     }
                 }
-                cityAdapter.notifyDataSetChanged();
             }
 
+            cityAdapter.notifyDataSetChanged();
         });
 
     }
 
-    private void getData(){
-        try {
-            InputStream is = getAssets().open("china_city_data");
-            int lenght = is.available();
-            byte[] buffer = new byte[lenght];
-            is.read(buffer);
-            String result = new String(buffer, "utf8");
-            LogUtils.i(result);
-            Gson gson = new Gson();
-            data = gson.fromJson(result, new TypeToken<ArrayList<ProvinceBean>>(){}.getType());
-            //初始化数据默认选中第一个
-            data.get(0).setIsSelect(1);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     private void setCityData(int i){
-        dataCity = data.get(i).getCityList();
-        //没有添加全部选项的添加
-        if (!dataCity.get(0).getName().equals("全部")){
-            CityBean cityBean = new CityBean();
-            cityBean.setName("全部");
-            cityBean.setId(0);
-            cityBean.setIsSelect(0);
-            dataCity.add(0, cityBean);
-        }
+        int id = data.get(i).getId();
+        areaVm.getCity(id);
+        areaVm.cityLiveData.observe(this, cityBeans -> {
+            dataCity = cityBeans;
+            //没有添加全部选项的添加
+            if (!dataCity.get(0).getName().equals("全部")){
+                CityBean cityBean = new CityBean();
+                cityBean.setName("全部");
+                cityBean.setId(0);
+                cityBean.setIsSelect(0);
+                dataCity.add(0, cityBean);
+            }
+
+            cityAdapter.setNewData(dataCity);
+        });
     }
 
     /**
@@ -188,10 +185,16 @@ public class BusinessAreaActivity extends BaseActivity {
                 break;
             case R.id.tv_bar_right:
                 StringBuilder builder = new StringBuilder();
+                List<Integer> list = new ArrayList<>();
                 for (int i = 1; i < dataCity.size(); i++) {
-                    if (dataCity.get(i).getIsSelect() == 1) builder.append(dataCity.get(i).getName());
+                    if (dataCity.get(i).getIsSelect() == 1) {
+                        builder.append(dataCity.get(i).getName());
+                        list.add(dataCity.get(i).getId());
+                    }
                 }
-                ToastUtils.showShort(builder.toString());
+                Integer[] citys = list.toArray(new Integer[list.size()]);
+                EventBus.getDefault().post(new CityEvent(citys, builder.toString()));
+                finish();
                 break;
         }
     }

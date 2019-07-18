@@ -9,6 +9,8 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.base.BaseActivity;
+import com.shuangduan.zcy.utils.LoginUtils;
+import com.shuangduan.zcy.view.MainActivity;
 import com.shuangduan.zcy.view.login.LoginActivity;
 import com.shuangduan.zcy.view.login.RegisterActivity;
 
@@ -41,6 +43,10 @@ public class FirstActivity extends BaseActivity {
     protected void initDataAndEvent(Bundle savedInstanceState) {
         //设置状态栏颜色模式
         BarUtils.setStatusBarLightMode(this, true);
+
+        if (LoginUtils.isLogin()){
+            ActivityUtils.startActivity(MainActivity.class);
+        }
     }
 
     @OnClick({R.id.tv_login, R.id.tv_register})

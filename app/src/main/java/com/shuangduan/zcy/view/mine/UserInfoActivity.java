@@ -187,7 +187,7 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
                 break;
             case R.id.fl_business_exp:
                 new BusinessExpDialog(this)
-                        .setSingleCallBack(item -> tvBusinessExp.setText(item))
+                        .setSingleCallBack((item, position) -> tvBusinessExp.setText(item))
                         .showDialog();
                 break;
         }

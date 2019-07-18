@@ -24,17 +24,20 @@ public class ProvinceBean extends BaseSelectorBean implements Parcelable {
      */
     private int id;
     private String name;
+    private int pid;
     private List<CityBean> cityList;
 
-    public ProvinceBean(int id, String name, List<CityBean> cityList) {
+    public ProvinceBean(int id, String name, int pid, List<CityBean> cityList) {
         this.id = id;
         this.name = name;
+        this.pid = pid;
         this.cityList = cityList;
     }
 
     protected ProvinceBean(Parcel in) {
         id = in.readInt();
         name = in.readString();
+        pid = in.readInt();
         isSelect = in.readInt();
         cityList = in.createTypedArrayList(CityBean.CREATOR);
     }
@@ -43,6 +46,7 @@ public class ProvinceBean extends BaseSelectorBean implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(id);
         dest.writeString(name);
+        dest.writeInt(pid);
         dest.writeInt(isSelect);
         dest.writeTypedList(cityList);
     }
@@ -78,6 +82,14 @@ public class ProvinceBean extends BaseSelectorBean implements Parcelable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getPid() {
+        return pid;
+    }
+
+    public void setPid(int pid) {
+        this.pid = pid;
     }
 
     public List<CityBean> getCityList() {

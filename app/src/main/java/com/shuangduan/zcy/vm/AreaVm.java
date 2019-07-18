@@ -2,9 +2,15 @@ package com.shuangduan.zcy.vm;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.blankj.utilcode.util.SPUtils;
+import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseViewModel;
+import com.shuangduan.zcy.model.api.repository.ProjectRepository;
+import com.shuangduan.zcy.model.bean.BaseListResponse;
 import com.shuangduan.zcy.model.bean.CityBean;
 import com.shuangduan.zcy.model.bean.ProvinceBean;
+
+import java.util.List;
 
 /**
  * @author 宁文强 QQ:858777523
@@ -18,21 +24,22 @@ import com.shuangduan.zcy.model.bean.ProvinceBean;
  */
 public class AreaVm extends BaseViewModel {
 
-    private MutableLiveData<ProvinceBean> provinceLiveData;
-    private MutableLiveData<CityBean> cityLiveData;
+    public MutableLiveData<List<ProvinceBean>> provinceLiveData;
+    public MutableLiveData<List<CityBean>> cityLiveData;
+
+    private int userId;
 
     public AreaVm() {
-        this.provinceLiveData = new MutableLiveData<>();
-        this.cityLiveData = new MutableLiveData<>();
-        addLiveData(provinceLiveData);
-        addLiveData(cityLiveData);
+        userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
+        cityLiveData = new MutableLiveData<>();
     }
 
-    public void setProvinceLiveData(MutableLiveData<ProvinceBean> provinceLiveData) {
-        this.provinceLiveData = provinceLiveData;
+    public void getProvince(){
+        provinceLiveData = new ProjectRepository().getProvince(userId);
     }
 
-    public void setCityLiveData(MutableLiveData<CityBean> cityLiveData) {
-        this.cityLiveData = cityLiveData;
+    public void getCity(int id){
+        cityLiveData = new ProjectRepository().getCity(userId, id);
     }
+
 }

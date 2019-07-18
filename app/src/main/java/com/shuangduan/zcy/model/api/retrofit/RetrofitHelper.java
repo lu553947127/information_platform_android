@@ -4,7 +4,6 @@ import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.app.BuildConfig;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.model.api.ApiService;
-import com.shuangduan.zcy.model.api.convert.MyGsonConverterFactory;
 
 import java.util.concurrent.TimeUnit;
 
@@ -12,6 +11,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * <pre>
@@ -40,7 +40,7 @@ public class RetrofitHelper {
                     Request original = chain.request();
                     // Request customization: add request headers
                     Request.Builder requestBuilder = original.newBuilder()
-                            .addHeader("X-App-Token", SPUtils.getInstance().getString(SpConfig.TOKEN));
+                            .addHeader("token", SPUtils.getInstance().getString(SpConfig.TOKEN));
                     Request request = requestBuilder.build();
                     return chain.proceed(request);
                 });
@@ -52,8 +52,8 @@ public class RetrofitHelper {
         Retrofit build = new Retrofit.Builder()
                 .client(builder.build())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(MyGsonConverterFactory.create())
-                .baseUrl(BuildConfig.IS_DEBUG? BASE_TEST_URL :BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .baseUrl(BuildConfig.IS_DEBUG ? BASE_TEST_URL :BASE_URL)
                 .build();
 
         apiService = build.create(ApiService.class);

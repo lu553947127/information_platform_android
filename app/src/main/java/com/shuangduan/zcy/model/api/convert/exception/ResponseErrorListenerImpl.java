@@ -27,7 +27,7 @@ import retrofit2.HttpException;
 public class ResponseErrorListenerImpl implements ResponseErrorListener {
     @Override
     public void handlerResponseError(Throwable t) {
-        LogUtils.i(t.getMessage(), t.getCause());
+        LogUtils.i("请求出错", t.getMessage(), t.getCause());
         String msg = "未知错误";
         if (t instanceof UnknownHostException) {
             msg = "网络不可用";
@@ -35,7 +35,7 @@ public class ResponseErrorListenerImpl implements ResponseErrorListener {
             msg = "请求网络超时";
         } else if (t instanceof HttpException) {
             HttpException httpException = (HttpException) t;
-            msg = convertStatusCode(httpException);
+            msg = "HttpException: " + convertStatusCode(httpException);
         } else if (t instanceof JsonParseException || t instanceof ParseException || t instanceof JSONException || t instanceof JsonIOException) {
             msg = "数据解析错误";
         }else if (t instanceof ApiException){

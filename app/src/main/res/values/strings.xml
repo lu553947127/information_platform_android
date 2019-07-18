@@ -20,10 +20,16 @@
     <string name="positive">确定</string>
     <string name="login">登录</string>
     <string name="register">注册</string>
+    <string name="account_error">账号错误</string>
+    <string name="mobile_error">手机号错误</string>
+    <string name="pwd_error">密码错误</string>
+    <string name="pwd_empty">密码为空</string>
+    <string name="sms_error">验证码错误</string>
     <string name="hint_mobile_code">请输入手机号</string>
     <string name="hint_SMS_verification_code">请输入短信验证码</string>
     <string name="hint_email_verification_code">请输入邮箱验证码</string>
     <string name="send_verification_code">发送验证码</string>
+    <string name="send_verification_code_success">验证码已发送</string>
     <string name="hint_pwd">请输入密码</string>
     <string name="hint_mobile_invite">请输入邀请手机号</string>
     <string name="login_account">账号登录</string>

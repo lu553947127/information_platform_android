@@ -31,4 +31,6 @@ public class CustomConfig {
     public static final String uploadTypeIdCard = "id_card";
     public static final String uploadTypeBusinessCard = "business_card";
 
+    public static final int AREA_REQUEST_CODE = 1001;
+
 }

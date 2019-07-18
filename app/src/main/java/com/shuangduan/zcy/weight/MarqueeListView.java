@@ -85,7 +85,7 @@ public class MarqueeListView extends View implements Runnable {
     public MarqueeListView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         textDistance1 = ConvertUtils.px2dp(getScreenWidth());
-        LogUtils.i(getScreenWidth(), textDistance1);
+        LogUtils.i("屏宽",getScreenWidth(), textDistance1);
         initAttrs(attrs);
         initPaint();
         initClick();

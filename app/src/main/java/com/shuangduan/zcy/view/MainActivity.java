@@ -11,9 +11,12 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
+import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
+import com.shuangduan.zcy.view.login.UserInfoInputActivity;
 
 import butterknife.BindView;
 
@@ -91,6 +94,8 @@ public class MainActivity extends BaseActivity {
             }
 
         });
+
+        checkInfoState();
     }
 
     /**
@@ -119,6 +124,15 @@ public class MainActivity extends BaseActivity {
             show.commit();
         }
 
+    }
+
+    /**
+     * 检测信息是否录入过
+     */
+    private void checkInfoState(){
+        if (SPUtils.getInstance().getInt(SpConfig.INFO_STATUS) == 0){
+            ActivityUtils.startActivity(UserInfoInputActivity.class);
+        }
     }
 
     private boolean mIsExit = false;

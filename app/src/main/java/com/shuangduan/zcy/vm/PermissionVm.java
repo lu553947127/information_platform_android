@@ -38,10 +38,10 @@ public class PermissionVm extends BaseViewModel {
     /*定位*/
     public static final int PERMISSION_LOCATION = 3;
 
-    private MutableLiveData<Integer> liveData = new MutableLiveData<>();
+    private MutableLiveData<Integer> liveData;
 
     public PermissionVm() {
-        addLiveData(liveData);
+        liveData = new MutableLiveData<>();
     }
 
     @SuppressLint("CheckResult")

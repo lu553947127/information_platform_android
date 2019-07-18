@@ -153,7 +153,7 @@ public abstract class BaseDialog extends Dialog {
     public SingleCallBack singleCallBack;
 
     public interface SingleCallBack{
-        void click(String item);
+        void click(String item, int position);
     }
 
     public BaseDialog setSingleCallBack(SingleCallBack singleCallBack){

@@ -1,17 +1,20 @@
 package com.shuangduan.zcy.model.api;
 
 import com.shuangduan.zcy.model.bean.BaseListResponse;
-import com.shuangduan.zcy.model.bean.BaseResponse;
+import com.shuangduan.zcy.model.bean.BaseObjResponse;
+import com.shuangduan.zcy.model.bean.CityBean;
 import com.shuangduan.zcy.model.bean.LoginBean;
+import com.shuangduan.zcy.model.bean.MapBean;
 import com.shuangduan.zcy.model.bean.ProvinceBean;
 import com.shuangduan.zcy.model.bean.ReSetPwdBean;
 import com.shuangduan.zcy.model.bean.RegisterBean;
 import com.shuangduan.zcy.model.bean.SearchCompanyBean;
 
-import io.reactivex.Observable;
+import io.reactivex.Flowable;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 /**
  * @author 宁文强 QQ:858777523
@@ -27,14 +30,14 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("api/Passport/smsCode")
-    Observable<BaseResponse> smsCode(
+    Flowable<BaseObjResponse> smsCode(
             @Field("tel")String tel,
             @Field("type")int type
     );
 
     @FormUrlEncoded
     @POST("api/Passport/codeLogin")
-    Observable<BaseResponse<LoginBean>> codeLogin(
+    Flowable<BaseObjResponse<LoginBean>> codeLogin(
             @Field("tel")String tel,
             @Field("code")String code,
             @Field("client_id")String client_id
@@ -42,7 +45,7 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("api/Passport/accountLogin")
-    Observable<BaseResponse<LoginBean>> accountLogin(
+    Flowable<BaseObjResponse<LoginBean>> accountLogin(
             @Field("tel")String tel,
             @Field("password")String password,
             @Field("client_id")String client_id
@@ -50,7 +53,7 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("api/Passport/register")
-    Observable<BaseResponse<RegisterBean>> register(
+    Flowable<BaseObjResponse<RegisterBean>> register(
             @Field("tel")String tel,
             @Field("code")String code,
             @Field("password")String password,
@@ -59,7 +62,7 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("api/Passport/setPassword")
-    Observable<BaseResponse<ReSetPwdBean>> setPassword(
+    Flowable<BaseObjResponse<ReSetPwdBean>> setPassword(
             @Field("tel")String tel,
             @Field("code")String code,
             @Field("password")String password
@@ -67,34 +70,34 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("api/Passport/outLogin")
-    Observable<BaseResponse> outLogin(
-            @Field("user_id")String user_id
+    Flowable<BaseObjResponse> outLogin(
+            @Field("user_id")int user_id
     );
 
     @FormUrlEncoded
     @POST("api/Userinfo/searchCompany")
-    Observable<BaseListResponse<SearchCompanyBean>> searchCompany(
-            @Field("user_id")String user_id,
+    Flowable<BaseListResponse<SearchCompanyBean>> searchCompany(
+            @Field("user_id")int user_id,
             @Field("title")String title
     );
 
     @FormUrlEncoded
     @POST("api/Userinfo/setInfo")
-    Observable<BaseResponse> setInfo(
-            @Field("user_id")String user_id,
+    Flowable<BaseObjResponse> setInfo(
+            @Field("user_id")int user_id,
             @Field("username")String username,
-            @Field("sex")String sex,
+            @Field("sex")int sex,
             @Field("company")String company,
             @Field("position")String position,
-            @Field("business_city[]")String business_city[],
-            @Field("experience")String experience,
+            @Query("business_city[]") Integer[] business_city,
+            @Field("experience")int experience,
             @Field("managing_products")String managing_products
     );
 
     @FormUrlEncoded
     @POST("api/Userinfo/telUpdate")
-    Observable<BaseResponse> telUpdate(
-            @Field("user_id")String user_id,
+    Flowable<BaseObjResponse> telUpdate(
+            @Field("user_id")int user_id,
             @Field("tel")String tel,
             @Field("code")String code,
             @Field("old_tel")String old_tel,
@@ -103,9 +106,30 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("api/Userinfo/telCheck")
-    Observable<BaseResponse> telCheck(
-            @Field("user_id")String user_id,
+    Flowable<BaseObjResponse> telCheck(
+            @Field("user_id")int user_id,
             @Field("code")String code
+    );
+
+    @FormUrlEncoded
+    @POST("api/District/getProvince")
+    Flowable<BaseListResponse<ProvinceBean>> getProvince(
+            @Field("user_id")int user_id
+    );
+
+    @FormUrlEncoded
+    @POST("api/District/getCity")
+    Flowable<BaseListResponse<CityBean>> getCity(
+            @Field("user_id")int user_id,
+            @Field("id")int id
+    );
+
+    @FormUrlEncoded
+    @POST("api/Project/mapList")
+    Flowable<BaseListResponse<MapBean>> mapList(
+            @Field("user_id")int user_id,
+            @Field("lng")double lng,
+            @Field("lat")double lat
     );
 
 }

@@ -75,7 +75,7 @@ public class MobileVerificationActivity extends BaseActivity {
         }
 
         loginVm = ViewModelProviders.of(this).get(LoginVm.class);
-        loginVm.getTimeLiveData().observe(this, aLong -> {
+        loginVm.timeLiveDataLiveData.observe(this, aLong -> {
             if (aLong == -1) {
                 //重新获取
                 tvSendVerificationCode.setText(getString(R.string.send_again));

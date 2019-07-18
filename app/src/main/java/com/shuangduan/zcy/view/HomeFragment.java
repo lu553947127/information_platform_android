@@ -22,6 +22,7 @@ import com.shuangduan.zcy.model.bean.ClassifyBean;
 import com.shuangduan.zcy.utils.AlphaUtils;
 import com.shuangduan.zcy.utils.BarUtils;
 import com.shuangduan.zcy.utils.image.GlideImageLoader;
+import com.shuangduan.zcy.view.login.UserInfoInputActivity;
 import com.shuangduan.zcy.view.projectinfo.ProjectInfoActivity;
 import com.shuangduan.zcy.view.projectinfo.SubInfoActivity;
 import com.shuangduan.zcy.view.recruit.RecruitActivity;
@@ -114,6 +115,7 @@ public class HomeFragment extends BaseFragment {
                     ActivityUtils.startActivity(ReleaseListActivity.class);
                     break;
                 case ClassifyBean.JJTT:
+                    ActivityUtils.startActivity(UserInfoInputActivity.class);
                     break;
             }
         });

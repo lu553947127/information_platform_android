@@ -23,7 +23,6 @@ public class ReadHistoryVm extends BaseViewModel {
 
     public ReadHistoryVm() {
         this.readHistoryBeanMutableLiveData = new MutableLiveData<>();
-        addLiveData(readHistoryBeanMutableLiveData);
     }
 
     public void getHistory(){

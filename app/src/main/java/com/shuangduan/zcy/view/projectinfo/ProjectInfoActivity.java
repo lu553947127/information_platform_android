@@ -32,8 +32,10 @@ import com.blankj.utilcode.util.LogUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.pop.CommonPopupWindow;
+import com.shuangduan.zcy.model.bean.MapBean;
 import com.shuangduan.zcy.view.SearchActivity;
 import com.shuangduan.zcy.vm.PermissionVm;
+import com.shuangduan.zcy.vm.ProjectInfoVm;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.ArrayList;
@@ -67,6 +69,7 @@ public class ProjectInfoActivity extends BaseActivity {
     AMap aMap = null;
     private List<LatLonPoint> throughPointList;
     private Marker targetMarker;
+    private ProjectInfoVm projectInfoVm;
 
     @Override
     protected int initLayoutRes() {
@@ -94,21 +97,14 @@ public class ProjectInfoActivity extends BaseActivity {
             }
         });
         permissionVm.getPermissionLocation(new RxPermissions(this));
+
+        projectInfoVm = ViewModelProviders.of(this).get(ProjectInfoVm.class);
     }
 
     /**
      * 初始化
      */
     private void init() {
-        //marker经纬度假数据
-        throughPointList = new ArrayList<>();
-        throughPointList.add(new LatLonPoint(36.676262, 117.135815));
-        throughPointList.add(new LatLonPoint(36.676262, 117.136015));
-        throughPointList.add(new LatLonPoint(36.676062, 117.135815));
-        throughPointList.add(new LatLonPoint(36.676062, 117.136015));
-        throughPointList.add(new LatLonPoint(36.676062, 117.135715));
-        throughPointList.add(new LatLonPoint(36.676062, 117.135615));
-        throughPointList.add(new LatLonPoint(36.676062, 117.135515));
         if (aMap == null) {
             aMap = mMapView.getMap();
             setUpMap();
@@ -138,7 +134,18 @@ public class ProjectInfoActivity extends BaseActivity {
         aMap.setOnMyLocationChangeListener(new AMap.OnMyLocationChangeListener() {
             @Override
             public void onMyLocationChange(Location location) {
-                LogUtils.i(location);
+                projectInfoVm.mapList(location.getLongitude(), location.getLatitude());
+                projectInfoVm.mapLiveData.observe(ProjectInfoActivity.this, new Observer<List<MapBean>>() {
+                    @Override
+                    public void onChanged(List<MapBean> mapBeans) {
+                        //marker经纬度数据
+                        throughPointList = new ArrayList<>();
+                        for (MapBean bean : mapBeans) {
+//                            throughPointList.add(bean.)
+                        }
+                        setMarker();
+                    }
+                });
             }
         });
         setupLocationStyle();
@@ -163,8 +170,6 @@ public class ProjectInfoActivity extends BaseActivity {
         myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE);
         // 将自定义的 myLocationStyle 对象添加到地图上
         aMap.setMyLocationStyle(myLocationStyle);
-
-        setMarker();
     }
 
     private void setMarker() {
