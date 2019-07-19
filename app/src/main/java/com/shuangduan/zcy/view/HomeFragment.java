@@ -11,15 +11,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ActivityUtils;
-import com.blankj.utilcode.util.LogUtils;
-import com.blankj.utilcode.util.ToastUtils;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ClassifyAdapter;
 import com.shuangduan.zcy.adapter.IncomeStatementAdapter;
 import com.shuangduan.zcy.base.BaseFragment;
 import com.shuangduan.zcy.model.bean.ClassifyBean;
-import com.shuangduan.zcy.utils.AlphaUtils;
 import com.shuangduan.zcy.utils.BarUtils;
 import com.shuangduan.zcy.utils.image.GlideImageLoader;
 import com.shuangduan.zcy.view.login.UserInfoInputActivity;
@@ -29,15 +25,12 @@ import com.shuangduan.zcy.view.recruit.RecruitActivity;
 import com.shuangduan.zcy.view.release.ReleaseListActivity;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 import com.shuangduan.zcy.weight.MarqueeListView;
-import com.shuangduan.zcy.weight.MarqueeView;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 
 import butterknife.BindView;
 

@@ -1,7 +1,9 @@
 package com.shuangduan.zcy.model.api.repository;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.shuangduan.zcy.model.api.rxjava.BaseSubscriber;
 import com.shuangduan.zcy.model.bean.LoginBean;
 import com.shuangduan.zcy.model.bean.RegisterBean;
 
@@ -18,19 +20,27 @@ import com.shuangduan.zcy.model.bean.RegisterBean;
 public class LoginRepository extends BaseRepository {
 
     public MutableLiveData smsCode(String tel, int type){
-        return request(apiService.smsCode(tel, type)).send().getData();
+        BaseSubscriber subscriber = request(apiService.smsCode(tel, type)).send();
+        pageStateLiveData = subscriber.getPageState();
+        return subscriber.getData();
     }
 
     public MutableLiveData<LoginBean> codeLogin(String tel, String code, String client_id){
-        return request(apiService.codeLogin(tel, code, client_id)).send().getData();
+        BaseSubscriber subscriber = request(apiService.codeLogin(tel, code, client_id)).send();
+        pageStateLiveData = subscriber.getPageState();
+        return subscriber.getData();
     }
 
     public MutableLiveData<LoginBean> accountLogin(String tel, String pwd, String client_id){
-        return request(apiService.accountLogin(tel, pwd, client_id)).send().getData();
+        BaseSubscriber subscriber = request(apiService.accountLogin(tel, pwd, client_id)).send();
+        pageStateLiveData = subscriber.getPageState();
+        return subscriber.getData();
     }
 
     public MutableLiveData<RegisterBean> register(String tel, String code, String pwd, String invite_tel){
-        return request(apiService.register(tel, code, pwd, invite_tel)).send().getData();
+        BaseSubscriber subscriber = request(apiService.register(tel, code, pwd, invite_tel)).send();
+        pageStateLiveData = subscriber.getPageState();
+        return subscriber.getData();
     }
 
 }

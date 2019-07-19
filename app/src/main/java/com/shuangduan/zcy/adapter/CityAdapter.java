@@ -26,8 +26,7 @@ public class CityAdapter extends BaseQuickAdapter<CityBean, BaseViewHolder> {
 
     @Override
     protected void convert(BaseViewHolder baseViewHolder, CityBean cityBean) {
-        baseViewHolder.setText(R.id.tv_city, cityBean.getName())
-                .addOnClickListener(R.id.tv_city);
+        baseViewHolder.setText(R.id.tv_city, cityBean.getName());
 
         baseViewHolder.getView(R.id.tv_city).setSelected(cityBean.getIsSelect() == 1);
         baseViewHolder.getView(R.id.iv_mark).setSelected(cityBean.getIsSelect() == 1);

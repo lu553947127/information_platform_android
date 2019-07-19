@@ -2,6 +2,7 @@ package com.shuangduan.zcy.model.api.repository;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.shuangduan.zcy.model.api.rxjava.BaseSubscriber;
 import com.shuangduan.zcy.model.bean.SearchCompanyBean;
 
 /**
@@ -17,11 +18,15 @@ import com.shuangduan.zcy.model.bean.SearchCompanyBean;
 public class UserRepository extends BaseRepository {
 
     public MutableLiveData<SearchCompanyBean> searchCompany(int user_id, String title){
-        return request(apiService.searchCompany(user_id, title)).send().getData();
+        BaseSubscriber subscriber = request(apiService.searchCompany(user_id, title)).send();
+        pageStateLiveData = subscriber.getPageState();
+        return subscriber.getData();
     }
 
     public MutableLiveData setInfo(int user_id, String username, int sex, String company, String position, Integer[] business_city, int experience, String managing_products){
-        return request(apiService.setInfo(user_id, username, sex, company, position, business_city, experience, managing_products)).send().getData();
+        BaseSubscriber subscriber = request(apiService.setInfo(user_id, username, sex, company, position, business_city, experience, managing_products)).send();
+        pageStateLiveData = subscriber.getPageState();
+        return subscriber.getData();
     }
 
 }

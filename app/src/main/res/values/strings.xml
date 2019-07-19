@@ -154,6 +154,7 @@
     <string name="wechat_pay">微信支付</string>
     <string name="pay">支付</string>
     <string name="subscription_msg">认购信息</string>
+    <string name="select_city_correct">请选择具体的市区</string>
 
     <string name="release_msg">发布信息</string>
     <string name="release">发布</string>

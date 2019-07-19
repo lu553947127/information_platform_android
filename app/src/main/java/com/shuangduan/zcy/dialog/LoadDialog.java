@@ -31,6 +31,7 @@ public class LoadDialog extends BaseDialog{
     void initData() {
         setWidth(ConvertUtils.dp2px(100));
         setHeight(ConvertUtils.dp2px(100));
+
         setCancelOutside(false);
         DialogUtils.enterCustomAnim(this);
     }

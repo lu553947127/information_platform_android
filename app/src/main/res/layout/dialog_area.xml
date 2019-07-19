@@ -8,19 +8,15 @@
         android:layout_height="250dp"
         android:orientation="horizontal">
 
-        <com.shuangduan.zcy.weight.selectorview.SelectorParentView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_province"
             android:layout_width="125dp"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"/>
 
-        </com.shuangduan.zcy.weight.selectorview.SelectorParentView>
-
-        <com.shuangduan.zcy.weight.selectorview.SelectorChildView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_city"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </com.shuangduan.zcy.weight.selectorview.SelectorChildView>
+            android:layout_height="match_parent"/>
 
     </LinearLayout>
 

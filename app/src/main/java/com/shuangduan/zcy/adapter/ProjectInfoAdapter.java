@@ -19,17 +19,18 @@ import java.util.List;
  * @chang time
  * @class describe
  */
-public class ProjectInfoAdapter extends BaseQuickAdapter<ProjectInfoBean, BaseViewHolder> {
-    public ProjectInfoAdapter(int layoutResId, @Nullable List<ProjectInfoBean> data) {
+public class ProjectInfoAdapter extends BaseQuickAdapter<ProjectInfoBean.ListBean, BaseViewHolder> {
+    public ProjectInfoAdapter(int layoutResId, @Nullable List<ProjectInfoBean.ListBean> data) {
         super(layoutResId, data);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, ProjectInfoBean item) {
-        helper.setText(R.id.tv_title, "山东省济南市莱芜区影城电子信息产业园一期")
-                .setText(R.id.tv_content, "项目简介项目简介项目简介项目简介项目简介项目简介项目简介项目简介")
-                .setText(R.id.tv_type, "勘察设计")
-                .setText(R.id.tv_readers, String.format(mContext.getString(R.string.format_num_of_readers), 12))
-                .setText(R.id.tv_time, String.format(mContext.getString(R.string.format_update_time), "2018-6-9 15:55"));
+    protected void convert(BaseViewHolder helper, ProjectInfoBean.ListBean item) {
+        helper.setText(R.id.tv_title, item.getTitle())
+                .setText(R.id.tv_content, item.getIntro())
+                .setText(R.id.tv_type, item.getPhases())
+                .setText(R.id.tv_readers, String.format(mContext.getString(R.string.format_num_of_readers), item.getSubscription_num()))
+                .setText(R.id.tv_time, String.format(mContext.getString(R.string.format_update_time), item.getUpdate_time()))
+                .setVisible(R.id.iv_subscribe, item.getWarrant_status() == 1);
     }
 }

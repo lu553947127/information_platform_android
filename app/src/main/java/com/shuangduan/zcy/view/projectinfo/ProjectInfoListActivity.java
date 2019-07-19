@@ -9,33 +9,27 @@ import android.widget.TextView;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.ConvertUtils;
-import com.blankj.utilcode.util.LogUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ProjectInfoAdapter;
+import com.shuangduan.zcy.adapter.SelectorSecondAdapter;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.pop.CommonPopupWindow;
-import com.shuangduan.zcy.model.bean.CityBean;
-import com.shuangduan.zcy.model.bean.ProjectInfoBean;
-import com.shuangduan.zcy.model.bean.ProvinceBean;
-import com.shuangduan.zcy.utils.AlphaUtils;
+import com.shuangduan.zcy.model.bean.StageBean;
+import com.shuangduan.zcy.vm.ProjectListVm;
+import com.shuangduan.zcy.vm.StageVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 import com.shuangduan.zcy.weight.datepicker.CustomDatePicker;
-import com.shuangduan.zcy.weight.selectorview.SelectorChildView;
-import com.shuangduan.zcy.weight.selectorview.SelectorParentView;
+import com.shuangduan.zcy.adapter.SelectorFirstAdapter;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -87,8 +81,9 @@ public class ProjectInfoListActivity extends BaseActivity {
     @BindView(R.id.line)
     View line;
 
-    private List<ProvinceBean> data;
-    private List<CityBean> dataCity;
+    private ProjectListVm projectListVm;
+    private StageVm stageVm;
+    private ProjectInfoAdapter projectInfoAdapter;
 
     @Override
     protected int initLayoutRes() {
@@ -100,23 +95,32 @@ public class ProjectInfoListActivity extends BaseActivity {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getResources().getStringArray(R.array.classify)[0]);
 
-        List<ProjectInfoBean> list = new ArrayList<>();
-        for (int i = 0; i < 11; i++) {
-            list.add(new ProjectInfoBean());
-        }
+        projectListVm = ViewModelProviders.of(this).get(ProjectListVm.class);
+        stageVm = ViewModelProviders.of(this).get(StageVm.class);
+
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
-        ProjectInfoAdapter projectInfoAdapter = new ProjectInfoAdapter(R.layout.item_project_info, list);
+        projectInfoAdapter = new ProjectInfoAdapter(R.layout.item_project_info, null);
         rv.setAdapter(projectInfoAdapter);
-        projectInfoAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                ActivityUtils.startActivity(ProjectDetailActivity.class);
-            }
+        projectInfoAdapter.setOnItemClickListener((adapter, view, position) -> ActivityUtils.startActivity(ProjectDetailActivity.class));
+
+        refresh.setEnableRefresh(false);
+        refresh.setOnLoadMoreListener(refreshLayout -> {
+            projectListVm.page++;
+            projectListVm.projectList();
         });
 
-        refresh.setEnableLoadMore(false);
-        refresh.setEnableRefresh(false);
+        projectListVm.init();
+        projectListVm.projectLiveData.observe(this, projectInfoBeans -> {
+            projectListVm.page = projectInfoBeans.getPage();
+            if (projectListVm.page == 1){
+                //初始数据
+                projectInfoAdapter.setNewData(projectInfoBeans.getList());
+            }else if (projectListVm.page > 1){
+                //加载更多的数据
+                projectInfoAdapter.addData(projectInfoBeans.getList());
+            }
+        });
     }
 
     @OnClick({R.id.iv_bar_back, R.id.iv_bar_right, R.id.ll_area, R.id.ll_stage, R.id.ll_type, R.id.ll_time, R.id.ll_subscribe, R.id.over})
@@ -128,7 +132,7 @@ public class ProjectInfoListActivity extends BaseActivity {
             case R.id.iv_bar_right:
                 break;
             case R.id.ll_area:
-                getAreaData();
+
                 break;
             case R.id.ll_stage:
                 getStageData();
@@ -150,9 +154,11 @@ public class ProjectInfoListActivity extends BaseActivity {
     }
 
     private CommonPopupWindow popupWindowArea;
-    private SelectorParentView rvProvince;
-    private SelectorChildView rvCity;
-    private void showPopArea(final List<ProvinceBean> data){
+    private RecyclerView rvProvince;
+    private RecyclerView rvCity;
+    private SelectorFirstAdapter provinceAdapter;
+    private SelectorSecondAdapter cityAdapter;
+    private void showPopArea(final List<StageBean> data){
         if (popupWindowArea == null){
             popupWindowArea = new CommonPopupWindow.Builder(this)
                     .setView(R.layout.dialog_area)
@@ -162,12 +168,24 @@ public class ProjectInfoListActivity extends BaseActivity {
                     .setViewOnclickListener((view, layoutResId) -> {
                         rvProvince = view.findViewById(R.id.rv_province);
                         rvCity = view.findViewById(R.id.rv_city);
-                        rvProvince.setData(data);
-                        dataCity = rvProvince.setCityData(0);
-                        rvCity.setData(dataCity);
+                        rvProvince.setLayoutManager(new LinearLayoutManager(this));
+                        rvCity.setLayoutManager(new LinearLayoutManager(this));
+                        provinceAdapter = new SelectorFirstAdapter(R.layout.item_province, data);
+                        cityAdapter = new SelectorSecondAdapter(R.layout.item_city, null);
+                        rvProvince.setAdapter(provinceAdapter);
+                        rvCity.setAdapter(cityAdapter);
 
-                        rvProvince.setOnDataChangeListener(position -> {
-                            rvCity.setData(rvProvince.setCityData(position));
+                        provinceAdapter.setOnItemClickListener((adapter, view1, position) -> {
+                            stageVm.clickFirst(position);
+                            stageVm.stageSecondLiveData.observe(ProjectInfoListActivity.this, stageBeans -> {
+                                cityAdapter.setNewData(stageBeans);
+                            });
+                        });
+                        cityAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                                stageVm.clickSecond(position);
+                            }
                         });
                     })
                     .create();
@@ -178,53 +196,16 @@ public class ProjectInfoListActivity extends BaseActivity {
         }else {
             //点击类型是切换，直接刷新数据
             if (rvProvince != null && rvProvince.getAdapter() != null){
-                rvProvince.setData(data);
-                rvProvince.getAdapter().notifyDataSetChanged();
+                provinceAdapter.setNewData(data);
             }
-            if (rvCity != null && rvCity.getAdapter() != null){
-                dataCity = rvProvince.setCityData(0);
-                rvCity.setData(dataCity);
-                rvCity.getAdapter().notifyDataSetChanged();
-            }
-        }
-    }
-
-    private void getAreaData(){
-        try {
-            InputStream is = getAssets().open("china_city_data");
-            int length = is.available();
-            byte[] buffer = new byte[length];
-            is.read(buffer);
-            String result = new String(buffer, "utf8");
-            LogUtils.i(result);
-            Gson gson = new Gson();
-            data = gson.fromJson(result, new TypeToken<ArrayList<ProvinceBean>>(){}.getType());
-
-            //初始化数据默认选中第一个
-            data.get(0).setIsSelect(1);
-
-            showPopArea(data);
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
     private void getStageData(){
-        data = new ArrayList<>();
-        for (int j = 0; j < 6; j++) {
-            List<CityBean> list = new ArrayList<>();
-            for (int i = 0; i < 8; i++) {
-                CityBean cityBean = new CityBean(0, "子阶段" + j + ":" + (i + 1));
-                list.add(cityBean);
-            }
-            ProvinceBean provinceBean = new ProvinceBean(0, "主阶段" + (j + 1), 0, list);
-            data.add(provinceBean);
-        }
-
-        //初始化数据默认选中第一个
-        data.get(0).setIsSelect(1);
-
-        showPopArea(data);
+        stageVm.init();
+        stageVm.stageFirstLiveData.observe(this, stageBeans -> {
+            showPopArea(stageBeans);
+        });
     }
 
     /**

@@ -16,6 +16,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.amap.api.maps.AMap;
+import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.LatLng;
@@ -67,7 +68,7 @@ public class ProjectInfoActivity extends BaseActivity {
     private PermissionVm permissionVm;
     MapView mMapView = null;
     AMap aMap = null;
-    private List<LatLonPoint> throughPointList;
+    private List<MapBean> throughPointList;
     private Marker targetMarker;
     private ProjectInfoVm projectInfoVm;
 
@@ -88,12 +89,9 @@ public class ProjectInfoActivity extends BaseActivity {
         mMapView.onCreate(savedInstanceState);// 此方法必须重写
 
         permissionVm = ViewModelProviders.of(this).get(PermissionVm.class);
-        permissionVm.getLiveData().observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer integer) {
-                if (integer == PermissionVm.PERMISSION_LOCATION){
-                    init();
-                }
+        permissionVm.getLiveData().observe(this, integer -> {
+            if (integer == PermissionVm.PERMISSION_LOCATION){
+                init();
             }
         });
         permissionVm.getPermissionLocation(new RxPermissions(this));
@@ -127,26 +125,18 @@ public class ProjectInfoActivity extends BaseActivity {
      * 设置一些amap的属性
      */
     private void setUpMap() {
+        aMap.moveCamera(CameraUpdateFactory.zoomTo(15));
         aMap.setMyLocationEnabled(true);// 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
         aMap.getUiSettings().setMyLocationButtonEnabled(true);// 设置默认定位按钮是否显示
         aMap.getUiSettings().setRotateGesturesEnabled(false);//设置地图不能旋转
         aMap.getUiSettings().setMyLocationButtonEnabled(false);//设置默认定位按钮是否显示，非必需设置。
-        aMap.setOnMyLocationChangeListener(new AMap.OnMyLocationChangeListener() {
-            @Override
-            public void onMyLocationChange(Location location) {
-                projectInfoVm.mapList(location.getLongitude(), location.getLatitude());
-                projectInfoVm.mapLiveData.observe(ProjectInfoActivity.this, new Observer<List<MapBean>>() {
-                    @Override
-                    public void onChanged(List<MapBean> mapBeans) {
-                        //marker经纬度数据
-                        throughPointList = new ArrayList<>();
-                        for (MapBean bean : mapBeans) {
-//                            throughPointList.add(bean.)
-                        }
-                        setMarker();
-                    }
-                });
-            }
+        aMap.setOnMyLocationChangeListener(location -> {
+            projectInfoVm.mapList(location.getLongitude(), location.getLatitude());
+            projectInfoVm.mapLiveData.observe(ProjectInfoActivity.this, mapBeans -> {
+                //marker经纬度数据
+                throughPointList = mapBeans != null ? mapBeans : new ArrayList<>();
+                setMarker();
+            });
         });
         setupLocationStyle();
     }
@@ -175,17 +165,22 @@ public class ProjectInfoActivity extends BaseActivity {
     private void setMarker() {
         //marker集合
         ArrayList<MarkerOptions> markers = new ArrayList<>();
-        for (int i = 0; i < throughPointList.size(); i++) {
+        for (MapBean mapBean : throughPointList) {
             MarkerOptions markerOptions = new MarkerOptions()
-                    .position(new LatLng(throughPointList.get(i).getLatitude(), throughPointList.get(i).getLongitude()))
+                    .position(new LatLng(mapBean.getLatitude(), mapBean.getLongitude()))
                     .visible(true)
-                    .title("济南莱芜" + i + 1 + "期")
+                    .title(mapBean.getTitle())
                     .infoWindowEnable(false)
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_marker));
             markers.add(markerOptions);
         }
+
         //添加marker
-        aMap.addMarkers(markers, true);
+        ArrayList<Marker> markerArrayList = aMap.addMarkers(markers, false);
+        for (int i = 0; i < markerArrayList.size(); i++) {
+            //遍历添加的marker,给marker添加额外数据
+            markerArrayList.get(i).setObject(i);
+        }
 
         aMap.setOnMarkerClickListener(marker -> {
             //点击的marker是定位的小蓝点，不走动画和弹窗
@@ -195,7 +190,7 @@ public class ProjectInfoActivity extends BaseActivity {
                 setMarkerAnim(targetMarker, 1.5f, 1, 1.5f, 1);
             }
             setMarkerAnim(marker, 1, 1.5f, 1, 1.5f);
-            showPopWindow(marker.getTitle());
+            showPopWindow(marker.getTitle(), (Integer) marker.getObject());
             return true;
         });
     }
@@ -219,7 +214,13 @@ public class ProjectInfoActivity extends BaseActivity {
     TextView tvReaders;
     TextView tvTime;
 
-    private void showPopWindow(String title) {
+    /**
+     * 显示信息弹窗
+     * @param title
+     * @param position
+     */
+    private void showPopWindow(String title, int position) {
+        MapBean mapBean = throughPointList.get(position);
         if (popupWindow == null) {
             popupWindow = new CommonPopupWindow.Builder(this)
                     .setView(R.layout.dialog_project_info)
@@ -240,10 +241,10 @@ public class ProjectInfoActivity extends BaseActivity {
                     .create();
         }
         tvTitle.setText(title);
-        tvContent.setText("项目简介项目简介项目简介项目简介项目简介项目简介项目简介项目简介");
-        tvType.setText("勘察设计");
-        tvReaders.setText(String.format(getString(R.string.format_num_of_readers), 12));
-        tvTime.setText(String.format(getString(R.string.format_update_time), "2018-6-9 15:55"));
+        tvContent.setText(mapBean.getIntro());
+        tvType.setText(mapBean.getPhases());
+        tvReaders.setText(String.format(getString(R.string.format_num_of_readers), mapBean.getSubscription_num()));
+        tvTime.setText(String.format(getString(R.string.format_update_time), mapBean.getUpdate_time()));
 
         if (!popupWindow.isShowing()) {
             popupWindow.showAtLocation(findViewById(android.R.id.content), Gravity.BOTTOM, 0, ConvertUtils.dp2px(45));

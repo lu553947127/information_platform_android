@@ -67,12 +67,25 @@
         android:layout_marginRight="40dp"/>
 
     <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/edt_verification_code"
+        android:visibility="invisible"
+        style="@style/MessageHint"
+        android:layout_below="@+id/edt_account"
+        android:layout_marginTop="14dp"
+        android:drawableLeft="@drawable/icon_verification_code"
+        android:inputType="number"
+        android:maxLength="6"
+        android:hint="@string/hint_SMS_verification_code"/>
+
+    <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/edt_pwd"
+        android:visibility="visible"
         style="@style/MessageHint"
         android:layout_below="@+id/edt_account"
         android:layout_marginTop="14dp"
         android:drawableLeft="@drawable/icon_verification_code"
         android:inputType="textPassword"
+        android:maxLength="20"
         android:hint="@string/hint_pwd"/>
 
     <androidx.appcompat.widget.AppCompatTextView

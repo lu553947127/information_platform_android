@@ -1,4 +1,4 @@
-package com.shuangduan.zcy.weight.selectorview;
+package com.shuangduan.zcy.model.bean;
 
 /**
  * @author 宁文强 QQ:858777523

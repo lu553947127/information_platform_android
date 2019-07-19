@@ -27,7 +27,6 @@ public class ProvinceAdapter extends BaseQuickAdapter<ProvinceBean, BaseViewHold
     @Override
     protected void convert(BaseViewHolder baseViewHolder, ProvinceBean provinceBean) {
         baseViewHolder.setText(R.id.tv_province, provinceBean.getName())
-                .addOnClickListener(R.id.tv_province)
                 .setVisible(R.id.mark, provinceBean.getIsSelect() == 1)
                 .setVisible(R.id.iv_more, provinceBean.getIsSelect() == 1);
 

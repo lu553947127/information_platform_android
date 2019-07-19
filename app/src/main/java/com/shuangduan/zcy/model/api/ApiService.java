@@ -5,10 +5,13 @@ import com.shuangduan.zcy.model.bean.BaseObjResponse;
 import com.shuangduan.zcy.model.bean.CityBean;
 import com.shuangduan.zcy.model.bean.LoginBean;
 import com.shuangduan.zcy.model.bean.MapBean;
+import com.shuangduan.zcy.model.bean.ProjectInfoBean;
 import com.shuangduan.zcy.model.bean.ProvinceBean;
 import com.shuangduan.zcy.model.bean.ReSetPwdBean;
 import com.shuangduan.zcy.model.bean.RegisterBean;
 import com.shuangduan.zcy.model.bean.SearchCompanyBean;
+import com.shuangduan.zcy.model.bean.StageBean;
+import com.shuangduan.zcy.model.bean.TypeBean;
 
 import io.reactivex.Flowable;
 import retrofit2.http.Field;
@@ -131,5 +134,32 @@ public interface ApiService {
             @Field("lng")double lng,
             @Field("lat")double lat
     );
+
+    @FormUrlEncoded
+    @POST("api/Project/dataList")
+    Flowable<BaseObjResponse<ProjectInfoBean>> projectList(
+            @Field("user_id")int user_id,
+            @Field("province")String province,
+            @Field("city[]")String[] city,
+            @Field("phases")String phases,
+            @Field("type[]")String[] type,
+            @Field("stime")String stime,
+            @Field("etime")String etime,
+            @Field("warrant_status")String warrant_status,
+            @Field("page")int page
+            );
+
+    @FormUrlEncoded
+    @POST("api/Project/getTypes")
+    Flowable<BaseListResponse<TypeBean>> projectTypes(
+            @Field("user_id")int user_id,
+            @Field("id")int id
+            );
+
+    @FormUrlEncoded
+    @POST("api/Project/getPhases")
+    Flowable<BaseListResponse<StageBean>> projectStage(
+            @Field("user_id")int user_id
+            );
 
 }

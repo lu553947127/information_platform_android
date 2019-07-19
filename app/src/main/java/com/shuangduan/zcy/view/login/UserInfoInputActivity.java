@@ -27,6 +27,7 @@ import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.BusinessExpDialog;
 import com.shuangduan.zcy.dialog.SexDialog;
 import com.shuangduan.zcy.dialog.SubscriptionTypeDialog;
+import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.event.CityEvent;
 import com.shuangduan.zcy.utils.AndroidBug5497Workaround;
 import com.shuangduan.zcy.view.MainActivity;
@@ -130,11 +131,21 @@ public class UserInfoInputActivity extends BaseActivity {
                         area,
                         exp,
                         edtProduction.getText().toString());
-                userInfoVm.infoLiveData.observe(this, new Observer() {
-                    @Override
-                    public void onChanged(Object o) {
-                        SPUtils.getInstance().put(SpConfig.INFO_STATUS, 1);
-                        finish();
+                userInfoVm.infoLiveData.observe(this, o -> {
+                    SPUtils.getInstance().put(SpConfig.INFO_STATUS, 1);
+                    finish();
+                });
+                userInfoVm.pageStateLiveData.observe(this, s -> {
+                    switch (s){
+                        case PageState.PAGE_LOADING:
+                            showLoading();
+                            break;
+                        case PageState.PAGE_NET_ERROR:
+                            ToastUtils.showShort(getString(R.string.net_not));
+                            break;
+                            default:
+                                hideLoading();
+                                break;
                     }
                 });
                 break;

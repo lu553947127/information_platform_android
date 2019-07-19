@@ -1,11 +1,18 @@
 package com.shuangduan.zcy.model.api.repository;
 
+import androidx.lifecycle.MutableLiveData;
+
+import com.blankj.utilcode.util.NetworkUtils;
 import com.shuangduan.zcy.model.api.ApiService;
+import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
 import com.shuangduan.zcy.model.api.rxjava.BaseSubscriber;
 
+import org.reactivestreams.Subscription;
+
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -25,6 +32,7 @@ public class BaseRepository<T> {
     /*解决背压*/
     private Flowable<T> flowable;
     public final ApiService apiService;
+    public MutableLiveData<String> pageStateLiveData;
 
     /*初始化*/
     public BaseRepository() {
@@ -53,4 +61,7 @@ public class BaseRepository<T> {
         return this;
     }
 
+    public MutableLiveData<String> getPageStateLiveData() {
+        return pageStateLiveData !=null? pageStateLiveData: new MutableLiveData<>();
+    }
 }

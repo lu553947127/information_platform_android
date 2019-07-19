@@ -35,6 +35,7 @@ public class LoginVm extends BaseViewModel {
     public MutableLiveData smsDataLiveData;
     public MutableLiveData<LoginBean> accountLoginLiveData;
     public MutableLiveData<RegisterBean> registerLiveData;
+    public MutableLiveData<String> pageStateLiveData;
 
     public LoginVm() {
         timeLiveDataLiveData = new MutableLiveData<>();
@@ -61,19 +62,27 @@ public class LoginVm extends BaseViewModel {
     }
 
     public void smsCode(String tel, int type){
-        smsDataLiveData = new LoginRepository().smsCode(tel, type);
+        LoginRepository loginRepository = new LoginRepository();
+        smsDataLiveData = loginRepository.smsCode(tel, type);
+        pageStateLiveData = loginRepository.getPageStateLiveData();
     }
 
     public void codeLogin(String tel, String code, String client_id){
-        accountLoginLiveData = new LoginRepository().codeLogin(tel, code, client_id);
+        LoginRepository loginRepository = new LoginRepository();
+        accountLoginLiveData = loginRepository.codeLogin(tel, code, client_id);
+        pageStateLiveData = loginRepository.getPageStateLiveData();
     }
 
     public void accountLogin(String tel, String pwd, String client_id){
-        accountLoginLiveData = new LoginRepository().accountLogin(tel, pwd, client_id);
+        LoginRepository loginRepository = new LoginRepository();
+        accountLoginLiveData = loginRepository.accountLogin(tel, pwd, client_id);
+        pageStateLiveData = loginRepository.getPageStateLiveData();
     }
 
     public void register(String tel, String code, String pwd, String invite_tel){
-        registerLiveData = new LoginRepository().register(tel, code, pwd, invite_tel);
+        LoginRepository loginRepository = new LoginRepository();
+        registerLiveData = loginRepository.register(tel, code, pwd, invite_tel);
+        pageStateLiveData = loginRepository.getPageStateLiveData();
     }
 
 }

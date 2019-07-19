@@ -20,6 +20,7 @@ import com.shuangduan.zcy.model.api.repository.UserRepository;
 public class UserInfoVm extends BaseViewModel {
 
     public MutableLiveData infoLiveData;
+    public MutableLiveData<String> pageStateLiveData;
 
     private int userId;
 
@@ -28,7 +29,9 @@ public class UserInfoVm extends BaseViewModel {
     }
 
     public void infoSet(String username, int sex, String company, String position, Integer[] business_city, int experience, String managing_products){
-        infoLiveData = new UserRepository().setInfo(userId, username, sex, company, position, business_city, experience, managing_products);
+        UserRepository userRepository = new UserRepository();
+        infoLiveData = userRepository.setInfo(userId, username, sex, company, position, business_city, experience, managing_products);
+        pageStateLiveData = userRepository.getPageStateLiveData();
     }
 
 }

@@ -14,11 +14,13 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.DeviceUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
+import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.utils.AndroidBug5497Workaround;
 import com.shuangduan.zcy.view.MainActivity;
 import com.shuangduan.zcy.vm.LoginVm;
@@ -50,6 +52,8 @@ public class LoginActivity extends BaseActivity {
     AppCompatTextView tvAccountNull;
     @BindView(R.id.edt_pwd)
     AppCompatEditText edtPwd;
+    @BindView(R.id.edt_verification_code)
+    AppCompatEditText edtVerificationCode;
     @BindView(R.id.tv_send_verification_code)
     AppCompatTextView tvSendVerificationCode;
     @BindView(R.id.tv_forget_pwd)
@@ -114,12 +118,9 @@ public class LoginActivity extends BaseActivity {
             return;
         }
         loginVm.smsCode(edtAccount.getText().toString(), LoginVm.SMS_LOGIN);
-        loginVm.smsDataLiveData.observe(this, new Observer() {
-            @Override
-            public void onChanged(Object o) {
-                tvSendVerificationCode.setClickable(false);
-                loginVm.sendVerificationCode();
-            }
+        loginVm.smsDataLiveData.observe(this, o -> {
+            tvSendVerificationCode.setClickable(false);
+            loginVm.sendVerificationCode();
         });
     }
 
@@ -128,16 +129,21 @@ public class LoginActivity extends BaseActivity {
             ToastUtils.showShort(getString(loginStyle == LOGIN_ACCOUNT ? R.string.account_error:R.string.mobile_error));
             return;
         }
-        if (TextUtils.isEmpty(edtPwd.getText())) {
-            ToastUtils.showShort(getString(loginStyle == LOGIN_ACCOUNT ? R.string.pwd_error:R.string.sms_error));
-            return;
-        }
         String account = Objects.requireNonNull(edtAccount.getText()).toString();
         String pwd = Objects.requireNonNull(edtPwd.getText()).toString();
+        String verificationCode = Objects.requireNonNull(edtVerificationCode.getText()).toString();
         if (loginStyle == LOGIN_ACCOUNT){
+            if (TextUtils.isEmpty(edtPwd.getText())) {
+                ToastUtils.showShort(R.string.pwd_error);
+                return;
+            }
             loginVm.accountLogin(account, pwd, DeviceUtils.getAndroidID());
         }else {
-            loginVm.codeLogin(account, pwd, DeviceUtils.getAndroidID());
+            if (TextUtils.isEmpty(edtVerificationCode.getText())) {
+                ToastUtils.showShort(getString(R.string.sms_error));
+                return;
+            }
+            loginVm.codeLogin(account, verificationCode, DeviceUtils.getAndroidID());
         }
         loginVm.accountLoginLiveData.observe(this, loginBean -> {
             SPUtils.getInstance().put(SpConfig.USER_ID, loginBean.getUser_id());
@@ -146,6 +152,20 @@ public class LoginActivity extends BaseActivity {
             SPUtils.getInstance().put(SpConfig.INFO_STATUS, loginBean.getInfo_status());
             ActivityUtils.startActivity(MainActivity.class);
             finish();
+        });
+        loginVm.pageStateLiveData.observe(this, s -> {
+            LogUtils.i(s);
+            switch (s){
+                case PageState.PAGE_LOADING:
+                    showLoading();
+                    break;
+                case PageState.PAGE_NET_ERROR:
+                    ToastUtils.showShort(getString(R.string.net_not));
+                    break;
+                default:
+                    hideLoading();
+                    break;
+            }
         });
     }
 
@@ -161,10 +181,8 @@ public class LoginActivity extends BaseActivity {
                 tvLoginVerificationCode.setTextColor(getResources().getColor(R.color.colorTvHint));
                 tvLoginAccount.setTextSize(19);
                 tvLoginVerificationCode.setTextSize(13);
-                edtPwd.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                edtPwd.setText("");
-                edtPwd.setHint(getString(R.string.hint_pwd));
-                edtPwd.setFilters(new InputFilter[]{new InputFilter.LengthFilter(20)});
+                edtPwd.setVisibility(View.VISIBLE);
+                edtVerificationCode.setVisibility(View.INVISIBLE);
                 tvSendVerificationCode.setVisibility(View.INVISIBLE);
                 tvForgetPwd.setVisibility(View.VISIBLE);
                 break;
@@ -173,10 +191,8 @@ public class LoginActivity extends BaseActivity {
                 tvLoginVerificationCode.setTextColor(getResources().getColor(R.color.colorTv));
                 tvLoginAccount.setTextSize(13);
                 tvLoginVerificationCode.setTextSize(19);
-                edtPwd.setInputType(InputType.TYPE_CLASS_NUMBER);
-                edtPwd.setText("");
-                edtPwd.setHint(getString(R.string.hint_SMS_verification_code));
-                edtPwd.setFilters(new InputFilter[]{new InputFilter.LengthFilter(6)});
+                edtPwd.setVisibility(View.INVISIBLE);
+                edtVerificationCode.setVisibility(View.VISIBLE);
                 tvSendVerificationCode.setVisibility(View.VISIBLE);
                 tvForgetPwd.setVisibility(View.INVISIBLE);
                 break;

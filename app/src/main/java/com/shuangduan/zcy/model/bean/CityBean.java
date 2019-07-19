@@ -3,8 +3,6 @@ package com.shuangduan.zcy.model.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.shuangduan.zcy.weight.selectorview.BaseSelectorBean;
-
 /**
  * @author 宁文强 QQ:858777523
  * @name information_platform_android

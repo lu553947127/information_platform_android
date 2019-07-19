@@ -16,6 +16,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
+import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.RegisterBean;
 import com.shuangduan.zcy.utils.AndroidBug5497Workaround;
 import com.shuangduan.zcy.view.MainActivity;
@@ -100,25 +101,29 @@ public class RegisterActivity extends BaseActivity {
         }
         //注册
         loginVm.register(edtMobile.getText().toString(), edtVerificationCode.getText().toString(), edtPwd.getText().toString(), Objects.requireNonNull(edtMobileInvite.getText()).toString());
-        loginVm.registerLiveData.observe(this, new Observer<RegisterBean>() {
-            @Override
-            public void onChanged(RegisterBean registerBean) {
-                //注册成功走一遍登录
-                loginVm.accountLogin(edtMobile.getText().toString(), edtPwd.getText().toString(), DeviceUtils.getAndroidID());
-                loginVm.accountLoginLiveData.observe(RegisterActivity.this, loginBean -> {
-                    SPUtils.getInstance().put(SpConfig.USER_ID, loginBean.getUser_id());
-                    SPUtils.getInstance().put(SpConfig.TOKEN, loginBean.getToken());
-                    SPUtils.getInstance().put(SpConfig.MOBILE, loginBean.getTel());
-                    SPUtils.getInstance().put(SpConfig.INFO_STATUS, loginBean.getInfo_status());
-                    ActivityUtils.startActivity(MainActivity.class);
-                    finish();
-                });
-            }
+        loginVm.registerLiveData.observe(this, registerBean -> {
+            //注册成功走一遍登录
+            loginVm.accountLogin(edtMobile.getText().toString(), edtPwd.getText().toString(), DeviceUtils.getAndroidID());
+            loginVm.accountLoginLiveData.observe(RegisterActivity.this, loginBean -> {
+                SPUtils.getInstance().put(SpConfig.USER_ID, loginBean.getUser_id());
+                SPUtils.getInstance().put(SpConfig.TOKEN, loginBean.getToken());
+                SPUtils.getInstance().put(SpConfig.MOBILE, loginBean.getTel());
+                SPUtils.getInstance().put(SpConfig.INFO_STATUS, loginBean.getInfo_status());
+                ActivityUtils.startActivity(MainActivity.class);
+                finish();
+            });
         });
-        loginVm.registerLiveData.observe(this, new Observer<RegisterBean>() {
-            @Override
-            public void onChanged(RegisterBean registerBean) {
-
+        loginVm.pageStateLiveData.observe(this, s -> {
+            switch (s){
+                case PageState.PAGE_LOADING:
+                    showLoading();
+                    break;
+                case PageState.PAGE_NET_ERROR:
+                    ToastUtils.showShort(getString(R.string.net_not));
+                    break;
+                default:
+                    hideLoading();
+                    break;
             }
         });
     }
@@ -129,13 +134,10 @@ public class RegisterActivity extends BaseActivity {
             return;
         }
         loginVm.smsCode(edtMobile.getText().toString(), LoginVm.SMS_REGISTER);
-        loginVm.smsDataLiveData.observe(this, new Observer() {
-            @Override
-            public void onChanged(Object o) {
-                tvSendVerificationCode.setClickable(false);
-                loginVm.sendVerificationCode();
-                ToastUtils.showShort(getString(R.string.send_verification_code_success));
-            }
+        loginVm.smsDataLiveData.observe(this, o -> {
+            tvSendVerificationCode.setClickable(false);
+            loginVm.sendVerificationCode();
+            ToastUtils.showShort(getString(R.string.send_verification_code_success));
         });
     }
 
