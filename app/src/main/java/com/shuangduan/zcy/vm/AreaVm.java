@@ -7,7 +7,6 @@ import com.blankj.utilcode.util.StringUtils;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseViewModel;
 import com.shuangduan.zcy.model.api.repository.ProjectRepository;
-import com.shuangduan.zcy.model.bean.BaseListResponse;
 import com.shuangduan.zcy.model.bean.CityBean;
 import com.shuangduan.zcy.model.bean.ProvinceBean;
 
@@ -57,16 +56,16 @@ public class AreaVm extends BaseViewModel {
      */
     public void setProvinceInit(){
         if (!pronvinceInited){
-            List<ProvinceBean> provinceList = provinceLiveData.getValue();
-            //初始化数据默认选中第一个
-            if (provinceList != null) {
-                provinceList.get(0).setIsSelect(1);
-                provinceLiveData.postValue(provinceList);
+            //初始化省份数据，默认选中第一个省份
+            List<ProvinceBean> list = provinceLiveData.getValue();
+            if (list != null && list.size() > 0){
+                list.get(0).setIsSelect(1);
+                provinceLiveData.postValue(list);
                 pronvinceInited = true;
-
-                //默认获取第一个省份的市区
-                getCity(0);
             }
+        }else {
+            //省份被选定后才开始请求城市数据
+            getCity(positionProvinceNow);
         }
     }
 
@@ -104,7 +103,6 @@ public class AreaVm extends BaseViewModel {
         provinceList.get(positionProvinceNow).setIsSelect(0);
         provinceList.get(position).setIsSelect(1);
         provinceLiveData.postValue(provinceList);
-        getCity(position);
         positionProvinceNow = position;
     }
 
@@ -165,17 +163,19 @@ public class AreaVm extends BaseViewModel {
     /**
      * 获取城市选择结果,id
      */
-    public Integer[] getResult(){
+    public int[] getResult(){
         List<CityBean> dataCity = cityLiveData.getValue();
         StringBuilder builder = new StringBuilder();
-        List<Integer> list = new ArrayList<>();
+        int[] citys = null;
         for (int i = 1; i < dataCity.size(); i++) {
             if (dataCity.get(i).getIsSelect() == 1) {
                 builder.append(dataCity.get(i).getName());
-                list.add(dataCity.get(i).getId());
+                if (citys == null){
+                    citys = new int[dataCity.size()];
+                }
+                citys[i] = dataCity.get(i).getId();
             }
         }
-        Integer[] citys = list.toArray(new Integer[list.size()]);
         cityResult = builder.toString();
         return citys;
     }
@@ -188,12 +188,17 @@ public class AreaVm extends BaseViewModel {
             return cityResult;
         List<CityBean> dataCity = cityLiveData.getValue();
         StringBuilder builder = new StringBuilder();
+        builder.append(provinceLiveData.getValue().get(positionProvinceNow).getName());
         for (int i = 1; i < dataCity.size(); i++) {
             if (dataCity.get(i).getIsSelect() == 1) {
                 builder.append(dataCity.get(i).getName());
             }
         }
         return builder.toString();
+    }
+
+    public int getProvinceId(){
+        return provinceLiveData.getValue().get(positionProvinceNow).getId();
     }
 
 }

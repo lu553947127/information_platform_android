@@ -11,6 +11,7 @@ package com.shuangduan.zcy.model.bean;
  * @class describe
  */
 public class BaseSelectorBean {
+
     public int isSelect;
 
     public int getIsSelect() {
@@ -20,4 +21,5 @@ public class BaseSelectorBean {
     public void setIsSelect(int isSelect) {
         this.isSelect = isSelect;
     }
+
 }

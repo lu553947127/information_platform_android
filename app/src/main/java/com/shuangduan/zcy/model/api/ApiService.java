@@ -140,9 +140,9 @@ public interface ApiService {
     Flowable<BaseObjResponse<ProjectInfoBean>> projectList(
             @Field("user_id")int user_id,
             @Field("province")String province,
-            @Field("city[]")String[] city,
+            @Field("city[]")int[] city,
             @Field("phases")String phases,
-            @Field("type[]")String[] type,
+            @Field("type[]")int[] type,
             @Field("stime")String stime,
             @Field("etime")String etime,
             @Field("warrant_status")String warrant_status,

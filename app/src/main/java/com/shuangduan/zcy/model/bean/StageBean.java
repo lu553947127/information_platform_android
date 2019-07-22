@@ -13,7 +13,7 @@ package com.shuangduan.zcy.model.bean;
 public class StageBean extends BaseSelectorBean {
     private int id;
     private int parentid;
-    private String catname;
+    private String phases_name;
 
     public int getId() {
         return id;
@@ -31,12 +31,11 @@ public class StageBean extends BaseSelectorBean {
         this.parentid = parentid;
     }
 
-    public String getCatname() {
-        return catname;
+    public String getPhases_name() {
+        return phases_name;
     }
 
-    public void setCatname(String catname) {
-        this.catname = catname;
+    public void setPhases_name(String phases_name) {
+        this.phases_name = phases_name;
     }
-
 }

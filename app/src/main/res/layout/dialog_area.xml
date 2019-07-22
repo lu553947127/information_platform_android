@@ -3,22 +3,170 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:background="@color/colorFFF">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_province"
-            android:layout_width="125dp"
-            android:layout_height="match_parent"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_city"
+        <LinearLayout
+            android:id="@+id/ll_area"
+            android:visibility="gone"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="250dp"
+            android:orientation="horizontal">
 
-    </LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_province"
+                android:layout_width="125dp"
+                android:layout_height="match_parent"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_city"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_stage"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:orientation="horizontal">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_stage_first"
+                android:layout_width="125dp"
+                android:layout_height="match_parent"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_stage_second"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_type"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:orientation="horizontal">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_type_first"
+                android:layout_width="125dp"
+                android:layout_height="match_parent"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_type_second"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_time"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp">
+
+            <TextView
+                android:id="@+id/tv_time_end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:textColor="@color/color_666666"
+                android:textSize="14sp"
+                android:text="@string/starting_time_period"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="74dp"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/color_666666"
+                android:textSize="13sp"
+                android:text="至"/>
+
+            <TextView
+                android:id="@+id/tv_time_start"
+                android:layout_width="150dp"
+                android:layout_height="32dp"
+                android:gravity="center"
+                android:layout_marginLeft="25dp"
+                android:background="@drawable/shape_f4f2f7_16"
+                android:layout_marginTop="64dp"
+                android:textColorHint="@color/colorTvHint"
+                android:textColor="@color/color_666666"
+                android:textSize="14sp"
+                android:text="@string/time_start"/>
+
+            <TextView
+                android:id="@+id/time_end"
+                android:layout_width="150dp"
+                android:layout_height="32dp"
+                android:gravity="center"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="25dp"
+                android:background="@drawable/shape_f4f2f7_16"
+                android:layout_marginTop="64dp"
+                android:textColorHint="@color/colorTvHint"
+                android:textColor="@color/color_666666"
+                android:textSize="14sp"
+                android:text="@string/time_end"/>
+
+        </RelativeLayout>
+
+        <FrameLayout
+            android:id="@+id/fl_subscription"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:textColor="@color/color_666666"
+                android:textSize="14sp"
+                android:text="@string/please_select"/>
+
+            <CheckBox
+                android:id="@+id/cb_unsubscribe"
+                android:layout_width="66dp"
+                android:layout_height="22dp"
+                android:button="@null"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="64dp"
+                android:gravity="center"
+                android:background="@drawable/selector_bg_flex_box"
+                android:textColor="@color/selector_flex_box"
+                android:textSize="12sp"
+                android:text="@string/unsubscribe"/>
+
+            <CheckBox
+                android:id="@+id/cb_subscribe"
+                android:layout_width="66dp"
+                android:layout_height="22dp"
+                android:button="@null"
+                android:layout_marginLeft="106dp"
+                android:layout_marginTop="64dp"
+                android:gravity="center"
+                android:background="@drawable/selector_bg_flex_box"
+                android:textColor="@color/selector_flex_box"
+                android:textSize="12sp"
+                android:text="@string/subscribe"/>
+
+        </FrameLayout>
+
+    </FrameLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

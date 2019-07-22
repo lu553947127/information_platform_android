@@ -1,5 +1,9 @@
 package com.shuangduan.zcy.vm;
 
+import android.util.SparseArray;
+import android.util.SparseBooleanArray;
+
+import androidx.collection.SparseArrayCompat;
 import androidx.lifecycle.MutableLiveData;
 
 import com.blankj.utilcode.util.SPUtils;
@@ -7,7 +11,8 @@ import com.blankj.utilcode.util.StringUtils;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseViewModel;
 import com.shuangduan.zcy.model.api.repository.ProjectRepository;
-import com.shuangduan.zcy.model.bean.StageBean;
+import com.shuangduan.zcy.model.bean.MultiSelectBean;
+import com.shuangduan.zcy.model.bean.TypeBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,19 +22,18 @@ import java.util.List;
  * @name information_platform_android
  * @class name：com.shuangduan.zcy.vm
  * @class describe  工程信息列表类型分类
- * @time 2019/7/19 15:40
+ * @time 2019/7/22 14:32
  * @change
  * @chang time
  * @class describe
  */
-public class StageVm extends BaseViewModel {
-
-    public MutableLiveData<List<StageBean>> stageFirstLiveData;
-    public MutableLiveData<List<StageBean>> stageSecondLiveData;
+public class TypesVm extends BaseViewModel {
+    public MutableLiveData<List<TypeBean>> typeFirstLiveData;
+    public MutableLiveData<List<TypeBean>> typeSecondLiveData;
     public MutableLiveData<String> pageStateLiveData;
     private int userId;
     public int id;//分类id  0为一级
-    public int positionFirstNow = 0;
+    public int positionFirstNow = 1;
     private String secondResult = "";
     private boolean firstInited = false;
 
@@ -38,57 +42,66 @@ public class StageVm extends BaseViewModel {
      */
     public void init(){
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
-        stageSecondLiveData = new MutableLiveData<>();
+        typeSecondLiveData = new MutableLiveData<>();
         id = 0;
         getStageFirst();
     }
 
     public void getStageFirst(){
         ProjectRepository projectRepository = new ProjectRepository();
-        stageFirstLiveData = projectRepository.projectStage(userId);
+        typeFirstLiveData = projectRepository.projectTypes(userId, id);
         pageStateLiveData = projectRepository.getPageStateLiveData();
     }
 
     /**
      * 设置省份默认数据
      */
-    public void setProvinceInit(){
+    public void setTypeFirstInit(){
         if (!firstInited){
+            List<TypeBean> list = typeFirstLiveData.getValue();
             //初始化省份数据，默认选中第一个省份
-            List<StageBean> list = stageFirstLiveData.getValue();
             if (list != null && list.size() > 0){
-                list.get(0).setIsSelect(1);
-                stageFirstLiveData.postValue(list);
+                //没有添加全部选项的添加
+                if (!list.get(0).getCatname().equals("全部")){
+                    TypeBean typeBean = new TypeBean();
+                    typeBean.setCatname("全部");
+                    typeBean.setId(0);
+                    typeBean.setIsSelect(0);
+                    list.add(0, typeBean);
+                }
+
+                //初始化选中一级第一个
+                list.get(positionFirstNow).setIsSelect(1);
+                typeFirstLiveData.postValue(list);
+
                 firstInited = true;
             }
         }else {
             //省份被选定后才开始请求城市数据
-            getCity(positionFirstNow);
+            getSecond(positionFirstNow);
         }
     }
 
-    public void getCity(int position){
-        id = stageFirstLiveData.getValue().get(position).getId();
+    public void getSecond(int position){
+        id = typeFirstLiveData.getValue().get(position).getId();
         ProjectRepository projectRepository = new ProjectRepository();
-//        stageSecondLiveData = projectRepository.projectStage(userId);
-        // TODO: 2019/7/22 目前没有二级数据 ，有则采用上面注释的部分，逻辑同类型板块
-        stageSecondLiveData = new MutableLiveData<>();
+        typeSecondLiveData = projectRepository.projectTypes(userId, id);
     }
 
     /**
      * 设置默认的城市状态
      */
-    public void setCityInit(){
-        List<StageBean> cityList = stageSecondLiveData.getValue();
-        if (cityList != null){
+    public void setTypeSecondInit(){
+        List<TypeBean> cityList = typeSecondLiveData.getValue();
+        if (cityList != null && cityList.size() > 0){
             //没有添加全部选项的添加
-            if (!cityList.get(0).getPhases_name().equals("全部")){
-                StageBean stageBean = new StageBean();
-                stageBean.setPhases_name("全部");
-                stageBean.setId(0);
-                stageBean.setIsSelect(0);
-                cityList.add(0, stageBean);
-                stageSecondLiveData.postValue(cityList);
+            if (!cityList.get(0).getCatname().equals("全部")){
+                TypeBean typeBean = new TypeBean();
+                typeBean.setCatname("全部");
+                typeBean.setId(0);
+                typeBean.setIsSelect(0);
+                cityList.add(0, typeBean);
+                typeSecondLiveData.postValue(cityList);
             }
         }
     }
@@ -98,11 +111,11 @@ public class StageVm extends BaseViewModel {
      */
     public void clickFirst(int position){
         if (positionFirstNow == position) return;
-        List<StageBean> provinceList = stageFirstLiveData.getValue();
+        List<TypeBean> provinceList = typeFirstLiveData.getValue();
         //选中状态：未选中0，选中1
         provinceList.get(positionFirstNow).setIsSelect(0);
         provinceList.get(position).setIsSelect(1);
-        stageFirstLiveData.postValue(provinceList);
+        typeFirstLiveData.postValue(provinceList);
         positionFirstNow = position;
     }
 
@@ -110,7 +123,7 @@ public class StageVm extends BaseViewModel {
      * 点击二级分类
      */
     public void clickSecond(int i){
-        List<StageBean> data = stageSecondLiveData.getValue();
+        List<TypeBean> data = typeSecondLiveData.getValue();
         /*//点击城市后，如果存在上一个选择的省份，则将上一个省份的选中城市清空
             if (positionProvincePrevious >= 0){
                 setCitySelectState(positionProvincePrevious);
@@ -147,14 +160,14 @@ public class StageVm extends BaseViewModel {
                 }
             }
         }
-        stageSecondLiveData.postValue(data);
+        typeSecondLiveData.postValue(data);
     }
 
     /**
-     * 修改所有数据选中状态
+     * 修改二级单一所有数据选中状态
      * @param i
      */
-    public void setSelectState(List<StageBean> data, int i){
+    private void setSelectState(List<TypeBean> data, int i){
         for (int j = 0; j < data.size(); j++) {
             data.get(j).setIsSelect(i);
         }
@@ -163,19 +176,21 @@ public class StageVm extends BaseViewModel {
     /**
      * 获取城市选择结果,id
      */
-    public Integer[] getResult(){
-        List<StageBean> dataCity = stageSecondLiveData.getValue();
+    public int[] getResult(){
+        List<TypeBean> dataCity = typeSecondLiveData.getValue();
         StringBuilder builder = new StringBuilder();
-        List<Integer> list = new ArrayList<>();
+        int[] result = null;
         for (int i = 1; i < dataCity.size(); i++) {
             if (dataCity.get(i).getIsSelect() == 1) {
-                builder.append(dataCity.get(i).getPhases_name());
-                list.add(dataCity.get(i).getId());
+                builder.append(dataCity.get(i).getCatname());
+                if (result == null){
+                    result = new int[dataCity.size()];
+                }
+                result[i] = dataCity.get(i).getId();
             }
         }
-        Integer[] citys = list.toArray(new Integer[list.size()]);
         secondResult = builder.toString();
-        return citys;
+        return result;
     }
 
     /**
@@ -184,18 +199,17 @@ public class StageVm extends BaseViewModel {
     public String getStringResult(){
         if (!StringUtils.isTrimEmpty(secondResult))
             return secondResult;
-        List<StageBean> dataCity = stageSecondLiveData.getValue();
+        List<TypeBean> dataCity = typeSecondLiveData.getValue();
         StringBuilder builder = new StringBuilder();
         for (int i = 1; i < dataCity.size(); i++) {
             if (dataCity.get(i).getIsSelect() == 1) {
-                builder.append(dataCity.get(i).getPhases_name());
+                builder.append(dataCity.get(i).getCatname());
             }
         }
         return builder.toString();
     }
 
-    public int getFirstId(){
-        return stageFirstLiveData.getValue().get(positionFirstNow).getId();
+    private String getKey(int i, int j){
+        return i + "-" + j;
     }
-
 }

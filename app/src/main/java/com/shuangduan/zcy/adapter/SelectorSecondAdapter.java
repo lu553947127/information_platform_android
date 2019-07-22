@@ -8,6 +8,7 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.model.bean.CityBean;
 import com.shuangduan.zcy.model.bean.StageBean;
 import com.shuangduan.zcy.model.bean.BaseSelectorBean;
+import com.shuangduan.zcy.model.bean.TypeBean;
 
 import java.util.List;
 
@@ -30,14 +31,17 @@ public class SelectorSecondAdapter<T  extends BaseSelectorBean> extends BaseQuic
     @Override
     protected void convert(BaseViewHolder helper, T item) {
         if (item instanceof CityBean){
-            helper.setText(R.id.tv_city, ((CityBean) item).getName())
-                    .addOnClickListener(R.id.tv_city);
+            helper.setText(R.id.tv_city, ((CityBean) item).getName());
 
             helper.getView(R.id.tv_city).setSelected(item.getIsSelect() == 1);
             helper.getView(R.id.iv_mark).setSelected(item.getIsSelect() == 1);
         }else if (item instanceof StageBean){
-            helper.setText(R.id.tv_city, ((StageBean) item).getCatname())
-                    .addOnClickListener(R.id.tv_city);
+            helper.setText(R.id.tv_city, ((StageBean) item).getPhases_name());
+
+            helper.getView(R.id.tv_city).setSelected(item.getIsSelect() == 1);
+            helper.getView(R.id.iv_mark).setSelected(item.getIsSelect() == 1);
+        }else if (item instanceof TypeBean){
+            helper.setText(R.id.tv_city, ((TypeBean) item).getCatname());
 
             helper.getView(R.id.tv_city).setSelected(item.getIsSelect() == 1);
             helper.getView(R.id.iv_mark).setSelected(item.getIsSelect() == 1);

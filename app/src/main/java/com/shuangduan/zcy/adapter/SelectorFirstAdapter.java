@@ -8,6 +8,7 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.model.bean.ProvinceBean;
 import com.shuangduan.zcy.model.bean.StageBean;
 import com.shuangduan.zcy.model.bean.BaseSelectorBean;
+import com.shuangduan.zcy.model.bean.TypeBean;
 
 import java.util.List;
 
@@ -36,7 +37,13 @@ public class SelectorFirstAdapter<T  extends BaseSelectorBean> extends BaseQuick
 
             helper.getView(R.id.tv_province).setSelected(item.getIsSelect() == 1);
         }else if (item instanceof StageBean){
-            helper.setText(R.id.tv_province, ((StageBean) item).getCatname())
+            helper.setText(R.id.tv_province, ((StageBean) item).getPhases_name())
+                    .setVisible(R.id.mark, item.getIsSelect() == 1)
+                    .setVisible(R.id.iv_more, item.getIsSelect() == 1);
+
+            helper.getView(R.id.tv_province).setSelected(item.getIsSelect() == 1);
+        }else if (item instanceof TypeBean){
+            helper.setText(R.id.tv_province, ((TypeBean) item).getCatname())
                     .setVisible(R.id.mark, item.getIsSelect() == 1)
                     .setVisible(R.id.iv_more, item.getIsSelect() == 1);
 

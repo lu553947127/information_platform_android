@@ -25,13 +25,13 @@ public class ProjectListVm extends BaseViewModel {
     public MutableLiveData<ProjectInfoBean> projectLiveData;
     private int userId;
     public int page = 1;
-    private String province = null;
-    private String[] city = null;
-    private String phases = null;
-    private String[] type = null;
-    private String stime = null;
-    private String etime = null;
-    private String warrant_status = null;
+    public String province = null;
+    public int[] city = null;
+    public String phases = null;
+    public int[] type = null;
+    public String stime = null;
+    public String etime = null;
+    public String warrant_status = null;
 
     /**
      * 初始化数据

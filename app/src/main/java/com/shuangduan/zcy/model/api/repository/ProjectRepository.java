@@ -3,8 +3,6 @@ package com.shuangduan.zcy.model.api.repository;
 import androidx.lifecycle.MutableLiveData;
 
 import com.shuangduan.zcy.model.api.rxjava.BaseSubscriber;
-import com.shuangduan.zcy.model.bean.BaseListResponse;
-import com.shuangduan.zcy.model.bean.BaseObjResponse;
 import com.shuangduan.zcy.model.bean.CityBean;
 import com.shuangduan.zcy.model.bean.MapBean;
 import com.shuangduan.zcy.model.bean.ProjectInfoBean;
@@ -29,7 +27,8 @@ public class ProjectRepository extends BaseRepository {
     public MutableLiveData<List<ProvinceBean>> getProvince(int user_id){
         BaseSubscriber subscriber = request(apiService.getProvince(user_id)).send();
         pageStateLiveData = subscriber.getPageState();
-        return subscriber.getDataList();
+        MutableLiveData<List<ProvinceBean>> dataList = subscriber.getDataList();
+        return dataList;
     }
 
     public MutableLiveData<List<CityBean>> getCity(int user_id, int id){
@@ -44,7 +43,7 @@ public class ProjectRepository extends BaseRepository {
         return subscriber.getDataList();
     }
 
-    public MutableLiveData<ProjectInfoBean> projectList(int user_id, String province, String[] city, String phases, String[] type, String stime, String etime, String warrant_status, int page){
+    public MutableLiveData<ProjectInfoBean> projectList(int user_id, String province, int[] city, String phases, int[] type, String stime, String etime, String warrant_status, int page){
         BaseSubscriber subscriber = request(apiService.projectList(user_id, province, city, phases, type, stime, etime, warrant_status, page)).send();
         pageStateLiveData = subscriber.getPageState();
         return subscriber.getData();
