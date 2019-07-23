@@ -25,10 +25,12 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ProjectInfoAdapter;
 import com.shuangduan.zcy.adapter.SelectorFirstAdapter;
 import com.shuangduan.zcy.adapter.SelectorSecondAdapter;
+import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.pop.CommonPopupWindow;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.BaseSelectorBean;
+import com.shuangduan.zcy.model.bean.ProjectInfoBean;
 import com.shuangduan.zcy.vm.AreaVm;
 import com.shuangduan.zcy.vm.ProjectListVm;
 import com.shuangduan.zcy.vm.StageVm;
@@ -113,7 +115,12 @@ public class ProjectInfoListActivity extends BaseActivity {
         rv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
         projectInfoAdapter = new ProjectInfoAdapter(R.layout.item_project_info, null);
         rv.setAdapter(projectInfoAdapter);
-        projectInfoAdapter.setOnItemClickListener((adapter, view, position) -> ActivityUtils.startActivity(ProjectDetailActivity.class));
+        projectInfoAdapter.setOnItemClickListener((adapter, view, position) -> {
+            ProjectInfoBean.ListBean bean = projectListVm.projectLiveData.getValue().getList().get(position);
+            Bundle bundle = new Bundle();
+            bundle.putInt(CustomConfig.PROJECT_ID, bean.getId());
+            ActivityUtils.startActivity(bundle, ProjectDetailActivity.class);
+        });
 
         refresh.setEnableRefresh(false);
         refresh.setOnLoadMoreListener(refreshLayout -> {

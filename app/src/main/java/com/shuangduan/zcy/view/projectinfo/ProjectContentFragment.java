@@ -11,9 +11,11 @@ import android.text.style.ClickableSpan;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SpanUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -23,6 +25,9 @@ import com.shuangduan.zcy.base.BaseFragment;
 import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.CustomDialog;
 import com.shuangduan.zcy.model.bean.ProjectContentBean;
+import com.shuangduan.zcy.model.bean.ProjectDetailBean;
+import com.shuangduan.zcy.view.PayActivity;
+import com.shuangduan.zcy.vm.ProjectDetailVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
 import java.util.ArrayList;
@@ -61,6 +66,7 @@ public class ProjectContentFragment extends BaseFragment {
     TextView tvMaterial;
     @BindView(R.id.rv_contact)
     RecyclerView rvContact;
+    private ProjectDetailVm projectDetailVm;
 
     public static ProjectContentFragment newInstance() {
 
@@ -79,24 +85,29 @@ public class ProjectContentFragment extends BaseFragment {
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
 
-        tvUpdateTime.setText(String.format(getString(R.string.format_update), "2019-05-17"));
-        tvStage.setText(String.format(getString(R.string.format_stage), "勘察设计"));
-        tvType.setText(String.format(getString(R.string.format_type), "商业住宅、商业综合/零售、社区服务"));
-        tvCycle.setText(String.format(getString(R.string.format_cycle), "2019-05-01至2019-10-01"));
-        tvAcreage.setText(String.format(getString(R.string.format_acreage), "11230㎡"));
-        tvPrice.setText(String.format(getString(R.string.format_price), "3.8亿"));
-
-        tvDetail.setText("项目为政府规划用地，占地11230㎡，项目为政府规划用地，占地...");
-        tvMaterial.setText("门窗玻璃、外墙装饰、防水防腐、油...");
-
-        List<ProjectContentBean> list = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            list.add(new ProjectContentBean());
-        }
         rvContact.setLayoutManager(new LinearLayoutManager(mContext));
         rvContact.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
-        ContactAdapter contactAdapter = new ContactAdapter(R.layout.item_contact, list);
+        ContactAdapter contactAdapter = new ContactAdapter(R.layout.item_contact, null);
         rvContact.setAdapter(contactAdapter);
+
+        projectDetailVm = ViewModelProviders.of(mActivity).get(ProjectDetailVm.class);
+        projectDetailVm.getDetail();
+        projectDetailVm.detailLiveData.observe(this, projectDetailBean -> {
+            ProjectDetailBean.DetailBean detail = projectDetailBean.getDetail();
+            projectDetailVm.titleLiveData.postValue(detail.getTitle());
+            projectDetailVm.locationLiveData.postValue(detail.getProvince() + detail.getCity());
+
+            tvUpdateTime.setText(String.format(getString(R.string.format_update), detail.getUpdate_time()));
+            tvStage.setText(String.format(getString(R.string.format_stage), detail.getPhases()));
+            tvType.setText(String.format(getString(R.string.format_type), detail.getType()));
+            tvCycle.setText(String.format(getString(R.string.format_cycle), detail.getCycle()));
+            tvAcreage.setText(String.format(getString(R.string.format_acreage), detail.getAcreage()));
+            tvPrice.setText(String.format(getString(R.string.format_price), detail.getValuation()));
+            tvDetail.setText(detail.getIntro());
+            tvMaterial.setText(detail.getMaterials());
+
+            contactAdapter.setNewData(projectDetailBean.getContact());
+        });
     }
 
     @Override
@@ -109,7 +120,7 @@ public class ProjectContentFragment extends BaseFragment {
         switch (view.getId()) {
             case R.id.tv_read_detail:
                 new CustomDialog(mActivity)
-                        .setTip("查看此消息请支付1亿元")
+                        .setTip(String.format(getString(R.string.format_pay_price), projectDetailVm.detailLiveData.getValue().getDetail().getDetail_price()))
                         .setCallBack(new BaseDialog.CallBack() {
                             @Override
                             public void cancel() {
@@ -118,7 +129,7 @@ public class ProjectContentFragment extends BaseFragment {
 
                             @Override
                             public void ok(String s) {
-
+                                ActivityUtils.startActivity(PayActivity.class);
                             }
                         })
                         .showDialog();

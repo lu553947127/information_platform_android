@@ -28,7 +28,7 @@ public class UserInfoVm extends BaseViewModel {
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
     }
 
-    public void infoSet(String username, int sex, String company, String position, Integer[] business_city, int experience, String managing_products){
+    public void infoSet(String username, int sex, String company, String position, int[] business_city, int experience, String managing_products){
         UserRepository userRepository = new UserRepository();
         infoLiveData = userRepository.setInfo(userId, username, sex, company, position, business_city, experience, managing_products);
         pageStateLiveData = userRepository.getPageStateLiveData();

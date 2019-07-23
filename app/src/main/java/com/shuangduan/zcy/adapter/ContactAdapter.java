@@ -6,6 +6,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.model.bean.ProjectContentBean;
+import com.shuangduan.zcy.model.bean.ProjectDetailBean;
 
 import java.util.List;
 
@@ -19,16 +20,16 @@ import java.util.List;
  * @chang time
  * @class describe
  */
-public class ContactAdapter extends BaseQuickAdapter<ProjectContentBean, BaseViewHolder> {
-    public ContactAdapter(int layoutResId, @Nullable List<ProjectContentBean> data) {
+public class ContactAdapter extends BaseQuickAdapter<ProjectDetailBean.ContactBean, BaseViewHolder> {
+    public ContactAdapter(int layoutResId, @Nullable List<ProjectDetailBean.ContactBean> data) {
         super(layoutResId, data);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, ProjectContentBean item) {
-        helper.setText(R.id.tv_unit, String.format(mContext.getResources().getString(R.string.format_unit), "滨州市*****单位"))
-                .setText(R.id.tv_principal, String.format(mContext.getResources().getString(R.string.format_principal), "王女士"))
-                .setText(R.id.tv_phone, String.format(mContext.getResources().getString(R.string.format_phone), "151****1232 "))
-                .setText(R.id.tv_address, String.format(mContext.getResources().getString(R.string.format_address), "山东省济南市莱芜区"));
+    protected void convert(BaseViewHolder helper, ProjectDetailBean.ContactBean item) {
+        helper.setText(R.id.tv_unit, String.format(mContext.getResources().getString(R.string.format_unit), item.getCompany()))
+                .setText(R.id.tv_principal, String.format(mContext.getResources().getString(R.string.format_principal), item.getName()))
+                .setText(R.id.tv_phone, String.format(mContext.getResources().getString(R.string.format_phone), item.getTel()))
+                .setText(R.id.tv_address, String.format(mContext.getResources().getString(R.string.format_address), item.getProvince() + item.getCity()));
     }
 }

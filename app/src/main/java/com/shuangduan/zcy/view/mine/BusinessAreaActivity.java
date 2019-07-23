@@ -113,7 +113,7 @@ public class BusinessAreaActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_bar_right:
-                Integer[] result = areaVm.getResult();
+                int[] result = areaVm.getResult();
                 if (result.length == 0){
                     ToastUtils.showShort(getString(R.string.select_city_correct));
                     return;

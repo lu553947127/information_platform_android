@@ -23,7 +23,7 @@ public class UserRepository extends BaseRepository {
         return subscriber.getData();
     }
 
-    public MutableLiveData setInfo(int user_id, String username, int sex, String company, String position, Integer[] business_city, int experience, String managing_products){
+    public MutableLiveData setInfo(int user_id, String username, int sex, String company, String position, int[] business_city, int experience, String managing_products){
         BaseSubscriber subscriber = request(apiService.setInfo(user_id, username, sex, company, position, business_city, experience, managing_products)).send();
         pageStateLiveData = subscriber.getPageState();
         return subscriber.getData();

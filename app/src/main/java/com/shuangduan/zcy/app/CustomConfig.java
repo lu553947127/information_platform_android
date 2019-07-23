@@ -30,6 +30,7 @@ public class CustomConfig {
     public static final String searchTypeOffice = "office";
     public static final String uploadTypeIdCard = "id_card";
     public static final String uploadTypeBusinessCard = "business_card";
+    public static final String PROJECT_ID = "project_id";
 
     public static final int AREA_REQUEST_CODE = 1001;
 

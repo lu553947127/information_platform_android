@@ -2,6 +2,7 @@ package com.shuangduan.zcy.view.projectinfo;
 
 import android.os.Bundle;
 
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -9,6 +10,7 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ConsumptionAdapter;
 import com.shuangduan.zcy.base.BaseFragment;
 import com.shuangduan.zcy.model.bean.ConsumptionBean;
+import com.shuangduan.zcy.vm.ProjectDetailVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
 import java.util.ArrayList;
@@ -29,6 +31,7 @@ import butterknife.BindView;
 public class ProjectConsumptionFragment extends BaseFragment {
     @BindView(R.id.rv_consumption)
     RecyclerView rvConsumption;
+    private ProjectDetailVm projectDetailVm;
 
     public static ProjectConsumptionFragment newInstance() {
 
@@ -46,6 +49,12 @@ public class ProjectConsumptionFragment extends BaseFragment {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
+        projectDetailVm = ViewModelProviders.of(mActivity).get(ProjectDetailVm.class);
+        projectDetailVm.getConsume();
+        projectDetailVm.consumeLiveData.observe(this, consumeBean -> {
+
+        });
+
         List<ConsumptionBean> list = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             list.add(new ConsumptionBean());

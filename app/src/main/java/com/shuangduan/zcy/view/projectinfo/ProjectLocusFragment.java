@@ -1,19 +1,28 @@
 package com.shuangduan.zcy.view.projectinfo;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.LocusAdapter;
+import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseFragment;
 import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.CustomDialog;
 import com.shuangduan.zcy.model.bean.LocusBean;
+import com.shuangduan.zcy.model.bean.TrackBean;
+import com.shuangduan.zcy.view.PayActivity;
+import com.shuangduan.zcy.view.PhotoViewActivity;
+import com.shuangduan.zcy.vm.ProjectDetailVm;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +45,7 @@ public class ProjectLocusFragment extends BaseFragment {
     TextView tvFilter;
     @BindView(R.id.rv_locus)
     RecyclerView rvLocus;
+    private ProjectDetailVm projectDetailVm;
 
     public static ProjectLocusFragment newInstance() {
 
@@ -54,17 +64,12 @@ public class ProjectLocusFragment extends BaseFragment {
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         tvFilter.setText(getString(R.string.release_by_me));
-
-        List<LocusBean> list = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
-            list.add(new LocusBean());
-        }
         rvLocus.setLayoutManager(new LinearLayoutManager(mContext));
-        LocusAdapter locusAdapter = new LocusAdapter(R.layout.item_locus, list){
+        LocusAdapter locusAdapter = new LocusAdapter(R.layout.item_locus, null){
             @Override
-            public void readDetail() {
+            public void readDetail(int position, String price) {
                 new CustomDialog(mActivity)
-                        .setTip("查看此消息请支付1亿元")
+                        .setTip(String.format(getString(R.string.format_pay_price), price))
                         .setCallBack(new BaseDialog.CallBack() {
                             @Override
                             public void cancel() {
@@ -73,19 +78,60 @@ public class ProjectLocusFragment extends BaseFragment {
 
                             @Override
                             public void ok(String s) {
-
+                                ActivityUtils.startActivity(PayActivity.class);
                             }
                         })
                         .showDialog();
             }
         };
         rvLocus.setAdapter(locusAdapter);
+        locusAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            TrackBean.ListBean listBean = projectDetailVm.trackLiveData.getValue().getList().get(position);
+            switch (view.getId()){
+                case R.id.iv_pic_first:
+                    showPic(listBean, 0, view);
+                    break;
+                case R.id.iv_pic_second:
+                    showPic(listBean, 1, view);
+                    break;
+                case R.id.iv_pic_third:
+                    showPic(listBean, 2, view);
+                    break;
+                case R.id.tv_more:
+                    showPic(listBean, 2, view);
+                    break;
+            }
+        });
 
+        projectDetailVm = ViewModelProviders.of(mActivity).get(ProjectDetailVm.class);
+        projectDetailVm.getTrack();
+        projectDetailVm.trackLiveData.observe(this, trackBean -> {
+            projectDetailVm.pageTrack = trackBean.getPage();
+            locusAdapter.setNewData(trackBean.getList());
+        });
     }
 
     @Override
     protected void initDataFromService() {
 
+    }
+
+    private void showPic(TrackBean.ListBean item, int position, View view){
+        ArrayList<String> list = new ArrayList<>();
+        for (TrackBean.ListBean.ImageBean img: item.getImage()) {
+            list.add(img.getSource());
+        }
+
+        Bundle bundle = new Bundle();
+        bundle.putInt("position", position);
+        bundle.putStringArrayList(CustomConfig.PHOTO_VIEW_URL_LIST, list);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            //共享shareElement这个View
+            ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(mActivity, view, "shareElement");
+            ActivityUtils.startActivity(bundle, PhotoViewActivity.class, activityOptionsCompat.toBundle());
+        } else {
+            ActivityUtils.startActivity(bundle, PhotoViewActivity.class);
+        }
     }
 
     @OnClick({R.id.tv_filter})

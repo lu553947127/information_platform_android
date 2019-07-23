@@ -3,15 +3,21 @@ package com.shuangduan.zcy.model.api;
 import com.shuangduan.zcy.model.bean.BaseListResponse;
 import com.shuangduan.zcy.model.bean.BaseObjResponse;
 import com.shuangduan.zcy.model.bean.CityBean;
+import com.shuangduan.zcy.model.bean.ConsumeBean;
 import com.shuangduan.zcy.model.bean.LoginBean;
 import com.shuangduan.zcy.model.bean.MapBean;
+import com.shuangduan.zcy.model.bean.ProjectDetailBean;
 import com.shuangduan.zcy.model.bean.ProjectInfoBean;
 import com.shuangduan.zcy.model.bean.ProvinceBean;
 import com.shuangduan.zcy.model.bean.ReSetPwdBean;
 import com.shuangduan.zcy.model.bean.RegisterBean;
+import com.shuangduan.zcy.model.bean.SearchBean;
 import com.shuangduan.zcy.model.bean.SearchCompanyBean;
+import com.shuangduan.zcy.model.bean.SearchHotBean;
 import com.shuangduan.zcy.model.bean.StageBean;
+import com.shuangduan.zcy.model.bean.TrackBean;
 import com.shuangduan.zcy.model.bean.TypeBean;
+import com.shuangduan.zcy.model.bean.ViewTrackBean;
 
 import io.reactivex.Flowable;
 import retrofit2.http.Field;
@@ -92,7 +98,7 @@ public interface ApiService {
             @Field("sex")int sex,
             @Field("company")String company,
             @Field("position")String position,
-            @Query("business_city[]") Integer[] business_city,
+            @Query("business_city[]") int[] business_city,
             @Field("experience")int experience,
             @Field("managing_products")String managing_products
     );
@@ -161,5 +167,49 @@ public interface ApiService {
     Flowable<BaseListResponse<StageBean>> projectStage(
             @Field("user_id")int user_id
             );
+
+    @FormUrlEncoded
+    @POST("api/Project/keywordHot")
+    Flowable<BaseListResponse<SearchHotBean>> keywordHot(
+            @Field("user_id")int user_id
+            );
+
+    @FormUrlEncoded
+    @POST("api/Project/keywordList")
+    Flowable<BaseObjResponse<SearchBean>> keywordList(
+            @Field("user_id")int user_id,
+            @Field("keyword")String keyword
+            );
+
+    @FormUrlEncoded
+    @POST("api/Project/getDetail")
+    Flowable<BaseObjResponse<ProjectDetailBean>> getDetail(
+            @Field("user_id")int user_id,
+            @Field("id")int id
+    );
+
+    @FormUrlEncoded
+    @POST("api/Project/getTrack")
+    Flowable<BaseObjResponse<TrackBean>> getTrack(
+            @Field("user_id")int user_id,
+            @Field("id")int id,
+            @Field("page")int page,
+            @Field("type")int type
+    );
+
+    @FormUrlEncoded
+    @POST("api/Project/viewTrack")
+    Flowable<BaseListResponse<ViewTrackBean>> getViewTrack(
+            @Field("user_id")int user_id,
+            @Field("id")int id
+    );
+
+    @FormUrlEncoded
+    @POST("api/Project/consumeList")
+    Flowable<BaseObjResponse<ConsumeBean>> consumeList(
+            @Field("user_id")int user_id,
+            @Field("id")int id,
+            @Field("page")int page
+    );
 
 }

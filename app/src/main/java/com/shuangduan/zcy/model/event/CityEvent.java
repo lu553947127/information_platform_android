@@ -12,10 +12,10 @@ package com.shuangduan.zcy.model.event;
  */
 public class CityEvent {
 
-    public Integer[] citys;
+    public int[] citys;
     public String city;
 
-    public CityEvent(Integer[] citys, String city) {
+    public CityEvent(int[] citys, String city) {
         this.citys = citys;
         this.city = city;
     }

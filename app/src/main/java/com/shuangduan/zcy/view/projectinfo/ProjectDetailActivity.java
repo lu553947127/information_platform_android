@@ -28,8 +28,10 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.tabs.TabLayout;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ViewPagerAdapter;
+import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.vm.PermissionVm;
+import com.shuangduan.zcy.vm.ProjectDetailVm;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.ArrayList;
@@ -87,6 +89,7 @@ public class ProjectDetailActivity extends BaseActivity {
     private Fragment[] fragments;
     AMap aMap = null;
     private PermissionVm permissionVm;
+    private ProjectDetailVm projectDetailVm;
 
     @Override
     protected int initLayoutRes() {
@@ -101,8 +104,10 @@ public class ProjectDetailActivity extends BaseActivity {
         ivBarRight.setImageResource(R.drawable.icon_share);
         tvBarRight.setVisibility(View.GONE);
 
-        tvTitle.setText("山东省济南市莱芜区影城电子信息产业园一期");
-        tvLocation.setText("山东省济南市莱芜区");
+        projectDetailVm = ViewModelProviders.of(this).get(ProjectDetailVm.class);
+        projectDetailVm.init(getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0));
+        projectDetailVm.titleLiveData.observe(this, s -> tvTitle.setText(s));
+        projectDetailVm.locationLiveData.observe(this, s -> tvLocation.setText(s));
 
         fragments = new Fragment[4];
         fragments[0] = ProjectContentFragment.newInstance();

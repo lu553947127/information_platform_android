@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * @author 宁文强 QQ:858777523
@@ -82,7 +83,6 @@ public class HomeFragment extends BaseFragment {
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.setStatusBarColorRes(fakeStatusBar, getResources().getColor(R.color.colorPrimary));
-        tvBarTitle.setText(getString(R.string.home));
 
         List<ClassifyBean> list = getClassify();
         rvClassify.setLayoutManager(new GridLayoutManager(mContext, 4));
@@ -153,6 +153,15 @@ public class HomeFragment extends BaseFragment {
     @Override
     protected void initDataFromService() {
 
+    }
+
+    @OnClick({R.id.tv_bar_title})
+    void onClick(View view){
+        switch (view.getId()){
+            case R.id.tv_bar_title:
+                ActivityUtils.startActivity(SearchActivity.class);
+                break;
+        }
     }
 
     @Override

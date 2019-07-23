@@ -86,7 +86,7 @@ public class UserInfoInputActivity extends BaseActivity {
     private int sex = -1;
     /*业务经验 1:"0-3年",2:"2-3年",3:"3-5年",4:"5-10年"*/
     private int exp = 0;
-    private Integer[] area;
+    private int[] area;
     private UserInfoVm userInfoVm;
 
     @Override

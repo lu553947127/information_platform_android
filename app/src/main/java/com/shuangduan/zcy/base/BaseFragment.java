@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 import com.shuangduan.zcy.dialog.LoadDialog;
 import com.shuangduan.zcy.model.event.BaseEvent;
@@ -32,7 +33,7 @@ import butterknife.Unbinder;
 public abstract class BaseFragment extends Fragment implements IView {
 
     public Context mContext;
-    public Activity mActivity;
+    public FragmentActivity mActivity;
     private Unbinder unBinder;
     public Bundle arguments;
     private LoadDialog loadDialog;
@@ -41,7 +42,7 @@ public abstract class BaseFragment extends Fragment implements IView {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         this.mContext = context;
-        this.mActivity = (Activity) context;
+        this.mActivity = (FragmentActivity) context;
     }
 
     @Override

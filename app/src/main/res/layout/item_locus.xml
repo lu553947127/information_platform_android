@@ -6,7 +6,7 @@
 
     <TextView
         android:id="@+id/tv_time"
-        android:layout_width="wrap_content"
+        android:layout_width="75dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="45dp"
         android:textColor="@color/color_666666"
@@ -15,10 +15,12 @@
     <View
         android:id="@+id/view_line"
         android:layout_width="1dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:minHeight="45dp"
+        android:layout_alignTop="@+id/iv_mark"
         android:layout_marginTop="5dp"
         android:layout_marginLeft="144dp"
+        android:layout_alignBottom="@+id/tv_content"
         android:background="@color/color_DDDDDD"/>
 
     <ImageView
@@ -35,7 +37,52 @@
         android:lineSpacingExtra="0dp"
         android:layout_marginLeft="171dp"
         android:layout_marginRight="45dp"
+        android:paddingBottom="90dp"
         android:textColor="@color/color_666666"
         android:textSize="13sp"/>
+
+    <ImageView
+        android:id="@+id/iv_pic_first"
+        android:visibility="gone"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_alignLeft="@+id/tv_content"
+        android:layout_alignBottom="@+id/tv_content"
+        android:layout_marginBottom="30dp"
+        android:scaleType="centerCrop"/>
+
+    <ImageView
+        android:id="@+id/iv_pic_second"
+        android:visibility="gone"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_toRightOf="@+id/iv_pic_first"
+        android:layout_marginLeft="10dp"
+        android:layout_alignTop="@+id/iv_pic_first"
+        android:scaleType="centerCrop"/>
+
+    <ImageView
+        android:id="@+id/iv_pic_third"
+        android:visibility="gone"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_toRightOf="@+id/iv_pic_second"
+        android:layout_marginLeft="10dp"
+        android:layout_alignTop="@+id/iv_pic_first"
+        android:scaleType="centerCrop"/>
+
+    <TextView
+        android:id="@+id/tv_more"
+        android:visibility="gone"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_toRightOf="@+id/iv_pic_second"
+        android:layout_marginLeft="10dp"
+        android:layout_alignTop="@+id/iv_pic_first"
+        android:background="@color/color_40000000"
+        android:gravity="center"
+        android:textColor="@color/colorFFF"
+        android:textSize="12sp"
+        android:text="@string/read_more"/>
 
 </RelativeLayout>
