@@ -20,7 +20,6 @@ import com.shuangduan.zcy.utils.BarUtils;
 import com.shuangduan.zcy.utils.image.GlideImageLoader;
 import com.shuangduan.zcy.view.login.UserInfoInputActivity;
 import com.shuangduan.zcy.view.projectinfo.ProjectInfoActivity;
-import com.shuangduan.zcy.view.projectinfo.SubInfoActivity;
 import com.shuangduan.zcy.view.recruit.RecruitActivity;
 import com.shuangduan.zcy.view.release.ReleaseListActivity;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
@@ -122,7 +121,7 @@ public class HomeFragment extends BaseFragment {
         IncomeStatementAdapter incomeStatementAdapter = new IncomeStatementAdapter(R.layout.item_income_statement, list2);
         rvIncomeStatement.setAdapter(incomeStatementAdapter);
         incomeStatementAdapter.setOnItemClickListener((adapter, view, position) -> {
-            ActivityUtils.startActivity(SubInfoActivity.class);
+
         });
 
         initBanner();

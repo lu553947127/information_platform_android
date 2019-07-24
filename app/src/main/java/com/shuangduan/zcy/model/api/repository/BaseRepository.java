@@ -31,13 +31,15 @@ public class BaseRepository<T> {
     private BaseSubscriber<T> baseObservable;
     /*解决背压*/
     private Flowable<T> flowable;
-    public final ApiService apiService;
+    public ApiService apiService;
     public MutableLiveData<String> pageStateLiveData;
 
     /*初始化*/
     public BaseRepository() {
-        this.baseObservable = new BaseSubscriber<T>() ;
-        this.apiService = RetrofitHelper.getApiService();
+        if (this.baseObservable == null)
+            this.baseObservable = new BaseSubscriber<T>() ;
+        if (this.apiService == null)
+            this.apiService = RetrofitHelper.getApiService();
     }
 
     /**

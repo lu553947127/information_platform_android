@@ -2,6 +2,7 @@ package com.shuangduan.zcy.view.projectinfo;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
@@ -16,6 +17,7 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.LocusAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseFragment;
+import com.shuangduan.zcy.base.BaseLazyFragment;
 import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.CustomDialog;
 import com.shuangduan.zcy.model.bean.LocusBean;
@@ -40,12 +42,13 @@ import butterknife.OnClick;
  * @chang time
  * @class describe
  */
-public class ProjectLocusFragment extends BaseFragment {
+public class ProjectLocusFragment extends BaseLazyFragment {
     @BindView(R.id.tv_filter)
     TextView tvFilter;
     @BindView(R.id.rv_locus)
     RecyclerView rvLocus;
     private ProjectDetailVm projectDetailVm;
+    private LocusAdapter locusAdapter;
 
     public static ProjectLocusFragment newInstance() {
 
@@ -65,7 +68,7 @@ public class ProjectLocusFragment extends BaseFragment {
     protected void initDataAndEvent(Bundle savedInstanceState) {
         tvFilter.setText(getString(R.string.release_by_me));
         rvLocus.setLayoutManager(new LinearLayoutManager(mContext));
-        LocusAdapter locusAdapter = new LocusAdapter(R.layout.item_locus, null){
+        locusAdapter = new LocusAdapter(R.layout.item_locus, null){
             @Override
             public void readDetail(int position, String price) {
                 new CustomDialog(mActivity)
@@ -84,6 +87,7 @@ public class ProjectLocusFragment extends BaseFragment {
                         .showDialog();
             }
         };
+        locusAdapter.setEmptyView(R.layout.layout_loading_top, rvLocus);
         rvLocus.setAdapter(locusAdapter);
         locusAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             TrackBean.ListBean listBean = projectDetailVm.trackLiveData.getValue().getList().get(position);
@@ -104,16 +108,31 @@ public class ProjectLocusFragment extends BaseFragment {
         });
 
         projectDetailVm = ViewModelProviders.of(mActivity).get(ProjectDetailVm.class);
-        projectDetailVm.getTrack();
-        projectDetailVm.trackLiveData.observe(this, trackBean -> {
-            projectDetailVm.pageTrack = trackBean.getPage();
-            locusAdapter.setNewData(trackBean.getList());
+        projectDetailVm.locusTypeLiveData.observe(this, type -> {
+            if (type == 1){
+                tvFilter.setText(getString(R.string.all));
+            }else {
+                tvFilter.setText(getString(R.string.release_by_me));
+            }
         });
     }
 
     @Override
     protected void initDataFromService() {
+        projectDetailVm.getTrack();
+        projectDetailVm.trackLiveData.observe(this, trackBean -> {
+            projectDetailVm.pageTrack = trackBean.getPage();
+            setEmpty();
+            locusAdapter.setNewData(trackBean.getList());
+            isInited = true;
+        });
+    }
 
+    private void setEmpty() {
+        View empty = LayoutInflater.from(mContext).inflate(R.layout.layout_empty, null);
+        TextView tvTip = empty.findViewById(R.id.tv_tip);
+        tvTip.setText(getString(R.string.empty_locus));
+        locusAdapter.setEmptyView(empty);
     }
 
     private void showPic(TrackBean.ListBean item, int position, View view){
@@ -138,6 +157,7 @@ public class ProjectLocusFragment extends BaseFragment {
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_filter:
+                projectDetailVm.switchLocusList();
                 break;
         }
     }

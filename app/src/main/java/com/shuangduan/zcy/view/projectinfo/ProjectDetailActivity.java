@@ -3,7 +3,6 @@ package com.shuangduan.zcy.view.projectinfo;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -18,9 +17,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.MapView;
-import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.MyLocationStyle;
-import com.amap.api.services.core.LatLonPoint;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.LogUtils;
@@ -30,14 +27,13 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ViewPagerAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
+import com.shuangduan.zcy.view.PayActivity;
+import com.shuangduan.zcy.view.release.ReleaseListActivity;
 import com.shuangduan.zcy.vm.PermissionVm;
 import com.shuangduan.zcy.vm.ProjectDetailVm;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
-import java.util.ArrayList;
-
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -108,6 +104,14 @@ public class ProjectDetailActivity extends BaseActivity {
         projectDetailVm.init(getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0));
         projectDetailVm.titleLiveData.observe(this, s -> tvTitle.setText(s));
         projectDetailVm.locationLiveData.observe(this, s -> tvLocation.setText(s));
+        projectDetailVm.collectionLiveData.observe(this, i -> {
+            tvCollect.setText(getString(i == 1? R.string.collected: R.string.collection));
+            ivCollect.setImageResource(i == 1? R.drawable.icon_collected: R.drawable.icon_collect);
+        });
+        projectDetailVm.subscribeLiveData.observe(this, i -> {
+            tvSubscribe.setText(getString(i == 1? R.string.subscribe: R.string.unsubscribe));
+            ivSubscribe.setImageResource(i == 1? R.drawable.icon_shopping_cart_select: R.drawable.icon_shopping_cart);
+        });
 
         fragments = new Fragment[4];
         fragments[0] = ProjectContentFragment.newInstance();
@@ -120,6 +124,7 @@ public class ProjectDetailActivity extends BaseActivity {
         tabLayout.addTab(tabLayout.newTab());
         tabLayout.addTab(tabLayout.newTab());
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), fragments, getResources().getStringArray(R.array.project_detail));
+        vp.setOffscreenPageLimit(3);
         vp.setAdapter(adapter);
         tabLayout.setupWithViewPager(vp);
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -167,20 +172,48 @@ public class ProjectDetailActivity extends BaseActivity {
         permissionVm.getPermissionLocation(new RxPermissions(this));
     }
 
-    @OnClick({R.id.iv_bar_back, R.id.iv_bar_right, R.id.fl_collect, R.id.fl_error, R.id.fl_subscription})
+    @OnClick({R.id.iv_bar_back, R.id.iv_bar_right, R.id.fl_collect, R.id.fl_error, R.id.fl_subscription, R.id.ll_chat, R.id.fl_release})
     void onClick(View view){
         switch (view.getId()){
             case R.id.iv_bar_back:
                 finish();
                 break;
             case R.id.iv_bar_right:
+
                 break;
             case R.id.fl_collect:
+                projectDetailVm.collect();
+                if (projectDetailVm.collectLiveData != null){
+                    projectDetailVm.collectLiveData.observe(this, o -> {
+                        projectDetailVm.collectionLiveData.postValue(1);
+                    });
+                }
+                if (projectDetailVm.cancelCollectLiveData != null){
+                    projectDetailVm.cancelCollectLiveData.observe(this, o -> {
+                        projectDetailVm.collectionLiveData.postValue(0);
+                    });
+                }
                 break;
             case R.id.fl_error:
+                Bundle bundle = new Bundle();
+                bundle.putInt(CustomConfig.PROJECT_ID, getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0));
+                ActivityUtils.startActivity(bundle, ProjectErrorActivity.class);
+                break;
+            case R.id.ll_chat:
+
                 break;
             case R.id.fl_subscription:
-                ActivityUtils.startActivity(GoToSubActivity.class);
+                switch (projectDetailVm.subscribeLiveData.getValue()){
+                    case 1:
+                        ActivityUtils.startActivity(SubInfoActivity.class);
+                        break;
+                    case 0:
+                        ActivityUtils.startActivity(GoToSubActivity.class);
+                        break;
+                }
+                break;
+            case R.id.fl_release:
+                ActivityUtils.startActivity(ReleaseListActivity.class);
                 break;
         }
     }

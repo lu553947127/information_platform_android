@@ -199,7 +199,7 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("api/Project/viewTrack")
-    Flowable<BaseListResponse<ViewTrackBean>> getViewTrack(
+    Flowable<BaseListResponse<TrackBean.ListBean>> getViewTrack(
             @Field("user_id")int user_id,
             @Field("id")int id
     );
@@ -210,6 +210,28 @@ public interface ApiService {
             @Field("user_id")int user_id,
             @Field("id")int id,
             @Field("page")int page
+    );
+
+    @FormUrlEncoded
+    @POST("api/Project/setCollection")
+    Flowable<BaseObjResponse> collect(
+            @Field("user_id")int user_id,
+            @Field("id")int id
+    );
+
+    @FormUrlEncoded
+    @POST("api/Project/cancelCollection")
+    Flowable<BaseObjResponse> cancelCollection(
+            @Field("user_id")int user_id,
+            @Field("id")int id
+    );
+
+    @FormUrlEncoded
+    @POST("api/Project/correction")
+    Flowable<BaseObjResponse> correction(
+            @Field("user_id")int user_id,
+            @Field("id")int id,
+            @Field("content")String content
     );
 
 }

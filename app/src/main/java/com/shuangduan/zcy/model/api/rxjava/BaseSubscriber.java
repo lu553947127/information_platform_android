@@ -36,9 +36,12 @@ public class BaseSubscriber<T> implements Subscriber<T> {
 
     public BaseSubscriber() {
         this.mErrorHandlerFactory = new ErrorHandlerFactory(new ResponseErrorListenerImpl());
-        this.data = new MutableLiveData<>();
-        this.dataList = new MutableLiveData<>();
-        this.pageState = new MutableLiveData<>();
+        if (this.data == null)
+            this.data = new MutableLiveData<>();
+        if (this.dataList == null)
+            this.dataList = new MutableLiveData<>();
+        if (this.pageState == null)
+            this.pageState = new MutableLiveData<>();
     }
 
     /**

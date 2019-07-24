@@ -1,9 +1,6 @@
 package com.shuangduan.zcy.vm;
 
-import androidx.arch.core.util.Function;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Transformations;
 
 import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.app.SpConfig;
@@ -12,7 +9,6 @@ import com.shuangduan.zcy.model.api.repository.ProjectDetailRepository;
 import com.shuangduan.zcy.model.bean.ConsumeBean;
 import com.shuangduan.zcy.model.bean.ProjectDetailBean;
 import com.shuangduan.zcy.model.bean.TrackBean;
-import com.shuangduan.zcy.model.bean.ViewTrackBean;
 
 import java.util.List;
 
@@ -33,43 +29,102 @@ public class ProjectDetailVm extends BaseViewModel {
     public MutableLiveData<String> pageStateLiveData;
     public MutableLiveData<ProjectDetailBean> detailLiveData;
     public MutableLiveData<TrackBean> trackLiveData;
-    public MutableLiveData<List<ViewTrackBean>> viewTrackLiveData;
+    public MutableLiveData<List<TrackBean.ListBean>> viewTrackLiveData;
     public MutableLiveData<ConsumeBean> consumeLiveData;
     public MutableLiveData<String> titleLiveData;
     public MutableLiveData<String> locationLiveData;
+    public MutableLiveData<String> introLiveData;
+    public MutableLiveData<String> materialLiveData;
+    public MutableLiveData<Integer> locusTypeLiveData;
+    public MutableLiveData<Integer> collectionLiveData;
+    public MutableLiveData<Integer> subscribeLiveData;
+    public MutableLiveData collectLiveData;
+    public MutableLiveData cancelCollectLiveData;
+    public MutableLiveData errorLiveData;
     public int pageTrack = 1;
     public int pageConsume = 1;
-    public int type = 1;
+    private final int TYPE_ALL = 1;//全部
+    private final int TYPE_MINE = 2;//我发布的
+    private int type = TYPE_ALL;
 
     public void init(int id){
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
         this.id = id;
-        titleLiveData = new MutableLiveData<>();
-        locationLiveData = new MutableLiveData<>();
+        if (titleLiveData == null)
+            titleLiveData = new MutableLiveData<>();
+        if (locationLiveData == null)
+            locationLiveData = new MutableLiveData<>();
+        if (introLiveData == null)
+            introLiveData = new MutableLiveData<>();
+        if (materialLiveData == null)
+            materialLiveData = new MutableLiveData<>();
+        if (locusTypeLiveData == null)
+            locusTypeLiveData = new MutableLiveData<>();
+        if (collectionLiveData == null)
+            collectionLiveData = new MutableLiveData<>();
+        if (subscribeLiveData == null)
+            subscribeLiveData = new MutableLiveData<>();
     }
 
+    private ProjectDetailRepository repositoryDetail;
     public void getDetail(){
-        ProjectDetailRepository repository = new ProjectDetailRepository();
-        pageStateLiveData = repository.getPageStateLiveData();
-        detailLiveData = repository.getDetail(userId, id);
+        if (repositoryDetail == null)
+            repositoryDetail = new ProjectDetailRepository();
+        pageStateLiveData = repositoryDetail.getPageStateLiveData();
+        detailLiveData = repositoryDetail.getDetail(userId, id);
     }
 
+    private ProjectDetailRepository repositoryTrack;
     public void getTrack(){
-        ProjectDetailRepository repository = new ProjectDetailRepository();
-        pageStateLiveData = repository.getPageStateLiveData();
-        trackLiveData = repository.getTrack(userId, id, pageTrack, type);
+        if (repositoryTrack == null)
+            repositoryTrack = new ProjectDetailRepository();
+        pageStateLiveData = repositoryTrack.getPageStateLiveData();
+        trackLiveData = repositoryTrack.getTrack(userId, id, pageTrack, type);
+        locusTypeLiveData.postValue(type);
     }
 
+    private ProjectDetailRepository repositoryViewTrack;
     public void getViewTrack(){
-        ProjectDetailRepository repository = new ProjectDetailRepository();
-        pageStateLiveData = repository.getPageStateLiveData();
-        viewTrackLiveData = repository.getViewTrack(userId, id);
+        if (repositoryViewTrack == null)
+            repositoryViewTrack = new ProjectDetailRepository();
+        pageStateLiveData = repositoryViewTrack.getPageStateLiveData();
+        viewTrackLiveData = repositoryViewTrack.getViewTrack(userId, id);
     }
 
+    private ProjectDetailRepository repositoryConsume;
     public void getConsume(){
+        if (repositoryConsume == null)
+            repositoryConsume = new ProjectDetailRepository();
+        pageStateLiveData = repositoryConsume.getPageStateLiveData();
+        consumeLiveData = repositoryConsume.consumeList(userId, id, pageConsume);
+    }
+
+    /**
+     * 切换轨迹列表，我的和全部
+     */
+    public void switchLocusList(){
+        type = type == TYPE_ALL?TYPE_MINE:TYPE_ALL;
+        getTrack();
+    }
+
+    public void collect(){
+        ProjectDetailRepository repositoryCollect = new ProjectDetailRepository();
+        if (collectionLiveData != null && collectionLiveData.getValue() == 1){
+            //取消收藏
+            cancelCollectLiveData = repositoryCollect.cancelCollect(userId, id);
+        }else {
+            //收藏
+            collectLiveData = repositoryCollect.collect(userId, id);
+        }
+    }
+
+    /**
+     * 纠错
+     */
+    public void error(String error){
         ProjectDetailRepository repository = new ProjectDetailRepository();
+        errorLiveData = repository.error(userId, id, error);
         pageStateLiveData = repository.getPageStateLiveData();
-        consumeLiveData = repository.consumeList(userId, id, pageConsume);
     }
 
 }

@@ -294,8 +294,8 @@ public class ProjectInfoListActivity extends BaseActivity {
                             showTimeDialog(tvTimeEnd);
                         });
 
-                        findViewById(R.id.tv_negative).setOnClickListener(v -> popupWindowArea.dismiss());
-                        findViewById(R.id.tv_positive).setOnClickListener(v -> {
+                        view.findViewById(R.id.tv_negative).setOnClickListener(v -> popupWindowArea.dismiss());
+                        view.findViewById(R.id.tv_positive).setOnClickListener(v -> {
                             switch (popType){
                                 case 1:
                                     int[] cityResult = areaVm.getResult();

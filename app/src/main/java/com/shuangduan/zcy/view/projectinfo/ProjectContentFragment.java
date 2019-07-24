@@ -1,13 +1,7 @@
 package com.shuangduan.zcy.view.projectinfo;
 
-import android.graphics.BitmapFactory;
-import android.graphics.BlurMaskFilter;
-import android.graphics.Color;
-import android.graphics.Shader;
 import android.os.Bundle;
-import android.text.Layout;
-import android.text.TextPaint;
-import android.text.style.ClickableSpan;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
@@ -17,21 +11,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
-import com.blankj.utilcode.util.SpanUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ContactAdapter;
 import com.shuangduan.zcy.base.BaseFragment;
 import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.CustomDialog;
-import com.shuangduan.zcy.model.bean.ProjectContentBean;
 import com.shuangduan.zcy.model.bean.ProjectDetailBean;
 import com.shuangduan.zcy.view.PayActivity;
 import com.shuangduan.zcy.vm.ProjectDetailVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -67,11 +56,10 @@ public class ProjectContentFragment extends BaseFragment {
     @BindView(R.id.rv_contact)
     RecyclerView rvContact;
     private ProjectDetailVm projectDetailVm;
+    private ContactAdapter contactAdapter;
 
     public static ProjectContentFragment newInstance() {
-
         Bundle args = new Bundle();
-
         ProjectContentFragment fragment = new ProjectContentFragment();
         fragment.setArguments(args);
         return fragment;
@@ -87,15 +75,24 @@ public class ProjectContentFragment extends BaseFragment {
 
         rvContact.setLayoutManager(new LinearLayoutManager(mContext));
         rvContact.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
-        ContactAdapter contactAdapter = new ContactAdapter(R.layout.item_contact, null);
+        contactAdapter = new ContactAdapter(R.layout.item_contact, null);
+        contactAdapter.setEmptyView(R.layout.layout_loading_top, rvContact);
         rvContact.setAdapter(contactAdapter);
 
         projectDetailVm = ViewModelProviders.of(mActivity).get(ProjectDetailVm.class);
+    }
+
+    @Override
+    protected void initDataFromService() {
         projectDetailVm.getDetail();
         projectDetailVm.detailLiveData.observe(this, projectDetailBean -> {
             ProjectDetailBean.DetailBean detail = projectDetailBean.getDetail();
             projectDetailVm.titleLiveData.postValue(detail.getTitle());
             projectDetailVm.locationLiveData.postValue(detail.getProvince() + detail.getCity());
+            projectDetailVm.introLiveData.postValue(detail.getIntro());
+            projectDetailVm.materialLiveData.postValue(detail.getMaterials());
+            projectDetailVm.collectionLiveData.postValue(projectDetailBean.getDetail().getCollection());
+            projectDetailVm.subscribeLiveData.postValue(projectDetailBean.getDetail().getWarrant_status());
 
             tvUpdateTime.setText(String.format(getString(R.string.format_update), detail.getUpdate_time()));
             tvStage.setText(String.format(getString(R.string.format_stage), detail.getPhases()));
@@ -106,13 +103,16 @@ public class ProjectContentFragment extends BaseFragment {
             tvDetail.setText(detail.getIntro());
             tvMaterial.setText(detail.getMaterials());
 
+            setEmpty();
             contactAdapter.setNewData(projectDetailBean.getContact());
         });
     }
 
-    @Override
-    protected void initDataFromService() {
-
+    private void setEmpty() {
+        View empty = LayoutInflater.from(mContext).inflate(R.layout.layout_empty_top, null);
+        TextView tvTip = empty.findViewById(R.id.tv_tip);
+        tvTip.setText(getString(R.string.empty_contact));
+        contactAdapter.setEmptyView(empty);
     }
 
     @OnClick({R.id.tv_read_detail})

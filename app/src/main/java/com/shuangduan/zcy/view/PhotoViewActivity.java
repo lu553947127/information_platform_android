@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.BarUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ViewPagerAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
@@ -34,6 +36,7 @@ public class PhotoViewActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo_view);
+        BarUtils.setStatusBarColor(this, getResources().getColor(android.R.color.transparent));
         vp = findViewById(R.id.vp);
 
         paths = getIntent().getStringArrayListExtra(CustomConfig.PHOTO_VIEW_URL_LIST);

@@ -1,14 +1,22 @@
 package com.shuangduan.zcy.view.projectinfo;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ConsumptionAdapter;
+import com.shuangduan.zcy.adapter.LocusAdapter;
 import com.shuangduan.zcy.base.BaseFragment;
+import com.shuangduan.zcy.base.BaseLazyFragment;
 import com.shuangduan.zcy.model.bean.ConsumptionBean;
 import com.shuangduan.zcy.vm.ProjectDetailVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
@@ -28,10 +36,11 @@ import butterknife.BindView;
  * @chang time
  * @class describe
  */
-public class ProjectConsumptionFragment extends BaseFragment {
+public class ProjectConsumptionFragment extends BaseLazyFragment {
     @BindView(R.id.rv_consumption)
     RecyclerView rvConsumption;
     private ProjectDetailVm projectDetailVm;
+    private ConsumptionAdapter consumptionAdapter;
 
     public static ProjectConsumptionFragment newInstance() {
 
@@ -49,24 +58,29 @@ public class ProjectConsumptionFragment extends BaseFragment {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
-        projectDetailVm = ViewModelProviders.of(mActivity).get(ProjectDetailVm.class);
-        projectDetailVm.getConsume();
-        projectDetailVm.consumeLiveData.observe(this, consumeBean -> {
-
-        });
-
-        List<ConsumptionBean> list = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            list.add(new ConsumptionBean());
-        }
         rvConsumption.setLayoutManager(new LinearLayoutManager(mContext));
         rvConsumption.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
-        ConsumptionAdapter consumptionAdapter = new ConsumptionAdapter(R.layout.item_consumption, list);
+        consumptionAdapter = new ConsumptionAdapter(R.layout.item_consumption, null);
+        consumptionAdapter.setEmptyView(R.layout.layout_loading_top, rvConsumption);
         rvConsumption.setAdapter(consumptionAdapter);
     }
 
     @Override
     protected void initDataFromService() {
-
+        projectDetailVm = ViewModelProviders.of(mActivity).get(ProjectDetailVm.class);
+        projectDetailVm.getConsume();
+        projectDetailVm.consumeLiveData.observe(this, consumeBean -> {
+            setEmpty(consumptionAdapter);
+            consumptionAdapter.setNewData(consumeBean.getList());
+            isInited = true;
+        });
     }
+
+    private void setEmpty(ConsumptionAdapter consumptionAdapter) {
+        View empty = LayoutInflater.from(mContext).inflate(R.layout.layout_empty_top, null);
+        TextView tvTip = empty.findViewById(R.id.tv_tip);
+        tvTip.setText(getString(R.string.empty_consume));
+        consumptionAdapter.setEmptyView(empty);
+    }
+
 }

@@ -1,11 +1,15 @@
 package com.shuangduan.zcy.adapter;
 
+import android.widget.ImageView;
+
 import androidx.annotation.Nullable;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.shuangduan.zcy.R;
-import com.shuangduan.zcy.model.bean.ConsumptionBean;
+import com.shuangduan.zcy.model.bean.ConsumeBean;
+import com.shuangduan.zcy.utils.image.ImageConfig;
+import com.shuangduan.zcy.utils.image.ImageLoader;
 
 import java.util.List;
 
@@ -19,16 +23,22 @@ import java.util.List;
  * @chang time
  * @class describe
  */
-public class ConsumptionAdapter extends BaseQuickAdapter<ConsumptionBean, BaseViewHolder> {
-    public ConsumptionAdapter(int layoutResId, @Nullable List<ConsumptionBean> data) {
+public class ConsumptionAdapter extends BaseQuickAdapter<ConsumeBean.ListBean, BaseViewHolder> {
+    public ConsumptionAdapter(int layoutResId, @Nullable List<ConsumeBean.ListBean> data) {
         super(layoutResId, data);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, ConsumptionBean item) {
-        helper.setText(R.id.tv_title, "王汪汪")
-                .setText(R.id.tv_content, "高级会员")
-                .setText(R.id.tv_amount, String.format(mContext.getString(R.string.format_consumption), 2))
-                .setImageResource(R.id.iv_header, R.drawable.default_head);
+    protected void convert(BaseViewHolder helper, ConsumeBean.ListBean item) {
+        helper.setText(R.id.tv_title, item.getUsername())
+                .setText(R.id.tv_amount, String.format(mContext.getString(R.string.format_consumption), item.getCount()));
+
+        ImageView ivHead = helper.getView(R.id.iv_header);
+        ImageLoader.load(mContext, new ImageConfig.Builder()
+                .url(item.getImage())
+                .placeholder(R.drawable.default_head)
+                .errorPic(R.drawable.default_head)
+                .imageView(ivHead)
+                .build());
     }
 }

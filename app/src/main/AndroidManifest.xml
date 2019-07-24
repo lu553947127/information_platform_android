@@ -68,12 +68,14 @@
         <activity android:name="com.shuangduan.zcy.view.projectinfo.GoToSubActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.view.projectinfo.SubOrderActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.view.projectinfo.SubInfoActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.shuangduan.zcy.view.projectinfo.ProjectErrorActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.view.recruit.RecruitActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.view.recruit.RecruitDetailActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.view.release.ReleaseListActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.view.release.ReleaseProjectActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.view.SearchActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.view.PhotoViewActivity" android:screenOrientation="portrait" android:theme="@style/PhotoViewTheme"/>
+        <activity android:name="com.shuangduan.zcy.view.PayActivity" android:screenOrientation="portrait"/>
 
         <provider
             android:name="androidx.core.content.FileProvider"

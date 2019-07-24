@@ -1,6 +1,8 @@
 package com.shuangduan.zcy.view.projectinfo;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.lifecycle.ViewModelProviders;
@@ -10,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.LocusAdapter;
 import com.shuangduan.zcy.base.BaseFragment;
+import com.shuangduan.zcy.base.BaseLazyFragment;
 import com.shuangduan.zcy.model.bean.LocusBean;
 import com.shuangduan.zcy.vm.ProjectDetailVm;
 
@@ -28,7 +31,7 @@ import butterknife.BindView;
  * @chang time
  * @class describe
  */
-public class ProjectReadFragment extends BaseFragment {
+public class ProjectReadFragment extends BaseLazyFragment {
 
     @BindView(R.id.tv_detail)
     TextView tvDetail;
@@ -37,6 +40,7 @@ public class ProjectReadFragment extends BaseFragment {
     @BindView(R.id.rv_locus)
     RecyclerView rvLocus;
     private ProjectDetailVm projectDetailVm;
+    private LocusAdapter locusAdapter;
 
     public static ProjectReadFragment newInstance() {
 
@@ -54,27 +58,40 @@ public class ProjectReadFragment extends BaseFragment {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
-        projectDetailVm = ViewModelProviders.of(mActivity).get(ProjectDetailVm.class);
-        projectDetailVm.getViewTrack();
-        projectDetailVm.viewTrackLiveData.observe(this, viewTrackBeans -> {
-
-        });
-
-        tvDetail.setText("项目为政府规划用地，占地11230㎡，项目为政府规划用地，占地...");
-        tvMaterial.setText("门窗玻璃、外墙装饰、防水防腐、油...");
-
         rvLocus.setLayoutManager(new LinearLayoutManager(mContext));
-        LocusAdapter locusAdapter = new LocusAdapter(R.layout.item_locus, null){
+        locusAdapter = new LocusAdapter(R.layout.item_locus, null){
             @Override
             public void readDetail(int position, String price) {
 
             }
         };
+        locusAdapter.setEmptyView(R.layout.layout_loading_top, rvLocus);
         rvLocus.setAdapter(locusAdapter);
+
+        projectDetailVm = ViewModelProviders.of(mActivity).get(ProjectDetailVm.class);
+        projectDetailVm.introLiveData.observe(this, intro ->{
+            tvDetail.setText(intro);
+        });
+        projectDetailVm.materialLiveData.observe(this, materials -> {
+            tvMaterial.setText(materials);
+        });
+
+    }
+
+    private void setEmpty() {
+        View empty = LayoutInflater.from(mContext).inflate(R.layout.layout_empty, null);
+        TextView tvTip = empty.findViewById(R.id.tv_tip);
+        tvTip.setText(getString(R.string.empty_view_locus));
+        locusAdapter.setEmptyView(empty);
     }
 
     @Override
     protected void initDataFromService() {
-
+        projectDetailVm.getViewTrack();
+        projectDetailVm.viewTrackLiveData.observe(this, listBeans -> {
+            setEmpty();
+            locusAdapter.setNewData(listBeans);
+            isInited = true;
+        });
     }
 }

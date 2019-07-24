@@ -28,7 +28,6 @@
 
     <!--图片查看用theme-->
     <style name="PhotoViewTheme" parent="BaseAppTheme">
-        <item name="android:windowFullscreen">true</item>
         <item name="android:windowAnimationStyle">@style/AnimPhotoView</item>
         <item name="android:windowBackground">#000</item>
     </style>

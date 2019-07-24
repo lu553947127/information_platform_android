@@ -3,6 +3,7 @@ package com.shuangduan.zcy.adapter;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextPaint;
+import android.text.TextUtils;
 import android.text.style.ClickableSpan;
 import android.view.View;
 import android.widget.ImageView;
@@ -61,9 +62,23 @@ public abstract class LocusAdapter extends BaseQuickAdapter<TrackBean.ListBean, 
             helper.setText(R.id.tv_content, item.getRemarks());
         }else {
             TextView tvContent = helper.getView(R.id.tv_content);
-            SpanUtils.with(tvContent)
-                    .append(item.getRemarks()).appendSpace(1)
-                    .append(mContext.getString(R.string.read_detail))
+            SpanUtils spanUtils = SpanUtils.with(tvContent);
+            spanUtils.append(item.getRemarks());
+            if (!TextUtils.isEmpty(item.getName())){
+                spanUtils.append("，")
+                        .append(mContext.getString(R.string.visitor))
+                        .append(":")
+                        .append(item.getName());
+            }
+            if (!TextUtils.isEmpty(item.getTel())){
+                spanUtils
+                        .append("，")
+                        .append(mContext.getString(R.string.mobile))
+                        .append(":")
+                        .append(item.getTel());
+            }
+            spanUtils.appendSpace(2)
+                    .appendLine(mContext.getString(R.string.read_detail))
                     .setFontSize(ConvertUtils.sp2px(13))
                     .setForegroundColor(mContext.getResources().getColor(R.color.colorPrimary))
                     .setClickSpan(new ClickableSpan() {

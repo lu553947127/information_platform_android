@@ -15,7 +15,11 @@
     <string name="loading">正在加载~</string>
     <string name="try_wait">网络不稳定，请稍后再试</string>
     <string name="request_error">请求出错，点击重试</string>
-    <string name="data_empty">列表空空如也~</string>
+    <string name="empty_data">列表空空如也~</string>
+    <string name="empty_view_locus">你还没有已查看的轨迹信息</string>
+    <string name="empty_locus">目前还没有已发布轨迹信息</string>
+    <string name="empty_consume">目前还没有已消费信息</string>
+    <string name="empty_contact">目前还没有联系人信息</string>
 
     <string name="positive">确定</string>
     <string name="login">登录</string>
@@ -82,6 +86,7 @@
     <string name="email_verification">邮箱验证</string>
     <string name="update_email">修改邮箱</string>
     <string name="submit">提交</string>
+    <string name="submit_success">提交成功</string>
     <string name="modify">修改</string>
     <string name="id_card_positive">身份证正面</string>
     <string name="id_card_negative">身份证反面</string>
@@ -113,6 +118,7 @@
     <string name="subscribe_message">订阅信息</string>
     <string name="model_list">列表模式</string>
     <string name="collection">收藏</string>
+    <string name="collected">已收藏</string>
     <string name="read_detail">查看详情</string>
     <string name="message_detail">信息详情</string>
     <string name="area">区域</string>
@@ -123,6 +129,7 @@
     <string name="subscribe">已认购</string>
     <string name="subscribe_push">认购推送</string>
     <string name="error_correction">纠错</string>
+    <string name="discuss_group">讨论组</string>
     <string name="contact">联系人</string>
     <string name="read_contact">查看联系人</string>
     <string name="detail">详情：</string>
@@ -159,6 +166,8 @@
     <string name="time_start">起始时间</string>
     <string name="time_end">结束时间</string>
     <string name="read_more">查看更多</string>
+    <string name="hint_here">请在此处输入</string>
+    <string name="hint_error_correct">请输入纠错的具体内容</string>
 
     <string name="release_msg">发布信息</string>
     <string name="release">发布</string>
