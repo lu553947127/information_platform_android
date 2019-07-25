@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.shuangduan.zcy.base.BaseViewModel;
 import com.shuangduan.zcy.model.api.repository.LoginRepository;
 import com.shuangduan.zcy.model.bean.LoginBean;
+import com.shuangduan.zcy.model.bean.ReSetPwdBean;
 import com.shuangduan.zcy.model.bean.RegisterBean;
 
 import java.util.concurrent.TimeUnit;
@@ -27,14 +28,11 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class LoginVm extends BaseViewModel {
 
-    public static final int SMS_REGISTER = 1;//注册
-    public static final int SMS_LOGIN = 2;//登录
-    public static final int SMS_FORGET_PWD = 3;//忘记密码
-    public static final int SMS_UPDATE_PWD = 4;//修改手机号码
     public MutableLiveData<Long> timeLiveDataLiveData;
     public MutableLiveData smsDataLiveData;
     public MutableLiveData<LoginBean> accountLoginLiveData;
     public MutableLiveData<RegisterBean> registerLiveData;
+    public MutableLiveData<ReSetPwdBean> resetPwdLiveData;
     public MutableLiveData<String> pageStateLiveData;
 
     public LoginVm() {
@@ -82,6 +80,12 @@ public class LoginVm extends BaseViewModel {
     public void register(String tel, String code, String pwd, String invite_tel){
         LoginRepository loginRepository = new LoginRepository();
         registerLiveData = loginRepository.register(tel, code, pwd, invite_tel);
+        pageStateLiveData = loginRepository.getPageStateLiveData();
+    }
+
+    public void resetPwd(String tel, String code, String pwd){
+        LoginRepository loginRepository = new LoginRepository();
+        resetPwdLiveData = loginRepository.setPassword(tel, code, pwd);
         pageStateLiveData = loginRepository.getPageStateLiveData();
     }
 

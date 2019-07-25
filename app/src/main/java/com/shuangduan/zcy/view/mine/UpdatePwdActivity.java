@@ -1,6 +1,7 @@
 package com.shuangduan.zcy.view.mine;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 
 import androidx.appcompat.widget.AppCompatEditText;
@@ -12,7 +13,9 @@ import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
+import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
+import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.vm.LoginVm;
 
 import butterknife.BindView;
@@ -76,14 +79,56 @@ public class UpdatePwdActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_send_verification_code:
-                mobile = edtAccount.getText().toString();
-                if (StringUtils.isTrimEmpty(mobile)){
+                if (TextUtils.isEmpty(edtAccount.getText())){
                     ToastUtils.showShort(getString(R.string.hint_mobile_code));
                     return;
                 }
-                loginVm.sendVerificationCode();
+                mobile = edtAccount.getText().toString();
+                loginVm.smsCode(mobile, CustomConfig.SMS_FORGET_PWD);
+                loginVm.smsDataLiveData.observe(this, o -> {
+                    loginVm.sendVerificationCode();
+                });
                 break;
             case R.id.tv_confirm:
+                if (TextUtils.isEmpty(edtAccount.getText())){
+                    ToastUtils.showShort(getString(R.string.hint_mobile_code));
+                    return;
+                }
+                if (TextUtils.isEmpty(edtSMSCode.getText())){
+                    ToastUtils.showShort(getString(R.string.hint_SMS_verification_code));
+                    return;
+                }
+                if (TextUtils.isEmpty(edtPwd.getText())){
+                    ToastUtils.showShort(getString(R.string.hint_pwd));
+                    return;
+                }
+                if (TextUtils.isEmpty(edtPwdAgain.getText())){
+                    ToastUtils.showShort(getString(R.string.hint_new_pwd));
+                    return;
+                }
+                mobile = edtAccount.getText().toString();
+                String code = edtPwd.getText().toString();
+                String pwdAgain = edtPwd.getText().toString();
+                String pwd = edtPwd.getText().toString();
+                if (!pwd.equals(pwdAgain)){
+                    ToastUtils.showShort(getString(R.string.pwd_no_same));
+                    return;
+                }
+                loginVm.resetPwd(mobile, code, pwd);
+                loginVm.resetPwdLiveData.observe(this, reSetPwdBean -> {
+                    ToastUtils.showShort(getString(R.string.pwd_reset_success));
+                    finish();
+                });
+                loginVm.pageStateLiveData.observe(this, s -> {
+                    switch (s){
+                        case PageState.PAGE_LOADING:
+                            showLoading();
+                            break;
+                        default:
+                            hideLoading();
+                            break;
+                    }
+                });
                 break;
         }
     }

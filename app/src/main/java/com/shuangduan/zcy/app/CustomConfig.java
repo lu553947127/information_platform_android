@@ -32,6 +32,12 @@ public class CustomConfig {
     public static final String uploadTypeBusinessCard = "business_card";
     public static final String PROJECT_ID = "project_id";
 
+    public static final String SMS_TYPE = "sms_type";
+    public static final int SMS_REGISTER = 1;//注册
+    public static final int SMS_LOGIN = 2;//登录
+    public static final int SMS_FORGET_PWD = 3;//忘记密码
+    public static final int SMS_UPDATE_PWD = 4;//修改手机号码
+
     public static final int AREA_REQUEST_CODE = 1001;
 
 }

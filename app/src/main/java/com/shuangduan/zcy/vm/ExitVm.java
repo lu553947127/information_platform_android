@@ -1,0 +1,36 @@
+package com.shuangduan.zcy.vm;
+
+import androidx.lifecycle.MutableLiveData;
+
+import com.blankj.utilcode.util.SPUtils;
+import com.shuangduan.zcy.app.SpConfig;
+import com.shuangduan.zcy.base.BaseViewModel;
+import com.shuangduan.zcy.model.api.repository.LoginRepository;
+
+/**
+ * @author 宁文强 QQ:858777523
+ * @name information_platform_android
+ * @class name：com.shuangduan.zcy.vm
+ * @class describe
+ * @time 2019/7/25 9:01
+ * @change
+ * @chang time
+ * @class describe
+ */
+public class ExitVm extends BaseViewModel {
+
+    private int userId;
+    public MutableLiveData exitLiveData;
+    public MutableLiveData<String> pageStateLiveData;
+
+    public void init(){
+        userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
+    }
+
+    public void exit(){
+        LoginRepository repository = new LoginRepository();
+        pageStateLiveData = repository.getPageStateLiveData();
+        exitLiveData = repository.outLogin(userId);
+    }
+
+}

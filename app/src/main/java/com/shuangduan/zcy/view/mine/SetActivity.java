@@ -6,11 +6,19 @@ import android.widget.Switch;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.R;
+import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
+import com.shuangduan.zcy.dialog.BaseDialog;
+import com.shuangduan.zcy.dialog.CustomDialog;
+import com.shuangduan.zcy.model.api.PageState;
+import com.shuangduan.zcy.view.login.FirstActivity;
+import com.shuangduan.zcy.vm.ExitVm;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -34,6 +42,7 @@ public class SetActivity extends BaseActivity {
     Switch switchSound;
     @BindView(R.id.switch_model)
     Switch switchModel;
+    private ExitVm exitVm;
 
     @Override
     protected int initLayoutRes() {
@@ -44,6 +53,9 @@ public class SetActivity extends BaseActivity {
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.set));
+
+        exitVm = ViewModelProviders.of(this).get(ExitVm.class);
+        exitVm.init();
 
         switchSound.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked){
@@ -61,7 +73,7 @@ public class SetActivity extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.iv_bar_back, R.id.tv_update_pwd, R.id.tv_about_ours})
+    @OnClick({R.id.iv_bar_back, R.id.tv_update_pwd, R.id.tv_about_ours, R.id.tv_exit})
     void onClick(View view){
         switch (view.getId()) {
             case R.id.iv_bar_back:
@@ -72,6 +84,38 @@ public class SetActivity extends BaseActivity {
                 break;
             case R.id.tv_about_ours:
                 ActivityUtils.startActivity(AboutOursActivity.class);
+                break;
+            case R.id.tv_exit:
+                exitVm.exit();
+                exitVm.exitLiveData.observe(this, o -> {
+                    new CustomDialog(SetActivity.this)
+                            .setTip(getString(R.string.exit_confirm))
+                            .setCallBack(new BaseDialog.CallBack() {
+                                @Override
+                                public void cancel() {
+
+                                }
+
+                                @Override
+                                public void ok(String s) {
+                                    SPUtils.getInstance().clear();
+                                    ActivityUtils.startActivity(FirstActivity.class);
+                                    ActivityUtils.finishAllActivitiesExceptNewest();
+                                }
+                            }).showDialog();
+                });
+                exitVm.pageStateLiveData.observe(this, s -> {
+                    switch (s){
+                        case PageState.PAGE_ERROR:
+                        case PageState.PAGE_SERVICE_ERROR:
+                        case PageState.PAGE_LOAD_SUCCESS:
+                            hideLoading();
+                            break;
+                        case PageState.PAGE_LOADING:
+                            showContent();
+                            break;
+                    }
+                });
                 break;
         }
     }

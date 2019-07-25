@@ -1,15 +1,12 @@
 package com.shuangduan.zcy.view.login;
 
 import android.os.Bundle;
-import android.text.InputFilter;
-import android.text.InputType;
 import android.text.TextUtils;
 import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatTextView;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.ActivityUtils;
@@ -18,11 +15,13 @@ import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
+import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.utils.AndroidBug5497Workaround;
 import com.shuangduan.zcy.view.MainActivity;
+import com.shuangduan.zcy.view.mine.UpdatePwdActivity;
 import com.shuangduan.zcy.vm.LoginVm;
 
 import java.util.Objects;
@@ -94,7 +93,7 @@ public class LoginActivity extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.tv_login_account, R.id.tv_login_verification_code, R.id.tv_send_verification_code, R.id.tv_login})
+    @OnClick({R.id.tv_login_account, R.id.tv_login_verification_code, R.id.tv_send_verification_code, R.id.tv_login, R.id.tv_forget_pwd})
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_login_account:
@@ -109,6 +108,9 @@ public class LoginActivity extends BaseActivity {
             case R.id.tv_login:
                 login();
                 break;
+            case R.id.tv_forget_pwd:
+                ActivityUtils.startActivity(UpdatePwdActivity.class);
+                break;
         }
     }
 
@@ -117,7 +119,7 @@ public class LoginActivity extends BaseActivity {
             ToastUtils.showShort(getString(R.string.mobile_error));
             return;
         }
-        loginVm.smsCode(edtAccount.getText().toString(), LoginVm.SMS_LOGIN);
+        loginVm.smsCode(edtAccount.getText().toString(), CustomConfig.SMS_LOGIN);
         loginVm.smsDataLiveData.observe(this, o -> {
             tvSendVerificationCode.setClickable(false);
             loginVm.sendVerificationCode();
@@ -158,9 +160,6 @@ public class LoginActivity extends BaseActivity {
             switch (s){
                 case PageState.PAGE_LOADING:
                     showLoading();
-                    break;
-                case PageState.PAGE_NET_ERROR:
-                    ToastUtils.showShort(getString(R.string.net_not));
                     break;
                 default:
                     hideLoading();

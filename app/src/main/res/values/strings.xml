@@ -108,12 +108,16 @@
     <string name="dark_model">夜间模式</string>
     <string name="update_pwd">修改密码</string>
     <string name="about_ours">关于我们</string>
+    <string name="exit">退出登录</string>
     <string name="set_new_pwd">请设置新的密码</string>
     <string name="hint_new_pwd">请输入新的密码</string>
     <string name="hint_opinion">请在此输入您的意见</string>
     <string name="share_url">http://www.shuangduan.com</string>
     <string name="share">分享</string>
     <string name="mobile">电话</string>
+    <string name="exit_confirm">确认退出登录吗</string>
+    <string name="pwd_no_same">两次输入的密码不一致</string>
+    <string name="pwd_reset_success">密码重置成功</string>
 
     <string name="subscribe_message">订阅信息</string>
     <string name="model_list">列表模式</string>
@@ -184,7 +188,7 @@
 
     <string name="format_version_name">当前版本号：v%1$s</string>
     <string name="format_get_verification_code_again">重新获取 (%1$ds)</string>
-    <string name="format_balance">余额:%1$d元</string>
+    <string name="format_balance">余额:%1$s元</string>
     <string name="format_num_of_people">人脉数量: %1$d人</string>
     <string name="format_num_of_readers">订阅人数: %1$d人</string>
     <string name="format_withdraw_now">当前可提现金额为:%1$d元</string>
@@ -241,6 +245,13 @@
     <string-array name="release_list">
         <item>工程信息</item>
         <item>轨迹信息</item>
+    </string-array>
+
+    <string-array name="experience_list">
+        <item>0–1年</item>
+        <item>1–2年</item>
+        <item>2–3年</item>
+        <item>3–5年</item>
     </string-array>
 
 </resources>

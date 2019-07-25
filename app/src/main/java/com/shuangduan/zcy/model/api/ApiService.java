@@ -17,12 +17,17 @@ import com.shuangduan.zcy.model.bean.SearchHotBean;
 import com.shuangduan.zcy.model.bean.StageBean;
 import com.shuangduan.zcy.model.bean.TrackBean;
 import com.shuangduan.zcy.model.bean.TypeBean;
+import com.shuangduan.zcy.model.bean.UploadBean;
+import com.shuangduan.zcy.model.bean.UserInfoBean;
 import com.shuangduan.zcy.model.bean.ViewTrackBean;
 
 import io.reactivex.Flowable;
+import okhttp3.MultipartBody;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Query;
 
 /**
@@ -104,6 +109,62 @@ public interface ApiService {
     );
 
     @FormUrlEncoded
+    @POST("api/Userinfo/setInfo")
+    Flowable<BaseObjResponse> updateUserName(
+            @Field("user_id")int user_id,
+            @Field("username")String username
+    );
+
+    @FormUrlEncoded
+    @POST("api/Userinfo/setInfo")
+    Flowable<BaseObjResponse> updateSex(
+            @Field("user_id")int user_id,
+            @Field("sex")int sex
+    );
+
+    @FormUrlEncoded
+    @POST("api/Userinfo/setInfo")
+    Flowable<BaseObjResponse> updateCompany(
+            @Field("user_id")int user_id,
+            @Field("company")String company
+    );
+
+    @FormUrlEncoded
+    @POST("api/Userinfo/setInfo")
+    Flowable<BaseObjResponse> updatePosition(
+            @Field("user_id")int user_id,
+            @Field("position")String position
+    );
+
+    @FormUrlEncoded
+    @POST("api/Userinfo/setInfo")
+    Flowable<BaseObjResponse> updateBusinessCity(
+            @Field("user_id")int user_id,
+            @Query("business_city[]") int[] business_city
+    );
+
+    @FormUrlEncoded
+    @POST("api/Userinfo/setInfo")
+    Flowable<BaseObjResponse> updateAvatar(
+            @Field("user_id")int user_id,
+            @Field("avatar")String avatar
+    );
+
+    @FormUrlEncoded
+    @POST("api/Userinfo/setInfo")
+    Flowable<BaseObjResponse> updateExperience(
+            @Field("user_id")int user_id,
+            @Query("experience") int experience
+    );
+
+    @FormUrlEncoded
+    @POST("api/Userinfo/setInfo")
+    Flowable<BaseObjResponse> updateProduct(
+            @Field("user_id")int user_id,
+            @Query("managing_products") String managing_products
+    );
+
+    @FormUrlEncoded
     @POST("api/Userinfo/telUpdate")
     Flowable<BaseObjResponse> telUpdate(
             @Field("user_id")int user_id,
@@ -118,6 +179,25 @@ public interface ApiService {
     Flowable<BaseObjResponse> telCheck(
             @Field("user_id")int user_id,
             @Field("code")String code
+    );
+
+    @FormUrlEncoded
+    @POST("api/Userinfo/userInfo")
+    Flowable<BaseObjResponse<UserInfoBean>> userInfo(
+            @Field("user_id")int user_id
+    );
+
+    @FormUrlEncoded
+    @POST("api/Userinfo/information")
+    Flowable<BaseObjResponse<UserInfoBean>> information(
+            @Field("user_id")int user_id
+    );
+
+    @Multipart
+    @POST("api/Upload/uploadImage")
+    Flowable<BaseObjResponse<UploadBean>> upload(
+            @Query("user_id") int user_id,
+            @Part MultipartBody.Part file
     );
 
     @FormUrlEncoded

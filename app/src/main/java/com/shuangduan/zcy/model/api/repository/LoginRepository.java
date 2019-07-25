@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.shuangduan.zcy.model.api.rxjava.BaseSubscriber;
 import com.shuangduan.zcy.model.bean.LoginBean;
+import com.shuangduan.zcy.model.bean.ReSetPwdBean;
 import com.shuangduan.zcy.model.bean.RegisterBean;
 
 /**
@@ -39,6 +40,21 @@ public class LoginRepository extends BaseRepository {
 
     public MutableLiveData<RegisterBean> register(String tel, String code, String pwd, String invite_tel){
         BaseSubscriber subscriber = request(apiService.register(tel, code, pwd, invite_tel)).send();
+        pageStateLiveData = subscriber.getPageState();
+        return subscriber.getData();
+    }
+
+    /**
+     * 重置密码
+     */
+    public MutableLiveData<ReSetPwdBean> setPassword(String tel, String code, String pwd){
+        BaseSubscriber subscriber = request(apiService.setPassword(tel, code, pwd)).send();
+        pageStateLiveData = subscriber.getPageState();
+        return subscriber.getData();
+    }
+
+    public MutableLiveData outLogin(int userId){
+        BaseSubscriber subscriber = request(apiService.outLogin(userId)).send();
         pageStateLiveData = subscriber.getPageState();
         return subscriber.getData();
     }

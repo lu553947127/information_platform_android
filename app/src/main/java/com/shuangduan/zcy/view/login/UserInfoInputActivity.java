@@ -83,7 +83,7 @@ public class UserInfoInputActivity extends BaseActivity {
     EditText edtProduction;
 
     /*性别  1男 2女 0未选择*/
-    private int sex = -1;
+    private int sex = 0;
     /*业务经验 1:"0-3年",2:"2-3年",3:"3-5年",4:"5-10年"*/
     private int exp = 0;
     private int[] area;
@@ -139,9 +139,6 @@ public class UserInfoInputActivity extends BaseActivity {
                     switch (s){
                         case PageState.PAGE_LOADING:
                             showLoading();
-                            break;
-                        case PageState.PAGE_NET_ERROR:
-                            ToastUtils.showShort(getString(R.string.net_not));
                             break;
                             default:
                                 hideLoading();

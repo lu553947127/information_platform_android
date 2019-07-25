@@ -4,18 +4,25 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.widget.AppCompatTextView;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.base.BaseFragment;
+import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.event.UserNameEvent;
 import com.shuangduan.zcy.utils.BarUtils;
+import com.shuangduan.zcy.utils.image.ImageConfig;
+import com.shuangduan.zcy.utils.image.ImageLoader;
 import com.shuangduan.zcy.view.mine.FeedbackActivity;
 import com.shuangduan.zcy.view.mine.HelperActivity;
 import com.shuangduan.zcy.view.mine.ReadHistoryActivity;
 import com.shuangduan.zcy.view.mine.RecommendFriendsActivity;
 import com.shuangduan.zcy.view.mine.SetActivity;
 import com.shuangduan.zcy.view.mine.UserInfoActivity;
+import com.shuangduan.zcy.view.mine.WithdrawActivity;
+import com.shuangduan.zcy.vm.UserInfoVm;
 import com.shuangduan.zcy.weight.CircleImageView;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -47,6 +54,7 @@ public class MineFragment extends BaseFragment {
     AppCompatTextView tvNumOfPeople;
     @BindView(R.id.tv_balance)
     AppCompatTextView tvBalance;
+    private UserInfoVm userInfoVm;
 
     public static MineFragment newInstance() {
 
@@ -65,26 +73,46 @@ public class MineFragment extends BaseFragment {
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.setStatusBarColor(fakeStatusBar, R.drawable.shape_bg_mine);
-
-        ivUser.setImageResource(R.drawable.default_head);
-        tvUsername.setText("王某某");
-        tvMember.setText("初级会员");
-        tvNumOfPeople.setText(String.format(getString(R.string.format_num_of_people), 123));
-        tvBalance.setText(String.format(getString(R.string.format_balance), 10000));
+        userInfoVm = ViewModelProviders.of(mActivity).get(UserInfoVm.class);
     }
 
     @Override
     protected void initDataFromService() {
-
+        userInfoVm.userInfo();
+        userInfoVm.getInfoLiveData.observe(this, userInfoBean -> {
+            tvUsername.setText(userInfoBean.getUsername());
+            tvNumOfPeople.setText(String.format(getString(R.string.format_num_of_people), userInfoBean.getCount()));
+            tvBalance.setText(String.format(getString(R.string.format_balance), userInfoBean.getFunds()));
+            ImageLoader.load(mContext, new ImageConfig.Builder()
+                    .url(userInfoBean.getImage())
+                    .placeholder(R.drawable.default_head)
+                    .errorPic(R.drawable.default_head)
+                    .imageView(ivUser)
+                    .build());
+        });
+        userInfoVm.pageStateLiveData.observe(this, s -> {
+            LogUtils.i(s);
+            switch (s){
+                case PageState.PAGE_LOADING:
+                    showLoading();
+                    break;
+                default:
+                    hideLoading();
+                    break;
+            }
+        });
     }
 
-    @OnClick({R.id.tv_username, R.id.iv_user, R.id.tv_my_subscription, R.id.fl_order, R.id.fl_income,
+    @OnClick({R.id.tv_username, R.id.iv_user, R.id.tv_my_subscription, R.id.fl_order, R.id.fl_income, R.id.tv_balance,
             R.id.tv_read_history, R.id.tv_feedback, R.id.tv_recommend_friends, R.id.tv_my_collection, R.id.tv_set, R.id.tv_helper})
     void onClick(View view){
         switch (view.getId()) {
             case R.id.tv_username:
             case R.id.iv_user:
                 ActivityUtils.startActivity(UserInfoActivity.class);
+                break;
+            case R.id.tv_balance:
+                ActivityUtils.startActivity(WithdrawActivity.class);
                 break;
             case R.id.fl_order:
                 break;

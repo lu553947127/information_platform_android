@@ -14,6 +14,7 @@ import com.blankj.utilcode.util.DeviceUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
+import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.PageState;
@@ -118,9 +119,6 @@ public class RegisterActivity extends BaseActivity {
                 case PageState.PAGE_LOADING:
                     showLoading();
                     break;
-                case PageState.PAGE_NET_ERROR:
-                    ToastUtils.showShort(getString(R.string.net_not));
-                    break;
                 default:
                     hideLoading();
                     break;
@@ -133,7 +131,7 @@ public class RegisterActivity extends BaseActivity {
             ToastUtils.showShort(getString(R.string.mobile_error));
             return;
         }
-        loginVm.smsCode(edtMobile.getText().toString(), LoginVm.SMS_REGISTER);
+        loginVm.smsCode(edtMobile.getText().toString(), CustomConfig.SMS_REGISTER);
         loginVm.smsDataLiveData.observe(this, o -> {
             tvSendVerificationCode.setClickable(false);
             loginVm.sendVerificationCode();

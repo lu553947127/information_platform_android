@@ -20,14 +20,19 @@ import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.BusinessExpDialog;
 import com.shuangduan.zcy.dialog.PhotoDialog;
 import com.shuangduan.zcy.dialog.SexDialog;
+import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.event.EmailEvent;
 import com.shuangduan.zcy.model.event.MobileEvent;
 import com.shuangduan.zcy.model.event.UserNameEvent;
 import com.shuangduan.zcy.utils.AndroidBug5497Workaround;
+import com.shuangduan.zcy.utils.image.ImageConfig;
+import com.shuangduan.zcy.utils.image.ImageLoader;
 import com.shuangduan.zcy.utils.matisse.Glide4Engine;
 import com.shuangduan.zcy.utils.matisse.MatisseCamera;
 import com.shuangduan.zcy.view.login.MobileVerificationActivity;
 import com.shuangduan.zcy.vm.PermissionVm;
+import com.shuangduan.zcy.vm.UploadPhotoVm;
+import com.shuangduan.zcy.vm.UserInfoVm;
 import com.shuangduan.zcy.weight.CircleImageView;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.zhihu.matisse.Matisse;
@@ -81,8 +86,10 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
     AppCompatEditText edtProduction;
 
     private int sex = -1;
-    private PermissionVm photoVm;
+    private PermissionVm permissionVm;
     private RxPermissions rxPermissions;
+    private UserInfoVm userInfoVm;
+    private UploadPhotoVm uploadPhotoVm;
 
     @Override
     protected int initLayoutRes() {
@@ -94,23 +101,41 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.base_info));
         AndroidBug5497Workaround.assistActivity(findViewById(android.R.id.content));
-        ivUser.setImageResource(R.drawable.default_head);
-        tvName.setText("王某某");
-        tvSex.setText("王某某");
-        tvMobile.setText("王某某");
-        tvIdCard.setText("王某某");
-        tvEmail.setText("王某某");
-        tvCompany.setText("王某某");
-        tvOffice.setText("王某某");
-        tvBusinessArea.setText("济南市济南市济南市济南市济南市济南市济南市济南市济南市");
-        tvBusinessExp.setText("王某某");
+
+        uploadPhotoVm = ViewModelProviders.of(this).get(UploadPhotoVm.class);
+        userInfoVm = ViewModelProviders.of(this).get(UserInfoVm.class);
+        userInfoVm.information();
+        userInfoVm.informationLiveData.observe(this, userInfoBean -> {
+            ivUser.setImageResource(R.drawable.default_head);
+            tvName.setText(userInfoBean.getUsername());
+            switch (userInfoBean.getSex()){
+                case 1:
+                    tvSex.setText(getString(R.string.man));
+                    break;
+                case 2:
+                    tvSex.setText(getString(R.string.woman));
+                    break;
+                case 0:
+                    tvSex.setText("");
+                    break;
+            }
+            tvMobile.setText(userInfoBean.getTel());
+            tvIdCard.setText(userInfoBean.getIdentity_card());
+            tvEmail.setText(userInfoBean.getEmail());
+            tvCompany.setText(userInfoBean.getCompany());
+            tvOffice.setText(userInfoBean.getPosition());
+            tvBusinessArea.setText(userInfoBean.getBusiness_city());
+            if (userInfoBean.getExperience() >= 1 && userInfoBean.getExperience() <= 4)
+                tvBusinessExp.setText(getResources().getStringArray(R.array.experience_list)[userInfoBean.getExperience() - 1]);
+            edtProduction.setText(userInfoBean.getManaging_products());
+        });
 
         rxPermissions = new RxPermissions(this);
-        photoVm = ViewModelProviders.of(this).get(PermissionVm.class);
-        photoVm.getLiveData().observe(this, integer -> {
+        permissionVm = ViewModelProviders.of(this).get(PermissionVm.class);
+        permissionVm.getLiveData().observe(this, integer -> {
             if (integer == PermissionVm.PERMISSION_CAMERA){
                 MatisseCamera.from(this)
-                        .forResult(PermissionVm.REQUEST_CODE_AUTHENTICATION, "com.shuangduan.zcy.fileprovider");
+                        .forResult(PermissionVm.REQUEST_CODE_HEAD, "com.shuangduan.zcy.fileprovider");
             }else if (integer == PermissionVm.PERMISSION_STORAGE){
                 Matisse.from(this)
                         .choose(MimeType.ofImage())
@@ -123,8 +148,23 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
                         .captureStrategy(
                                 new CaptureStrategy(true, "com.shuangduan.zcy.fileprovider"))
                         .imageEngine(new Glide4Engine())
-                        .forResult(PermissionVm.REQUEST_CODE_CHOOSE_AUTHENTICATION);
+                        .forResult(PermissionVm.REQUEST_CODE_CHOOSE_HEAD);
             }
+        });
+
+        uploadPhotoVm.changeLiveData.observe(this, integer -> {
+            uploadPhotoVm.uploadLiveData.observe(this, uploadBean -> {
+                ImageLoader.load(this, new ImageConfig.Builder()
+                        .url(uploadBean.getThumbnail())
+                        .imageView(ivUser)
+                        .build());
+                userInfoVm.updateAvatar(uploadBean.getImage_id());
+            });
+            uploadPhotoVm.mPageStateLiveData.observe(this, s -> {
+                if (s != PageState.PAGE_LOADING){
+                    hideLoading();
+                }
+            });
         });
     }
 
@@ -193,28 +233,33 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
         }
     }
 
+    private void upload(String path){
+        uploadPhotoVm.upload(path);
+        showLoading();
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PermissionVm.REQUEST_CODE_CHOOSE_HEAD && resultCode == RESULT_OK) {
             List<String> mSelected = Matisse.obtainPathResult(data);
-//            photoVm.upLoadImg(mSelected.get(0));
+            upload(mSelected.get(0));
         }
 
         if (requestCode == PermissionVm.REQUEST_CODE_HEAD && resultCode == RESULT_OK) {
-//            photoVm.upLoadImg(MatisseCamera.obtainPathResult());
-            LogUtils.i(MatisseCamera.obtainPathResult(), MatisseCamera.obtainUriResult());
+            upload(MatisseCamera.obtainPathResult());
         }
+
     }
 
     @Override
     public void camera() {
-        photoVm.getPermissionCamera(rxPermissions);
+        permissionVm.getPermissionCamera(rxPermissions);
     }
 
     @Override
     public void album() {
-        photoVm.getPermissionAlbum(rxPermissions);
+        permissionVm.getPermissionAlbum(rxPermissions);
     }
 
     @Subscribe()

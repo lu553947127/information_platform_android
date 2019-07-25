@@ -127,6 +127,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:overScrollMode="never"
                 android:background="@color/colorFFF"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
@@ -151,6 +152,7 @@
                 android:id="@+id/rv_income_statement"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:overScrollMode="never"
                 android:background="@color/colorFFF">
 
             </androidx.recyclerview.widget.RecyclerView>

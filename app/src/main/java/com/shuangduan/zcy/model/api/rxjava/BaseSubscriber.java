@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.NetworkUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.api.convert.exception.ApiException;
 import com.shuangduan.zcy.model.api.convert.exception.ErrorHandlerFactory;
@@ -78,6 +79,7 @@ public class BaseSubscriber<T> implements Subscriber<T> {
         s.request(1);
         //网络判断，无网络停止请求
         if (!NetworkUtils.isConnected()){
+            ToastUtils.showShort("请检查是否联网");
             pageState.postValue(PageState.PAGE_NET_ERROR);
             s.cancel();
             return;
