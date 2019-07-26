@@ -36,6 +36,11 @@ public class LoginVm extends BaseViewModel {
     public MutableLiveData<String> pageStateLiveData;
 
     public LoginVm() {
+        accountLoginLiveData = new MutableLiveData<>();
+        smsDataLiveData = new MutableLiveData<>();
+        resetPwdLiveData = new MutableLiveData<>();
+        registerLiveData = new MutableLiveData<>();
+        pageStateLiveData = new MutableLiveData<>();
         timeLiveDataLiveData = new MutableLiveData<>();
     }
 
@@ -60,33 +65,23 @@ public class LoginVm extends BaseViewModel {
     }
 
     public void smsCode(String tel, int type){
-        LoginRepository loginRepository = new LoginRepository();
-        smsDataLiveData = loginRepository.smsCode(tel, type);
-        pageStateLiveData = loginRepository.getPageStateLiveData();
+        new LoginRepository().smsCode(smsDataLiveData, pageStateLiveData, tel, type);
     }
 
     public void codeLogin(String tel, String code, String client_id){
-        LoginRepository loginRepository = new LoginRepository();
-        accountLoginLiveData = loginRepository.codeLogin(tel, code, client_id);
-        pageStateLiveData = loginRepository.getPageStateLiveData();
+        new LoginRepository().codeLogin(accountLoginLiveData, pageStateLiveData, tel, code, client_id);
     }
 
     public void accountLogin(String tel, String pwd, String client_id){
-        LoginRepository loginRepository = new LoginRepository();
-        accountLoginLiveData = loginRepository.accountLogin(tel, pwd, client_id);
-        pageStateLiveData = loginRepository.getPageStateLiveData();
+        new LoginRepository().accountLogin(accountLoginLiveData, pageStateLiveData, tel, pwd, client_id);
     }
 
     public void register(String tel, String code, String pwd, String invite_tel){
-        LoginRepository loginRepository = new LoginRepository();
-        registerLiveData = loginRepository.register(tel, code, pwd, invite_tel);
-        pageStateLiveData = loginRepository.getPageStateLiveData();
+        new LoginRepository().register(registerLiveData, pageStateLiveData, tel, code, pwd, invite_tel);
     }
 
     public void resetPwd(String tel, String code, String pwd){
-        LoginRepository loginRepository = new LoginRepository();
-        resetPwdLiveData = loginRepository.setPassword(tel, code, pwd);
-        pageStateLiveData = loginRepository.getPageStateLiveData();
+        new LoginRepository().setPassword(resetPwdLiveData, pageStateLiveData, tel, code, pwd);
     }
 
 }

@@ -30,18 +30,18 @@ public class SearchVm extends BaseViewModel {
 
     public void init(){
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
+        hotLiveData = new MutableLiveData<>();
+        searchLiveData = new MutableLiveData<>();
+        pageStateLiveData = new MutableLiveData<>();
         getHot();
     }
 
     public void search(String keyWord){
-        SearchRepository searchRepository = new SearchRepository();
-        pageStateLiveData = searchRepository.getPageStateLiveData();
-        searchLiveData = searchRepository.search(userId, keyWord);
+        new SearchRepository().search(searchLiveData, pageStateLiveData, userId, keyWord);
     }
 
     private void getHot(){
-        SearchRepository searchRepository = new SearchRepository();
-        hotLiveData = searchRepository.searchHot(userId);
+        new SearchRepository().searchHot(hotLiveData, userId);
     }
 
 }

@@ -27,7 +27,7 @@ public class SexDialog extends BaseDialog {
     @BindView(R.id.rg_sex)
     RadioGroup rgSex;
 
-    private int sex = -1;
+    private int sex = 0;
 
     public SexDialog(@NonNull Activity activity) {
         super(activity);
@@ -43,9 +43,9 @@ public class SexDialog extends BaseDialog {
         setWidth(ConvertUtils.dp2px(260));
         DialogUtils.enterCustomAnim(this);
 
-        if (sex == 0){
+        if (sex == 1){
             rgSex.check(R.id.rb_man);
-        }else if (sex == 1){
+        }else if (sex == 2){
             rgSex.check(R.id.rb_woman);
         }
     }

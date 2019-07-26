@@ -6,6 +6,7 @@ import android.widget.EditText;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.SPUtils;
@@ -15,6 +16,7 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.event.UserNameEvent;
+import com.shuangduan.zcy.vm.UserInfoVm;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -38,6 +40,7 @@ public class UpdateNameActivity extends BaseActivity {
     Toolbar toolbar;
     @BindView(R.id.edt_name)
     EditText edtName;
+    private UserInfoVm userInfoVm;
 
     @Override
     protected int initLayoutRes() {
@@ -51,6 +54,13 @@ public class UpdateNameActivity extends BaseActivity {
 
         String username = SPUtils.getInstance().getString(SpConfig.USERNAME);
         edtName.setText(username);
+
+        userInfoVm = ViewModelProviders.of(this).get(UserInfoVm.class);
+        userInfoVm.infoLiveData.observe(this, s -> {
+            SPUtils.getInstance().put(SpConfig.USERNAME, edtName.getText().toString());
+            EventBus.getDefault().post(new UserNameEvent(edtName.getText().toString()));
+            finish();
+        });
     }
 
     @OnClick({R.id.iv_bar_back, R.id.tv_save})
@@ -65,9 +75,7 @@ public class UpdateNameActivity extends BaseActivity {
                     ToastUtils.showShort(getString(R.string.hint_real_name));
                     return;
                 }
-                SPUtils.getInstance().put(SpConfig.USERNAME, username);
-                EventBus.getDefault().post(new UserNameEvent(username));
-                finish();
+                userInfoVm.updateUserName(username);
                 break;
         }
     }

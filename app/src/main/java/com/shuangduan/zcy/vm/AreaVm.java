@@ -40,15 +40,15 @@ public class AreaVm extends BaseViewModel {
      */
     public void init(){
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
+        provinceLiveData = new MutableLiveData<>();
         cityLiveData = new MutableLiveData<>();
+        pageStateLiveData = new MutableLiveData<>();
         id = 0;
         getProvince();
     }
 
     public void getProvince(){
-        ProjectRepository projectRepository = new ProjectRepository();
-        provinceLiveData = projectRepository.getProvince(userId);
-        pageStateLiveData = projectRepository.getPageStateLiveData();
+        new ProjectRepository().getProvince(provinceLiveData, pageStateLiveData, userId);
     }
 
     /**
@@ -71,8 +71,7 @@ public class AreaVm extends BaseViewModel {
 
     public void getCity(int position){
         id = provinceLiveData.getValue().get(position).getId();
-        ProjectRepository projectRepository = new ProjectRepository();
-        cityLiveData = projectRepository.getCity(userId, id);
+        new ProjectRepository().getCity(cityLiveData, userId, id);
     }
 
     /**

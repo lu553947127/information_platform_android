@@ -10,6 +10,8 @@ import com.shuangduan.zcy.model.api.rxjava.BaseSubscriber;
 
 import org.reactivestreams.Subscription;
 
+import java.util.List;
+
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
@@ -32,7 +34,6 @@ public class BaseRepository<T> {
     /*解决背压*/
     private Flowable<T> flowable;
     public ApiService apiService;
-    public MutableLiveData<String> pageStateLiveData;
 
     /*初始化*/
     public BaseRepository() {
@@ -63,7 +64,31 @@ public class BaseRepository<T> {
         return this;
     }
 
-    public MutableLiveData<String> getPageStateLiveData() {
-        return pageStateLiveData !=null? pageStateLiveData: new MutableLiveData<>();
+    /**
+     * 获取请求过程状态，更新界面
+     * @return
+     */
+    public BaseRepository<T> setPageState(MutableLiveData<String> pageState) {
+        this.baseObservable.setPageState(pageState);
+        return this;
     }
+
+    /**
+     * 返回数据类型BaseResponse
+     * @return
+     */
+    public BaseRepository<T> setData(MutableLiveData<T> data) {
+        this.baseObservable.setData(data);
+        return this;
+    }
+
+    /**
+     * 返回数据类型BaseListResponse
+     * @return
+     */
+    public BaseRepository<T> setDataList(MutableLiveData<List<T>> dataList){
+        this.baseObservable.setDataList(dataList);
+        return this;
+    }
+
 }

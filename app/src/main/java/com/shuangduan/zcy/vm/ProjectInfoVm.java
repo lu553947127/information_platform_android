@@ -23,14 +23,17 @@ import java.util.List;
 public class ProjectInfoVm extends BaseViewModel {
 
     public MutableLiveData<List<MapBean>> mapLiveData;
+    public MutableLiveData<String> pageStateLiveData;
     private int userId;
 
     public ProjectInfoVm() {
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
+        mapLiveData = new MutableLiveData<>();
+        pageStateLiveData = new MutableLiveData<>();
     }
 
     public void mapList(double lng, double lat){
-        mapLiveData = new ProjectRepository().mapList(userId, lng, lat);
+        new ProjectRepository().mapList(mapLiveData, pageStateLiveData, userId, lng, lat);
     }
 
 }

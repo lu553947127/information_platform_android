@@ -64,22 +64,36 @@ public class ProjectDetailVm extends BaseViewModel {
             collectionLiveData = new MutableLiveData<>();
         if (subscribeLiveData == null)
             subscribeLiveData = new MutableLiveData<>();
+        if (pageStateLiveData == null)
+            pageStateLiveData = new MutableLiveData<>();
+        if (detailLiveData == null)
+            detailLiveData = new MutableLiveData<>();
+        if (trackLiveData == null)
+            trackLiveData = new MutableLiveData<>();
+        if (viewTrackLiveData == null)
+            viewTrackLiveData = new MutableLiveData<>();
+        if (consumeLiveData == null)
+            consumeLiveData = new MutableLiveData<>();
+        if (cancelCollectLiveData == null)
+            cancelCollectLiveData = new MutableLiveData();
+        if (collectLiveData == null)
+            collectLiveData = new MutableLiveData();
+        if (errorLiveData == null)
+            errorLiveData = new MutableLiveData();
     }
 
     private ProjectDetailRepository repositoryDetail;
     public void getDetail(){
         if (repositoryDetail == null)
             repositoryDetail = new ProjectDetailRepository();
-        pageStateLiveData = repositoryDetail.getPageStateLiveData();
-        detailLiveData = repositoryDetail.getDetail(userId, id);
+        repositoryDetail.getDetail(detailLiveData, pageStateLiveData, userId, id);
     }
 
     private ProjectDetailRepository repositoryTrack;
     public void getTrack(){
         if (repositoryTrack == null)
             repositoryTrack = new ProjectDetailRepository();
-        pageStateLiveData = repositoryTrack.getPageStateLiveData();
-        trackLiveData = repositoryTrack.getTrack(userId, id, pageTrack, type);
+        repositoryTrack.getTrack(trackLiveData, pageStateLiveData, userId, id, pageTrack, type);
         locusTypeLiveData.postValue(type);
     }
 
@@ -87,16 +101,14 @@ public class ProjectDetailVm extends BaseViewModel {
     public void getViewTrack(){
         if (repositoryViewTrack == null)
             repositoryViewTrack = new ProjectDetailRepository();
-        pageStateLiveData = repositoryViewTrack.getPageStateLiveData();
-        viewTrackLiveData = repositoryViewTrack.getViewTrack(userId, id);
+        repositoryViewTrack.getViewTrack(viewTrackLiveData, pageStateLiveData, userId, id);
     }
 
     private ProjectDetailRepository repositoryConsume;
     public void getConsume(){
         if (repositoryConsume == null)
             repositoryConsume = new ProjectDetailRepository();
-        pageStateLiveData = repositoryConsume.getPageStateLiveData();
-        consumeLiveData = repositoryConsume.consumeList(userId, id, pageConsume);
+        repositoryConsume.consumeList(consumeLiveData, pageStateLiveData, userId, id, pageConsume);
     }
 
     /**
@@ -111,10 +123,10 @@ public class ProjectDetailVm extends BaseViewModel {
         ProjectDetailRepository repositoryCollect = new ProjectDetailRepository();
         if (collectionLiveData != null && collectionLiveData.getValue() == 1){
             //取消收藏
-            cancelCollectLiveData = repositoryCollect.cancelCollect(userId, id);
+            repositoryCollect.cancelCollect(cancelCollectLiveData, userId, id);
         }else {
             //收藏
-            collectLiveData = repositoryCollect.collect(userId, id);
+            repositoryCollect.collect(collectLiveData, userId, id);
         }
     }
 
@@ -122,9 +134,7 @@ public class ProjectDetailVm extends BaseViewModel {
      * 纠错
      */
     public void error(String error){
-        ProjectDetailRepository repository = new ProjectDetailRepository();
-        errorLiveData = repository.error(userId, id, error);
-        pageStateLiveData = repository.getPageStateLiveData();
+        new ProjectDetailRepository().error(errorLiveData, pageStateLiveData, userId, id, error);
     }
 
 }

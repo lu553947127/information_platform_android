@@ -8,7 +8,9 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.R;
+import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseFragment;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.event.UserNameEvent;
@@ -74,12 +76,8 @@ public class MineFragment extends BaseFragment {
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.setStatusBarColor(fakeStatusBar, R.drawable.shape_bg_mine);
         userInfoVm = ViewModelProviders.of(mActivity).get(UserInfoVm.class);
-    }
-
-    @Override
-    protected void initDataFromService() {
-        userInfoVm.userInfo();
         userInfoVm.getInfoLiveData.observe(this, userInfoBean -> {
+            SPUtils.getInstance().put(SpConfig.USERNAME, userInfoBean.getUsername());
             tvUsername.setText(userInfoBean.getUsername());
             tvNumOfPeople.setText(String.format(getString(R.string.format_num_of_people), userInfoBean.getCount()));
             tvBalance.setText(String.format(getString(R.string.format_balance), userInfoBean.getFunds()));
@@ -91,7 +89,6 @@ public class MineFragment extends BaseFragment {
                     .build());
         });
         userInfoVm.pageStateLiveData.observe(this, s -> {
-            LogUtils.i(s);
             switch (s){
                 case PageState.PAGE_LOADING:
                     showLoading();
@@ -101,6 +98,11 @@ public class MineFragment extends BaseFragment {
                     break;
             }
         });
+    }
+
+    @Override
+    protected void initDataFromService() {
+        userInfoVm.userInfo();
     }
 
     @OnClick({R.id.tv_username, R.id.iv_user, R.id.tv_my_subscription, R.id.fl_order, R.id.fl_income, R.id.tv_balance,
@@ -141,7 +143,7 @@ public class MineFragment extends BaseFragment {
     }
 
     @Subscribe()
-    void updateUserName(UserNameEvent event){
+    public void updateUserName(UserNameEvent event){
         tvUsername.setText(event.username);
     }
 

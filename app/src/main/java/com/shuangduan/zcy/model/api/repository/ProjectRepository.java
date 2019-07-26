@@ -24,41 +24,28 @@ import java.util.List;
  */
 public class ProjectRepository extends BaseRepository {
 
-    public MutableLiveData<List<ProvinceBean>> getProvince(int user_id){
-        BaseSubscriber subscriber = request(apiService.getProvince(user_id)).send();
-        pageStateLiveData = subscriber.getPageState();
-        MutableLiveData<List<ProvinceBean>> dataList = subscriber.getDataList();
-        return dataList;
+    public void getProvince(MutableLiveData<List<ProvinceBean>> liveData, MutableLiveData<String> pageState, int user_id){
+        request(apiService.getProvince(user_id)).setDataList(liveData).setPageState(pageState).send();
     }
 
-    public MutableLiveData<List<CityBean>> getCity(int user_id, int id){
-        BaseSubscriber subscriber = request(apiService.getCity(user_id, id)).send();
-        pageStateLiveData = subscriber.getPageState();
-        return subscriber.getDataList();
+    public void getCity(MutableLiveData<List<CityBean>> liveData, int user_id, int id){
+        request(apiService.getCity(user_id, id)).setDataList(liveData).send();
     }
 
-    public MutableLiveData<List<MapBean>> mapList(int user_id, double lng, double lat){
-        BaseSubscriber subscriber = request(apiService.mapList(user_id, lng, lat)).send();
-        pageStateLiveData = subscriber.getPageState();
-        return subscriber.getDataList();
+    public void mapList(MutableLiveData<List<MapBean>> liveData, MutableLiveData<String> pageState, int user_id, double lng, double lat){
+        request(apiService.mapList(user_id, lng, lat)).setDataList(liveData).setPageState(pageState).send();
     }
 
-    public MutableLiveData<ProjectInfoBean> projectList(int user_id, String province, int[] city, String phases, int[] type, String stime, String etime, String warrant_status, int page){
-        BaseSubscriber subscriber = request(apiService.projectList(user_id, province, city, phases, type, stime, etime, warrant_status, page)).send();
-        pageStateLiveData = subscriber.getPageState();
-        return subscriber.getData();
+    public void projectList(MutableLiveData<ProjectInfoBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, String province, int[] city, String phases, int[] type, String stime, String etime, String warrant_status, int page){
+        request(apiService.projectList(user_id, province, city, phases, type, stime, etime, warrant_status, page)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
-    public MutableLiveData<List<TypeBean>> projectTypes(int user_id, int id){
-        BaseSubscriber subscriber = request(apiService.projectTypes(user_id, id)).send();
-        pageStateLiveData = subscriber.getPageState();
-        return subscriber.getDataList();
+    public void projectTypes(MutableLiveData<List<TypeBean>> liveData, MutableLiveData<String> pageStateLiveData, int user_id, int id){
+        request(apiService.projectTypes(user_id, id)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
-    public MutableLiveData<List<StageBean>> projectStage(int user_id){
-        BaseSubscriber subscriber = request(apiService.projectStage(user_id)).send();
-        pageStateLiveData = subscriber.getPageState();
-        return subscriber.getDataList();
+    public void projectStage(MutableLiveData<List<StageBean>> liveData, MutableLiveData<String> pageStateLiveData, int user_id){
+        request(apiService.projectStage(user_id)).setDataList(liveData).setPageState(pageStateLiveData).send();
     }
 
 }

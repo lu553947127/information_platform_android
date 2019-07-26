@@ -37,34 +37,36 @@ public class BaseSubscriber<T> implements Subscriber<T> {
 
     public BaseSubscriber() {
         this.mErrorHandlerFactory = new ErrorHandlerFactory(new ResponseErrorListenerImpl());
-        if (this.data == null)
-            this.data = new MutableLiveData<>();
-        if (this.dataList == null)
-            this.dataList = new MutableLiveData<>();
-        if (this.pageState == null)
-            this.pageState = new MutableLiveData<>();
+    }
+
+    /**
+     * 获取请求过程状态，更新界面
+     * @return
+     */
+    public void setPageState(MutableLiveData<String> pageState) {
+        this.pageState = pageState;
     }
 
     /**
      * 返回数据类型BaseResponse
      * @return
      */
-    public MutableLiveData<T> getData() {
-        return data;
+    public void setData(MutableLiveData<T> data) {
+        this.data = data;
     }
 
     /**
      * 返回数据类型BaseListResponse
      * @return
      */
-    public MutableLiveData<List<T>> getDataList(){
-        return dataList;
+    public void setDataList(MutableLiveData<List<T>> dataList){
+        this.dataList = dataList;
     }
 
     public void set(T t){
-        if (t instanceof BaseObjResponse){
+        if (t instanceof BaseObjResponse && this.data != null){
             this.data.setValue((T) ((BaseObjResponse) t).getData());
-        }else if (t instanceof BaseListResponse){
+        }else if (t instanceof BaseListResponse && this.dataList != null){
             this.dataList.setValue(((BaseListResponse) t).getData());
         }
     }
@@ -80,11 +82,13 @@ public class BaseSubscriber<T> implements Subscriber<T> {
         //网络判断，无网络停止请求
         if (!NetworkUtils.isConnected()){
             ToastUtils.showShort("请检查是否联网");
-            pageState.postValue(PageState.PAGE_NET_ERROR);
+            if (pageState != null)
+                pageState.postValue(PageState.PAGE_NET_ERROR);
             s.cancel();
             return;
         }
-        pageState.postValue(PageState.PAGE_LOADING);
+        if (pageState != null)
+            pageState.postValue(PageState.PAGE_LOADING);
     }
 
     @Override
@@ -92,18 +96,22 @@ public class BaseSubscriber<T> implements Subscriber<T> {
         if (t instanceof BaseObjResponse){
             if (((BaseObjResponse) t).getCode() == 200){
                 onFinish(t);
-                pageState.postValue(PageState.PAGE_LOAD_SUCCESS);
+                if (pageState != null)
+                    pageState.postValue(PageState.PAGE_LOAD_SUCCESS);
             }else {
                 mErrorHandlerFactory.handleError(new ApiException(((BaseObjResponse) t).getCode(), ((BaseObjResponse) t).getMessage()));
-                pageState.postValue(PageState.PAGE_SERVICE_ERROR);
+                if (pageState != null)
+                    pageState.postValue(PageState.PAGE_SERVICE_ERROR);
             }
         }else if (t instanceof BaseListResponse){
             if (((BaseListResponse) t).getCode() == 200){
                 onFinish(t);
-                pageState.postValue(PageState.PAGE_LOAD_SUCCESS);
+                if (pageState != null)
+                    pageState.postValue(PageState.PAGE_LOAD_SUCCESS);
             }else {
                 mErrorHandlerFactory.handleError(new ApiException(((BaseListResponse) t).getCode(), ((BaseListResponse) t).getMessage()));
-                pageState.postValue(PageState.PAGE_SERVICE_ERROR);
+                if (pageState != null)
+                    pageState.postValue(PageState.PAGE_SERVICE_ERROR);
             }
         }
     }
@@ -112,20 +120,13 @@ public class BaseSubscriber<T> implements Subscriber<T> {
     public void onError(Throwable e) {
         e.printStackTrace();
         mErrorHandlerFactory.handleError(e);
-        pageState.postValue(PageState.PAGE_ERROR);
+        if (pageState != null)
+            pageState.postValue(PageState.PAGE_ERROR);
     }
 
     @Override
     public void onComplete() {
 
-    }
-
-    /**
-     * 获取请求过程状态，更新界面
-     * @return
-     */
-    public MutableLiveData<String> getPageState() {
-        return pageState;
     }
 
 }

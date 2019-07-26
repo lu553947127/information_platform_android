@@ -15,6 +15,7 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
+import com.shuangduan.zcy.view.login.MobileVerificationActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -23,7 +24,7 @@ import butterknife.OnClick;
  * @author 宁文强 QQ:858777523
  * @name ZICAICloudPlatform
  * @class name：com.example.zicaicloudplatform.view.activity
- * @class describe  用户信息更新结果
+ * @class describe  用户信息当前信息
  * @time 2019/7/8 11:36
  * @change
  * @chang time
@@ -77,10 +78,10 @@ public class UpdateResultActivity extends BaseActivity {
             case R.id.tv_bar_right:
                 switch (type){
                     case CustomConfig.updateTypePhone:
-                        ActivityUtils.startActivity(UpdateMobileActivity.class);
+                        ActivityUtils.startActivity(MobileVerificationActivity.class);
                         break;
                     case CustomConfig.updateTypeEmail:
-                        ActivityUtils.startActivity(UpdateMobileActivity.class);
+                        ActivityUtils.startActivity(MobileVerificationActivity.class);
                         break;
                 }
                 finish();

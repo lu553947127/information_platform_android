@@ -38,12 +38,12 @@ public class ProjectListVm extends BaseViewModel {
      */
     public void init(){
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
+        projectLiveData = new MutableLiveData<>();
+        pageStateLiveData = new MutableLiveData<>();
         projectList();
     }
 
     public void projectList(){
-        ProjectRepository projectRepository = new ProjectRepository();
-        projectLiveData = projectRepository.projectList(userId, province, city, phases, type, stime, etime, warrant_status, page);
-        pageStateLiveData = projectRepository.getPageStateLiveData();
+        new ProjectRepository().projectList(projectLiveData, pageStateLiveData, userId, province, city, phases, type, stime, etime, warrant_status, page);
     }
 }

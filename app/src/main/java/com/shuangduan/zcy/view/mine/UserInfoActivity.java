@@ -85,7 +85,6 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
     @BindView(R.id.edt_production)
     AppCompatEditText edtProduction;
 
-    private int sex = -1;
     private PermissionVm permissionVm;
     private RxPermissions rxPermissions;
     private UserInfoVm userInfoVm;
@@ -104,11 +103,27 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
 
         uploadPhotoVm = ViewModelProviders.of(this).get(UploadPhotoVm.class);
         userInfoVm = ViewModelProviders.of(this).get(UserInfoVm.class);
-        userInfoVm.information();
         userInfoVm.informationLiveData.observe(this, userInfoBean -> {
-            ivUser.setImageResource(R.drawable.default_head);
             tvName.setText(userInfoBean.getUsername());
-            switch (userInfoBean.getSex()){
+            tvMobile.setText(userInfoBean.getTel());
+            tvIdCard.setText(userInfoBean.getIdentity_card());
+            tvEmail.setText(userInfoBean.getEmail());
+            tvCompany.setText(userInfoBean.getCompany());
+            tvOffice.setText(userInfoBean.getPosition());
+            tvBusinessArea.setText(userInfoBean.getBusiness_city());
+            if (userInfoBean.getExperience() >= 1 && userInfoBean.getExperience() <= 4)
+                tvBusinessExp.setText(getResources().getStringArray(R.array.experience_list)[userInfoBean.getExperience() - 1]);
+            edtProduction.setText(userInfoBean.getManaging_products());
+
+            ImageLoader.load(this, new ImageConfig.Builder()
+                    .url(userInfoBean.getImage())
+                    .placeholder(R.drawable.default_head)
+                    .errorPic(R.drawable.default_head)
+                    .imageView(ivUser)
+                    .build());
+        });
+        userInfoVm.sexLiveData.observe(this, integer -> {
+            switch (integer){
                 case 1:
                     tvSex.setText(getString(R.string.man));
                     break;
@@ -119,15 +134,6 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
                     tvSex.setText("");
                     break;
             }
-            tvMobile.setText(userInfoBean.getTel());
-            tvIdCard.setText(userInfoBean.getIdentity_card());
-            tvEmail.setText(userInfoBean.getEmail());
-            tvCompany.setText(userInfoBean.getCompany());
-            tvOffice.setText(userInfoBean.getPosition());
-            tvBusinessArea.setText(userInfoBean.getBusiness_city());
-            if (userInfoBean.getExperience() >= 1 && userInfoBean.getExperience() <= 4)
-                tvBusinessExp.setText(getResources().getStringArray(R.array.experience_list)[userInfoBean.getExperience() - 1]);
-            edtProduction.setText(userInfoBean.getManaging_products());
         });
 
         rxPermissions = new RxPermissions(this);
@@ -152,20 +158,22 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
             }
         });
 
-        uploadPhotoVm.changeLiveData.observe(this, integer -> {
-            uploadPhotoVm.uploadLiveData.observe(this, uploadBean -> {
-                ImageLoader.load(this, new ImageConfig.Builder()
-                        .url(uploadBean.getThumbnail())
-                        .imageView(ivUser)
-                        .build());
-                userInfoVm.updateAvatar(uploadBean.getImage_id());
-            });
-            uploadPhotoVm.mPageStateLiveData.observe(this, s -> {
-                if (s != PageState.PAGE_LOADING){
-                    hideLoading();
-                }
-            });
+        uploadPhotoVm.uploadLiveData.observe(this, uploadBean -> {
+            ImageLoader.load(this, new ImageConfig.Builder()
+                    .url(uploadBean.getThumbnail())
+                    .imageView(ivUser)
+                    .build());
+            userInfoVm.updateAvatar(uploadBean.getSource());
         });
+        uploadPhotoVm.mPageStateLiveData.observe(this, s -> {
+            if (s != PageState.PAGE_LOADING){
+                hideLoading();
+            }else {
+                showLoading();
+            }
+        });
+
+        userInfoVm.information();
     }
 
     @OnClick({R.id.iv_bar_back, R.id.iv_user, R.id.fl_name, R.id.fl_sex, R.id.fl_mobile, R.id.fl_email, R.id.fl_id_card,
@@ -186,29 +194,29 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
                 break;
             case R.id.fl_sex:
                 new SexDialog(this)
-                        .setSex(sex)
+                        .setSex(userInfoVm.sexLiveData.getValue())
                         .setOnSexSelectListener(new SexDialog.OnSexSelectListener() {
                             @Override
                             public void man() {
-                                tvSex.setText(getString(R.string.man));
-                                sex = 0;
+                                userInfoVm.setSex(1);
+                                userInfoVm.updateSex(1);
                             }
 
                             @Override
                             public void woman() {
-                                tvSex.setText(getString(R.string.woman));
-                                sex = 1;
+                                userInfoVm.setSex(2);
+                                userInfoVm.updateSex(2);
                             }
                         })
                         .showDialog();
                 break;
             case R.id.fl_mobile:
                 bundle.putString(CustomConfig.UPDATE_TYPE, CustomConfig.updateTypePhone);
-                ActivityUtils.startActivity(bundle, MobileVerificationActivity.class);
+                ActivityUtils.startActivity(bundle, UpdateResultActivity.class);
                 break;
             case R.id.fl_email:
                 bundle.putString(CustomConfig.UPDATE_TYPE, CustomConfig.updateTypeEmail);
-                ActivityUtils.startActivity(bundle, MobileVerificationActivity.class);
+                ActivityUtils.startActivity(bundle, UpdateResultActivity.class);
                 break;
             case R.id.fl_id_card:
                 bundle.putString(CustomConfig.UPLOAD_TYPE, CustomConfig.uploadTypeIdCard);
@@ -235,7 +243,6 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
 
     private void upload(String path){
         uploadPhotoVm.upload(path);
-        showLoading();
     }
 
     @Override
@@ -263,17 +270,17 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
     }
 
     @Subscribe()
-    void updateUserName(UserNameEvent event){
+    public void updateUserName(UserNameEvent event){
         tvName.setText(event.username);
     }
 
     @Subscribe()
-    void updateMobile(MobileEvent event){
+    public void updateMobile(MobileEvent event){
         tvMobile.setText(event.mobile);
     }
 
     @Subscribe()
-    void updateEmail(EmailEvent event){
+    public void updateEmail(EmailEvent event){
         tvEmail.setText(event.email);
     }
 }

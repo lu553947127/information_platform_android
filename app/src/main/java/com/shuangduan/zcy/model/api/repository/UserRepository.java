@@ -18,109 +18,85 @@ import com.shuangduan.zcy.model.bean.UserInfoBean;
  */
 public class UserRepository extends BaseRepository {
 
-    public MutableLiveData<SearchCompanyBean> searchCompany(int user_id, String title){
-        BaseSubscriber subscriber = request(apiService.searchCompany(user_id, title)).send();
-        pageStateLiveData = subscriber.getPageState();
-        return subscriber.getData();
+    public void searchCompany(MutableLiveData<SearchCompanyBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, String title){
+        request(apiService.searchCompany(user_id, title)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
     /**
      * 录入信息
      */
-    public MutableLiveData setInfo(int user_id, String username, int sex, String company, String position, int[] business_city, int experience, String managing_products){
-        BaseSubscriber subscriber = request(apiService.setInfo(user_id, username, sex, company, position, business_city, experience, managing_products)).send();
-        pageStateLiveData = subscriber.getPageState();
-        return subscriber.getData();
+    public void setInfo(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int user_id, String username, int sex, String company, String position, int[] business_city, int experience, String managing_products){
+        request(apiService.setInfo(user_id, username, sex, company, position, business_city, experience, managing_products)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
     /**
      * 我的界面
      */
-    public MutableLiveData<UserInfoBean> userInfo(int user_id){
-        BaseSubscriber subscriber = request(apiService.userInfo(user_id)).send();
-        pageStateLiveData = subscriber.getPageState();
-        return subscriber.getData();
+    public void userInfo(MutableLiveData<UserInfoBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id){
+        request(apiService.userInfo(user_id)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
     /**
      * 个人信息
      */
-    public MutableLiveData<UserInfoBean> information(int user_id){
-        BaseSubscriber subscriber = request(apiService.information(user_id)).send();
-        pageStateLiveData = subscriber.getPageState();
-        return subscriber.getData();
+    public void information(MutableLiveData<UserInfoBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id){
+        request(apiService.information(user_id)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
     /**
      * 更新用户名
      */
-    public MutableLiveData updateUserName(int user_id, String username){
-        BaseSubscriber subscriber = request(apiService.updateUserName(user_id, username)).send();
-        pageStateLiveData = subscriber.getPageState();
-        return subscriber.getData();
+    public void updateUserName(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int user_id, String username){
+        request(apiService.updateUserName(user_id, username)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
     /**
      * 更新头像
      */
-    public MutableLiveData updateAvatar(int user_id, String avatar){
-        BaseSubscriber subscriber = request(apiService.updateAvatar(user_id, avatar)).send();
-        pageStateLiveData = subscriber.getPageState();
-        return subscriber.getData();
+    public void updateAvatar(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int user_id, String avatar){
+        request(apiService.updateAvatar(user_id, avatar)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
     /**
      * 更新性别
      */
-    public MutableLiveData updateSex(int user_id, int sex){
-        BaseSubscriber subscriber = request(apiService.updateSex(user_id, sex)).send();
-        pageStateLiveData = subscriber.getPageState();
-        return subscriber.getData();
+    public void updateSex(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int user_id, int sex){
+        request(apiService.updateSex(user_id, sex)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
     /**
      * 更新公司
      */
-    public MutableLiveData updateSex(int user_id, String company){
-        BaseSubscriber subscriber = request(apiService.updateCompany(user_id, company)).send();
-        pageStateLiveData = subscriber.getPageState();
-        return subscriber.getData();
+    public void updateSex(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int user_id, String company){
+        request(apiService.updateCompany(user_id, company)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
     /**
      * 更新职位
      */
-    public MutableLiveData updatePosition(int user_id, String position){
-        BaseSubscriber subscriber = request(apiService.updatePosition(user_id, position)).send();
-        pageStateLiveData = subscriber.getPageState();
-        return subscriber.getData();
+    public void updatePosition(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int user_id, String position){
+        request(apiService.updatePosition(user_id, position)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
     /**
      * 更新城市
      */
-    public MutableLiveData updateBusinessCity(int user_id, int[] businessCity){
-        BaseSubscriber subscriber = request(apiService.updateBusinessCity(user_id, businessCity)).send();
-        pageStateLiveData = subscriber.getPageState();
-        return subscriber.getData();
+    public void updateBusinessCity(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int user_id, int[] businessCity){
+        request(apiService.updateBusinessCity(user_id, businessCity)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
     /**
      * 更新经验
      */
-    public MutableLiveData updateExperience(int user_id, int experience){
-        BaseSubscriber subscriber = request(apiService.updateExperience(user_id, experience)).send();
-        pageStateLiveData = subscriber.getPageState();
-        return subscriber.getData();
+    public void updateExperience(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int user_id, int experience){
+        request(apiService.updateExperience(user_id, experience)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
     /**
      * 更新产品
      */
-    public MutableLiveData updateProduct(int user_id, String product){
-        BaseSubscriber subscriber = request(apiService.updateProduct(user_id, product)).send();
-        pageStateLiveData = subscriber.getPageState();
-        return subscriber.getData();
+    public void updateProduct(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int user_id, String product){
+        request(apiService.updateProduct(user_id, product)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
 }

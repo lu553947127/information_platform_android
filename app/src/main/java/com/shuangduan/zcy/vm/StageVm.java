@@ -39,14 +39,14 @@ public class StageVm extends BaseViewModel {
     public void init(){
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
         stageSecondLiveData = new MutableLiveData<>();
+        stageFirstLiveData = new MutableLiveData<>();
+        pageStateLiveData = new MutableLiveData<>();
         id = 0;
         getStageFirst();
     }
 
     public void getStageFirst(){
-        ProjectRepository projectRepository = new ProjectRepository();
-        stageFirstLiveData = projectRepository.projectStage(userId);
-        pageStateLiveData = projectRepository.getPageStateLiveData();
+        new ProjectRepository().projectStage(stageFirstLiveData, pageStateLiveData, userId);
     }
 
     /**

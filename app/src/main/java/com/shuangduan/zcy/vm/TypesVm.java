@@ -42,15 +42,15 @@ public class TypesVm extends BaseViewModel {
      */
     public void init(){
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
+        typeFirstLiveData = new MutableLiveData<>();
         typeSecondLiveData = new MutableLiveData<>();
+        pageStateLiveData = new MutableLiveData<>();
         id = 0;
         getStageFirst();
     }
 
     public void getStageFirst(){
-        ProjectRepository projectRepository = new ProjectRepository();
-        typeFirstLiveData = projectRepository.projectTypes(userId, id);
-        pageStateLiveData = projectRepository.getPageStateLiveData();
+        new ProjectRepository().projectTypes(typeFirstLiveData, pageStateLiveData, userId, id);
     }
 
     /**
@@ -84,8 +84,7 @@ public class TypesVm extends BaseViewModel {
 
     public void getSecond(int position){
         id = typeFirstLiveData.getValue().get(position).getId();
-        ProjectRepository projectRepository = new ProjectRepository();
-        typeSecondLiveData = projectRepository.projectTypes(userId, id);
+        new ProjectRepository().projectTypes(typeSecondLiveData, pageStateLiveData, userId, id);
     }
 
     /**

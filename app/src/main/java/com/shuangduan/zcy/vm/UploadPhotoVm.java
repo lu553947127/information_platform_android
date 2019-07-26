@@ -24,24 +24,15 @@ public class UploadPhotoVm extends BaseViewModel {
     private int userId;
     public MutableLiveData<String> mPageStateLiveData;
     public MutableLiveData<UploadBean> uploadLiveData;
-    public MutableLiveData<Integer> changeLiveData;
 
     public UploadPhotoVm() {
         this.userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
-        changeLiveData = new MutableLiveData<>();
+        mPageStateLiveData = new MutableLiveData<>();
+        uploadLiveData = new MutableLiveData<>();
     }
 
-    public UploadRepository repository;
     public void upload(String path){
-        repository = new UploadRepository(){
-            @Override
-            public void compressed(MutableLiveData<UploadBean> liveData) {
-                uploadLiveData = liveData;
-                mPageStateLiveData = repository.getPageStateLiveData();
-                changeLiveData.postValue(2);
-            }
-        };
-        repository.uploadPhoto(userId, path);
+        new UploadRepository().uploadPhoto(uploadLiveData, mPageStateLiveData, userId, path);
     }
 
 }

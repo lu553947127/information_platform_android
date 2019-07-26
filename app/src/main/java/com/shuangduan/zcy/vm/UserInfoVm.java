@@ -1,6 +1,8 @@
 package com.shuangduan.zcy.vm;
 
+import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 
 import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.app.SpConfig;
@@ -24,41 +26,53 @@ public class UserInfoVm extends BaseViewModel {
     public MutableLiveData<UserInfoBean> getInfoLiveData;
     public MutableLiveData<UserInfoBean> informationLiveData;
     public MutableLiveData<String> pageStateLiveData;
+    public MediatorLiveData<Integer> sexLiveData;
 
     private int userId;
+    private int sex = 0;
 
     public UserInfoVm() {
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
+        infoLiveData = new MutableLiveData();
+        getInfoLiveData = new MutableLiveData();
+        informationLiveData = new MutableLiveData();
+        pageStateLiveData = new MutableLiveData();
+        sexLiveData = new MediatorLiveData<>();
+        sexLiveData.addSource(informationLiveData, userInfoBean -> sexLiveData.postValue(userInfoBean.getSex()));
     }
 
     public void infoSet(String username, int sex, String company, String position, int[] business_city, int experience, String managing_products){
-        UserRepository userRepository = new UserRepository();
-        infoLiveData = userRepository.setInfo(userId, username, sex, company, position, business_city, experience, managing_products);
-        pageStateLiveData = userRepository.getPageStateLiveData();
+        new UserRepository().setInfo(infoLiveData, pageStateLiveData, userId, username, sex, company, position, business_city, experience, managing_products);
     }
 
     public void userInfo(){
-        UserRepository userRepository = new UserRepository();
-        getInfoLiveData = userRepository.userInfo(userId);
-        pageStateLiveData = userRepository.getPageStateLiveData();
+        new UserRepository().userInfo(getInfoLiveData, pageStateLiveData, userId);
     }
 
     public void information(){
-        UserRepository userRepository = new UserRepository();
-        informationLiveData = userRepository.information(userId);
-        pageStateLiveData = userRepository.getPageStateLiveData();
+        new UserRepository().information(informationLiveData, pageStateLiveData, userId);
     }
 
     public void updateUserName(String username){
-        UserRepository userRepository = new UserRepository();
-        infoLiveData = userRepository.updateUserName(userId, username);
-        pageStateLiveData = userRepository.getPageStateLiveData();
+        new UserRepository().updateUserName(infoLiveData, pageStateLiveData, userId, username);
     }
 
     public void updateAvatar(String avatar){
-        UserRepository userRepository = new UserRepository();
-        infoLiveData = userRepository.updateAvatar(userId, avatar);
-        pageStateLiveData = userRepository.getPageStateLiveData();
+        new UserRepository().updateAvatar(infoLiveData, pageStateLiveData, userId, avatar);
     }
 
+    public void updateSex(int sex){
+        new UserRepository().updateSex(infoLiveData, pageStateLiveData, userId, sex);
+    }
+
+    public void setSex(int sex) {
+        this.sex = sex;
+    }
+
+    /**
+     * 服务器修改成功，更新界面显示
+     */
+    public void updateSex(){
+        sexLiveData.postValue(sex);
+    }
 }

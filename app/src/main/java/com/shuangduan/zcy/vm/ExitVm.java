@@ -28,9 +28,7 @@ public class ExitVm extends BaseViewModel {
     }
 
     public void exit(){
-        LoginRepository repository = new LoginRepository();
-        pageStateLiveData = repository.getPageStateLiveData();
-        exitLiveData = repository.outLogin(userId);
+        new LoginRepository().outLogin(exitLiveData, userId);
     }
 
 }

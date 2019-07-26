@@ -20,43 +20,31 @@ import com.shuangduan.zcy.model.bean.RegisterBean;
  */
 public class LoginRepository extends BaseRepository {
 
-    public MutableLiveData smsCode(String tel, int type){
-        BaseSubscriber subscriber = request(apiService.smsCode(tel, type)).send();
-        pageStateLiveData = subscriber.getPageState();
-        return subscriber.getData();
+    public void smsCode(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, String tel, int type){
+        request(apiService.smsCode(tel, type)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
-    public MutableLiveData<LoginBean> codeLogin(String tel, String code, String client_id){
-        BaseSubscriber subscriber = request(apiService.codeLogin(tel, code, client_id)).send();
-        pageStateLiveData = subscriber.getPageState();
-        return subscriber.getData();
+    public void codeLogin(MutableLiveData<LoginBean> liveData, MutableLiveData<String> pageStateLiveData, String tel, String code, String client_id){
+        request(apiService.codeLogin(tel, code, client_id)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
-    public MutableLiveData<LoginBean> accountLogin(String tel, String pwd, String client_id){
-        BaseSubscriber subscriber = request(apiService.accountLogin(tel, pwd, client_id)).send();
-        pageStateLiveData = subscriber.getPageState();
-        return subscriber.getData();
+    public void accountLogin(MutableLiveData<LoginBean>liveData, MutableLiveData<String> pageStateLiveData, String tel, String pwd, String client_id){
+        request(apiService.accountLogin(tel, pwd, client_id)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
-    public MutableLiveData<RegisterBean> register(String tel, String code, String pwd, String invite_tel){
-        BaseSubscriber subscriber = request(apiService.register(tel, code, pwd, invite_tel)).send();
-        pageStateLiveData = subscriber.getPageState();
-        return subscriber.getData();
+    public void register(MutableLiveData<RegisterBean> liveData, MutableLiveData<String> pageStateLiveData, String tel, String code, String pwd, String invite_tel){
+        request(apiService.register(tel, code, pwd, invite_tel)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
     /**
      * 重置密码
      */
-    public MutableLiveData<ReSetPwdBean> setPassword(String tel, String code, String pwd){
-        BaseSubscriber subscriber = request(apiService.setPassword(tel, code, pwd)).send();
-        pageStateLiveData = subscriber.getPageState();
-        return subscriber.getData();
+    public void setPassword(MutableLiveData<ReSetPwdBean> liveData, MutableLiveData<String> pageStateLiveData, String tel, String code, String pwd){
+        request(apiService.setPassword(tel, code, pwd)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
-    public MutableLiveData outLogin(int userId){
-        BaseSubscriber subscriber = request(apiService.outLogin(userId)).send();
-        pageStateLiveData = subscriber.getPageState();
-        return subscriber.getData();
+    public void outLogin(MutableLiveData<String> liveData, int userId){
+        request(apiService.outLogin(userId)).setData(liveData).send();
     }
 
 }

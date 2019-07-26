@@ -20,15 +20,12 @@ import java.util.List;
  */
 public class SearchRepository extends BaseRepository {
 
-    public MutableLiveData<SearchBean> search(int user_id, String keyWord){
-        BaseSubscriber subscriber = request(apiService.keywordList(user_id, keyWord)).send();
-        pageStateLiveData = subscriber.getPageState();
-        return subscriber.getData();
+    public void search(MutableLiveData<SearchBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, String keyWord){
+        request(apiService.keywordList(user_id, keyWord)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
-    public MutableLiveData<List<SearchHotBean>> searchHot(int user_id){
-        BaseSubscriber subscriber = request(apiService.keywordHot(user_id)).send();
-        return subscriber.getDataList();
+    public void searchHot(MutableLiveData<List<SearchHotBean>> liveData, int user_id){
+        request(apiService.keywordHot(user_id)).setDataList(liveData).send();
     }
 
 }

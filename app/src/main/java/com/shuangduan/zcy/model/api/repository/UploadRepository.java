@@ -14,9 +14,12 @@ import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.ZipUtils;
 import com.shuangduan.zcy.app.MyApplication;
+import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.api.rxjava.BaseSubscriber;
 import com.shuangduan.zcy.model.bean.UploadBean;
 import com.shuangduan.zcy.utils.ShareUtils;
+
+import org.reactivestreams.Subscription;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -43,14 +46,20 @@ import top.zibin.luban.Luban;
  * @chang time
  * @class describe
  */
-public abstract class UploadRepository extends BaseRepository {
+public class UploadRepository extends BaseRepository {
 
-    public void uploadPhoto(final int userId, String path){
+    public void uploadPhoto(MutableLiveData<UploadBean> liveData, MutableLiveData<String> pageStateLiveData, final int userId, String path){
         List<File> list = new ArrayList<>();
         list.add(new File(path));
         //如果uri为空，代表为网络图片，无需压缩，直接增加即可
         Flowable.just(list)
                 .observeOn(Schedulers.io())
+                .doOnSubscribe(new Consumer<Subscription>() {
+                    @Override
+                    public void accept(Subscription subscription) throws Exception {
+                        pageStateLiveData.postValue(PageState.PAGE_LOADING);
+                    }
+                })
                 .map(new Function<List<File>, List<File>>() {
                     @Override
                     public List<File> apply(@NonNull List<File> list) throws Exception {
@@ -74,7 +83,7 @@ public abstract class UploadRepository extends BaseRepository {
                     @Override
                     public void accept(@NonNull List<File> files) {
                         LogUtils.i(files.get(0).getAbsolutePath());
-                        compressed(upload(userId, files.get(0)));
+                        upload(liveData, pageStateLiveData, userId, files.get(0));
                     }
                 }, new Consumer<Throwable>() {
                     @Override
@@ -93,7 +102,7 @@ public abstract class UploadRepository extends BaseRepository {
         return path;
     }
 
-    private MutableLiveData<UploadBean> upload(int userId, File file){
+    private void upload(MutableLiveData<UploadBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, File file){
         // 创建 RequestBody，用于封装 请求RequestBody
         RequestBody requestFile =
                 RequestBody.create(MediaType.parse("multipart/form-data"), file);
@@ -102,10 +111,7 @@ public abstract class UploadRepository extends BaseRepository {
         MultipartBody.Part body =
                 MultipartBody.Part.createFormData("file", file.getName(), requestFile);
 
-        BaseSubscriber subscriber = request(apiService.upload(userId, body)).send();
-        pageStateLiveData = subscriber.getPageState();
-        return subscriber.getData();
+        request(apiService.upload(userId, body)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
-    public abstract void compressed(MutableLiveData<UploadBean> liveData);
 }
