@@ -11,6 +11,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.shuangduan.zcy.R;
+import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.view.PayActivity;
 
@@ -70,7 +71,9 @@ public class SubOrderActivity extends BaseActivity {
             case R.id.tv_cancel:
                 break;
             case R.id.tv_confirm:
-                ActivityUtils.startActivity(PayActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt(CustomConfig.PROJECT_ID, getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0));
+                ActivityUtils.startActivity(bundle, PayActivity.class);
                 break;
         }
     }

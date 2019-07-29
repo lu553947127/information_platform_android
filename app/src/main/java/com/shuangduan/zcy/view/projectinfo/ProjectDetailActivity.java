@@ -174,6 +174,7 @@ public class ProjectDetailActivity extends BaseActivity {
 
     @OnClick({R.id.iv_bar_back, R.id.iv_bar_right, R.id.fl_collect, R.id.fl_error, R.id.fl_subscription, R.id.ll_chat, R.id.fl_release})
     void onClick(View view){
+        Bundle bundle = new Bundle();
         switch (view.getId()){
             case R.id.iv_bar_back:
                 finish();
@@ -195,7 +196,6 @@ public class ProjectDetailActivity extends BaseActivity {
                 }
                 break;
             case R.id.fl_error:
-                Bundle bundle = new Bundle();
                 bundle.putInt(CustomConfig.PROJECT_ID, getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0));
                 ActivityUtils.startActivity(bundle, ProjectErrorActivity.class);
                 break;
@@ -208,7 +208,8 @@ public class ProjectDetailActivity extends BaseActivity {
                         ActivityUtils.startActivity(SubInfoActivity.class);
                         break;
                     case 0:
-                        ActivityUtils.startActivity(GoToSubActivity.class);
+                        bundle.putInt(CustomConfig.PROJECT_ID, getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0));
+                        ActivityUtils.startActivity(bundle, GoToSubActivity.class);
                         break;
                 }
                 break;

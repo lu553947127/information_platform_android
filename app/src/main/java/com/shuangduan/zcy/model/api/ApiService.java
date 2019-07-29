@@ -4,10 +4,13 @@ import com.shuangduan.zcy.model.bean.BaseListResponse;
 import com.shuangduan.zcy.model.bean.BaseObjResponse;
 import com.shuangduan.zcy.model.bean.CityBean;
 import com.shuangduan.zcy.model.bean.ConsumeBean;
+import com.shuangduan.zcy.model.bean.LocusMineBean;
 import com.shuangduan.zcy.model.bean.LoginBean;
 import com.shuangduan.zcy.model.bean.MapBean;
+import com.shuangduan.zcy.model.bean.PayInfoBean;
 import com.shuangduan.zcy.model.bean.ProjectDetailBean;
 import com.shuangduan.zcy.model.bean.ProjectInfoBean;
+import com.shuangduan.zcy.model.bean.ProjectMineBean;
 import com.shuangduan.zcy.model.bean.ProvinceBean;
 import com.shuangduan.zcy.model.bean.ReSetPwdBean;
 import com.shuangduan.zcy.model.bean.RegisterBean;
@@ -312,6 +315,28 @@ public interface ApiService {
             @Field("user_id")int user_id,
             @Field("id")int id,
             @Field("content")String content
+    );
+
+    @FormUrlEncoded
+    @POST("api/Userinfo/myProject")
+    Flowable<BaseObjResponse<ProjectMineBean>> myProject(
+            @Field("user_id")int user_id,
+            @Field("page")int page
+    );
+
+    @FormUrlEncoded
+    @POST("api/Userinfo/myProjectTrack")
+    Flowable<BaseObjResponse<LocusMineBean>> myProjectTrack(
+            @Field("user_id")int user_id,
+            @Field("page")int page
+    );
+
+    @FormUrlEncoded
+    @POST("api/Pay/projectWarrant")
+    Flowable<BaseObjResponse<PayInfoBean>> projectWarrant(
+            @Field("user_id")int user_id,
+            @Field("id")int id,
+            @Field("type")String type
     );
 
 }

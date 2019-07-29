@@ -87,7 +87,7 @@ public class BaseSubscriber<T> implements Subscriber<T> {
             s.cancel();
             return;
         }
-        if (pageState != null)
+        if (pageState != null && !PageState.PAGE_REFRESH.equals(pageState.getValue()))
             pageState.postValue(PageState.PAGE_LOADING);
     }
 

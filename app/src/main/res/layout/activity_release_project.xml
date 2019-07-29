@@ -42,7 +42,8 @@
                     android:textColorHint="@color/colorTvHint"
                     android:textColor="@color/colorTv"
                     android:textSize="14sp"
-                    android:hint="@string/please_hint"/>
+                    android:text="@string/project_project"
+                    android:hint="@string/please_select"/>
 
                 <View
                     android:layout_width="match_parent"
@@ -53,6 +54,7 @@
             </FrameLayout>
 
             <FrameLayout
+                android:id="@+id/fl_project_name_edit"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@color/colorFFF"
@@ -89,6 +91,44 @@
             </FrameLayout>
 
             <FrameLayout
+                android:id="@+id/fl_project_name_select"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/colorFFF"
+                android:paddingLeft="14dp"
+                android:paddingRight="14dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/colorTv"
+                    android:textSize="14sp"
+                    android:text="@string/project_names"/>
+
+                <TextView
+                    android:id="@+id/tv_project_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="87dp"
+                    android:background="@null"
+                    android:singleLine="true"
+                    android:textColorHint="@color/colorTvHint"
+                    android:textColor="@color/colorTv"
+                    android:textSize="14sp"
+                    android:hint="@string/please_select"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_gravity="bottom"
+                    android:background="@color/colorDivider"/>
+
+            </FrameLayout>
+
+            <FrameLayout
                 android:id="@+id/fl_project_address"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -104,8 +144,219 @@
                     android:textSize="14sp"
                     android:text="@string/project_address"/>
 
+                <TextView
+                    android:id="@+id/tv_project_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="87dp"
+                    android:background="@null"
+                    android:singleLine="true"
+                    android:textColorHint="@color/colorTvHint"
+                    android:textColor="@color/colorTv"
+                    android:textSize="14sp"
+                    android:hint="@string/please_select"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_gravity="bottom"
+                    android:background="@color/colorDivider"/>
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/fl_project_stage"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/colorFFF"
+                android:paddingLeft="14dp"
+                android:paddingRight="14dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/colorTv"
+                    android:textSize="14sp"
+                    android:text="@string/project_stage"/>
+
+                <TextView
+                    android:id="@+id/tv_project_stage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="87dp"
+                    android:background="@null"
+                    android:singleLine="true"
+                    android:textColorHint="@color/colorTvHint"
+                    android:textColor="@color/colorTv"
+                    android:textSize="14sp"
+                    android:hint="@string/please_select"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_gravity="bottom"
+                    android:background="@color/colorDivider"/>
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/fl_project_types"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/colorFFF"
+                android:paddingLeft="14dp"
+                android:paddingRight="14dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/colorTv"
+                    android:textSize="14sp"
+                    android:text="@string/project_types"/>
+
+                <TextView
+                    android:id="@+id/tv_project_types"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="87dp"
+                    android:background="@null"
+                    android:singleLine="true"
+                    android:textColorHint="@color/colorTvHint"
+                    android:textColor="@color/colorTv"
+                    android:textSize="14sp"
+                    android:hint="@string/please_select"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_gravity="bottom"
+                    android:background="@color/colorDivider"/>
+
+            </FrameLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_project_cycle"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/colorFFF"
+                android:paddingLeft="14dp"
+                android:paddingRight="14dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/colorTv"
+                    android:textSize="14sp"
+                    android:text="@string/project_cycle"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@+id/tv_time_end"
+                    android:layout_toRightOf="@+id/tv_time_start"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:textColor="@color/color_666666"
+                    android:textSize="13sp"
+                    android:text="至"/>
+
+                <TextView
+                    android:id="@+id/tv_time_start"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:minWidth="100dp"
+                    android:gravity="center"
+                    android:layout_marginLeft="85dp"
+                    android:layout_centerVertical="true"
+                    android:textColorHint="@color/colorTvHint"
+                    android:textColor="@color/color_666666"
+                    android:textSize="14sp"
+                    android:text="@string/time_start"/>
+
+                <TextView
+                    android:id="@+id/tv_time_end"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:minWidth="100dp"
+                    android:gravity="center"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="25dp"
+                    android:layout_centerVertical="true"
+                    android:textColorHint="@color/colorTvHint"
+                    android:textColor="@color/color_666666"
+                    android:textSize="14sp"
+                    android:text="@string/time_end"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/colorDivider"/>
+
+            </RelativeLayout>
+
+            <FrameLayout
+                android:id="@+id/fl_project_acreage"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/colorFFF"
+                android:paddingLeft="14dp"
+                android:paddingRight="14dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/colorTv"
+                    android:textSize="14sp"
+                    android:text="@string/project_acreage"/>
+
                 <EditText
-                    android:id="@+id/edt_project_address"
+                    android:id="@+id/tv_project_acreage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="87dp"
+                    android:background="@null"
+                    android:singleLine="true"
+                    android:inputType="number"
+                    android:textColorHint="@color/colorTvHint"
+                    android:textColor="@color/colorTv"
+                    android:textSize="14sp"
+                    android:hint="@string/please_hint"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_gravity="bottom"
+                    android:background="@color/colorDivider"/>
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/fl_project_price"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/colorFFF"
+                android:paddingLeft="14dp"
+                android:paddingRight="14dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/colorTv"
+                    android:textSize="14sp"
+                    android:text="@string/project_price"/>
+
+                <EditText
+                    android:id="@+id/tv_project_price"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
@@ -126,7 +377,7 @@
             </FrameLayout>
 
             <FrameLayout
-                android:id="@+id/fl_project_content"
+                android:id="@+id/fl_project_detail"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@color/colorFFF"
@@ -139,10 +390,47 @@
                     android:layout_gravity="center_vertical"
                     android:textColor="@color/colorTv"
                     android:textSize="14sp"
-                    android:text="@string/project_content"/>
+                    android:text="@string/project_detail"/>
 
                 <EditText
-                    android:id="@+id/edt_project_content"
+                    android:id="@+id/tv_project_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="87dp"
+                    android:background="@null"
+                    android:singleLine="true"
+                    android:textColorHint="@color/colorTvHint"
+                    android:textColor="@color/colorTv"
+                    android:textSize="14sp"
+                    android:hint="@string/please_hint"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_gravity="bottom"
+                    android:background="@color/colorDivider"/>
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/fl_project_material"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/colorFFF"
+                android:paddingLeft="14dp"
+                android:paddingRight="14dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/colorTv"
+                    android:textSize="14sp"
+                    android:text="@string/project_material"/>
+
+                <EditText
+                    android:id="@+id/tv_project_material"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
@@ -239,45 +527,10 @@
             </FrameLayout>
 
             <FrameLayout
-                android:id="@+id/fl_principle"
+                android:id="@+id/fl_mobile"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="@color/colorFFF"
-                android:paddingLeft="14dp"
-                android:paddingRight="14dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:textColor="@color/colorTv"
-                    android:textSize="14sp"
-                    android:text="@string/principle"/>
-
-                <EditText
-                    android:id="@+id/edt_principle"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:layout_marginLeft="87dp"
-                    android:background="@null"
-                    android:singleLine="true"
-                    android:textColorHint="@color/colorTvHint"
-                    android:textColor="@color/colorTv"
-                    android:textSize="14sp"
-                    android:hint="@string/please_hint"/>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_gravity="bottom"
-                    android:background="@color/colorDivider"/>
-
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:visibility="gone"
                 android:background="@color/colorFFF"
                 android:paddingLeft="14dp"
                 android:paddingRight="14dp">

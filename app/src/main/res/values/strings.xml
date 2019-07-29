@@ -164,6 +164,9 @@
     <string name="ali_pay">支付宝支付</string>
     <string name="wechat_pay">微信支付</string>
     <string name="pay">支付</string>
+    <string name="pay_success">支付成功</string>
+    <string name="pay_failed">支付失败</string>
+    <string name="pay_cancle">支付取消</string>
     <string name="subscription_msg">认购信息</string>
     <string name="select_city_correct">请选择具体的市区</string>
     <string name="starting_time_period">开工时间段</string>
@@ -180,6 +183,15 @@
     <string name="project_address">项目地址</string>
     <string name="project_names">项目名称</string>
     <string name="project_type">项目类型</string>
+    <string name="project_stage">项目阶段</string>
+    <string name="project_types">项目类别</string>
+    <string name="project_cycle">项目周期</string>
+    <string name="project_acreage">项目面积(m²)</string>
+    <string name="project_price">项目估价</string>
+    <string name="project_detail">项目详情</string>
+    <string name="project_material">项目用材</string>
+    <string name="project_project">工程项目</string>
+    <string name="project_locus">轨迹项目</string>
     <string name="project_schedule">项目进度</string>
     <string name="visitor">拜访人</string>
     <string name="update_time">更新时间</string>

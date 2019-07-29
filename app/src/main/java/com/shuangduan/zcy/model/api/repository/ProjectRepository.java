@@ -4,8 +4,10 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.shuangduan.zcy.model.api.rxjava.BaseSubscriber;
 import com.shuangduan.zcy.model.bean.CityBean;
+import com.shuangduan.zcy.model.bean.LocusMineBean;
 import com.shuangduan.zcy.model.bean.MapBean;
 import com.shuangduan.zcy.model.bean.ProjectInfoBean;
+import com.shuangduan.zcy.model.bean.ProjectMineBean;
 import com.shuangduan.zcy.model.bean.ProvinceBean;
 import com.shuangduan.zcy.model.bean.StageBean;
 import com.shuangduan.zcy.model.bean.TypeBean;
@@ -46,6 +48,14 @@ public class ProjectRepository extends BaseRepository {
 
     public void projectStage(MutableLiveData<List<StageBean>> liveData, MutableLiveData<String> pageStateLiveData, int user_id){
         request(apiService.projectStage(user_id)).setDataList(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    public void myProject(MutableLiveData<ProjectMineBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, int page){
+        request(apiService.myProject(user_id, page)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    public void myProjectTrack(MutableLiveData<LocusMineBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, int page){
+        request(apiService.myProjectTrack(user_id, page)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
 }

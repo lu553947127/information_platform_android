@@ -117,7 +117,7 @@ public class AppConfig {
     /**
      * 微信初始化配置
      */
-    /*public static final String APP_ID = "wx3bdcc178510768b2";
+    /*public static final String APP_ID = "wx2e2f0d4ccdf3e52f";
     public static IWXAPI iwxapi;
     private static void initWX(Context context) {
         iwxapi = WXAPIFactory.createWXAPI(context, APP_ID, true);

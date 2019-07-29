@@ -73,6 +73,7 @@
         <activity android:name="com.shuangduan.zcy.view.recruit.RecruitDetailActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.view.release.ReleaseListActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.view.release.ReleaseProjectActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.shuangduan.zcy.view.release.ReleaseAreaSelectActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.view.SearchActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.view.PhotoViewActivity" android:screenOrientation="portrait" android:theme="@style/PhotoViewTheme"/>
         <activity android:name="com.shuangduan.zcy.view.PayActivity" android:screenOrientation="portrait"/>

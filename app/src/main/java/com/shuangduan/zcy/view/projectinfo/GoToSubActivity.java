@@ -11,6 +11,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.shuangduan.zcy.R;
+import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 
 import butterknife.BindView;
@@ -75,7 +76,9 @@ public class GoToSubActivity extends BaseActivity {
             case R.id.iv_bar_right:
                 break;
             case R.id.tv_confirm:
-                ActivityUtils.startActivity(SubOrderActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt(CustomConfig.PROJECT_ID, getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0));
+                ActivityUtils.startActivity(bundle, SubOrderActivity.class);
                 break;
         }
     }
