@@ -7,12 +7,12 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.ActivityUtils;
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseFragment;
 import com.shuangduan.zcy.model.api.PageState;
+import com.shuangduan.zcy.model.event.AvatarEvent;
 import com.shuangduan.zcy.model.event.UserNameEvent;
 import com.shuangduan.zcy.utils.BarUtils;
 import com.shuangduan.zcy.utils.image.ImageConfig;
@@ -82,7 +82,7 @@ public class MineFragment extends BaseFragment {
             tvNumOfPeople.setText(String.format(getString(R.string.format_num_of_people), userInfoBean.getCount()));
             tvBalance.setText(String.format(getString(R.string.format_balance), userInfoBean.getFunds()));
             ImageLoader.load(mContext, new ImageConfig.Builder()
-                    .url(userInfoBean.getImage())
+                    .url(userInfoBean.getImage_thumbnail())
                     .placeholder(R.drawable.default_head)
                     .errorPic(R.drawable.default_head)
                     .imageView(ivUser)
@@ -145,6 +145,16 @@ public class MineFragment extends BaseFragment {
     @Subscribe()
     public void updateUserName(UserNameEvent event){
         tvUsername.setText(event.username);
+    }
+
+    @Subscribe()
+    public void updateAvatar(AvatarEvent event){
+        ImageLoader.load(mContext, new ImageConfig.Builder()
+                .url(event.getAvatar())
+                .placeholder(R.drawable.default_head)
+                .errorPic(R.drawable.default_head)
+                .imageView(ivUser)
+                .build());
     }
 
 }

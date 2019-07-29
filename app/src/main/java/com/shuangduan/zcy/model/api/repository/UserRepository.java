@@ -99,4 +99,18 @@ public class UserRepository extends BaseRepository {
         request(apiService.updateProduct(user_id, product)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
+    /**
+     * 旧手机验证
+     */
+    public void checkTel(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int user_id, String code){
+        request(apiService.telCheck(user_id, code)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    /**
+     * 旧手机验证
+     */
+    public void updateTel(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int user_id, String tel, String code, String oldTel, String oldCode){
+        request(apiService.telUpdate(user_id, tel, code, oldTel, oldCode)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
 }

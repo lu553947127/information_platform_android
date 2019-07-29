@@ -68,9 +68,6 @@ public class UpdateEmailActivity extends BaseActivity {
 
                 SPUtils.getInstance().put(SpConfig.EMAIL, email);
                 EventBus.getDefault().post(new EmailEvent(email));
-                Bundle bundle = new Bundle();
-                bundle.putString(CustomConfig.UPDATE_TYPE, CustomConfig.updateTypeEmail);
-                ActivityUtils.startActivity(bundle, UpdateResultActivity.class);
                 finish();
                 break;
         }

@@ -12,9 +12,10 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
-import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
+import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.BusinessExpDialog;
@@ -29,7 +30,6 @@ import com.shuangduan.zcy.utils.image.ImageConfig;
 import com.shuangduan.zcy.utils.image.ImageLoader;
 import com.shuangduan.zcy.utils.matisse.Glide4Engine;
 import com.shuangduan.zcy.utils.matisse.MatisseCamera;
-import com.shuangduan.zcy.view.login.MobileVerificationActivity;
 import com.shuangduan.zcy.vm.PermissionVm;
 import com.shuangduan.zcy.vm.UploadPhotoVm;
 import com.shuangduan.zcy.vm.UserInfoVm;
@@ -104,6 +104,8 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
         uploadPhotoVm = ViewModelProviders.of(this).get(UploadPhotoVm.class);
         userInfoVm = ViewModelProviders.of(this).get(UserInfoVm.class);
         userInfoVm.informationLiveData.observe(this, userInfoBean -> {
+            SPUtils.getInstance().put(SpConfig.USERNAME, userInfoBean.getUsername());
+            SPUtils.getInstance().put(SpConfig.MOBILE, userInfoBean.getTel());
             tvName.setText(userInfoBean.getUsername());
             tvMobile.setText(userInfoBean.getTel());
             tvIdCard.setText(userInfoBean.getIdentity_card());
@@ -114,9 +116,10 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
             if (userInfoBean.getExperience() >= 1 && userInfoBean.getExperience() <= 4)
                 tvBusinessExp.setText(getResources().getStringArray(R.array.experience_list)[userInfoBean.getExperience() - 1]);
             edtProduction.setText(userInfoBean.getManaging_products());
-
+        });
+        userInfoVm.avatarLiveData.observe(this, s -> {
             ImageLoader.load(this, new ImageConfig.Builder()
-                    .url(userInfoBean.getImage())
+                    .url(s)
                     .placeholder(R.drawable.default_head)
                     .errorPic(R.drawable.default_head)
                     .imageView(ivUser)
@@ -133,6 +136,23 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
                 case 0:
                     tvSex.setText("");
                     break;
+            }
+        });
+        userInfoVm.infoLiveData.observe(this, o -> {
+            switch (userInfoVm.changeType){
+                case 1:
+                    userInfoVm.updateImage();
+                    break;
+                case 2:
+                    userInfoVm.updateSex();
+                    break;
+            }
+        });
+        userInfoVm.pageStateLiveData.observe(this, s -> {
+            if (s != PageState.PAGE_LOADING){
+                hideLoading();
+            }else {
+                showLoading();
             }
         });
 
@@ -159,10 +179,7 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
         });
 
         uploadPhotoVm.uploadLiveData.observe(this, uploadBean -> {
-            ImageLoader.load(this, new ImageConfig.Builder()
-                    .url(uploadBean.getThumbnail())
-                    .imageView(ivUser)
-                    .build());
+            userInfoVm.setImg(uploadBean.getThumbnail());
             userInfoVm.updateAvatar(uploadBean.getSource());
         });
         uploadPhotoVm.mPageStateLiveData.observe(this, s -> {
@@ -241,20 +258,16 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
         }
     }
 
-    private void upload(String path){
-        uploadPhotoVm.upload(path);
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PermissionVm.REQUEST_CODE_CHOOSE_HEAD && resultCode == RESULT_OK) {
             List<String> mSelected = Matisse.obtainPathResult(data);
-            upload(mSelected.get(0));
+            uploadPhotoVm.upload(mSelected.get(0));
         }
 
         if (requestCode == PermissionVm.REQUEST_CODE_HEAD && resultCode == RESULT_OK) {
-            upload(MatisseCamera.obtainPathResult());
+            uploadPhotoVm.upload(MatisseCamera.obtainPathResult());
         }
 
     }

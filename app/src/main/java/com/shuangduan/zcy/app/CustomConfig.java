@@ -18,6 +18,8 @@ public class CustomConfig {
     public static final String SEARCH_TYPE = "search_type";
     /*上传类型：身份证，名片*/
     public static final String UPLOAD_TYPE = "upload_type";
+    /*验证码*/
+    public static final String VERIFICATION_CODE = "verification_code";
 
     /**
      *  传递预览图片的url
@@ -36,7 +38,7 @@ public class CustomConfig {
     public static final int SMS_REGISTER = 1;//注册
     public static final int SMS_LOGIN = 2;//登录
     public static final int SMS_FORGET_PWD = 3;//忘记密码
-    public static final int SMS_UPDATE_PWD = 4;//修改手机号码
+    public static final int SMS_UPDATE_PHONE = 4;//修改手机号码
 
     public static final int AREA_REQUEST_CODE = 1001;
 

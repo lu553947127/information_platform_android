@@ -71,6 +71,7 @@ public class UpdateResultActivity extends BaseActivity {
 
     @OnClick({R.id.iv_bar_back, R.id.tv_bar_right})
     void onClick(View view){
+        Bundle bundle = new Bundle();
         switch (view.getId()){
             case R.id.iv_bar_back:
                 finish();
@@ -78,10 +79,12 @@ public class UpdateResultActivity extends BaseActivity {
             case R.id.tv_bar_right:
                 switch (type){
                     case CustomConfig.updateTypePhone:
-                        ActivityUtils.startActivity(MobileVerificationActivity.class);
+                        bundle.putString(CustomConfig.UPDATE_TYPE, CustomConfig.updateTypePhone);
+                        ActivityUtils.startActivity(bundle, MobileVerificationActivity.class);
                         break;
                     case CustomConfig.updateTypeEmail:
-                        ActivityUtils.startActivity(MobileVerificationActivity.class);
+                        bundle.putString(CustomConfig.UPDATE_TYPE, CustomConfig.updateTypeEmail);
+                        ActivityUtils.startActivity(bundle, MobileVerificationActivity.class);
                         break;
                 }
                 finish();

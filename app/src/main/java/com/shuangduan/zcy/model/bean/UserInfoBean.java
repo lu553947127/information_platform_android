@@ -32,6 +32,8 @@ public class UserInfoBean {
 
     private int id;
     private String image;
+    private String image_thumbnail;
+    private String image_source;
     private String username;
     private int sex;
     private String tel;
@@ -52,14 +54,6 @@ public class UserInfoBean {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 
     public String getUsername() {
@@ -164,5 +158,29 @@ public class UserInfoBean {
 
     public void setCount(int count) {
         this.count = count;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getImage_thumbnail() {
+        return image_thumbnail;
+    }
+
+    public void setImage_thumbnail(String image_thumbnail) {
+        this.image_thumbnail = image_thumbnail;
+    }
+
+    public String getImage_source() {
+        return image_source;
+    }
+
+    public void setImage_source(String image_source) {
+        this.image_source = image_source;
     }
 }

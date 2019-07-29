@@ -1,6 +1,7 @@
 package com.shuangduan.zcy.view.login;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -12,15 +13,18 @@ import androidx.lifecycle.ViewModelProviders;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.SPUtils;
-import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
+import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.view.mine.UpdateEmailActivity;
 import com.shuangduan.zcy.view.mine.UpdateMobileActivity;
 import com.shuangduan.zcy.vm.LoginVm;
+import com.shuangduan.zcy.vm.UserInfoVm;
+
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -49,6 +53,7 @@ public class MobileVerificationActivity extends BaseActivity {
 
     private String type;
     private LoginVm loginVm;
+    private UserInfoVm userInfoVm;
 
     @Override
     protected int initLayoutRes() {
@@ -75,6 +80,9 @@ public class MobileVerificationActivity extends BaseActivity {
         }
 
         loginVm = ViewModelProviders.of(this).get(LoginVm.class);
+        loginVm.smsDataLiveData.observe(this, o -> {
+            loginVm.sendVerificationCode();
+        });
         loginVm.timeLiveDataLiveData.observe(this, aLong -> {
             if (aLong == -1) {
                 //重新获取
@@ -82,6 +90,34 @@ public class MobileVerificationActivity extends BaseActivity {
                 tvSendVerificationCode.setClickable(true);
             }else {
                 tvSendVerificationCode.setText(String.format(getString(R.string.format_get_verification_code_again), aLong));
+            }
+        });
+        loginVm.pageStateLiveData.observe(this, s -> {
+            switch (s){
+                case PageState.PAGE_LOADING:
+                    showLoading();
+                    break;
+                default:
+                    hideLoading();
+                    break;
+            }
+        });
+
+        userInfoVm = ViewModelProviders.of(this).get(UserInfoVm.class);
+        userInfoVm.checkTelLiveData.observe(this, o -> {
+            Bundle bundle = new Bundle();
+            bundle.putString(CustomConfig.VERIFICATION_CODE, Objects.requireNonNull(edtPwd.getText()).toString());
+            ActivityUtils.startActivity(bundle, UpdateMobileActivity.class);
+            finish();
+        });
+        userInfoVm.pageStateLiveData.observe(this, s -> {
+            switch (s){
+                case PageState.PAGE_LOADING:
+                    showLoading();
+                    break;
+                    default:
+                        hideLoading();
+                        break;
             }
         });
     }
@@ -93,35 +129,33 @@ public class MobileVerificationActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_send_verification_code:
-                loginVm.sendVerificationCode();
                 switch (type){
                     case CustomConfig.updateTypePhone:
-                        loginVm.sendVerificationCode();
+                        loginVm.smsCode(SPUtils.getInstance().getString(SpConfig.MOBILE), CustomConfig.SMS_UPDATE_PHONE);
                         break;
                     case CustomConfig.updateTypeEmail:
-                        loginVm.sendVerificationCode();
+
                         break;
                 }
                 break;
             case R.id.tv_confirm:
-                String verificationCode = edtPwd.getText().toString();
+                String verificationCode = Objects.requireNonNull(edtPwd.getText()).toString();
                 switch (type){
                     case CustomConfig.updateTypePhone:
-                        if (StringUtils.isTrimEmpty(verificationCode)){
+                        if (TextUtils.isEmpty(edtPwd.getText())){
                             ToastUtils.showShort(getString(R.string.hint_SMS_verification_code));
                             return;
                         }
-                        ActivityUtils.startActivity(UpdateMobileActivity.class);
+                       userInfoVm.checkTel(verificationCode);
                         break;
                     case CustomConfig.updateTypeEmail:
-                        if (StringUtils.isTrimEmpty(verificationCode)){
+                        if (TextUtils.isEmpty(edtPwd.getText())){
                             ToastUtils.showShort(getString(R.string.hint_email_verification_code));
                             return;
                         }
                         ActivityUtils.startActivity(UpdateEmailActivity.class);
                         break;
                 }
-                finish();
                 break;
         }
     }

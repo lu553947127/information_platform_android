@@ -25,6 +25,8 @@ public class ExitVm extends BaseViewModel {
 
     public void init(){
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
+        exitLiveData = new MutableLiveData();
+        pageStateLiveData = new MutableLiveData<>();
     }
 
     public void exit(){
