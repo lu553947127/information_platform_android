@@ -2,10 +2,14 @@ package com.shuangduan.zcy.app;
 
 import android.Manifest;
 import android.app.Application;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Environment;
+import android.provider.SyncStateContract;
 import android.view.Gravity;
 
 import androidx.annotation.NonNull;
@@ -31,6 +35,9 @@ import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.tencent.mm.opensdk.constants.ConstantsAPI;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.io.File;
 
@@ -74,7 +81,7 @@ public class AppConfig {
 
         initLoadSir();
 
-//        initWX(context);
+        initWX(context);
 
 //        initBugly(context);
 
@@ -117,14 +124,14 @@ public class AppConfig {
     /**
      * 微信初始化配置
      */
-    /*public static final String APP_ID = "wx2e2f0d4ccdf3e52f";
+    public static final String APP_ID = "wx2e2f0d4ccdf3e52f";
     public static IWXAPI iwxapi;
     private static void initWX(Context context) {
         iwxapi = WXAPIFactory.createWXAPI(context, APP_ID, true);
         iwxapi.registerApp(APP_ID);
     }
 
-    private static void initBugly(Context context) {
+    /*private static void initBugly(Context context) {
         Beta.upgradeDialogLayoutId = R.layout.upgrade_dialog;
         Bugly.init(context, "52396056dc", BuildConfig.IS_DEBUG);
     }*/

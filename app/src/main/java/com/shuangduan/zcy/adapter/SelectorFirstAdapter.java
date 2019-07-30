@@ -39,7 +39,7 @@ public class SelectorFirstAdapter<T  extends BaseSelectorBean> extends BaseQuick
         }else if (item instanceof StageBean){
             helper.setText(R.id.tv_province, ((StageBean) item).getPhases_name())
                     .setVisible(R.id.mark, item.getIsSelect() == 1)
-                    .setVisible(R.id.iv_more, item.getIsSelect() == 1);
+                    .setVisible(R.id.iv_more, false);
 
             helper.getView(R.id.tv_province).setSelected(item.getIsSelect() == 1);
         }else if (item instanceof TypeBean){

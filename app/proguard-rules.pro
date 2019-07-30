@@ -48,3 +48,8 @@
 
 #保留实体类
 -keep class com.shuangduan.zcy.model.bean.** { *; }
+
+#微信
+-keep class com.tencent.mm.opensdk.** {*;}
+-keep class com.tencent.wxop.** {*;}
+-keep class com.tencent.mm.sdk.** {*;}

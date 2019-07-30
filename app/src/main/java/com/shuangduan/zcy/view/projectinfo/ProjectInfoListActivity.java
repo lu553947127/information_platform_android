@@ -484,9 +484,10 @@ public class ProjectInfoListActivity extends BaseActivity {
                 }
             });
         }else {
-            List<BaseSelectorBean> list = new ArrayList<>();
-            list.addAll(typeVm.typeFirstLiveData.getValue());
-            showPopArea(list, 3);
+            if (typeVm.typeFirstLiveData.getValue() != null){
+                List<BaseSelectorBean> list = new ArrayList<>(typeVm.typeFirstLiveData.getValue());
+                showPopArea(list, 3);
+            }
         }
     }
 

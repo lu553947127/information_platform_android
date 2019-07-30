@@ -72,11 +72,33 @@
         <activity android:name="com.shuangduan.zcy.view.recruit.RecruitActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.view.recruit.RecruitDetailActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.view.release.ReleaseListActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.view.release.ReleaseProjectActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.shuangduan.zcy.view.release.ReleaseProjectActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
+        <activity android:name="com.shuangduan.zcy.view.release.ReleaseTypeSelectActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.view.release.ReleaseAreaSelectActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.shuangduan.zcy.view.release.LocationMapActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.shuangduan.zcy.view.release.ReleaseStageSelectActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
         <activity android:name="com.shuangduan.zcy.view.SearchActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.view.PhotoViewActivity" android:screenOrientation="portrait" android:theme="@style/PhotoViewTheme"/>
         <activity android:name="com.shuangduan.zcy.view.PayActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.shuangduan.zcy.wxapi.WXPayEntryActivity" android:screenOrientation="portrait" android:launchMode="singleTop" android:exported="true"/>
+
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:exported="true"
+            android:taskAffinity="net.sourceforge.simcpux"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            <data android:scheme="wx2e2f0d4ccdf3e52f"/>
+        </intent-filter>
+        </activity>
 
         <provider
             android:name="androidx.core.content.FileProvider"

@@ -14,6 +14,12 @@ import android.os.Bundle;
 //import com.tencent.tauth.IUiListener;
 //import com.tencent.tauth.Tencent;
 
+import com.shuangduan.zcy.app.AppConfig;
+import com.shuangduan.zcy.wxapi.WXUtils;
+import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
+import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
+import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
+
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -36,25 +42,25 @@ import java.util.ArrayList;
 public class ShareUtils {
 
     private static final int THUMB_SIZE = 150;
-//    public static int FRIEND = SendMessageToWX.Req.WXSceneSession;
-//    public static int FRIEND_CIRCLE = SendMessageToWX.Req.WXSceneTimeline;
+    public static int FRIEND = SendMessageToWX.Req.WXSceneSession;
+    public static int FRIEND_CIRCLE = SendMessageToWX.Req.WXSceneTimeline;
 
     public static final String app_id_qq = "1107824707";
 
     public static void shareWeChat(Context context, int shareTo, String url, String title, String description, Bitmap bitmap){
-//        WXWebpageObject webPage = new WXWebpageObject();
-//        webPage.webpageUrl = url;
-//        WXMediaMessage msg = new WXMediaMessage(webPage);
-//        msg.title = title;
-//        msg.description = description;
-//        Bitmap thumbBmp = Bitmap.createScaledBitmap(bitmap, THUMB_SIZE, THUMB_SIZE, true);
-//        msg.thumbData = WXUtils.bmpToByteArray(thumbBmp, true);
-//
-//        SendMessageToWX.Req req = new SendMessageToWX.Req();
-//        req.transaction = buildTransaction("webPage");
-//        req.message = msg;
-//        req.scene = shareTo;
-//        AppConfig.iwxapi.sendReq(req);
+        WXWebpageObject webPage = new WXWebpageObject();
+        webPage.webpageUrl = url;
+        WXMediaMessage msg = new WXMediaMessage(webPage);
+        msg.title = title;
+        msg.description = description;
+        Bitmap thumbBmp = Bitmap.createScaledBitmap(bitmap, THUMB_SIZE, THUMB_SIZE, true);
+        msg.thumbData = WXUtils.bmpToByteArray(thumbBmp, true);
+
+        SendMessageToWX.Req req = new SendMessageToWX.Req();
+        req.transaction = buildTransaction("webPage");
+        req.message = msg;
+        req.scene = shareTo;
+        AppConfig.iwxapi.sendReq(req);
     }
 
 //    public static void shareQQ(Activity context, Tencent tencent, IUiListener listener, String url, String title, String des, String img){

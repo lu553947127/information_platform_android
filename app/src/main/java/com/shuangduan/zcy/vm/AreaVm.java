@@ -9,6 +9,7 @@ import com.shuangduan.zcy.base.BaseViewModel;
 import com.shuangduan.zcy.model.api.repository.ProjectRepository;
 import com.shuangduan.zcy.model.bean.CityBean;
 import com.shuangduan.zcy.model.bean.ProvinceBean;
+import com.shuangduan.zcy.model.bean.TypeBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -146,6 +147,20 @@ public class AreaVm extends BaseViewModel {
                 }
             }
         }
+        cityLiveData.postValue(data);
+    }
+
+    /**
+     * 单选的二级列表点击
+     */
+    public void clickSecondSingle(int i){
+        List<CityBean> data = cityLiveData.getValue();
+        //单一选项
+        if (data.get(i).getIsSelect() == 1) return;
+        //选中状态，之前就是未选中状态，需判断是否为全部选中，是则修改全部为选中状态
+        //初始把“全部”更新为选中
+        setSelectState(data, 0);
+        data.get(i).setIsSelect(1);
         cityLiveData.postValue(data);
     }
 

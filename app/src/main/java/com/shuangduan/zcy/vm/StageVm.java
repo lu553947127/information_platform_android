@@ -198,4 +198,8 @@ public class StageVm extends BaseViewModel {
         return stageFirstLiveData.getValue().get(positionFirstNow).getId();
     }
 
+    public String getFirstName(){
+        return stageFirstLiveData.getValue().get(positionFirstNow).getPhases_name();
+    }
+
 }

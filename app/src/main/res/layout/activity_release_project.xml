@@ -450,6 +450,39 @@
 
             </FrameLayout>
 
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp"/>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorFFF">
+
+                <TextView
+                    android:id="@+id/tv_add"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingTop="13dp"
+                    android:drawableLeft="@drawable/add"
+                    android:drawablePadding="5dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="12sp"
+                    android:text="@string/add"/>
+
+            </FrameLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_contact"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:overScrollMode="never">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
             <FrameLayout
                 android:id="@+id/fl_project_schedule"
                 android:visibility="gone"

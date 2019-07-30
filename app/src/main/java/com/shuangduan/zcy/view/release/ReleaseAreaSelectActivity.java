@@ -9,18 +9,24 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.CityAdapter;
 import com.shuangduan.zcy.adapter.ProvinceAdapter;
+import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.PageState;
+import com.shuangduan.zcy.model.bean.CityBean;
+import com.shuangduan.zcy.model.bean.ProvinceBean;
 import com.shuangduan.zcy.model.event.CityEvent;
 import com.shuangduan.zcy.vm.AreaVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -77,7 +83,7 @@ public class ReleaseAreaSelectActivity extends BaseActivity {
         });
 
         cityAdapter.setOnItemClickListener((baseQuickAdapter, view, i) -> {
-            areaVm.clickSecond(i);
+            areaVm.clickSecondSingle(i);
         });
 
         areaVm = ViewModelProviders.of(this).get(AreaVm.class);
@@ -116,7 +122,34 @@ public class ReleaseAreaSelectActivity extends BaseActivity {
                     ToastUtils.showShort(getString(R.string.select_city_correct));
                     return;
                 }
-
+                String province = "";
+                int provinceId = 0;
+                String city = "";
+                int cityId = 0;
+                List<ProvinceBean> provinces = areaVm.provinceLiveData.getValue();
+                assert provinces != null;
+                for (ProvinceBean bean : provinces) {
+                    if (bean.isSelect == 1){
+                        province = bean.getName();
+                        provinceId = bean.getId();
+                        break;
+                    }
+                }
+                List<CityBean> citys = areaVm.cityLiveData.getValue();
+                assert citys != null;
+                for (CityBean bean: citys) {
+                    if (bean.getIsSelect() == 1){
+                        city = bean.getName();
+                        cityId = bean.getId();
+                        break;
+                    }
+                }
+                Bundle bundle = new Bundle();
+                bundle.putString(CustomConfig.PROVINCE_NAME, province);
+                bundle.putInt(CustomConfig.PROVINCE_ID, provinceId);
+                bundle.putString(CustomConfig.CITY_NAME, city);
+                bundle.putInt(CustomConfig.CITY_ID, cityId);
+                ActivityUtils.startActivity(bundle, LocationMapActivity.class);
                 break;
         }
     }

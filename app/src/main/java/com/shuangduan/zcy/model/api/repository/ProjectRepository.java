@@ -43,7 +43,7 @@ public class ProjectRepository extends BaseRepository {
     }
 
     public void projectTypes(MutableLiveData<List<TypeBean>> liveData, MutableLiveData<String> pageStateLiveData, int user_id, int id){
-        request(apiService.projectTypes(user_id, id)).setData(liveData).setPageState(pageStateLiveData).send();
+        request(apiService.projectTypes(user_id, id)).setDataList(liveData).setPageState(pageStateLiveData).send();
     }
 
     public void projectStage(MutableLiveData<List<StageBean>> liveData, MutableLiveData<String> pageStateLiveData, int user_id){

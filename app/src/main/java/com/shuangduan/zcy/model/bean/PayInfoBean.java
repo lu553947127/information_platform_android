@@ -1,5 +1,7 @@
 package com.shuangduan.zcy.model.bean;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * @author 宁文强 QQ:858777523
  * @name information_platform_android
@@ -17,6 +19,26 @@ public class PayInfoBean {
      */
 
     private String alipay;
+    /**
+     * appid : wx2e2f0d4ccdf3e52f
+     * partnerid : 1526823381
+     * prepayid : wx30153503062370a064a8e49c1504692500
+     * package : Sign=WXPay
+     * noncestr : 5vtGhwrd0J205nF0MTtV2uxUv8fFOH2M
+     * timestamp : 1564472103
+     * sign_type : MD5
+     * sign : A48350C7DED76B7C238802612DACB719
+     */
+
+    private String appid;
+    private String partnerid;
+    private String prepayid;
+    @SerializedName("package")
+    private String packageX;
+    private String noncestr;
+    private int timestamp;
+    private String sign_type;
+    private String sign;
 
     public String getAlipay() {
         return alipay;
@@ -24,5 +46,69 @@ public class PayInfoBean {
 
     public void setAlipay(String alipay) {
         this.alipay = alipay;
+    }
+
+    public String getAppid() {
+        return appid;
+    }
+
+    public void setAppid(String appid) {
+        this.appid = appid;
+    }
+
+    public String getPartnerid() {
+        return partnerid;
+    }
+
+    public void setPartnerid(String partnerid) {
+        this.partnerid = partnerid;
+    }
+
+    public String getPrepayid() {
+        return prepayid;
+    }
+
+    public void setPrepayid(String prepayid) {
+        this.prepayid = prepayid;
+    }
+
+    public String getPackageX() {
+        return packageX;
+    }
+
+    public void setPackageX(String packageX) {
+        this.packageX = packageX;
+    }
+
+    public String getNoncestr() {
+        return noncestr;
+    }
+
+    public void setNoncestr(String noncestr) {
+        this.noncestr = noncestr;
+    }
+
+    public int getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(int timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public String getSign_type() {
+        return sign_type;
+    }
+
+    public void setSign_type(String sign_type) {
+        this.sign_type = sign_type;
+    }
+
+    public String getSign() {
+        return sign;
+    }
+
+    public void setSign(String sign) {
+        this.sign = sign;
     }
 }

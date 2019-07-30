@@ -16,20 +16,22 @@ import com.alipay.sdk.app.PayTask;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
+import com.shuangduan.zcy.app.AppConfig;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.utils.pay.PayResult;
 import com.shuangduan.zcy.view.projectinfo.GoToSubActivity;
 import com.shuangduan.zcy.view.projectinfo.SubOrderActivity;
-import com.shuangduan.zcy.vm.PayVm;
+import com.shuangduan.zcy.wxapi.PayVm;
+import com.tencent.mm.opensdk.modelpay.PayReq;
 
 import java.lang.ref.WeakReference;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -67,7 +69,27 @@ public class PayActivity extends BaseActivity {
         payVm = ViewModelProviders.of(this).get(PayVm.class);
         payVm.id = getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0);
         payVm.payInfoLiveData.observe(this, payInfoBean -> {
-            aliPay(payInfoBean.getAlipay());
+            if (StringUtils.isTrimEmpty(payInfoBean.getAlipay())){
+                PayReq request = new PayReq();
+                request.appId = payInfoBean.getAppid();
+                request.partnerId = payInfoBean.getPartnerid();
+                request.prepayId= payInfoBean.getPrepayid();
+                request.packageValue = "Sign=WXPay";
+                request.nonceStr= payInfoBean.getNoncestr();
+                request.timeStamp= String.valueOf(payInfoBean.getTimestamp());
+                request.sign= payInfoBean.getSign();
+                request.signType = payInfoBean.getSign_type();
+//                request.appId = AppConfig.APP_ID;
+//                request.partnerId = "1526823381";
+//                request.prepayId= "wx30192759080006b37f0a83551854849300";
+//                request.packageValue = "Sign=WXPay";
+//                request.nonceStr= "836bd6128fd162cfc6b926efcd08bfbe";
+//                request.timeStamp= "1564486078";
+//                request.sign= "852796E88D849E6133132EF8426364B7";
+                AppConfig.iwxapi.sendReq(request);
+            }else {
+                aliPay(payInfoBean.getAlipay());
+            }
         });
     }
 
@@ -82,6 +104,8 @@ public class PayActivity extends BaseActivity {
                 payVm.getInfo();
                 break;
             case R.id.tv_wechat:
+                payVm.setType(2);
+                payVm.getInfo();
                 break;
         }
     }

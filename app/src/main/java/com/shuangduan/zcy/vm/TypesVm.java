@@ -163,6 +163,19 @@ public class TypesVm extends BaseViewModel {
     }
 
     /**
+     * 单选的二级列表点击
+     */
+    public void clickSecondSingle(int i){
+        List<TypeBean> data = typeSecondLiveData.getValue();
+        //单一选项
+        if (data.get(i).getIsSelect() == 1) return;
+        //选中状态，之前就是未选中状态
+        setSelectState(data, 0);
+        data.get(i).setIsSelect(1);
+        typeSecondLiveData.postValue(data);
+    }
+
+    /**
      * 修改二级单一所有数据选中状态
      * @param i
      */
@@ -211,4 +224,25 @@ public class TypesVm extends BaseViewModel {
     private String getKey(int i, int j){
         return i + "-" + j;
     }
+
+    /**
+     * 设置默认数据(不带全部)
+     */
+    public void setTypeFirstSingleInit(){
+        if (!firstInited){
+            List<TypeBean> list = typeFirstLiveData.getValue();
+            //初始化省份数据，默认选中第一个省份
+            if (list != null && list.size() > 0){
+                //初始化选中一级第一个
+                list.get(positionFirstNow).setIsSelect(1);
+                typeFirstLiveData.postValue(list);
+
+                firstInited = true;
+            }
+        }else {
+            //省份被选定后才开始请求城市数据
+            getSecond(positionFirstNow);
+        }
+    }
+
 }

@@ -31,6 +31,6 @@ public class ProjectInfoAdapter extends BaseQuickAdapter<ProjectInfoBean.ListBea
                 .setText(R.id.tv_type, item.getPhases())
                 .setText(R.id.tv_readers, String.format(mContext.getString(R.string.format_num_of_readers), item.getSubscription_num()))
                 .setText(R.id.tv_time, String.format(mContext.getString(R.string.format_update_time), item.getUpdate_time()))
-                .setVisible(R.id.iv_subscribe, item.getWarrant_status() == 1);
+                .setVisible(R.id.iv_subscribe, item.getWarrant_status() != 1);
     }
 }

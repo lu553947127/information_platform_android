@@ -33,6 +33,10 @@ public class CustomConfig {
     public static final String uploadTypeIdCard = "id_card";
     public static final String uploadTypeBusinessCard = "business_card";
     public static final String PROJECT_ID = "project_id";
+    public static final String PROVINCE_NAME = "province_name";
+    public static final String CITY_NAME = "city_name";
+    public static final String PROVINCE_ID = "province_id";
+    public static final String CITY_ID = "city_id";
 
     public static final String SMS_TYPE = "sms_type";
     public static final int SMS_REGISTER = 1;//注册

@@ -197,6 +197,13 @@
     <string name="update_time">更新时间</string>
     <string name="upload_photo">上传照片</string>
     <string name="not_required">(非必填项)</string>
+    <string name="location_select">地理位置</string>
+    <string name="share_success">分享成功</string>
+    <string name="share_cancel">分享取消</string>
+    <string name="add">添加</string>
+    <string name="mobile_code">手机号</string>
+    <string name="unit">单位</string>
+    <string name="address">地址</string>
 
     <string name="format_version_name">当前版本号：v%1$s</string>
     <string name="format_get_verification_code_again">重新获取 (%1$ds)</string>

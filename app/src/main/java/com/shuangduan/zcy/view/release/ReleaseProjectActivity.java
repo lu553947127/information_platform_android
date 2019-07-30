@@ -16,27 +16,39 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.TimeUtils;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.shuangduan.zcy.R;
+import com.shuangduan.zcy.adapter.ContactAdapter;
+import com.shuangduan.zcy.adapter.ReleaseContactAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.PhotoDialog;
 import com.shuangduan.zcy.dialog.pop.CommonPopupWindow;
+import com.shuangduan.zcy.model.event.LocationEvent;
+import com.shuangduan.zcy.model.event.StageEvent;
 import com.shuangduan.zcy.utils.matisse.Glide4Engine;
 import com.shuangduan.zcy.utils.matisse.MatisseCamera;
 import com.shuangduan.zcy.view.PhotoViewActivity;
 import com.shuangduan.zcy.vm.MineReleaseVm;
 import com.shuangduan.zcy.vm.PermissionVm;
+import com.shuangduan.zcy.weight.DividerItemDecoration;
 import com.shuangduan.zcy.weight.PicContentView;
+import com.shuangduan.zcy.weight.datepicker.CustomDatePicker;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -126,10 +138,15 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
     FrameLayout flProjectNameSelect;
     @BindView(R.id.fl_mobile)
     FrameLayout flMobile;
+    @BindView(R.id.rv_contact)
+    RecyclerView rvContact;
+    @BindView(R.id.tv_add)
+    TextView tvAdd;
     private PermissionVm permissionVm;
     private RxPermissions rxPermissions;
     private MineReleaseVm mineReleaseVm;
     private CommonPopupWindow popupWindow;
+    private ReleaseContactAdapter releaseContactAdapter;
 
     @Override
     protected int initLayoutRes() {
@@ -146,6 +163,27 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
         photoSet();
 
         mineReleaseVm = ViewModelProviders.of(this).get(MineReleaseVm.class);
+        mineReleaseVm.contactLiveData.observe(this, contactBeans -> {
+            if (releaseContactAdapter == null){
+                rvContact.setLayoutManager(new LinearLayoutManager(this));
+                rvContact.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_10_10));
+                releaseContactAdapter = new ReleaseContactAdapter(R.layout.item_release_contact, contactBeans);
+                rvContact.setAdapter(releaseContactAdapter);
+                releaseContactAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+                    switch (view.getId()){
+                        case R.id.iv_del:
+                            mineReleaseVm.delContact(position);
+                            break;
+                        case R.id.tv_type:
+                            break;
+                        case R.id.tv_address:
+                            break;
+                    }
+                });
+            }else {
+                releaseContactAdapter.setNewData(contactBeans);
+            }
+        });
     }
 
     private void photoSet() {
@@ -244,7 +282,7 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
         permissionVm.getPermissionAlbum(rxPermissions);
     }
 
-    @OnClick({R.id.iv_bar_back, R.id.tv_release, R.id.tv_project_type, R.id.tv_project_address})
+    @OnClick({R.id.iv_bar_back, R.id.tv_release, R.id.tv_project_type, R.id.tv_project_address, R.id.tv_project_stage, R.id.tv_project_types, R.id.tv_time_start, R.id.tv_time_end, R.id.tv_add})
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_bar_back:
@@ -306,11 +344,46 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
                 }
                 break;
             case R.id.tv_project_address:
-
+                ActivityUtils.startActivity(ReleaseAreaSelectActivity.class);
+                break;
+            case R.id.tv_project_stage:
+                ActivityUtils.startActivity(ReleaseStageSelectActivity.class);
+                break;
+            case R.id.tv_project_types:
+                ActivityUtils.startActivity(ReleaseTypeSelectActivity.class);
+                break;
+            case R.id.tv_time_start:
+                showTimeDialog(tvTimeStart);
+                break;
+            case R.id.tv_time_end:
+                showTimeDialog(tvTimeEnd);
+                break;
+            case R.id.tv_add:
+                mineReleaseVm.addContact();
                 break;
             case R.id.tv_release:
                 break;
         }
     }
 
+    /**
+     * 时间选择器
+     */
+    private void showTimeDialog(TextView tv){
+        CustomDatePicker customDatePicker = new CustomDatePicker(this, time -> {
+            tv.setText(time);
+        }, "2010-01-01 00:00", "2040-12-31 00:00");
+        customDatePicker.showSpecificTime(false);
+        customDatePicker.show(TimeUtils.getNowString());
+    }
+
+    @Subscribe()
+    public void locationEvent(LocationEvent event){
+        tvProjectAddress.setText(event.getProvince() + event.getCity());
+    }
+
+    @Subscribe()
+    public void stageEvent(StageEvent event){
+        tvProjectStage.setText(event.getName());
+    }
 }

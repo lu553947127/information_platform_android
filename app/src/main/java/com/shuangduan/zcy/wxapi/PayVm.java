@@ -1,4 +1,4 @@
-package com.shuangduan.zcy.vm;
+package com.shuangduan.zcy.wxapi;
 
 import androidx.lifecycle.MutableLiveData;
 
@@ -44,6 +44,10 @@ public class PayVm extends BaseViewModel {
         }else if (i == 2){
             type = WECHAT;
         }
+    }
+
+    public String getType(){
+        return type;
     }
 
 }

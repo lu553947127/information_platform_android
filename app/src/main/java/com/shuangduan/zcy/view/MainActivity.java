@@ -1,5 +1,9 @@
 package com.shuangduan.zcy.view;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.KeyEvent;
@@ -17,8 +21,13 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.view.login.UserInfoInputActivity;
+import com.tencent.mm.opensdk.constants.ConstantsAPI;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import butterknife.BindView;
+
+import static com.shuangduan.zcy.app.AppConfig.APP_ID;
 
 public class MainActivity extends BaseActivity {
 
@@ -59,6 +68,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
+        regToWx();
         if (fragments[0] == null) {
             fragments[0] = HomeFragment.newInstance();
         }
@@ -155,6 +165,28 @@ public class MainActivity extends BaseActivity {
         }
 
         return super.onKeyDown(keyCode, event);
+    }
+
+    // IWXAPI 是第三方app和微信通信的openApi接口
+    private IWXAPI api;
+
+    private void regToWx() {
+        // 通过WXAPIFactory工厂，获取IWXAPI的实例
+        api = WXAPIFactory.createWXAPI(this, APP_ID, true);
+
+        // 将应用的appId注册到微信
+        api.registerApp(APP_ID);
+
+        //建议动态监听微信启动广播进行注册到微信
+        registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+
+                // 将该app注册到微信
+                api.registerApp(APP_ID);
+            }
+        }, new IntentFilter(ConstantsAPI.ACTION_REFRESH_WXAPP));
+
     }
 
 }
