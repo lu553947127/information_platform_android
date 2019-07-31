@@ -24,22 +24,24 @@ import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.TimeUtils;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.shuangduan.zcy.R;
-import com.shuangduan.zcy.adapter.ContactAdapter;
 import com.shuangduan.zcy.adapter.ReleaseContactAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.PhotoDialog;
 import com.shuangduan.zcy.dialog.pop.CommonPopupWindow;
+import com.shuangduan.zcy.model.bean.ContactBean;
+import com.shuangduan.zcy.model.event.AddressEvent;
+import com.shuangduan.zcy.model.event.ContactTypeEvent;
 import com.shuangduan.zcy.model.event.LocationEvent;
 import com.shuangduan.zcy.model.event.StageEvent;
+import com.shuangduan.zcy.model.event.TypesEvent;
 import com.shuangduan.zcy.utils.matisse.Glide4Engine;
 import com.shuangduan.zcy.utils.matisse.MatisseCamera;
 import com.shuangduan.zcy.view.PhotoViewActivity;
-import com.shuangduan.zcy.vm.MineReleaseVm;
 import com.shuangduan.zcy.vm.PermissionVm;
+import com.shuangduan.zcy.vm.ReleaseVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 import com.shuangduan.zcy.weight.PicContentView;
 import com.shuangduan.zcy.weight.datepicker.CustomDatePicker;
@@ -55,7 +57,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -96,20 +97,20 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
     TextView tvTimeEnd;
     @BindView(R.id.rl_project_cycle)
     RelativeLayout rlProjectCycle;
-    @BindView(R.id.tv_project_acreage)
-    EditText tvProjectAcreage;
+    @BindView(R.id.edt_project_acreage)
+    EditText edtProjectAcreage;
     @BindView(R.id.fl_project_acreage)
     FrameLayout flProjectAcreage;
-    @BindView(R.id.tv_project_price)
-    EditText tvProjectPrice;
+    @BindView(R.id.edt_project_price)
+    EditText edtProjectPrice;
     @BindView(R.id.fl_project_price)
     FrameLayout flProjectPrice;
-    @BindView(R.id.tv_project_detail)
-    EditText tvProjectDetail;
+    @BindView(R.id.edt_project_detail)
+    EditText edtProjectDetail;
     @BindView(R.id.fl_project_detail)
     FrameLayout flProjectDetail;
-    @BindView(R.id.tv_project_material)
-    EditText tvProjectMaterial;
+    @BindView(R.id.edt_project_material)
+    EditText edtProjectMaterial;
     @BindView(R.id.fl_project_material)
     FrameLayout flProjectMaterial;
     @BindView(R.id.edt_project_schedule)
@@ -144,7 +145,7 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
     TextView tvAdd;
     private PermissionVm permissionVm;
     private RxPermissions rxPermissions;
-    private MineReleaseVm mineReleaseVm;
+    private ReleaseVm releaseVm;
     private CommonPopupWindow popupWindow;
     private ReleaseContactAdapter releaseContactAdapter;
 
@@ -162,21 +163,29 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
 
         photoSet();
 
-        mineReleaseVm = ViewModelProviders.of(this).get(MineReleaseVm.class);
-        mineReleaseVm.contactLiveData.observe(this, contactBeans -> {
+        releaseVm = ViewModelProviders.of(this).get(ReleaseVm.class);
+        releaseVm.contactLiveData.observe(this, contactBeans -> {
             if (releaseContactAdapter == null){
                 rvContact.setLayoutManager(new LinearLayoutManager(this));
                 rvContact.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_10_10));
-                releaseContactAdapter = new ReleaseContactAdapter(R.layout.item_release_contact, contactBeans);
+                releaseContactAdapter = new ReleaseContactAdapter(R.layout.item_release_contact, contactBeans){
+
+                };
                 rvContact.setAdapter(releaseContactAdapter);
                 releaseContactAdapter.setOnItemChildClickListener((adapter, view, position) -> {
                     switch (view.getId()){
                         case R.id.iv_del:
-                            mineReleaseVm.delContact(position);
+                            releaseVm.delContact(position);
                             break;
                         case R.id.tv_type:
+                            releaseVm.editContactTypePos = position;
+                            ActivityUtils.startActivity(ContactTypeActivity.class);
                             break;
                         case R.id.tv_address:
+                            releaseVm.editContactAddressPos = position;
+                            Bundle bundle = new Bundle();
+                            bundle.putInt(CustomConfig.PROJECT_ADDRESS, 0);
+                            ActivityUtils.startActivity(bundle, ReleaseAreaSelectActivity.class);
                             break;
                     }
                 });
@@ -296,7 +305,7 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
                         .setWidthAndHeight(ConvertUtils.dp2px(260), ViewGroup.LayoutParams.WRAP_CONTENT)
                         .setViewOnclickListener((popView, layoutResId) -> {
                             popView.findViewById(R.id.tv_project).setOnClickListener(v -> {
-                                mineReleaseVm.type = 1;
+                                releaseVm.type = 1;
                                 flProjectNameEdit.setVisibility(View.VISIBLE);
                                 tvProjectAddress.setClickable(true);
                                 flProjectStage.setVisibility(View.VISIBLE);
@@ -306,6 +315,8 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
                                 flProjectPrice.setVisibility(View.VISIBLE);
                                 flProjectDetail.setVisibility(View.VISIBLE);
                                 flProjectMaterial.setVisibility(View.VISIBLE);
+                                rvContact.setVisibility(View.VISIBLE);
+                                tvAdd.setVisibility(View.VISIBLE);
                                 flProjectNameSelect.setVisibility(View.GONE);
                                 flProjectSchedule.setVisibility(View.GONE);
                                 flVisitor.setVisibility(View.GONE);
@@ -317,7 +328,7 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
                                 popupWindow.dismiss();
                             });
                             popView.findViewById(R.id.tv_locus).setOnClickListener(v -> {
-                                mineReleaseVm.type = 2;
+                                releaseVm.type = 2;
                                 flProjectNameEdit.setVisibility(View.GONE);
                                 tvProjectAddress.setClickable(false);
                                 flProjectStage.setVisibility(View.GONE);
@@ -327,6 +338,8 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
                                 flProjectPrice.setVisibility(View.GONE);
                                 flProjectDetail.setVisibility(View.GONE);
                                 flProjectMaterial.setVisibility(View.GONE);
+                                rvContact.setVisibility(View.GONE);
+                                tvAdd.setVisibility(View.GONE);
                                 flProjectNameSelect.setVisibility(View.VISIBLE);
                                 flProjectSchedule.setVisibility(View.VISIBLE);
                                 flVisitor.setVisibility(View.VISIBLE);
@@ -344,7 +357,9 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
                 }
                 break;
             case R.id.tv_project_address:
-                ActivityUtils.startActivity(ReleaseAreaSelectActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt(CustomConfig.PROJECT_ADDRESS, 1);
+                ActivityUtils.startActivity(bundle, ReleaseAreaSelectActivity.class);
                 break;
             case R.id.tv_project_stage:
                 ActivityUtils.startActivity(ReleaseStageSelectActivity.class);
@@ -353,15 +368,16 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
                 ActivityUtils.startActivity(ReleaseTypeSelectActivity.class);
                 break;
             case R.id.tv_time_start:
-                showTimeDialog(tvTimeStart);
+                showTimeDialog(tvTimeStart, 0);
                 break;
             case R.id.tv_time_end:
-                showTimeDialog(tvTimeEnd);
+                showTimeDialog(tvTimeEnd, 1);
                 break;
             case R.id.tv_add:
-                mineReleaseVm.addContact();
+                releaseVm.addContact();
                 break;
             case R.id.tv_release:
+                releaseVm.releaseProject(edtProjectName.getText().toString(), edtProjectAcreage.getText().toString(), edtProjectPrice.getText().toString(), edtProjectDetail.getText().toString(), edtProjectMaterial.getText().toString());
                 break;
         }
     }
@@ -369,21 +385,53 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
     /**
      * 时间选择器
      */
-    private void showTimeDialog(TextView tv){
+    private void showTimeDialog(TextView tv, int type){
         CustomDatePicker customDatePicker = new CustomDatePicker(this, time -> {
             tv.setText(time);
-        }, "2010-01-01 00:00", "2040-12-31 00:00");
+            if (type == 0) releaseVm.start_time = time;
+            else releaseVm.end_time = time;
+        }, "yyyy-MM-dd", "2010-01-01", "2040-12-31");
         customDatePicker.showSpecificTime(false);
         customDatePicker.show(TimeUtils.getNowString());
     }
 
     @Subscribe()
     public void locationEvent(LocationEvent event){
+        releaseVm.province = event.getProvinceId();
+        releaseVm.city = event.getCityId();
         tvProjectAddress.setText(event.getProvince() + event.getCity());
     }
 
     @Subscribe()
     public void stageEvent(StageEvent event){
+        releaseVm.phases = event.getId();
         tvProjectStage.setText(event.getName());
+    }
+
+    @Subscribe()
+    public void typesEvent(TypesEvent event){
+        releaseVm.types = event.getId();
+        tvProjectTypes.setText(event.getName());
+    }
+
+    @Subscribe()
+    public void contactEvent(ContactTypeEvent event){
+        List<ContactBean> list = releaseVm.contactLiveData.getValue();
+        if (list != null){
+            list.get(releaseVm.editContactTypePos).setType(event.getBean());
+            list.get(releaseVm.editContactTypePos).setPhone_type(event.getBean().getType_name());
+            releaseVm.contactLiveData.postValue(list);
+        }
+    }
+
+    @Subscribe()
+    public void addressEvent(AddressEvent event){
+        List<ContactBean> list = releaseVm.contactLiveData.getValue();
+        if (list != null){
+            list.get(releaseVm.editContactTypePos).setAddress(event.getProvince() + event.getCity());
+            list.get(releaseVm.editContactTypePos).setProvince(event.getProvinceId());
+            list.get(releaseVm.editContactTypePos).setCity(event.getCityId());
+            releaseVm.contactLiveData.postValue(list);
+        }
     }
 }

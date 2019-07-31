@@ -497,7 +497,7 @@ public class ProjectInfoListActivity extends BaseActivity {
     private void showTimeDialog(TextView tv){
         CustomDatePicker customDatePicker = new CustomDatePicker(this, time -> {
             tv.setText(time);
-        }, "2010-01-01 00:00", "2040-12-31 00:00");
+        }, "yyyy-MM-dd HH:mm", "2010-01-01 00:00", "2040-12-31 00:00");
         customDatePicker.showSpecificTime(false);
         customDatePicker.show(TimeUtils.getNowString());
     }

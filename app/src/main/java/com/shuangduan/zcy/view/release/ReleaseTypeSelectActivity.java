@@ -11,13 +11,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.SelectorFirstAdapter;
 import com.shuangduan.zcy.adapter.SelectorSecondAdapter;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.BaseSelectorBean;
+import com.shuangduan.zcy.model.bean.TypeBean;
+import com.shuangduan.zcy.model.event.TypesEvent;
 import com.shuangduan.zcy.vm.TypesVm;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,6 +106,33 @@ public class ReleaseTypeSelectActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_bar_right:
+                int[] result = typesVm.getResult();
+                if (result.length == 0){
+                    ToastUtils.showShort(getString(R.string.select_types_correct));
+                    return;
+                }
+                String province = "";
+                String city = "";
+                int cityId = 0;
+                List<TypeBean> types = typesVm.typeFirstLiveData.getValue();
+                assert types != null;
+                for (TypeBean bean : types) {
+                    if (bean.isSelect == 1){
+                        province = bean.getCatname();
+                        break;
+                    }
+                }
+                List<TypeBean> citys = typesVm.typeSecondLiveData.getValue();
+                assert citys != null;
+                for (TypeBean bean: citys) {
+                    if (bean.getIsSelect() == 1){
+                        city = bean.getCatname();
+                        cityId = bean.getId();
+                        break;
+                    }
+                }
+                EventBus.getDefault().post(new TypesEvent(province + city, cityId));
+                finish();
                 break;
         }
     }

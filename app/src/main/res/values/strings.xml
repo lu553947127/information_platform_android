@@ -135,6 +135,7 @@
     <string name="error_correction">纠错</string>
     <string name="discuss_group">讨论组</string>
     <string name="contact">联系人</string>
+    <string name="contact_type">联系人类型</string>
     <string name="read_contact">查看联系人</string>
     <string name="detail">详情：</string>
     <string name="material">用材：</string>
@@ -175,6 +176,7 @@
     <string name="read_more">查看更多</string>
     <string name="hint_here">请在此处输入</string>
     <string name="hint_error_correct">请输入纠错的具体内容</string>
+    <string name="select_types_correct">请选择具体的类别</string>
 
     <string name="release_msg">发布信息</string>
     <string name="release">发布</string>

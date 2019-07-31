@@ -79,13 +79,6 @@ public class PayActivity extends BaseActivity {
                 request.timeStamp= String.valueOf(payInfoBean.getTimestamp());
                 request.sign= payInfoBean.getSign();
                 request.signType = payInfoBean.getSign_type();
-//                request.appId = AppConfig.APP_ID;
-//                request.partnerId = "1526823381";
-//                request.prepayId= "wx30192759080006b37f0a83551854849300";
-//                request.packageValue = "Sign=WXPay";
-//                request.nonceStr= "836bd6128fd162cfc6b926efcd08bfbe";
-//                request.timeStamp= "1564486078";
-//                request.sign= "852796E88D849E6133132EF8426364B7";
                 AppConfig.iwxapi.sendReq(request);
             }else {
                 aliPay(payInfoBean.getAlipay());

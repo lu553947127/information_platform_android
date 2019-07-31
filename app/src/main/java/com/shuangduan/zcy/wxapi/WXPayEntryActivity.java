@@ -5,14 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.AppConfig;
-import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.view.PayActivity;
 import com.shuangduan.zcy.view.projectinfo.GoToSubActivity;
 import com.shuangduan.zcy.view.projectinfo.SubOrderActivity;
@@ -33,7 +31,7 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
  * </pre>
  */
 
-public class WXPayEntryActivity extends AppCompatActivity implements IWXAPIEventHandler {
+public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
 
     private IWXAPI api;
 

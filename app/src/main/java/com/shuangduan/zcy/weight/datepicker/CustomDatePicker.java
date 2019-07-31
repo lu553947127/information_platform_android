@@ -68,16 +68,18 @@ public class CustomDatePicker {
     private boolean spanYear, spanMon, spanDay, spanHour, spanMin;
     private Calendar selectedCalender, startCalendar, endCalendar;
     private TextView tv_cancel, tv_select, hour_text, minute_text;
+    private String timeStyle = "yyyy-MM-dd HH:mm";
 
-    public CustomDatePicker(Context context, ResultHandler resultHandler, String startDate, String endDate) {
-        if (isValidDate(startDate, "yyyy-MM-dd HH:mm") && isValidDate(endDate, "yyyy-MM-dd HH:mm")) {
+    public CustomDatePicker(Context context, ResultHandler resultHandler, String timeStyle, String startDate, String endDate) {
+        this.timeStyle = timeStyle;
+        if (isValidDate(startDate, timeStyle) && isValidDate(endDate, timeStyle)) {
             canAccess = true;
             this.context = context;
             this.handler = resultHandler;
             selectedCalender = Calendar.getInstance();
             startCalendar = Calendar.getInstance();
             endCalendar = Calendar.getInstance();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.CHINA);
+            SimpleDateFormat sdf = new SimpleDateFormat(timeStyle, Locale.CHINA);
             try {
                 startCalendar.setTime(sdf.parse(startDate));
                 endCalendar.setTime(sdf.parse(endDate));
@@ -127,7 +129,7 @@ public class CustomDatePicker {
         tv_select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.CHINA);
+                SimpleDateFormat sdf = new SimpleDateFormat(timeStyle, Locale.CHINA);
                 handler.handle(sdf.format(selectedCalender.getTime()));
                 datePickerDialog.dismiss();
             }

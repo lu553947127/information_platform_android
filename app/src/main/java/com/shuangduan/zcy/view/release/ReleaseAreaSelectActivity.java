@@ -20,7 +20,9 @@ import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.CityBean;
 import com.shuangduan.zcy.model.bean.ProvinceBean;
+import com.shuangduan.zcy.model.event.AddressEvent;
 import com.shuangduan.zcy.model.event.CityEvent;
+import com.shuangduan.zcy.model.event.LocationEvent;
 import com.shuangduan.zcy.vm.AreaVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
@@ -144,12 +146,20 @@ public class ReleaseAreaSelectActivity extends BaseActivity {
                         break;
                     }
                 }
-                Bundle bundle = new Bundle();
-                bundle.putString(CustomConfig.PROVINCE_NAME, province);
-                bundle.putInt(CustomConfig.PROVINCE_ID, provinceId);
-                bundle.putString(CustomConfig.CITY_NAME, city);
-                bundle.putInt(CustomConfig.CITY_ID, cityId);
-                ActivityUtils.startActivity(bundle, LocationMapActivity.class);
+                switch (getIntent().getIntExtra(CustomConfig.PROJECT_ADDRESS, 0)){
+                    case 0:
+                        EventBus.getDefault().post(new AddressEvent(province, city, provinceId, cityId));
+                        finish();
+                        break;
+                    case 1:
+                        Bundle bundle = new Bundle();
+                        bundle.putString(CustomConfig.PROVINCE_NAME, province);
+                        bundle.putInt(CustomConfig.PROVINCE_ID, provinceId);
+                        bundle.putString(CustomConfig.CITY_NAME, city);
+                        bundle.putInt(CustomConfig.CITY_ID, cityId);
+                        ActivityUtils.startActivity(bundle, LocationMapActivity.class);
+                        break;
+                }
                 break;
         }
     }

@@ -1,12 +1,15 @@
 package com.shuangduan.zcy.adapter;
 
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.widget.EditText;
+
 import androidx.annotation.Nullable;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.model.bean.ContactBean;
-import com.shuangduan.zcy.model.bean.ProjectDetailBean;
 
 import java.util.List;
 
@@ -29,6 +32,44 @@ public class ReleaseContactAdapter extends BaseQuickAdapter<ContactBean, BaseVie
     protected void convert(BaseViewHolder helper, ContactBean item) {
         helper.addOnClickListener(R.id.iv_del)
                 .addOnClickListener(R.id.tv_type)
-                .addOnClickListener(R.id.tv_address);
+                .addOnClickListener(R.id.tv_address)
+                .setText(R.id.tv_type, item.getType() == null ? "" : item.getType().getType_name())
+                .setText(R.id.tv_address, item.getAddress());
+
+        EditText edtUnit = helper.getView(R.id.edt_unit);
+        edtUnit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        EditText edtPrinciple = helper.getView(R.id.edt_principle);
+        edtPrinciple.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 }

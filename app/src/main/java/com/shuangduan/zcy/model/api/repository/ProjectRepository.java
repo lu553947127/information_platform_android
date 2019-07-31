@@ -3,7 +3,9 @@ package com.shuangduan.zcy.model.api.repository;
 import androidx.lifecycle.MutableLiveData;
 
 import com.shuangduan.zcy.model.api.rxjava.BaseSubscriber;
+import com.shuangduan.zcy.model.bean.BaseObjResponse;
 import com.shuangduan.zcy.model.bean.CityBean;
+import com.shuangduan.zcy.model.bean.ContactTypeBean;
 import com.shuangduan.zcy.model.bean.LocusMineBean;
 import com.shuangduan.zcy.model.bean.MapBean;
 import com.shuangduan.zcy.model.bean.ProjectInfoBean;
@@ -56,6 +58,15 @@ public class ProjectRepository extends BaseRepository {
 
     public void myProjectTrack(MutableLiveData<LocusMineBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, int page){
         request(apiService.myProjectTrack(user_id, page)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    public void getContactType(MutableLiveData<List<ContactTypeBean>> liveData, MutableLiveData<String> pageStateLiveData, int user_id){
+        request(apiService.getContactType(user_id)).setDataList(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    public void addProject(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int user_id, String title, int province, int city, int phases, int type,
+                           String start_time, String end_time, String acreage, String valuation, String intro, String materials, String longitude, String latitude, String[] contact){
+        request(apiService.addProject(user_id, title, province, city, phases, type, start_time, end_time, acreage, valuation, intro, materials, longitude, latitude, contact)).setDataList(liveData).setPageState(pageStateLiveData).send();
     }
 
 }

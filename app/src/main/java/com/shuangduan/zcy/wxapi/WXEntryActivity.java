@@ -1,5 +1,6 @@
 package com.shuangduan.zcy.wxapi;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -31,7 +32,7 @@ import org.greenrobot.eventbus.EventBus;
  * </pre>
  */
 
-public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHandler {
+public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 
     public static IWXAPI iwxapi;
 

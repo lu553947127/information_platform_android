@@ -4,6 +4,7 @@ import com.shuangduan.zcy.model.bean.BaseListResponse;
 import com.shuangduan.zcy.model.bean.BaseObjResponse;
 import com.shuangduan.zcy.model.bean.CityBean;
 import com.shuangduan.zcy.model.bean.ConsumeBean;
+import com.shuangduan.zcy.model.bean.ContactTypeBean;
 import com.shuangduan.zcy.model.bean.LocusMineBean;
 import com.shuangduan.zcy.model.bean.LoginBean;
 import com.shuangduan.zcy.model.bean.MapBean;
@@ -22,7 +23,6 @@ import com.shuangduan.zcy.model.bean.TrackBean;
 import com.shuangduan.zcy.model.bean.TypeBean;
 import com.shuangduan.zcy.model.bean.UploadBean;
 import com.shuangduan.zcy.model.bean.UserInfoBean;
-import com.shuangduan.zcy.model.bean.ViewTrackBean;
 
 import io.reactivex.Flowable;
 import okhttp3.MultipartBody;
@@ -337,6 +337,32 @@ public interface ApiService {
             @Field("user_id")int user_id,
             @Field("id")int id,
             @Field("type")String type
+    );
+
+    @FormUrlEncoded
+    @POST("api/Project/getPhoneType")
+    Flowable<BaseListResponse<ContactTypeBean>> getContactType(
+            @Field("user_id")int user_id
+    );
+
+    @FormUrlEncoded
+    @POST("api/Project/addProject")
+    Flowable<BaseObjResponse> addProject(
+            @Field("user_id")int user_id,
+            @Field("title")String title,
+            @Field("province")int province,
+            @Field("city")int city,
+            @Field("phases")int phases,
+            @Field("type")int type,
+            @Field("start_time")String start_time,
+            @Field("end_time")String end_time,
+            @Field("acreage")String acreage,
+            @Field("valuation")String valuation,
+            @Field("intro")String intro,
+            @Field("materials")String materials,
+            @Field("longitude")String longitude,
+            @Field("latitude")String latitude,
+            @Field("contact")String[] contact
     );
 
 }
