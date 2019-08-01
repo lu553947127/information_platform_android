@@ -2,6 +2,7 @@ package com.shuangduan.zcy.adapter;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.EditText;
 
 import androidx.annotation.Nullable;
@@ -23,7 +24,7 @@ import java.util.List;
  * @chang time
  * @class describe
  */
-public class ReleaseContactAdapter extends BaseQuickAdapter<ContactBean, BaseViewHolder> {
+public abstract class ReleaseContactAdapter extends BaseQuickAdapter<ContactBean, BaseViewHolder> {
     public ReleaseContactAdapter(int layoutResId, @Nullable List<ContactBean> data) {
         super(layoutResId, data);
     }
@@ -37,6 +38,14 @@ public class ReleaseContactAdapter extends BaseQuickAdapter<ContactBean, BaseVie
                 .setText(R.id.tv_address, item.getAddress());
 
         EditText edtUnit = helper.getView(R.id.edt_unit);
+        edtUnit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus){
+                    unitChange(edtUnit.getText().toString(), helper.getLayoutPosition());
+                }
+            }
+        });
         edtUnit.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -51,10 +60,19 @@ public class ReleaseContactAdapter extends BaseQuickAdapter<ContactBean, BaseVie
             @Override
             public void afterTextChanged(Editable s) {
 
+
             }
         });
 
         EditText edtPrinciple = helper.getView(R.id.edt_principle);
+        edtPrinciple.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus){
+                    unitChange(edtPrinciple.getText().toString(), helper.getLayoutPosition());
+                }
+            }
+        });
         edtPrinciple.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -68,8 +86,42 @@ public class ReleaseContactAdapter extends BaseQuickAdapter<ContactBean, BaseVie
 
             @Override
             public void afterTextChanged(Editable s) {
-
+                principleChange(s.toString(), helper.getLayoutPosition());
             }
         });
+        EditText edtMobile = helper.getView(R.id.edt_mobile);
+        edtMobile.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus){
+                    unitChange(edtMobile.getText().toString(), helper.getLayoutPosition());
+                }
+            }
+        });
+        edtMobile.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                mobileChange(s.toString(), helper.getLayoutPosition());
+            }
+        });
+    }
+
+    public abstract void unitChange(String text, int position);
+    public abstract void principleChange(String text, int position);
+    public abstract void mobileChange(String text, int position);
+
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 }

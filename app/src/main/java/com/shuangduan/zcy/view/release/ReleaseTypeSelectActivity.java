@@ -5,6 +5,7 @@ import android.view.View;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -106,11 +107,6 @@ public class ReleaseTypeSelectActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_bar_right:
-                int[] result = typesVm.getResult();
-                if (result.length == 0){
-                    ToastUtils.showShort(getString(R.string.select_types_correct));
-                    return;
-                }
                 String province = "";
                 String city = "";
                 int cityId = 0;
@@ -119,20 +115,21 @@ public class ReleaseTypeSelectActivity extends BaseActivity {
                 for (TypeBean bean : types) {
                     if (bean.isSelect == 1){
                         province = bean.getCatname();
+                        List<TypeBean> citys = typesVm.typeSecondLiveData.getValue();
+                        assert citys != null;
+                        for (int i = 0; i < citys.size(); i++) {
+                            if (citys.get(i).getIsSelect() == 1) {
+                                city = citys.get(i).getCatname();
+                                cityId = citys.get(i).getId();
+                                EventBus.getDefault().post(new TypesEvent(province + city, cityId));
+                                finish();
+                                return;
+                            }
+                        }
                         break;
                     }
                 }
-                List<TypeBean> citys = typesVm.typeSecondLiveData.getValue();
-                assert citys != null;
-                for (TypeBean bean: citys) {
-                    if (bean.getIsSelect() == 1){
-                        city = bean.getCatname();
-                        cityId = bean.getId();
-                        break;
-                    }
-                }
-                EventBus.getDefault().post(new TypesEvent(province + city, cityId));
-                finish();
+                ToastUtils.showShort(getString(R.string.select_types_correct));
                 break;
         }
     }

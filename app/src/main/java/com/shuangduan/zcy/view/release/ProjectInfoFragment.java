@@ -2,11 +2,14 @@ package com.shuangduan.zcy.view.release;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ProjectMineAdapter;
 import com.shuangduan.zcy.base.BaseLazyFragment;
@@ -57,23 +60,44 @@ public class ProjectInfoFragment extends BaseLazyFragment {
         rv.setLayoutManager(new LinearLayoutManager(mContext));
         rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
         ProjectMineAdapter adapter = new ProjectMineAdapter(R.layout.item_mine_project, null);
+        adapter.setEmptyView(R.layout.layout_loading, rv);
         rv.setAdapter(adapter);
 
         mineReleaseVm = ViewModelProviders.of(this).get(MineReleaseVm.class);
         mineReleaseVm.myProject();
         mineReleaseVm.projectLiveData.observe(this, projectMineBean -> {
-
+            if (projectMineBean.getPage() == 1) {
+                adapter.setNewData(projectMineBean.getList());
+                adapter.setEmptyView(R.layout.layout_empty, rv);
+            }else {
+                adapter.addData(projectMineBean.getList());
+            }
+            setNoMore(projectMineBean.getPage(), projectMineBean.getCount());
         });
         mineReleaseVm.pageStateLiveData.observe(this, s -> {
             switch (s){
                 case PageState.PAGE_LOADING:
-                    showLoading();
+                    break;
+                case PageState.PAGE_REFRESH:
                     break;
                     default:
                         refresh.finishRefresh();
                         refresh.finishLoadMore();
-                        hideLoading();
+
                         break;
+            }
+        });
+
+        refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                mineReleaseVm.projectPage++;
+                mineReleaseVm.refreshMyProject();
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                mineReleaseVm.myProject();
             }
         });
     }
@@ -81,5 +105,9 @@ public class ProjectInfoFragment extends BaseLazyFragment {
     @Override
     protected void initDataFromService() {
 
+    }
+
+    private void setNoMore(int page, int count){
+        refresh.setNoMoreData(page * 10 >= count);
     }
 }

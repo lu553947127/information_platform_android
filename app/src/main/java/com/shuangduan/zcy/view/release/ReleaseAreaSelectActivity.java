@@ -119,47 +119,43 @@ public class ReleaseAreaSelectActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_bar_right:
-                int[] result = areaVm.getResult();
-                if (result.length == 0){
-                    ToastUtils.showShort(getString(R.string.select_city_correct));
-                    return;
-                }
                 String province = "";
                 int provinceId = 0;
                 String city = "";
                 int cityId = 0;
-                List<ProvinceBean> provinces = areaVm.provinceLiveData.getValue();
-                assert provinces != null;
-                for (ProvinceBean bean : provinces) {
+                List<ProvinceBean> types = areaVm.provinceLiveData.getValue();
+                assert types != null;
+                for (ProvinceBean bean : types) {
                     if (bean.isSelect == 1){
                         province = bean.getName();
                         provinceId = bean.getId();
+                        List<CityBean> citys = areaVm.cityLiveData.getValue();
+                        assert citys != null;
+                        for (int i = 0; i < citys.size(); i++) {
+                            if (citys.get(i).getIsSelect() == 1) {
+                                city = citys.get(i).getName();
+                                cityId = citys.get(i).getId();
+                                switch (getIntent().getIntExtra(CustomConfig.PROJECT_ADDRESS, 0)){
+                                    case 0:
+                                        EventBus.getDefault().post(new AddressEvent(province, city, provinceId, cityId));
+                                        finish();
+                                        break;
+                                    case 1:
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString(CustomConfig.PROVINCE_NAME, province);
+                                        bundle.putInt(CustomConfig.PROVINCE_ID, provinceId);
+                                        bundle.putString(CustomConfig.CITY_NAME, city);
+                                        bundle.putInt(CustomConfig.CITY_ID, cityId);
+                                        ActivityUtils.startActivity(bundle, LocationMapActivity.class);
+                                        break;
+                                }
+                                return;
+                            }
+                        }
                         break;
                     }
                 }
-                List<CityBean> citys = areaVm.cityLiveData.getValue();
-                assert citys != null;
-                for (CityBean bean: citys) {
-                    if (bean.getIsSelect() == 1){
-                        city = bean.getName();
-                        cityId = bean.getId();
-                        break;
-                    }
-                }
-                switch (getIntent().getIntExtra(CustomConfig.PROJECT_ADDRESS, 0)){
-                    case 0:
-                        EventBus.getDefault().post(new AddressEvent(province, city, provinceId, cityId));
-                        finish();
-                        break;
-                    case 1:
-                        Bundle bundle = new Bundle();
-                        bundle.putString(CustomConfig.PROVINCE_NAME, province);
-                        bundle.putInt(CustomConfig.PROVINCE_ID, provinceId);
-                        bundle.putString(CustomConfig.CITY_NAME, city);
-                        bundle.putInt(CustomConfig.CITY_ID, cityId);
-                        ActivityUtils.startActivity(bundle, LocationMapActivity.class);
-                        break;
-                }
+                ToastUtils.showShort(getString(R.string.select_city_correct));
                 break;
         }
     }

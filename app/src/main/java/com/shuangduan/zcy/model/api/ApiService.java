@@ -1,9 +1,13 @@
 package com.shuangduan.zcy.model.api;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.shuangduan.zcy.model.bean.BaseListResponse;
 import com.shuangduan.zcy.model.bean.BaseObjResponse;
 import com.shuangduan.zcy.model.bean.CityBean;
 import com.shuangduan.zcy.model.bean.ConsumeBean;
+import com.shuangduan.zcy.model.bean.ContactBean;
+import com.shuangduan.zcy.model.bean.ContactListBean;
 import com.shuangduan.zcy.model.bean.ContactTypeBean;
 import com.shuangduan.zcy.model.bean.LocusMineBean;
 import com.shuangduan.zcy.model.bean.LoginBean;
@@ -24,10 +28,14 @@ import com.shuangduan.zcy.model.bean.TypeBean;
 import com.shuangduan.zcy.model.bean.UploadBean;
 import com.shuangduan.zcy.model.bean.UserInfoBean;
 
+import java.util.List;
+
 import io.reactivex.Flowable;
 import okhttp3.MultipartBody;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -345,24 +353,36 @@ public interface ApiService {
             @Field("user_id")int user_id
     );
 
-    @FormUrlEncoded
     @POST("api/Project/addProject")
     Flowable<BaseObjResponse> addProject(
-            @Field("user_id")int user_id,
-            @Field("title")String title,
-            @Field("province")int province,
-            @Field("city")int city,
-            @Field("phases")int phases,
-            @Field("type")int type,
-            @Field("start_time")String start_time,
-            @Field("end_time")String end_time,
-            @Field("acreage")String acreage,
-            @Field("valuation")String valuation,
-            @Field("intro")String intro,
-            @Field("materials")String materials,
-            @Field("longitude")String longitude,
-            @Field("latitude")String latitude,
-            @Field("contact")String[] contact
+            @Query("user_id") int user_id,
+            @Query("title")String title,
+            @Query("company")String company,
+            @Query("province")int province,
+            @Query("city")int city,
+            @Query("phases")int phases,
+            @Query("type")int type,
+            @Query("start_time")String start_time,
+            @Query("end_time")String end_time,
+            @Query("acreage")String acreage,
+            @Query("valuation")String valuation,
+            @Query("intro")String intro,
+            @Query("materials")String materials,
+            @Query("longitude")String longitude,
+            @Query("latitude")String latitude,
+            @Body ContactListBean contact
+    );
+
+    @FormUrlEncoded
+    @POST("api/Project/addTrack")
+    Flowable<BaseObjResponse> addTrack(
+            @Field("user_id") int user_id,
+            @Field("id")int id,
+            @Field("remarks")String remarks,
+            @Field("name")String name,
+            @Field("tel")String tel,
+            @Field("update_time")String update_time,
+            @Field("image_id")int[] image_id
     );
 
 }

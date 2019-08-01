@@ -31,12 +31,14 @@ import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.PhotoDialog;
 import com.shuangduan.zcy.dialog.pop.CommonPopupWindow;
+import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.ContactBean;
 import com.shuangduan.zcy.model.event.AddressEvent;
 import com.shuangduan.zcy.model.event.ContactTypeEvent;
 import com.shuangduan.zcy.model.event.LocationEvent;
 import com.shuangduan.zcy.model.event.StageEvent;
 import com.shuangduan.zcy.model.event.TypesEvent;
+import com.shuangduan.zcy.utils.AndroidBug5497Workaround;
 import com.shuangduan.zcy.utils.matisse.Glide4Engine;
 import com.shuangduan.zcy.utils.matisse.MatisseCamera;
 import com.shuangduan.zcy.view.PhotoViewActivity;
@@ -53,6 +55,7 @@ import com.zhihu.matisse.internal.entity.CaptureStrategy;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.File;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -143,6 +146,12 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
     RecyclerView rvContact;
     @BindView(R.id.tv_add)
     TextView tvAdd;
+    @BindView(R.id.fl_add)
+    FrameLayout flAdd;
+    @BindView(R.id.fl_project_company)
+    FrameLayout flProjectCompany;
+    @BindView(R.id.edt_project_company)
+    EditText edtProjectCompany;
     private PermissionVm permissionVm;
     private RxPermissions rxPermissions;
     private ReleaseVm releaseVm;
@@ -156,6 +165,7 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
+        AndroidBug5497Workaround.assistActivity(findViewById(android.R.id.content));
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.release_msg));
 
@@ -169,8 +179,34 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
                 rvContact.setLayoutManager(new LinearLayoutManager(this));
                 rvContact.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_10_10));
                 releaseContactAdapter = new ReleaseContactAdapter(R.layout.item_release_contact, contactBeans){
+                    @Override
+                    public void unitChange(String text, int position) {
+                        List<ContactBean> list = releaseVm.contactLiveData.getValue();
+                        if (list != null){
+                            list.get(position).setCompany(text);
+                            releaseVm.contactLiveData.postValue(list);
+                        }
+                    }
 
+                    @Override
+                    public void principleChange(String text, int position) {
+                        List<ContactBean> list = releaseVm.contactLiveData.getValue();
+                        if (list != null){
+                            list.get(position).setName(text);
+                            releaseVm.contactLiveData.postValue(list);
+                        }
+                    }
+
+                    @Override
+                    public void mobileChange(String text, int position) {
+                        List<ContactBean> list = releaseVm.contactLiveData.getValue();
+                        if (list != null){
+                            list.get(position).setTel(text);
+                            releaseVm.contactLiveData.postValue(list);
+                        }
+                    }
                 };
+                releaseContactAdapter.setHasStableIds(true);
                 rvContact.setAdapter(releaseContactAdapter);
                 releaseContactAdapter.setOnItemChildClickListener((adapter, view, position) -> {
                     switch (view.getId()){
@@ -191,6 +227,18 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
                 });
             }else {
                 releaseContactAdapter.setNewData(contactBeans);
+            }
+        });
+
+        releaseVm.releaseProjectLiveData.observe(this, o -> finish());
+        releaseVm.pageStateLiveData.observe(this, s -> {
+            switch (s){
+                case PageState.PAGE_LOADING:
+                    showLoading();
+                    break;
+                    default:
+                        hideLoading();
+                        break;
             }
         });
     }
@@ -316,7 +364,9 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
                                 flProjectDetail.setVisibility(View.VISIBLE);
                                 flProjectMaterial.setVisibility(View.VISIBLE);
                                 rvContact.setVisibility(View.VISIBLE);
-                                tvAdd.setVisibility(View.VISIBLE);
+                                flAdd.setVisibility(View.VISIBLE);
+                                flProjectCompany.setVisibility(View.VISIBLE);
+                                flProjectAddress.setVisibility(View.VISIBLE);
                                 flProjectNameSelect.setVisibility(View.GONE);
                                 flProjectSchedule.setVisibility(View.GONE);
                                 flVisitor.setVisibility(View.GONE);
@@ -339,12 +389,14 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
                                 flProjectDetail.setVisibility(View.GONE);
                                 flProjectMaterial.setVisibility(View.GONE);
                                 rvContact.setVisibility(View.GONE);
-                                tvAdd.setVisibility(View.GONE);
+                                flAdd.setVisibility(View.GONE);
+                                flProjectCompany.setVisibility(View.GONE);
+                                flProjectAddress.setVisibility(View.GONE);
                                 flProjectNameSelect.setVisibility(View.VISIBLE);
                                 flProjectSchedule.setVisibility(View.VISIBLE);
                                 flVisitor.setVisibility(View.VISIBLE);
                                 flMobile.setVisibility(View.VISIBLE);
-                                flUpdateTime.setVisibility(View.VISIBLE);
+                                flUpdateTime.setVisibility(View.GONE);
                                 rlPhoto.setVisibility(View.VISIBLE);
                                 picContentView.setVisibility(View.VISIBLE);
                                 tvProjectType.setText(getString(R.string.project_locus));
@@ -377,7 +429,16 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
                 releaseVm.addContact();
                 break;
             case R.id.tv_release:
-                releaseVm.releaseProject(edtProjectName.getText().toString(), edtProjectAcreage.getText().toString(), edtProjectPrice.getText().toString(), edtProjectDetail.getText().toString(), edtProjectMaterial.getText().toString());
+                if (releaseVm.type == 1) {
+                    releaseVm.releaseProject(edtProjectName.getText().toString(), edtProjectCompany.getText().toString(), edtProjectAcreage.getText().toString(), edtProjectPrice.getText().toString(), edtProjectDetail.getText().toString(), edtProjectMaterial.getText().toString());
+                }else if (releaseVm.type == 2){
+                    List<PicContentView.PicContentBean> list = picContentView.getList();
+                    for (PicContentView.PicContentBean bean :
+                            list) {
+                        bean.getId();
+                    }
+                    releaseVm.releaseLocus(edtProjectSchedule.getText().toString(), edtVisitor.getText().toString(), edtMobile.getText().toString());
+                }
                 break;
         }
     }
@@ -399,6 +460,9 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
     public void locationEvent(LocationEvent event){
         releaseVm.province = event.getProvinceId();
         releaseVm.city = event.getCityId();
+        DecimalFormat df = new DecimalFormat("#.000000");
+        releaseVm.longitude = df.format(event.getLongitude());
+        releaseVm.latitude = df.format(event.getLatitude());
         tvProjectAddress.setText(event.getProvince() + event.getCity());
     }
 
@@ -419,7 +483,7 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
         List<ContactBean> list = releaseVm.contactLiveData.getValue();
         if (list != null){
             list.get(releaseVm.editContactTypePos).setType(event.getBean());
-            list.get(releaseVm.editContactTypePos).setPhone_type(event.getBean().getType_name());
+            list.get(releaseVm.editContactTypePos).setPhone_type(String.valueOf(event.getBean().getId()));
             releaseVm.contactLiveData.postValue(list);
         }
     }

@@ -19,15 +19,15 @@ import java.util.List;
  * @chang time
  * @class describe
  */
-public class ProjectMineAdapter extends BaseQuickAdapter<ProjectMineBean, BaseViewHolder> {
-    public ProjectMineAdapter(int layoutResId, @Nullable List<ProjectMineBean> data) {
+public class ProjectMineAdapter extends BaseQuickAdapter<ProjectMineBean.ListBean, BaseViewHolder> {
+    public ProjectMineAdapter(int layoutResId, @Nullable List<ProjectMineBean.ListBean> data) {
         super(layoutResId, data);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, ProjectMineBean item) {
-        helper.setText(R.id.tv_title, "山东省济南市莱芜区影城电子信息产业园一期")
-                .setText(R.id.tv_content, "项目简介项目简介项目简介项目简介项目简介项目简介")
-                .setText(R.id.tv_time, "2019-06-20");
+    protected void convert(BaseViewHolder helper, ProjectMineBean.ListBean item) {
+        helper.setText(R.id.tv_title, item.getTitle())
+                .setText(R.id.tv_content, item.getIntro())
+                .setText(R.id.tv_time, item.getCreate_time());
     }
 }
