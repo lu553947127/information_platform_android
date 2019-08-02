@@ -1,5 +1,6 @@
 package com.shuangduan.zcy.view.release;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
@@ -36,6 +37,7 @@ import com.shuangduan.zcy.model.bean.ContactBean;
 import com.shuangduan.zcy.model.event.AddressEvent;
 import com.shuangduan.zcy.model.event.ContactTypeEvent;
 import com.shuangduan.zcy.model.event.LocationEvent;
+import com.shuangduan.zcy.model.event.ProjectNameEvent;
 import com.shuangduan.zcy.model.event.StageEvent;
 import com.shuangduan.zcy.model.event.TypesEvent;
 import com.shuangduan.zcy.utils.AndroidBug5497Workaround;
@@ -44,6 +46,7 @@ import com.shuangduan.zcy.utils.matisse.MatisseCamera;
 import com.shuangduan.zcy.view.PhotoViewActivity;
 import com.shuangduan.zcy.vm.PermissionVm;
 import com.shuangduan.zcy.vm.ReleaseVm;
+import com.shuangduan.zcy.vm.UploadPhotoVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 import com.shuangduan.zcy.weight.PicContentView;
 import com.shuangduan.zcy.weight.datepicker.CustomDatePicker;
@@ -157,6 +160,7 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
     private ReleaseVm releaseVm;
     private CommonPopupWindow popupWindow;
     private ReleaseContactAdapter releaseContactAdapter;
+    private UploadPhotoVm uploadPhotoVm;
 
     @Override
     protected int initLayoutRes() {
@@ -231,6 +235,7 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
         });
 
         releaseVm.releaseProjectLiveData.observe(this, o -> finish());
+        releaseVm.releaseLocusLiveData.observe(this, o -> finish());
         releaseVm.pageStateLiveData.observe(this, s -> {
             switch (s){
                 case PageState.PAGE_LOADING:
@@ -279,6 +284,11 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
                 }
 
             }
+
+            @Override
+            public void delete(int pos) {
+                releaseVm.delImage(pos);
+            }
         });
     }
 
@@ -304,6 +314,20 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
                         .forResult(PermissionVm.REQUEST_CODE_CHOOSE_HEAD);
             }
         });
+        uploadPhotoVm = ViewModelProviders.of(this).get(UploadPhotoVm.class);
+        uploadPhotoVm.uploadLiveData.observe(this, uploadBean -> {
+            releaseVm.addImage(uploadBean.getImage_id());
+        });
+        uploadPhotoVm.mPageStateLiveData.observe(this, s -> {
+            switch (s){
+                case PageState.PAGE_LOADING:
+                    showLoading();
+                    break;
+                    default:
+                        hideLoading();
+                        break;
+            }
+        });
     }
 
     @Override
@@ -319,6 +343,7 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
                 list.add(new PicContentView.PicContentBean(image, null, 0));
             }
             picContentView.insert(list);
+            uploadPhotoVm.upload(Matisse.obtainPathResult(data).get(0));
         }
 
         if (requestCode == PermissionVm.REQUEST_CODE_HEAD && resultCode == RESULT_OK) {
@@ -326,6 +351,7 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
             List<PicContentView.PicContentBean> list = new ArrayList<>();
             list.add(new PicContentView.PicContentBean(Uri.fromFile(new File(MatisseCamera.obtainPathResult())), null, 0));
             picContentView.insert(list);
+            uploadPhotoVm.upload(MatisseCamera.obtainPathResult());
         }
     }
 
@@ -339,7 +365,7 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
         permissionVm.getPermissionAlbum(rxPermissions);
     }
 
-    @OnClick({R.id.iv_bar_back, R.id.tv_release, R.id.tv_project_type, R.id.tv_project_address, R.id.tv_project_stage, R.id.tv_project_types, R.id.tv_time_start, R.id.tv_time_end, R.id.tv_add})
+    @OnClick({R.id.iv_bar_back, R.id.tv_release, R.id.tv_project_type, R.id.tv_project_address, R.id.tv_project_stage, R.id.tv_project_types, R.id.tv_time_start, R.id.tv_time_end, R.id.tv_add, R.id.tv_project_name})
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_bar_back:
@@ -428,15 +454,13 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
             case R.id.tv_add:
                 releaseVm.addContact();
                 break;
+            case R.id.tv_project_name:
+                ActivityUtils.startActivity(ProjectSearchActivity.class);
+                break;
             case R.id.tv_release:
                 if (releaseVm.type == 1) {
                     releaseVm.releaseProject(edtProjectName.getText().toString(), edtProjectCompany.getText().toString(), edtProjectAcreage.getText().toString(), edtProjectPrice.getText().toString(), edtProjectDetail.getText().toString(), edtProjectMaterial.getText().toString());
                 }else if (releaseVm.type == 2){
-                    List<PicContentView.PicContentBean> list = picContentView.getList();
-                    for (PicContentView.PicContentBean bean :
-                            list) {
-                        bean.getId();
-                    }
                     releaseVm.releaseLocus(edtProjectSchedule.getText().toString(), edtVisitor.getText().toString(), edtMobile.getText().toString());
                 }
                 break;
@@ -497,5 +521,11 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
             list.get(releaseVm.editContactTypePos).setCity(event.getCityId());
             releaseVm.contactLiveData.postValue(list);
         }
+    }
+
+    @Subscribe()
+    public void projectNameEvent(ProjectNameEvent event){
+        tvProjectName.setText(event.getName());
+        releaseVm.projectId = event.getId();
     }
 }

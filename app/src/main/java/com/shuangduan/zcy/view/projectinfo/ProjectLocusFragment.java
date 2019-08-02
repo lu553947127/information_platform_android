@@ -12,22 +12,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ActivityUtils;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.LocusAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
-import com.shuangduan.zcy.base.BaseFragment;
 import com.shuangduan.zcy.base.BaseLazyFragment;
 import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.CustomDialog;
-import com.shuangduan.zcy.model.bean.LocusBean;
 import com.shuangduan.zcy.model.bean.TrackBean;
 import com.shuangduan.zcy.view.PayActivity;
 import com.shuangduan.zcy.view.PhotoViewActivity;
 import com.shuangduan.zcy.vm.ProjectDetailVm;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -121,7 +117,6 @@ public class ProjectLocusFragment extends BaseLazyFragment {
     protected void initDataFromService() {
         projectDetailVm.getTrack();
         projectDetailVm.trackLiveData.observe(this, trackBean -> {
-            projectDetailVm.pageTrack = trackBean.getPage();
             setEmpty();
             locusAdapter.setNewData(trackBean.getList());
             isInited = true;

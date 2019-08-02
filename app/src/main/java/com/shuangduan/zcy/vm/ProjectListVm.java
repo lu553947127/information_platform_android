@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseViewModel;
+import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.api.repository.ProjectRepository;
 import com.shuangduan.zcy.model.bean.ProjectInfoBean;
 
@@ -44,6 +45,14 @@ public class ProjectListVm extends BaseViewModel {
     }
 
     public void projectList(){
+        page = 1;
+        pageStateLiveData.postValue(PageState.PAGE_REFRESH);
+        new ProjectRepository().projectList(projectLiveData, pageStateLiveData, userId, province, city, phases, type, stime, etime, warrant_status, page);
+    }
+
+    public void refreshProjectList(){
+        page++;
+        pageStateLiveData.postValue(PageState.PAGE_REFRESH);
         new ProjectRepository().projectList(projectLiveData, pageStateLiveData, userId, province, city, phases, type, stime, etime, warrant_status, page);
     }
 }

@@ -63,8 +63,8 @@ public class ProjectDetailBean {
         private String title;
         private String province;
         private String city;
-        private String longitude;
-        private String latitude;
+        private double longitude;
+        private double latitude;
         private String update_time;
         private String phases;
         private String type;
@@ -103,19 +103,19 @@ public class ProjectDetailBean {
             this.city = city;
         }
 
-        public String getLongitude() {
+        public double getLongitude() {
             return longitude;
         }
 
-        public void setLongitude(String longitude) {
+        public void setLongitude(double longitude) {
             this.longitude = longitude;
         }
 
-        public String getLatitude() {
+        public double getLatitude() {
             return latitude;
         }
 
-        public void setLatitude(String latitude) {
+        public void setLatitude(double latitude) {
             this.latitude = latitude;
         }
 

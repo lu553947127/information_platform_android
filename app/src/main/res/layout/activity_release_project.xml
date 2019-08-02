@@ -622,6 +622,8 @@
                     android:layout_marginLeft="87dp"
                     android:background="@null"
                     android:singleLine="true"
+                    android:inputType="phone"
+                    android:maxLength="11"
                     android:textColorHint="@color/colorTvHint"
                     android:textColor="@color/colorTv"
                     android:textSize="14sp"
@@ -703,11 +705,12 @@
             <com.shuangduan.zcy.weight.PicContentView
                 android:id="@+id/pic_content"
                 android:visibility="gone"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/colorFFF"
                 android:overScrollMode="never"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="@dimen/dp_10">
+                android:paddingLeft="15dp"
+                android:paddingTop="@dimen/dp_10">
 
             </com.shuangduan.zcy.weight.PicContentView>
 

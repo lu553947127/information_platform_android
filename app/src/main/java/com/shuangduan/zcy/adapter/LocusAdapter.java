@@ -25,6 +25,7 @@ import com.shuangduan.zcy.utils.image.ImageConfig;
 import com.shuangduan.zcy.utils.image.ImageLoader;
 import com.shuangduan.zcy.view.PhotoViewActivity;
 import com.shuangduan.zcy.view.release.ReleaseProjectActivity;
+import com.shuangduan.zcy.weight.CircleImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,12 +48,12 @@ public abstract class LocusAdapter extends BaseQuickAdapter<TrackBean.ListBean, 
     @Override
     protected void convert(BaseViewHolder helper, TrackBean.ListBean item) {
         helper.setText(R.id.tv_time, item.getCreate_time())
-                .setGone(R.id.view_line, helper.getAdapterPosition() != getData().size() - 1)
-                .setImageResource(R.id.iv_mark, helper.getLayoutPosition() == getData().size() - 1?R.drawable.locus_marker_first:R.drawable.locus_marker_normal)
-                .setVisible(R.id.iv_pic_first, item.getImage() != null && item.getImage().size() >= 1)
-                .setVisible(R.id.iv_pic_second, item.getImage() != null && item.getImage().size() >= 2)
-                .setVisible(R.id.iv_pic_third, item.getImage() != null && item.getImage().size() >= 3)
-                .setVisible(R.id.tv_more, item.getImage() != null && item.getImage().size() >= 4)
+                .setGone(R.id.view_line_top, helper.getAdapterPosition() != 0)
+                .setGone(R.id.view_line_bottom, helper.getAdapterPosition() != getData().size() - 1)
+                .setGone(R.id.iv_pic_first, item.getImage() != null && item.getImage().size() >= 1)
+                .setGone(R.id.iv_pic_second, item.getImage() != null && item.getImage().size() >= 2)
+                .setGone(R.id.iv_pic_third, item.getImage() != null && item.getImage().size() >= 3)
+                .setGone(R.id.tv_more, item.getImage() != null && item.getImage().size() >= 4)
                 .addOnClickListener(R.id.iv_pic_first)
                 .addOnClickListener(R.id.iv_pic_second)
                 .addOnClickListener(R.id.iv_pic_third)
@@ -78,7 +79,7 @@ public abstract class LocusAdapter extends BaseQuickAdapter<TrackBean.ListBean, 
                         .append(item.getTel());
             }
             spanUtils.appendSpace(2)
-                    .appendLine(mContext.getString(R.string.read_detail))
+                    .append(mContext.getString(R.string.read_detail))
                     .setFontSize(ConvertUtils.sp2px(13))
                     .setForegroundColor(mContext.getResources().getColor(R.color.colorPrimary))
                     .setClickSpan(new ClickableSpan() {
@@ -108,6 +109,14 @@ public abstract class LocusAdapter extends BaseQuickAdapter<TrackBean.ListBean, 
                 ImageLoader.load(mContext, new ImageConfig.Builder().url(item.getImage().get(2).getThumbnail()).placeholder(R.drawable.default_pic).errorPic(R.drawable.default_pic).imageView(ivFirst).build());
             }
         }
+
+        CircleImageView ivHead = helper.getView(R.id.iv_mark);
+        ImageLoader.load(mContext, new ImageConfig.Builder()
+                .url(item.getAvatar())
+                .placeholder(R.drawable.default_head)
+                .errorPic(R.drawable.default_head)
+                .imageView(ivHead)
+                .build());
 
     }
 

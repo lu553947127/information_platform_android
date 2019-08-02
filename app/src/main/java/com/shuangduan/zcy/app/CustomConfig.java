@@ -38,6 +38,7 @@ public class CustomConfig {
     public static final String PROVINCE_ID = "province_id";
     public static final String CITY_ID = "city_id";
     public static final String PROJECT_ADDRESS = "project_address";
+    public static final String LOCATION = "location";
 
     public static final String SMS_TYPE = "sms_type";
     public static final int SMS_REGISTER = 1;//注册

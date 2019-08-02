@@ -1,20 +1,26 @@
 package com.shuangduan.zcy.view.release;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.ActivityUtils;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ProjectMineAdapter;
+import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseLazyFragment;
 import com.shuangduan.zcy.model.api.PageState;
+import com.shuangduan.zcy.model.bean.ProjectInfoBean;
 import com.shuangduan.zcy.model.bean.ProjectMineBean;
+import com.shuangduan.zcy.view.projectinfo.ProjectDetailActivity;
 import com.shuangduan.zcy.vm.MineReleaseVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
@@ -62,6 +68,16 @@ public class ProjectInfoFragment extends BaseLazyFragment {
         ProjectMineAdapter adapter = new ProjectMineAdapter(R.layout.item_mine_project, null);
         adapter.setEmptyView(R.layout.layout_loading, rv);
         rv.setAdapter(adapter);
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter helper, View view, int position) {
+                ProjectMineBean.ListBean listBean = adapter.getData().get(position);
+                Bundle bundle = new Bundle();
+                bundle.putInt(CustomConfig.PROJECT_ID, listBean.getId());
+                bundle.putInt(CustomConfig.LOCATION, 1);
+                ActivityUtils.startActivity(bundle, ProjectDetailActivity.class);
+            }
+        });
 
         mineReleaseVm = ViewModelProviders.of(this).get(MineReleaseVm.class);
         mineReleaseVm.myProject();

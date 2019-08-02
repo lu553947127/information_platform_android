@@ -16,6 +16,7 @@ import com.shuangduan.zcy.model.bean.PayInfoBean;
 import com.shuangduan.zcy.model.bean.ProjectDetailBean;
 import com.shuangduan.zcy.model.bean.ProjectInfoBean;
 import com.shuangduan.zcy.model.bean.ProjectMineBean;
+import com.shuangduan.zcy.model.bean.ProjectSearchBean;
 import com.shuangduan.zcy.model.bean.ProvinceBean;
 import com.shuangduan.zcy.model.bean.ReSetPwdBean;
 import com.shuangduan.zcy.model.bean.RegisterBean;
@@ -290,7 +291,7 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("api/Project/viewTrack")
-    Flowable<BaseListResponse<TrackBean.ListBean>> getViewTrack(
+    Flowable<BaseObjResponse<TrackBean>> getViewTrack(
             @Field("user_id")int user_id,
             @Field("id")int id
     );
@@ -383,6 +384,14 @@ public interface ApiService {
             @Field("tel")String tel,
             @Field("update_time")String update_time,
             @Field("image_id")int[] image_id
+    );
+
+    @FormUrlEncoded
+    @POST("api/Project/keywordTitle")
+    Flowable<BaseObjResponse<ProjectSearchBean>> keywordTitle(
+            @Field("user_id") int user_id,
+            @Field("keyword")String keyword,
+            @Field("page") int page
     );
 
 }

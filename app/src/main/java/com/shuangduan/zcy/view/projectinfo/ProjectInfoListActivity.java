@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
@@ -21,6 +22,8 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.TimeUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ProjectInfoAdapter;
 import com.shuangduan.zcy.adapter.SelectorFirstAdapter;
@@ -116,16 +119,23 @@ public class ProjectInfoListActivity extends BaseActivity {
         projectInfoAdapter = new ProjectInfoAdapter(R.layout.item_project_info, null);
         rv.setAdapter(projectInfoAdapter);
         projectInfoAdapter.setOnItemClickListener((adapter, view, position) -> {
-            ProjectInfoBean.ListBean bean = projectListVm.projectLiveData.getValue().getList().get(position);
+            ProjectInfoBean.ListBean bean = projectInfoAdapter.getData().get(position);
             Bundle bundle = new Bundle();
             bundle.putInt(CustomConfig.PROJECT_ID, bean.getId());
+            bundle.putInt(CustomConfig.LOCATION, 0);
             ActivityUtils.startActivity(bundle, ProjectDetailActivity.class);
         });
 
-        refresh.setEnableRefresh(false);
-        refresh.setOnLoadMoreListener(refreshLayout -> {
-            projectListVm.page++;
-            projectListVm.projectList();
+        refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                projectListVm.refreshProjectList();
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                projectListVm.projectList();
+            }
         });
 
         projectListVm.init();
@@ -137,6 +147,19 @@ public class ProjectInfoListActivity extends BaseActivity {
             }else if (projectListVm.page > 1){
                 //加载更多的数据
                 projectInfoAdapter.addData(projectInfoBeans.getList());
+            }
+        });
+        projectListVm.pageStateLiveData.observe(this, s -> {
+            switch (s){
+                case PageState.PAGE_LOADING:
+                    break;
+                case PageState.PAGE_REFRESH:
+
+                    break;
+                    default:
+                        refresh.finishRefresh();
+                        refresh.finishLoadMore();
+                        break;
             }
         });
     }

@@ -19,6 +19,7 @@ import com.shuangduan.zcy.model.bean.ContactTypeBean;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import okhttp3.MediaType;
@@ -171,19 +172,26 @@ public class ReleaseVm extends BaseViewModel {
 
     public void releaseLocus(String remarks, String name, String tel){
         if (projectId == 0){
-            ToastUtils.showShort("请输入项目用材");
+            ToastUtils.showShort("请选择项目名称");
             return;
         }if (StringUtils.isTrimEmpty(remarks)){
-            ToastUtils.showShort("请输入项目面积");
+            ToastUtils.showShort("请输入项目进度");
             return;
         }if (StringUtils.isTrimEmpty(name)){
-            ToastUtils.showShort("请输入项目估价");
+            ToastUtils.showShort("请输入拜访人");
             return;
         }if (StringUtils.isTrimEmpty(tel)){
-            ToastUtils.showShort("请输入项目详情");
+            ToastUtils.showShort("请输入电话");
             return;
         }
         String updateTime = TimeUtils.getNowString(new SimpleDateFormat("yyyy-MM-dd"));
-        new ProjectRepository().addTrack(releaseLocusLiveData, pageStateLiveData, userId, projectId, remarks, name, tel, updateTime, null);
+        int[] imgs = null;
+        if (imageIds != null){
+            imgs = new int[imageIds.size()];
+            for (int i = 0; i < imageIds.size(); i++) {
+                imgs[i] = imageIds.get(i);
+            }
+        }
+        new ProjectRepository().addTrack(releaseLocusLiveData, pageStateLiveData, userId, projectId, remarks, name, tel, updateTime, imgs);
     }
 }

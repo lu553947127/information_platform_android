@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.amap.api.maps.model.LatLng;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -89,6 +90,7 @@ public class ProjectContentFragment extends BaseFragment {
             ProjectDetailBean.DetailBean detail = projectDetailBean.getDetail();
             projectDetailVm.titleLiveData.postValue(detail.getTitle());
             projectDetailVm.locationLiveData.postValue(detail.getProvince() + detail.getCity());
+            projectDetailVm.latitudeLiveData.postValue(new LatLng(detail.getLatitude(), detail.getLongitude()));
             projectDetailVm.introLiveData.postValue(detail.getIntro());
             projectDetailVm.materialLiveData.postValue(detail.getMaterials());
             projectDetailVm.collectionLiveData.postValue(projectDetailBean.getDetail().getCollection());

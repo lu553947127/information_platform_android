@@ -107,7 +107,6 @@ public class HomeFragment extends BaseFragment {
                     ActivityUtils.startActivity(ReleaseListActivity.class);
                     break;
                 case ClassifyBean.JJTT:
-                    ActivityUtils.startActivity(UserInfoInputActivity.class);
                     break;
             }
         });

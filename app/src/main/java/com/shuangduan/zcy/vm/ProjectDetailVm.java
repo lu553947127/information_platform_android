@@ -2,6 +2,7 @@ package com.shuangduan.zcy.vm;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.amap.api.maps.model.LatLng;
 import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseViewModel;
@@ -29,10 +30,11 @@ public class ProjectDetailVm extends BaseViewModel {
     public MutableLiveData<String> pageStateLiveData;
     public MutableLiveData<ProjectDetailBean> detailLiveData;
     public MutableLiveData<TrackBean> trackLiveData;
-    public MutableLiveData<List<TrackBean.ListBean>> viewTrackLiveData;
+    public MutableLiveData<TrackBean> viewTrackLiveData;
     public MutableLiveData<ConsumeBean> consumeLiveData;
     public MutableLiveData<String> titleLiveData;
     public MutableLiveData<String> locationLiveData;
+    public MutableLiveData<LatLng> latitudeLiveData;
     public MutableLiveData<String> introLiveData;
     public MutableLiveData<String> materialLiveData;
     public MutableLiveData<Integer> locusTypeLiveData;
@@ -54,6 +56,8 @@ public class ProjectDetailVm extends BaseViewModel {
             titleLiveData = new MutableLiveData<>();
         if (locationLiveData == null)
             locationLiveData = new MutableLiveData<>();
+        if (latitudeLiveData == null)
+            latitudeLiveData = new MutableLiveData<>();
         if (introLiveData == null)
             introLiveData = new MutableLiveData<>();
         if (materialLiveData == null)

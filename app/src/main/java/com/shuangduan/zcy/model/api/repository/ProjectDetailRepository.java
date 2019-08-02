@@ -37,8 +37,8 @@ public class ProjectDetailRepository extends BaseRepository {
     /**
      * 已查看轨迹
      */
-    public void getViewTrack(MutableLiveData<List<TrackBean.ListBean>> liveData, MutableLiveData<String> pageStateLiveData, int user_id, int id){
-        request(apiService.getViewTrack(user_id, id)).setDataList(liveData).setPageState(pageStateLiveData).send();
+    public void getViewTrack(MutableLiveData<TrackBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, int id){
+        request(apiService.getViewTrack(user_id, id)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
     /**

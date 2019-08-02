@@ -88,9 +88,9 @@ public class ProjectReadFragment extends BaseLazyFragment {
     @Override
     protected void initDataFromService() {
         projectDetailVm.getViewTrack();
-        projectDetailVm.viewTrackLiveData.observe(this, listBeans -> {
+        projectDetailVm.viewTrackLiveData.observe(this, trackBean -> {
             setEmpty();
-            locusAdapter.setNewData(listBeans);
+            locusAdapter.setNewData(trackBean.getList());
             isInited = true;
         });
     }

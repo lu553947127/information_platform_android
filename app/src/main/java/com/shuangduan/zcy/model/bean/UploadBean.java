@@ -11,15 +11,15 @@ package com.shuangduan.zcy.model.bean;
  * @class describe
  */
 public class UploadBean {
-    private String image_id;
+    private int image_id;
     private String source;
     private String thumbnail;
 
-    public String getImage_id() {
+    public int getImage_id() {
         return image_id;
     }
 
-    public void setImage_id(String image_id) {
+    public void setImage_id(int image_id) {
         this.image_id = image_id;
     }
 

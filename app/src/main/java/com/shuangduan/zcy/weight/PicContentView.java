@@ -190,6 +190,7 @@ public class PicContentView extends RecyclerView {
                 @Override
                 public void onClick(View v) {
                     int pos = holder.getLayoutPosition();
+                    listener.delete(pos);
                     deleteData(pos);
                 }
             });
@@ -221,6 +222,7 @@ public class PicContentView extends RecyclerView {
     public interface OnClickListener{
         void add();
         void see(View view, int position);
+        void delete(int pos);
     }
 
     public static class PicContentBean{

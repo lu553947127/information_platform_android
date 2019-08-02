@@ -1,8 +1,10 @@
 package com.shuangduan.zcy.view.projectinfo;
 
+import android.graphics.Point;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Interpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -16,10 +18,19 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
 import com.amap.api.maps.AMap;
+import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
+import com.amap.api.maps.model.CameraPosition;
+import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.Marker;
+import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
+import com.amap.api.maps.model.animation.Animation;
+import com.amap.api.maps.model.animation.TranslateAnimation;
+import com.amap.api.services.core.LatLonPoint;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.tabs.TabLayout;
@@ -112,6 +123,9 @@ public class ProjectDetailActivity extends BaseActivity {
             tvSubscribe.setText(getString(i == 1? R.string.subscribe: R.string.unsubscribe));
             ivSubscribe.setImageResource(i == 1? R.drawable.icon_shopping_cart_select: R.drawable.icon_shopping_cart);
         });
+        projectDetailVm.latitudeLiveData.observe(this, s -> {
+            aMap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(s.latitude, s.longitude)));
+        });
 
         fragments = new Fragment[4];
         fragments[0] = ProjectContentFragment.newInstance();
@@ -170,6 +184,12 @@ public class ProjectDetailActivity extends BaseActivity {
             }
         });
         permissionVm.getPermissionLocation(new RxPermissions(this));
+
+        if (getIntent().getIntExtra(CustomConfig.LOCATION, 0) != 0){
+            int position = getIntent().getIntExtra(CustomConfig.LOCATION, 0);
+            vp.setCurrentItem(position);
+            tabLayout.getTabAt(position).select();
+        }
     }
 
     @OnClick({R.id.iv_bar_back, R.id.iv_bar_right, R.id.fl_collect, R.id.fl_error, R.id.fl_subscription, R.id.ll_chat, R.id.fl_release})
@@ -238,6 +258,25 @@ public class ProjectDetailActivity extends BaseActivity {
                     }
                 }
             }.start();
+
+            aMap.setOnCameraChangeListener(new AMap.OnCameraChangeListener() {
+                @Override
+                public void onCameraChange(CameraPosition cameraPosition) {
+
+                }
+
+                @Override
+                public void onCameraChangeFinish(CameraPosition cameraPosition) {
+                    startJumpAnimation();
+                }
+            });
+
+            aMap.setOnMapLoadedListener(new AMap.OnMapLoadedListener() {
+                @Override
+                public void onMapLoaded() {
+                    addMarkerInScreenCenter(null);
+                }
+            });
         }
     }
 
@@ -245,38 +284,60 @@ public class ProjectDetailActivity extends BaseActivity {
      * 设置一些amap的属性
      */
     private void setUpMap() {
-        aMap.setMyLocationEnabled(true);// 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
-        aMap.getUiSettings().setMyLocationButtonEnabled(true);// 设置默认定位按钮是否显示
+        aMap.moveCamera(CameraUpdateFactory.zoomTo(12));
+        aMap.setMyLocationEnabled(false);// 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
+        aMap.getUiSettings().setMyLocationButtonEnabled(false);// 设置默认定位按钮是否显示
         aMap.getUiSettings().setRotateGesturesEnabled(false);//设置地图不能旋转
         aMap.getUiSettings().setMyLocationButtonEnabled(false);//设置默认定位按钮是否显示，非必需设置。
-        aMap.setOnMyLocationChangeListener(new AMap.OnMyLocationChangeListener() {
-            @Override
-            public void onMyLocationChange(Location location) {
-                LogUtils.i(location);
-            }
-        });
-        setupLocationStyle();
+        aMap.getUiSettings().setAllGesturesEnabled(false);//关闭所有手势
+    }
+
+    private Marker locationMarker;
+    private void addMarkerInScreenCenter(LatLng locationLatLng) {
+        LatLng latLng = aMap.getCameraPosition().target;
+        Point screenPosition = aMap.getProjection().toScreenLocation(latLng);
+        locationMarker = aMap.addMarker(new MarkerOptions()
+                .anchor(0.5f,0.5f));
+        //设置Marker在屏幕上,不跟随地图移动
+        locationMarker.setPositionByPixels(screenPosition.x,screenPosition.y);
+        locationMarker.setZIndex(1);
     }
 
     /**
-     * 设置自定义定位蓝点
+     * 屏幕中心marker 跳动
      */
-    private void setupLocationStyle() {
-        // 自定义系统定位蓝点
-        MyLocationStyle myLocationStyle = new MyLocationStyle();
-        // 自定义定位蓝点图标
-//        myLocationStyle.myLocationIcon(BitmapDescriptorFactory.
-//                fromResource(R.drawable.icon_location));
-        // 自定义精度范围的圆形边框颜色
-        myLocationStyle.strokeColor(getResources().getColor(R.color.colorTransparent));
-        //自定义精度范围的圆形边框宽度
-        myLocationStyle.strokeWidth(0);
-        // 设置圆形的填充颜色
-        myLocationStyle.radiusFillColor(getResources().getColor(R.color.colorTransparent));
-        //定位一次，且将视角移动到地图中心点。
-        myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE);
-        // 将自定义的 myLocationStyle 对象添加到地图上
-        aMap.setMyLocationStyle(myLocationStyle);
+    public void startJumpAnimation() {
+
+        if (locationMarker != null ) {
+            //根据屏幕距离计算需要移动的目标点
+            final LatLng latLng = locationMarker.getPosition();
+            Point point =  aMap.getProjection().toScreenLocation(latLng);
+            point.y -= ConvertUtils.dp2px(50);
+            LatLng target = aMap.getProjection()
+                    .fromScreenLocation(point);
+            //使用TranslateAnimation,填写一个需要移动的目标点
+            Animation animation = new TranslateAnimation(target);
+            animation.setInterpolator(new Interpolator() {
+                @Override
+                public float getInterpolation(float input) {
+                    // 模拟重加速度的interpolator
+                    if(input <= 0.5) {
+                        return (float) (0.5f - 2 * (0.5 - input) * (0.5 - input));
+                    } else {
+                        return (float) (0.5f - Math.sqrt((input - 0.5f)*(1.5f - input)));
+                    }
+                }
+            });
+            //整个移动所需要的时间
+            animation.setDuration(600);
+            //设置动画
+            locationMarker.setAnimation(animation);
+            //开始动画
+            locationMarker.startAnimation();
+
+        } else {
+            LogUtils.i("ama","screenMarker is null");
+        }
     }
 
     @Override

@@ -19,16 +19,16 @@ import java.util.List;
  * @chang time
  * @class describe
  */
-public class LocusMineAdapter extends BaseQuickAdapter<LocusMineBean, BaseViewHolder> {
-    public LocusMineAdapter(int layoutResId, @Nullable List<LocusMineBean> data) {
+public class LocusMineAdapter extends BaseQuickAdapter<LocusMineBean.ListBean, BaseViewHolder> {
+    public LocusMineAdapter(int layoutResId, @Nullable List<LocusMineBean.ListBean> data) {
         super(layoutResId, data);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, LocusMineBean item) {
-        helper.setText(R.id.tv_title, "山东省济南市莱芜区影城电子信息产业园一期")
-                .setText(R.id.tv_content, "勘察设计")
-                .setText(R.id.tv_time, "2019-06-20")
-                .setText(R.id.tv_locus_num, String.format(mContext.getString(R.string.format_locus_num), 4));
+    protected void convert(BaseViewHolder helper, LocusMineBean.ListBean item) {
+        helper.setText(R.id.tv_title, item.getTitle())
+                .setText(R.id.tv_content, item.getPhases())
+                .setText(R.id.tv_time, item.getCreate_time())
+                .setText(R.id.tv_locus_num, String.format(mContext.getString(R.string.format_locus_num), item.getTrack_count()));
     }
 }

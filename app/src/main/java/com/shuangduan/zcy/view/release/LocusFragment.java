@@ -2,14 +2,24 @@ package com.shuangduan.zcy.view.release;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.LocusMineAdapter;
+import com.shuangduan.zcy.adapter.ProjectMineAdapter;
+import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseLazyFragment;
+import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.LocusMineBean;
+import com.shuangduan.zcy.view.projectinfo.ProjectDetailActivity;
+import com.shuangduan.zcy.vm.MineReleaseVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
 import java.util.ArrayList;
@@ -33,6 +43,7 @@ public class LocusFragment extends BaseLazyFragment {
     RecyclerView rv;
     @BindView(R.id.refresh)
     SmartRefreshLayout refresh;
+    private MineReleaseVm mineReleaseVm;
 
     public static LocusFragment newInstance() {
 
@@ -50,21 +61,64 @@ public class LocusFragment extends BaseLazyFragment {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
-        refresh.setEnableRefresh(false);
-        refresh.setEnableLoadMore(false);
-
-        List<LocusMineBean> list = new ArrayList<>();
-        for (int i = 0; i < 11; i++) {
-            list.add(new LocusMineBean());
-        }
         rv.setLayoutManager(new LinearLayoutManager(mContext));
         rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
-        LocusMineAdapter adapter = new LocusMineAdapter(R.layout.item_mine_locus, list);
+        LocusMineAdapter adapter = new LocusMineAdapter(R.layout.item_mine_locus, null);
+        adapter.setEmptyView(R.layout.layout_loading, rv);
         rv.setAdapter(adapter);
+        adapter.setOnItemClickListener((helper, view, position) -> {
+            LocusMineBean.ListBean listBean = adapter.getData().get(position);
+            Bundle bundle = new Bundle();
+            bundle.putInt(CustomConfig.PROJECT_ID, listBean.getId());
+            bundle.putInt(CustomConfig.LOCATION, 1);
+            ActivityUtils.startActivity(bundle, ProjectDetailActivity.class);
+        });
+
+        mineReleaseVm = ViewModelProviders.of(this).get(MineReleaseVm.class);
+        mineReleaseVm.myProjectTract();
+        mineReleaseVm.trackLiveData.observe(this, locusMineBean -> {
+            if (locusMineBean.getPage() == 1) {
+                adapter.setNewData(locusMineBean.getList());
+                adapter.setEmptyView(R.layout.layout_empty, rv);
+            }else {
+                adapter.addData(locusMineBean.getList());
+            }
+            setNoMore(locusMineBean.getPage(), locusMineBean.getCount());
+        });
+        mineReleaseVm.pageStateLiveData.observe(this, s -> {
+            switch (s){
+                case PageState.PAGE_LOADING:
+                    break;
+                case PageState.PAGE_REFRESH:
+                    break;
+                default:
+                    refresh.finishRefresh();
+                    refresh.finishLoadMore();
+
+                    break;
+            }
+        });
+
+        refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                mineReleaseVm.projectPage++;
+                mineReleaseVm.refreshMyProjectTract();
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                mineReleaseVm.myProjectTract();
+            }
+        });
     }
 
     @Override
     protected void initDataFromService() {
 
+    }
+
+    private void setNoMore(int page, int count){
+        refresh.setNoMoreData(page * 10 >= count);
     }
 }

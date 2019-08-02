@@ -31,6 +31,7 @@ import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.shuangduan.zcy.R;
+import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.pop.CommonPopupWindow;
 import com.shuangduan.zcy.model.bean.MapBean;
@@ -235,7 +236,10 @@ public class ProjectInfoActivity extends BaseActivity {
                         tvReaders = view.findViewById(R.id.tv_readers);
                         tvTime = view.findViewById(R.id.tv_time);
                         view.setOnClickListener(v -> {
-                            ActivityUtils.startActivity(ProjectDetailActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putInt(CustomConfig.PROJECT_ID, mapBean.getId());
+                            bundle.putInt(CustomConfig.LOCATION, 0);
+                            ActivityUtils.startActivity(bundle, ProjectDetailActivity.class);
                         });
                     })
                     .create();

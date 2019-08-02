@@ -70,6 +70,7 @@ public class TrackBean {
         private String create_time;
         private int is_pay;
         private List<ImageBean> image;
+        private String avatar;
 
         public int getId() {
             return id;
@@ -141,6 +142,14 @@ public class TrackBean {
 
         public void setImage(List<ImageBean> image) {
             this.image = image;
+        }
+
+        public String getAvatar() {
+            return avatar;
+        }
+
+        public void setAvatar(String avatar) {
+            this.avatar = avatar;
         }
 
         public static class ImageBean {

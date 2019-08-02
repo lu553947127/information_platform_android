@@ -206,6 +206,7 @@
     <string name="mobile_code">手机号</string>
     <string name="unit">单位</string>
     <string name="address">地址</string>
+    <string name="push_select">推送选择</string>
 
     <string name="format_version_name">当前版本号：v%1$s</string>
     <string name="format_get_verification_code_again">重新获取 (%1$ds)</string>
@@ -266,6 +267,11 @@
     <string-array name="release_list">
         <item>工程信息</item>
         <item>轨迹信息</item>
+    </string-array>
+
+    <string-array name="mine_sub">
+        <item>工程信息</item>
+        <item>招采信息</item>
     </string-array>
 
     <string-array name="experience_list">
