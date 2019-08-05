@@ -2,7 +2,10 @@ package com.shuangduan.zcy.vm;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.blankj.utilcode.util.SPUtils;
+import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseViewModel;
+import com.shuangduan.zcy.model.api.repository.UserRepository;
 import com.shuangduan.zcy.model.bean.ReadHistoryBean;
 
 import java.util.ArrayList;
@@ -19,24 +22,22 @@ import java.util.List;
  * @class describe
  */
 public class ReadHistoryVm extends BaseViewModel {
-    private MutableLiveData<List<ReadHistoryBean>> readHistoryBeanMutableLiveData;
+    public MutableLiveData<List<ReadHistoryBean>> readHistoryBeanMutableLiveData;
+    public MutableLiveData<String> pageStateLiveData;
+    private int userId;
 
     public ReadHistoryVm() {
+        userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
         this.readHistoryBeanMutableLiveData = new MutableLiveData<>();
+        this.pageStateLiveData = new MutableLiveData<>();
     }
 
-    public void getHistory(){
-        List<ReadHistoryBean> list = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            ReadHistoryBean readHistoryBean = new ReadHistoryBean();
-            readHistoryBean.setTitle("红星美凯龙");
-            readHistoryBean.setTime("2019-6-1 15:25");
-            list.add(readHistoryBean);
-        }
-        readHistoryBeanMutableLiveData.postValue(list);
+    public void getProjectHistory(){
+        new UserRepository().historyProject(readHistoryBeanMutableLiveData, pageStateLiveData, userId);
     }
 
-    public MutableLiveData<List<ReadHistoryBean>> getReadHistoryBeanMutableLiveData() {
-        return readHistoryBeanMutableLiveData;
+    public void getRecruitHistory(){
+
     }
+
 }

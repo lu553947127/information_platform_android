@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.google.android.flexbox.FlexboxLayout;
 import com.shuangduan.zcy.R;
+import com.shuangduan.zcy.model.bean.MyPhasesBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +31,7 @@ public class SubscriptionTypeDialog extends BaseDialog {
     @BindView(R.id.fl_subscription)
     FlexboxLayout flSubscription;
 
-    private String[] items = {"工程进度", "工程预算", "工程工期", "地理位置"};
-    private List<ItemBean> itemBeans = new ArrayList<>();
+    private List<MyPhasesBean> itemBeans = new ArrayList<>();
 
     public SubscriptionTypeDialog(@NonNull Activity activity) {
         super(activity);
@@ -48,11 +48,9 @@ public class SubscriptionTypeDialog extends BaseDialog {
         setWidth(ConvertUtils.dp2px(260));
         setHeight(ConvertUtils.dp2px(340));
         setCancelOutside(false);
-        for (int i = 0; i < items.length; i++) {
-            itemBeans.add(new ItemBean(false, items[i]));
+        for (int i = 0; i < itemBeans.size(); i++) {
             addItem(i);
         }
-
     }
 
     @Override
@@ -60,8 +58,8 @@ public class SubscriptionTypeDialog extends BaseDialog {
         findViewById(R.id.tv_positive).setOnClickListener(v -> {
             StringBuilder stringBuilder = new StringBuilder();
             for (int i = 0; i < itemBeans.size(); i++) {
-                if (itemBeans.get(i).isSelect()){
-                    stringBuilder.append(itemBeans.get(i).getName());
+                if (itemBeans.get(i).getIs_select() == 1){
+                    stringBuilder.append(itemBeans.get(i).getPhases_name());
                 }
             }
             if (callBack != null){
@@ -79,39 +77,18 @@ public class SubscriptionTypeDialog extends BaseDialog {
 
     private void addItem(int i){
         final TextView tv = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.item_box, flSubscription, false);
-        tv.setText(itemBeans.get(i).getName());
-        tv.setSelected(itemBeans.get(i).isSelect());
+        tv.setText(itemBeans.get(i).getPhases_name());
+        tv.setSelected(itemBeans.get(i).getIs_select() == 1);
         tv.setOnClickListener(v -> {
-            itemBeans.get(i).setSelect(!tv.isSelected());
+            itemBeans.get(i).setIs_select(tv.isSelected()?0:1);
             tv.setSelected(!tv.isSelected());
         });
         flSubscription.addView(tv);
     }
 
-    public static class ItemBean{
-        boolean isSelect;
-        String name;
-
-        public ItemBean(boolean isSelect, String name) {
-            this.isSelect = isSelect;
-            this.name = name;
-        }
-
-        public boolean isSelect() {
-            return isSelect;
-        }
-
-        public void setSelect(boolean select) {
-            isSelect = select;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
+    public SubscriptionTypeDialog setItems(List<MyPhasesBean> items){
+        this.itemBeans.addAll(items);
+        return this;
     }
 
 }

@@ -112,6 +112,7 @@
     <string name="set_new_pwd">请设置新的密码</string>
     <string name="hint_new_pwd">请输入新的密码</string>
     <string name="hint_opinion">请在此输入您的意见</string>
+    <string name="hint_opinion_error">请输入您的意见</string>
     <string name="share_url">http://www.shuangduan.com</string>
     <string name="share">分享</string>
     <string name="mobile">电话</string>
@@ -207,10 +208,14 @@
     <string name="unit">单位</string>
     <string name="address">地址</string>
     <string name="push_select">推送选择</string>
+    <string name="expected_return_s">预计收益</string>
+    <string name="withdraw_income">可提现收益</string>
+    <string name="income_trend_s">收益走向</string>
 
     <string name="format_version_name">当前版本号：v%1$s</string>
     <string name="format_get_verification_code_again">重新获取 (%1$ds)</string>
     <string name="format_balance">余额:%1$s元</string>
+    <string name="format_amount">%1$s元</string>
     <string name="format_num_of_people">人脉数量: %1$d人</string>
     <string name="format_num_of_readers">订阅人数: %1$d人</string>
     <string name="format_withdraw_now">当前可提现金额为:%1$d元</string>

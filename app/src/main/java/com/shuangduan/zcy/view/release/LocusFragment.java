@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.LocusMineAdapter;
@@ -85,19 +86,6 @@ public class LocusFragment extends BaseLazyFragment {
             }
             setNoMore(locusMineBean.getPage(), locusMineBean.getCount());
         });
-        mineReleaseVm.pageStateLiveData.observe(this, s -> {
-            switch (s){
-                case PageState.PAGE_LOADING:
-                    break;
-                case PageState.PAGE_REFRESH:
-                    break;
-                default:
-                    refresh.finishRefresh();
-                    refresh.finishLoadMore();
-
-                    break;
-            }
-        });
 
         refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
@@ -119,6 +107,22 @@ public class LocusFragment extends BaseLazyFragment {
     }
 
     private void setNoMore(int page, int count){
-        refresh.setNoMoreData(page * 10 >= count);
+        if (page == 1){
+            if (page * 10 >= count){
+                if (refresh.getState() == RefreshState.None){
+                    refresh.setNoMoreData(true);
+                }else {
+                    refresh.finishRefreshWithNoMoreData();
+                }
+            }else {
+                refresh.finishRefresh();
+            }
+        }else {
+            if (page * 10 >= count){
+                refresh.finishLoadMoreWithNoMoreData();
+            }else {
+                refresh.finishLoadMore();
+            }
+        }
     }
 }

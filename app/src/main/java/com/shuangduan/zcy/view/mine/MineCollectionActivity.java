@@ -1,7 +1,6 @@
 package com.shuangduan.zcy.view.mine;
 
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
@@ -21,14 +20,14 @@ import butterknife.OnClick;
 /**
  * @author 宁文强 QQ:858777523
  * @name information_platform_android
- * @class name：com.shuangduan.zicaicloudplatform.view.activity
- * @class describe  浏览历史
- * @time 2019/7/10 15:50
+ * @class name：com.shuangduan.zcy.view.mine
+ * @class describe
+ * @time 2019/8/5 14:32
  * @change
  * @chang time
  * @class describe
  */
-public class ReadHistoryActivity extends BaseActivity {
+public class MineCollectionActivity extends BaseActivity {
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
     @BindView(R.id.tv_bar_right)
@@ -49,11 +48,11 @@ public class ReadHistoryActivity extends BaseActivity {
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
-        tvBarTitle.setText(getString(R.string.read_history));
+        tvBarTitle.setText(getString(R.string.my_collection));
 
         Fragment[] fragments = new Fragment[]{
-                ProjectHistoryFragment.newInstance(),
-                RecruitHistoryFragment.newInstance()
+                ProjectCollectFragment.newInstance(),
+                RecruitCollectFragment.newInstance()
         };
         tabLayout.addTab(tabLayout.newTab());
         tabLayout.addTab(tabLayout.newTab());

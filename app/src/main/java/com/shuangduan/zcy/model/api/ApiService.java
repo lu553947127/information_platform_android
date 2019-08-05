@@ -12,18 +12,24 @@ import com.shuangduan.zcy.model.bean.ContactTypeBean;
 import com.shuangduan.zcy.model.bean.LocusMineBean;
 import com.shuangduan.zcy.model.bean.LoginBean;
 import com.shuangduan.zcy.model.bean.MapBean;
+import com.shuangduan.zcy.model.bean.MineIncomeBean;
+import com.shuangduan.zcy.model.bean.MyPhasesBean;
 import com.shuangduan.zcy.model.bean.PayInfoBean;
+import com.shuangduan.zcy.model.bean.ProjectCollectBean;
 import com.shuangduan.zcy.model.bean.ProjectDetailBean;
 import com.shuangduan.zcy.model.bean.ProjectInfoBean;
 import com.shuangduan.zcy.model.bean.ProjectMineBean;
 import com.shuangduan.zcy.model.bean.ProjectSearchBean;
+import com.shuangduan.zcy.model.bean.ProjectSubBean;
 import com.shuangduan.zcy.model.bean.ProvinceBean;
 import com.shuangduan.zcy.model.bean.ReSetPwdBean;
+import com.shuangduan.zcy.model.bean.ReadHistoryBean;
 import com.shuangduan.zcy.model.bean.RegisterBean;
 import com.shuangduan.zcy.model.bean.SearchBean;
 import com.shuangduan.zcy.model.bean.SearchCompanyBean;
 import com.shuangduan.zcy.model.bean.SearchHotBean;
 import com.shuangduan.zcy.model.bean.StageBean;
+import com.shuangduan.zcy.model.bean.SubBean;
 import com.shuangduan.zcy.model.bean.TrackBean;
 import com.shuangduan.zcy.model.bean.TypeBean;
 import com.shuangduan.zcy.model.bean.UploadBean;
@@ -166,14 +172,14 @@ public interface ApiService {
     @POST("api/Userinfo/setInfo")
     Flowable<BaseObjResponse> updateExperience(
             @Field("user_id")int user_id,
-            @Query("experience") int experience
+            @Field("experience") int experience
     );
 
     @FormUrlEncoded
     @POST("api/Userinfo/setInfo")
     Flowable<BaseObjResponse> updateProduct(
             @Field("user_id")int user_id,
-            @Query("managing_products") String managing_products
+            @Field("managing_products") String managing_products
     );
 
     @FormUrlEncoded
@@ -238,9 +244,9 @@ public interface ApiService {
     Flowable<BaseObjResponse<ProjectInfoBean>> projectList(
             @Field("user_id")int user_id,
             @Field("province")String province,
-            @Field("city[]")int[] city,
+            @Query("city[]")int[] city,
             @Field("phases")String phases,
-            @Field("type[]")int[] type,
+            @Query("type[]")int[] type,
             @Field("stime")String stime,
             @Field("etime")String etime,
             @Field("warrant_status")String warrant_status,
@@ -383,7 +389,7 @@ public interface ApiService {
             @Field("name")String name,
             @Field("tel")String tel,
             @Field("update_time")String update_time,
-            @Field("image_id")int[] image_id
+            @Query("image_id")int[] image_id
     );
 
     @FormUrlEncoded
@@ -392,6 +398,51 @@ public interface ApiService {
             @Field("user_id") int user_id,
             @Field("keyword")String keyword,
             @Field("page") int page
+    );
+
+    @FormUrlEncoded
+    @POST("api/Subscription/projectSubscription")
+    Flowable<BaseObjResponse<ProjectSubBean>> projectSub(
+            @Field("user_id") int user_id,
+            @Field("page") int page
+    );
+
+    @FormUrlEncoded
+    @POST("api/Userinfo/myPhases")
+    Flowable<BaseListResponse<MyPhasesBean>> myPhases(
+            @Field("user_id") int user_id
+    );
+
+    @POST("api/Userinfo/setPhases")
+    Flowable<BaseObjResponse> setPhases(
+            @Query("user_id") int user_id,
+            @Body SubBean id
+    );
+
+    @FormUrlEncoded
+    @POST("api/Userinfo/historyProject")
+    Flowable<BaseListResponse<ReadHistoryBean>> historyProject(
+            @Field("user_id") int user_id
+    );
+
+    @FormUrlEncoded
+    @POST("api/Userinfo/feedback")
+    Flowable<BaseObjResponse> feedback(
+            @Field("user_id") int user_id,
+            @Field("content") String content
+    );
+
+    @FormUrlEncoded
+    @POST("api/Userinfo/projectCollection")
+    Flowable<BaseObjResponse<ProjectCollectBean>> projectCollection(
+            @Field("user_id") int user_id,
+            @Field("page") int page
+    );
+
+    @FormUrlEncoded
+    @POST("api/Profit/myProceeds")
+    Flowable<BaseObjResponse<MineIncomeBean>> myProceeds(
+            @Field("user_id") int user_id
     );
 
 }

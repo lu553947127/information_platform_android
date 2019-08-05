@@ -1,7 +1,6 @@
-package com.shuangduan.zcy.view.release;
+package com.shuangduan.zcy.view.mine;
 
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProviders;
@@ -9,50 +8,45 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ActivityUtils;
-import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.blankj.utilcode.util.LogUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shuangduan.zcy.R;
-import com.shuangduan.zcy.adapter.ProjectMineAdapter;
+import com.shuangduan.zcy.adapter.ProjectCollectAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
-import com.shuangduan.zcy.base.BaseLazyFragment;
+import com.shuangduan.zcy.base.BaseFragment;
 import com.shuangduan.zcy.model.api.PageState;
-import com.shuangduan.zcy.model.bean.ProjectInfoBean;
-import com.shuangduan.zcy.model.bean.ProjectMineBean;
+import com.shuangduan.zcy.model.bean.ProjectCollectBean;
 import com.shuangduan.zcy.view.projectinfo.ProjectDetailActivity;
-import com.shuangduan.zcy.vm.MineReleaseVm;
+import com.shuangduan.zcy.vm.MineCollectionVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 
 /**
  * @author 宁文强 QQ:858777523
  * @name information_platform_android
- * @class name：com.shuangduan.zcy.view.release
- * @class describe  我发布的工程信息列表
- * @time 2019/7/16 20:22
+ * @class name：com.shuangduan.zcy.view.mine
+ * @class describe  工程信息，收藏
+ * @time 2019/8/5 8:47
  * @change
  * @chang time
  * @class describe
  */
-public class ProjectInfoFragment extends BaseLazyFragment {
-
+public class ProjectCollectFragment extends BaseFragment {
     @BindView(R.id.rv)
     RecyclerView rv;
     @BindView(R.id.refresh)
     SmartRefreshLayout refresh;
-    private MineReleaseVm mineReleaseVm;
+    private MineCollectionVm mineCollectionVm;
 
-    public static ProjectInfoFragment newInstance() {
+    public static ProjectCollectFragment newInstance() {
 
         Bundle args = new Bundle();
 
-        ProjectInfoFragment fragment = new ProjectInfoFragment();
+        ProjectCollectFragment fragment = new ProjectCollectFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -66,48 +60,44 @@ public class ProjectInfoFragment extends BaseLazyFragment {
     protected void initDataAndEvent(Bundle savedInstanceState) {
         rv.setLayoutManager(new LinearLayoutManager(mContext));
         rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
-        ProjectMineAdapter adapter = new ProjectMineAdapter(R.layout.item_mine_project, null);
+        ProjectCollectAdapter adapter = new ProjectCollectAdapter(R.layout.item_mine_project, null);
         adapter.setEmptyView(R.layout.layout_loading, rv);
         rv.setAdapter(adapter);
-        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter helper, View view, int position) {
-                ProjectMineBean.ListBean listBean = adapter.getData().get(position);
-                Bundle bundle = new Bundle();
-                bundle.putInt(CustomConfig.PROJECT_ID, listBean.getId());
-                bundle.putInt(CustomConfig.LOCATION, 1);
-                ActivityUtils.startActivity(bundle, ProjectDetailActivity.class);
-            }
+        adapter.setOnItemClickListener((helper, view, position) -> {
+            ProjectCollectBean.ListBean listBean = adapter.getData().get(position);
+            Bundle bundle = new Bundle();
+            bundle.putInt(CustomConfig.PROJECT_ID, listBean.getId());
+            bundle.putInt(CustomConfig.LOCATION, 0);
+            ActivityUtils.startActivity(bundle, ProjectDetailActivity.class);
         });
 
-        mineReleaseVm = ViewModelProviders.of(this).get(MineReleaseVm.class);
-        mineReleaseVm.myProject();
-        mineReleaseVm.projectLiveData.observe(this, projectMineBean -> {
-            if (projectMineBean.getPage() == 1) {
-                adapter.setNewData(projectMineBean.getList());
+        mineCollectionVm = ViewModelProviders.of(this).get(MineCollectionVm.class);
+        mineCollectionVm.collectLiveData.observe(this, projectCollectBean -> {
+            if (projectCollectBean.getPage() == 1) {
+                adapter.setNewData(projectCollectBean.getList());
                 adapter.setEmptyView(R.layout.layout_empty, rv);
             }else {
-                adapter.addData(projectMineBean.getList());
+                adapter.addData(projectCollectBean.getList());
             }
-            setNoMore(projectMineBean.getPage(), projectMineBean.getCount());
+            setNoMore(projectCollectBean.getPage(), projectCollectBean.getCount());
         });
 
         refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                mineReleaseVm.refreshMyProject();
+                mineCollectionVm.refreshMyCollection();
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                mineReleaseVm.myProject();
+                mineCollectionVm.myCollection();
             }
         });
     }
 
     @Override
     protected void initDataFromService() {
-
+        mineCollectionVm.myCollection();
     }
 
     private void setNoMore(int page, int count){

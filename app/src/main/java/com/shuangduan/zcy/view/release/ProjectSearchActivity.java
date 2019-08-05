@@ -19,6 +19,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ProjectSearchAdapter;
@@ -100,16 +101,6 @@ public class ProjectSearchActivity extends BaseActivity {
                 projectSearchAdapter.addData(projectSearchBean.getList());
             }
         });
-        projectSearchVm.pageStateLiveData.observe(this, s -> {
-            switch (s){
-                case PageState.PAGE_REFRESH:
-                    break;
-                    default:
-                        refresh.finishRefresh();
-                        refresh.finishLoadMore();
-                        break;
-            }
-        });
 
         refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
@@ -132,7 +123,23 @@ public class ProjectSearchActivity extends BaseActivity {
     }
 
     private void noMoreData(int page, int count){
-        refresh.setNoMoreData(page * 10 >= count);
+        if (page == 1){
+            if (page * 10 >= count){
+                if (refresh.getState() == RefreshState.None){
+                    refresh.setNoMoreData(true);
+                }else {
+                    refresh.finishRefreshWithNoMoreData();
+                }
+            }else {
+                refresh.finishRefresh();
+            }
+        }else {
+            if (page * 10 >= count){
+                refresh.finishLoadMoreWithNoMoreData();
+            }else {
+                refresh.finishLoadMore();
+            }
+        }
     }
 
     @OnClick({R.id.iv_bar_back, R.id.tv_positive, R.id.tv_bar_right})

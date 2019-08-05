@@ -27,6 +27,6 @@ public class ReadHistoryAdapter extends BaseQuickAdapter<ReadHistoryBean, BaseVi
     @Override
     protected void convert(BaseViewHolder helper, ReadHistoryBean item) {
         helper.setText(R.id.tv_title, item.getTitle())
-                .setText(R.id.tv_time, String.format(mContext.getString(R.string.format_read_num), item.getTime()));
+                .setText(R.id.tv_time, String.format(mContext.getString(R.string.format_read_num), item.getCreate_time()));
     }
 }

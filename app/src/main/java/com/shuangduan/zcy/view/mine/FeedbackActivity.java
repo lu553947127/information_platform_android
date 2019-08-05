@@ -6,10 +6,15 @@ import android.widget.EditText;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.StringUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.base.BaseActivity;
+import com.shuangduan.zcy.model.api.PageState;
+import com.shuangduan.zcy.vm.FeedbackVm;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -31,6 +36,7 @@ public class FeedbackActivity extends BaseActivity {
     Toolbar toolbar;
     @BindView(R.id.edt_feedback)
     EditText edtFeedback;
+    private FeedbackVm feedbackVm;
 
     @Override
     protected int initLayoutRes() {
@@ -41,6 +47,20 @@ public class FeedbackActivity extends BaseActivity {
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.feedback));
+
+        feedbackVm = ViewModelProviders.of(this).get(FeedbackVm.class);
+        feedbackVm.feedbackLiveData.observe(this, o -> {
+            finish();
+        });
+        feedbackVm.pageStateLiveData.observe(this, s -> {
+            switch (s){
+                case PageState.PAGE_LOADING:
+                    showLoading();
+                default:
+                    hideLoading();
+                    break;
+            }
+        });
     }
 
     @OnClick({R.id.iv_bar_back, R.id.tv_confirm})
@@ -50,7 +70,11 @@ public class FeedbackActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_confirm:
-
+                if (StringUtils.isTrimEmpty(edtFeedback.getText().toString())){
+                    ToastUtils.showShort(getString(R.string.hint_opinion_error));
+                    return;
+                }
+                feedbackVm.submit(edtFeedback.getText().toString());
                 break;
         }
     }

@@ -44,9 +44,9 @@ public class UserInfoVm extends BaseViewModel {
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
         oldTel = SPUtils.getInstance().getString(SpConfig.MOBILE);
         infoLiveData = new MutableLiveData();
-        getInfoLiveData = new MutableLiveData();
-        informationLiveData = new MutableLiveData();
-        pageStateLiveData = new MutableLiveData();
+        getInfoLiveData = new MutableLiveData<>();
+        informationLiveData = new MutableLiveData<>();
+        pageStateLiveData = new MutableLiveData<>();
         sexLiveData = (MediatorLiveData<Integer>) Transformations.map(informationLiveData, input -> input.getSex());
         avatarLiveData = (MediatorLiveData<String>) Transformations.map(informationLiveData, input -> input.getImage_thumbnail());
         checkTelLiveData = new MutableLiveData();

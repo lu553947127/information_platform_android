@@ -3,8 +3,15 @@ package com.shuangduan.zcy.model.api.repository;
 import androidx.lifecycle.MutableLiveData;
 
 import com.shuangduan.zcy.model.api.rxjava.BaseSubscriber;
+import com.shuangduan.zcy.model.bean.MineIncomeBean;
+import com.shuangduan.zcy.model.bean.MyPhasesBean;
+import com.shuangduan.zcy.model.bean.ProjectCollectBean;
+import com.shuangduan.zcy.model.bean.ReadHistoryBean;
 import com.shuangduan.zcy.model.bean.SearchCompanyBean;
+import com.shuangduan.zcy.model.bean.SubBean;
 import com.shuangduan.zcy.model.bean.UserInfoBean;
+
+import java.util.List;
 
 /**
  * @author 宁文强 QQ:858777523
@@ -111,6 +118,48 @@ public class UserRepository extends BaseRepository {
      */
     public void updateTel(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int user_id, String tel, String code, String oldTel, String oldCode){
         request(apiService.telUpdate(user_id, tel, code, oldTel, oldCode)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    /**
+     * 工程推送阶段选项
+     */
+    public void myPhases(MutableLiveData<List<MyPhasesBean>> liveData, MutableLiveData<String> pageStateLiveData, int user_id){
+        request(apiService.myPhases(user_id)).setDataList(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    /**
+     * 工程推送阶段提交
+     */
+    public void setPhases(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int user_id, SubBean id){
+        request(apiService.setPhases(user_id, id)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    /**
+     * 浏览历史-工程信息
+     */
+    public void historyProject(MutableLiveData<List<ReadHistoryBean>> liveData, MutableLiveData<String> pageStateLiveData, int user_id){
+        request(apiService.historyProject(user_id)).setDataList(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    /**
+     * 意见反馈
+     */
+    public void feedback(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int user_id, String content){
+        request(apiService.feedback(user_id, content)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    /**
+     * 我的收藏-工程信息
+     */
+    public void projectCollection(MutableLiveData<ProjectCollectBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, int page){
+        request(apiService.projectCollection(user_id, page)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    /**
+     * 我的收益
+     */
+    public void mineIncome(MutableLiveData<MineIncomeBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id){
+        request(apiService.myProceeds(user_id)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
 }

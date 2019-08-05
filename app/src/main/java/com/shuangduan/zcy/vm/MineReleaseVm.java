@@ -43,6 +43,7 @@ public class MineReleaseVm extends BaseViewModel {
     }
 
     public void refreshMyProject(){
+        projectPage++;
         pageStateLiveData.setValue(PageState.PAGE_REFRESH);
         new ProjectRepository().myProject(projectLiveData, pageStateLiveData, userId, projectPage);
     }

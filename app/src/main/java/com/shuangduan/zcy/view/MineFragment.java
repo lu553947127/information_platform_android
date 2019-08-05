@@ -19,6 +19,8 @@ import com.shuangduan.zcy.utils.image.ImageConfig;
 import com.shuangduan.zcy.utils.image.ImageLoader;
 import com.shuangduan.zcy.view.mine.FeedbackActivity;
 import com.shuangduan.zcy.view.mine.HelperActivity;
+import com.shuangduan.zcy.view.mine.MineCollectionActivity;
+import com.shuangduan.zcy.view.mine.MineIncomeActivity;
 import com.shuangduan.zcy.view.mine.MineSubActivity;
 import com.shuangduan.zcy.view.mine.ReadHistoryActivity;
 import com.shuangduan.zcy.view.mine.RecommendFriendsActivity;
@@ -120,7 +122,7 @@ public class MineFragment extends BaseFragment {
             case R.id.fl_order:
                 break;
             case R.id.fl_income:
-                ActivityUtils.startActivity(WithdrawActivity.class);
+                ActivityUtils.startActivity(MineIncomeActivity.class);
                 break;
             case R.id.tv_my_subscription:
                 ActivityUtils.startActivity(MineSubActivity.class);
@@ -135,6 +137,7 @@ public class MineFragment extends BaseFragment {
                 ActivityUtils.startActivity(RecommendFriendsActivity.class);
                 break;
             case R.id.tv_my_collection:
+                ActivityUtils.startActivity(MineCollectionActivity.class);
                 break;
             case R.id.tv_set:
                 ActivityUtils.startActivity(SetActivity.class);

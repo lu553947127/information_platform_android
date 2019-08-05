@@ -63,6 +63,8 @@
         <activity android:name="com.shuangduan.zcy.view.mine.FeedbackActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.view.mine.ReadHistoryActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.view.mine.MineSubActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.shuangduan.zcy.view.mine.MineCollectionActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.shuangduan.zcy.view.mine.MineIncomeActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
         <activity android:name="com.shuangduan.zcy.view.projectinfo.ProjectInfoActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.view.projectinfo.ProjectInfoListActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.view.projectinfo.ProjectDetailActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>

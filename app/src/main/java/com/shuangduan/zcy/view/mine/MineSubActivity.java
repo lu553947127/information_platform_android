@@ -6,17 +6,25 @@ import android.view.View;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.google.android.material.tabs.TabLayout;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ViewPagerAdapter;
 import com.shuangduan.zcy.base.BaseActivity;
-import com.shuangduan.zcy.view.release.ProjectInfoFragment;
+import com.shuangduan.zcy.dialog.BaseDialog;
+import com.shuangduan.zcy.dialog.SubscriptionTypeDialog;
+import com.shuangduan.zcy.model.api.PageState;
+import com.shuangduan.zcy.model.bean.MyPhasesBean;
+import com.shuangduan.zcy.view.MainActivity;
+import com.shuangduan.zcy.vm.MineSubVm;
+
+import java.util.Objects;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -40,6 +48,7 @@ public class MineSubActivity extends BaseActivity {
     TabLayout tabLayout;
     @BindView(R.id.vp)
     ViewPager vp;
+    private MineSubVm mineSubVm;
 
     @Override
     protected int initLayoutRes() {
@@ -53,13 +62,52 @@ public class MineSubActivity extends BaseActivity {
         tvBarRight.setText(getString(R.string.push_select));
 
         Fragment[] fragments = new Fragment[]{
-                ProjectInfoFragment.newInstance(),
+                ProjectSubFragment.newInstance(),
                 RecruitSubFragment.newInstance()
         };
         tabLayout.addTab(tabLayout.newTab());
         tabLayout.addTab(tabLayout.newTab());
         vp.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), fragments, getResources().getStringArray(R.array.mine_sub)));
         tabLayout.setupWithViewPager(vp);
+
+        mineSubVm = ViewModelProviders.of(this).get(MineSubVm.class);
+        mineSubVm.phasesLiveData.observe(this, myPhasesBean -> {
+            new SubscriptionTypeDialog(this)
+                    .setItems(myPhasesBean)
+                    .setCallBack(new BaseDialog.CallBack() {
+                        @Override
+                        public void cancel() {
+
+                        }
+
+                        @Override
+                        public void ok(String s) {
+                            if (mineSubVm.phasesLiveData.getValue() == null) {
+                                return;
+                            }
+                            mineSubVm.phasesId.clear();
+                            for (MyPhasesBean bean: mineSubVm.phasesLiveData.getValue()) {
+                                if (bean.getIs_select() == 1)
+                                    mineSubVm.phasesId.add(bean.getId());
+                            }
+                            mineSubVm.setPhases();
+                        }
+                    })
+                    .showDialog();
+        });
+        mineSubVm.phasesSetLiveData.observe(this, o -> {
+            mineSubVm.myProject();
+        });
+        mineSubVm.pageStateLiveData.observe(this, s -> {
+            switch (s){
+                case PageState.PAGE_LOADING:
+                    showLoading();
+                    break;
+                default:
+                    hideLoading();
+                    break;
+            }
+        });
     }
 
     @OnClick({R.id.iv_bar_back, R.id.tv_bar_right})
@@ -69,7 +117,7 @@ public class MineSubActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_bar_right:
-
+                mineSubVm.myPhases();
                 break;
         }
     }

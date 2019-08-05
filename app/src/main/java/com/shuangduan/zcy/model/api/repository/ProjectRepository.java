@@ -80,4 +80,8 @@ public class ProjectRepository extends BaseRepository {
         request(apiService.addTrack(user_id, id, remarks, name, tel, update_time, image_id)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
+    public void projectSub(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int user_id, int page){
+        request(apiService.projectSub(user_id, page)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
 }
