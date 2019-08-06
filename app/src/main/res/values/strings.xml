@@ -212,13 +212,22 @@
     <string name="withdraw_income">可提现收益</string>
     <string name="income_trend_s">收益走向</string>
 
+    <string name="recruit_intro">招标简介</string>
+    <string name="filter">筛选</string>
+    <string name="loose_change_withdraw">零钱提现</string>
+    <string name="withdraw_record">提现记录</string>
+    <string name="bank_card">银行卡</string>
+    <string name="add_bank_card">添加银行卡</string>
+    <string name="add_bank_card_tip">(最多只能添加5张银行卡)</string>
+    <string name="balance">余额</string>
+
     <string name="format_version_name">当前版本号：v%1$s</string>
     <string name="format_get_verification_code_again">重新获取 (%1$ds)</string>
     <string name="format_balance">余额:%1$s元</string>
     <string name="format_amount">%1$s元</string>
     <string name="format_num_of_people">人脉数量: %1$d人</string>
     <string name="format_num_of_readers">订阅人数: %1$d人</string>
-    <string name="format_withdraw_now">当前可提现金额为:%1$d元</string>
+    <string name="format_withdraw_now">当前可提现金额为:%1$s元</string>
     <string name="format_update_mobile_tip">为了您的信息安全，请务必使用%1$s号码获取验证码之后，再修改手机号</string>
     <string name="format_update_email_tip">为了您的信息安全，请务必使用%1$s号码获取 验证码之后，再修改邮箱</string>
     <string name="format_mobile">您的手机号为：%1$s</string>
@@ -258,10 +267,6 @@
         <item>基建头条</item>
     </string-array>
 
-    <string-array name="recruit_detail">
-        <item>招标简介</item>
-    </string-array>
-
     <string-array name="project_detail">
         <item>概况</item>
         <item>轨迹</item>
@@ -277,6 +282,11 @@
     <string-array name="mine_sub">
         <item>工程信息</item>
         <item>招采信息</item>
+    </string-array>
+
+    <string-array name="infrastructure">
+        <item>售卖</item>
+        <item>租赁</item>
     </string-array>
 
     <string-array name="experience_list">

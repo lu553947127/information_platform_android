@@ -5,198 +5,159 @@
 
     <include layout="@layout/toolbar"/>
 
-    <ScrollView
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="none">
+        android:layout_height="50dp"
+        android:background="@color/colorFFF"
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/colorTv"
+            android:textSize="14sp"
+            android:text="@string/account_name"/>
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@color/colorFFF"
-                android:paddingLeft="14dp"
-                android:paddingRight="14dp">
+        <TextView
+            android:id="@+id/edt_real_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="87dp"
+            android:background="@null"
+            android:singleLine="true"
+            android:textColorHint="@color/colorTvHint"
+            android:textColor="@color/colorTv"
+            android:textSize="14sp"
+            android:hint="@string/hint_real_name"/>
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:textColor="@color/colorTv"
-                    android:textSize="14sp"
-                    android:text="@string/account_name"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="bottom"
+            android:background="@color/colorDivider"/>
 
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/edt_real_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:layout_marginLeft="87dp"
-                    android:background="@null"
-                    android:singleLine="true"
-                    android:textColorHint="@color/colorTvHint"
-                    android:textColor="@color/colorTv"
-                    android:textSize="14sp"
-                    android:hint="@string/hint_real_name"/>
+    </FrameLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_gravity="bottom"
-                    android:background="@color/colorDivider"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorFFF"
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp">
 
-            </FrameLayout>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/colorTv"
+            android:textSize="14sp"
+            android:text="@string/identity_number"/>
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@color/colorFFF"
-                android:paddingLeft="14dp"
-                android:paddingRight="14dp">
+        <TextView
+            android:id="@+id/edt_identity_number"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="87dp"
+            android:background="@null"
+            android:singleLine="true"
+            android:maxLength="18"
+            android:textColorHint="@color/colorTvHint"
+            android:textColor="@color/colorTv"
+            android:textSize="14sp"
+            android:hint="@string/hint_identity_number"/>
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:textColor="@color/colorTv"
-                    android:textSize="14sp"
-                    android:text="@string/bank_account"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="bottom"
+            android:background="@color/colorDivider"/>
 
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/edt_bank_account"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:layout_marginLeft="87dp"
-                    android:background="@null"
-                    android:singleLine="true"
-                    android:textColorHint="@color/colorTvHint"
-                    android:textColor="@color/colorTv"
-                    android:textSize="14sp"
-                    android:hint="@string/please_be_accurate_to_the_branch"/>
+    </FrameLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_gravity="bottom"
-                    android:background="@color/colorDivider"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorFFF"
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp">
 
-            </FrameLayout>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/colorTv"
+            android:textSize="14sp"
+            android:text="@string/bank_account"/>
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@color/colorFFF"
-                android:paddingLeft="14dp"
-                android:paddingRight="14dp">
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edt_bank_account"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="87dp"
+            android:background="@null"
+            android:singleLine="true"
+            android:maxLength="19"
+            android:inputType="number"
+            android:textColorHint="@color/colorTvHint"
+            android:textColor="@color/colorTv"
+            android:textSize="14sp"
+            android:hint="@string/please_be_accurate_to_the_branch"/>
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:textColor="@color/colorTv"
-                    android:textSize="14sp"
-                    android:text="@string/bank_card_number"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="bottom"
+            android:background="@color/colorDivider"/>
 
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/edt_bank_card_number"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:layout_marginLeft="87dp"
-                    android:background="@null"
-                    android:singleLine="true"
-                    android:textColorHint="@color/colorTvHint"
-                    android:textColor="@color/colorTv"
-                    android:textSize="14sp"
-                    android:hint="@string/hint_bank_card_number"/>
+    </FrameLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_gravity="bottom"
-                    android:background="@color/colorDivider"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorFFF"
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp">
 
-            </FrameLayout>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/colorTv"
+            android:textSize="14sp"
+            android:text="@string/bank_card_number"/>
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@color/colorFFF"
-                android:paddingLeft="14dp"
-                android:paddingRight="14dp">
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edt_bank_card_number"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="87dp"
+            android:background="@null"
+            android:singleLine="true"
+            android:textColorHint="@color/colorTvHint"
+            android:textColor="@color/colorTv"
+            android:textSize="14sp"
+            android:hint="@string/hint_bank_card_number"/>
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:textColor="@color/colorTv"
-                    android:textSize="14sp"
-                    android:text="@string/identity_number"/>
+        <ImageView
+            android:id="@+id/iv_camera"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginRight="15dp"
+            android:layout_gravity="end|center_vertical"
+            android:src="@drawable/icon_photo"/>
 
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/edt_identity_number"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:layout_marginLeft="87dp"
-                    android:background="@null"
-                    android:singleLine="true"
-                    android:textColorHint="@color/colorTvHint"
-                    android:textColor="@color/colorTv"
-                    android:textSize="14sp"
-                    android:hint="@string/hint_identity_number"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="bottom"
+            android:background="@color/colorDivider"/>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_gravity="bottom"
-                    android:background="@color/colorDivider"/>
-
-            </FrameLayout>
-
-            <ImageView
-                android:id="@+id/iv_id_card_positive"
-                android:layout_width="300dp"
-                android:layout_height="180dp"
-                android:layout_marginTop="20dp"
-                android:layout_gravity="center_horizontal"
-                android:scaleType="centerCrop"
-                android:src="@drawable/id_card_positive"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp"
-                android:textColor="@color/colorTvHint"
-                android:textSize="13sp"
-                android:text="@string/id_card_positive"/>
-
-            <ImageView
-                android:id="@+id/iv_id_card_negative"
-                android:layout_width="300dp"
-                android:layout_height="180dp"
-                android:layout_marginTop="20dp"
-                android:layout_gravity="center_horizontal"
-                android:scaleType="centerCrop"
-                android:src="@drawable/id_card_negative"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp"
-                android:textColor="@color/colorTvHint"
-                android:textSize="13sp"
-                android:text="@string/id_card_negative"/>
-
-        </LinearLayout>
-
-    </ScrollView>
+    </FrameLayout>
 
 </LinearLayout>

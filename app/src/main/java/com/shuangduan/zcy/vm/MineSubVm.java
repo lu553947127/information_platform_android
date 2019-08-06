@@ -30,9 +30,9 @@ public class MineSubVm extends BaseViewModel {
 
     private int userId;
     public int projectPage = 1;
-    public int RecruitPage = 1;
+    public int recruitPage = 1;
     public MutableLiveData<ProjectSubBean> projectLiveData;
-    public MutableLiveData<RecruitSubBean> trackLiveData;
+    public MutableLiveData<RecruitSubBean> recruitLiveData;
     public MutableLiveData<List<MyPhasesBean>> phasesLiveData;
     public MutableLiveData phasesSetLiveData;
     public MutableLiveData<String> pageStateLiveData;
@@ -42,7 +42,7 @@ public class MineSubVm extends BaseViewModel {
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
         pageStateLiveData = new MutableLiveData<>();
         projectLiveData = new MutableLiveData<>();
-        trackLiveData = new MutableLiveData<>();
+        recruitLiveData = new MutableLiveData<>();
         phasesLiveData = new MutableLiveData<>();
         phasesSetLiveData = new MutableLiveData<>();
         phasesId = new ArrayList<>();
@@ -50,22 +50,26 @@ public class MineSubVm extends BaseViewModel {
 
     public void myProject(){
         projectPage = 1;
+        pageStateLiveData.setValue(PageState.PAGE_REFRESH);
         new ProjectRepository().projectSub(projectLiveData, pageStateLiveData, userId, projectPage);
     }
 
     public void refreshMyProject(){
+        projectPage++;
         pageStateLiveData.setValue(PageState.PAGE_REFRESH);
         new ProjectRepository().projectSub(projectLiveData, pageStateLiveData, userId, projectPage);
     }
 
     public void myRecruit(){
-        RecruitPage = 1;
-//        new ProjectRepository().myProjectTrack(trackLiveData, pageStateLiveData, userId, RecruitPage);
+        recruitPage = 1;
+        pageStateLiveData.setValue(PageState.PAGE_REFRESH);
+        new ProjectRepository().recruitSub(recruitLiveData, pageStateLiveData, userId, recruitPage);
     }
 
     public void refreshMyRecruit(){
+        recruitPage++;
         pageStateLiveData.setValue(PageState.PAGE_REFRESH);
-//        new ProjectRepository().myProjectTrack(trackLiveData, pageStateLiveData, userId, RecruitPage);
+        new ProjectRepository().recruitSub(recruitLiveData, pageStateLiveData, userId, recruitPage);
     }
 
     public void myPhases(){

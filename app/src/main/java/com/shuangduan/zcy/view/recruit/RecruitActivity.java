@@ -3,8 +3,10 @@ package com.shuangduan.zcy.view.recruit;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,10 +14,15 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.constant.RefreshState;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.RecruitAdapter;
+import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.bean.RecruitBean;
+import com.shuangduan.zcy.vm.RecruitVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
 import java.util.ArrayList;
@@ -44,6 +51,7 @@ public class RecruitActivity extends BaseActivity {
     RecyclerView rv;
     @BindView(R.id.refresh)
     SmartRefreshLayout refresh;
+    private RecruitVm recruitVm;
 
     @Override
     protected int initLayoutRes() {
@@ -55,21 +63,61 @@ public class RecruitActivity extends BaseActivity {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getResources().getStringArray(R.array.classify)[1]);
 
-        List<RecruitBean> list = new ArrayList<>();
-        for (int i = 0; i < 11; i++) {
-            list.add(new RecruitBean());
-        }
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
-        RecruitAdapter recruitAdapter = new RecruitAdapter(R.layout.item_recruit, list);
+        RecruitAdapter recruitAdapter = new RecruitAdapter(R.layout.item_recruit, null);
+        recruitAdapter.setEmptyView(R.layout.layout_loading, rv);
         rv.setAdapter(recruitAdapter);
-
-        refresh.setEnableRefresh(false);
-        refresh.setEnableLoadMore(false);
-
         recruitAdapter.setOnItemClickListener((adapter, view, position) -> {
-            ActivityUtils.startActivity(RecruitDetailActivity.class);
+            RecruitBean.ListBean listBean = recruitAdapter.getData().get(position);
+            Bundle bundle = new Bundle();
+            bundle.putInt(CustomConfig.RECRUIT_ID, listBean.getId());
+            ActivityUtils.startActivity(bundle, RecruitDetailActivity.class);
         });
+
+        recruitVm = ViewModelProviders.of(this).get(RecruitVm.class);
+        recruitVm.recruitMutableLiveData.observe(this, recruitBean -> {
+            if (recruitBean.getPage() == 1) {
+                recruitAdapter.setNewData(recruitBean.getList());
+                recruitAdapter.setEmptyView(R.layout.layout_empty_top, rv);
+            }else {
+                recruitAdapter.addData(recruitBean.getList());
+            }
+            setNoMore(recruitBean.getPage(), recruitBean.getCount());
+        });
+        recruitVm.getRecruit();
+
+        refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                recruitVm.refreshRecruit();
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                recruitVm.getRecruit();
+            }
+        });
+    }
+
+    private void setNoMore(int page, int count){
+        if (page == 1){
+            if (page * 10 >= count){
+                if (refresh.getState() == RefreshState.None){
+                    refresh.setNoMoreData(true);
+                }else {
+                    refresh.finishRefreshWithNoMoreData();
+                }
+            }else {
+                refresh.finishRefresh();
+            }
+        }else {
+            if (page * 10 >= count){
+                refresh.finishLoadMoreWithNoMoreData();
+            }else {
+                refresh.finishLoadMore();
+            }
+        }
     }
 
     @OnClick(R.id.iv_bar_back)

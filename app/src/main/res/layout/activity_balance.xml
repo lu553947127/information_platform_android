@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/toolbar"/>
+
+    <TextView
+        android:id="@+id/tv_loose_change_withdraw"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorFFF"
+        android:gravity="center_vertical"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:drawableLeft="@drawable/icon_loose_change"
+        android:drawablePadding="10dp"
+        android:drawableRight="@drawable/icon_next"
+        android:textColor="@color/color_666666"
+        android:textSize="14sp"
+        android:text="@string/loose_change_withdraw"/>
+    
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/divider_15"/>
+
+    <TextView
+        android:id="@+id/tv_bank_card"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorFFF"
+        android:gravity="center_vertical"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:drawableLeft="@drawable/icon_bank_card"
+        android:drawablePadding="10dp"
+        android:drawableRight="@drawable/icon_next"
+        android:textColor="@color/color_666666"
+        android:textSize="14sp"
+        android:text="@string/bank_card"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/divider_15"/>
+
+    <TextView
+        android:id="@+id/tv_withdraw_record"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorFFF"
+        android:gravity="center_vertical"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:drawableLeft="@drawable/icon_withdraw_record"
+        android:drawablePadding="10dp"
+        android:drawableRight="@drawable/icon_next"
+        android:textColor="@color/color_666666"
+        android:textSize="14sp"
+        android:text="@string/withdraw_record"/>
+
+</LinearLayout>

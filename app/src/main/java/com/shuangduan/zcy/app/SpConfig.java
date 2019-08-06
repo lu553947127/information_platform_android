@@ -51,7 +51,7 @@ public class SpConfig {
     /*用户简介*/
     public static final String INTRODUCE = "introduce";
 
-    /*是否实名认证（0否1是）*/
+    /*是否实名认证（0未认证 1审核中 2认证成功 3认证失败 -1 无会员信息）*/
     public static final String IS_VERIFIED = "is_verified";
 
     /*启动页广告*/

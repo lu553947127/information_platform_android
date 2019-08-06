@@ -2,6 +2,8 @@ package com.shuangduan.zcy.model.api;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.shuangduan.zcy.model.bean.AuthenBean;
+import com.shuangduan.zcy.model.bean.BankCardBean;
 import com.shuangduan.zcy.model.bean.BaseListResponse;
 import com.shuangduan.zcy.model.bean.BaseObjResponse;
 import com.shuangduan.zcy.model.bean.CityBean;
@@ -24,6 +26,9 @@ import com.shuangduan.zcy.model.bean.ProjectSubBean;
 import com.shuangduan.zcy.model.bean.ProvinceBean;
 import com.shuangduan.zcy.model.bean.ReSetPwdBean;
 import com.shuangduan.zcy.model.bean.ReadHistoryBean;
+import com.shuangduan.zcy.model.bean.RecruitBean;
+import com.shuangduan.zcy.model.bean.RecruitDetailBean;
+import com.shuangduan.zcy.model.bean.RecruitSubBean;
 import com.shuangduan.zcy.model.bean.RegisterBean;
 import com.shuangduan.zcy.model.bean.SearchBean;
 import com.shuangduan.zcy.model.bean.SearchCompanyBean;
@@ -34,6 +39,7 @@ import com.shuangduan.zcy.model.bean.TrackBean;
 import com.shuangduan.zcy.model.bean.TypeBean;
 import com.shuangduan.zcy.model.bean.UploadBean;
 import com.shuangduan.zcy.model.bean.UserInfoBean;
+import com.shuangduan.zcy.model.bean.WithdrawBean;
 
 import java.util.List;
 
@@ -408,6 +414,13 @@ public interface ApiService {
     );
 
     @FormUrlEncoded
+    @POST("api/Subscription/tenderer")
+    Flowable<BaseObjResponse<RecruitSubBean>> recruitSub(
+            @Field("user_id") int user_id,
+            @Field("page") int page
+    );
+
+    @FormUrlEncoded
     @POST("api/Userinfo/myPhases")
     Flowable<BaseListResponse<MyPhasesBean>> myPhases(
             @Field("user_id") int user_id
@@ -426,6 +439,12 @@ public interface ApiService {
     );
 
     @FormUrlEncoded
+    @POST("api/Userinfo/historyTenderer")
+    Flowable<BaseListResponse<ReadHistoryBean>> historyTenderer(
+            @Field("user_id") int user_id
+    );
+
+    @FormUrlEncoded
     @POST("api/Userinfo/feedback")
     Flowable<BaseObjResponse> feedback(
             @Field("user_id") int user_id,
@@ -440,9 +459,70 @@ public interface ApiService {
     );
 
     @FormUrlEncoded
+    @POST("api/Userinfo/tendererCollection")
+    Flowable<BaseObjResponse<RecruitBean>> recruitCollection(
+            @Field("user_id") int user_id,
+            @Field("page") int page
+    );
+
+    @FormUrlEncoded
+    @POST("api/Userinfo/authentication")
+    Flowable<BaseObjResponse<AuthenBean>> authentication(
+            @Field("user_id") int user_id
+    );
+
+    @FormUrlEncoded
+    @POST("api/Userinfo/idcard")
+    Flowable<BaseObjResponse> idcard(
+            @Field("user_id") int user_id,
+            @Field("image_front") String image_front,
+            @Field("image_reverse_site") String image_reverse_site
+    );
+
+    @FormUrlEncoded
+    @POST("api/Userinfo/loading")
+    Flowable<BaseObjResponse<WithdrawBean>> withdrawMsg(
+            @Field("user_id") int user_id
+    );
+
+    @FormUrlEncoded
+    @POST("api/Bankcard/bankcardList")
+    Flowable<BaseListResponse<BankCardBean>> bankcardList(
+            @Field("user_id") int user_id
+    );
+
+    @FormUrlEncoded
     @POST("api/Profit/myProceeds")
     Flowable<BaseObjResponse<MineIncomeBean>> myProceeds(
             @Field("user_id") int user_id
+    );
+
+    @FormUrlEncoded
+    @POST("api/Tenderer/dataList")
+    Flowable<BaseObjResponse<RecruitBean>> recruitList(
+            @Field("user_id") int user_id,
+            @Field("page") int page
+    );
+
+    @FormUrlEncoded
+    @POST("api/Tenderer/getDetail")
+    Flowable<BaseObjResponse<RecruitDetailBean>> recruitDetail(
+            @Field("user_id") int user_id,
+            @Field("id") int id
+    );
+
+    @FormUrlEncoded
+    @POST("api/Tenderer/setCollection")
+    Flowable<BaseObjResponse> recruitCollect(
+            @Field("user_id") int user_id,
+            @Field("id") int id
+    );
+
+    @FormUrlEncoded
+    @POST("api/Tenderer/cancelCollection")
+    Flowable<BaseObjResponse> recruitCancelCollect(
+            @Field("user_id") int user_id,
+            @Field("id") int id
     );
 
 }

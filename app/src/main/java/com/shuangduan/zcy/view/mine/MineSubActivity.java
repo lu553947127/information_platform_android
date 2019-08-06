@@ -97,6 +97,7 @@ public class MineSubActivity extends BaseActivity {
         });
         mineSubVm.phasesSetLiveData.observe(this, o -> {
             mineSubVm.myProject();
+            mineSubVm.myRecruit();
         });
         mineSubVm.pageStateLiveData.observe(this, s -> {
             switch (s){

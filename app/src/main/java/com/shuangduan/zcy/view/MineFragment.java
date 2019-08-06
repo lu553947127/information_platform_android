@@ -17,6 +17,7 @@ import com.shuangduan.zcy.model.event.UserNameEvent;
 import com.shuangduan.zcy.utils.BarUtils;
 import com.shuangduan.zcy.utils.image.ImageConfig;
 import com.shuangduan.zcy.utils.image.ImageLoader;
+import com.shuangduan.zcy.view.mine.BalanceActivity;
 import com.shuangduan.zcy.view.mine.FeedbackActivity;
 import com.shuangduan.zcy.view.mine.HelperActivity;
 import com.shuangduan.zcy.view.mine.MineCollectionActivity;
@@ -26,7 +27,6 @@ import com.shuangduan.zcy.view.mine.ReadHistoryActivity;
 import com.shuangduan.zcy.view.mine.RecommendFriendsActivity;
 import com.shuangduan.zcy.view.mine.SetActivity;
 import com.shuangduan.zcy.view.mine.UserInfoActivity;
-import com.shuangduan.zcy.view.mine.WithdrawActivity;
 import com.shuangduan.zcy.vm.UserInfoVm;
 import com.shuangduan.zcy.weight.CircleImageView;
 
@@ -117,7 +117,7 @@ public class MineFragment extends BaseFragment {
                 ActivityUtils.startActivity(UserInfoActivity.class);
                 break;
             case R.id.tv_balance:
-                ActivityUtils.startActivity(WithdrawActivity.class);
+                ActivityUtils.startActivity(BalanceActivity.class);
                 break;
             case R.id.fl_order:
                 break;

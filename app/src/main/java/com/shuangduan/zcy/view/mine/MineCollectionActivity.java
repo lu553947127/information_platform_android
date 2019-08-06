@@ -12,7 +12,6 @@ import com.google.android.material.tabs.TabLayout;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ViewPagerAdapter;
 import com.shuangduan.zcy.base.BaseActivity;
-import com.shuangduan.zcy.vm.MineSubVm;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -21,7 +20,7 @@ import butterknife.OnClick;
  * @author 宁文强 QQ:858777523
  * @name information_platform_android
  * @class name：com.shuangduan.zcy.view.mine
- * @class describe
+ * @class describe  我的收藏
  * @time 2019/8/5 14:32
  * @change
  * @chang time
@@ -38,7 +37,6 @@ public class MineCollectionActivity extends BaseActivity {
     TabLayout tabLayout;
     @BindView(R.id.vp)
     ViewPager vp;
-    private MineSubVm mineSubVm;
 
     @Override
     protected int initLayoutRes() {

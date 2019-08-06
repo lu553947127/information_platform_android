@@ -66,7 +66,7 @@ public class ProjectHistoryFragment extends BaseLazyFragment {
         });
 
         readHistoryVm = ViewModelProviders.of(this).get(ReadHistoryVm.class);
-        readHistoryVm.readHistoryBeanMutableLiveData.observe(this, readHistoryBeans -> {
+        readHistoryVm.projectHistoryLiveData.observe(this, readHistoryBeans -> {
             isInited = true;
             readHistoryAdapter.setNewData(readHistoryBeans);
             readHistoryAdapter.setEmptyView(R.layout.layout_empty_top, rv);

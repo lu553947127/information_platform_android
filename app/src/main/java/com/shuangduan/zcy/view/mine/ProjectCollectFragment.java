@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ActivityUtils;
-import com.blankj.utilcode.util.LogUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
@@ -17,7 +16,6 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ProjectCollectAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseFragment;
-import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.ProjectCollectBean;
 import com.shuangduan.zcy.view.projectinfo.ProjectDetailActivity;
 import com.shuangduan.zcy.vm.MineCollectionVm;
@@ -72,7 +70,7 @@ public class ProjectCollectFragment extends BaseFragment {
         });
 
         mineCollectionVm = ViewModelProviders.of(this).get(MineCollectionVm.class);
-        mineCollectionVm.collectLiveData.observe(this, projectCollectBean -> {
+        mineCollectionVm.projectCollectLiveData.observe(this, projectCollectBean -> {
             if (projectCollectBean.getPage() == 1) {
                 adapter.setNewData(projectCollectBean.getList());
                 adapter.setEmptyView(R.layout.layout_empty, rv);
@@ -85,19 +83,19 @@ public class ProjectCollectFragment extends BaseFragment {
         refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                mineCollectionVm.refreshMyCollection();
+                mineCollectionVm.refreshProjectCollection();
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                mineCollectionVm.myCollection();
+                mineCollectionVm.projectCollection();
             }
         });
     }
 
     @Override
     protected void initDataFromService() {
-        mineCollectionVm.myCollection();
+        mineCollectionVm.projectCollection();
     }
 
     private void setNoMore(int page, int count){

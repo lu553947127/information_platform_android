@@ -13,13 +13,12 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shuangduan.zcy.R;
-import com.shuangduan.zcy.adapter.ProjectSubAdapter;
+import com.shuangduan.zcy.adapter.RecruitAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseLazyFragment;
-import com.shuangduan.zcy.model.api.PageState;
-import com.shuangduan.zcy.model.bean.ProjectSubBean;
-import com.shuangduan.zcy.view.projectinfo.ProjectDetailActivity;
-import com.shuangduan.zcy.vm.MineSubVm;
+import com.shuangduan.zcy.model.bean.RecruitBean;
+import com.shuangduan.zcy.view.recruit.RecruitDetailActivity;
+import com.shuangduan.zcy.vm.MineCollectionVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
 import butterknife.BindView;
@@ -39,7 +38,7 @@ public class RecruitCollectFragment extends BaseLazyFragment {
     RecyclerView rv;
     @BindView(R.id.refresh)
     SmartRefreshLayout refresh;
-    private MineSubVm mineSubVm;
+    private MineCollectionVm mineCollectionVm;
 
     public static RecruitCollectFragment newInstance() {
 
@@ -59,40 +58,44 @@ public class RecruitCollectFragment extends BaseLazyFragment {
     protected void initDataAndEvent(Bundle savedInstanceState) {
         rv.setLayoutManager(new LinearLayoutManager(mContext));
         rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
-        ProjectSubAdapter adapter = new ProjectSubAdapter(R.layout.item_mine_project, null);
-        adapter.setEmptyView(R.layout.layout_loading, rv);
-        rv.setAdapter(adapter);
-        adapter.setOnItemClickListener((helper, view, position) -> {
-
+        RecruitAdapter recruitAdapter = new RecruitAdapter(R.layout.item_recruit, null);
+        recruitAdapter.setEmptyView(R.layout.layout_loading, rv);
+        rv.setAdapter(recruitAdapter);
+        recruitAdapter.setOnItemClickListener((adapter, view, position) -> {
+            RecruitBean.ListBean listBean = recruitAdapter.getData().get(position);
+            Bundle bundle = new Bundle();
+            bundle.putInt(CustomConfig.RECRUIT_ID, listBean.getId());
+            ActivityUtils.startActivity(bundle, RecruitDetailActivity.class);
         });
 
-        mineSubVm = ViewModelProviders.of(this).get(MineSubVm.class);
-        mineSubVm.projectLiveData.observe(this, projectMineBean -> {
-            if (projectMineBean.getPage() == 1) {
-                adapter.setNewData(projectMineBean.getList());
-                adapter.setEmptyView(R.layout.layout_empty, rv);
+        mineCollectionVm = ViewModelProviders.of(this).get(MineCollectionVm.class);
+        mineCollectionVm.recruitCollectLiveData.observe(this, recruitBean -> {
+            isInited = true;
+            if (recruitBean.getPage() == 1) {
+                recruitAdapter.setNewData(recruitBean.getList());
+                recruitAdapter.setEmptyView(R.layout.layout_empty_top, rv);
             }else {
-                adapter.addData(projectMineBean.getList());
+                recruitAdapter.addData(recruitBean.getList());
             }
-            setNoMore(projectMineBean.getPage(), projectMineBean.getCount());
+            setNoMore(recruitBean.getPage(), recruitBean.getCount());
         });
 
         refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-
+                mineCollectionVm.refreshRecruitCollection();
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-
+                mineCollectionVm.recruitCollection();
             }
         });
     }
 
     @Override
     protected void initDataFromService() {
-
+        mineCollectionVm.recruitCollection();
     }
 
     private void setNoMore(int page, int count){

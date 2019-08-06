@@ -65,6 +65,10 @@
         <activity android:name="com.shuangduan.zcy.view.mine.MineSubActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.view.mine.MineCollectionActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.view.mine.MineIncomeActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
+        <activity android:name="com.shuangduan.zcy.view.mine.BalanceActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
+        <activity android:name="com.shuangduan.zcy.view.mine.BankCardListActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
+        <activity android:name="com.shuangduan.zcy.view.mine.WithdrawRecordActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
+        <activity android:name="com.shuangduan.zcy.view.mine.WithdrawDetailActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
         <activity android:name="com.shuangduan.zcy.view.projectinfo.ProjectInfoActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.view.projectinfo.ProjectInfoListActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.view.projectinfo.ProjectDetailActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
@@ -82,6 +86,7 @@
         <activity android:name="com.shuangduan.zcy.view.release.ContactTypeActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.view.release.ProjectSearchActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.view.release.ReleaseStageSelectActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
+        <activity android:name="com.shuangduan.zcy.view.infrastructure.InfrastructureActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.view.SearchActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.view.PhotoViewActivity" android:screenOrientation="portrait" android:theme="@style/PhotoViewTheme"/>
         <activity android:name="com.shuangduan.zcy.view.PayActivity" android:screenOrientation="portrait"/>

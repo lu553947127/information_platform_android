@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatTextView;
@@ -20,6 +20,7 @@ import com.shuangduan.zcy.dialog.PhotoDialog;
 import com.shuangduan.zcy.utils.matisse.Glide4Engine;
 import com.shuangduan.zcy.utils.matisse.MatisseCamera;
 import com.shuangduan.zcy.vm.PermissionVm;
+import com.shuangduan.zcy.vm.WithdrawVm;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
@@ -49,20 +50,17 @@ public class BindBankCardActivity extends BaseActivity implements BaseDialog.Pho
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.edt_real_name)
-    AppCompatEditText edtRealName;
+    TextView tvRealName;
     @BindView(R.id.edt_bank_account)
     AppCompatEditText edtBankAccount;
     @BindView(R.id.edt_bank_card_number)
     AppCompatEditText edtBankCardNumber;
     @BindView(R.id.edt_identity_number)
-    AppCompatEditText edtIdentityNumber;
-    @BindView(R.id.iv_id_card_positive)
-    ImageView ivIdCardPositive;
-    @BindView(R.id.iv_id_card_negative)
-    ImageView ivIdCardNegative;
+    TextView tvIdentityNumber;
 
-    private PermissionVm photoVm;
+    private PermissionVm permissionVm;
     private RxPermissions rxPermissions;
+    private WithdrawVm withdrawVm;
 
     @Override
     protected int initLayoutRes() {
@@ -76,8 +74,8 @@ public class BindBankCardActivity extends BaseActivity implements BaseDialog.Pho
         tvBarRight.setText(getString(R.string.save));
 
         rxPermissions = new RxPermissions(this);
-        photoVm = ViewModelProviders.of(this).get(PermissionVm.class);
-        photoVm.getLiveData().observe(this, integer -> {
+        permissionVm = ViewModelProviders.of(this).get(PermissionVm.class);
+        permissionVm.getLiveData().observe(this, integer -> {
             if (integer == PermissionVm.PERMISSION_CAMERA){
                 MatisseCamera.from(this)
                         .forResult(PermissionVm.REQUEST_CODE_BANK_CARD, "com.shuangduan.zcy.fileprovider");
@@ -96,9 +94,15 @@ public class BindBankCardActivity extends BaseActivity implements BaseDialog.Pho
                         .forResult(PermissionVm.REQUEST_CODE_CHOOSE_BANK_CARD);
             }
         });
+        withdrawVm = ViewModelProviders.of(this).get(WithdrawVm.class);
+        withdrawVm.authenticationLiveData.observe(this, authenBean -> {
+            tvRealName.setText(authenBean.getReal_name());
+            tvIdentityNumber.setText(authenBean.getIdentity_card());
+        });
+        withdrawVm.authentication();
     }
 
-    @OnClick({R.id.iv_bar_back, R.id.tv_bar_right, R.id.iv_id_card_positive, R.id.iv_id_card_negative})
+    @OnClick({R.id.iv_bar_back, R.id.tv_bar_right, R.id.iv_camera})
     void onClick(View view){
         switch (view.getId()){
             case R.id.iv_bar_back:
@@ -106,12 +110,7 @@ public class BindBankCardActivity extends BaseActivity implements BaseDialog.Pho
                 break;
             case R.id.tv_bar_right:
                 break;
-            case R.id.iv_id_card_positive:
-                new PhotoDialog(this)
-                        .setPhotoCallBack(this)
-                        .showDialog();
-                break;
-            case R.id.iv_id_card_negative:
+            case R.id.iv_camera:
                 new PhotoDialog(this)
                         .setPhotoCallBack(this)
                         .showDialog();
@@ -124,23 +123,21 @@ public class BindBankCardActivity extends BaseActivity implements BaseDialog.Pho
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PermissionVm.REQUEST_CODE_CHOOSE_BANK_CARD && resultCode == RESULT_OK) {
             List<String> mSelected = Matisse.obtainPathResult(data);
-//            photoVm.upLoadImg(mSelected.get(0));
         }
 
         if (requestCode == PermissionVm.REQUEST_CODE_BANK_CARD && resultCode == RESULT_OK) {
-//            photoVm.upLoadImg(MatisseCamera.obtainPathResult());
             LogUtils.i(MatisseCamera.obtainPathResult(), MatisseCamera.obtainUriResult());
         }
     }
 
     @Override
     public void camera() {
-        photoVm.getPermissionCamera(rxPermissions);
+        permissionVm.getPermissionCamera(rxPermissions);
     }
 
     @Override
     public void album() {
-        photoVm.getPermissionAlbum(rxPermissions);
+        permissionVm.getPermissionAlbum(rxPermissions);
     }
 
 }

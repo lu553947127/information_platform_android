@@ -20,6 +20,7 @@
             android:text="@string/arrival_bank_card"/>
 
         <TextView
+            android:id="@+id/tv_bank_card"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="89dp"

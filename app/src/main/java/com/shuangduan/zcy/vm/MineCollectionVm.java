@@ -8,6 +8,7 @@ import com.shuangduan.zcy.base.BaseViewModel;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.api.repository.UserRepository;
 import com.shuangduan.zcy.model.bean.ProjectCollectBean;
+import com.shuangduan.zcy.model.bean.RecruitBean;
 
 /**
  * @author 宁文强 QQ:858777523
@@ -20,26 +21,41 @@ import com.shuangduan.zcy.model.bean.ProjectCollectBean;
  * @class describe
  */
 public class MineCollectionVm extends BaseViewModel {
-    public MutableLiveData<ProjectCollectBean> collectLiveData;
+    public MutableLiveData<ProjectCollectBean> projectCollectLiveData;
+    public MutableLiveData<RecruitBean> recruitCollectLiveData;
     public MutableLiveData<String> pageStateLiveData;
     private int userId;
-    public int page;
+    public int projectPage;
+    public int recruitPage;
 
     public MineCollectionVm() {
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
-        collectLiveData = new MutableLiveData<>();
+        projectCollectLiveData = new MutableLiveData<>();
+        recruitCollectLiveData = new MutableLiveData<>();
         pageStateLiveData = new MutableLiveData<>();
     }
 
-    public void myCollection(){
-        page = 1;
+    public void projectCollection(){
+        projectPage = 1;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
-        new UserRepository().projectCollection(collectLiveData, pageStateLiveData, userId, page);
+        new UserRepository().projectCollection(projectCollectLiveData, pageStateLiveData, userId, projectPage);
     }
 
-    public void refreshMyCollection(){
-        page ++;
+    public void refreshProjectCollection(){
+        projectPage ++;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
-        new UserRepository().projectCollection(collectLiveData, pageStateLiveData, userId, page);
+        new UserRepository().projectCollection(projectCollectLiveData, pageStateLiveData, userId, projectPage);
+    }
+
+    public void recruitCollection(){
+        recruitPage = 1;
+        pageStateLiveData.postValue(PageState.PAGE_REFRESH);
+        new UserRepository().recruitCollection(recruitCollectLiveData, pageStateLiveData, userId, recruitPage);
+    }
+
+    public void refreshRecruitCollection(){
+        recruitPage ++;
+        pageStateLiveData.postValue(PageState.PAGE_REFRESH);
+        new UserRepository().recruitCollection(recruitCollectLiveData, pageStateLiveData, userId, recruitPage);
     }
 }

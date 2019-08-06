@@ -15,6 +15,7 @@ import com.shuangduan.zcy.model.bean.MapBean;
 import com.shuangduan.zcy.model.bean.ProjectInfoBean;
 import com.shuangduan.zcy.model.bean.ProjectMineBean;
 import com.shuangduan.zcy.model.bean.ProvinceBean;
+import com.shuangduan.zcy.model.bean.RecruitSubBean;
 import com.shuangduan.zcy.model.bean.StageBean;
 import com.shuangduan.zcy.model.bean.TypeBean;
 
@@ -82,6 +83,10 @@ public class ProjectRepository extends BaseRepository {
 
     public void projectSub(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int user_id, int page){
         request(apiService.projectSub(user_id, page)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    public void recruitSub(MutableLiveData<RecruitSubBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, int page){
+        request(apiService.recruitSub(user_id, page)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
 }

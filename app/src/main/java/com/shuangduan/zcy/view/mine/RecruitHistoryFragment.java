@@ -6,9 +6,14 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ReadHistoryAdapter;
+import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseLazyFragment;
+import com.shuangduan.zcy.model.bean.ReadHistoryBean;
+import com.shuangduan.zcy.view.projectinfo.ProjectDetailActivity;
+import com.shuangduan.zcy.view.recruit.RecruitDetailActivity;
 import com.shuangduan.zcy.vm.ReadHistoryVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
@@ -50,12 +55,18 @@ public class RecruitHistoryFragment extends BaseLazyFragment {
         ReadHistoryAdapter readHistoryAdapter = new ReadHistoryAdapter(R.layout.item_read_history, null);
         readHistoryAdapter.setEmptyView(R.layout.layout_loading, rv);
         rv.setAdapter(readHistoryAdapter);
+        readHistoryAdapter.setOnItemClickListener((adapter, view, position) -> {
+            ReadHistoryBean listBean = readHistoryAdapter.getData().get(position);
+            Bundle bundle = new Bundle();
+            bundle.putInt(CustomConfig.RECRUIT_ID, listBean.getId());
+            ActivityUtils.startActivity(bundle, RecruitDetailActivity.class);
+        });
 
         readHistoryVm = ViewModelProviders.of(this).get(ReadHistoryVm.class);
-        readHistoryVm.readHistoryBeanMutableLiveData.observe(this, readHistoryBeans -> {
+        readHistoryVm.recruitHistoryLiveData.observe(this, readHistoryBeans -> {
             isInited = true;
-            readHistoryAdapter.setEmptyView(R.layout.layout_empty_top, rv);
             readHistoryAdapter.setNewData(readHistoryBeans);
+            readHistoryAdapter.setEmptyView(R.layout.layout_empty_top, rv);
         });
     }
 

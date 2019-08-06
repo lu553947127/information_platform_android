@@ -22,22 +22,24 @@ import java.util.List;
  * @class describe
  */
 public class ReadHistoryVm extends BaseViewModel {
-    public MutableLiveData<List<ReadHistoryBean>> readHistoryBeanMutableLiveData;
+    public MutableLiveData<List<ReadHistoryBean>> projectHistoryLiveData;
+    public MutableLiveData<List<ReadHistoryBean>> recruitHistoryLiveData;
     public MutableLiveData<String> pageStateLiveData;
     private int userId;
 
     public ReadHistoryVm() {
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
-        this.readHistoryBeanMutableLiveData = new MutableLiveData<>();
+        this.projectHistoryLiveData = new MutableLiveData<>();
+        this.recruitHistoryLiveData = new MutableLiveData<>();
         this.pageStateLiveData = new MutableLiveData<>();
     }
 
     public void getProjectHistory(){
-        new UserRepository().historyProject(readHistoryBeanMutableLiveData, pageStateLiveData, userId);
+        new UserRepository().historyProject(projectHistoryLiveData, pageStateLiveData, userId);
     }
 
     public void getRecruitHistory(){
-
+        new UserRepository().historyRecruit(recruitHistoryLiveData, pageStateLiveData, userId);
     }
 
 }

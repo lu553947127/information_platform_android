@@ -25,7 +25,7 @@ import butterknife.Unbinder;
 public abstract class BaseDialog extends Dialog {
 
     public final String TAG = "BaseDialog";
-    private Activity mActivity;
+    public Activity mActivity;
     private BaseDialog dialog;
     private Unbinder unbinder;
 

@@ -3,13 +3,17 @@ package com.shuangduan.zcy.model.api.repository;
 import androidx.lifecycle.MutableLiveData;
 
 import com.shuangduan.zcy.model.api.rxjava.BaseSubscriber;
+import com.shuangduan.zcy.model.bean.AuthenBean;
+import com.shuangduan.zcy.model.bean.BankCardBean;
 import com.shuangduan.zcy.model.bean.MineIncomeBean;
 import com.shuangduan.zcy.model.bean.MyPhasesBean;
 import com.shuangduan.zcy.model.bean.ProjectCollectBean;
 import com.shuangduan.zcy.model.bean.ReadHistoryBean;
+import com.shuangduan.zcy.model.bean.RecruitBean;
 import com.shuangduan.zcy.model.bean.SearchCompanyBean;
 import com.shuangduan.zcy.model.bean.SubBean;
 import com.shuangduan.zcy.model.bean.UserInfoBean;
+import com.shuangduan.zcy.model.bean.WithdrawBean;
 
 import java.util.List;
 
@@ -142,6 +146,13 @@ public class UserRepository extends BaseRepository {
     }
 
     /**
+     * 浏览历史-招采信息
+     */
+    public void historyRecruit(MutableLiveData<List<ReadHistoryBean>> liveData, MutableLiveData<String> pageStateLiveData, int user_id){
+        request(apiService.historyTenderer(user_id)).setDataList(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    /**
      * 意见反馈
      */
     public void feedback(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int user_id, String content){
@@ -156,10 +167,45 @@ public class UserRepository extends BaseRepository {
     }
 
     /**
+     * 我的收藏-工程信息
+     */
+    public void recruitCollection(MutableLiveData<RecruitBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, int page){
+        request(apiService.recruitCollection(user_id, page)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    /**
      * 我的收益
      */
     public void mineIncome(MutableLiveData<MineIncomeBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id){
         request(apiService.myProceeds(user_id)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    /**
+     * 我的收益
+     */
+    public void authentication(MutableLiveData<AuthenBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id){
+        request(apiService.authentication(user_id)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    /**
+     * 身份认证
+     */
+    public void idcard(MutableLiveData<AuthenBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, String image_front, String image_reverse_site){
+        request(apiService.idcard(user_id, image_front, image_reverse_site)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    /**
+     * 提现信息
+     */
+    public void withdrawMsg(MutableLiveData<WithdrawBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id){
+        request(apiService.withdrawMsg(user_id)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    /**
+     * 银行卡列表
+     */
+    public void bankcardList(MutableLiveData<List<BankCardBean>> liveData, MutableLiveData<String> pageStateLiveData, int user_id){
+        request(apiService.bankcardList(user_id)).setDataList(liveData).setPageState(pageStateLiveData).send();
     }
 
 }

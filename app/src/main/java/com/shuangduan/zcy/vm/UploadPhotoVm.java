@@ -21,9 +21,12 @@ import com.shuangduan.zcy.model.bean.UploadBean;
  * @class describe
  */
 public class UploadPhotoVm extends BaseViewModel {
+    public static final int ID_CARD_POSITIVE = 1;//身份证正面
+    public static final int ID_CARD_NEGATIVE = 2;//身份证反面
     private int userId;
     public MutableLiveData<String> mPageStateLiveData;
     public MutableLiveData<UploadBean> uploadLiveData;
+    public int type = 0;
 
     public UploadPhotoVm() {
         this.userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);

@@ -20,6 +20,7 @@ import com.shuangduan.zcy.dialog.PhotoDialog;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.utils.matisse.Glide4Engine;
 import com.shuangduan.zcy.utils.matisse.MatisseCamera;
+import com.shuangduan.zcy.vm.AuthenticationVm;
 import com.shuangduan.zcy.vm.PermissionVm;
 import com.shuangduan.zcy.vm.UploadPhotoVm;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -63,6 +64,7 @@ public class AuthenticationActivity extends BaseActivity implements BaseDialog.P
     private PermissionVm permissionVm;
     private RxPermissions rxPermissions;
     private UploadPhotoVm uploadPhotoVm;
+    private AuthenticationVm authenticationVm;
 
     @Override
     protected int initLayoutRes() {
@@ -91,6 +93,7 @@ public class AuthenticationActivity extends BaseActivity implements BaseDialog.P
                 break;
         }
 
+        authenticationVm = ViewModelProviders.of(this).get(AuthenticationVm.class);
         uploadPhotoVm = ViewModelProviders.of(this).get(UploadPhotoVm.class);
         rxPermissions = new RxPermissions(this);
         permissionVm = ViewModelProviders.of(this).get(PermissionVm.class);
@@ -115,14 +118,31 @@ public class AuthenticationActivity extends BaseActivity implements BaseDialog.P
         });
 
         uploadPhotoVm.uploadLiveData.observe(this, uploadBean -> {
-//            userInfoVm.setImg(uploadBean.getThumbnail());
-//            userInfoVm.updateAvatar(uploadBean.getSource());
+            if (uploadPhotoVm.type == UploadPhotoVm.ID_CARD_POSITIVE){
+                authenticationVm.image_front = uploadBean.getSource();
+            }else if (uploadPhotoVm.type == UploadPhotoVm.ID_CARD_NEGATIVE){
+                authenticationVm.image_reverse_site = uploadBean.getSource();
+            }
         });
+        authenticationVm.authenticationLiveData.observe(this, o -> finish());
         uploadPhotoVm.mPageStateLiveData.observe(this, s -> {
-            if (s != PageState.PAGE_LOADING){
-                hideLoading();
-            }else {
-                showLoading();
+            switch (s){
+                case PageState.PAGE_LOADING:
+                    showLoading();
+                    break;
+                default:
+                    hideLoading();
+                    break;
+            }
+        });
+        authenticationVm.pageStateLiveData.observe(this, s -> {
+            switch (s){
+                case PageState.PAGE_LOADING:
+                    showLoading();
+                    break;
+                default:
+                    hideLoading();
+                    break;
             }
         });
     }
@@ -136,17 +156,20 @@ public class AuthenticationActivity extends BaseActivity implements BaseDialog.P
             case R.id.tv_bar_right:
                 switch (type){
                     case CustomConfig.uploadTypeIdCard://身份认证
+                        authenticationVm.idCard();
                         break;
                     case CustomConfig.uploadTypeBusinessCard://上传名片
                         break;
                 }
                 break;
             case R.id.iv_id_card_positive:
+                uploadPhotoVm.type = UploadPhotoVm.ID_CARD_POSITIVE;
                 new PhotoDialog(this)
                         .setPhotoCallBack(this)
                         .showDialog();
                 break;
             case R.id.iv_id_card_negative:
+                uploadPhotoVm.type = UploadPhotoVm.ID_CARD_NEGATIVE;
                 new PhotoDialog(this)
                         .setPhotoCallBack(this)
                         .showDialog();

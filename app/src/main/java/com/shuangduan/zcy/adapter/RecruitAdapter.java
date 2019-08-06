@@ -19,16 +19,16 @@ import java.util.List;
  * @chang time
  * @class describe
  */
-public class RecruitAdapter extends BaseQuickAdapter<RecruitBean, BaseViewHolder> {
-    public RecruitAdapter(int layoutResId, @Nullable List<RecruitBean> data) {
+public class RecruitAdapter extends BaseQuickAdapter<RecruitBean.ListBean, BaseViewHolder> {
+    public RecruitAdapter(int layoutResId, @Nullable List<RecruitBean.ListBean> data) {
         super(layoutResId, data);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, RecruitBean item) {
-        helper.setText(R.id.tv_title, "山东省济南市莱芜去影视城电子信息产业园一期")
-                .setText(R.id.tv_content, "项目简介项目简介项目简介项目简介项目简介项目简介项目简介")
-                .setText(R.id.tv_area, "济南市莱芜区")
-                .setText(R.id.tv_time, "2018-5-8");
+    protected void convert(BaseViewHolder helper, RecruitBean.ListBean item) {
+        helper.setText(R.id.tv_title, item.getTitle())
+                .setText(R.id.tv_content, item.getContent())
+                .setText(R.id.tv_area, item.getProvince() + item.getCity())
+                .setText(R.id.tv_time, item.getCreate_time());
     }
 }
