@@ -5,10 +5,12 @@ import androidx.lifecycle.MutableLiveData;
 import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseViewModel;
+import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.api.repository.UserRepository;
 import com.shuangduan.zcy.model.bean.AuthenBean;
 import com.shuangduan.zcy.model.bean.BankCardBean;
 import com.shuangduan.zcy.model.bean.WithdrawBean;
+import com.shuangduan.zcy.model.bean.WithdrawRecordBean;
 
 import java.util.List;
 
@@ -27,7 +29,10 @@ public class WithdrawVm extends BaseViewModel {
     public MutableLiveData<AuthenBean> authenticationLiveData;
     public MutableLiveData<WithdrawBean> withdrawLiveData;
     public MutableLiveData<List<BankCardBean>> bankcardLiveData;
+    public MutableLiveData<WithdrawRecordBean> recordLiveData;
+    public MutableLiveData<WithdrawRecordBean.ListBean> recordDetailLiveData;
     public MutableLiveData<String> pageStateLiveData;
+    private int recordPage;
 
     public WithdrawVm() {
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
@@ -35,6 +40,8 @@ public class WithdrawVm extends BaseViewModel {
         pageStateLiveData = new MutableLiveData<>();
         withdrawLiveData = new MutableLiveData<>();
         bankcardLiveData = new MutableLiveData<>();
+        recordLiveData = new MutableLiveData<>();
+        recordDetailLiveData = new MutableLiveData<>();
     }
 
     public void authentication(){
@@ -47,6 +54,22 @@ public class WithdrawVm extends BaseViewModel {
 
     public void bankcardList(){
         new UserRepository().bankcardList(bankcardLiveData, pageStateLiveData, userId);
+    }
+
+    public void withdrawRecord(){
+        recordPage = 1;
+        pageStateLiveData.postValue(PageState.PAGE_REFRESH);
+        new UserRepository().withdrawRecord(recordLiveData, pageStateLiveData, userId, recordPage);
+    }
+
+    public void refreshWithdrawRecord(){
+        recordPage ++;
+        pageStateLiveData.postValue(PageState.PAGE_REFRESH);
+        new UserRepository().withdrawRecord(recordLiveData, pageStateLiveData, userId, recordPage);
+    }
+
+    public void getDetail(int id){
+        new UserRepository().withdrawRecordDetail(recordDetailLiveData, pageStateLiveData, userId, id);
     }
 
 }

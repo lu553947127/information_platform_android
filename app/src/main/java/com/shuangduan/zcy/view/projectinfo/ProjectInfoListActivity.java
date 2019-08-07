@@ -23,6 +23,7 @@ import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.TimeUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ProjectInfoAdapter;
@@ -140,28 +141,34 @@ public class ProjectInfoListActivity extends BaseActivity {
 
         projectListVm.init();
         projectListVm.projectLiveData.observe(this, projectInfoBeans -> {
-            projectListVm.page = projectInfoBeans.getPage();
-            if (projectListVm.page == 1){
-                //初始数据
+            if (projectInfoBeans.getPage() == 1) {
                 projectInfoAdapter.setNewData(projectInfoBeans.getList());
-            }else if (projectListVm.page > 1){
-                //加载更多的数据
+                projectInfoAdapter.setEmptyView(R.layout.layout_empty, rv);
+            }else {
                 projectInfoAdapter.addData(projectInfoBeans.getList());
             }
+            setNoMore(projectInfoBeans.getPage(), projectInfoBeans.getCount());
         });
-        projectListVm.pageStateLiveData.observe(this, s -> {
-            switch (s){
-                case PageState.PAGE_LOADING:
-                    break;
-                case PageState.PAGE_REFRESH:
+    }
 
-                    break;
-                    default:
-                        refresh.finishRefresh();
-                        refresh.finishLoadMore();
-                        break;
+    private void setNoMore(int page, int count){
+        if (page == 1){
+            if (page * 10 >= count){
+                if (refresh.getState() == RefreshState.None){
+                    refresh.setNoMoreData(true);
+                }else {
+                    refresh.finishRefreshWithNoMoreData();
+                }
+            }else {
+                refresh.finishRefresh();
             }
-        });
+        }else {
+            if (page * 10 >= count){
+                refresh.finishLoadMoreWithNoMoreData();
+            }else {
+                refresh.finishLoadMore();
+            }
+        }
     }
 
     @OnClick({R.id.iv_bar_back, R.id.iv_bar_right, R.id.ll_area, R.id.ll_stage, R.id.ll_type, R.id.ll_time, R.id.ll_subscribe, R.id.over})

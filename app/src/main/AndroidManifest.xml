@@ -67,7 +67,7 @@
         <activity android:name="com.shuangduan.zcy.view.mine.MineIncomeActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
         <activity android:name="com.shuangduan.zcy.view.mine.BalanceActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
         <activity android:name="com.shuangduan.zcy.view.mine.BankCardListActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
-        <activity android:name="com.shuangduan.zcy.view.mine.WithdrawRecordActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
+        <activity android:name="com.shuangduan.zcy.view.mine.WithdrawRecordActivity" android:screenOrientation="portrait" />
         <activity android:name="com.shuangduan.zcy.view.mine.WithdrawDetailActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
         <activity android:name="com.shuangduan.zcy.view.projectinfo.ProjectInfoActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.view.projectinfo.ProjectInfoListActivity" android:screenOrientation="portrait"/>
@@ -78,6 +78,8 @@
         <activity android:name="com.shuangduan.zcy.view.projectinfo.ProjectErrorActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.view.recruit.RecruitActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.view.recruit.RecruitDetailActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.shuangduan.zcy.view.material.MaterialActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.shuangduan.zcy.view.material.MaterialDetailActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
         <activity android:name="com.shuangduan.zcy.view.release.ReleaseListActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.view.release.ReleaseProjectActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray" android:windowSoftInputMode="stateHidden|adjustResize"/>
         <activity android:name="com.shuangduan.zcy.view.release.ReleaseTypeSelectActivity" android:screenOrientation="portrait"/>
@@ -86,7 +88,6 @@
         <activity android:name="com.shuangduan.zcy.view.release.ContactTypeActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.view.release.ProjectSearchActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.view.release.ReleaseStageSelectActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
-        <activity android:name="com.shuangduan.zcy.view.infrastructure.InfrastructureActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.view.SearchActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.view.PhotoViewActivity" android:screenOrientation="portrait" android:theme="@style/PhotoViewTheme"/>
         <activity android:name="com.shuangduan.zcy.view.PayActivity" android:screenOrientation="portrait"/>

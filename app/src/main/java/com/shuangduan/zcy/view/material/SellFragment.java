@@ -1,96 +1,103 @@
-package com.shuangduan.zcy.view.mine;
+package com.shuangduan.zcy.view.material;
 
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatTextView;
-import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ActivityUtils;
-import com.blankj.utilcode.util.BarUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shuangduan.zcy.R;
-import com.shuangduan.zcy.adapter.WithdrawRecordAdapter;
+import com.shuangduan.zcy.adapter.ProjectSubAdapter;
+import com.shuangduan.zcy.adapter.SellAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
-import com.shuangduan.zcy.base.BaseActivity;
-import com.shuangduan.zcy.model.bean.WithdrawRecordBean;
-import com.shuangduan.zcy.vm.WithdrawVm;
+import com.shuangduan.zcy.base.BaseLazyFragment;
+import com.shuangduan.zcy.model.bean.MaterialBean;
+import com.shuangduan.zcy.model.bean.ProjectSubBean;
+import com.shuangduan.zcy.view.projectinfo.ProjectDetailActivity;
+import com.shuangduan.zcy.vm.MaterialVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
 /**
  * @author 宁文强 QQ:858777523
  * @name information_platform_android
- * @class name：com.shuangduan.zcy.view.mine
- * @class describe  提现记录
- * @time 2019/8/6 17:47
+ * @class name：com.shuangduan.zcy.view.infrastructure
+ * @class describe  售卖
+ * @time 2019/8/6 11:16
  * @change
  * @chang time
  * @class describe
  */
-public class WithdrawRecordActivity extends BaseActivity {
-    @BindView(R.id.tv_bar_title)
-    AppCompatTextView tvBarTitle;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+public class SellFragment extends BaseLazyFragment {
     @BindView(R.id.rv)
     RecyclerView rv;
     @BindView(R.id.refresh)
     SmartRefreshLayout refresh;
-    private WithdrawVm withdrawVm;
+    private MaterialVm materialVm;
+
+    public static SellFragment newInstance() {
+
+        Bundle args = new Bundle();
+
+        SellFragment fragment = new SellFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
-    protected int initLayoutRes() {
-        return R.layout.activity_withdraw_record;
+    protected int initLayout() {
+        return R.layout.fragment_project_info;
     }
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
-        BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
-        tvBarTitle.setText(getString(R.string.withdraw_record));
-
-        rv.setLayoutManager(new LinearLayoutManager(this));
-        rv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
-        WithdrawRecordAdapter adapter = new WithdrawRecordAdapter(R.layout.item_withdraw_record, null);
+        rv.setLayoutManager(new LinearLayoutManager(mContext));
+        rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
+        SellAdapter adapter = new SellAdapter(R.layout.item_material, null);
         adapter.setEmptyView(R.layout.layout_loading, rv);
         rv.setAdapter(adapter);
         adapter.setOnItemClickListener((helper, view, position) -> {
-            WithdrawRecordBean.ListBean listBean = adapter.getData().get(position);
+            MaterialBean.ListBean listBean = adapter.getData().get(position);
             Bundle bundle = new Bundle();
-            bundle.putInt(CustomConfig.WITHDRAW_RECORD_ID, listBean.getId());
-            ActivityUtils.startActivity(bundle, WithdrawDetailActivity.class);
+            bundle.putInt(CustomConfig.MATERIAL_ID, listBean.getId());
+            ActivityUtils.startActivity(bundle, MaterialDetailActivity.class);
         });
 
-        withdrawVm = ViewModelProviders.of(this).get(WithdrawVm.class);
-        withdrawVm.recordLiveData.observe(this, withdrawRecordBean -> {
-            if (withdrawRecordBean.getPage() == 1) {
-                adapter.setNewData(withdrawRecordBean.getList());
+        materialVm = ViewModelProviders.of(mActivity).get(MaterialVm.class);
+        materialVm.sellLiveData.observe(this, materialBean -> {
+            isInited = true;
+            if (materialBean.getPage() == 1) {
+                adapter.setNewData(materialBean.getList());
                 adapter.setEmptyView(R.layout.layout_empty, rv);
             }else {
-                adapter.addData(withdrawRecordBean.getList());
+                adapter.addData(materialBean.getList());
             }
-            setNoMore(withdrawRecordBean.getPage(), withdrawRecordBean.getCount());
+            setNoMore(materialBean.getPage(), materialBean.getCount());
         });
+
         refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                withdrawVm.refreshWithdrawRecord();
+                materialVm.refreshSellList();
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                withdrawVm.withdrawRecord();
+                materialVm.sellList();
             }
         });
-        withdrawVm.withdrawRecord();
+    }
+
+    @Override
+    protected void initDataFromService() {
+        materialVm.sellList();
     }
 
     private void setNoMore(int page, int count){
@@ -112,7 +119,4 @@ public class WithdrawRecordActivity extends BaseActivity {
             }
         }
     }
-
-    @OnClick(R.id.iv_bar_back)
-    void onClick(){finish();}
 }

@@ -40,6 +40,8 @@ public class CustomConfig {
     public static final String PROJECT_ADDRESS = "project_address";
     public static final String LOCATION = "location";
     public static final String RECRUIT_ID = "recruit_id";
+    public static final String WITHDRAW_RECORD_ID = "withdraw_record_id";
+    public static final String MATERIAL_ID = "material_id";
 
     public static final String SMS_TYPE = "sms_type";
     public static final int SMS_REGISTER = 1;//注册

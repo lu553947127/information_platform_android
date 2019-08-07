@@ -14,6 +14,7 @@ import com.shuangduan.zcy.model.bean.SearchCompanyBean;
 import com.shuangduan.zcy.model.bean.SubBean;
 import com.shuangduan.zcy.model.bean.UserInfoBean;
 import com.shuangduan.zcy.model.bean.WithdrawBean;
+import com.shuangduan.zcy.model.bean.WithdrawRecordBean;
 
 import java.util.List;
 
@@ -206,6 +207,20 @@ public class UserRepository extends BaseRepository {
      */
     public void bankcardList(MutableLiveData<List<BankCardBean>> liveData, MutableLiveData<String> pageStateLiveData, int user_id){
         request(apiService.bankcardList(user_id)).setDataList(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    /**
+     * 提现记录
+     */
+    public void withdrawRecord(MutableLiveData<WithdrawRecordBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, int page){
+        request(apiService.withdrawRecord(user_id, page)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    /**
+     * 提现详情
+     */
+    public void withdrawRecordDetail(MutableLiveData<WithdrawRecordBean.ListBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, int id){
+        request(apiService.withdrawRecordDetail(user_id, id)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
 }

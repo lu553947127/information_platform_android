@@ -7,29 +7,6 @@
 
     <include layout="@layout/toolbar"/>
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tab_layout"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        app:tabTextAppearance="@style/TabLayoutTextStyle"
-        app:tabMode="fixed"
-        app:elevation="0dp"
-        app:tabTextColor="@color/colorTvHint"
-        app:tabSelectedTextColor="@color/colorTv"
-        app:tabIndicatorColor="@color/colorPrimary"
-        app:tabIndicatorHeight="3dp"
-        app:tabIndicatorFullWidth="false"/>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/colorDivider"/>
-
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/vp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </androidx.viewpager.widget.ViewPager>
+    <include layout="@layout/layout_tab_vp"/>
 
 </LinearLayout>

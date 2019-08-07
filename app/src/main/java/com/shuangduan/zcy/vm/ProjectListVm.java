@@ -25,7 +25,7 @@ public class ProjectListVm extends BaseViewModel {
     public MutableLiveData<String> pageStateLiveData;
     public MutableLiveData<ProjectInfoBean> projectLiveData;
     private int userId;
-    public int page = 1;
+    private int page = 1;
     public String province = null;
     public int[] city = null;
     public String phases = null;

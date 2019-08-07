@@ -14,6 +14,9 @@ import com.shuangduan.zcy.model.bean.ContactTypeBean;
 import com.shuangduan.zcy.model.bean.LocusMineBean;
 import com.shuangduan.zcy.model.bean.LoginBean;
 import com.shuangduan.zcy.model.bean.MapBean;
+import com.shuangduan.zcy.model.bean.MaterialBean;
+import com.shuangduan.zcy.model.bean.MaterialCategoryBean;
+import com.shuangduan.zcy.model.bean.MaterialDetailBean;
 import com.shuangduan.zcy.model.bean.MineIncomeBean;
 import com.shuangduan.zcy.model.bean.MyPhasesBean;
 import com.shuangduan.zcy.model.bean.PayInfoBean;
@@ -40,6 +43,7 @@ import com.shuangduan.zcy.model.bean.TypeBean;
 import com.shuangduan.zcy.model.bean.UploadBean;
 import com.shuangduan.zcy.model.bean.UserInfoBean;
 import com.shuangduan.zcy.model.bean.WithdrawBean;
+import com.shuangduan.zcy.model.bean.WithdrawRecordBean;
 
 import java.util.List;
 
@@ -486,6 +490,20 @@ public interface ApiService {
     );
 
     @FormUrlEncoded
+    @POST("api/Userinfo/record")
+    Flowable<BaseObjResponse<WithdrawRecordBean>> withdrawRecord(
+            @Field("user_id") int user_id,
+            @Field("page") int page
+    );
+
+    @FormUrlEncoded
+    @POST("api/Userinfo/detailsRecord")
+    Flowable<BaseObjResponse<WithdrawRecordBean.ListBean>> withdrawRecordDetail(
+            @Field("user_id") int user_id,
+            @Field("id") int id
+    );
+
+    @FormUrlEncoded
     @POST("api/Bankcard/bankcardList")
     Flowable<BaseListResponse<BankCardBean>> bankcardList(
             @Field("user_id") int user_id
@@ -523,6 +541,29 @@ public interface ApiService {
     Flowable<BaseObjResponse> recruitCancelCollect(
             @Field("user_id") int user_id,
             @Field("id") int id
+    );
+
+    @FormUrlEncoded
+    @POST("api/Material/dateList")
+    Flowable<BaseObjResponse<MaterialBean>> materialList(
+            @Field("user_id") int user_id,
+            @Field("categoryId") int category_id,
+            @Field("type") int type,
+            @Field("page") int page
+    );
+
+    @FormUrlEncoded
+    @POST("api/Material/getDetail")
+    Flowable<BaseObjResponse<MaterialDetailBean>> materialDetail(
+            @Field("user_id") int user_id,
+            @Field("id") int id
+    );
+
+    @FormUrlEncoded
+    @POST("api/Material/getCategory")
+    Flowable<BaseListResponse<MaterialCategoryBean>> getCategory(
+            @Field("user_id") int user_id,
+            @Field("categoryId") int category_id
     );
 
 }

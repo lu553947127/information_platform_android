@@ -220,6 +220,10 @@
     <string name="add_bank_card">添加银行卡</string>
     <string name="add_bank_card_tip">(最多只能添加5张银行卡)</string>
     <string name="balance">余额</string>
+    <string name="trans_order_number">交易单号</string>
+    <string name="withdraw_state">提现状态</string>
+    <string name="material_base">基建物资</string>
+    <string name="product_detail">产品详情</string>
 
     <string name="format_version_name">当前版本号：v%1$s</string>
     <string name="format_get_verification_code_again">重新获取 (%1$ds)</string>
@@ -247,7 +251,12 @@
     <string name="format_price">估价：%1$s</string>
     <string name="format_consumption">消费次数：%1$d次</string>
     <string name="format_locus_num">轨迹信息：%1$d条</string>
-    <string name="format_pay_price">查看此消息请支付%1Ss元</string>
+    <string name="format_pay_price">查看此消息请支付%1$s元</string>
+    <string name="format_provide">供应：%1$d吨</string>
+    <string name="format_sold">已售：%1$d吨</string>
+    <string name="format_order_num">%1$d单</string>
+    <string name="format_supplier">供应商：%1$s</string>
+    <string name="format_bought">已购标的号%1$s</string>
 
     <string name="please_select_time">请选择时间</string>
     <string name="year">年</string>
@@ -287,6 +296,12 @@
     <string-array name="infrastructure">
         <item>售卖</item>
         <item>租赁</item>
+    </string-array>
+
+    <string-array name="withdraw_state">
+        <item>审核中</item>
+        <item>成功</item>
+        <item>驳回</item>
     </string-array>
 
     <string-array name="experience_list">

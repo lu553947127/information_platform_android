@@ -5,11 +5,33 @@
     android:layout_height="wrap_content"
     android:padding="15dp">
 
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:textColor="@color/colorTv"
+        android:textSize="16dp"
+        android:text="推送选择"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/tv_title"
+        android:layout_alignBottom="@+id/tv_title"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:textColor="@color/color_666666"
+        android:textSize="14dp"
+        android:text="(工程信息)"/>
+
     <com.google.android.flexbox.FlexboxLayout
         android:id="@+id/fl_subscription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
+        android:layout_below="@+id/tv_title"
+        android:layout_marginTop="15dp"
         app:flexWrap="wrap">
         
     </com.google.android.flexbox.FlexboxLayout>
@@ -21,7 +43,8 @@
         android:layout_height="30dp"
         android:background="@drawable/shape_btn_confirm_15"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="5dp"
+        android:layout_marginLeft="15dp"
+        android:textSize="14sp"
         android:text="@string/positive"/>
 
     <TextView
@@ -32,8 +55,9 @@
         android:background="@drawable/shape_btn_confirm_gray_15"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="5dp"
+        android:layout_marginRight="15dp"
         android:textColor="@color/color_666666"
+        android:textSize="14sp"
         android:text="@string/negative"/>
 
 </RelativeLayout>

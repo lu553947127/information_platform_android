@@ -1,7 +1,6 @@
 package com.shuangduan.zcy.view.projectinfo;
 
 import android.graphics.Point;
-import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Interpolator;
@@ -24,10 +23,8 @@ import com.amap.api.maps.model.CameraPosition;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
-import com.amap.api.maps.model.MyLocationStyle;
 import com.amap.api.maps.model.animation.Animation;
 import com.amap.api.maps.model.animation.TranslateAnimation;
-import com.amap.api.services.core.LatLonPoint;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.ConvertUtils;
@@ -38,7 +35,6 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ViewPagerAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
-import com.shuangduan.zcy.view.PayActivity;
 import com.shuangduan.zcy.view.release.ReleaseListActivity;
 import com.shuangduan.zcy.vm.PermissionVm;
 import com.shuangduan.zcy.vm.ProjectDetailVm;

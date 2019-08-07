@@ -134,8 +134,8 @@ public abstract class BaseDialog extends Dialog {
 
     @Override
     public void hide() {
-        super.hide();
         unbinder.unbind();
+        super.hide();
     }
 
     public CallBack callBack;

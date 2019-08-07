@@ -103,7 +103,7 @@ public abstract class BaseFragment extends Fragment implements IView {
         unBinder.unbind();
         EventBus.getDefault().unregister(this);
         if (loadDialog != null){
-            if (loadDialog.isShowing()) loadDialog.hideDialog();
+            loadDialog.dismiss();
             loadDialog = null;
         }
         super.onDestroyView();

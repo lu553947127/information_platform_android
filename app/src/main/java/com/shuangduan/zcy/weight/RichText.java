@@ -153,7 +153,7 @@ public class RichText extends TextView {
                     throw new NullPointerException("没有注入Glide.with(context)");
                 }
                 glideRm.asBitmap()
-                        .apply(new RequestOptions().placeholder(R.drawable.shape_pic_default))
+                        .apply(new RequestOptions().placeholder(R.drawable.default_pic))
                         .load(source).into(new SimpleTarget<Bitmap>() {
                     @Override
                     public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {

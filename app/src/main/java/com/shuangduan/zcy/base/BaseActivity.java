@@ -101,7 +101,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
         unBinder.unbind();
         EventBus.getDefault().unregister(this);
         if (loadDialog != null){
-            if (loadDialog.isShowing()) loadDialog.hideDialog();
+            loadDialog.dismiss();
             loadDialog = null;
         }
         super.onDestroy();
