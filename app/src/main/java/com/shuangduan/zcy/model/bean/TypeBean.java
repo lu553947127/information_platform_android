@@ -1,5 +1,7 @@
 package com.shuangduan.zcy.model.bean;
 
+import java.util.List;
+
 /**
  * @author 宁文强 QQ:858777523
  * @name information_platform_android
@@ -14,6 +16,7 @@ public class TypeBean extends BaseSelectorBean {
     private int id;
     private int parentid;
     private String catname;
+    private List<TypeBean> childList;
 
     public int getId() {
         return id;
@@ -38,4 +41,13 @@ public class TypeBean extends BaseSelectorBean {
     public void setCatname(String catname) {
         this.catname = catname;
     }
+
+    public List<TypeBean> getChildList() {
+        return childList;
+    }
+
+    public void setChildList(List<TypeBean> childList) {
+        this.childList = childList;
+    }
+
 }

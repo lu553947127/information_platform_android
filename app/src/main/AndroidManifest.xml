@@ -69,6 +69,7 @@
         <activity android:name="com.shuangduan.zcy.view.mine.BankCardListActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
         <activity android:name="com.shuangduan.zcy.view.mine.WithdrawRecordActivity" android:screenOrientation="portrait" />
         <activity android:name="com.shuangduan.zcy.view.mine.WithdrawDetailActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
+        <activity android:name="com.shuangduan.zcy.view.mine.UnbindBankCardActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
         <activity android:name="com.shuangduan.zcy.view.projectinfo.ProjectInfoActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.view.projectinfo.ProjectInfoListActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.view.projectinfo.ProjectDetailActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>

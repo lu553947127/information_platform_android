@@ -32,7 +32,9 @@ public class WithdrawVm extends BaseViewModel {
     public MutableLiveData<WithdrawRecordBean> recordLiveData;
     public MutableLiveData<WithdrawRecordBean.ListBean> recordDetailLiveData;
     public MutableLiveData<String> pageStateLiveData;
+    public MutableLiveData operateLiveData;
     private int recordPage;
+    public int withdrawBankcardId = 0;
 
     public WithdrawVm() {
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
@@ -42,6 +44,7 @@ public class WithdrawVm extends BaseViewModel {
         bankcardLiveData = new MutableLiveData<>();
         recordLiveData = new MutableLiveData<>();
         recordDetailLiveData = new MutableLiveData<>();
+        operateLiveData = new MutableLiveData<>();
     }
 
     public void authentication(){
@@ -70,6 +73,10 @@ public class WithdrawVm extends BaseViewModel {
 
     public void getDetail(int id){
         new UserRepository().withdrawRecordDetail(recordDetailLiveData, pageStateLiveData, userId, id);
+    }
+
+    public void withdraw(String price){
+        new UserRepository().withdraw(operateLiveData, pageStateLiveData, userId, withdrawBankcardId, price);
     }
 
 }

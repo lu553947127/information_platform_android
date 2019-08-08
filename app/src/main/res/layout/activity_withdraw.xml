@@ -56,13 +56,13 @@
 
         <EditText
             android:id="@+id/edt_money"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/tv_money"
             android:layout_marginLeft="60dp"
             android:background="@null"
             android:singleLine="true"
-            android:inputType="number"
+            android:inputType="numberDecimal"
             android:textColor="@color/colorTv"
             android:textSize="30sp"/>
 

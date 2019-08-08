@@ -11,13 +11,13 @@ package com.shuangduan.zcy.model.bean;
  * @class describe
  */
 public class WithdrawBean {
-    private String funds;
+    private String coin;
 
-    public String getFunds() {
-        return funds;
+    public String getCoin() {
+        return coin;
     }
 
-    public void setFunds(String funds) {
-        this.funds = funds;
+    public void setCoin(String coin) {
+        this.coin = coin;
     }
 }

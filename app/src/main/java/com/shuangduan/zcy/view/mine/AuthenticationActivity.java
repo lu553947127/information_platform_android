@@ -2,22 +2,36 @@ package com.shuangduan.zcy.view.mine;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.ConvertUtils;
+import com.blankj.utilcode.util.LogUtils;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.SizeReadyCallback;
+import com.bumptech.glide.request.target.Target;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.PhotoDialog;
 import com.shuangduan.zcy.model.api.PageState;
+import com.shuangduan.zcy.utils.image.ImageConfig;
+import com.shuangduan.zcy.utils.image.ImageLoader;
 import com.shuangduan.zcy.utils.matisse.Glide4Engine;
 import com.shuangduan.zcy.utils.matisse.MatisseCamera;
 import com.shuangduan.zcy.vm.AuthenticationVm;
@@ -65,6 +79,7 @@ public class AuthenticationActivity extends BaseActivity implements BaseDialog.P
     private RxPermissions rxPermissions;
     private UploadPhotoVm uploadPhotoVm;
     private AuthenticationVm authenticationVm;
+    private BaseDialog photoDialog;
 
     @Override
     protected int initLayoutRes() {
@@ -100,7 +115,7 @@ public class AuthenticationActivity extends BaseActivity implements BaseDialog.P
         permissionVm.getLiveData().observe(this, integer -> {
             if (integer == PermissionVm.PERMISSION_CAMERA){
                 MatisseCamera.from(this)
-                        .forResult(PermissionVm.REQUEST_CODE_HEAD, "com.shuangduan.zcy.fileprovider");
+                        .forResult(PermissionVm.REQUEST_CODE_AUTHENTICATION, "com.shuangduan.zcy.fileprovider");
             }else if (integer == PermissionVm.PERMISSION_STORAGE){
                 Matisse.from(this)
                         .choose(MimeType.ofImage())
@@ -113,15 +128,17 @@ public class AuthenticationActivity extends BaseActivity implements BaseDialog.P
                         .captureStrategy(
                                 new CaptureStrategy(true, "com.shuangduan.zcy.fileprovider"))
                         .imageEngine(new Glide4Engine())
-                        .forResult(PermissionVm.REQUEST_CODE_CHOOSE_HEAD);
+                        .forResult(PermissionVm.REQUEST_CODE_CHOOSE_AUTHENTICATION);
             }
         });
 
         uploadPhotoVm.uploadLiveData.observe(this, uploadBean -> {
             if (uploadPhotoVm.type == UploadPhotoVm.ID_CARD_POSITIVE){
                 authenticationVm.image_front = uploadBean.getSource();
+                ImageLoader.load(this, new ImageConfig.Builder().url(uploadBean.getSource()).imageView(ivIdCardPositive).build());
             }else if (uploadPhotoVm.type == UploadPhotoVm.ID_CARD_NEGATIVE){
                 authenticationVm.image_reverse_site = uploadBean.getSource();
+                ImageLoader.load(this, new ImageConfig.Builder().url(uploadBean.getSource()).imageView(ivIdCardNegative).build());
             }
         });
         authenticationVm.authenticationLiveData.observe(this, o -> finish());
@@ -164,13 +181,13 @@ public class AuthenticationActivity extends BaseActivity implements BaseDialog.P
                 break;
             case R.id.iv_id_card_positive:
                 uploadPhotoVm.type = UploadPhotoVm.ID_CARD_POSITIVE;
-                new PhotoDialog(this)
+                photoDialog = new PhotoDialog(this)
                         .setPhotoCallBack(this)
                         .showDialog();
                 break;
             case R.id.iv_id_card_negative:
                 uploadPhotoVm.type = UploadPhotoVm.ID_CARD_NEGATIVE;
-                new PhotoDialog(this)
+                photoDialog = new PhotoDialog(this)
                         .setPhotoCallBack(this)
                         .showDialog();
                 break;
@@ -198,5 +215,11 @@ public class AuthenticationActivity extends BaseActivity implements BaseDialog.P
     @Override
     public void album() {
         permissionVm.getPermissionAlbum(rxPermissions);
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (photoDialog != null) photoDialog.dismiss();
+        super.onDestroy();
     }
 }

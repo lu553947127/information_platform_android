@@ -35,14 +35,14 @@ import com.shuangduan.zcy.dialog.pop.CommonPopupWindow;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.BaseSelectorBean;
 import com.shuangduan.zcy.model.bean.ProjectInfoBean;
+import com.shuangduan.zcy.model.bean.TypeBean;
 import com.shuangduan.zcy.vm.AreaVm;
+import com.shuangduan.zcy.vm.MultiTypeVm;
 import com.shuangduan.zcy.vm.ProjectListVm;
 import com.shuangduan.zcy.vm.StageVm;
-import com.shuangduan.zcy.vm.TypesVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 import com.shuangduan.zcy.weight.datepicker.CustomDatePicker;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -97,7 +97,7 @@ public class ProjectInfoListActivity extends BaseActivity {
     private ProjectListVm projectListVm;
     private StageVm stageVm;
     private AreaVm areaVm;
-    private TypesVm typeVm;
+    private MultiTypeVm typeVm;
     private ProjectInfoAdapter projectInfoAdapter;
 
     @Override
@@ -113,7 +113,8 @@ public class ProjectInfoListActivity extends BaseActivity {
         projectListVm = ViewModelProviders.of(this).get(ProjectListVm.class);
         stageVm = ViewModelProviders.of(this).get(StageVm.class);
         areaVm = ViewModelProviders.of(this).get(AreaVm.class);
-        typeVm = ViewModelProviders.of(this).get(TypesVm.class);
+        typeVm = ViewModelProviders.of(this).get(MultiTypeVm.class);
+        initTypes();
 
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
@@ -180,19 +181,19 @@ public class ProjectInfoListActivity extends BaseActivity {
             case R.id.iv_bar_right:
                 break;
             case R.id.ll_area:
-                getAreaData();
+//                getAreaData();
                 break;
             case R.id.ll_stage:
-                getStageData();
+//                getStageData();
                 break;
             case R.id.ll_type:
                 getTypesData();
                 break;
             case R.id.ll_time:
-                showPopArea(null, 4);
+                showPopArea(null, null, null, 4);
                 break;
             case R.id.ll_subscribe:
-                showPopArea(null, 5);
+                showPopArea(null, null, null, 5);
                 break;
             case R.id.over:
                 if (popupWindowArea != null && popupWindowArea.isShowing()){
@@ -225,7 +226,7 @@ public class ProjectInfoListActivity extends BaseActivity {
     private SelectorSecondAdapter stageSecondAdapter;
     private SelectorFirstAdapter typeFirstAdapter;
     private SelectorSecondAdapter typeSecondAdapter;
-    private void showPopArea(final List<BaseSelectorBean> data, int popType){
+    private void showPopArea(final List<BaseSelectorBean> dataArea, final List<BaseSelectorBean> dataStage, final List<TypeBean> data, int popType){
         if (popupWindowArea == null){
             popupWindowArea = new CommonPopupWindow.Builder(this)
                     .setView(R.layout.dialog_area)
@@ -341,12 +342,12 @@ public class ProjectInfoListActivity extends BaseActivity {
                                     projectListVm.phases = String.valueOf(stageVm.getFirstId());
                                     break;
                                 case 3:
-                                    int[] typeResult = typeVm.getResult();
-                                    if (typeResult == null){
-                                        projectListVm.type = null;
-                                    }else {
-                                        projectListVm.city = typeResult;
-                                    }
+//                                    int[] typeResult = typeVm.getResult();
+//                                    if (typeResult == null){
+//                                        projectListVm.type = null;
+//                                    }else {
+//                                        projectListVm.city = typeResult;
+//                                    }
                                     break;
                                 case 4:
                                     projectListVm.stime = tvTimeStart.getText().toString();
@@ -415,109 +416,113 @@ public class ProjectInfoListActivity extends BaseActivity {
         }
     }
 
-    /**
-     * 初始化阶段
-     */
-    private void getStageData(){
-        if (stageVm.stageFirstLiveData == null){
-            stageVm.init();
-            stageVm.stageFirstLiveData.observe(this, stageBeans -> {
-                List<BaseSelectorBean> list = new ArrayList<>();
-                list.addAll(stageBeans);
-                showPopArea(list, 2);
-                stageVm.setProvinceInit();
-                stageVm.stageSecondLiveData.observe(this, stageBeans1 -> {
-                    stageVm.setCityInit();
-                    //刷新二级列表
-                    stageSecondAdapter.setNewData(stageBeans1);
-                });
-            });
+//    /**
+//     * 初始化阶段
+//     */
+//    private void getStageData(){
+//        if (stageVm.stageFirstLiveData == null){
+//            stageVm.init();
+//            stageVm.stageFirstLiveData.observe(this, stageBeans -> {
+//                List<BaseSelectorBean> list = new ArrayList<>();
+//                list.addAll(stageBeans);
+//                showPopArea(list, 2);
+//                stageVm.setProvinceInit();
+//                stageVm.stageSecondLiveData.observe(this, stageBeans1 -> {
+//                    stageVm.setCityInit();
+//                    //刷新二级列表
+//                    stageSecondAdapter.setNewData(stageBeans1);
+//                });
+//            });
+//
+//            stageVm.pageStateLiveData.observe(this, s -> {
+//                switch (s){
+//                    case PageState.PAGE_LOADING:
+//                        showLoading();
+//                        break;
+//                    default:
+//                        hideLoading();
+//                        break;
+//                }
+//            });
+//        }else {
+//            List<BaseSelectorBean> list = new ArrayList<>();
+//            list.addAll(stageVm.stageFirstLiveData.getValue());
+//            showPopArea(list, 2);
+//        }
+//    }
+//
+//    /**
+//     * 初始化地区
+//     */
+//    private void getAreaData(){
+//        if (areaVm.provinceLiveData == null){
+//            areaVm.init();
+//            areaVm.provinceLiveData.observe(this, provinceBeans -> {
+//                List<BaseSelectorBean> list = new ArrayList<>();
+//                list.addAll(provinceBeans);
+//                showPopArea(list, 1);
+//                areaVm.setProvinceInit();
+//                areaVm.cityLiveData.observe(this, cityBeans -> {
+//                    areaVm.setCityInit();
+//                    //刷新市区
+//                    cityAdapter.setNewData(cityBeans);
+//                });
+//            });
+//
+//            areaVm.pageStateLiveData.observe(this, s -> {
+//                switch (s){
+//                    case PageState.PAGE_LOADING:
+//                        showLoading();
+//                        break;
+//                    default:
+//                        hideLoading();
+//                        break;
+//                }
+//            });
+//        }else {
+//            List<BaseSelectorBean> list = new ArrayList<>();
+//            list.addAll(areaVm.provinceLiveData.getValue());
+//            showPopArea(list, 1);
+//        }
+//    }
 
-            stageVm.pageStateLiveData.observe(this, s -> {
-                switch (s){
-                    case PageState.PAGE_LOADING:
-                        showLoading();
-                        break;
-                    default:
-                        hideLoading();
-                        break;
-                }
-            });
-        }else {
-            List<BaseSelectorBean> list = new ArrayList<>();
-            list.addAll(stageVm.stageFirstLiveData.getValue());
-            showPopArea(list, 2);
-        }
-    }
+    private void initTypes(){
+        typeVm.typeFirstLiveData.observe(this, typeBeans -> {
+            if (!typeVm.firstInited) {
+                //首次加载，未添加全部，
+                typeVm.setTypeFirstInit();
+            }else {
+                showPopArea(null, null, typeBeans, 3);
+            }
+        });
+        typeVm.typeSecondLiveData.observe(this, typeBeans1 -> {
+            typeVm.setTypeSecondInit();
+            if (typeBeans1 != null && typeBeans1.size() > 0 && typeBeans1.get(0).getCatname().equals("全部")){
+                //刷新二级列表
+                typeSecondAdapter.setNewData(typeBeans1);
+            }
+        });
 
-    /**
-     * 初始化地区
-     */
-    private void getAreaData(){
-        if (areaVm.provinceLiveData == null){
-            areaVm.init();
-            areaVm.provinceLiveData.observe(this, provinceBeans -> {
-                List<BaseSelectorBean> list = new ArrayList<>();
-                list.addAll(provinceBeans);
-                showPopArea(list, 1);
-                areaVm.setProvinceInit();
-                areaVm.cityLiveData.observe(this, cityBeans -> {
-                    areaVm.setCityInit();
-                    //刷新市区
-                    cityAdapter.setNewData(cityBeans);
-                });
-            });
-
-            areaVm.pageStateLiveData.observe(this, s -> {
-                switch (s){
-                    case PageState.PAGE_LOADING:
-                        showLoading();
-                        break;
-                    default:
-                        hideLoading();
-                        break;
-                }
-            });
-        }else {
-            List<BaseSelectorBean> list = new ArrayList<>();
-            list.addAll(areaVm.provinceLiveData.getValue());
-            showPopArea(list, 1);
-        }
+        typeVm.pageStateLiveData.observe(this, s -> {
+            switch (s){
+                case PageState.PAGE_LOADING:
+                    showLoading();
+                    break;
+                default:
+                    hideLoading();
+                    break;
+            }
+        });
     }
 
     /**
      * 初始化分类
      */
     private void getTypesData(){
-        if (typeVm.typeFirstLiveData == null){
-            typeVm.init();
-            typeVm.typeFirstLiveData.observe(this, typeBeans -> {
-                List<BaseSelectorBean> list = new ArrayList<>();
-                list.addAll(typeBeans);
-                showPopArea(list, 3);
-                typeVm.setTypeFirstInit();
-                typeVm.typeSecondLiveData.observe(this, typeBeans1 -> {
-                    typeVm.setTypeSecondInit();
-                    //刷新二级列表
-                    typeSecondAdapter.setNewData(typeBeans1);
-                });
-            });
-
-            typeVm.pageStateLiveData.observe(this, s -> {
-                switch (s){
-                    case PageState.PAGE_LOADING:
-                        showLoading();
-                        break;
-                    default:
-                        hideLoading();
-                        break;
-                }
-            });
+        if (typeVm.typeFirstLiveData.getValue() == null){
+            typeVm.getTypesFirst();
         }else {
-            if (typeVm.typeFirstLiveData.getValue() != null){
-                List<BaseSelectorBean> list = new ArrayList<>(typeVm.typeFirstLiveData.getValue());
-                showPopArea(list, 3);
-            }
+            showPopArea(null, null, typeVm.typeFirstLiveData.getValue(), 3);
         }
     }
 

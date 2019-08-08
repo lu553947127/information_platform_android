@@ -47,7 +47,6 @@ public class MaterialVm extends BaseViewModel {
     }
 
     public void sellList(){
-        LogUtils.i("售卖了");
         sellPage = 1;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
         new MaterialRepository().materialList(sellLiveData, pageStateLiveData, userId, categoryId, 1, sellPage);

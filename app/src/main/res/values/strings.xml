@@ -74,6 +74,8 @@
     <string name="withdrawal_amount">提现金额</string>
     <string name="withdraw">提现</string>
     <string name="bind_bank_card">绑定银行卡</string>
+    <string name="unbind_bank_card">解绑银行卡</string>
+    <string name="unbind">解绑</string>
     <string name="please_select_sex">请选择性别</string>
     <string name="man">男</string>
     <string name="woman">女</string>
@@ -224,6 +226,8 @@
     <string name="withdraw_state">提现状态</string>
     <string name="material_base">基建物资</string>
     <string name="product_detail">产品详情</string>
+    <string name="authentication_not">尚未实名认证</string>
+    <string name="bankcard_msg_not">银行卡信息不完整</string>
 
     <string name="format_version_name">当前版本号：v%1$s</string>
     <string name="format_get_verification_code_again">重新获取 (%1$ds)</string>

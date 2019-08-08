@@ -15,9 +15,14 @@ import com.blankj.utilcode.util.BarUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.BankCardAdapter;
+import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.PageState;
+import com.shuangduan.zcy.model.bean.BankCardBean;
+import com.shuangduan.zcy.model.event.BankcardUpdateEvent;
 import com.shuangduan.zcy.vm.BankCardVm;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -58,16 +63,20 @@ public class BankCardListActivity extends BaseActivity {
         });
         rv.setLayoutManager(new LinearLayoutManager(this));
         BankCardAdapter bankCardAdapter = new BankCardAdapter(R.layout.item_bank_card, null);
-        bankCardAdapter.addFooterView(foot);
         rv.setAdapter(bankCardAdapter);
         bankCardAdapter.setOnItemClickListener((adapter, view, position) -> {
-
+            BankCardBean bankCardBean = bankCardAdapter.getData().get(position);
+            Bundle bundle = new Bundle();
+            bundle.putInt(CustomConfig.BANKCARD_ID, bankCardBean.getId());
+            bundle.putString(CustomConfig.BANKCARD_NAME, bankCardBean.getType_name());
+            ActivityUtils.startActivity(bundle, UnbindBankCardActivity.class);
         });
         bankCardVm = ViewModelProviders.of(this).get(BankCardVm.class);
         bankCardVm.bankcardLiveData.observe(this, bankCardBeans -> {
             bankCardAdapter.setNewData(bankCardBeans);
-            if (bankCardBeans != null && bankCardBeans.size() >= 5){
-                bankCardAdapter.removeAllFooterView();
+            bankCardAdapter.removeAllFooterView();
+            if (bankCardBeans != null && bankCardBeans.size() < 5){
+                bankCardAdapter.addFooterView(foot);
             }
         });
         bankCardVm.pageStateLiveData.observe(this, s -> {
@@ -85,4 +94,9 @@ public class BankCardListActivity extends BaseActivity {
 
     @OnClick(R.id.iv_bar_back)
     void onClick(){finish();};
+
+    @Subscribe()
+    public void updateBankcard(BankcardUpdateEvent event){
+        bankCardVm.bankcardList();
+    }
 }

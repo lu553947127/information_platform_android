@@ -12,7 +12,8 @@ package com.shuangduan.zcy.model.bean;
  */
 public class BaseSelectorBean {
 
-    public int isSelect;
+    public int isSelect;//选中状态
+    public int isCheck;//点击状态
 
     public int getIsSelect() {
         return isSelect;
@@ -22,4 +23,11 @@ public class BaseSelectorBean {
         this.isSelect = isSelect;
     }
 
+    public int getIsCheck() {
+        return isCheck;
+    }
+
+    public void setIsCheck(int isCheck) {
+        this.isCheck = isCheck;
+    }
 }

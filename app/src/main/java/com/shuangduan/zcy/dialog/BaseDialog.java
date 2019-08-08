@@ -115,9 +115,7 @@ public abstract class BaseDialog extends Dialog {
      * @return
      */
     public BaseDialog showDialog(){
-        if (!isShowing()) {
-            dialog.show();
-        }
+        dialog.show();
         return this;
     }
 
@@ -126,9 +124,7 @@ public abstract class BaseDialog extends Dialog {
      * @return
      */
     public BaseDialog hideDialog(){
-        if (isShowing()) {
-            dialog.hide();
-        }
+        dialog.hide();
         return this;
     }
 

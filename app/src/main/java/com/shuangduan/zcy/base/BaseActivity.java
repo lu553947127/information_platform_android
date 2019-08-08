@@ -1,6 +1,7 @@
 package com.shuangduan.zcy.base;
 
 import android.os.Bundle;
+import android.util.SparseArray;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -11,9 +12,11 @@ import androidx.core.content.ContextCompat;
 
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.KeyboardUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.Utils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.MyApplication;
+import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.LoadDialog;
 import com.shuangduan.zcy.model.event.BaseEvent;
 import com.shuangduan.zcy.utils.AutoUtils;
@@ -39,6 +42,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
     private Unbinder unBinder;
     public boolean isTranslationBar = false;
     private LoadDialog loadDialog;
+    private SparseArray<BaseDialog> dialogArray = new SparseArray<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,14 +67,12 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
         if (loadDialog == null){
             loadDialog = new LoadDialog(this);
         }
-        if (!loadDialog.isShowing()){
-            loadDialog.showDialog();
-        }
+        loadDialog.showDialog();
     }
 
     @Override
     public void hideLoading() {
-        if (loadDialog != null && loadDialog.isShowing()){
+        if (loadDialog != null){
             loadDialog.hideDialog();
         }
     }
@@ -96,6 +98,10 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
         return super.dispatchTouchEvent(ev);
     }
 
+    public void addDialog(BaseDialog dialog){
+        dialogArray.put(dialogArray.size(), dialog);
+    }
+
     @Override
     protected void onDestroy() {
         unBinder.unbind();
@@ -104,6 +110,12 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
             loadDialog.dismiss();
             loadDialog = null;
         }
+        for (int i = 0; i < dialogArray.size(); i++) {
+            if (dialogArray.get(i) != null){
+                dialogArray.get(i).dismiss();
+            }
+        }
+        dialogArray = null;
         super.onDestroy();
     }
 

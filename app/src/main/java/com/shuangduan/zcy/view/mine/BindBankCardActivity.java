@@ -13,18 +13,29 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.RegexUtils;
+import com.blankj.utilcode.util.StringUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.PhotoDialog;
+import com.shuangduan.zcy.model.api.PageState;
+import com.shuangduan.zcy.model.event.BankcardUpdateEvent;
+import com.shuangduan.zcy.utils.image.ImageConfig;
+import com.shuangduan.zcy.utils.image.ImageLoader;
 import com.shuangduan.zcy.utils.matisse.Glide4Engine;
 import com.shuangduan.zcy.utils.matisse.MatisseCamera;
+import com.shuangduan.zcy.vm.BankCardVm;
 import com.shuangduan.zcy.vm.PermissionVm;
+import com.shuangduan.zcy.vm.UploadPhotoVm;
 import com.shuangduan.zcy.vm.WithdrawVm;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -60,7 +71,9 @@ public class BindBankCardActivity extends BaseActivity implements BaseDialog.Pho
 
     private PermissionVm permissionVm;
     private RxPermissions rxPermissions;
+    private UploadPhotoVm uploadPhotoVm;
     private WithdrawVm withdrawVm;
+    private BankCardVm bankCardVm;
 
     @Override
     protected int initLayoutRes() {
@@ -74,6 +87,7 @@ public class BindBankCardActivity extends BaseActivity implements BaseDialog.Pho
         tvBarRight.setText(getString(R.string.save));
 
         rxPermissions = new RxPermissions(this);
+        uploadPhotoVm = ViewModelProviders.of(this).get(UploadPhotoVm.class);
         permissionVm = ViewModelProviders.of(this).get(PermissionVm.class);
         permissionVm.getLiveData().observe(this, integer -> {
             if (integer == PermissionVm.PERMISSION_CAMERA){
@@ -94,12 +108,51 @@ public class BindBankCardActivity extends BaseActivity implements BaseDialog.Pho
                         .forResult(PermissionVm.REQUEST_CODE_CHOOSE_BANK_CARD);
             }
         });
+        uploadPhotoVm.uploadLiveData.observe(this, uploadBean -> {
+            bankCardVm.imageBandCard = uploadBean.getSource();
+            bankCardVm.bankcardDis();
+        });
+        uploadPhotoVm.mPageStateLiveData.observe(this, s -> {
+            switch (s){
+                case PageState.PAGE_LOADING:
+                    showLoading();
+                    break;
+                default:
+                    hideLoading();
+                    break;
+            }
+        });
+
+
         withdrawVm = ViewModelProviders.of(this).get(WithdrawVm.class);
         withdrawVm.authenticationLiveData.observe(this, authenBean -> {
             tvRealName.setText(authenBean.getReal_name());
             tvIdentityNumber.setText(authenBean.getIdentity_card());
         });
         withdrawVm.authentication();
+
+        bankCardVm = ViewModelProviders.of(this).get(BankCardVm.class);
+        bankCardVm.disLiveData.observe(this, bankCardDisBean -> {
+            String cardNum = RegexUtils.getReplaceAll(bankCardDisBean.getCard_num(), " ", "");
+            edtBankAccount.setText(bankCardDisBean.getType_name());
+            edtBankCardNumber.setText(cardNum);
+        });
+        bankCardVm.AddLiveData.observe(this, o -> {
+            ToastUtils.showShort("添加成功");
+            EventBus.getDefault().post(new BankcardUpdateEvent());
+            finish();
+        });
+        bankCardVm.pageStateLiveData.observe(this, s -> {
+            LogUtils.i(s);
+            switch (s) {
+                case PageState.PAGE_LOADING:
+                    showLoading();
+                    break;
+                default:
+                    hideLoading();
+                    break;
+            }
+        });
     }
 
     @OnClick({R.id.iv_bar_back, R.id.tv_bar_right, R.id.iv_camera})
@@ -109,11 +162,16 @@ public class BindBankCardActivity extends BaseActivity implements BaseDialog.Pho
                 finish();
                 break;
             case R.id.tv_bar_right:
+                if (StringUtils.isTrimEmpty(edtBankCardNumber.getText().toString()) || StringUtils.isTrimEmpty(edtBankAccount.getText().toString())){
+                    ToastUtils.showShort(getString(R.string.bankcard_msg_not));
+                    return;
+                }
+                bankCardVm.bankcardAdd(edtBankCardNumber.getText().toString(), edtBankAccount.getText().toString());
                 break;
             case R.id.iv_camera:
-                new PhotoDialog(this)
+                addDialog(new PhotoDialog(this)
                         .setPhotoCallBack(this)
-                        .showDialog();
+                        .showDialog());
                 break;
         }
     }
@@ -123,10 +181,11 @@ public class BindBankCardActivity extends BaseActivity implements BaseDialog.Pho
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PermissionVm.REQUEST_CODE_CHOOSE_BANK_CARD && resultCode == RESULT_OK) {
             List<String> mSelected = Matisse.obtainPathResult(data);
+            uploadPhotoVm.upload(mSelected.get(0));
         }
 
         if (requestCode == PermissionVm.REQUEST_CODE_BANK_CARD && resultCode == RESULT_OK) {
-            LogUtils.i(MatisseCamera.obtainPathResult(), MatisseCamera.obtainUriResult());
+            uploadPhotoVm.upload(MatisseCamera.obtainPathResult());
         }
     }
 

@@ -45,7 +45,7 @@ public class UserInfoBean {
     private int experience;
     private String managing_products;
     private List<String> city_array;
-    private String funds;
+    private String coin;
     private int count;
 
     public int getId() {
@@ -144,12 +144,12 @@ public class UserInfoBean {
         this.city_array = city_array;
     }
 
-    public String getFunds() {
-        return funds;
+    public String getCoin() {
+        return coin;
     }
 
-    public void setFunds(String funds) {
-        this.funds = funds;
+    public void setCoin(String coin) {
+        this.coin = coin;
     }
 
     public int getCount() {

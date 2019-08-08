@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.shuangduan.zcy.model.bean.AuthenBean;
 import com.shuangduan.zcy.model.bean.BankCardBean;
+import com.shuangduan.zcy.model.bean.BankCardDisBean;
 import com.shuangduan.zcy.model.bean.BaseListResponse;
 import com.shuangduan.zcy.model.bean.BaseObjResponse;
 import com.shuangduan.zcy.model.bean.CityBean;
@@ -111,7 +112,7 @@ public interface ApiService {
     );
 
     @FormUrlEncoded
-    @POST("api/Passport/outLogin")
+    @POST("api/Userinfo/outLogin")
     Flowable<BaseObjResponse> outLogin(
             @Field("user_id")int user_id
     );
@@ -504,9 +505,39 @@ public interface ApiService {
     );
 
     @FormUrlEncoded
+    @POST("api/Userinfo/withdrawDeposit")
+    Flowable<BaseObjResponse> withdraw(
+            @Field("user_id") int user_id,
+            @Field("bankcard_id") int bankcard_id,
+            @Field("price") String price
+    );
+
+    @FormUrlEncoded
     @POST("api/Bankcard/bankcardList")
     Flowable<BaseListResponse<BankCardBean>> bankcardList(
             @Field("user_id") int user_id
+    );
+
+    @FormUrlEncoded
+    @POST("api/Bankcard/ibcard")
+    Flowable<BaseObjResponse<BankCardDisBean>> bankcardDis(
+            @Field("user_id") int user_id,
+            @Field("image") String image
+    );
+
+    @FormUrlEncoded
+    @POST("api/Bankcard/bankcardAdd")
+    Flowable<BaseObjResponse> bankcardAdd(
+            @Field("user_id") int user_id,
+            @Field("bankcard_num") String bankcard_num,
+            @Field("opening_bank") String opening_bank
+    );
+
+    @FormUrlEncoded
+    @POST("api/Bankcard/bankCardDel")
+    Flowable<BaseObjResponse> unbindBankcard(
+            @Field("user_id") int user_id,
+            @Field("bankcard_id") int bankcard_id
     );
 
     @FormUrlEncoded

@@ -7,6 +7,8 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.RegexUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.SpConfig;
@@ -83,7 +85,7 @@ public class MineFragment extends BaseFragment {
             SPUtils.getInstance().put(SpConfig.USERNAME, userInfoBean.getUsername());
             tvUsername.setText(userInfoBean.getUsername());
             tvNumOfPeople.setText(String.format(getString(R.string.format_num_of_people), userInfoBean.getCount()));
-            tvBalance.setText(String.format(getString(R.string.format_balance), userInfoBean.getFunds()));
+            tvBalance.setText(String.format(getString(R.string.format_balance), userInfoBean.getCoin()));
             ImageLoader.load(mContext, new ImageConfig.Builder()
                     .url(userInfoBean.getImage_thumbnail())
                     .placeholder(R.drawable.default_head)

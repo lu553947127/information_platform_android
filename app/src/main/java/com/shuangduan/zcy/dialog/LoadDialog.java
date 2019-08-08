@@ -5,6 +5,7 @@ import android.app.Activity;
 import androidx.annotation.NonNull;
 
 import com.blankj.utilcode.util.ConvertUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.shuangduan.zcy.R;
 
 /**
@@ -18,6 +19,8 @@ import com.shuangduan.zcy.R;
  * @class describe
  */
 public class LoadDialog extends BaseDialog{
+    private int showNum = 0;
+
     public LoadDialog(@NonNull Activity activity) {
         super(activity);
     }
@@ -39,5 +42,25 @@ public class LoadDialog extends BaseDialog{
     @Override
     void initEvent() {
 
+    }
+
+    @Override
+    public BaseDialog showDialog() {
+        showNum++;
+        if (showNum > 1){
+            return this;
+        }else {
+            return super.showDialog();
+        }
+    }
+
+    @Override
+    public BaseDialog hideDialog() {
+        showNum--;
+        if (showNum > 0){
+            return this;
+        }else {
+            return super.hideDialog();
+        }
     }
 }

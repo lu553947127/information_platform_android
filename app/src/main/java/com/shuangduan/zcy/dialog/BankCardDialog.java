@@ -1,7 +1,9 @@
 package com.shuangduan.zcy.dialog;
 
 import android.app.Activity;
+import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -45,6 +47,8 @@ public class BankCardDialog extends BaseDialog {
 
     @Override
     void initData() {
+        setWidth(WindowManager.LayoutParams.MATCH_PARENT);
+        setGravity(Gravity.BOTTOM);
         DialogUtils.enterBottomAnim(this);
     }
 
@@ -58,6 +62,7 @@ public class BankCardDialog extends BaseDialog {
             BankCardBean bankCardBean = bankCardDialogAdapter.getData().get(position);
             if (singleCallBack != null){
                 singleCallBack.click(bankCardBean.getType_name(), position);
+                dismiss();
             }
         });
     }

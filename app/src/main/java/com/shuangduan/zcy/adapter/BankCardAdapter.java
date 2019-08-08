@@ -35,16 +35,14 @@ public class BankCardAdapter extends BaseQuickAdapter<BankCardBean, BaseViewHold
         ImageView ivIcon = helper.getView(R.id.iv_icon);
         ImageLoader.load(mContext, new ImageConfig.Builder()
                 .url(item.getIcon())
-                .imageView(ivIcon)
                 .placeholder(R.drawable.default_pic)
                 .errorPic(R.drawable.default_pic)
+                .imageView(ivIcon)
                 .build());
         ImageView ivBg = helper.getView(R.id.iv_bg);
         ImageLoader.load(mContext, new ImageConfig.Builder()
                 .url(item.getBackground())
                 .imageView(ivBg)
-                .placeholder(R.drawable.default_pic)
-                .errorPic(R.drawable.default_pic)
                 .build());
     }
 }

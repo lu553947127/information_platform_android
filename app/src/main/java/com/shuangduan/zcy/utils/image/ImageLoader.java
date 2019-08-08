@@ -3,6 +3,7 @@ package com.shuangduan.zcy.utils.image;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.RequestManager;
@@ -29,19 +30,19 @@ public class ImageLoader {
                 .error(config.getErrorPic());
 
         if (config.isCenterCrop()){
-            options.centerCrop();
+           options =  options.centerCrop();
         }
 
         if (config.isCircle()){
-            options.circleCrop();
+            options = options.circleCrop();
         }
 
         if (config.getImageRadius() > 0){
-            options.transform(new RoundedCorners(config.getImageRadius()));
+            options = options.transform(new RoundedCorners(config.getImageRadius()));
         }
 
         if (config.getBlurValue() > 0){
-            options.transform(new BlurTransformation(config.getBlurValue()));
+            options = options.transform(new BlurTransformation(config.getBlurValue()));
         }
 
         RequestManager requestManager = Glide.with(context);
@@ -49,7 +50,7 @@ public class ImageLoader {
         RequestBuilder<Drawable> requestBuilder = requestManager.load(config.getUrl());
 
         if (config.isCrossFade()){
-            requestBuilder.transition(DrawableTransitionOptions.withCrossFade());
+            requestBuilder = requestBuilder.transition(DrawableTransitionOptions.withCrossFade());
         }
 
         requestBuilder.apply(options)

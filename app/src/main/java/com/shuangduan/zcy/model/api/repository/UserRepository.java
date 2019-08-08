@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.shuangduan.zcy.model.api.rxjava.BaseSubscriber;
 import com.shuangduan.zcy.model.bean.AuthenBean;
 import com.shuangduan.zcy.model.bean.BankCardBean;
+import com.shuangduan.zcy.model.bean.BankCardDisBean;
 import com.shuangduan.zcy.model.bean.MineIncomeBean;
 import com.shuangduan.zcy.model.bean.MyPhasesBean;
 import com.shuangduan.zcy.model.bean.ProjectCollectBean;
@@ -210,6 +211,27 @@ public class UserRepository extends BaseRepository {
     }
 
     /**
+     * 银行卡识别
+     */
+    public void bankcardDis(MutableLiveData<BankCardDisBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, String image){
+        request(apiService.bankcardDis(user_id, image)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    /**
+     * 银行卡添加
+     */
+    public void bankcardAdd(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int user_id, String bankcard_num, String opening_bank){
+        request(apiService.bankcardAdd(user_id, bankcard_num, opening_bank)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    /**
+     * 银行卡解绑
+     */
+    public void unbindBankcard(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int user_id, int bankcard_id){
+        request(apiService.unbindBankcard(user_id, bankcard_id)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    /**
      * 提现记录
      */
     public void withdrawRecord(MutableLiveData<WithdrawRecordBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, int page){
@@ -221,6 +243,13 @@ public class UserRepository extends BaseRepository {
      */
     public void withdrawRecordDetail(MutableLiveData<WithdrawRecordBean.ListBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, int id){
         request(apiService.withdrawRecordDetail(user_id, id)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    /**
+     * 提现
+     */
+    public void withdraw(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int user_id, int bankcard_id, String price){
+        request(apiService.withdraw(user_id, bankcard_id, price)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
 }

@@ -82,7 +82,6 @@ public class UploadRepository extends BaseRepository {
                 .subscribe(new Consumer<List<File>>() {
                     @Override
                     public void accept(@NonNull List<File> files) {
-                        LogUtils.i(files.get(0).getAbsolutePath());
                         upload(liveData, pageStateLiveData, userId, files.get(0));
                     }
                 }, new Consumer<Throwable>() {
