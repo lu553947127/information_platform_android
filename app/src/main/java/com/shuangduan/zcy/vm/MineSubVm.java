@@ -54,7 +54,7 @@ public class MineSubVm extends BaseViewModel {
         new ProjectRepository().projectSub(projectLiveData, pageStateLiveData, userId, projectPage);
     }
 
-    public void refreshMyProject(){
+    public void moreMyProject(){
         projectPage++;
         pageStateLiveData.setValue(PageState.PAGE_REFRESH);
         new ProjectRepository().projectSub(projectLiveData, pageStateLiveData, userId, projectPage);
@@ -66,7 +66,7 @@ public class MineSubVm extends BaseViewModel {
         new ProjectRepository().recruitSub(recruitLiveData, pageStateLiveData, userId, recruitPage);
     }
 
-    public void refreshMyRecruit(){
+    public void moreMyRecruit(){
         recruitPage++;
         pageStateLiveData.setValue(PageState.PAGE_REFRESH);
         new ProjectRepository().recruitSub(recruitLiveData, pageStateLiveData, userId, recruitPage);

@@ -1,7 +1,6 @@
 package com.shuangduan.zcy.view.recruit;
 
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
@@ -12,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
@@ -25,11 +23,7 @@ import com.shuangduan.zcy.model.bean.RecruitBean;
 import com.shuangduan.zcy.vm.RecruitVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -90,7 +84,7 @@ public class RecruitActivity extends BaseActivity {
         refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                recruitVm.refreshRecruit();
+                recruitVm.moreRecruit();
             }
 
             @Override

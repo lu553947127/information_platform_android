@@ -45,7 +45,7 @@ public class MineIncomeBean {
          */
 
         private String all_funds;
-        private String funds;
+        private String coin;
 
         public String getAll_funds() {
             return all_funds;
@@ -55,12 +55,12 @@ public class MineIncomeBean {
             this.all_funds = all_funds;
         }
 
-        public String getFunds() {
-            return funds;
+        public String getCoin() {
+            return coin;
         }
 
-        public void setFunds(String funds) {
-            this.funds = funds;
+        public void setCoin(String coin) {
+            this.coin = coin;
         }
     }
 

@@ -25,6 +25,9 @@ public class ProvinceBean extends BaseSelectorBean implements Parcelable {
     private int pid;
     private List<CityBean> cityList;
 
+    public ProvinceBean() {
+    }
+
     public ProvinceBean(int id, String name, int pid, List<CityBean> cityList) {
         this.id = id;
         this.name = name;

@@ -47,6 +47,9 @@ public class WithdrawVm extends BaseViewModel {
         operateLiveData = new MutableLiveData<>();
     }
 
+    /**
+     * 实名认证检测
+     */
     public void authentication(){
         new UserRepository().authentication(authenticationLiveData, pageStateLiveData, userId);
     }
@@ -65,7 +68,7 @@ public class WithdrawVm extends BaseViewModel {
         new UserRepository().withdrawRecord(recordLiveData, pageStateLiveData, userId, recordPage);
     }
 
-    public void refreshWithdrawRecord(){
+    public void moreWithdrawRecord(){
         recordPage ++;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
         new UserRepository().withdrawRecord(recordLiveData, pageStateLiveData, userId, recordPage);

@@ -82,7 +82,7 @@ public class LeaseFragment extends BaseLazyFragment {
         refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                materialVm.refreshLeaseList();
+                materialVm.moreLeaseList();
             }
 
             @Override

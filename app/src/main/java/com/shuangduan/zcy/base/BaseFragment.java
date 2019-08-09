@@ -3,6 +3,7 @@ package com.shuangduan.zcy.base;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
+import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.LoadDialog;
 import com.shuangduan.zcy.model.event.BaseEvent;
 
@@ -37,6 +39,7 @@ public abstract class BaseFragment extends Fragment implements IView {
     private Unbinder unBinder;
     public Bundle arguments;
     private LoadDialog loadDialog;
+    private SparseArray<BaseDialog> dialogArray = new SparseArray<>();
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -76,14 +79,12 @@ public abstract class BaseFragment extends Fragment implements IView {
         if (loadDialog == null){
             loadDialog = new LoadDialog(mActivity);
         }
-        if (!loadDialog.isShowing()){
-            loadDialog.showDialog();
-        }
+        loadDialog.showDialog();
     }
 
     @Override
     public void hideLoading() {
-        if (loadDialog != null && loadDialog.isShowing()){
+        if (loadDialog != null){
             loadDialog.hideDialog();
         }
     }
@@ -98,6 +99,10 @@ public abstract class BaseFragment extends Fragment implements IView {
 
     }
 
+    public void addDialog(BaseDialog dialog){
+        dialogArray.put(dialogArray.size(), dialog);
+    }
+
     @Override
     public void onDestroyView() {
         unBinder.unbind();
@@ -106,6 +111,12 @@ public abstract class BaseFragment extends Fragment implements IView {
             loadDialog.dismiss();
             loadDialog = null;
         }
+        for (int i = 0; i < dialogArray.size(); i++) {
+            if (dialogArray.get(i) != null){
+                dialogArray.get(i).dismiss();
+            }
+        }
+        dialogArray = null;
         super.onDestroyView();
     }
 

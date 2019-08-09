@@ -16,17 +16,14 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ProjectSearchAdapter;
-import com.shuangduan.zcy.adapter.SearchAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
-import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.ProjectSearchBean;
 import com.shuangduan.zcy.model.event.ProjectNameEvent;
 import com.shuangduan.zcy.view.mine.AuthenticationActivity;
@@ -37,7 +34,6 @@ import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import retrofit2.http.Body;
 
 /**
  * @author 宁文强 QQ:858777523
@@ -105,7 +101,7 @@ public class ProjectSearchActivity extends BaseActivity {
         refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                projectSearchVm.refreshSearch();
+                projectSearchVm.moreSearch();
             }
 
             @Override

@@ -1,7 +1,6 @@
 package com.shuangduan.zcy.view.mine;
 
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProviders;
@@ -9,7 +8,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ActivityUtils;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
@@ -18,7 +16,6 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ProjectSubAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseFragment;
-import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.ProjectSubBean;
 import com.shuangduan.zcy.view.projectinfo.ProjectDetailActivity;
 import com.shuangduan.zcy.vm.MineSubVm;
@@ -87,7 +84,7 @@ public class ProjectSubFragment extends BaseFragment {
         refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                mineSubVm.refreshMyProject();
+                mineSubVm.moreMyProject();
             }
 
             @Override

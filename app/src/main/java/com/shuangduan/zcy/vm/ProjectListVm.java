@@ -50,7 +50,7 @@ public class ProjectListVm extends BaseViewModel {
         new ProjectRepository().projectList(projectLiveData, pageStateLiveData, userId, province, city, phases, type, stime, etime, warrant_status, page);
     }
 
-    public void refreshProjectList(){
+    public void moreProjectList(){
         page++;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
         new ProjectRepository().projectList(projectLiveData, pageStateLiveData, userId, province, city, phases, type, stime, etime, warrant_status, page);

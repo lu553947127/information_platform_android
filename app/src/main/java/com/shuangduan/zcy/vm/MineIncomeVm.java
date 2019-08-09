@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseViewModel;
-import com.shuangduan.zcy.model.api.repository.UserRepository;
+import com.shuangduan.zcy.model.api.repository.IncomeRepository;
 import com.shuangduan.zcy.model.bean.MineIncomeBean;
 
 /**
@@ -31,6 +31,6 @@ public class MineIncomeVm extends BaseViewModel {
     }
 
     public void myIncome(){
-        new UserRepository().mineIncome(incomeLiveData, pageStateLiveData, userId);
+        new IncomeRepository().mineIncome(incomeLiveData, pageStateLiveData, userId);
     }
 }

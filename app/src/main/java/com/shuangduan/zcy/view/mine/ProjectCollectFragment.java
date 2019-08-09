@@ -83,7 +83,7 @@ public class ProjectCollectFragment extends BaseFragment {
         refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                mineCollectionVm.refreshProjectCollection();
+                mineCollectionVm.moreProjectCollection();
             }
 
             @Override

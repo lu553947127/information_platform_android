@@ -12,6 +12,10 @@ import com.shuangduan.zcy.model.bean.ConsumeBean;
 import com.shuangduan.zcy.model.bean.ContactBean;
 import com.shuangduan.zcy.model.bean.ContactListBean;
 import com.shuangduan.zcy.model.bean.ContactTypeBean;
+import com.shuangduan.zcy.model.bean.IncomeLocusBean;
+import com.shuangduan.zcy.model.bean.IncomeMsgBean;
+import com.shuangduan.zcy.model.bean.IncomePeopleBean;
+import com.shuangduan.zcy.model.bean.IncomeReleaseBean;
 import com.shuangduan.zcy.model.bean.LocusMineBean;
 import com.shuangduan.zcy.model.bean.LoginBean;
 import com.shuangduan.zcy.model.bean.MapBean;
@@ -310,7 +314,8 @@ public interface ApiService {
     @POST("api/Project/viewTrack")
     Flowable<BaseObjResponse<TrackBean>> getViewTrack(
             @Field("user_id")int user_id,
-            @Field("id")int id
+            @Field("id")int id,
+            @Field("page")int page
     );
 
     @FormUrlEncoded
@@ -544,6 +549,34 @@ public interface ApiService {
     @POST("api/Profit/myProceeds")
     Flowable<BaseObjResponse<MineIncomeBean>> myProceeds(
             @Field("user_id") int user_id
+    );
+
+    @FormUrlEncoded
+    @POST("api/Profit/publish")
+    Flowable<BaseObjResponse<IncomeReleaseBean>> incomeRelease(
+            @Field("user_id") int user_id,
+            @Field("page") int page
+    );
+
+    @FormUrlEncoded
+    @POST("api/Profit/Floor")
+    Flowable<BaseObjResponse<IncomePeopleBean>> incomePeople(
+            @Field("user_id") int user_id,
+            @Field("page") int page
+    );
+
+    @FormUrlEncoded
+    @POST("api/Profit/subscribe")
+    Flowable<BaseObjResponse<IncomeMsgBean>> incomeMsg(
+            @Field("user_id") int user_id,
+            @Field("page") int page
+    );
+
+    @FormUrlEncoded
+    @POST("api/Profit/track")
+    Flowable<BaseObjResponse<IncomeLocusBean>> incomeLocus(
+            @Field("user_id") int user_id,
+            @Field("page") int page
     );
 
     @FormUrlEncoded

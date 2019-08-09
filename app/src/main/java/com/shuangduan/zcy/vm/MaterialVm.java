@@ -52,7 +52,7 @@ public class MaterialVm extends BaseViewModel {
         new MaterialRepository().materialList(sellLiveData, pageStateLiveData, userId, categoryId, 1, sellPage);
     }
 
-    public void refreshSellList(){
+    public void moreSellList(){
         sellPage ++;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
         new MaterialRepository().materialList(sellLiveData, pageStateLiveData, userId, categoryId, 1, sellPage);
@@ -64,7 +64,7 @@ public class MaterialVm extends BaseViewModel {
         new MaterialRepository().materialList(leaseLiveData, pageStateLiveData, userId, categoryId, 2, leasePage);
     }
 
-    public void refreshLeaseList(){
+    public void moreLeaseList(){
         leasePage ++;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
         new MaterialRepository().materialList(leaseLiveData, pageStateLiveData, userId, categoryId, 2, leasePage);

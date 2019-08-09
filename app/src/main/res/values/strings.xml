@@ -228,6 +228,12 @@
     <string name="product_detail">产品详情</string>
     <string name="authentication_not">尚未实名认证</string>
     <string name="bankcard_msg_not">银行卡信息不完整</string>
+    <string name="income_classify">收益分类</string>
+    <string name="income_release">发布信息收益</string>
+    <string name="income_locus">发布信息轨迹收益</string>
+    <string name="income_msg">认购信息收益</string>
+    <string name="income_product_rights">认购品权收益</string>
+    <string name="income_people">6°人脉收益</string>
 
     <string name="format_version_name">当前版本号：v%1$s</string>
     <string name="format_get_verification_code_again">重新获取 (%1$ds)</string>

@@ -6,6 +6,7 @@ import com.amap.api.maps.model.LatLng;
 import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseViewModel;
+import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.api.repository.ProjectDetailRepository;
 import com.shuangduan.zcy.model.bean.ConsumeBean;
 import com.shuangduan.zcy.model.bean.ProjectDetailBean;
@@ -44,6 +45,7 @@ public class ProjectDetailVm extends BaseViewModel {
     public MutableLiveData cancelCollectLiveData;
     public MutableLiveData errorLiveData;
     public int pageTrack = 1;
+    public int pageViewTrack = 1;
     public int pageConsume = 1;
     private final int TYPE_ALL = 1;//全部
     private final int TYPE_MINE = 2;//我发布的
@@ -93,26 +95,41 @@ public class ProjectDetailVm extends BaseViewModel {
         repositoryDetail.getDetail(detailLiveData, pageStateLiveData, userId, id);
     }
 
-    private ProjectDetailRepository repositoryTrack;
     public void getTrack(){
-        if (repositoryTrack == null)
-            repositoryTrack = new ProjectDetailRepository();
-        repositoryTrack.getTrack(trackLiveData, pageStateLiveData, userId, id, pageTrack, type);
+        pageTrack = 1;
+        pageStateLiveData.postValue(PageState.PAGE_REFRESH);
+        new ProjectDetailRepository().getTrack(trackLiveData, pageStateLiveData, userId, id, pageTrack, type);
         locusTypeLiveData.postValue(type);
     }
 
-    private ProjectDetailRepository repositoryViewTrack;
-    public void getViewTrack(){
-        if (repositoryViewTrack == null)
-            repositoryViewTrack = new ProjectDetailRepository();
-        repositoryViewTrack.getViewTrack(viewTrackLiveData, pageStateLiveData, userId, id);
+    public void getMoreTract(){
+        pageTrack ++;
+        pageStateLiveData.postValue(PageState.PAGE_REFRESH);
+        new ProjectDetailRepository().getTrack(trackLiveData, pageStateLiveData, userId, id, pageTrack, type);
     }
 
-    private ProjectDetailRepository repositoryConsume;
+    public void getViewTrack(){
+        pageViewTrack = 1;
+        pageStateLiveData.postValue(PageState.PAGE_REFRESH);
+        new ProjectDetailRepository().getViewTrack(viewTrackLiveData, pageStateLiveData, userId, id, pageViewTrack);
+    }
+
+    public void getMoreViewTrack(){
+        pageViewTrack ++;
+        pageStateLiveData.postValue(PageState.PAGE_REFRESH);
+        new ProjectDetailRepository().getViewTrack(viewTrackLiveData, pageStateLiveData, userId, id, pageViewTrack);
+    }
+
     public void getConsume(){
-        if (repositoryConsume == null)
-            repositoryConsume = new ProjectDetailRepository();
-        repositoryConsume.consumeList(consumeLiveData, pageStateLiveData, userId, id, pageConsume);
+        pageConsume = 1;
+        pageStateLiveData.postValue(PageState.PAGE_REFRESH);
+        new ProjectDetailRepository().consumeList(consumeLiveData, pageStateLiveData, userId, id, pageConsume);
+    }
+
+    public void getMoreConsume(){
+        pageConsume ++;
+        pageStateLiveData.postValue(PageState.PAGE_REFRESH);
+        new ProjectDetailRepository().consumeList(consumeLiveData, pageStateLiveData, userId, id, pageConsume);
     }
 
     /**

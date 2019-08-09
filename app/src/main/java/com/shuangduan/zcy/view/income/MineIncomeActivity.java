@@ -1,4 +1,4 @@
-package com.shuangduan.zcy.view.mine;
+package com.shuangduan.zcy.view.income;
 
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +8,7 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
@@ -84,7 +85,7 @@ public class MineIncomeActivity extends BaseActivity {
         mineIncomeVm.incomeLiveData.observe(this, mineIncomeBean -> {
             MineIncomeBean.ProceedsBean proceeds = mineIncomeBean.getProceeds();
             tvExpectedReturn.setText(proceeds.getAll_funds());
-            tvWithdrawIncome.setText(proceeds.getFunds());
+            tvWithdrawIncome.setText(proceeds.getCoin());
             List<MineIncomeBean.ListBean> list = mineIncomeBean.getList();
             values.clear();
             for (MineIncomeBean.ListBean bean : list) {
@@ -111,6 +112,7 @@ public class MineIncomeActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_read_detail:
+                ActivityUtils.startActivity(IncomeClassifyActivity.class);
                 break;
         }
     }

@@ -82,7 +82,7 @@ public class WithdrawRecordActivity extends BaseActivity {
         refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                withdrawVm.refreshWithdrawRecord();
+                withdrawVm.moreWithdrawRecord();
             }
 
             @Override

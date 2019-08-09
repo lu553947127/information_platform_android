@@ -14,17 +14,12 @@ import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.LocusMineAdapter;
-import com.shuangduan.zcy.adapter.ProjectMineAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseLazyFragment;
-import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.LocusMineBean;
 import com.shuangduan.zcy.view.projectinfo.ProjectDetailActivity;
 import com.shuangduan.zcy.vm.MineReleaseVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 
@@ -91,7 +86,7 @@ public class LocusFragment extends BaseLazyFragment {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 mineReleaseVm.projectPage++;
-                mineReleaseVm.refreshMyProjectTract();
+                mineReleaseVm.moreMyProjectTract();
             }
 
             @Override

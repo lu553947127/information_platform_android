@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/toolbar"/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/income_head"/>
+
+    <TextView
+        android:id="@+id/tv_income_release"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:drawableLeft="@drawable/icon_record_gray"
+        android:drawablePadding="11dp"
+        android:drawableRight="@drawable/icon_next"
+        android:textColor="@color/color_666666"
+        android:textSize="14sp"
+        android:text="@string/income_release"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorDivider"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"/>
+
+    <TextView
+        android:id="@+id/tv_income_locus"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:drawableLeft="@drawable/icon_locus"
+        android:drawablePadding="11dp"
+        android:drawableRight="@drawable/icon_next"
+        android:textColor="@color/color_666666"
+        android:textSize="14sp"
+        android:text="@string/income_locus"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorDivider"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"/>
+
+    <TextView
+        android:id="@+id/tv_income_msg"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:drawableLeft="@drawable/icon_shopping_cart_small"
+        android:drawablePadding="11dp"
+        android:drawableRight="@drawable/icon_next"
+        android:textColor="@color/color_666666"
+        android:textSize="14sp"
+        android:text="@string/income_msg"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorDivider"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"/>
+
+    <TextView
+        android:id="@+id/tv_income_product_rights"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:drawableLeft="@drawable/add_double"
+        android:drawablePadding="11dp"
+        android:drawableRight="@drawable/icon_next"
+        android:textColor="@color/color_666666"
+        android:textSize="14sp"
+        android:text="@string/income_product_rights"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorDivider"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"/>
+
+    <TextView
+        android:id="@+id/tv_income_people"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:drawableLeft="@drawable/member"
+        android:drawablePadding="11dp"
+        android:drawableRight="@drawable/icon_next"
+        android:textColor="@color/color_666666"
+        android:textSize="14sp"
+        android:text="@string/income_people"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorDivider"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"/>
+
+</LinearLayout>

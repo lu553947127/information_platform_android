@@ -176,14 +176,7 @@ public class UserRepository extends BaseRepository {
     }
 
     /**
-     * 我的收益
-     */
-    public void mineIncome(MutableLiveData<MineIncomeBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id){
-        request(apiService.myProceeds(user_id)).setData(liveData).setPageState(pageStateLiveData).send();
-    }
-
-    /**
-     * 我的收益
+     * 实名认证检测
      */
     public void authentication(MutableLiveData<AuthenBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id){
         request(apiService.authentication(user_id)).setData(liveData).setPageState(pageStateLiveData).send();

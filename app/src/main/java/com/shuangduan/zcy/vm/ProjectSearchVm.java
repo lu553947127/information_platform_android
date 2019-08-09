@@ -39,7 +39,7 @@ public class ProjectSearchVm extends BaseViewModel {
         new SearchRepository().searchProjectTitle(searchLiveData, pageStateLiveData, userId, keyword, page);
     }
 
-    public void refreshSearch(){
+    public void moreSearch(){
         page++;
         new SearchRepository().searchProjectTitle(searchLiveData, pageStateLiveData, userId, keyword, page);
     }

@@ -1,19 +1,30 @@
 package com.shuangduan.zcy.view.projectinfo;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.ActivityUtils;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.constant.RefreshState;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.LocusAdapter;
+import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseFragment;
 import com.shuangduan.zcy.base.BaseLazyFragment;
 import com.shuangduan.zcy.model.bean.LocusBean;
+import com.shuangduan.zcy.model.bean.TrackBean;
+import com.shuangduan.zcy.view.PhotoViewActivity;
 import com.shuangduan.zcy.vm.ProjectDetailVm;
 
 import java.util.ArrayList;
@@ -37,6 +48,8 @@ public class ProjectReadFragment extends BaseLazyFragment {
     TextView tvDetail;
     @BindView(R.id.tv_material)
     TextView tvMaterial;
+    @BindView(R.id.refresh)
+    SmartRefreshLayout refresh;
     @BindView(R.id.rv_locus)
     RecyclerView rvLocus;
     private ProjectDetailVm projectDetailVm;
@@ -67,6 +80,24 @@ public class ProjectReadFragment extends BaseLazyFragment {
         };
         locusAdapter.setEmptyView(R.layout.layout_loading_top, rvLocus);
         rvLocus.setAdapter(locusAdapter);
+        locusAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            TrackBean.ListBean listBean = projectDetailVm.trackLiveData.getValue().getList().get(position);
+            switch (view.getId()){
+                case R.id.iv_pic_first:
+                    showPic(listBean, 0, view);
+                    break;
+                case R.id.iv_pic_second:
+                    showPic(listBean, 1, view);
+                    break;
+                case R.id.iv_pic_third:
+                    showPic(listBean, 2, view);
+                    break;
+                case R.id.tv_more:
+                    showPic(listBean, 2, view);
+                    break;
+            }
+        });
+        refresh.setOnLoadMoreListener(refreshLayout -> projectDetailVm.getMoreTract());
 
         projectDetailVm = ViewModelProviders.of(mActivity).get(ProjectDetailVm.class);
         projectDetailVm.introLiveData.observe(this, intro ->{
@@ -75,7 +106,16 @@ public class ProjectReadFragment extends BaseLazyFragment {
         projectDetailVm.materialLiveData.observe(this, materials -> {
             tvMaterial.setText(materials);
         });
-
+        projectDetailVm.viewTrackLiveData.observe(this, trackBean -> {
+            isInited = true;
+            if (trackBean.getPage() == 1) {
+                locusAdapter.setNewData(trackBean.getList());
+                setEmpty();
+            }else {
+                locusAdapter.addData(trackBean.getList());
+            }
+            setNoMore(trackBean.getPage(), trackBean.getCount());
+        });
     }
 
     private void setEmpty() {
@@ -88,10 +128,46 @@ public class ProjectReadFragment extends BaseLazyFragment {
     @Override
     protected void initDataFromService() {
         projectDetailVm.getViewTrack();
-        projectDetailVm.viewTrackLiveData.observe(this, trackBean -> {
-            setEmpty();
-            locusAdapter.setNewData(trackBean.getList());
-            isInited = true;
-        });
+    }
+
+    /**
+     *  图片预览
+     */
+    private void showPic(TrackBean.ListBean item, int position, View view){
+        ArrayList<String> list = new ArrayList<>();
+        for (TrackBean.ListBean.ImageBean img: item.getImage()) {
+            list.add(img.getSource());
+        }
+
+        Bundle bundle = new Bundle();
+        bundle.putInt("position", position);
+        bundle.putStringArrayList(CustomConfig.PHOTO_VIEW_URL_LIST, list);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            //共享shareElement这个View
+            ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(mActivity, view, "shareElement");
+            ActivityUtils.startActivity(bundle, PhotoViewActivity.class, activityOptionsCompat.toBundle());
+        } else {
+            ActivityUtils.startActivity(bundle, PhotoViewActivity.class);
+        }
+    }
+
+    private void setNoMore(int page, int count){
+        if (page == 1){
+            if (page * 10 >= count){
+                if (refresh.getState() == RefreshState.None){
+                    refresh.setNoMoreData(true);
+                }else {
+                    refresh.finishRefreshWithNoMoreData();
+                }
+            }else {
+                refresh.finishRefresh();
+            }
+        }else {
+            if (page * 10 >= count){
+                refresh.finishLoadMoreWithNoMoreData();
+            }else {
+                refresh.finishLoadMore();
+            }
+        }
     }
 }

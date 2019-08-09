@@ -33,13 +33,14 @@ import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.pop.CommonPopupWindow;
 import com.shuangduan.zcy.model.api.PageState;
-import com.shuangduan.zcy.model.bean.BaseSelectorBean;
 import com.shuangduan.zcy.model.bean.ProjectInfoBean;
+import com.shuangduan.zcy.model.bean.ProvinceBean;
+import com.shuangduan.zcy.model.bean.StageBean;
 import com.shuangduan.zcy.model.bean.TypeBean;
-import com.shuangduan.zcy.vm.AreaVm;
+import com.shuangduan.zcy.vm.MultiAreaVm;
+import com.shuangduan.zcy.vm.MultiStageVm;
 import com.shuangduan.zcy.vm.MultiTypeVm;
 import com.shuangduan.zcy.vm.ProjectListVm;
-import com.shuangduan.zcy.vm.StageVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 import com.shuangduan.zcy.weight.datepicker.CustomDatePicker;
 
@@ -95,8 +96,8 @@ public class ProjectInfoListActivity extends BaseActivity {
     View line;
 
     private ProjectListVm projectListVm;
-    private StageVm stageVm;
-    private AreaVm areaVm;
+    private MultiStageVm stageVm;
+    private MultiAreaVm areaVm;
     private MultiTypeVm typeVm;
     private ProjectInfoAdapter projectInfoAdapter;
 
@@ -111,9 +112,11 @@ public class ProjectInfoListActivity extends BaseActivity {
         tvBarTitle.setText(getResources().getStringArray(R.array.classify)[0]);
 
         projectListVm = ViewModelProviders.of(this).get(ProjectListVm.class);
-        stageVm = ViewModelProviders.of(this).get(StageVm.class);
-        areaVm = ViewModelProviders.of(this).get(AreaVm.class);
+        areaVm = ViewModelProviders.of(this).get(MultiAreaVm.class);
+        stageVm = ViewModelProviders.of(this).get(MultiStageVm.class);
         typeVm = ViewModelProviders.of(this).get(MultiTypeVm.class);
+        initArea();
+        initStage();
         initTypes();
 
         rv.setLayoutManager(new LinearLayoutManager(this));
@@ -131,7 +134,7 @@ public class ProjectInfoListActivity extends BaseActivity {
         refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                projectListVm.refreshProjectList();
+                projectListVm.moreProjectList();
             }
 
             @Override
@@ -181,10 +184,10 @@ public class ProjectInfoListActivity extends BaseActivity {
             case R.id.iv_bar_right:
                 break;
             case R.id.ll_area:
-//                getAreaData();
+                getAreaData();
                 break;
             case R.id.ll_stage:
-//                getStageData();
+                getStageData();
                 break;
             case R.id.ll_type:
                 getTypesData();
@@ -207,8 +210,7 @@ public class ProjectInfoListActivity extends BaseActivity {
     private CommonPopupWindow popupWindowArea;
     private RecyclerView rvProvince;
     private RecyclerView rvCity;
-    private RecyclerView rvStageFirst;
-    private RecyclerView rvStageSecond;
+    private RecyclerView rvStage;
     private RecyclerView rvTypeFirst;
     private RecyclerView rvTypeSecond;
     private LinearLayout llArea;
@@ -223,10 +225,9 @@ public class ProjectInfoListActivity extends BaseActivity {
     private SelectorFirstAdapter provinceAdapter;
     private SelectorSecondAdapter cityAdapter;
     private SelectorFirstAdapter stageFirstAdapter;
-    private SelectorSecondAdapter stageSecondAdapter;
     private SelectorFirstAdapter typeFirstAdapter;
     private SelectorSecondAdapter typeSecondAdapter;
-    private void showPopArea(final List<BaseSelectorBean> dataArea, final List<BaseSelectorBean> dataStage, final List<TypeBean> data, int popType){
+    private void showPopArea(final List<ProvinceBean> dataArea, final List<StageBean> dataStage, final List<TypeBean> dataType, int popType){
         if (popupWindowArea == null){
             popupWindowArea = new CommonPopupWindow.Builder(this)
                     .setView(R.layout.dialog_area)
@@ -283,26 +284,22 @@ public class ProjectInfoListActivity extends BaseActivity {
 
                         rvProvince = view.findViewById(R.id.rv_province);
                         rvCity = view.findViewById(R.id.rv_city);
-                        rvStageFirst = view.findViewById(R.id.rv_stage_first);
-                        rvStageSecond = view.findViewById(R.id.rv_stage_second);
+                        rvStage = view.findViewById(R.id.rv_stage);
                         rvTypeFirst = view.findViewById(R.id.rv_type_first);
                         rvTypeSecond = view.findViewById(R.id.rv_type_second);
                         rvProvince.setLayoutManager(new LinearLayoutManager(this));
                         rvCity.setLayoutManager(new LinearLayoutManager(this));
-                        rvStageFirst.setLayoutManager(new LinearLayoutManager(this));
-                        rvStageSecond.setLayoutManager(new LinearLayoutManager(this));
+                        rvStage.setLayoutManager(new LinearLayoutManager(this));
                         rvTypeFirst.setLayoutManager(new LinearLayoutManager(this));
                         rvTypeSecond.setLayoutManager(new LinearLayoutManager(this));
                         provinceAdapter = new SelectorFirstAdapter(R.layout.item_province, null);
                         cityAdapter = new SelectorSecondAdapter(R.layout.item_city, null);
                         stageFirstAdapter = new SelectorFirstAdapter(R.layout.item_province, null);
-                        stageSecondAdapter = new SelectorSecondAdapter(R.layout.item_city, null);
                         typeFirstAdapter = new SelectorFirstAdapter(R.layout.item_province, null);
                         typeSecondAdapter = new SelectorSecondAdapter(R.layout.item_city, null);
                         rvProvince.setAdapter(provinceAdapter);
                         rvCity.setAdapter(cityAdapter);
-                        rvStageFirst.setAdapter(stageFirstAdapter);
-                        rvStageSecond.setAdapter(stageSecondAdapter);
+                        rvStage.setAdapter(stageFirstAdapter);
                         rvTypeFirst.setAdapter(typeFirstAdapter);
                         rvTypeSecond.setAdapter(typeSecondAdapter);
 
@@ -312,7 +309,6 @@ public class ProjectInfoListActivity extends BaseActivity {
 
                         //阶段点击事件
                         stageFirstAdapter.setOnItemClickListener((adapter, view1, position) -> stageVm.clickFirst(position));
-                        stageSecondAdapter.setOnItemClickListener((adapter, view12, position) -> stageVm.clickSecond(position));
 
                         //类型点击事件
                         typeFirstAdapter.setOnItemClickListener((adapter, view1, position) -> typeVm.clickFirst(position));
@@ -325,21 +321,24 @@ public class ProjectInfoListActivity extends BaseActivity {
                             showTimeDialog(tvTimeEnd);
                         });
 
-                        view.findViewById(R.id.tv_negative).setOnClickListener(v -> popupWindowArea.dismiss());
+                        view.findViewById(R.id.tv_negative).setOnClickListener(v -> {
+                            over.setVisibility(View.VISIBLE);
+                            popupWindowArea.dismiss();
+                        });
                         view.findViewById(R.id.tv_positive).setOnClickListener(v -> {
                             switch (popType){
                                 case 1:
-                                    int[] cityResult = areaVm.getResult();
-                                    if (cityResult == null){
-                                        projectListVm.province = null;
-                                        projectListVm.city = null;
-                                    }else {
-                                        projectListVm.city = cityResult;
-                                        projectListVm.province = String.valueOf(areaVm.getProvinceId());
-                                    }
+//                                    int[] cityResult = areaVm.getResult();
+//                                    if (cityResult == null){
+//                                        projectListVm.province = null;
+//                                        projectListVm.city = null;
+//                                    }else {
+//                                        projectListVm.city = cityResult;
+//                                        projectListVm.province = String.valueOf(areaVm.getProvinceId());
+//                                    }
                                     break;
                                 case 2:
-                                    projectListVm.phases = String.valueOf(stageVm.getFirstId());
+//                                    projectListVm.phases = String.valueOf(stageVm.getFirstId());
                                     break;
                                 case 3:
 //                                    int[] typeResult = typeVm.getResult();
@@ -365,6 +364,7 @@ public class ProjectInfoListActivity extends BaseActivity {
                                     }
                                     break;
                             }
+                            over.setVisibility(View.GONE);
                             popupWindowArea.dismiss();
                         });
                     })
@@ -372,7 +372,7 @@ public class ProjectInfoListActivity extends BaseActivity {
         }
         switch (popType){
             case 1:
-                provinceAdapter.setNewData(data);
+                provinceAdapter.setNewData(dataArea);
                 llArea.setVisibility(View.VISIBLE);
                 llStage.setVisibility(View.GONE);
                 llType.setVisibility(View.GONE);
@@ -380,7 +380,7 @@ public class ProjectInfoListActivity extends BaseActivity {
                 flSubscription.setVisibility(View.GONE);
                 break;
             case 2:
-                stageFirstAdapter.setNewData(data);
+                stageFirstAdapter.setNewData(dataStage);
                 llArea.setVisibility(View.GONE);
                 llStage.setVisibility(View.VISIBLE);
                 llType.setVisibility(View.GONE);
@@ -388,7 +388,7 @@ public class ProjectInfoListActivity extends BaseActivity {
                 flSubscription.setVisibility(View.GONE);
                 break;
             case 3:
-                typeFirstAdapter.setNewData(data);
+                typeFirstAdapter.setNewData(dataType);
                 llArea.setVisibility(View.GONE);
                 llStage.setVisibility(View.GONE);
                 llType.setVisibility(View.VISIBLE);
@@ -416,76 +416,80 @@ public class ProjectInfoListActivity extends BaseActivity {
         }
     }
 
-//    /**
-//     * 初始化阶段
-//     */
-//    private void getStageData(){
-//        if (stageVm.stageFirstLiveData == null){
-//            stageVm.init();
-//            stageVm.stageFirstLiveData.observe(this, stageBeans -> {
-//                List<BaseSelectorBean> list = new ArrayList<>();
-//                list.addAll(stageBeans);
-//                showPopArea(list, 2);
-//                stageVm.setProvinceInit();
-//                stageVm.stageSecondLiveData.observe(this, stageBeans1 -> {
-//                    stageVm.setCityInit();
-//                    //刷新二级列表
-//                    stageSecondAdapter.setNewData(stageBeans1);
-//                });
-//            });
-//
-//            stageVm.pageStateLiveData.observe(this, s -> {
-//                switch (s){
-//                    case PageState.PAGE_LOADING:
-//                        showLoading();
-//                        break;
-//                    default:
-//                        hideLoading();
-//                        break;
-//                }
-//            });
-//        }else {
-//            List<BaseSelectorBean> list = new ArrayList<>();
-//            list.addAll(stageVm.stageFirstLiveData.getValue());
-//            showPopArea(list, 2);
-//        }
-//    }
-//
-//    /**
-//     * 初始化地区
-//     */
-//    private void getAreaData(){
-//        if (areaVm.provinceLiveData == null){
-//            areaVm.init();
-//            areaVm.provinceLiveData.observe(this, provinceBeans -> {
-//                List<BaseSelectorBean> list = new ArrayList<>();
-//                list.addAll(provinceBeans);
-//                showPopArea(list, 1);
-//                areaVm.setProvinceInit();
-//                areaVm.cityLiveData.observe(this, cityBeans -> {
-//                    areaVm.setCityInit();
-//                    //刷新市区
-//                    cityAdapter.setNewData(cityBeans);
-//                });
-//            });
-//
-//            areaVm.pageStateLiveData.observe(this, s -> {
-//                switch (s){
-//                    case PageState.PAGE_LOADING:
-//                        showLoading();
-//                        break;
-//                    default:
-//                        hideLoading();
-//                        break;
-//                }
-//            });
-//        }else {
-//            List<BaseSelectorBean> list = new ArrayList<>();
-//            list.addAll(areaVm.provinceLiveData.getValue());
-//            showPopArea(list, 1);
-//        }
-//    }
+    private void initStage(){
+        stageVm.stageLiveData.observe(this, stageBeans -> {
+            if (!stageVm.inited){
+                stageVm.setStageInit();
+            }else {
+                showPopArea(null, stageBeans, null, 2);
+            }
+        });
 
+        stageVm.pageStateLiveData.observe(this, s -> {
+            switch (s){
+                case PageState.PAGE_LOADING:
+                    showLoading();
+                    break;
+                default:
+                    hideLoading();
+                    break;
+            }
+        });
+    }
+
+    /**
+     * 初始化阶段
+     */
+    private void getStageData(){
+        if (stageVm.stageLiveData.getValue() == null){
+            stageVm.getStage();
+        }else {
+            showPopArea(null, stageVm.stageLiveData.getValue(), null, 2);
+        }
+    }
+
+    /**
+     * 初始化地区
+     */
+    private void initArea(){
+        areaVm.provinceLiveData.observe(this, provinceBeans -> {
+            if (!areaVm.provinceInited) {
+                //首次加载，未添加全部，
+                areaVm.setProvinceInit();
+            }else {
+                showPopArea(provinceBeans, null, null, 1);
+            }
+        });
+        areaVm.cityLiveData.observe(this, cityBeans -> {
+            areaVm.setCityInit();
+            if (cityBeans != null && cityBeans.size() > 0 && cityBeans.get(0).getName().equals("全部")){
+                //刷新市区
+                cityAdapter.setNewData(cityBeans);
+            }
+        });
+        areaVm.pageStateLiveData.observe(this, s -> {
+            switch (s){
+                case PageState.PAGE_LOADING:
+                    showLoading();
+                    break;
+                default:
+                    hideLoading();
+                    break;
+            }
+        });
+    }
+
+    private void getAreaData(){
+        if (areaVm.provinceLiveData.getValue() == null){
+            areaVm.getProvince();
+        }else {
+            showPopArea(areaVm.provinceLiveData.getValue(), null, null, 1);
+        }
+    }
+
+    /**
+     * 初始化分类
+     */
     private void initTypes(){
         typeVm.typeFirstLiveData.observe(this, typeBeans -> {
             if (!typeVm.firstInited) {
@@ -515,9 +519,6 @@ public class ProjectInfoListActivity extends BaseActivity {
         });
     }
 
-    /**
-     * 初始化分类
-     */
     private void getTypesData(){
         if (typeVm.typeFirstLiveData.getValue() == null){
             typeVm.getTypesFirst();

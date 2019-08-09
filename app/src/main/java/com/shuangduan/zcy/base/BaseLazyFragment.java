@@ -2,6 +2,7 @@ package com.shuangduan.zcy.base;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
 import com.blankj.utilcode.util.LogUtils;
+import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.LoadDialog;
 import com.shuangduan.zcy.model.event.BaseEvent;
 
@@ -41,6 +43,7 @@ public abstract class BaseLazyFragment extends Fragment implements IView {
      * 数据是否已从服务器拉取，拉取成功后设为true
      */
     public boolean isInited = false;
+    private SparseArray<BaseDialog> dialogArray = new SparseArray<>();
 
     @Override
     public void onAttach(Context context) {
@@ -91,14 +94,12 @@ public abstract class BaseLazyFragment extends Fragment implements IView {
         if (loadDialog == null){
             loadDialog = new LoadDialog(mActivity);
         }
-        if (!loadDialog.isShowing()){
-            loadDialog.showDialog();
-        }
+        loadDialog.showDialog();
     }
 
     @Override
     public void hideLoading() {
-        if (loadDialog != null && loadDialog.isShowing()){
+        if (loadDialog != null){
             loadDialog.hideDialog();
         }
     }
@@ -113,6 +114,10 @@ public abstract class BaseLazyFragment extends Fragment implements IView {
 
     }
 
+    public void addDialog(BaseDialog dialog){
+        dialogArray.put(dialogArray.size(), dialog);
+    }
+
     @Override
     public void onDestroyView() {
         unBinder.unbind();
@@ -121,6 +126,12 @@ public abstract class BaseLazyFragment extends Fragment implements IView {
             loadDialog.dismiss();
             loadDialog = null;
         }
+        for (int i = 0; i < dialogArray.size(); i++) {
+            if (dialogArray.get(i) != null){
+                dialogArray.get(i).dismiss();
+            }
+        }
+        dialogArray = null;
         super.onDestroyView();
     }
 

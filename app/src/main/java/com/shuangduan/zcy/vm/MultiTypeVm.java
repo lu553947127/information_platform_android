@@ -31,6 +31,7 @@ public class MultiTypeVm extends BaseViewModel {
     private String secondResult = "";
     public boolean firstInited = false;
     public int prePosition = 0;//上一个选中的位置
+    private boolean selectAll = true;
 
     public MultiTypeVm() {
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
@@ -49,7 +50,7 @@ public class MultiTypeVm extends BaseViewModel {
     }
 
     /**
-     * 设置省份默认数据
+     * 设置一级默认数据
      */
     public void setTypeFirstInit(){
         if (!firstInited){
@@ -90,13 +91,13 @@ public class MultiTypeVm extends BaseViewModel {
             if (!secondList.get(0).getCatname().equals("全部")){
                 for (TypeBean bean: secondList) {
                     //默认全选
-                    bean.setIsSelect(1);
+                    bean.setIsSelect(selectAll?1:0);
                 }
 
                 TypeBean typeBean = new TypeBean();
                 typeBean.setCatname("全部");
                 typeBean.setId(0);
-                typeBean.setIsSelect(1);
+                typeBean.setIsSelect(selectAll?1:0);
                 secondList.add(0, typeBean);
                 typeSecondLiveData.postValue(secondList);
             }
@@ -118,6 +119,7 @@ public class MultiTypeVm extends BaseViewModel {
         firstList.get(prePosition).setIsSelect(0);
         //改变上一个选中效果，字体颜色
         List<TypeBean> childList = firstList.get(prePosition).getChildList();
+        if (childList == null) return;
         if (childList.get(0).getIsSelect() != 1){
             //非全选,遍历子类，判断是否修改字体效果
             for (TypeBean bean: childList) {
@@ -156,44 +158,37 @@ public class MultiTypeVm extends BaseViewModel {
             LogUtils.i("***********", prePosition, data.get(0).getIsSelect());
             if (prePosition == 0){//一级全部的全部
                 List<TypeBean> firstList = typeFirstLiveData.getValue();
-                if (data.get(0).getIsSelect() == 1){//所有全部非选中
+                if (data.get(0).getIsSelect() == 1){//更改为所有全部非选中
+                    selectAll = false;
                     if (firstList != null){
                         for (int j = 0; j < firstList.size(); j++) {
                             TypeBean firstData = firstList.get(j);
+                            firstData.setIsSelect(j == 0?1:0);
                             List<TypeBean> childList = firstData.getChildList();
-                            if (j == 0){
-                                //只改变子类选中效果
-                                firstData.getChildList().get(0).setIsSelect(0);
-                                firstData.setIsSelect(1);
-                            }else {
-                                firstData.setIsSelect(0);
-                                if (childList != null){
-                                    for (int k = 0; k < childList.size(); k++) {
-                                        childList.get(k).setIsSelect(0);
-                                    }
+                            if (childList != null){
+                                for (int k = 0; k < childList.size(); k++) {
+                                    childList.get(k).setIsSelect(0);
                                 }
                             }
                         }
                     }
-                }else {//所有全部选中
+                }else {//更改为所有全部选中
+                    selectAll = true;
                     if (firstList != null){
                         for (int j = 0; j < firstList.size(); j++) {
                             TypeBean firstData = firstList.get(j);
                             List<TypeBean> childList = firstData.getChildList();
-                            if (j == 0){
-                                firstData.getChildList().get(0).setIsSelect(1);
-                                firstData.setIsSelect(1);
-                            }else {
-                                firstData.setIsSelect(1);
-                                if (childList != null){
-                                    for (int k = 0; k < childList.size(); k++) {
-                                        childList.get(k).setIsSelect(1);
-                                    }
+                            firstData.setIsSelect(1);
+                            if (childList != null){
+                                for (int k = 0; k < childList.size(); k++) {
+                                    childList.get(k).setIsSelect(1);
                                 }
                             }
                         }
                     }
                 }
+                typeSecondLiveData.postValue(firstList.get(0).getChildList());
+                typeFirstLiveData.postValue(firstList);
             }else {//一级非全部的全部
                 //选全部
                 if (data.get(0).getIsSelect() == 1){
@@ -208,6 +203,7 @@ public class MultiTypeVm extends BaseViewModel {
                     }
                 }
                 typeSecondLiveData.postValue(data);
+                changeFirstState();
             }
         }else {
             //单一选项
@@ -231,8 +227,8 @@ public class MultiTypeVm extends BaseViewModel {
                 }
             }
             typeSecondLiveData.postValue(data);
+            changeFirstState();
         }
-        changeFirstState();
     }
 
     private void changeFirstState(){
@@ -252,6 +248,12 @@ public class MultiTypeVm extends BaseViewModel {
             }
         }
 
+        if (firstData.get(0).getChildList().get(0).getIsSelect() == 1) {
+            selectAll = true;//只在全部选中的时候改变为true
+        }
+
         typeFirstLiveData.postValue(firstData);
     }
+
+
 }

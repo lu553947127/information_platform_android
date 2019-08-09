@@ -42,7 +42,7 @@ public class MineReleaseVm extends BaseViewModel {
         new ProjectRepository().myProject(projectLiveData, pageStateLiveData, userId, projectPage);
     }
 
-    public void refreshMyProject(){
+    public void moreMyProject(){
         projectPage++;
         pageStateLiveData.setValue(PageState.PAGE_REFRESH);
         new ProjectRepository().myProject(projectLiveData, pageStateLiveData, userId, projectPage);
@@ -53,7 +53,7 @@ public class MineReleaseVm extends BaseViewModel {
         new ProjectRepository().myProjectTrack(trackLiveData, pageStateLiveData, userId, tractPage);
     }
 
-    public void refreshMyProjectTract(){
+    public void moreMyProjectTract(){
         pageStateLiveData.setValue(PageState.PAGE_REFRESH);
         new ProjectRepository().myProjectTrack(trackLiveData, pageStateLiveData, userId, tractPage);
     }

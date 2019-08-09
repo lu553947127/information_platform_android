@@ -37,7 +37,7 @@ public class RecruitVm extends BaseViewModel {
         new RecruitReporitory().recruitList(recruitMutableLiveData, pageStateLiveData, userId, page);
     }
 
-    public void refreshRecruit(){
+    public void moreRecruit(){
         page ++;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
         new RecruitReporitory().recruitList(recruitMutableLiveData, pageStateLiveData, userId, page);

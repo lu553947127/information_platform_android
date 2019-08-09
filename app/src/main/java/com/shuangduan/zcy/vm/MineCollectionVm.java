@@ -41,7 +41,7 @@ public class MineCollectionVm extends BaseViewModel {
         new UserRepository().projectCollection(projectCollectLiveData, pageStateLiveData, userId, projectPage);
     }
 
-    public void refreshProjectCollection(){
+    public void moreProjectCollection(){
         projectPage ++;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
         new UserRepository().projectCollection(projectCollectLiveData, pageStateLiveData, userId, projectPage);
@@ -53,7 +53,7 @@ public class MineCollectionVm extends BaseViewModel {
         new UserRepository().recruitCollection(recruitCollectLiveData, pageStateLiveData, userId, recruitPage);
     }
 
-    public void refreshRecruitCollection(){
+    public void moreRecruitCollection(){
         recruitPage ++;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
         new UserRepository().recruitCollection(recruitCollectLiveData, pageStateLiveData, userId, recruitPage);

@@ -13,13 +13,10 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shuangduan.zcy.R;
-import com.shuangduan.zcy.adapter.ProjectSubAdapter;
 import com.shuangduan.zcy.adapter.SellAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseLazyFragment;
 import com.shuangduan.zcy.model.bean.MaterialBean;
-import com.shuangduan.zcy.model.bean.ProjectSubBean;
-import com.shuangduan.zcy.view.projectinfo.ProjectDetailActivity;
 import com.shuangduan.zcy.vm.MaterialVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
@@ -85,7 +82,7 @@ public class SellFragment extends BaseLazyFragment {
         refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                materialVm.refreshSellList();
+                materialVm.moreSellList();
             }
 
             @Override

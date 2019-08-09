@@ -83,7 +83,7 @@ public class RecruitCollectFragment extends BaseLazyFragment {
         refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                mineCollectionVm.refreshRecruitCollection();
+                mineCollectionVm.moreRecruitCollection();
             }
 
             @Override

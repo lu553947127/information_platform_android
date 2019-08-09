@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.LocusAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
@@ -41,6 +43,8 @@ import butterknife.OnClick;
 public class ProjectLocusFragment extends BaseLazyFragment {
     @BindView(R.id.tv_filter)
     TextView tvFilter;
+    @BindView(R.id.refresh)
+    SmartRefreshLayout refresh;
     @BindView(R.id.rv_locus)
     RecyclerView rvLocus;
     private ProjectDetailVm projectDetailVm;
@@ -103,6 +107,8 @@ public class ProjectLocusFragment extends BaseLazyFragment {
             }
         });
 
+        refresh.setOnLoadMoreListener(refreshLayout -> projectDetailVm.getMoreViewTrack());
+
         projectDetailVm = ViewModelProviders.of(mActivity).get(ProjectDetailVm.class);
         projectDetailVm.locusTypeLiveData.observe(this, type -> {
             if (type == 1){
@@ -111,16 +117,21 @@ public class ProjectLocusFragment extends BaseLazyFragment {
                 tvFilter.setText(getString(R.string.release_by_me));
             }
         });
+        projectDetailVm.trackLiveData.observe(this, trackBean -> {
+            isInited = true;
+            if (trackBean.getPage() == 1) {
+                locusAdapter.setNewData(trackBean.getList());
+                setEmpty();
+            }else {
+                locusAdapter.addData(trackBean.getList());
+            }
+            setNoMore(trackBean.getPage(), trackBean.getCount());
+        });
     }
 
     @Override
     protected void initDataFromService() {
         projectDetailVm.getTrack();
-        projectDetailVm.trackLiveData.observe(this, trackBean -> {
-            setEmpty();
-            locusAdapter.setNewData(trackBean.getList());
-            isInited = true;
-        });
     }
 
     private void setEmpty() {
@@ -130,6 +141,9 @@ public class ProjectLocusFragment extends BaseLazyFragment {
         locusAdapter.setEmptyView(empty);
     }
 
+    /**
+     *  图片预览
+     */
     private void showPic(TrackBean.ListBean item, int position, View view){
         ArrayList<String> list = new ArrayList<>();
         for (TrackBean.ListBean.ImageBean img: item.getImage()) {
@@ -154,6 +168,26 @@ public class ProjectLocusFragment extends BaseLazyFragment {
             case R.id.tv_filter:
                 projectDetailVm.switchLocusList();
                 break;
+        }
+    }
+
+    private void setNoMore(int page, int count){
+        if (page == 1){
+            if (page * 10 >= count){
+                if (refresh.getState() == RefreshState.None){
+                    refresh.setNoMoreData(true);
+                }else {
+                    refresh.finishRefreshWithNoMoreData();
+                }
+            }else {
+                refresh.finishRefresh();
+            }
+        }else {
+            if (page * 10 >= count){
+                refresh.finishLoadMoreWithNoMoreData();
+            }else {
+                refresh.finishLoadMore();
+            }
         }
     }
 }

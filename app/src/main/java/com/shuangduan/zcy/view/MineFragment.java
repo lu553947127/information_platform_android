@@ -7,8 +7,6 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.ActivityUtils;
-import com.blankj.utilcode.util.LogUtils;
-import com.blankj.utilcode.util.RegexUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.SpConfig;
@@ -23,7 +21,7 @@ import com.shuangduan.zcy.view.mine.BalanceActivity;
 import com.shuangduan.zcy.view.mine.FeedbackActivity;
 import com.shuangduan.zcy.view.mine.HelperActivity;
 import com.shuangduan.zcy.view.mine.MineCollectionActivity;
-import com.shuangduan.zcy.view.mine.MineIncomeActivity;
+import com.shuangduan.zcy.view.income.MineIncomeActivity;
 import com.shuangduan.zcy.view.mine.MineSubActivity;
 import com.shuangduan.zcy.view.mine.ReadHistoryActivity;
 import com.shuangduan.zcy.view.mine.RecommendFriendsActivity;

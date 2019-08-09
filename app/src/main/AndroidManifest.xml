@@ -64,12 +64,18 @@
         <activity android:name="com.shuangduan.zcy.view.mine.ReadHistoryActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.view.mine.MineSubActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.view.mine.MineCollectionActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.view.mine.MineIncomeActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
         <activity android:name="com.shuangduan.zcy.view.mine.BalanceActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
         <activity android:name="com.shuangduan.zcy.view.mine.BankCardListActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
         <activity android:name="com.shuangduan.zcy.view.mine.WithdrawRecordActivity" android:screenOrientation="portrait" />
         <activity android:name="com.shuangduan.zcy.view.mine.WithdrawDetailActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
-        <activity android:name="com.shuangduan.zcy.view.mine.UnbindBankCardActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
+        <activity android:name="com.shuangduan.zcy.view.mine.UnbindBankCardActivity" android:screenOrientation="portrait" />
+        <activity android:name="com.shuangduan.zcy.view.income.MineIncomeActivity" android:screenOrientation="portrait" />
+        <activity android:name="com.shuangduan.zcy.view.income.IncomeClassifyActivity" android:screenOrientation="portrait" />
+        <activity android:name="com.shuangduan.zcy.view.income.IncomeReleaseActivity" android:screenOrientation="portrait" />
+        <activity android:name="com.shuangduan.zcy.view.income.IncomeProductRightsActivity" android:screenOrientation="portrait" />
+        <activity android:name="com.shuangduan.zcy.view.income.IncomePeopleActivity" android:screenOrientation="portrait" />
+        <activity android:name="com.shuangduan.zcy.view.income.IncomeLocusActivity" android:screenOrientation="portrait" />
+        <activity android:name="com.shuangduan.zcy.view.income.IncomeMsgActivity" android:screenOrientation="portrait" />
         <activity android:name="com.shuangduan.zcy.view.projectinfo.ProjectInfoActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.view.projectinfo.ProjectInfoListActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.view.projectinfo.ProjectDetailActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
