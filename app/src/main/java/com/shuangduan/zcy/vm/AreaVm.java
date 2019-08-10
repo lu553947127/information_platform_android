@@ -12,6 +12,8 @@ import com.shuangduan.zcy.model.bean.ProvinceBean;
 import com.shuangduan.zcy.model.bean.TypeBean;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -179,18 +181,26 @@ public class AreaVm extends BaseViewModel {
      */
     public int[] getResult(){
         List<CityBean> dataCity = cityLiveData.getValue();
-        StringBuilder builder = new StringBuilder();
         int[] citys = null;
-        for (int i = 1; i < dataCity.size(); i++) {
-            if (dataCity.get(i).getIsSelect() == 1) {
-                builder.append(dataCity.get(i).getName());
-                if (citys == null){
-                    citys = new int[dataCity.size()];
+        if (dataCity != null){
+            StringBuilder builder = new StringBuilder();
+            List<Integer> idList = new ArrayList<>();
+            for (int i = 1; i < dataCity.size(); i++) {
+                if (dataCity.get(i).getIsSelect() == 1) {
+                    if (i == 1){
+                        builder.append(dataCity.get(i).getName());
+                    }else {
+                        builder.append("、").append(dataCity.get(i).getName());
+                    }
+                    idList.add(dataCity.get(i).getId());
                 }
-                citys[i] = dataCity.get(i).getId();
+            }
+            cityResult = builder.toString();
+            citys = new int[idList.size()];
+            for (int i = 0; i < idList.size(); i++) {
+                citys[i] = idList.get(i);
             }
         }
-        cityResult = builder.toString();
         return citys;
     }
 

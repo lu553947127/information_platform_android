@@ -175,6 +175,7 @@
 
             <FrameLayout
                 android:id="@+id/fl_email"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/selector_bg_custom"
@@ -354,19 +355,21 @@
                 android:layout_height="10dp"/>
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_production_tip"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="15dp"
-                android:paddingLeft="14dp"
+                android:drawableRight="@drawable/icon_next"
+                android:padding="14dp"
+                android:gravity="center_vertical"
                 android:background="@color/colorFFF"
                 android:textColor="@color/colorTv"
                 android:textSize="14sp"
                 android:text="@string/product"/>
 
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/edt_production"
+            <TextView
+                android:id="@+id/tv_production"
                 android:layout_width="match_parent"
-                android:layout_height="92dp"
+                android:layout_height="wrap_content"
                 android:background="@color/colorFFF"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
@@ -375,8 +378,7 @@
                 android:gravity="top"
                 android:textColorHint="@color/colorTvHint"
                 android:textColor="@color/colorTv"
-                android:textSize="14sp"
-                android:hint="@string/please_hint"/>
+                android:textSize="14sp"/>
 
             <Space
                 android:layout_width="match_parent"

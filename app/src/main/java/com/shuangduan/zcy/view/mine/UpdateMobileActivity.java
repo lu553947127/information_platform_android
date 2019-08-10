@@ -16,6 +16,7 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
+import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.event.MobileEvent;
 import com.shuangduan.zcy.vm.LoginVm;
 import com.shuangduan.zcy.vm.UserInfoVm;
@@ -73,6 +74,7 @@ public class UpdateMobileActivity extends BaseActivity {
                 tvSendVerificationCode.setText(String.format(getString(R.string.format_get_verification_code_again), aLong));
             }
         });
+        loginVm.smsDataLiveData.observe(this, o -> loginVm.sendVerificationCode());
 
         userInfoVm = ViewModelProviders.of(this).get(UserInfoVm.class);
         userInfoVm.updateTelLiveData.observe(this, o -> {
@@ -80,6 +82,20 @@ public class UpdateMobileActivity extends BaseActivity {
             EventBus.getDefault().post(new MobileEvent(Objects.requireNonNull(edtAccount.getText()).toString()));
             finish();
         });
+
+        loginVm.pageStateLiveData.observe(this, s -> showHideLoading(s));
+        userInfoVm.pageStateLiveData.observe(this, s -> showHideLoading(s));
+    }
+
+    private void showHideLoading(String s){
+        switch (s){
+            case PageState.PAGE_LOADING:
+                showLoading();
+                break;
+            default:
+                hideLoading();
+                break;
+        }
     }
 
     @OnClick({R.id.iv_bar_back, R.id.tv_send_verification_code, R.id.tv_confirm})
@@ -95,7 +111,7 @@ public class UpdateMobileActivity extends BaseActivity {
                     ToastUtils.showShort(getString(R.string.hint_new_mobile));
                     return;
                 }
-                loginVm.sendVerificationCode();
+                loginVm.smsCode(mobile, CustomConfig.SMS_UPDATE_PHONE);
                 break;
             case R.id.tv_confirm:
                 mobile = Objects.requireNonNull(edtAccount.getText()).toString();

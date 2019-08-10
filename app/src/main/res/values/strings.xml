@@ -121,6 +121,9 @@
     <string name="exit_confirm">确认退出登录吗</string>
     <string name="pwd_no_same">两次输入的密码不一致</string>
     <string name="pwd_reset_success">密码重置成功</string>
+    <string name="no_company">没有相关公司</string>
+    <string name="edit_success">信息编辑成功</string>
+    <string name="hint_production">请输入产品信息</string>
 
     <string name="subscribe_message">订阅信息</string>
     <string name="model_list">列表模式</string>

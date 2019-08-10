@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/toolbar"/>
+
+    <EditText
+        android:id="@+id/edt_production"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="31dp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginRight="28dp"
+        android:background="@color/colorBgDark"
+        android:gravity="top"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:textColorHint="@color/colorTvHint"
+        android:textColor="@color/colorTv"
+        android:textSize="13sp"
+        android:hint="@string/hint_production"/>
+
+    <TextView
+        android:id="@+id/tv_confirm"
+        style="@style/BtnConfirm"
+        android:layout_width="320dp"
+        android:layout_marginTop="30dp"
+        android:text="@string/submit"/>
+
+</LinearLayout>

@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
@@ -141,7 +142,10 @@ public class AuthenticationActivity extends BaseActivity implements BaseDialog.P
                 ImageLoader.load(this, new ImageConfig.Builder().url(uploadBean.getSource()).imageView(ivIdCardNegative).build());
             }
         });
-        authenticationVm.authenticationLiveData.observe(this, o -> finish());
+        authenticationVm.authenticationLiveData.observe(this, o -> {
+            ToastUtils.showShort("认证成功");
+            finish();
+        });
         uploadPhotoVm.mPageStateLiveData.observe(this, s -> {
             switch (s){
                 case PageState.PAGE_LOADING:

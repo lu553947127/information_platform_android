@@ -4,8 +4,8 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
-import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
@@ -22,8 +23,12 @@ import com.shuangduan.zcy.dialog.BusinessExpDialog;
 import com.shuangduan.zcy.dialog.PhotoDialog;
 import com.shuangduan.zcy.dialog.SexDialog;
 import com.shuangduan.zcy.model.api.PageState;
+import com.shuangduan.zcy.model.event.CityEvent;
+import com.shuangduan.zcy.model.event.CompanyEvent;
 import com.shuangduan.zcy.model.event.EmailEvent;
 import com.shuangduan.zcy.model.event.MobileEvent;
+import com.shuangduan.zcy.model.event.OfficeEvent;
+import com.shuangduan.zcy.model.event.ProductionEvent;
 import com.shuangduan.zcy.model.event.UserNameEvent;
 import com.shuangduan.zcy.utils.AndroidBug5497Workaround;
 import com.shuangduan.zcy.utils.image.ImageConfig;
@@ -82,8 +87,8 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
     AppCompatTextView tvBusinessArea;
     @BindView(R.id.tv_business_exp)
     AppCompatTextView tvBusinessExp;
-    @BindView(R.id.edt_production)
-    AppCompatEditText edtProduction;
+    @BindView(R.id.tv_production)
+    TextView tvProduction;
 
     private PermissionVm permissionVm;
     private RxPermissions rxPermissions;
@@ -115,7 +120,7 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
             tvBusinessArea.setText(userInfoBean.getBusiness_city());
             if (userInfoBean.getExperience() >= 1 && userInfoBean.getExperience() <= 4)
                 tvBusinessExp.setText(getResources().getStringArray(R.array.experience_list)[userInfoBean.getExperience() - 1]);
-            edtProduction.setText(userInfoBean.getManaging_products());
+            tvProduction.setText(userInfoBean.getManaging_products());
         });
         userInfoVm.avatarLiveData.observe(this, s -> {
             ImageLoader.load(this, new ImageConfig.Builder()
@@ -154,6 +159,15 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
             }else {
                 showLoading();
             }
+        });
+        userInfoVm.areaLiveData.observe(this, o -> {
+            ToastUtils.showShort(getString(R.string.edit_success));
+            tvBusinessArea.setText(userInfoVm.area.getValue().city);
+        });
+        userInfoVm.expLiveData.observe(this, o -> {
+            ToastUtils.showShort(getString(R.string.edit_success));
+            if (userInfoVm.experience.getValue() >= 1 && userInfoVm.experience.getValue() <= 4)
+                tvBusinessExp.setText(getResources().getStringArray(R.array.experience_list)[userInfoVm.experience.getValue() - 1]);
         });
 
         rxPermissions = new RxPermissions(this);
@@ -194,7 +208,7 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
     }
 
     @OnClick({R.id.iv_bar_back, R.id.iv_user, R.id.fl_name, R.id.fl_sex, R.id.fl_mobile, R.id.fl_email, R.id.fl_id_card,
-            R.id.fl_company, R.id.fl_office, R.id.fl_business_area, R.id.fl_business_exp})
+            R.id.fl_company, R.id.fl_office, R.id.fl_business_area, R.id.fl_business_exp, R.id.tv_production_tip, R.id.tv_production})
     void onClick(View view){
         Bundle bundle = new Bundle();
         switch (view.getId()){
@@ -252,8 +266,16 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
                 break;
             case R.id.fl_business_exp:
                 new BusinessExpDialog(this)
-                        .setSingleCallBack((item, position) -> tvBusinessExp.setText(item))
+                        .setSelected(userInfoVm.experience.getValue() == null ? userInfoVm.informationLiveData.getValue().getExperience() -1 : userInfoVm.experience.getValue() - 1)
+                        .setSingleCallBack((item, position) -> {
+                            userInfoVm.experience.postValue(position + 1);
+                        })
                         .showDialog();
+                break;
+            case R.id.tv_production_tip:
+            case R.id.tv_production:
+                bundle.putString(CustomConfig.PRODUCTION, tvProduction.getText().toString());
+                ActivityUtils.startActivity(bundle, UpdateProductionActivity.class);
                 break;
         }
     }
@@ -296,4 +318,25 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
     public void updateEmail(EmailEvent event){
         tvEmail.setText(event.email);
     }
+
+    @Subscribe()
+    public void updateCompany(CompanyEvent event){
+        tvCompany.setText(event.company);
+    }
+
+    @Subscribe()
+    public void updateOffice(OfficeEvent event){
+        tvOffice.setText(event.office);
+    }
+
+    @Subscribe()
+    public void updateCity(CityEvent event){
+        userInfoVm.area.postValue(event);
+    }
+
+    @Subscribe()
+    public void updateProduction(ProductionEvent event){
+        tvProduction.setText(event.production);
+    }
+
 }

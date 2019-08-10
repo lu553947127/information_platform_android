@@ -9,6 +9,7 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.weight.datepicker.DatePickerView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -24,9 +25,10 @@ import butterknife.BindView;
  * @class describe
  */
 public class BusinessExpDialog extends BaseDialog {
-
     @BindView(R.id.dp_exp)
     DatePickerView dpExp;
+    private int selected = 0;
+    private String text;
 
     public BusinessExpDialog(@NonNull Activity activity) {
         super(activity);
@@ -41,26 +43,32 @@ public class BusinessExpDialog extends BaseDialog {
     void initData() {
         setWidth(ConvertUtils.dp2px(260));
         List<String> data = new ArrayList<>();
-        data.add("0-1");
-        data.add("1-3");
-        data.add("3-5");
-        data.add("5-10");
+        String[] stringArray = mActivity.getResources().getStringArray(R.array.experience_list);
+        Collections.addAll(data, stringArray);
         dpExp.setData(data);
         dpExp.setCanScroll(true);
         dpExp.setIsLoop(false);
-        dpExp.setSelected(2);
+        dpExp.setSelected(selected);
+        this.text = stringArray[selected];
     }
 
     @Override
     void initEvent() {
         findViewById(R.id.tv_confirm).setOnClickListener(v -> {
+            if (singleCallBack != null){
+                singleCallBack.click(text, selected);
+            }
             hideDialog();
         });
         dpExp.setOnSelectListener((text, position) -> {
-            if (singleCallBack != null){
-                singleCallBack.click(text, position);
-            }
+            this.selected = position;
+            this.text = text;
         });
+    }
+
+    public BusinessExpDialog setSelected(int position){
+        this.selected = position;
+        return this;
     }
 
 }

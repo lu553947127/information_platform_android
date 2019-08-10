@@ -2,10 +2,13 @@ package com.shuangduan.zcy.model.api.convert.exception;
 
 import android.net.ParseException;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonParseException;
+import com.shuangduan.zcy.view.login.FirstActivity;
 
 import org.json.JSONException;
 
@@ -56,7 +59,12 @@ public class ResponseErrorListenerImpl implements ResponseErrorListener {
             msg = "请求被服务器拒绝";
         } else if (httpException.code() == 307) {
             msg = "请求被重定向到其他页面";
-        } else {
+        } else if (httpException.code() == -1){
+            msg = "账户失效，请重新登录";
+            SPUtils.getInstance().clear();
+            ActivityUtils.startActivity(FirstActivity.class);
+            ActivityUtils.finishAllActivitiesExceptNewest();
+        }else {
             msg = httpException.message();
         }
         return msg;

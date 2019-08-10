@@ -22,6 +22,7 @@ import com.shuangduan.zcy.dialog.SexDialog;
 import com.shuangduan.zcy.dialog.SubscriptionTypeDialog;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.event.CityEvent;
+import com.shuangduan.zcy.model.event.CompanyEvent;
 import com.shuangduan.zcy.utils.AndroidBug5497Workaround;
 import com.shuangduan.zcy.view.MainActivity;
 import com.shuangduan.zcy.view.mine.BusinessAreaActivity;
@@ -193,7 +194,7 @@ public class UserInfoInputActivity extends BaseActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void cityChange(CityEvent event){
         tvBusinessArea.setText(event.city);
-        area = event.citys;
+        area = event.business_city;
     }
 
     /**

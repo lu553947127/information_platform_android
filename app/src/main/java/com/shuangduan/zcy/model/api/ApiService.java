@@ -1,7 +1,5 @@
 package com.shuangduan.zcy.model.api;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import com.shuangduan.zcy.model.bean.AuthenBean;
 import com.shuangduan.zcy.model.bean.BankCardBean;
 import com.shuangduan.zcy.model.bean.BankCardDisBean;
@@ -9,7 +7,6 @@ import com.shuangduan.zcy.model.bean.BaseListResponse;
 import com.shuangduan.zcy.model.bean.BaseObjResponse;
 import com.shuangduan.zcy.model.bean.CityBean;
 import com.shuangduan.zcy.model.bean.ConsumeBean;
-import com.shuangduan.zcy.model.bean.ContactBean;
 import com.shuangduan.zcy.model.bean.ContactListBean;
 import com.shuangduan.zcy.model.bean.ContactTypeBean;
 import com.shuangduan.zcy.model.bean.IncomeLocusBean;
@@ -39,8 +36,6 @@ import com.shuangduan.zcy.model.bean.RecruitDetailBean;
 import com.shuangduan.zcy.model.bean.RecruitSubBean;
 import com.shuangduan.zcy.model.bean.RegisterBean;
 import com.shuangduan.zcy.model.bean.SearchBean;
-import com.shuangduan.zcy.model.bean.SearchCompanyBean;
-import com.shuangduan.zcy.model.bean.SearchHotBean;
 import com.shuangduan.zcy.model.bean.StageBean;
 import com.shuangduan.zcy.model.bean.SubBean;
 import com.shuangduan.zcy.model.bean.TrackBean;
@@ -49,15 +44,13 @@ import com.shuangduan.zcy.model.bean.UploadBean;
 import com.shuangduan.zcy.model.bean.UserInfoBean;
 import com.shuangduan.zcy.model.bean.WithdrawBean;
 import com.shuangduan.zcy.model.bean.WithdrawRecordBean;
-
-import java.util.List;
+import com.shuangduan.zcy.model.event.CityEvent;
 
 import io.reactivex.Flowable;
 import okhttp3.MultipartBody;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -123,7 +116,7 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("api/Userinfo/searchCompany")
-    Flowable<BaseListResponse<SearchCompanyBean>> searchCompany(
+    Flowable<BaseListResponse<String>> searchCompany(
             @Field("user_id")int user_id,
             @Field("title")String title
     );
@@ -169,11 +162,10 @@ public interface ApiService {
             @Field("position")String position
     );
 
-    @FormUrlEncoded
     @POST("api/Userinfo/setInfo")
     Flowable<BaseObjResponse> updateBusinessCity(
-            @Field("user_id")int user_id,
-            @Query("business_city[]") int[] business_city
+            @Query("user_id") int user_id,
+            @Body CityEvent business_city
     );
 
     @FormUrlEncoded
@@ -283,7 +275,7 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("api/Project/keywordHot")
-    Flowable<BaseListResponse<SearchHotBean>> keywordHot(
+    Flowable<BaseListResponse<String>> keywordHot(
             @Field("user_id")int user_id
             );
 

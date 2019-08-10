@@ -7,7 +7,6 @@ import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseViewModel;
 import com.shuangduan.zcy.model.api.repository.SearchRepository;
 import com.shuangduan.zcy.model.bean.SearchBean;
-import com.shuangduan.zcy.model.bean.SearchHotBean;
 
 import java.util.List;
 
@@ -23,25 +22,30 @@ import java.util.List;
  */
 public class SearchVm extends BaseViewModel {
 
-    public MutableLiveData<List<SearchHotBean>> hotLiveData;
+    public MutableLiveData<List<String>> hotLiveData;
     public MutableLiveData<SearchBean> searchLiveData;
+    public MutableLiveData<List<String>> companyLiveData;
     public MutableLiveData<String> pageStateLiveData;
     private int userId;
 
-    public void init(){
+    public SearchVm(){
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
         hotLiveData = new MutableLiveData<>();
         searchLiveData = new MutableLiveData<>();
+        companyLiveData = new MutableLiveData<>();
         pageStateLiveData = new MutableLiveData<>();
-        getHot();
     }
 
     public void search(String keyWord){
         new SearchRepository().search(searchLiveData, pageStateLiveData, userId, keyWord);
     }
 
-    private void getHot(){
+    public void getHot(){
         new SearchRepository().searchHot(hotLiveData, userId);
+    }
+
+    public void searchCompany(String keyword){
+        new SearchRepository().searchCompany(companyLiveData, pageStateLiveData, userId, keyword);
     }
 
 }

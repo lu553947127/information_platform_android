@@ -2,20 +2,18 @@ package com.shuangduan.zcy.model.api.repository;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.shuangduan.zcy.model.api.rxjava.BaseSubscriber;
 import com.shuangduan.zcy.model.bean.AuthenBean;
 import com.shuangduan.zcy.model.bean.BankCardBean;
 import com.shuangduan.zcy.model.bean.BankCardDisBean;
-import com.shuangduan.zcy.model.bean.MineIncomeBean;
 import com.shuangduan.zcy.model.bean.MyPhasesBean;
 import com.shuangduan.zcy.model.bean.ProjectCollectBean;
 import com.shuangduan.zcy.model.bean.ReadHistoryBean;
 import com.shuangduan.zcy.model.bean.RecruitBean;
-import com.shuangduan.zcy.model.bean.SearchCompanyBean;
 import com.shuangduan.zcy.model.bean.SubBean;
 import com.shuangduan.zcy.model.bean.UserInfoBean;
 import com.shuangduan.zcy.model.bean.WithdrawBean;
 import com.shuangduan.zcy.model.bean.WithdrawRecordBean;
+import com.shuangduan.zcy.model.event.CityEvent;
 
 import java.util.List;
 
@@ -30,11 +28,6 @@ import java.util.List;
  * @class describe
  */
 public class UserRepository extends BaseRepository {
-
-    public void searchCompany(MutableLiveData<SearchCompanyBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, String title){
-        request(apiService.searchCompany(user_id, title)).setData(liveData).setPageState(pageStateLiveData).send();
-    }
-
     /**
      * 录入信息
      */
@@ -80,7 +73,7 @@ public class UserRepository extends BaseRepository {
     /**
      * 更新公司
      */
-    public void updateSex(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int user_id, String company){
+    public void updateCompany(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int user_id, String company){
         request(apiService.updateCompany(user_id, company)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
@@ -94,7 +87,7 @@ public class UserRepository extends BaseRepository {
     /**
      * 更新城市
      */
-    public void updateBusinessCity(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int user_id, int[] businessCity){
+    public void updateBusinessCity(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int user_id, CityEvent businessCity){
         request(apiService.updateBusinessCity(user_id, businessCity)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 

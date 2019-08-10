@@ -44,12 +44,15 @@ public class CustomConfig {
     public static final String MATERIAL_ID = "material_id";
     public static final String BANKCARD_ID = "bankcard_id";
     public static final String BANKCARD_NAME = "bankcard_name";
+    public static final String PRODUCTION = "production";
 
     public static final String SMS_TYPE = "sms_type";
     public static final int SMS_REGISTER = 1;//注册
     public static final int SMS_LOGIN = 2;//登录
     public static final int SMS_FORGET_PWD = 3;//忘记密码
-    public static final int SMS_UPDATE_PHONE = 4;//修改手机号码
+    public static final int SMS_UPDATE_PWD = 4;//修改密码
+    public static final int SMS_PWD_PAY = 5;//修改支付密码
+    public static final int SMS_UPDATE_PHONE = 6;//修改手机号码
 
     public static final int AREA_REQUEST_CODE = 1001;
 

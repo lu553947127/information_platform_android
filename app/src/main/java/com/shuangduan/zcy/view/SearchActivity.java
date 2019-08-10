@@ -68,30 +68,19 @@ public class SearchActivity extends BaseActivity {
         tvBarTitle.setText(getString(R.string.search));
 
         searchVm = ViewModelProviders.of(this).get(SearchVm.class);
-        searchVm.init();
-        searchVm.hotLiveData.observe(this, searchHotBeans -> {
-
+        searchVm.hotLiveData.observe(this, list -> {
+            for (String s : list) {
+                TextView itemHot = (TextView) LayoutInflater.from(this).inflate(R.layout.item_fl_search, flHot, false);
+                itemHot.setText(s);
+                flHot.addView(itemHot);
+            }
         });
-
-        TextView itemHot = (TextView) LayoutInflater.from(this).inflate(R.layout.item_fl_search, flHot, false);
-        itemHot.setText("热热热");
-        flHot.addView(itemHot);
-        TextView itemHot1 = (TextView) LayoutInflater.from(this).inflate(R.layout.item_fl_search, flHot, false);
-        itemHot1.setText("热热热热热热热热热");
-        flHot.addView(itemHot1);
-        TextView itemHot2 = (TextView) LayoutInflater.from(this).inflate(R.layout.item_fl_search, flHot, false);
-        itemHot2.setText("热热热热热热");
-        flHot.addView(itemHot2);
-        TextView itemHot3 = (TextView) LayoutInflater.from(this).inflate(R.layout.item_fl_search, flHot, false);
-        itemHot3.setText("热热热热热热热热热热热热热热热");
-        flHot.addView(itemHot3);
-        TextView itemHot4 = (TextView) LayoutInflater.from(this).inflate(R.layout.item_fl_search, flHot, false);
-        itemHot4.setText("热热热热热热热热热");
-        flHot.addView(itemHot4);
 
         rvCompany.setLayoutManager(new LinearLayoutManager(this));
         searchAdapter = new SearchAdapter(R.layout.item_search, null);
         rvCompany.setAdapter(searchAdapter);
+
+        searchVm.getHot();//获取热点搜索
     }
 
     @OnClick({R.id.iv_bar_back, R.id.tv_positive, R.id.iv_del})
