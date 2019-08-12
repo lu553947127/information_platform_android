@@ -79,6 +79,7 @@
     <string name="please_select_sex">请选择性别</string>
     <string name="man">男</string>
     <string name="woman">女</string>
+    <string name="select_not">未选择</string>
     <string name="hint_real_name">请填写真实姓名</string>
     <string name="please_hint_real_name">为了方便别人找您合作，请填写真实姓名</string>
     <string name="mobile_verification">手机验证</string>
@@ -130,6 +131,7 @@
     <string name="collection">收藏</string>
     <string name="collected">已收藏</string>
     <string name="read_detail">查看详情</string>
+    <string name="read">查看</string>
     <string name="message_detail">信息详情</string>
     <string name="area">区域</string>
     <string name="type">类型</string>
@@ -183,6 +185,7 @@
     <string name="hint_here">请在此处输入</string>
     <string name="hint_error_correct">请输入纠错的具体内容</string>
     <string name="select_types_correct">请选择具体的类别</string>
+    <string name="order">订单</string>
 
     <string name="release_msg">发布信息</string>
     <string name="release">发布</string>
@@ -237,6 +240,9 @@
     <string name="income_msg">认购信息收益</string>
     <string name="income_product_rights">认购品权收益</string>
     <string name="income_people">6°人脉收益</string>
+    <string name="supplier">优质供应商</string>
+    <string name="supplier_join">加入供应商</string>
+    <string name="supplier_join_success">申请成功，请等待审核...</string>
 
     <string name="format_version_name">当前版本号：v%1$s</string>
     <string name="format_get_verification_code_again">重新获取 (%1$ds)</string>
@@ -304,6 +310,11 @@
     <string-array name="mine_sub">
         <item>工程信息</item>
         <item>招采信息</item>
+    </string-array>
+
+    <string-array name="project_order">
+        <item>概况订单</item>
+        <item>轨迹订单</item>
     </string-array>
 
     <string-array name="infrastructure">

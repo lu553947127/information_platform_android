@@ -31,7 +31,7 @@ public class UserRepository extends BaseRepository {
     /**
      * 录入信息
      */
-    public void setInfo(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int user_id, String username, int sex, String company, String position, int[] business_city, int experience, String managing_products){
+    public void setInfo(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int user_id, String username, int sex, String company, String position, CityEvent business_city, int experience, String managing_products){
         request(apiService.setInfo(user_id, username, sex, company, position, business_city, experience, managing_products)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 

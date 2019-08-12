@@ -43,4 +43,5 @@ public class MyViewPager extends ViewPager {
     public void setCurrentItem(int item) {
         super.setCurrentItem(item,false);
     }
+
 }

@@ -23,6 +23,7 @@ import com.shuangduan.zcy.view.income.MineIncomeActivity;
 import com.shuangduan.zcy.view.projectinfo.ProjectInfoActivity;
 import com.shuangduan.zcy.view.recruit.RecruitActivity;
 import com.shuangduan.zcy.view.release.ReleaseListActivity;
+import com.shuangduan.zcy.view.supplier.SupplierActivity;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 import com.shuangduan.zcy.weight.MarqueeListView;
 import com.youth.banner.Banner;
@@ -102,6 +103,7 @@ public class HomeFragment extends BaseFragment {
                 case ClassifyBean.PQZX:
                     break;
                 case ClassifyBean.YZGYS:
+                    ActivityUtils.startActivity(SupplierActivity.class);
                     break;
                 case ClassifyBean.WDSY:
                     ActivityUtils.startActivity(MineIncomeActivity.class);

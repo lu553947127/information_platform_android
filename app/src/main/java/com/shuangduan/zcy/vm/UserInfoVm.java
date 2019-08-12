@@ -92,7 +92,7 @@ public class UserInfoVm extends BaseViewModel {
         });
     }
 
-    public void infoSet(String username, int sex, String company, String position, int[] business_city, int experience, String managing_products){
+    public void infoSet(String username, int sex, String company, String position, CityEvent business_city, int experience, String managing_products){
         new UserRepository().setInfo(infoLiveData, pageStateLiveData, userId, username, sex, company, position, business_city, experience, managing_products);
     }
 

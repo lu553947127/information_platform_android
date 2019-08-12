@@ -2,16 +2,13 @@ package com.shuangduan.zcy.model.api.repository;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.shuangduan.zcy.model.api.rxjava.BaseSubscriber;
-import com.shuangduan.zcy.model.bean.BaseObjResponse;
+import com.shuangduan.zcy.model.bean.AddTrackBean;
 import com.shuangduan.zcy.model.bean.CityBean;
-import com.shuangduan.zcy.model.bean.ContactBean;
 import com.shuangduan.zcy.model.bean.ContactListBean;
 import com.shuangduan.zcy.model.bean.ContactTypeBean;
 import com.shuangduan.zcy.model.bean.LocusMineBean;
 import com.shuangduan.zcy.model.bean.MapBean;
+import com.shuangduan.zcy.model.bean.ProjectFilterBean;
 import com.shuangduan.zcy.model.bean.ProjectInfoBean;
 import com.shuangduan.zcy.model.bean.ProjectMineBean;
 import com.shuangduan.zcy.model.bean.ProvinceBean;
@@ -20,9 +17,6 @@ import com.shuangduan.zcy.model.bean.StageBean;
 import com.shuangduan.zcy.model.bean.TypeBean;
 
 import java.util.List;
-
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 
 /**
  * @author 宁文强 QQ:858777523
@@ -48,8 +42,8 @@ public class ProjectRepository extends BaseRepository {
         request(apiService.mapList(user_id, lng, lat)).setDataList(liveData).setPageState(pageState).send();
     }
 
-    public void projectList(MutableLiveData<ProjectInfoBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, String province, int[] city, String phases, int[] type, String stime, String etime, String warrant_status, int page){
-        request(apiService.projectList(user_id, province, city, phases, type, stime, etime, warrant_status, page)).setData(liveData).setPageState(pageStateLiveData).send();
+    public void projectList(MutableLiveData<ProjectInfoBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, String province, ProjectFilterBean filterBean, String phases, String stime, String etime, String warrant_status, int page){
+        request(apiService.projectList(user_id, province, filterBean, phases, stime, etime, warrant_status, page)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
     public void projectTypes(MutableLiveData<List<TypeBean>> liveData, MutableLiveData<String> pageStateLiveData, int user_id, int id){
@@ -77,7 +71,7 @@ public class ProjectRepository extends BaseRepository {
         request(apiService.addProject(user_id, title, company, province, city, phases, type, start_time, end_time, acreage, valuation, intro, materials, longitude, latitude, contact)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
-    public void addTrack(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int user_id, int id, String remarks, String name, String tel, String update_time, int[] image_id){
+    public void addTrack(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int user_id, int id, String remarks, String name, String tel, String update_time, AddTrackBean image_id){
         request(apiService.addTrack(user_id, id, remarks, name, tel, update_time, image_id)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 

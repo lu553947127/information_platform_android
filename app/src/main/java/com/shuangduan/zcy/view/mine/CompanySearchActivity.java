@@ -137,10 +137,13 @@ public class CompanySearchActivity extends BaseActivity {
     }
 
     private void showHideLoad(String s){
-        if (s != PageState.PAGE_LOADING){
-            hideLoading();
-        }else {
-            showLoading();
+        switch (s){
+            case PageState.PAGE_LOADING:
+                showLoading();
+                break;
+            default:
+                hideLoading();
+                break;
         }
     }
 

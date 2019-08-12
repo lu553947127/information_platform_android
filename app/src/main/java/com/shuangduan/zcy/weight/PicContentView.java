@@ -1,6 +1,7 @@
 package com.shuangduan.zcy.weight;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
@@ -52,7 +53,7 @@ public class PicContentView extends RecyclerView {
     private PicAdapter picAdapter;
     private OnClickListener listener;
     private boolean couldAdd = true;
-    private final int max = 6;
+    private int max = 6;
 
     public PicContentView(Context context) {
         this(context, null);
@@ -65,6 +66,11 @@ public class PicContentView extends RecyclerView {
     public PicContentView(Context context, @Nullable AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         this.context = context;
+
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.PicContentView, defStyle, 0);
+        max = typedArray.getInt(R.styleable.PicContentView_maxSize, 6);
+        typedArray.recycle();
+
         list.add(new PicContentBean(null, null, 0));
         picAdapter = new PicAdapter(list);
         this.setLayoutManager(new GridLayoutManager(context, 3));

@@ -8,6 +8,8 @@ import com.shuangduan.zcy.base.BaseViewModel;
 import com.shuangduan.zcy.model.api.repository.SearchRepository;
 import com.shuangduan.zcy.model.bean.SearchBean;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -26,6 +28,7 @@ public class SearchVm extends BaseViewModel {
     public MutableLiveData<SearchBean> searchLiveData;
     public MutableLiveData<List<String>> companyLiveData;
     public MutableLiveData<String> pageStateLiveData;
+    public MutableLiveData<List<String>> historyLiveData;
     private int userId;
 
     public SearchVm(){
@@ -34,14 +37,38 @@ public class SearchVm extends BaseViewModel {
         searchLiveData = new MutableLiveData<>();
         companyLiveData = new MutableLiveData<>();
         pageStateLiveData = new MutableLiveData<>();
+        historyLiveData = new MutableLiveData<>();
     }
 
     public void search(String keyWord){
         new SearchRepository().search(searchLiveData, pageStateLiveData, userId, keyWord);
+        boolean isRemove = false;
+        String history = SPUtils.getInstance().getString(SpConfig.SEARCH_HISTORY);
+        String[] split = history.split("|,");
+        List<String> historyList = new ArrayList<>();
+        Collections.addAll(historyList, split);
+        for (int i = 0; i < historyList.size(); i++) {
+            if (keyWord.equals(historyList.get(i))){
+                historyList.remove(i);
+                isRemove = true;
+            }
+        }
+        if (!isRemove && historyList.size() >= 20){
+            historyList.remove(historyList.size() - 1);
+        }
+        historyList.add(0, keyWord);
     }
 
     public void getHot(){
         new SearchRepository().searchHot(hotLiveData, userId);
+    }
+
+    public void getHistory(){
+        String history = SPUtils.getInstance().getString(SpConfig.SEARCH_HISTORY);
+        String[] split = history.split("|,");
+        List<String> historyList = new ArrayList<>();
+        Collections.addAll(historyList, split);
+        historyLiveData.postValue(historyList);
     }
 
     public void searchCompany(String keyword){

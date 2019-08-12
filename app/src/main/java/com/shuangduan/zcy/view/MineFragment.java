@@ -22,6 +22,7 @@ import com.shuangduan.zcy.view.mine.FeedbackActivity;
 import com.shuangduan.zcy.view.mine.HelperActivity;
 import com.shuangduan.zcy.view.mine.MineCollectionActivity;
 import com.shuangduan.zcy.view.income.MineIncomeActivity;
+import com.shuangduan.zcy.view.mine.MineOrderActivity;
 import com.shuangduan.zcy.view.mine.MineSubActivity;
 import com.shuangduan.zcy.view.mine.ReadHistoryActivity;
 import com.shuangduan.zcy.view.mine.RecommendFriendsActivity;
@@ -120,6 +121,7 @@ public class MineFragment extends BaseFragment {
                 ActivityUtils.startActivity(BalanceActivity.class);
                 break;
             case R.id.fl_order:
+                ActivityUtils.startActivity(MineOrderActivity.class);
                 break;
             case R.id.fl_income:
                 ActivityUtils.startActivity(MineIncomeActivity.class);

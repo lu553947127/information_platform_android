@@ -45,6 +45,7 @@ public class CustomConfig {
     public static final String BANKCARD_ID = "bankcard_id";
     public static final String BANKCARD_NAME = "bankcard_name";
     public static final String PRODUCTION = "production";
+    public static final String SUPPLIER_ID = "supplier_id";
 
     public static final String SMS_TYPE = "sms_type";
     public static final int SMS_REGISTER = 1;//注册

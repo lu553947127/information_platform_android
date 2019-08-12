@@ -97,4 +97,8 @@
         <attr name="marqueeview_is_resetLocation" format="boolean"/><!--重新改变内容的时候 ， 是否初始化 位置，默认为true，改变-->
     </declare-styleable>
 
+    <declare-styleable name="PicContentView">
+        <attr name="maxSize" format="integer"/>
+    </declare-styleable>
+
 </resources>

@@ -70,6 +70,7 @@
         <activity android:name="com.shuangduan.zcy.view.mine.WithdrawDetailActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
         <activity android:name="com.shuangduan.zcy.view.mine.UnbindBankCardActivity" android:screenOrientation="portrait" />
         <activity android:name="com.shuangduan.zcy.view.mine.UpdateProductionActivity" android:screenOrientation="portrait" />
+        <activity android:name="com.shuangduan.zcy.view.mine.MineOrderActivity" android:screenOrientation="portrait" />
         <activity android:name="com.shuangduan.zcy.view.income.MineIncomeActivity" android:screenOrientation="portrait" />
         <activity android:name="com.shuangduan.zcy.view.income.IncomeClassifyActivity" android:screenOrientation="portrait" />
         <activity android:name="com.shuangduan.zcy.view.income.IncomeReleaseActivity" android:screenOrientation="portrait" />
@@ -88,6 +89,9 @@
         <activity android:name="com.shuangduan.zcy.view.recruit.RecruitDetailActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.view.material.MaterialActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.view.material.MaterialDetailActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
+        <activity android:name="com.shuangduan.zcy.view.supplier.SupplierActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.shuangduan.zcy.view.supplier.SupplierDetailActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
+        <activity android:name="com.shuangduan.zcy.view.supplier.SupplierJoinActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
         <activity android:name="com.shuangduan.zcy.view.release.ReleaseListActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.view.release.ReleaseProjectActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray" android:windowSoftInputMode="stateHidden|adjustResize"/>
         <activity android:name="com.shuangduan.zcy.view.release.ReleaseTypeSelectActivity" android:screenOrientation="portrait"/>

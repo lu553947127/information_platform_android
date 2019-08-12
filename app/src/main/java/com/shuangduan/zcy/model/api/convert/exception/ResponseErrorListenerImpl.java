@@ -38,34 +38,34 @@ public class ResponseErrorListenerImpl implements ResponseErrorListener {
             msg = "请求网络超时";
         } else if (t instanceof HttpException) {
             HttpException httpException = (HttpException) t;
-            msg = "HttpException: " + convertStatusCode(httpException);
+            msg = httpException.getMessage();
         } else if (t instanceof JsonParseException || t instanceof ParseException || t instanceof JSONException || t instanceof JsonIOException) {
             msg = "数据解析错误";
         }else if (t instanceof ApiException){
             //自定义错误
-            msg = ((ApiException) t).getMsg();
+            msg = convertStatusCode((ApiException) t);
         }
 
         ToastUtils.showLong(msg);
     }
 
-    private String convertStatusCode(HttpException httpException) {
+    private String convertStatusCode(ApiException exception) {
         String msg;
-        if (httpException.code() == 500) {
+        if (exception.getErrorCode() == 500) {
             msg = "服务器发生错误";
-        } else if (httpException.code() == 404) {
+        } else if (exception.getErrorCode() == 404) {
             msg = "请求地址不存在";
-        } else if (httpException.code() == 403) {
+        } else if (exception.getErrorCode() == 403) {
             msg = "请求被服务器拒绝";
-        } else if (httpException.code() == 307) {
+        } else if (exception.getErrorCode() == 307) {
             msg = "请求被重定向到其他页面";
-        } else if (httpException.code() == -1){
+        } else if (exception.getErrorCode() == -1){
             msg = "账户失效，请重新登录";
             SPUtils.getInstance().clear();
             ActivityUtils.startActivity(FirstActivity.class);
             ActivityUtils.finishAllActivitiesExceptNewest();
         }else {
-            msg = httpException.message();
+            msg = exception.getMsg();
         }
         return msg;
     }

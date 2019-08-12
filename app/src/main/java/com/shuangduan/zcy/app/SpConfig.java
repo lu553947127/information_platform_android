@@ -57,4 +57,7 @@ public class SpConfig {
     /*启动页广告*/
     public static final String AD_SPLASH = "ad_splash";
 
+    /*搜索历史*/
+    public static final String SEARCH_HISTORY = "search_history";
+
 }

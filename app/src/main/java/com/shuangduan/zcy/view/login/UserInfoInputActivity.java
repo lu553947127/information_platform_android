@@ -80,7 +80,7 @@ public class UserInfoInputActivity extends BaseActivity {
     private int sex = 0;
     /*业务经验 1:"0-3年",2:"2-3年",3:"3-5年",4:"5-10年"*/
     private int exp = 0;
-    private int[] area;
+    private CityEvent area;
     private UserInfoVm userInfoVm;
     private MineSubVm mineSubVm;
 
@@ -194,7 +194,7 @@ public class UserInfoInputActivity extends BaseActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void cityChange(CityEvent event){
         tvBusinessArea.setText(event.city);
-        area = event.business_city;
+        area = event;
     }
 
     /**

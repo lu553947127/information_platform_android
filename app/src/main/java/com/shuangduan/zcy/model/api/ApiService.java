@@ -1,10 +1,11 @@
 package com.shuangduan.zcy.model.api;
 
+import com.shuangduan.zcy.model.bean.AddTrackBean;
 import com.shuangduan.zcy.model.bean.AuthenBean;
 import com.shuangduan.zcy.model.bean.BankCardBean;
 import com.shuangduan.zcy.model.bean.BankCardDisBean;
 import com.shuangduan.zcy.model.bean.BaseListResponse;
-import com.shuangduan.zcy.model.bean.BaseObjResponse;
+import com.shuangduan.zcy.model.bean.BaseResponse;
 import com.shuangduan.zcy.model.bean.CityBean;
 import com.shuangduan.zcy.model.bean.ConsumeBean;
 import com.shuangduan.zcy.model.bean.ContactListBean;
@@ -24,6 +25,7 @@ import com.shuangduan.zcy.model.bean.MyPhasesBean;
 import com.shuangduan.zcy.model.bean.PayInfoBean;
 import com.shuangduan.zcy.model.bean.ProjectCollectBean;
 import com.shuangduan.zcy.model.bean.ProjectDetailBean;
+import com.shuangduan.zcy.model.bean.ProjectFilterBean;
 import com.shuangduan.zcy.model.bean.ProjectInfoBean;
 import com.shuangduan.zcy.model.bean.ProjectMineBean;
 import com.shuangduan.zcy.model.bean.ProjectSearchBean;
@@ -38,6 +40,9 @@ import com.shuangduan.zcy.model.bean.RegisterBean;
 import com.shuangduan.zcy.model.bean.SearchBean;
 import com.shuangduan.zcy.model.bean.StageBean;
 import com.shuangduan.zcy.model.bean.SubBean;
+import com.shuangduan.zcy.model.bean.SupplierBean;
+import com.shuangduan.zcy.model.bean.SupplierDetailBean;
+import com.shuangduan.zcy.model.bean.SupplierJoinImageBean;
 import com.shuangduan.zcy.model.bean.TrackBean;
 import com.shuangduan.zcy.model.bean.TypeBean;
 import com.shuangduan.zcy.model.bean.UploadBean;
@@ -70,14 +75,14 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("api/Passport/smsCode")
-    Flowable<BaseObjResponse> smsCode(
+    Flowable<BaseResponse> smsCode(
             @Field("tel")String tel,
             @Field("type")int type
     );
 
     @FormUrlEncoded
     @POST("api/Passport/codeLogin")
-    Flowable<BaseObjResponse<LoginBean>> codeLogin(
+    Flowable<BaseResponse<LoginBean>> codeLogin(
             @Field("tel")String tel,
             @Field("code")String code,
             @Field("client_id")String client_id
@@ -85,7 +90,7 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("api/Passport/accountLogin")
-    Flowable<BaseObjResponse<LoginBean>> accountLogin(
+    Flowable<BaseResponse<LoginBean>> accountLogin(
             @Field("tel")String tel,
             @Field("password")String password,
             @Field("client_id")String client_id
@@ -93,7 +98,7 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("api/Passport/register")
-    Flowable<BaseObjResponse<RegisterBean>> register(
+    Flowable<BaseResponse<RegisterBean>> register(
             @Field("tel")String tel,
             @Field("code")String code,
             @Field("password")String password,
@@ -102,7 +107,7 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("api/Passport/setPassword")
-    Flowable<BaseObjResponse<ReSetPwdBean>> setPassword(
+    Flowable<BaseResponse<ReSetPwdBean>> setPassword(
             @Field("tel")String tel,
             @Field("code")String code,
             @Field("password")String password
@@ -110,7 +115,7 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("api/Userinfo/outLogin")
-    Flowable<BaseObjResponse> outLogin(
+    Flowable<BaseResponse> outLogin(
             @Field("user_id")int user_id
     );
 
@@ -121,77 +126,76 @@ public interface ApiService {
             @Field("title")String title
     );
 
-    @FormUrlEncoded
     @POST("api/Userinfo/setInfo")
-    Flowable<BaseObjResponse> setInfo(
-            @Field("user_id")int user_id,
-            @Field("username")String username,
-            @Field("sex")int sex,
-            @Field("company")String company,
-            @Field("position")String position,
-            @Query("business_city[]") int[] business_city,
-            @Field("experience")int experience,
-            @Field("managing_products")String managing_products
+    Flowable<BaseResponse> setInfo(
+            @Query("user_id") int user_id,
+            @Query("username")String username,
+            @Query("sex")int sex,
+            @Query("company")String company,
+            @Query("position")String position,
+            @Body CityEvent business_city,
+            @Query("experience")int experience,
+            @Query("managing_products")String managing_products
     );
 
     @FormUrlEncoded
     @POST("api/Userinfo/setInfo")
-    Flowable<BaseObjResponse> updateUserName(
+    Flowable<BaseResponse> updateUserName(
             @Field("user_id")int user_id,
             @Field("username")String username
     );
 
     @FormUrlEncoded
     @POST("api/Userinfo/setInfo")
-    Flowable<BaseObjResponse> updateSex(
+    Flowable<BaseResponse> updateSex(
             @Field("user_id")int user_id,
             @Field("sex")int sex
     );
 
     @FormUrlEncoded
     @POST("api/Userinfo/setInfo")
-    Flowable<BaseObjResponse> updateCompany(
+    Flowable<BaseResponse> updateCompany(
             @Field("user_id")int user_id,
             @Field("company")String company
     );
 
     @FormUrlEncoded
     @POST("api/Userinfo/setInfo")
-    Flowable<BaseObjResponse> updatePosition(
+    Flowable<BaseResponse> updatePosition(
             @Field("user_id")int user_id,
             @Field("position")String position
     );
 
     @POST("api/Userinfo/setInfo")
-    Flowable<BaseObjResponse> updateBusinessCity(
+    Flowable<BaseResponse> updateBusinessCity(
             @Query("user_id") int user_id,
             @Body CityEvent business_city
     );
 
     @FormUrlEncoded
     @POST("api/Userinfo/setInfo")
-    Flowable<BaseObjResponse> updateAvatar(
+    Flowable<BaseResponse> updateAvatar(
             @Field("user_id")int user_id,
             @Field("avatar")String avatar
     );
 
     @FormUrlEncoded
     @POST("api/Userinfo/setInfo")
-    Flowable<BaseObjResponse> updateExperience(
+    Flowable<BaseResponse> updateExperience(
             @Field("user_id")int user_id,
             @Field("experience") int experience
     );
 
     @FormUrlEncoded
     @POST("api/Userinfo/setInfo")
-    Flowable<BaseObjResponse> updateProduct(
+    Flowable<BaseResponse> updateProduct(
             @Field("user_id")int user_id,
             @Field("managing_products") String managing_products
     );
 
     @FormUrlEncoded
     @POST("api/Userinfo/telUpdate")
-    Flowable<BaseObjResponse> telUpdate(
+    Flowable<BaseResponse> telUpdate(
             @Field("user_id")int user_id,
             @Field("tel")String tel,
             @Field("code")String code,
@@ -201,26 +205,26 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("api/Userinfo/telCheck")
-    Flowable<BaseObjResponse> telCheck(
+    Flowable<BaseResponse> telCheck(
             @Field("user_id")int user_id,
             @Field("code")String code
     );
 
     @FormUrlEncoded
     @POST("api/Userinfo/userInfo")
-    Flowable<BaseObjResponse<UserInfoBean>> userInfo(
+    Flowable<BaseResponse<UserInfoBean>> userInfo(
             @Field("user_id")int user_id
     );
 
     @FormUrlEncoded
     @POST("api/Userinfo/information")
-    Flowable<BaseObjResponse<UserInfoBean>> information(
+    Flowable<BaseResponse<UserInfoBean>> information(
             @Field("user_id")int user_id
     );
 
     @Multipart
     @POST("api/Upload/uploadImage")
-    Flowable<BaseObjResponse<UploadBean>> upload(
+    Flowable<BaseResponse<UploadBean>> upload(
             @Query("user_id") int user_id,
             @Part MultipartBody.Part file
     );
@@ -246,18 +250,16 @@ public interface ApiService {
             @Field("lat")double lat
     );
 
-    @FormUrlEncoded
     @POST("api/Project/dataList")
-    Flowable<BaseObjResponse<ProjectInfoBean>> projectList(
-            @Field("user_id")int user_id,
-            @Field("province")String province,
-            @Query("city[]")int[] city,
-            @Field("phases")String phases,
-            @Query("type[]")int[] type,
-            @Field("stime")String stime,
-            @Field("etime")String etime,
-            @Field("warrant_status")String warrant_status,
-            @Field("page")int page
+    Flowable<BaseResponse<ProjectInfoBean>> projectList(
+            @Query("user_id")int user_id,
+            @Query("province")String province,
+            @Body ProjectFilterBean city,
+            @Query("phases")String phases,
+            @Query("stime")String stime,
+            @Query("etime")String etime,
+            @Query("warrant_status")String warrant_status,
+            @Query("page")int page
             );
 
     @FormUrlEncoded
@@ -281,21 +283,21 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("api/Project/keywordList")
-    Flowable<BaseObjResponse<SearchBean>> keywordList(
+    Flowable<BaseResponse<SearchBean>> keywordList(
             @Field("user_id")int user_id,
             @Field("keyword")String keyword
             );
 
     @FormUrlEncoded
     @POST("api/Project/getDetail")
-    Flowable<BaseObjResponse<ProjectDetailBean>> getDetail(
+    Flowable<BaseResponse<ProjectDetailBean>> getDetail(
             @Field("user_id")int user_id,
             @Field("id")int id
     );
 
     @FormUrlEncoded
     @POST("api/Project/getTrack")
-    Flowable<BaseObjResponse<TrackBean>> getTrack(
+    Flowable<BaseResponse<TrackBean>> getTrack(
             @Field("user_id")int user_id,
             @Field("id")int id,
             @Field("page")int page,
@@ -304,7 +306,7 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("api/Project/viewTrack")
-    Flowable<BaseObjResponse<TrackBean>> getViewTrack(
+    Flowable<BaseResponse<TrackBean>> getViewTrack(
             @Field("user_id")int user_id,
             @Field("id")int id,
             @Field("page")int page
@@ -312,7 +314,7 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("api/Project/consumeList")
-    Flowable<BaseObjResponse<ConsumeBean>> consumeList(
+    Flowable<BaseResponse<ConsumeBean>> consumeList(
             @Field("user_id")int user_id,
             @Field("id")int id,
             @Field("page")int page
@@ -320,21 +322,21 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("api/Project/setCollection")
-    Flowable<BaseObjResponse> collect(
+    Flowable<BaseResponse> collect(
             @Field("user_id")int user_id,
             @Field("id")int id
     );
 
     @FormUrlEncoded
     @POST("api/Project/cancelCollection")
-    Flowable<BaseObjResponse> cancelCollection(
+    Flowable<BaseResponse> cancelCollection(
             @Field("user_id")int user_id,
             @Field("id")int id
     );
 
     @FormUrlEncoded
     @POST("api/Project/correction")
-    Flowable<BaseObjResponse> correction(
+    Flowable<BaseResponse> correction(
             @Field("user_id")int user_id,
             @Field("id")int id,
             @Field("content")String content
@@ -342,21 +344,21 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("api/Userinfo/myProject")
-    Flowable<BaseObjResponse<ProjectMineBean>> myProject(
+    Flowable<BaseResponse<ProjectMineBean>> myProject(
             @Field("user_id")int user_id,
             @Field("page")int page
     );
 
     @FormUrlEncoded
     @POST("api/Userinfo/myProjectTrack")
-    Flowable<BaseObjResponse<LocusMineBean>> myProjectTrack(
+    Flowable<BaseResponse<LocusMineBean>> myProjectTrack(
             @Field("user_id")int user_id,
             @Field("page")int page
     );
 
     @FormUrlEncoded
     @POST("api/Pay/projectWarrant")
-    Flowable<BaseObjResponse<PayInfoBean>> projectWarrant(
+    Flowable<BaseResponse<PayInfoBean>> projectWarrant(
             @Field("user_id")int user_id,
             @Field("id")int id,
             @Field("type")String type
@@ -369,7 +371,7 @@ public interface ApiService {
     );
 
     @POST("api/Project/addProject")
-    Flowable<BaseObjResponse> addProject(
+    Flowable<BaseResponse> addProject(
             @Query("user_id") int user_id,
             @Query("title")String title,
             @Query("company")String company,
@@ -388,21 +390,20 @@ public interface ApiService {
             @Body ContactListBean contact
     );
 
-    @FormUrlEncoded
     @POST("api/Project/addTrack")
-    Flowable<BaseObjResponse> addTrack(
-            @Field("user_id") int user_id,
-            @Field("id")int id,
-            @Field("remarks")String remarks,
-            @Field("name")String name,
-            @Field("tel")String tel,
-            @Field("update_time")String update_time,
-            @Query("image_id")int[] image_id
+    Flowable<BaseResponse> addTrack(
+            @Query("user_id") int user_id,
+            @Query("id")int id,
+            @Query("remarks")String remarks,
+            @Query("name")String name,
+            @Query("tel")String tel,
+            @Query("update_time")String update_time,
+            @Body AddTrackBean image_id
     );
 
     @FormUrlEncoded
     @POST("api/Project/keywordTitle")
-    Flowable<BaseObjResponse<ProjectSearchBean>> keywordTitle(
+    Flowable<BaseResponse<ProjectSearchBean>> keywordTitle(
             @Field("user_id") int user_id,
             @Field("keyword")String keyword,
             @Field("page") int page
@@ -410,14 +411,14 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("api/Subscription/projectSubscription")
-    Flowable<BaseObjResponse<ProjectSubBean>> projectSub(
+    Flowable<BaseResponse<ProjectSubBean>> projectSub(
             @Field("user_id") int user_id,
             @Field("page") int page
     );
 
     @FormUrlEncoded
     @POST("api/Subscription/tenderer")
-    Flowable<BaseObjResponse<RecruitSubBean>> recruitSub(
+    Flowable<BaseResponse<RecruitSubBean>> recruitSub(
             @Field("user_id") int user_id,
             @Field("page") int page
     );
@@ -429,7 +430,7 @@ public interface ApiService {
     );
 
     @POST("api/Userinfo/setPhases")
-    Flowable<BaseObjResponse> setPhases(
+    Flowable<BaseResponse> setPhases(
             @Query("user_id") int user_id,
             @Body SubBean id
     );
@@ -448,34 +449,34 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("api/Userinfo/feedback")
-    Flowable<BaseObjResponse> feedback(
+    Flowable<BaseResponse> feedback(
             @Field("user_id") int user_id,
             @Field("content") String content
     );
 
     @FormUrlEncoded
     @POST("api/Userinfo/projectCollection")
-    Flowable<BaseObjResponse<ProjectCollectBean>> projectCollection(
+    Flowable<BaseResponse<ProjectCollectBean>> projectCollection(
             @Field("user_id") int user_id,
             @Field("page") int page
     );
 
     @FormUrlEncoded
     @POST("api/Userinfo/tendererCollection")
-    Flowable<BaseObjResponse<RecruitBean>> recruitCollection(
+    Flowable<BaseResponse<RecruitBean>> recruitCollection(
             @Field("user_id") int user_id,
             @Field("page") int page
     );
 
     @FormUrlEncoded
     @POST("api/Userinfo/authentication")
-    Flowable<BaseObjResponse<AuthenBean>> authentication(
+    Flowable<BaseResponse<AuthenBean>> authentication(
             @Field("user_id") int user_id
     );
 
     @FormUrlEncoded
     @POST("api/Userinfo/idcard")
-    Flowable<BaseObjResponse> idcard(
+    Flowable<BaseResponse> idcard(
             @Field("user_id") int user_id,
             @Field("image_front") String image_front,
             @Field("image_reverse_site") String image_reverse_site
@@ -483,27 +484,27 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("api/Userinfo/loading")
-    Flowable<BaseObjResponse<WithdrawBean>> withdrawMsg(
+    Flowable<BaseResponse<WithdrawBean>> withdrawMsg(
             @Field("user_id") int user_id
     );
 
     @FormUrlEncoded
     @POST("api/Userinfo/record")
-    Flowable<BaseObjResponse<WithdrawRecordBean>> withdrawRecord(
+    Flowable<BaseResponse<WithdrawRecordBean>> withdrawRecord(
             @Field("user_id") int user_id,
             @Field("page") int page
     );
 
     @FormUrlEncoded
     @POST("api/Userinfo/detailsRecord")
-    Flowable<BaseObjResponse<WithdrawRecordBean.ListBean>> withdrawRecordDetail(
+    Flowable<BaseResponse<WithdrawRecordBean.ListBean>> withdrawRecordDetail(
             @Field("user_id") int user_id,
             @Field("id") int id
     );
 
     @FormUrlEncoded
     @POST("api/Userinfo/withdrawDeposit")
-    Flowable<BaseObjResponse> withdraw(
+    Flowable<BaseResponse> withdraw(
             @Field("user_id") int user_id,
             @Field("bankcard_id") int bankcard_id,
             @Field("price") String price
@@ -517,14 +518,14 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("api/Bankcard/ibcard")
-    Flowable<BaseObjResponse<BankCardDisBean>> bankcardDis(
+    Flowable<BaseResponse<BankCardDisBean>> bankcardDis(
             @Field("user_id") int user_id,
             @Field("image") String image
     );
 
     @FormUrlEncoded
     @POST("api/Bankcard/bankcardAdd")
-    Flowable<BaseObjResponse> bankcardAdd(
+    Flowable<BaseResponse> bankcardAdd(
             @Field("user_id") int user_id,
             @Field("bankcard_num") String bankcard_num,
             @Field("opening_bank") String opening_bank
@@ -532,76 +533,76 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("api/Bankcard/bankCardDel")
-    Flowable<BaseObjResponse> unbindBankcard(
+    Flowable<BaseResponse> unbindBankcard(
             @Field("user_id") int user_id,
             @Field("bankcard_id") int bankcard_id
     );
 
     @FormUrlEncoded
     @POST("api/Profit/myProceeds")
-    Flowable<BaseObjResponse<MineIncomeBean>> myProceeds(
+    Flowable<BaseResponse<MineIncomeBean>> myProceeds(
             @Field("user_id") int user_id
     );
 
     @FormUrlEncoded
     @POST("api/Profit/publish")
-    Flowable<BaseObjResponse<IncomeReleaseBean>> incomeRelease(
+    Flowable<BaseResponse<IncomeReleaseBean>> incomeRelease(
             @Field("user_id") int user_id,
             @Field("page") int page
     );
 
     @FormUrlEncoded
     @POST("api/Profit/Floor")
-    Flowable<BaseObjResponse<IncomePeopleBean>> incomePeople(
+    Flowable<BaseResponse<IncomePeopleBean>> incomePeople(
             @Field("user_id") int user_id,
             @Field("page") int page
     );
 
     @FormUrlEncoded
     @POST("api/Profit/subscribe")
-    Flowable<BaseObjResponse<IncomeMsgBean>> incomeMsg(
+    Flowable<BaseResponse<IncomeMsgBean>> incomeMsg(
             @Field("user_id") int user_id,
             @Field("page") int page
     );
 
     @FormUrlEncoded
     @POST("api/Profit/track")
-    Flowable<BaseObjResponse<IncomeLocusBean>> incomeLocus(
+    Flowable<BaseResponse<IncomeLocusBean>> incomeLocus(
             @Field("user_id") int user_id,
             @Field("page") int page
     );
 
     @FormUrlEncoded
     @POST("api/Tenderer/dataList")
-    Flowable<BaseObjResponse<RecruitBean>> recruitList(
+    Flowable<BaseResponse<RecruitBean>> recruitList(
             @Field("user_id") int user_id,
             @Field("page") int page
     );
 
     @FormUrlEncoded
     @POST("api/Tenderer/getDetail")
-    Flowable<BaseObjResponse<RecruitDetailBean>> recruitDetail(
+    Flowable<BaseResponse<RecruitDetailBean>> recruitDetail(
             @Field("user_id") int user_id,
             @Field("id") int id
     );
 
     @FormUrlEncoded
     @POST("api/Tenderer/setCollection")
-    Flowable<BaseObjResponse> recruitCollect(
+    Flowable<BaseResponse> recruitCollect(
             @Field("user_id") int user_id,
             @Field("id") int id
     );
 
     @FormUrlEncoded
     @POST("api/Tenderer/cancelCollection")
-    Flowable<BaseObjResponse> recruitCancelCollect(
+    Flowable<BaseResponse> recruitCancelCollect(
             @Field("user_id") int user_id,
             @Field("id") int id
     );
 
     @FormUrlEncoded
     @POST("api/Material/dateList")
-    Flowable<BaseObjResponse<MaterialBean>> materialList(
+    Flowable<BaseResponse<MaterialBean>> materialList(
             @Field("user_id") int user_id,
             @Field("categoryId") int category_id,
             @Field("type") int type,
@@ -610,7 +611,7 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("api/Material/getDetail")
-    Flowable<BaseObjResponse<MaterialDetailBean>> materialDetail(
+    Flowable<BaseResponse<MaterialDetailBean>> materialDetail(
             @Field("user_id") int user_id,
             @Field("id") int id
     );
@@ -621,5 +622,25 @@ public interface ApiService {
             @Field("user_id") int user_id,
             @Field("categoryId") int category_id
     );
+
+    @FormUrlEncoded
+    @POST("api/supplier/supplierList")
+    Flowable<BaseResponse<SupplierBean>> supplierList(
+            @Field("user_id") int user_id,
+            @Field("page") int page
+    );
+
+    @FormUrlEncoded
+    @POST("api/supplier/supplierDetails")
+    Flowable<BaseResponse<SupplierDetailBean>> supplierDetail(
+            @Field("user_id") int user_id,
+            @Field("id") int id
+    );
+
+    @POST("api/supplier/supplierApply")
+    Flowable<BaseResponse> supplierJoin(
+            @Query("user_id") int user_id,
+            @Body SupplierJoinImageBean joinImageBean
+            );
 
 }

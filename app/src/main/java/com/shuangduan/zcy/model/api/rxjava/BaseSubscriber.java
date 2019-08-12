@@ -2,7 +2,6 @@ package com.shuangduan.zcy.model.api.rxjava;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.model.api.PageState;
@@ -10,13 +9,12 @@ import com.shuangduan.zcy.model.api.convert.exception.ApiException;
 import com.shuangduan.zcy.model.api.convert.exception.ErrorHandlerFactory;
 import com.shuangduan.zcy.model.api.convert.exception.ResponseErrorListenerImpl;
 import com.shuangduan.zcy.model.bean.BaseListResponse;
-import com.shuangduan.zcy.model.bean.BaseObjResponse;
+import com.shuangduan.zcy.model.bean.BaseResponse;
 
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
 
 import java.util.List;
-import java.util.Objects;
 
 /**
  * <pre>
@@ -64,8 +62,8 @@ public class BaseSubscriber<T> implements Subscriber<T> {
     }
 
     public void set(T t){
-        if (t instanceof BaseObjResponse && this.data != null){
-            this.data.setValue((T) ((BaseObjResponse) t).getData());
+        if (t instanceof BaseResponse && this.data != null){
+            this.data.setValue((T) ((BaseResponse) t).getData());
         }else if (t instanceof BaseListResponse && this.dataList != null){
             this.dataList.setValue(((BaseListResponse) t).getData());
         }
@@ -94,13 +92,13 @@ public class BaseSubscriber<T> implements Subscriber<T> {
 
     @Override
     public void onNext(T t) {
-        if (t instanceof BaseObjResponse){
-            if (((BaseObjResponse) t).getCode() == 200){
+        if (t instanceof BaseResponse){
+            if (((BaseResponse) t).getCode() == 200){
                 onFinish(t);
                 if (pageState != null)
                     pageState.postValue(PageState.PAGE_LOAD_SUCCESS);
             }else {
-                mErrorHandlerFactory.handleError(new ApiException(((BaseObjResponse) t).getCode(), ((BaseObjResponse) t).getMessage()));
+                mErrorHandlerFactory.handleError(new ApiException(((BaseResponse) t).getCode(), ((BaseResponse) t).getMessage()));
                 if (pageState != null)
                     pageState.postValue(PageState.PAGE_SERVICE_ERROR);
             }

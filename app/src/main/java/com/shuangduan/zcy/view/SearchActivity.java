@@ -79,6 +79,20 @@ public class SearchActivity extends BaseActivity {
         rvCompany.setLayoutManager(new LinearLayoutManager(this));
         searchAdapter = new SearchAdapter(R.layout.item_search, null);
         rvCompany.setAdapter(searchAdapter);
+        searchVm.searchLiveData.observe(this, searchBeans -> {
+
+        });
+        searchVm.pageStateLiveData.observe(this, s -> {
+            switch (s){
+                case PageState.PAGE_LOADING:
+                    showLoading();
+                    break;
+                case PageState.PAGE_LOAD_SUCCESS:
+                case PageState.PAGE_ERROR:
+                    hideLoading();
+                    break;
+            }
+        });
 
         searchVm.getHot();//获取热点搜索
     }
@@ -95,20 +109,6 @@ public class SearchActivity extends BaseActivity {
                     return;
                 }
                 searchVm.search(edtKeyword.getText().toString());
-                searchVm.searchLiveData.observe(this, searchBeans -> {
-
-                });
-                searchVm.pageStateLiveData.observe(this, s -> {
-                    switch (s){
-                        case PageState.PAGE_LOADING:
-                            showLoading();
-                            break;
-                        case PageState.PAGE_LOAD_SUCCESS:
-                        case PageState.PAGE_ERROR:
-                            hideLoading();
-                            break;
-                    }
-                });
                 break;
             case R.id.iv_del:
                 break;

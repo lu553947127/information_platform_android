@@ -154,10 +154,13 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
             }
         });
         userInfoVm.pageStateLiveData.observe(this, s -> {
-            if (s != PageState.PAGE_LOADING){
-                hideLoading();
-            }else {
-                showLoading();
+            switch (s){
+                case PageState.PAGE_LOADING:
+                    showLoading();
+                    break;
+                default:
+                    hideLoading();
+                    break;
             }
         });
         userInfoVm.areaLiveData.observe(this, o -> {
@@ -197,10 +200,13 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
             userInfoVm.updateAvatar(uploadBean.getSource());
         });
         uploadPhotoVm.mPageStateLiveData.observe(this, s -> {
-            if (s != PageState.PAGE_LOADING){
-                hideLoading();
-            }else {
-                showLoading();
+            switch (s){
+                case PageState.PAGE_LOADING:
+                    showLoading();
+                    break;
+                default:
+                    hideLoading();
+                    break;
             }
         });
 

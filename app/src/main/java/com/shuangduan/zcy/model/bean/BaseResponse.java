@@ -12,7 +12,7 @@ import java.util.List;
  * </pre>
  */
 
-public class BaseObjResponse<T> {
+public class BaseResponse<T> {
 
     private int code;
     private String msg;

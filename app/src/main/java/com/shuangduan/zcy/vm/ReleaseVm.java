@@ -13,6 +13,7 @@ import com.google.gson.JsonObject;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseViewModel;
 import com.shuangduan.zcy.model.api.repository.ProjectRepository;
+import com.shuangduan.zcy.model.bean.AddTrackBean;
 import com.shuangduan.zcy.model.bean.ContactBean;
 import com.shuangduan.zcy.model.bean.ContactListBean;
 import com.shuangduan.zcy.model.bean.ContactTypeBean;
@@ -185,13 +186,6 @@ public class ReleaseVm extends BaseViewModel {
             return;
         }
         String updateTime = TimeUtils.getNowString(new SimpleDateFormat("yyyy-MM-dd"));
-        int[] imgs = null;
-        if (imageIds != null){
-            imgs = new int[imageIds.size()];
-            for (int i = 0; i < imageIds.size(); i++) {
-                imgs[i] = imageIds.get(i);
-            }
-        }
-        new ProjectRepository().addTrack(releaseLocusLiveData, pageStateLiveData, userId, projectId, remarks, name, tel, updateTime, imgs);
+        new ProjectRepository().addTrack(releaseLocusLiveData, pageStateLiveData, userId, projectId, remarks, name, tel, updateTime, new AddTrackBean(imageIds));
     }
 }
