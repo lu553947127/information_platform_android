@@ -17,7 +17,7 @@ public class ProjectInfoBean {
     /**
      * page : 1
      * count : 258
-     * list : [{"id":1536,"longitude":"0.000000","latitude":"0.000000","title":"F息烽至黔西高速公路TJ-2标","intro":"项目起点位于小寨坝顺接开阳至息烽高速公路，与贵遵高...","phases":"项目完成","warrant_status":0,"subscription_num":0,"update_time":"2019-07-19 11:55:31"}]
+     * list : [{"amount":1536,"longitude":"0.000000","latitude":"0.000000","title":"F息烽至黔西高速公路TJ-2标","intro":"项目起点位于小寨坝顺接开阳至息烽高速公路，与贵遵高...","phases":"项目完成","warrant_status":0,"subscription_num":0,"update_time":"2019-07-19 11:55:31"}]
      */
 
     private int page;
@@ -50,7 +50,7 @@ public class ProjectInfoBean {
 
     public static class ListBean {
         /**
-         * id : 1536
+         * amount : 1536
          * longitude : 0.000000
          * latitude : 0.000000
          * title : F息烽至黔西高速公路TJ-2标

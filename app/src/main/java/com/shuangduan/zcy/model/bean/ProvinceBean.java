@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class ProvinceBean extends BaseSelectorBean implements Parcelable {
     /**
-     * id : 110000
+     * amount : 110000
      * name : 北京市
      */
     private int id;

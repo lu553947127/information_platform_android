@@ -24,10 +24,12 @@ import com.shuangduan.zcy.view.mine.MineCollectionActivity;
 import com.shuangduan.zcy.view.income.MineIncomeActivity;
 import com.shuangduan.zcy.view.mine.MineOrderActivity;
 import com.shuangduan.zcy.view.mine.MineSubActivity;
+import com.shuangduan.zcy.view.mine.PwdPayActivity;
 import com.shuangduan.zcy.view.mine.ReadHistoryActivity;
 import com.shuangduan.zcy.view.mine.RecommendFriendsActivity;
 import com.shuangduan.zcy.view.mine.SetActivity;
 import com.shuangduan.zcy.view.mine.UserInfoActivity;
+import com.shuangduan.zcy.view.recharge.RechargeActivity;
 import com.shuangduan.zcy.vm.UserInfoVm;
 import com.shuangduan.zcy.weight.CircleImageView;
 
@@ -47,7 +49,6 @@ import butterknife.OnClick;
  * @class describe
  */
 public class MineFragment extends BaseFragment {
-
     @BindView(R.id.fake_status_bar)
     View fakeStatusBar;
     @BindView(R.id.iv_user)
@@ -109,7 +110,8 @@ public class MineFragment extends BaseFragment {
         userInfoVm.userInfo();
     }
 
-    @OnClick({R.id.tv_username, R.id.iv_user, R.id.tv_my_subscription, R.id.fl_order, R.id.fl_income, R.id.tv_balance,
+    @OnClick({R.id.tv_username, R.id.iv_user, R.id.tv_my_subscription, R.id.fl_order, R.id.fl_income, R.id.tv_balance, R.id.tv_my_demand, R.id.tv_transaction_record,
+            R.id.tv_agreement_manage, R.id.tv_pwd_pay, R.id.tv_recharge,
             R.id.tv_read_history, R.id.tv_feedback, R.id.tv_recommend_friends, R.id.tv_my_collection, R.id.tv_set, R.id.tv_helper})
     void onClick(View view){
         switch (view.getId()) {
@@ -119,6 +121,18 @@ public class MineFragment extends BaseFragment {
                 break;
             case R.id.tv_balance:
                 ActivityUtils.startActivity(BalanceActivity.class);
+                break;
+            case R.id.tv_recharge:
+                ActivityUtils.startActivity(RechargeActivity.class);
+                break;
+            case R.id.tv_my_demand:
+                break;
+            case R.id.tv_transaction_record:
+                break;
+            case R.id.tv_agreement_manage:
+                break;
+            case R.id.tv_pwd_pay:
+                ActivityUtils.startActivity(PwdPayActivity.class);
                 break;
             case R.id.fl_order:
                 ActivityUtils.startActivity(MineOrderActivity.class);

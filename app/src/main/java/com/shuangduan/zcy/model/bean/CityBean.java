@@ -16,7 +16,7 @@ import android.os.Parcelable;
 public class CityBean extends BaseSelectorBean implements Parcelable {
 
     /**
-     * id : 110100
+     * amount : 110100
      * name : 北京市
      */
     private int id;

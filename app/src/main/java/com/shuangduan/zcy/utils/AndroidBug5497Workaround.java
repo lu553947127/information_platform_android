@@ -18,7 +18,7 @@ import android.view.ViewTreeObserver;
 public class AndroidBug5497Workaround {
 
     /**
-     *  demo: AndroidBug5497Workaround.assistActivity(findViewById(android.R.id.content));
+     *  demo: AndroidBug5497Workaround.assistActivity(findViewById(android.R.amount.content));
      * @param content
      */
     public static void assistActivity(View content) {

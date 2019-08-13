@@ -71,6 +71,15 @@
         <activity android:name="com.shuangduan.zcy.view.mine.UnbindBankCardActivity" android:screenOrientation="portrait" />
         <activity android:name="com.shuangduan.zcy.view.mine.UpdateProductionActivity" android:screenOrientation="portrait" />
         <activity android:name="com.shuangduan.zcy.view.mine.MineOrderActivity" android:screenOrientation="portrait" />
+        <activity android:name="com.shuangduan.zcy.view.mine.OrderSubActivity" android:screenOrientation="portrait" />
+        <activity android:name="com.shuangduan.zcy.view.mine.PwdPayActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
+        <activity android:name="com.shuangduan.zcy.view.mine.UpdatePwdPayActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
+        <activity android:name="com.shuangduan.zcy.view.mine.ForgetPwdPayActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
+        <activity android:name="com.shuangduan.zcy.view.mine.SetPwdPayActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
+        <activity android:name="com.shuangduan.zcy.view.recharge.RechargeActivity" android:screenOrientation="portrait" />
+        <activity android:name="com.shuangduan.zcy.view.recharge.RechargeRecordActivity" android:screenOrientation="portrait" />
+        <activity android:name="com.shuangduan.zcy.view.recharge.RechargeResultActivity" android:screenOrientation="portrait" />
+        <activity android:name="com.shuangduan.zcy.view.recharge.RechargeRecordDetailActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray" />
         <activity android:name="com.shuangduan.zcy.view.income.MineIncomeActivity" android:screenOrientation="portrait" />
         <activity android:name="com.shuangduan.zcy.view.income.IncomeClassifyActivity" android:screenOrientation="portrait" />
         <activity android:name="com.shuangduan.zcy.view.income.IncomeReleaseActivity" android:screenOrientation="portrait" />

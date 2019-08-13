@@ -19,6 +19,7 @@ public class PayInfoBean {
      */
 
     private String alipay;
+    private String order_sn;
     /**
      * appid : wx2e2f0d4ccdf3e52f
      * partnerid : 1526823381
@@ -46,6 +47,14 @@ public class PayInfoBean {
 
     public void setAlipay(String alipay) {
         this.alipay = alipay;
+    }
+
+    public String getOrder_sn() {
+        return order_sn;
+    }
+
+    public void setOrder_sn(String order_sn) {
+        this.order_sn = order_sn;
     }
 
     public String getAppid() {

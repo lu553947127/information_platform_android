@@ -15,7 +15,7 @@ import java.util.List;
 public class UserInfoBean {
 
     /**
-     * id : 33
+     * amount : 33
      * image : http://xx.yijijian.com/uploads/thumb/20190719/c7b0f2fb8a240ef4377f39374fbd050f.jpg
      * username : 哒哒哒
      * sex : -1

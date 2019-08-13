@@ -177,7 +177,7 @@ public class AreaVm extends BaseViewModel {
     }
 
     /**
-     * 获取城市选择结果,id
+     * 获取城市选择结果,amount
      */
     public int[] getResult(){
         List<CityBean> dataCity = cityLiveData.getValue();

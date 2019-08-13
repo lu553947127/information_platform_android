@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/toolbar"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_fff_7"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        android:paddingBottom="30dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="25dp"
+            android:textColor="@color/colorTv"
+            android:textSize="13sp"
+            android:text="充值"/>
+
+        <TextView
+            android:id="@+id/tv_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="54dp"
+            android:textColor="@color/colorTv"
+            android:textSize="16sp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/colorDivider"
+            app:layout_constraintTop_toBottomOf="@+id/tv_amount"/>
+
+        <TextView
+            android:id="@+id/tv_type_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_amount"
+            android:layout_marginTop="45dp"
+            android:textColor="@color/colorTv"
+            android:textSize="13sp"
+            android:text="@string/amount"/>
+
+        <TextView
+            android:id="@+id/tv_time_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_type_tip"
+            android:layout_marginTop="17dp"
+            android:textColor="@color/colorTv"
+            android:textSize="13sp"
+            android:text="@string/time"/>
+
+        <TextView
+            android:id="@+id/tv_trans_order_number_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_time_tip"
+            android:layout_marginTop="17dp"
+            android:textColor="@color/colorTv"
+            android:textSize="13sp"
+            android:text="@string/trans_order_number"/>
+
+        <TextView
+            android:id="@+id/tv_account_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_trans_order_number_tip"
+            android:layout_marginTop="17dp"
+            android:textColor="@color/colorTv"
+            android:textSize="13sp"
+            android:text="@string/pay_style"/>
+
+        <TextView
+            android:id="@+id/tv_state_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_account_tip"
+            android:layout_marginTop="17dp"
+            android:textColor="@color/colorTv"
+            android:textSize="13sp"
+            android:text="@string/recharge_state"/>
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="right"
+            app:constraint_referenced_ids="tv_state_tip"/>
+
+        <TextView
+            android:id="@+id/tv_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_time"
+            app:layout_constraintTop_toTopOf="@+id/tv_type_tip"
+            android:textColor="@color/color_666666"
+            android:textSize="13sp"/>
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toRightOf="@+id/barrier"
+            app:layout_constraintTop_toTopOf="@+id/tv_time_tip"
+            android:layout_marginLeft="35dp"
+            android:textColor="@color/color_666666"
+            android:textSize="13sp"/>
+
+        <TextView
+            android:id="@+id/tv_trans_order_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_time"
+            app:layout_constraintTop_toTopOf="@+id/tv_trans_order_number_tip"
+            android:textColor="@color/color_666666"
+            android:textSize="13sp"/>
+
+        <TextView
+            android:id="@+id/tv_pay_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_time"
+            app:layout_constraintTop_toTopOf="@+id/tv_account_tip"
+            android:textColor="@color/color_666666"
+            android:textSize="13sp"/>
+
+        <TextView
+            android:id="@+id/tv_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_time"
+            app:layout_constraintTop_toTopOf="@+id/tv_state_tip"
+            android:textColor="@color/color_666666"
+            android:textSize="13sp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

@@ -13,7 +13,7 @@ package com.shuangduan.zcy.model.bean;
 public class RecruitDetailBean {
 
     /**
-     * id : 68
+     * amount : 68
      * title : 中铁十九局集团有限公司G3011敦当高速公路DD1合同段施工总承包项目柴油招标采购方案招标公告
      * content : "
      * start_time : null

@@ -7,6 +7,7 @@ import com.shuangduan.zcy.model.bean.BankCardBean;
 import com.shuangduan.zcy.model.bean.BankCardDisBean;
 import com.shuangduan.zcy.model.bean.MyPhasesBean;
 import com.shuangduan.zcy.model.bean.ProjectCollectBean;
+import com.shuangduan.zcy.model.bean.PwdPayStateBean;
 import com.shuangduan.zcy.model.bean.ReadHistoryBean;
 import com.shuangduan.zcy.model.bean.RecruitBean;
 import com.shuangduan.zcy.model.bean.SubBean;
@@ -236,6 +237,22 @@ public class UserRepository extends BaseRepository {
      */
     public void withdraw(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int user_id, int bankcard_id, String price){
         request(apiService.withdraw(user_id, bankcard_id, price)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    public void setPwdPay(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int user_id, String password, String tel, String code){
+        request(apiService.setPwdPay(user_id, password, tel, code)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    public void updatePwdPay(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int user_id, String old_password, String password){
+        request(apiService.updatePwdPay(user_id, old_password, password)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    public void forgetPwdPay(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int user_id, String tel, String code, String password){
+        request(apiService.forgetPwdPay(user_id, tel, code, password)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    public void pwdPayState(MutableLiveData<PwdPayStateBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id){
+        request(apiService.pwdPayState(user_id)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
 }

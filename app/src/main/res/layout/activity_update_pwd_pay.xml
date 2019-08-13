@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/toolbar"/>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/edt_pwd_old"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:paddingTop="10dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:background="@color/colorFFF"
+        android:gravity="center_vertical"
+        android:drawableLeft="@drawable/icon_pwd"
+        android:drawablePadding="9dp"
+        android:inputType="textPassword"
+        android:singleLine="true"
+        android:textColorHint="@color/colorTvHint"
+        android:textColor="@color/colorTv"
+        android:textSize="13sp"
+        android:hint="@string/hint_pwd_pay_old"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/divider_20"/>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/edt_pwd_new"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="10dp"
+        android:background="@color/colorFFF"
+        android:gravity="center_vertical"
+        android:drawableLeft="@drawable/icon_pwd"
+        android:drawablePadding="9dp"
+        android:inputType="textPassword"
+        android:singleLine="true"
+        android:textColorHint="@color/colorTvHint"
+        android:textColor="@color/colorTv"
+        android:textSize="13sp"
+        android:hint="@string/hint_pwd_pay_new"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/divider_20"/>
+    
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="@color/colorFFF"/>
+    
+    <TextView
+        android:id="@+id/tv_save"
+        android:layout_width="335dp"
+        style="@style/BtnConfirm"
+        android:layout_marginTop="30dp"
+        android:text="@string/save"/>
+
+</LinearLayout>

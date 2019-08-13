@@ -11,8 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.amap.api.maps.model.LatLng;
 import com.blankj.utilcode.util.ActivityUtils;
-import com.blankj.utilcode.util.LogUtils;
-import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ContactAdapter;
 import com.shuangduan.zcy.base.BaseFragment;
@@ -101,7 +99,7 @@ public class ProjectContentFragment extends BaseFragment {
             tvType.setText(String.format(getString(R.string.format_type), detail.getType()));
             tvCycle.setText(String.format(getString(R.string.format_cycle), detail.getCycle()));
             tvAcreage.setText(String.format(getString(R.string.format_acreage), detail.getAcreage()));
-            tvPrice.setText(String.format(getString(R.string.format_price), detail.getValuation()));
+            tvPrice.setText(String.format(getString(R.string.format_valuation), detail.getValuation()));
             tvDetail.setText(detail.getIntro());
             tvMaterial.setText(detail.getMaterials());
 

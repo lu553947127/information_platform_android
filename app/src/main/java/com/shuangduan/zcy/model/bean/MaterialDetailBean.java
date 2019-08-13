@@ -13,7 +13,7 @@ package com.shuangduan.zcy.model.bean;
 public class MaterialDetailBean {
 
     /**
-     * id : 1
+     * amount : 1
      * name : 挂篮物资
      * price : 7000.00
      * stock : 269

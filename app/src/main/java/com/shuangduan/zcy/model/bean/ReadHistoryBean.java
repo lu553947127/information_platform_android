@@ -14,7 +14,7 @@ public class ReadHistoryBean {
 
     /**
      * title : 中国电信
-     * id : 2869
+     * amount : 2869
      * create_time : 2019-08-05 09:22:20
      */
 

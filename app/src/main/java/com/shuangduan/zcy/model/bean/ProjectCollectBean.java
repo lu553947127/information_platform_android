@@ -17,7 +17,7 @@ public class ProjectCollectBean {
     /**
      * page : 1
      * count : 5
-     * list : [{"id":2869,"title":"中国电信","phases":"工程构思","create_time":"2019-08-02 17:51:47","intro":""}]
+     * list : [{"amount":2869,"title":"中国电信","phases":"工程构思","create_time":"2019-08-02 17:51:47","intro":""}]
      */
 
     private int page;
@@ -50,7 +50,7 @@ public class ProjectCollectBean {
 
     public static class ListBean {
         /**
-         * id : 2869
+         * amount : 2869
          * title : 中国电信
          * phases : 工程构思
          * create_time : 2019-08-02 17:51:47

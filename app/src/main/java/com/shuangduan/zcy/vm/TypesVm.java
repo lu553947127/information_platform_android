@@ -186,7 +186,7 @@ public class TypesVm extends BaseViewModel {
     }
 
     /**
-     * 获取城市选择结果,id
+     * 获取城市选择结果,amount
      */
     public int[] getResult(){
         List<TypeBean> dataCity = typeSecondLiveData.getValue();

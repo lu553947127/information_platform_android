@@ -17,7 +17,7 @@ public class LocusMineBean {
     /**
      * page : 1
      * count : 3
-     * list : [{"id":2709,"title":"中建八局阳新高速黄河大桥","intro":"濮阳至阳新高速，北起河南濮阳南到湖北阳新，位于中原...","phases":"项目完成","track_count":0,"create_time":"2019-07-21 06:29:49"}]
+     * list : [{"amount":2709,"title":"中建八局阳新高速黄河大桥","intro":"濮阳至阳新高速，北起河南濮阳南到湖北阳新，位于中原...","phases":"项目完成","track_count":0,"create_time":"2019-07-21 06:29:49"}]
      */
 
     private int page;
@@ -50,7 +50,7 @@ public class LocusMineBean {
 
     public static class ListBean {
         /**
-         * id : 2709
+         * amount : 2709
          * title : 中建八局阳新高速黄河大桥
          * intro : 濮阳至阳新高速，北起河南濮阳南到湖北阳新，位于中原...
          * phases : 项目完成

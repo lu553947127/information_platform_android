@@ -13,7 +13,7 @@ package com.shuangduan.zcy.model.bean;
 public class MaterialCategoryBean extends BaseSelectorBean {
 
     /**
-     * id : 8
+     * amount : 8
      * parentid : 9
      * catname : 二衬台车
      */

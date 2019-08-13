@@ -16,8 +16,8 @@ import com.shuangduan.zcy.model.bean.PayInfoBean;
  */
 public class PayRepository extends BaseRepository {
 
-    public void getPayInfo(MutableLiveData<PayInfoBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int id, String type){
-        request(apiService.projectWarrant(userId, id, type)).setData(liveData).setPageState(pageStateLiveData).send();
+    public void getPayInfo(MutableLiveData<PayInfoBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, String amount, int type){
+        request(apiService.recharge(userId, amount, type)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
 }

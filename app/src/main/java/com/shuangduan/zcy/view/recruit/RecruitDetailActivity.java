@@ -56,9 +56,9 @@ public class RecruitDetailActivity extends BaseActivity {
     TextView tvCollect;
     @BindView(R.id.ll_read_detail)
     LinearLayout llReadDetail;
-//    @BindView(R.id.tv_intro_title)
+//    @BindView(R.amount.tv_intro_title)
 //    TextView tvIntroTitle;
-//    @BindView(R.id.tv_intro_time)
+//    @BindView(R.amount.tv_intro_time)
 //    TextView tvIntroTime;
     @BindView(R.id.tv_intro_content)
     TextView tvIntroContent;

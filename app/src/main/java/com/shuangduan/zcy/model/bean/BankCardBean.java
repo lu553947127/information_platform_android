@@ -13,7 +13,7 @@ package com.shuangduan.zcy.model.bean;
 public class BankCardBean {
 
     /**
-     * id : 2
+     * amount : 2
      * type_name : 建设银行
      * card_num : **** **** **** **** 6124
      * icon : null

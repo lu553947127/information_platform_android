@@ -17,7 +17,7 @@ public class TrackBean {
     /**
      * page : 1
      * count : 3
-     * list : [{"id":3,"name":"都...","tel":"178****8888","user_id":19,"price":"112.00","remarks":"的士大夫士大...","create_time":"2019-07-16 10:08:27","is_pay":0,"image":[{"thumbnail":"http://api.info.com/uploads/thumb/20190716/707aa171fa4dd1616844dd66d18176ed.jpg","source":"http://api.info.com/uploads/20190716/707aa171fa4dd1616844dd66d18176ed.jpg"}]}]
+     * list : [{"amount":3,"name":"都...","tel":"178****8888","user_id":19,"price":"112.00","remarks":"的士大夫士大...","create_time":"2019-07-16 10:08:27","is_pay":0,"image":[{"thumbnail":"http://api.info.com/uploads/thumb/20190716/707aa171fa4dd1616844dd66d18176ed.jpg","source":"http://api.info.com/uploads/20190716/707aa171fa4dd1616844dd66d18176ed.jpg"}]}]
      */
 
     private int page;
@@ -50,7 +50,7 @@ public class TrackBean {
 
     public static class ListBean {
         /**
-         * id : 3
+         * amount : 3
          * name : 都...
          * tel : 178****8888
          * user_id : 19

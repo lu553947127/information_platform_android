@@ -17,7 +17,7 @@ public class ProjectMineBean {
     /**
      * page : 1
      * count : 12
-     * list : [{"id":2866,"title":"明敏","intro":"","phases":"主体施工","create_time":"2019-08-01 16:28:25"}]
+     * list : [{"amount":2866,"title":"明敏","intro":"","phases":"主体施工","create_time":"2019-08-01 16:28:25"}]
      */
 
     private int page;
@@ -50,7 +50,7 @@ public class ProjectMineBean {
 
     public static class ListBean {
         /**
-         * id : 2866
+         * amount : 2866
          * title : 明敏
          * intro :
          * phases : 主体施工

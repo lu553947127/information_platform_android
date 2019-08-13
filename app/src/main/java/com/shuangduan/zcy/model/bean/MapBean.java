@@ -13,7 +13,7 @@ package com.shuangduan.zcy.model.bean;
 public class MapBean {
 
     /**
-     * id : 2
+     * amount : 2
      * longitude : 117.143219
      * latitude : 36.683159
      * title : 标题

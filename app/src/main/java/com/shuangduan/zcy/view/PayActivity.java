@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
@@ -18,18 +17,19 @@ import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.google.gson.Gson;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.AppConfig;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.utils.pay.PayResult;
-import com.shuangduan.zcy.view.projectinfo.GoToSubActivity;
-import com.shuangduan.zcy.view.projectinfo.SubOrderActivity;
+import com.shuangduan.zcy.view.recharge.RechargeResultActivity;
 import com.shuangduan.zcy.wxapi.PayVm;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 
 import java.lang.ref.WeakReference;
 import java.util.Map;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -53,7 +53,7 @@ public class PayActivity extends BaseActivity {
     TextView tvPrice;
 
     private int ALIPAY_MSG = 1;
-    private PayVm payVm;
+    public PayVm payVm;
 
     @Override
     protected int initLayoutRes() {
@@ -65,9 +65,9 @@ public class PayActivity extends BaseActivity {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.pay));
 
-        tvPrice.setText("请支付1000元！");
+        tvPrice.setText(String.format(getString(R.string.format_pay), getIntent().getStringExtra(CustomConfig.RECHARGE_AMOUNT)));
         payVm = ViewModelProviders.of(this).get(PayVm.class);
-        payVm.id = getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0);
+        payVm.amount = getIntent().getStringExtra(CustomConfig.RECHARGE_AMOUNT);
         payVm.payInfoLiveData.observe(this, payInfoBean -> {
             if (StringUtils.isTrimEmpty(payInfoBean.getAlipay())){
                 PayReq request = new PayReq();
@@ -79,6 +79,7 @@ public class PayActivity extends BaseActivity {
                 request.timeStamp= String.valueOf(payInfoBean.getTimestamp());
                 request.sign= payInfoBean.getSign();
                 request.signType = payInfoBean.getSign_type();
+                request.extData = getIntent().getStringExtra(CustomConfig.RECHARGE_AMOUNT) + "," + payInfoBean.getOrder_sn();
                 AppConfig.iwxapi.sendReq(request);
             }else {
                 aliPay(payInfoBean.getAlipay());
@@ -93,11 +94,11 @@ public class PayActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_ali:
-                payVm.setType(1);
+                payVm.setType(CustomConfig.PAY_STYLE_ALIPAY);
                 payVm.getInfo();
                 break;
             case R.id.tv_wechat:
-                payVm.setType(2);
+                payVm.setType(CustomConfig.PAY_STYLE_WECHAT);
                 payVm.getInfo();
                 break;
         }
@@ -127,10 +128,10 @@ public class PayActivity extends BaseActivity {
     private PayHandler mHandler = new PayHandler(this);
 
     public static class PayHandler extends Handler{
-        private WeakReference<AppCompatActivity> activity;
+        private WeakReference<PayActivity> activity;
 
-        public PayHandler(AppCompatActivity activity) {
-            this.activity = new WeakReference<>(activity);
+        public PayHandler(PayActivity activity) {
+            this.activity = new WeakReference<PayActivity>(activity);
         }
 
         @Override
@@ -140,9 +141,13 @@ public class PayActivity extends BaseActivity {
                 switch (result.getResultStatus()){
                     case "9000":
                         ToastUtils.showShort(activity.get().getString(R.string.pay_success));
-                        LogUtils.i(result.getResult());
-                        ActivityUtils.finishActivity(GoToSubActivity.class);
-                        ActivityUtils.finishActivity(SubOrderActivity.class);
+                        PayResult.ResultBean resultBean = new Gson().fromJson(result.getResult(), PayResult.ResultBean.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putInt(CustomConfig.PAY_STYLE, CustomConfig.PAY_STYLE_ALIPAY);
+                        LogUtils.i(resultBean.getAlipay_trade_app_pay_response().getOut_trade_no(), resultBean.getAlipay_trade_app_pay_response().getTotal_amount());
+                        bundle.putString(CustomConfig.ORDER_SN, resultBean.getAlipay_trade_app_pay_response().getOut_trade_no());
+                        bundle.putString(CustomConfig.RECHARGE_AMOUNT, resultBean.getAlipay_trade_app_pay_response().getTotal_amount());
+                        ActivityUtils.startActivity(bundle, RechargeResultActivity.class);
                         activity.get().finish();
                         break;
                     case "4000":

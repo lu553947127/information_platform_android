@@ -17,7 +17,7 @@ public class WithdrawRecordBean {
     /**
      * page : 1
      * count : 0
-     * list : [{"id":1,"user_id":17,"order_sn":"201907221749411111111119","bankcard_id":1,"bankcard_type":"建设银行(4121)","bankcard_num":"621700151224121","real_name":"张三","price":"0.00","status":"1","remark":null,"create_time":"2019-07-22 17:49:41","update_time":"2019-07-22 17:49:41"}]
+     * list : [{"amount":1,"user_id":17,"order_sn":"201907221749411111111119","bankcard_id":1,"bankcard_type":"建设银行(4121)","bankcard_num":"621700151224121","real_name":"张三","price":"0.00","status":"1","remark":null,"create_time":"2019-07-22 17:49:41","update_time":"2019-07-22 17:49:41"}]
      */
 
     private int page;
@@ -50,7 +50,7 @@ public class WithdrawRecordBean {
 
     public static class ListBean {
         /**
-         * id : 1
+         * amount : 1
          * user_id : 17
          * order_sn : 201907221749411111111119
          * bankcard_id : 1

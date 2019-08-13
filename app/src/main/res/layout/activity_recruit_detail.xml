@@ -50,7 +50,7 @@
         android:background="@color/colorPrimary"/>
 
     <!--<TextView-->
-        <!--android:id="@+id/tv_intro_title"-->
+        <!--android:amount="@+amount/tv_intro_title"-->
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="wrap_content"-->
         <!--android:layout_marginTop="15dp"-->
@@ -60,7 +60,7 @@
         <!--android:textSize="13sp"/>-->
 
     <!--<TextView-->
-        <!--android:id="@+id/tv_intro_time"-->
+        <!--android:amount="@+amount/tv_intro_time"-->
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="wrap_content"-->
         <!--android:layout_marginTop="10dp"-->

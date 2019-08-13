@@ -58,6 +58,10 @@
     <string name="my_order">我的订单</string>
     <string name="my_income">我的收益</string>
     <string name="my_subscription">我的订阅</string>
+    <string name="my_demand">我的需求</string>
+    <string name="transaction_record">交易记录</string>
+    <string name="agreement_manage">合同管理</string>
+    <string name="pwd_pay">支付密码</string>
     <string name="read_history">浏览历史</string>
     <string name="feedback">意见反馈</string>
     <string name="recommend_friends">推荐好友</string>
@@ -125,6 +129,22 @@
     <string name="no_company">没有相关公司</string>
     <string name="edit_success">信息编辑成功</string>
     <string name="hint_production">请输入产品信息</string>
+    <string name="recharge">充值</string>
+    <string name="recharge_center">充值中心</string>
+    <string name="recharge_record">充值记录</string>
+    <string name="done">完成</string>
+    <string name="recharge_success">充值成功</string>
+    <string name="recharge_fail">充值失败</string>
+    <string name="pwd_pay_set">设置支付密码</string>
+    <string name="pwd_pay_update">修改支付密码</string>
+    <string name="forget_pwd_pay">忘记密码</string>
+    <string name="hint_pwd_pay_old">请输入原支付密码</string>
+    <string name="hint_pwd_pay_new">请设置新的支付密码</string>
+    <string name="pwd_pay_set_success">支付密码设置成功</string>
+    <string name="pwd_pay_update_success">支付密码修改成功</string>
+    <string name="hint_pwd_pay">请设置支付密码</string>
+    <string name="pwd_pay_not_set">还没有设置支付密码</string>
+    <string name="pwd_pay_done">支付密码已设置</string>
 
     <string name="subscribe_message">订阅信息</string>
     <string name="model_list">列表模式</string>
@@ -213,12 +233,18 @@
     <string name="share_cancel">分享取消</string>
     <string name="add">添加</string>
     <string name="mobile_code">手机号</string>
+    <string name="tel_code">手机号码</string>
     <string name="unit">单位</string>
     <string name="address">地址</string>
     <string name="push_select">推送选择</string>
     <string name="expected_return_s">预计收益</string>
     <string name="withdraw_income">可提现收益</string>
     <string name="income_trend_s">收益走向</string>
+    <string name="recharge_amount">充值额度</string>
+    <string name="pay_style">支付方式</string>
+    <string name="select_recharge_amount">请选择充值金额</string>
+    <string name="recharge_state">充值状态</string>
+    <string name="amount">金额</string>
 
     <string name="recruit_intro">招标简介</string>
     <string name="filter">筛选</string>
@@ -229,6 +255,7 @@
     <string name="add_bank_card_tip">(最多只能添加5张银行卡)</string>
     <string name="balance">余额</string>
     <string name="trans_order_number">交易单号</string>
+    <string name="target_account">到账账户</string>
     <string name="withdraw_state">提现状态</string>
     <string name="material_base">基建物资</string>
     <string name="product_detail">产品详情</string>
@@ -243,11 +270,16 @@
     <string name="supplier">优质供应商</string>
     <string name="supplier_join">加入供应商</string>
     <string name="supplier_join_success">申请成功，请等待审核...</string>
+    <string name="project_msg">工程信息</string>
+    <string name="recruit_msg">招采信息</string>
+    <string name="supplier_msg">供应商信息</string>
 
     <string name="format_version_name">当前版本号：v%1$s</string>
     <string name="format_get_verification_code_again">重新获取 (%1$ds)</string>
     <string name="format_balance">余额:%1$s元</string>
     <string name="format_amount">%1$s元</string>
+    <string name="format_amount_bi">%1$s币</string>
+    <string name="format_amount_rmb">￥%1$s元</string>
     <string name="format_num_of_people">人脉数量: %1$d人</string>
     <string name="format_num_of_readers">订阅人数: %1$d人</string>
     <string name="format_withdraw_now">当前可提现金额为:%1$s元</string>
@@ -267,7 +299,7 @@
     <string name="format_type">类别：%1$s</string>
     <string name="format_cycle">周期：%1$s</string>
     <string name="format_acreage">面积：%1$sm^2</string>
-    <string name="format_price">估价：%1$s</string>
+    <string name="format_valuation">估价：%1$s</string>
     <string name="format_consumption">消费次数：%1$d次</string>
     <string name="format_locus_num">轨迹信息：%1$d条</string>
     <string name="format_pay_price">查看此消息请支付%1$s元</string>
@@ -276,6 +308,11 @@
     <string name="format_order_num">%1$d单</string>
     <string name="format_supplier">供应商：%1$s</string>
     <string name="format_bought">已购标的号%1$s</string>
+    <string name="format_pay_amount">支付金额: %1$s元</string>
+    <string name="format_amount_sub">认购金额: %1$s元</string>
+    <string name="format_amount_return">已返金额: %1$s元</string>
+    <string name="format_price">价格: %1$s元</string>
+    <string name="format_pay">请支付: %1$s元！</string>
 
     <string name="please_select_time">请选择时间</string>
     <string name="year">年</string>
@@ -326,6 +363,11 @@
         <item>审核中</item>
         <item>成功</item>
         <item>驳回</item>
+    </string-array>
+
+    <string-array name="success_fail">
+        <item>成功</item>
+        <item>失败</item>
     </string-array>
 
     <string-array name="experience_list">

@@ -17,7 +17,7 @@ public class SearchBean {
     /**
      * page : 1
      * count : 23
-     * list : [{"id":2786,"longitude":"0.000000","latitude":"0.000000","title":"中国水电建设集团十五工程局有限公司广西左江治旱驮英水库枢纽项目","intro":"驮英水库位于广西宁明县那堪乡垌中村上游约6km的珠江流...","phases":"文件审批","subscription_num":0,"update_time":"2019-07-21 06:29:49"}]
+     * list : [{"amount":2786,"longitude":"0.000000","latitude":"0.000000","title":"中国水电建设集团十五工程局有限公司广西左江治旱驮英水库枢纽项目","intro":"驮英水库位于广西宁明县那堪乡垌中村上游约6km的珠江流...","phases":"文件审批","subscription_num":0,"update_time":"2019-07-21 06:29:49"}]
      */
 
     private int page;
@@ -50,7 +50,7 @@ public class SearchBean {
 
     public static class ListBean {
         /**
-         * id : 2786
+         * amount : 2786
          * longitude : 0.000000
          * latitude : 0.000000
          * title : 中国水电建设集团十五工程局有限公司广西左江治旱驮英水库枢纽项目

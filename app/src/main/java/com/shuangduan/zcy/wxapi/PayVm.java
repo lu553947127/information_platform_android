@@ -20,10 +20,8 @@ import com.shuangduan.zcy.model.bean.PayInfoBean;
  */
 public class PayVm extends BaseViewModel {
 
-    private String WECHAT = "wechat";
-    private String ALIPAY = "alipay";
-    private String type;
-    public int id;
+    private int type;
+    public String amount;
     private int userId;
     public MutableLiveData<String> pageStateLiveData;
     public MutableLiveData<PayInfoBean> payInfoLiveData;
@@ -35,19 +33,10 @@ public class PayVm extends BaseViewModel {
     }
 
     public void getInfo(){
-        new PayRepository().getPayInfo(payInfoLiveData, pageStateLiveData, userId, id, type);
+        new PayRepository().getPayInfo(payInfoLiveData, pageStateLiveData, userId, amount, type);
     }
 
     public void setType(int i){
-        if (i == 1){
-            type = ALIPAY;
-        }else if (i == 2){
-            type = WECHAT;
-        }
+        this.type = i;
     }
-
-    public String getType(){
-        return type;
-    }
-
 }

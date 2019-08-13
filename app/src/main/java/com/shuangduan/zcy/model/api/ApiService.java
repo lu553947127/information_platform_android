@@ -22,6 +22,8 @@ import com.shuangduan.zcy.model.bean.MaterialCategoryBean;
 import com.shuangduan.zcy.model.bean.MaterialDetailBean;
 import com.shuangduan.zcy.model.bean.MineIncomeBean;
 import com.shuangduan.zcy.model.bean.MyPhasesBean;
+import com.shuangduan.zcy.model.bean.OrderListBean;
+import com.shuangduan.zcy.model.bean.OrderSubBean;
 import com.shuangduan.zcy.model.bean.PayInfoBean;
 import com.shuangduan.zcy.model.bean.ProjectCollectBean;
 import com.shuangduan.zcy.model.bean.ProjectDetailBean;
@@ -31,8 +33,13 @@ import com.shuangduan.zcy.model.bean.ProjectMineBean;
 import com.shuangduan.zcy.model.bean.ProjectSearchBean;
 import com.shuangduan.zcy.model.bean.ProjectSubBean;
 import com.shuangduan.zcy.model.bean.ProvinceBean;
+import com.shuangduan.zcy.model.bean.PwdPayStateBean;
 import com.shuangduan.zcy.model.bean.ReSetPwdBean;
 import com.shuangduan.zcy.model.bean.ReadHistoryBean;
+import com.shuangduan.zcy.model.bean.RechargeRecordBean;
+import com.shuangduan.zcy.model.bean.RechargeRecordDetailBean;
+import com.shuangduan.zcy.model.bean.RechargeResultBean;
+import com.shuangduan.zcy.model.bean.RechargeShowBean;
 import com.shuangduan.zcy.model.bean.RecruitBean;
 import com.shuangduan.zcy.model.bean.RecruitDetailBean;
 import com.shuangduan.zcy.model.bean.RecruitSubBean;
@@ -239,7 +246,7 @@ public interface ApiService {
     @POST("api/District/getCity")
     Flowable<BaseListResponse<CityBean>> getCity(
             @Field("user_id")int user_id,
-            @Field("id")int id
+            @Field("amount")int id
     );
 
     @FormUrlEncoded
@@ -266,7 +273,7 @@ public interface ApiService {
     @POST("api/Project/getTypes")
     Flowable<BaseListResponse<TypeBean>> projectTypes(
             @Field("user_id")int user_id,
-            @Field("id")int id
+            @Field("amount")int id
             );
 
     @FormUrlEncoded
@@ -292,14 +299,14 @@ public interface ApiService {
     @POST("api/Project/getDetail")
     Flowable<BaseResponse<ProjectDetailBean>> getDetail(
             @Field("user_id")int user_id,
-            @Field("id")int id
+            @Field("amount")int id
     );
 
     @FormUrlEncoded
     @POST("api/Project/getTrack")
     Flowable<BaseResponse<TrackBean>> getTrack(
             @Field("user_id")int user_id,
-            @Field("id")int id,
+            @Field("amount")int id,
             @Field("page")int page,
             @Field("type")int type
     );
@@ -308,7 +315,7 @@ public interface ApiService {
     @POST("api/Project/viewTrack")
     Flowable<BaseResponse<TrackBean>> getViewTrack(
             @Field("user_id")int user_id,
-            @Field("id")int id,
+            @Field("amount")int id,
             @Field("page")int page
     );
 
@@ -316,7 +323,7 @@ public interface ApiService {
     @POST("api/Project/consumeList")
     Flowable<BaseResponse<ConsumeBean>> consumeList(
             @Field("user_id")int user_id,
-            @Field("id")int id,
+            @Field("amount")int id,
             @Field("page")int page
     );
 
@@ -324,21 +331,21 @@ public interface ApiService {
     @POST("api/Project/setCollection")
     Flowable<BaseResponse> collect(
             @Field("user_id")int user_id,
-            @Field("id")int id
+            @Field("amount")int id
     );
 
     @FormUrlEncoded
     @POST("api/Project/cancelCollection")
     Flowable<BaseResponse> cancelCollection(
             @Field("user_id")int user_id,
-            @Field("id")int id
+            @Field("amount")int id
     );
 
     @FormUrlEncoded
     @POST("api/Project/correction")
     Flowable<BaseResponse> correction(
             @Field("user_id")int user_id,
-            @Field("id")int id,
+            @Field("amount")int id,
             @Field("content")String content
     );
 
@@ -357,11 +364,11 @@ public interface ApiService {
     );
 
     @FormUrlEncoded
-    @POST("api/Pay/projectWarrant")
-    Flowable<BaseResponse<PayInfoBean>> projectWarrant(
+    @POST("/api/Userinfo/recharge")
+    Flowable<BaseResponse<PayInfoBean>> recharge(
             @Field("user_id")int user_id,
-            @Field("id")int id,
-            @Field("type")String type
+            @Field("amount")String amount,
+            @Field("type")int type
     );
 
     @FormUrlEncoded
@@ -393,7 +400,7 @@ public interface ApiService {
     @POST("api/Project/addTrack")
     Flowable<BaseResponse> addTrack(
             @Query("user_id") int user_id,
-            @Query("id")int id,
+            @Query("amount")int id,
             @Query("remarks")String remarks,
             @Query("name")String name,
             @Query("tel")String tel,
@@ -499,7 +506,7 @@ public interface ApiService {
     @POST("api/Userinfo/detailsRecord")
     Flowable<BaseResponse<WithdrawRecordBean.ListBean>> withdrawRecordDetail(
             @Field("user_id") int user_id,
-            @Field("id") int id
+            @Field("amount") int id
     );
 
     @FormUrlEncoded
@@ -583,21 +590,21 @@ public interface ApiService {
     @POST("api/Tenderer/getDetail")
     Flowable<BaseResponse<RecruitDetailBean>> recruitDetail(
             @Field("user_id") int user_id,
-            @Field("id") int id
+            @Field("amount") int id
     );
 
     @FormUrlEncoded
     @POST("api/Tenderer/setCollection")
     Flowable<BaseResponse> recruitCollect(
             @Field("user_id") int user_id,
-            @Field("id") int id
+            @Field("amount") int id
     );
 
     @FormUrlEncoded
     @POST("api/Tenderer/cancelCollection")
     Flowable<BaseResponse> recruitCancelCollect(
             @Field("user_id") int user_id,
-            @Field("id") int id
+            @Field("amount") int id
     );
 
     @FormUrlEncoded
@@ -613,7 +620,7 @@ public interface ApiService {
     @POST("api/Material/getDetail")
     Flowable<BaseResponse<MaterialDetailBean>> materialDetail(
             @Field("user_id") int user_id,
-            @Field("id") int id
+            @Field("amount") int id
     );
 
     @FormUrlEncoded
@@ -634,7 +641,7 @@ public interface ApiService {
     @POST("api/supplier/supplierDetails")
     Flowable<BaseResponse<SupplierDetailBean>> supplierDetail(
             @Field("user_id") int user_id,
-            @Field("id") int id
+            @Field("amount") int id
     );
 
     @POST("api/supplier/supplierApply")
@@ -643,4 +650,97 @@ public interface ApiService {
             @Body SupplierJoinImageBean joinImageBean
             );
 
+    @FormUrlEncoded
+    @POST("api/Order/projectOrder")
+    Flowable<BaseResponse<OrderListBean>> projectOrder(
+            @Field("user_id") int user_id,
+            @Field("page") int page
+    );
+
+    @FormUrlEncoded
+    @POST("api/Order/trackOrder")
+    Flowable<BaseResponse<OrderListBean>> locusOrder(
+            @Field("user_id") int user_id,
+            @Field("page") int page
+    );
+
+    @FormUrlEncoded
+    @POST("api/Order/tendererOrder")
+    Flowable<BaseResponse<OrderListBean>> recruitOrder(
+            @Field("user_id") int user_id,
+            @Field("page") int page
+    );
+
+    @FormUrlEncoded
+    @POST("api/Order/supplierOrder")
+    Flowable<BaseResponse<OrderListBean>> supplierOrder(
+            @Field("user_id") int user_id,
+            @Field("page") int page
+    );
+
+    @FormUrlEncoded
+    @POST("api/Order/warrantOrder")
+    Flowable<BaseResponse<OrderSubBean>> subOrder(
+            @Field("user_id") int user_id,
+            @Field("page") int page
+    );
+
+    @FormUrlEncoded
+    @POST("api/Userinfo/rechargeLoading")
+    Flowable<BaseResponse<RechargeShowBean>> rechargeShow(
+            @Field("user_id") int user_id
+    );
+
+    @FormUrlEncoded
+    @POST("/api/Pay/orderStatus")
+    Flowable<BaseResponse<RechargeResultBean>> rechargeResult(
+            @Field("user_id") int user_id,
+            @Field("order_sn") String order_sn
+    );
+
+    @FormUrlEncoded
+    @POST("api/Userinfo/rechargeRecord")
+    Flowable<BaseResponse<RechargeRecordBean>> rechargeRecord(
+            @Field("user_id") int user_id,
+            @Field("page") int page
+    );
+
+    @FormUrlEncoded
+    @POST("api/Userinfo/rechargeDetails")
+    Flowable<BaseResponse<RechargeRecordDetailBean>> rechargeRecordDetail(
+            @Field("user_id") int user_id,
+            @Field("id") int id
+    );
+
+    @FormUrlEncoded
+    @POST("api/Userinfo/coinPassword")
+    Flowable<BaseResponse> setPwdPay(
+            @Field("user_id") int user_id,
+            @Field("password") String password,
+            @Field("tel") String tel,
+            @Field("code") String code
+    );
+
+    @FormUrlEncoded
+    @POST("api/Userinfo/setCoinPassword")
+    Flowable<BaseResponse> updatePwdPay(
+            @Field("user_id") int user_id,
+            @Field("old_password") String old_password,
+            @Field("password") String password
+    );
+
+    @FormUrlEncoded
+    @POST("api/Userinfo/forgetPassword")
+    Flowable<BaseResponse> forgetPwdPay(
+            @Field("user_id") int user_id,
+            @Field("tel") String tel,
+            @Field("code") String code,
+            @Field("password") String password
+    );
+
+    @FormUrlEncoded
+    @POST("api/Userinfo/coinPwdStatus")
+    Flowable<BaseResponse<PwdPayStateBean>> pwdPayState(
+            @Field("user_id") int user_id
+    );
 }

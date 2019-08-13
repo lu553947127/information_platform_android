@@ -46,6 +46,10 @@ public class CustomConfig {
     public static final String BANKCARD_NAME = "bankcard_name";
     public static final String PRODUCTION = "production";
     public static final String SUPPLIER_ID = "supplier_id";
+    public static final String RECHARGE_AMOUNT = "recharge_amount";
+    public static final String ORDER_SN = "order_sn";
+    public static final String PAY_STYLE = "pay_style";
+    public static final String RECHARGE_ID = "recharge_id";
 
     public static final String SMS_TYPE = "sms_type";
     public static final int SMS_REGISTER = 1;//注册
@@ -54,6 +58,9 @@ public class CustomConfig {
     public static final int SMS_UPDATE_PWD = 4;//修改密码
     public static final int SMS_PWD_PAY = 5;//修改支付密码
     public static final int SMS_UPDATE_PHONE = 6;//修改手机号码
+
+    public static final int PAY_STYLE_ALIPAY = 2;//支付宝支付
+    public static final int PAY_STYLE_WECHAT = 1;//微信支付
 
     public static final int AREA_REQUEST_CODE = 1001;
 

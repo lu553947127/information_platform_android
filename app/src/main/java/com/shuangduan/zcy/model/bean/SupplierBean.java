@@ -17,7 +17,7 @@ public class SupplierBean {
     /**
      * page : 1
      * count : 23
-     * list : [{"id":1,"name":"市场人员","headimg":null,"tel":"028****58353","sex":0,"company":"四川博忠金属制造有限公司","serve_address":"全国","product":"钢结构、钢模板","sort":0,"images_json":[],"is_pay":0}]
+     * list : [{"amount":1,"name":"市场人员","headimg":null,"tel":"028****58353","sex":0,"company":"四川博忠金属制造有限公司","serve_address":"全国","product":"钢结构、钢模板","sort":0,"images_json":[],"is_pay":0}]
      */
 
     private int page;
@@ -50,7 +50,7 @@ public class SupplierBean {
 
     public static class ListBean {
         /**
-         * id : 1
+         * amount : 1
          * name : 市场人员
          * headimg : null
          * tel : 028****58353

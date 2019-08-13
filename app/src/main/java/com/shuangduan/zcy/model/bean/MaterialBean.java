@@ -17,7 +17,7 @@ public class MaterialBean {
     /**
      * page : 1
      * count : 6
-     * list : [{"id":1,"name":"挂篮物资","oss_path":"23efd8a8e90434523c5e5b5a7f223f99.jpg","price":"7000.00","stock":269,"sell_stock":null,"tonne":100,"agent_id":3,"categoryId":11,"is_order":0,"image":"http://zicaiyun-pc.oss-cn-qingdao.aliyuncs.com/23efd8a8e90434523c5e5b5a7f223f99.jpg","amount":26900,"sell_amount":0,"agent_name":"湖北港桥模板有限公司"}]
+     * list : [{"amount":1,"name":"挂篮物资","oss_path":"23efd8a8e90434523c5e5b5a7f223f99.jpg","price":"7000.00","stock":269,"sell_stock":null,"tonne":100,"agent_id":3,"categoryId":11,"is_order":0,"image":"http://zicaiyun-pc.oss-cn-qingdao.aliyuncs.com/23efd8a8e90434523c5e5b5a7f223f99.jpg","amount":26900,"sell_amount":0,"agent_name":"湖北港桥模板有限公司"}]
      */
 
     private int page;
@@ -50,7 +50,7 @@ public class MaterialBean {
 
     public static class ListBean {
         /**
-         * id : 1
+         * amount : 1
          * name : 挂篮物资
          * oss_path : 23efd8a8e90434523c5e5b5a7f223f99.jpg
          * price : 7000.00

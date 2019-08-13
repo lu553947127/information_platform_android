@@ -44,7 +44,7 @@ public class SearchVm extends BaseViewModel {
         new SearchRepository().search(searchLiveData, pageStateLiveData, userId, keyWord);
         boolean isRemove = false;
         String history = SPUtils.getInstance().getString(SpConfig.SEARCH_HISTORY);
-        String[] split = history.split("|,");
+        String[] split = history.split(",");
         List<String> historyList = new ArrayList<>();
         Collections.addAll(historyList, split);
         for (int i = 0; i < historyList.size(); i++) {
@@ -65,7 +65,7 @@ public class SearchVm extends BaseViewModel {
 
     public void getHistory(){
         String history = SPUtils.getInstance().getString(SpConfig.SEARCH_HISTORY);
-        String[] split = history.split("|,");
+        String[] split = history.split(",");
         List<String> historyList = new ArrayList<>();
         Collections.addAll(historyList, split);
         historyLiveData.postValue(historyList);

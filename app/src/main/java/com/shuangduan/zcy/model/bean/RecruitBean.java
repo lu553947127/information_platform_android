@@ -17,7 +17,7 @@ public class RecruitBean {
     /**
      * page : 1
      * count : 65
-     * list : [{"id":68,"title":"中铁十九局集团有限公司G3011敦当高速公路DD1合同段施工总承包项目柴油招标采购方案招标公告","content":"\" ","province":"甘肃省","city":"敦煌市","create_time":"2019-07-04 23:52:18","is_pay":0}]
+     * list : [{"amount":68,"title":"中铁十九局集团有限公司G3011敦当高速公路DD1合同段施工总承包项目柴油招标采购方案招标公告","content":"\" ","province":"甘肃省","city":"敦煌市","create_time":"2019-07-04 23:52:18","is_pay":0}]
      */
 
     private int page;
@@ -50,7 +50,7 @@ public class RecruitBean {
 
     public static class ListBean {
         /**
-         * id : 68
+         * amount : 68
          * title : 中铁十九局集团有限公司G3011敦当高速公路DD1合同段施工总承包项目柴油招标采购方案招标公告
          * content : "
          * province : 甘肃省

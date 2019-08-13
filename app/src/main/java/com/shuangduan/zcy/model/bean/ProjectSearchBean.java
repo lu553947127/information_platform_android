@@ -16,7 +16,7 @@ public class ProjectSearchBean {
 
     /**
      * count : 13
-     * list : [{"id":2786,"title":"中国水电建设集团十五工程局有限公司广西左江治旱驮英水库枢纽项目","province":"","city":""}]
+     * list : [{"amount":2786,"title":"中国水电建设集团十五工程局有限公司广西左江治旱驮英水库枢纽项目","province":"","city":""}]
      */
 
     private int page;
@@ -49,7 +49,7 @@ public class ProjectSearchBean {
 
     public static class ListBean {
         /**
-         * id : 2786
+         * amount : 2786
          * title : 中国水电建设集团十五工程局有限公司广西左江治旱驮英水库枢纽项目
          * province :
          * city :

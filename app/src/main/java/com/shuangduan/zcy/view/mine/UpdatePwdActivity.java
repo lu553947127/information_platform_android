@@ -107,8 +107,8 @@ public class UpdatePwdActivity extends BaseActivity {
                     return;
                 }
                 mobile = edtAccount.getText().toString();
-                String code = edtPwd.getText().toString();
-                String pwdAgain = edtPwd.getText().toString();
+                String code = edtSMSCode.getText().toString();
+                String pwdAgain = edtPwdAgain.getText().toString();
                 String pwd = edtPwd.getText().toString();
                 if (!pwd.equals(pwdAgain)){
                     ToastUtils.showShort(getString(R.string.pwd_no_same));
