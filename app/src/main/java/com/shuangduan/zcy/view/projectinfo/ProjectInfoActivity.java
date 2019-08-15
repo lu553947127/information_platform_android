@@ -1,6 +1,5 @@
 package com.shuangduan.zcy.view.projectinfo;
 
-import android.location.Location;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -12,7 +11,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.amap.api.maps.AMap;
@@ -25,17 +23,15 @@ import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
 import com.amap.api.maps.model.animation.Animation;
 import com.amap.api.maps.model.animation.ScaleAnimation;
-import com.amap.api.services.core.LatLonPoint;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.ConvertUtils;
-import com.blankj.utilcode.util.LogUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.pop.CommonPopupWindow;
 import com.shuangduan.zcy.model.bean.MapBean;
-import com.shuangduan.zcy.view.SearchActivity;
+import com.shuangduan.zcy.view.search.SearchActivity;
 import com.shuangduan.zcy.vm.PermissionVm;
 import com.shuangduan.zcy.vm.ProjectInfoVm;
 import com.tbruyelle.rxpermissions2.RxPermissions;

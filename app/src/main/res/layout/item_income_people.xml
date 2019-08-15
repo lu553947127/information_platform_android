@@ -18,9 +18,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="@+id/iv_header"
+        app:layout_constraintBottom_toTopOf="@+id/tv_time"
         app:layout_constraintLeft_toRightOf="@+id/iv_header"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="5dp"
         android:textColor="@color/colorTv"
         android:textSize="13sp"/>
 
@@ -29,8 +29,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@+id/iv_header"
+        app:layout_constraintTop_toBottomOf="@+id/tv_name"
         app:layout_constraintLeft_toLeftOf="@+id/tv_name"
-        android:layout_marginBottom="6dp"
         android:textColor="@color/color_666666"
         android:textSize="12sp"/>
 
@@ -42,5 +42,19 @@
         app:layout_constraintRight_toRightOf="parent"
         android:textColor="@color/color_666666"
         android:textSize="13sp"/>
+    
+    <TextView
+        android:id="@+id/tv_add_friends"
+        android:visibility="gone"
+        android:layout_width="64dp"
+        android:layout_height="18dp"
+        app:layout_constraintRight_toRightOf="@+id/tv_price"
+        app:layout_constraintTop_toTopOf="@+id/tv_time"
+        style="@style/BtnConfirm"
+        android:background="@drawable/selector_btn_confirm"
+        android:gravity="center"
+        android:textColor="@color/colorFFF"
+        android:textSize="12sp"
+        android:text="@string/add_friends"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

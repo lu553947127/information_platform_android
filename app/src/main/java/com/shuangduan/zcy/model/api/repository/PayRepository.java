@@ -2,6 +2,7 @@ package com.shuangduan.zcy.model.api.repository;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.shuangduan.zcy.model.bean.CoinPayResultBean;
 import com.shuangduan.zcy.model.bean.PayInfoBean;
 
 /**
@@ -16,8 +17,39 @@ import com.shuangduan.zcy.model.bean.PayInfoBean;
  */
 public class PayRepository extends BaseRepository {
 
+    /**
+     * 获取支付宝和微信的订单信息
+     */
     public void getPayInfo(MutableLiveData<PayInfoBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, String amount, int type){
         request(apiService.recharge(userId, amount, type)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    /**
+     * 紫金币支付概况
+     */
+    public void payProjectContent(MutableLiveData<CoinPayResultBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int id, String coin_password){
+        request(apiService.payProjectContent(userId, id, coin_password)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    /**
+     * 紫金币支付轨迹
+     */
+    public void payLocus(MutableLiveData<CoinPayResultBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int id, String coin_password){
+        request(apiService.payLocus(userId, id, coin_password)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    /**
+     * 紫金币支付供应商
+     */
+    public void paySupplier(MutableLiveData<CoinPayResultBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int id, String coin_password){
+        request(apiService.paySupplier(userId, id, coin_password)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    /**
+     * 紫金币支付招采信息
+     */
+    public void payRecruit(MutableLiveData<CoinPayResultBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int id, String coin_password){
+        request(apiService.payRecruit(userId, id, coin_password)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
 }

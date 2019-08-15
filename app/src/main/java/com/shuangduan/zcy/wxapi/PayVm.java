@@ -39,4 +39,5 @@ public class PayVm extends BaseViewModel {
     public void setType(int i){
         this.type = i;
     }
+
 }

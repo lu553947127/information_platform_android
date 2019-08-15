@@ -49,6 +49,7 @@ import org.greenrobot.eventbus.Subscribe;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -62,7 +63,6 @@ import butterknife.OnClick;
  * @class describe
  */
 public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCallBack {
-
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
     @BindView(R.id.toolbar)
@@ -104,10 +104,11 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.base_info));
-        AndroidBug5497Workaround.assistActivity(findViewById(android.R.id.content));
+        int uid = getIntent().getIntExtra(CustomConfig.UID, 0);
 
         uploadPhotoVm = ViewModelProviders.of(this).get(UploadPhotoVm.class);
         userInfoVm = ViewModelProviders.of(this).get(UserInfoVm.class);
+        userInfoVm.uid = uid;
         userInfoVm.informationLiveData.observe(this, userInfoBean -> {
             SPUtils.getInstance().put(SpConfig.USERNAME, userInfoBean.getUsername());
             SPUtils.getInstance().put(SpConfig.MOBILE, userInfoBean.getTel());
@@ -131,7 +132,7 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
                     .build());
         });
         userInfoVm.sexLiveData.observe(this, integer -> {
-            switch (integer){
+            switch (integer) {
                 case 1:
                     tvSex.setText(getString(R.string.man));
                     break;
@@ -139,12 +140,12 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
                     tvSex.setText(getString(R.string.woman));
                     break;
                 case 0:
-                    tvSex.setText("");
+                    tvSex.setText(getString(R.string.select_not));
                     break;
             }
         });
         userInfoVm.infoLiveData.observe(this, o -> {
-            switch (userInfoVm.changeType){
+            switch (userInfoVm.changeType) {
                 case 1:
                     userInfoVm.updateImage();
                     break;
@@ -154,7 +155,7 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
             }
         });
         userInfoVm.pageStateLiveData.observe(this, s -> {
-            switch (s){
+            switch (s) {
                 case PageState.PAGE_LOADING:
                     showLoading();
                     break;
@@ -176,10 +177,10 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
         rxPermissions = new RxPermissions(this);
         permissionVm = ViewModelProviders.of(this).get(PermissionVm.class);
         permissionVm.getLiveData().observe(this, integer -> {
-            if (integer == PermissionVm.PERMISSION_CAMERA){
+            if (integer == PermissionVm.PERMISSION_CAMERA) {
                 MatisseCamera.from(this)
                         .forResult(PermissionVm.REQUEST_CODE_HEAD, "com.shuangduan.zcy.fileprovider");
-            }else if (integer == PermissionVm.PERMISSION_STORAGE){
+            } else if (integer == PermissionVm.PERMISSION_STORAGE) {
                 Matisse.from(this)
                         .choose(MimeType.ofImage())
                         .showSingleMediaType(true)
@@ -200,7 +201,7 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
             userInfoVm.updateAvatar(uploadBean.getSource());
         });
         uploadPhotoVm.mPageStateLiveData.observe(this, s -> {
-            switch (s){
+            switch (s) {
                 case PageState.PAGE_LOADING:
                     showLoading();
                     break;
@@ -215,9 +216,9 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
 
     @OnClick({R.id.iv_bar_back, R.id.iv_user, R.id.fl_name, R.id.fl_sex, R.id.fl_mobile, R.id.fl_email, R.id.fl_id_card,
             R.id.fl_company, R.id.fl_office, R.id.fl_business_area, R.id.fl_business_exp, R.id.tv_production_tip, R.id.tv_production})
-    void onClick(View view){
+    void onClick(View view) {
         Bundle bundle = new Bundle();
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.iv_bar_back:
                 finish();
                 break;
@@ -272,7 +273,7 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
                 break;
             case R.id.fl_business_exp:
                 new BusinessExpDialog(this)
-                        .setSelected(userInfoVm.experience.getValue() == null ? userInfoVm.informationLiveData.getValue().getExperience() -1 : userInfoVm.experience.getValue() - 1)
+                        .setSelected(userInfoVm.experience.getValue() == null ? userInfoVm.informationLiveData.getValue().getExperience() - 1 : userInfoVm.experience.getValue() - 1)
                         .setSingleCallBack((item, position) -> {
                             userInfoVm.experience.postValue(position + 1);
                         })
@@ -311,38 +312,44 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
     }
 
     @Subscribe()
-    public void updateUserName(UserNameEvent event){
+    public void updateUserName(UserNameEvent event) {
         tvName.setText(event.username);
     }
 
     @Subscribe()
-    public void updateMobile(MobileEvent event){
+    public void updateMobile(MobileEvent event) {
         tvMobile.setText(event.mobile);
     }
 
     @Subscribe()
-    public void updateEmail(EmailEvent event){
+    public void updateEmail(EmailEvent event) {
         tvEmail.setText(event.email);
     }
 
     @Subscribe()
-    public void updateCompany(CompanyEvent event){
+    public void updateCompany(CompanyEvent event) {
         tvCompany.setText(event.company);
     }
 
     @Subscribe()
-    public void updateOffice(OfficeEvent event){
+    public void updateOffice(OfficeEvent event) {
         tvOffice.setText(event.office);
     }
 
     @Subscribe()
-    public void updateCity(CityEvent event){
+    public void updateCity(CityEvent event) {
         userInfoVm.area.postValue(event);
     }
 
     @Subscribe()
-    public void updateProduction(ProductionEvent event){
+    public void updateProduction(ProductionEvent event) {
         tvProduction.setText(event.production);
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
 }

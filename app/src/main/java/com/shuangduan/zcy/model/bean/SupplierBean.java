@@ -71,6 +71,7 @@ public class SupplierBean {
         private String company;
         private String serve_address;
         private String product;
+        private String detail_price;
         private int sort;
         private int is_pay;
         private List<ImageBean> images_json;
@@ -137,6 +138,14 @@ public class SupplierBean {
 
         public void setProduct(String product) {
             this.product = product;
+        }
+
+        public String getDetail_price() {
+            return detail_price;
+        }
+
+        public void setDetail_price(String detail_price) {
+            this.detail_price = detail_price;
         }
 
         public int getSort() {

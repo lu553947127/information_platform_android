@@ -102,7 +102,7 @@
         android:gravity="center_vertical"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
-        android:drawableLeft="@drawable/member"
+        android:drawableLeft="@drawable/second_degree"
         android:drawablePadding="11dp"
         android:drawableRight="@drawable/icon_next"
         android:textColor="@color/color_666666"

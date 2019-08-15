@@ -12,18 +12,28 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.LocusAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
+import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseLazyFragment;
 import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.CustomDialog;
+import com.shuangduan.zcy.dialog.PayDialog;
 import com.shuangduan.zcy.model.bean.TrackBean;
+import com.shuangduan.zcy.model.event.RefreshViewLocusEvent;
 import com.shuangduan.zcy.view.PayActivity;
 import com.shuangduan.zcy.view.PhotoViewActivity;
+import com.shuangduan.zcy.view.recharge.RechargeActivity;
+import com.shuangduan.zcy.vm.CoinPayVm;
 import com.shuangduan.zcy.vm.ProjectDetailVm;
+import com.shuangduan.zcy.vm.UpdatePwdPayVm;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 
@@ -49,6 +59,8 @@ public class ProjectLocusFragment extends BaseLazyFragment {
     RecyclerView rvLocus;
     private ProjectDetailVm projectDetailVm;
     private LocusAdapter locusAdapter;
+    private UpdatePwdPayVm updatePwdPayVm;
+    private CoinPayVm coinPayVm;
 
     public static ProjectLocusFragment newInstance() {
 
@@ -71,6 +83,8 @@ public class ProjectLocusFragment extends BaseLazyFragment {
         locusAdapter = new LocusAdapter(R.layout.item_locus, null){
             @Override
             public void readDetail(int position, String price) {
+                TrackBean.ListBean listBean = locusAdapter.getData().get(position);
+                coinPayVm.locusId = listBean.getId();
                 new CustomDialog(mActivity)
                         .setTip(String.format(getString(R.string.format_pay_price), price))
                         .setCallBack(new BaseDialog.CallBack() {
@@ -81,7 +95,13 @@ public class ProjectLocusFragment extends BaseLazyFragment {
 
                             @Override
                             public void ok(String s) {
-                                ActivityUtils.startActivity(PayActivity.class);
+                                int status = SPUtils.getInstance().getInt(SpConfig.PWD_PAY_STATUS, 0);
+                                if (status == 1){
+                                    goToPay();
+                                }else {
+                                    //查询是否设置支付密码
+                                    updatePwdPayVm.payPwdState();
+                                }
                             }
                         })
                         .showDialog();
@@ -126,6 +146,37 @@ public class ProjectLocusFragment extends BaseLazyFragment {
                 locusAdapter.addData(trackBean.getList());
             }
             setNoMore(trackBean.getPage(), trackBean.getCount());
+        });
+
+        //支付密码状态查询
+        updatePwdPayVm = ViewModelProviders.of(mActivity).get(UpdatePwdPayVm.class);
+
+        //紫金币支付
+        coinPayVm = ViewModelProviders.of(mActivity).get(CoinPayVm.class);
+        coinPayVm.locusPayLiveData.observe(this, coinPayResultBean -> {
+            if (coinPayResultBean.getPay_status() == 1){
+                ToastUtils.showShort(getString(R.string.buy_success));
+                projectDetailVm.getTrack();
+                //刷新已查看列表
+                EventBus.getDefault().post(new RefreshViewLocusEvent());
+            }else {
+                //余额不足
+                addDialog(new CustomDialog(mActivity)
+                        .setIcon(R.drawable.icon_error)
+                        .setTip("余额不足")
+                        .setCallBack(new BaseDialog.CallBack() {
+                            @Override
+                            public void cancel() {
+
+                            }
+
+                            @Override
+                            public void ok(String s) {
+                                ActivityUtils.startActivity(RechargeActivity.class);
+                            }
+                        })
+                        .showDialog());
+            }
         });
     }
 
@@ -189,5 +240,16 @@ public class ProjectLocusFragment extends BaseLazyFragment {
                 refresh.finishLoadMore();
             }
         }
+    }
+
+    /**
+     * 去支付
+     */
+    private void goToPay(){
+        addDialog(new PayDialog(mActivity)
+                .setSingleCallBack((item, position) -> {
+                    coinPayVm.payLocus(item);
+                })
+                .showDialog());
     }
 }

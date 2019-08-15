@@ -54,38 +54,22 @@ public class ProjectDetailVm extends BaseViewModel {
     public void init(int id){
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
         this.id = id;
-        if (titleLiveData == null)
-            titleLiveData = new MutableLiveData<>();
-        if (locationLiveData == null)
-            locationLiveData = new MutableLiveData<>();
-        if (latitudeLiveData == null)
-            latitudeLiveData = new MutableLiveData<>();
-        if (introLiveData == null)
-            introLiveData = new MutableLiveData<>();
-        if (materialLiveData == null)
-            materialLiveData = new MutableLiveData<>();
-        if (locusTypeLiveData == null)
-            locusTypeLiveData = new MutableLiveData<>();
-        if (collectionLiveData == null)
-            collectionLiveData = new MutableLiveData<>();
-        if (subscribeLiveData == null)
-            subscribeLiveData = new MutableLiveData<>();
-        if (pageStateLiveData == null)
-            pageStateLiveData = new MutableLiveData<>();
-        if (detailLiveData == null)
-            detailLiveData = new MutableLiveData<>();
-        if (trackLiveData == null)
-            trackLiveData = new MutableLiveData<>();
-        if (viewTrackLiveData == null)
-            viewTrackLiveData = new MutableLiveData<>();
-        if (consumeLiveData == null)
-            consumeLiveData = new MutableLiveData<>();
-        if (cancelCollectLiveData == null)
-            cancelCollectLiveData = new MutableLiveData();
-        if (collectLiveData == null)
-            collectLiveData = new MutableLiveData();
-        if (errorLiveData == null)
-            errorLiveData = new MutableLiveData();
+        titleLiveData = new MutableLiveData<>();
+        locationLiveData = new MutableLiveData<>();
+        latitudeLiveData = new MutableLiveData<>();
+        introLiveData = new MutableLiveData<>();
+        materialLiveData = new MutableLiveData<>();
+        locusTypeLiveData = new MutableLiveData<>();
+        collectionLiveData = new MutableLiveData<>();
+        subscribeLiveData = new MutableLiveData<>();
+        pageStateLiveData = new MutableLiveData<>();
+        detailLiveData = new MutableLiveData<>();
+        trackLiveData = new MutableLiveData<>();
+        viewTrackLiveData = new MutableLiveData<>();
+        consumeLiveData = new MutableLiveData<>();
+        cancelCollectLiveData = new MutableLiveData();
+        collectLiveData = new MutableLiveData();
+        errorLiveData = new MutableLiveData();
     }
 
     private ProjectDetailRepository repositoryDetail;

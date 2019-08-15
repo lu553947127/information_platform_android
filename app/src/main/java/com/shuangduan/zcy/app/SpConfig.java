@@ -60,4 +60,10 @@ public class SpConfig {
     /*搜索历史*/
     public static final String SEARCH_HISTORY = "search_history";
 
+    /*支付密码是否设置*/
+    public static final String PWD_PAY_STATUS = "pwd_pay_status";
+
+    /*推送别名是否设置*/
+    public static final String ALIAS_STATUS = "alias_status";
+
 }

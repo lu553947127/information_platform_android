@@ -48,6 +48,7 @@ public class SupplierAdapter extends BaseQuickAdapter<SupplierBean.ListBean, Bas
                 .setGone(R.id.iv_pic_second, item.getImages_json() != null && item.getImages_json().size() >= 2)
                 .setGone(R.id.iv_pic_third, item.getImages_json() != null && item.getImages_json().size() >= 3)
                 .setGone(R.id.tv_more, item.getImages_json() != null && item.getImages_json().size() >= 4)
+                .setGone(R.id.tv_read, item.getIs_pay() != 1)
                 .addOnClickListener(R.id.iv_header)
                 .addOnClickListener(R.id.tv_read);
 

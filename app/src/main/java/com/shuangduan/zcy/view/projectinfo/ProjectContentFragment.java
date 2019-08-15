@@ -11,14 +11,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.amap.api.maps.model.LatLng;
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ContactAdapter;
+import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseFragment;
 import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.CustomDialog;
+import com.shuangduan.zcy.dialog.PayDialog;
+import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.ProjectDetailBean;
-import com.shuangduan.zcy.view.PayActivity;
+import com.shuangduan.zcy.view.mine.SetPwdPayActivity;
+import com.shuangduan.zcy.view.recharge.RechargeActivity;
+import com.shuangduan.zcy.vm.CoinPayVm;
 import com.shuangduan.zcy.vm.ProjectDetailVm;
+import com.shuangduan.zcy.vm.UpdatePwdPayVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
 import butterknife.BindView;
@@ -54,8 +62,12 @@ public class ProjectContentFragment extends BaseFragment {
     TextView tvMaterial;
     @BindView(R.id.rv_contact)
     RecyclerView rvContact;
+    @BindView(R.id.tv_read_detail)
+    TextView tvReadDetail;
     private ProjectDetailVm projectDetailVm;
     private ContactAdapter contactAdapter;
+    private UpdatePwdPayVm updatePwdPayVm;
+    private CoinPayVm coinPayVm;
 
     public static ProjectContentFragment newInstance() {
         Bundle args = new Bundle();
@@ -78,12 +90,8 @@ public class ProjectContentFragment extends BaseFragment {
         contactAdapter.setEmptyView(R.layout.layout_loading_top, rvContact);
         rvContact.setAdapter(contactAdapter);
 
+        //基本信息设置
         projectDetailVm = ViewModelProviders.of(mActivity).get(ProjectDetailVm.class);
-    }
-
-    @Override
-    protected void initDataFromService() {
-        projectDetailVm.getDetail();
         projectDetailVm.detailLiveData.observe(this, projectDetailBean -> {
             ProjectDetailBean.DetailBean detail = projectDetailBean.getDetail();
             projectDetailVm.titleLiveData.postValue(detail.getTitle());
@@ -102,10 +110,53 @@ public class ProjectContentFragment extends BaseFragment {
             tvPrice.setText(String.format(getString(R.string.format_valuation), detail.getValuation()));
             tvDetail.setText(detail.getIntro());
             tvMaterial.setText(detail.getMaterials());
+            tvReadDetail.setVisibility(detail.getIs_pay() == 1? View.GONE: View.VISIBLE);
 
             setEmpty();
             contactAdapter.setNewData(projectDetailBean.getContact());
         });
+
+        //支付密码状态查询
+        updatePwdPayVm = ViewModelProviders.of(mActivity).get(UpdatePwdPayVm.class);
+        updatePwdPayVm.stateLiveData.observe(this, pwdPayStateBean -> {
+            int status = pwdPayStateBean.getStatus();
+            SPUtils.getInstance().put(SpConfig.PWD_PAY_STATUS, status);
+            if (status == 1){
+                goToPay();
+            }else {
+                ActivityUtils.startActivity(SetPwdPayActivity.class);
+            }
+        });
+
+        coinPayVm = ViewModelProviders.of(mActivity).get(CoinPayVm.class);
+        coinPayVm.contentPayLiveData.observe(this, coinPayResultBean -> {
+            if (coinPayResultBean.getPay_status() == 1){
+                ToastUtils.showShort(getString(R.string.buy_success));
+                projectDetailVm.getDetail();
+            }else {
+                //余额不足
+                addDialog(new CustomDialog(mActivity)
+                        .setIcon(R.drawable.icon_error)
+                        .setTip("余额不足")
+                        .setCallBack(new BaseDialog.CallBack() {
+                            @Override
+                            public void cancel() {
+
+                            }
+
+                            @Override
+                            public void ok(String s) {
+                                ActivityUtils.startActivity(RechargeActivity.class);
+                            }
+                        })
+                        .showDialog());
+            }
+        });
+    }
+
+    @Override
+    protected void initDataFromService() {
+        projectDetailVm.getDetail();
     }
 
     private void setEmpty() {
@@ -119,7 +170,7 @@ public class ProjectContentFragment extends BaseFragment {
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_read_detail:
-                new CustomDialog(mActivity)
+                addDialog(new CustomDialog(mActivity)
                         .setTip(String.format(getString(R.string.format_pay_price), projectDetailVm.detailLiveData.getValue().getDetail().getDetail_price()))
                         .setCallBack(new BaseDialog.CallBack() {
                             @Override
@@ -129,11 +180,28 @@ public class ProjectContentFragment extends BaseFragment {
 
                             @Override
                             public void ok(String s) {
-                                ActivityUtils.startActivity(PayActivity.class);
+                                int status = SPUtils.getInstance().getInt(SpConfig.PWD_PAY_STATUS, 0);
+                                if (status == 1){
+                                    goToPay();
+                                }else {
+                                    //查询是否设置支付密码
+                                    updatePwdPayVm.payPwdState();
+                                }
                             }
                         })
-                        .showDialog();
+                        .showDialog());
                 break;
         }
+    }
+
+    /**
+     * 去支付
+     */
+    private void goToPay(){
+        addDialog(new PayDialog(mActivity)
+                .setSingleCallBack((item, position) -> {
+                    coinPayVm.payProject(item);
+                })
+                .showDialog());
     }
 }

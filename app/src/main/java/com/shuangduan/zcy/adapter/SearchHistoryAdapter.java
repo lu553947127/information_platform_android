@@ -4,7 +4,7 @@ import androidx.annotation.Nullable;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.shuangduan.zcy.model.bean.SearchBean;
+import com.shuangduan.zcy.R;
 
 import java.util.List;
 
@@ -18,13 +18,13 @@ import java.util.List;
  * @chang time
  * @class describe
  */
-public class SearchAdapter extends BaseQuickAdapter<SearchBean.ListBean, BaseViewHolder> {
-    public SearchAdapter(int layoutResId, @Nullable List<SearchBean.ListBean> data) {
+public class SearchHistoryAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
+    public SearchHistoryAdapter(int layoutResId, @Nullable List<String> data) {
         super(layoutResId, data);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, SearchBean.ListBean item) {
-
+    protected void convert(BaseViewHolder helper, String item) {
+        helper.setText(R.id.tv_title, item);
     }
 }

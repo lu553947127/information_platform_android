@@ -18,10 +18,21 @@ android {
         versionName rootProject.ext.versionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
+//        ndk {
+//            //设置支持的SO库架构
+//            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86","x86_64"
+//        }
         ndk {
-            //设置支持的SO库架构
-            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86","x86_64"
+            //选择要添加的对应 cpu 类型的 .so 库。
+            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a'
+            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
         }
+
+        manifestPlaceholders = [
+                JPUSH_PKGNAME : applicationId,
+                JPUSH_APPKEY : "0d800d11134cd925a013c5da", //JPush 上注册的包名对应的 Appkey.
+                JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
+        ]
 
         resConfigs "zh-rCN", "zh-rHK", "zh-rTW", "en"
         multiDexEnabled true
@@ -106,5 +117,8 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     implementation (name: 'alipaySdk-15.6.5-20190718211159-noUtdid', ext: 'aar')
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
+    implementation files('libs\\open_sdk_r6019_lite.jar')
+    implementation 'cn.jiguang.sdk:jpush:3.3.4'  // 此处以JPush 3.3.4 版本为例。
+    api 'cn.jiguang.sdk:jcore:2.1.2'  // 此处以JCore 2.1.2 版本为例。
 
 }

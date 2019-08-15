@@ -161,7 +161,7 @@ public class UserInfoInputActivity extends BaseActivity {
                         edtProduction.getText().toString());
                 break;
             case R.id.tv_sex:
-                new SexDialog(this)
+                addDialog(new SexDialog(this)
                         .setSex(sex)
                         .setOnSexSelectListener(new SexDialog.OnSexSelectListener() {
                             @Override
@@ -175,7 +175,7 @@ public class UserInfoInputActivity extends BaseActivity {
                                 sex = 2;
                                 tvSex.setText(getString(R.string.woman));
                             }
-                        });
+                        }).showDialog());
                 break;
             case R.id.tv_business_area:
                 ActivityUtils.startActivity(BusinessAreaActivity.class);

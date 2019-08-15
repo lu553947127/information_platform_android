@@ -42,6 +42,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatTextView;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.bumptech.glide.RequestManager;
@@ -64,11 +65,26 @@ import java.util.regex.Pattern;
  *     e-mail : ningwenqiang@lanhuiplay.com
  *     time   : 2018/11/27
  *     desc   :
+ *     richText.setGlide(Glide.with(this));
+ *         richText.setOnRichClickListener(new RichText.CustomRichClickListener(){
+ *             @Override
+ *             public void onNormalUrl(String url) {
+ *                 Bundle bundle = new Bundle();
+ *                 bundle.putString(CustomConfig.TITLE, getString(R.string.app_name));
+ *                 bundle.putString(CustomConfig.URL, url);
+ *                 ActivityUtils.startActivity(bundle, WebActivity.class);
+ *             }
+ *
+ *             @Override
+ *             public void OnImg(String imgUrl) {
+ *                 startPhotoActivity(imgUrl);
+ *             }
+ *         });
  *     version: 1.0
  * </pre>
  */
 
-public class RichText extends TextView {
+public class RichText extends AppCompatTextView {
 
     private static final int TOPIC_TAG = 0;
     private static final int AT_USER = 1;
@@ -110,7 +126,7 @@ public class RichText extends TextView {
 
 //        setIncludeFontPadding(false);
 //        setLineSpacing(density * 5, 1);
-        setHighlightColor(getResources().getColor(android.R.color.transparent));
+        setHighlightColor(getResources().getColor(R.color.colorPrimary));
     }
 
     private CharSequence getClickableHtml(String html) {

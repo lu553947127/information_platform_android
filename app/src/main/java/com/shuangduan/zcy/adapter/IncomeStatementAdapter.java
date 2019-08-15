@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.shuangduan.zcy.R;
+import com.shuangduan.zcy.model.bean.HomeListBean;
 
 import java.util.List;
 
@@ -18,13 +19,13 @@ import java.util.List;
  * @chang time
  * @class describe
  */
-public class IncomeStatementAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
-    public IncomeStatementAdapter(int layoutResId, @Nullable List<String> data) {
+public class IncomeStatementAdapter extends BaseQuickAdapter<HomeListBean.ExplainBean, BaseViewHolder> {
+    public IncomeStatementAdapter(int layoutResId, @Nullable List<HomeListBean.ExplainBean> data) {
         super(layoutResId, data);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, String item) {
-        helper.setText(R.id.tv_title, item);
+    protected void convert(BaseViewHolder helper, HomeListBean.ExplainBean item) {
+        helper.setText(R.id.tv_title, item.getTitle());
     }
 }

@@ -3,4 +3,160 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/fake_status_bar"/>
+
+    <include layout="@layout/toolbar"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:src="@drawable/bg_head_people"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="63dp"
+            android:layout_marginTop="30dp"
+            android:textColor="#464372"
+            android:textSize="12sp"
+            android:text="@string/income_amount"/>
+
+        <TextView
+            android:id="@+id/tv_income_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="63dp"
+            android:layout_marginTop="55dp"
+            android:textColor="#464372"
+            android:textSize="15sp"/>
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tv_first_degree"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:drawableRight="@drawable/icon_next"
+        android:drawableLeft="@drawable/first_degree"
+        android:drawablePadding="12dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:background="@drawable/selector_bg_custom"
+        android:textColor="@color/color_666666"
+        android:textSize="14sp"
+        android:text="1°收益"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/divider_15"/>
+
+    <TextView
+        android:id="@+id/tv_second_degree"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:drawableRight="@drawable/icon_next"
+        android:drawableLeft="@drawable/second_degree"
+        android:drawablePadding="12dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:background="@drawable/selector_bg_custom"
+        android:textColor="@color/color_666666"
+        android:textSize="14sp"
+        android:text="2°收益"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/divider_15"/>
+
+    <TextView
+        android:id="@+id/tv_three_degree"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:drawableRight="@drawable/icon_next"
+        android:drawableLeft="@drawable/three_degree"
+        android:drawablePadding="12dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:background="@drawable/selector_bg_custom"
+        android:textColor="@color/color_666666"
+        android:textSize="14sp"
+        android:text="3°收益"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/divider_15"/>
+
+    <TextView
+        android:id="@+id/tv_four_degree"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:drawableRight="@drawable/icon_next"
+        android:drawableLeft="@drawable/four_degree"
+        android:drawablePadding="12dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:background="@drawable/selector_bg_custom"
+        android:textColor="@color/color_666666"
+        android:textSize="14sp"
+        android:text="4°收益"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/divider_15"/>
+
+    <TextView
+        android:id="@+id/tv_five_degree"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:drawableRight="@drawable/icon_next"
+        android:drawableLeft="@drawable/five_degree"
+        android:drawablePadding="12dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:background="@drawable/selector_bg_custom"
+        android:textColor="@color/color_666666"
+        android:textSize="14sp"
+        android:text="5°收益"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/divider_15"/>
+
+    <TextView
+        android:id="@+id/tv_six_degree"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:drawableRight="@drawable/icon_next"
+        android:drawableLeft="@drawable/six_degree"
+        android:drawablePadding="12dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:background="@drawable/selector_bg_custom"
+        android:textColor="@color/color_666666"
+        android:textSize="14sp"
+        android:text="6°收益"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/divider_15"/>
+
 </LinearLayout>

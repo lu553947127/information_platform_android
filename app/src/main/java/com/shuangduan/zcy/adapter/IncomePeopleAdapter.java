@@ -24,15 +24,19 @@ import java.util.List;
  * @class describe
  */
 public class IncomePeopleAdapter extends BaseQuickAdapter<IncomePeopleBean.ListBean, BaseViewHolder> {
-    public IncomePeopleAdapter(int layoutResId, @Nullable List<IncomePeopleBean.ListBean> data) {
+    private int type;
+
+    public IncomePeopleAdapter(int layoutResId, @Nullable List<IncomePeopleBean.ListBean> data, int type) {
         super(layoutResId, data);
+        this.type = type;
     }
 
     @Override
     protected void convert(BaseViewHolder helper, IncomePeopleBean.ListBean item) {
         helper.setText(R.id.tv_name, item.getUsername())
                 .setText(R.id.tv_time, item.getCreate_time())
-                .setText(R.id.tv_price, item.getPrice());
+                .setText(R.id.tv_price, item.getPrice() + "元")
+                .setVisible(R.id.tv_add_friends, type != 1);
         ImageView ivHead = helper.getView(R.id.iv_header);
         ImageLoader.load(mContext, new ImageConfig.Builder()
                 .url(item.getImage())

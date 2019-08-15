@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -16,8 +17,10 @@ import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.IncomePeopleAdapter;
+import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.bean.IncomePeopleBean;
+import com.shuangduan.zcy.view.people.PeopleInfoActivity;
 import com.shuangduan.zcy.vm.IncomePeopleVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
@@ -53,21 +56,25 @@ public class IncomePeopleActivity extends BaseActivity {
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
-        tvBarTitle.setText(getString(R.string.income_people));
+        int degree = getIntent().getIntExtra(CustomConfig.PEOPLE_DEGREE, CustomConfig.FIRST_DEGREE);
+        tvBarTitle.setText(String.format(getString(R.string.format_income_degree), degree));
 
         incomeReleaseVm = ViewModelProviders.of(this).get(IncomePeopleVm.class);
+        incomeReleaseVm.type = degree;
 
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
-        IncomePeopleAdapter adapter = new IncomePeopleAdapter(R.layout.item_income_people, null);
+        IncomePeopleAdapter adapter = new IncomePeopleAdapter(R.layout.item_income_people, null, degree);
         adapter.setEmptyView(R.layout.layout_loading, rv);
         rv.setAdapter(adapter);
-        adapter.setOnItemClickListener((helper, view, position) -> {
-            IncomePeopleBean.ListBean listBean = adapter.getData().get(position);
-            Bundle bundle = new Bundle();
-//            bundle.putInt(CustomConfig.PROJECT_ID, listBean.getType_id());
-//            ActivityUtils.startActivity(bundle, ProjectDetailActivity.class);
-        });
+        if (degree == 1){//只有一度人脉可以查看
+            adapter.setOnItemClickListener((helper, view, position) -> {
+                IncomePeopleBean.ListBean listBean = adapter.getData().get(position);
+                Bundle bundle = new Bundle();
+                bundle.putInt(CustomConfig.UID, listBean.getUser_id());
+                ActivityUtils.startActivity(bundle, PeopleInfoActivity.class);
+            });
+        }
 
         incomeReleaseVm.liveData.observe(this, incomePeopleBean -> {
             if (incomePeopleBean.getPage() == 1) {

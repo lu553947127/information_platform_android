@@ -137,6 +137,44 @@
 
             </androidx.recyclerview.widget.RecyclerView>
 
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:drawableLeft="@drawable/shape_home_mark"
+                    android:drawablePadding="7dp"
+                    android:paddingLeft="16dp"
+                    android:textColor="@color/colorTv"
+                    android:textSize="15sp"
+                    android:text="基建头条"/>
+
+                <TextView
+                    android:id="@+id/tv_more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="end"
+                    android:gravity="center"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:textColor="@color/color_666666"
+                    android:textSize="12sp"
+                    android:text="@string/more"/>
+
+            </FrameLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_infrastructure_headlines"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:overScrollMode="never"
+                android:background="@color/colorFFF">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
@@ -151,7 +189,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_income_statement"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:overScrollMode="never"
                 android:background="@color/colorFFF">
 

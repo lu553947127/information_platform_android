@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingTop="18dp"
+    android:paddingBottom="20dp"
+    android:paddingLeft="25dp"
+    android:paddingRight="25dp"
+    android:layout_width="260dp"
+    android:layout_height="223dp">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/colorTv"
+        android:textSize="16sp"
+        android:text="分享项目"/>
+
+    <ImageView
+        android:id="@+id/iv_wechat_friend"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title"
+        android:layout_marginTop="23dp"
+        android:src="@drawable/icon_wechat_friend"/>
+
+    <ImageView
+        android:id="@+id/iv_wechat_circle"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_wechat_friend"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/icon_friend_circle"/>
+
+    <ImageView
+        android:id="@+id/iv_qq_friend"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_wechat_circle"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/icon_qq_friend"/>
+
+    <ImageView
+        android:id="@+id/iv_qq_stone"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_qq_friend"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/icon_qq_stone"/>
+
+    <TextView
+        android:id="@+id/tv_wechat_friend"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:gravity="center_vertical"
+        app:layout_constraintTop_toTopOf="@+id/iv_wechat_friend"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_wechat_friend"
+        app:layout_constraintLeft_toRightOf="@+id/iv_wechat_friend"
+        android:paddingLeft="11dp"
+        android:textColor="@color/colorTv"
+        android:textSize="14sp"
+        android:text="@string/wechat_friend"/>
+
+    <TextView
+        android:id="@+id/tv_wechat_circle"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:gravity="center_vertical"
+        app:layout_constraintTop_toTopOf="@+id/iv_wechat_circle"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_wechat_circle"
+        app:layout_constraintLeft_toRightOf="@+id/iv_wechat_circle"
+        android:paddingLeft="11dp"
+        android:textColor="@color/colorTv"
+        android:textSize="14sp"
+        android:text="@string/friend_circle"/>
+
+    <TextView
+        android:id="@+id/tv_qq_friend"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:gravity="center_vertical"
+        app:layout_constraintTop_toTopOf="@+id/iv_qq_friend"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_qq_friend"
+        app:layout_constraintLeft_toRightOf="@+id/iv_qq_friend"
+        android:paddingLeft="11dp"
+        android:textColor="@color/colorTv"
+        android:textSize="14sp"
+        android:text="@string/qq_friend"/>
+
+    <TextView
+        android:id="@+id/tv_qq_stone"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:gravity="center_vertical"
+        app:layout_constraintTop_toTopOf="@+id/iv_qq_stone"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_qq_stone"
+        app:layout_constraintLeft_toRightOf="@+id/iv_qq_stone"
+        android:paddingLeft="11dp"
+        android:textColor="@color/colorTv"
+        android:textSize="14sp"
+        android:text="@string/qq_stone"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

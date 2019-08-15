@@ -50,6 +50,17 @@ public class CustomConfig {
     public static final String ORDER_SN = "order_sn";
     public static final String PAY_STYLE = "pay_style";
     public static final String RECHARGE_ID = "recharge_id";
+    public static final String UID = "uid";
+    public static final String KEYWORD = "keyword";
+    public static final String HEADLINES_ID = "headlines_id";
+
+    public static final String PEOPLE_DEGREE = "people_degree";
+    public static final int FIRST_DEGREE = 1;//1°人脉收益
+    public static final int SECOND_DEGREE = 2;//2°人脉收益
+    public static final int THREE_DEGREE = 3;//3°人脉收益
+    public static final int FOUR_DEGREE = 4;//4°人脉收益
+    public static final int FIVE_DEGREE = 5;//5°人脉收益
+    public static final int SIX_DEGREE = 6;//6°人脉收益
 
     public static final String SMS_TYPE = "sms_type";
     public static final int SMS_REGISTER = 1;//注册

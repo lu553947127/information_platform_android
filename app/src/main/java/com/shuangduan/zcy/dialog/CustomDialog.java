@@ -2,6 +2,7 @@ package com.shuangduan.zcy.dialog;
 
 import android.app.Activity;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -25,8 +26,11 @@ import butterknife.OnClick;
 public class CustomDialog extends BaseDialog {
     @BindView(R.id.tv_tip)
     TextView tvTip;
+    @BindView(R.id.iv_icon)
+    ImageView ivIcon;
 
     String tip = "";
+    int iconRes = 0;
 
     public CustomDialog(@NonNull Activity activity) {
         super(activity);
@@ -43,6 +47,10 @@ public class CustomDialog extends BaseDialog {
         setCancelOutside(true);
         DialogUtils.enterCustomAnim(this);
         tvTip.setText(tip);
+        if (iconRes != 0){
+            ivIcon.setImageResource(iconRes);
+            ivIcon.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -50,8 +58,13 @@ public class CustomDialog extends BaseDialog {
 
     }
 
-    public BaseDialog setTip(String tip){
+    public CustomDialog setTip(String tip){
         this.tip = tip;
+        return this;
+    }
+
+    public CustomDialog setIcon(int icon){
+        this.iconRes = icon;
         return this;
     }
 

@@ -9,6 +9,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.shuangduan.zcy.R;
+import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 
 import butterknife.BindView;
@@ -61,7 +62,8 @@ public class IncomeClassifyActivity extends BaseActivity {
                 ActivityUtils.startActivity(IncomeProductRightsActivity.class);
                 break;
             case R.id.tv_income_people:
-                ActivityUtils.startActivity(IncomePeopleActivity.class);
+                bundle.putInt(CustomConfig.PEOPLE_DEGREE, CustomConfig.SIX_DEGREE);
+                ActivityUtils.startActivity(bundle, IncomePeopleActivity.class);
                 break;
         }
     }

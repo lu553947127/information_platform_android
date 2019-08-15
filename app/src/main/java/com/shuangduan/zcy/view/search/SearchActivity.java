@@ -1,34 +1,33 @@
-package com.shuangduan.zcy.view;
+package com.shuangduan.zcy.view.search;
 
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.annotation.WorkerThread;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
-import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.android.flexbox.FlexboxLayout;
 import com.shuangduan.zcy.R;
-import com.shuangduan.zcy.adapter.SearchAdapter;
+import com.shuangduan.zcy.adapter.SearchHistoryAdapter;
+import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.PageState;
+import com.shuangduan.zcy.model.event.SearchHistoryEvent;
 import com.shuangduan.zcy.vm.SearchVm;
 
+import org.greenrobot.eventbus.Subscribe;
+
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -52,10 +51,10 @@ public class SearchActivity extends BaseActivity {
     TextView tvPositive;
     @BindView(R.id.fl_hot)
     FlexboxLayout flHot;
-    @BindView(R.id.rv_company)
-    RecyclerView rvCompany;
+    @BindView(R.id.rv)
+    RecyclerView rv;
     private SearchVm searchVm;
-    private SearchAdapter searchAdapter;
+    private SearchHistoryAdapter searchAdapter;
 
     @Override
     protected int initLayoutRes() {
@@ -72,15 +71,20 @@ public class SearchActivity extends BaseActivity {
             for (String s : list) {
                 TextView itemHot = (TextView) LayoutInflater.from(this).inflate(R.layout.item_fl_search, flHot, false);
                 itemHot.setText(s);
+                itemHot.setOnClickListener(l -> {
+                    Bundle bundle = new Bundle();
+                    bundle.putString(CustomConfig.KEYWORD, s);
+                    ActivityUtils.startActivity(bundle, SearchResultActivity.class);
+                });
                 flHot.addView(itemHot);
             }
         });
 
-        rvCompany.setLayoutManager(new LinearLayoutManager(this));
-        searchAdapter = new SearchAdapter(R.layout.item_search, null);
-        rvCompany.setAdapter(searchAdapter);
-        searchVm.searchLiveData.observe(this, searchBeans -> {
-
+        rv.setLayoutManager(new LinearLayoutManager(this));
+        searchAdapter = new SearchHistoryAdapter(R.layout.item_search_history, null);
+        rv.setAdapter(searchAdapter);
+        searchVm.historyLiveData.observe(this, history -> {
+            searchAdapter.setNewData(history);
         });
         searchVm.pageStateLiveData.observe(this, s -> {
             switch (s){
@@ -95,6 +99,7 @@ public class SearchActivity extends BaseActivity {
         });
 
         searchVm.getHot();//获取热点搜索
+        searchVm.getHistory();
     }
 
     @OnClick({R.id.iv_bar_back, R.id.tv_positive, R.id.iv_del})
@@ -108,10 +113,18 @@ public class SearchActivity extends BaseActivity {
                     ToastUtils.showShort(getString(R.string.hint_keyword));
                     return;
                 }
-                searchVm.search(edtKeyword.getText().toString());
+                Bundle bundle = new Bundle();
+                bundle.putString(CustomConfig.KEYWORD, edtKeyword.getText().toString());
+                ActivityUtils.startActivity(bundle, SearchResultActivity.class);
                 break;
             case R.id.iv_del:
+                searchVm.delHistory();
                 break;
         }
+    }
+
+    @Subscribe()
+    public void historyChange(SearchHistoryEvent event){
+        searchVm.getHistory();
     }
 }

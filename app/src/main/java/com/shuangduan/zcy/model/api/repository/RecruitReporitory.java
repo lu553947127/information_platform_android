@@ -25,10 +25,10 @@ public class RecruitReporitory extends BaseRepository {
     }
 
     public void recruitCollect(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int userId, int id){
-        request(apiService.recruitCollect(userId, id)).setData(liveData).setPageState(pageStateLiveData).send();
+        request(apiService.recruitCollect(userId, id)).setData(liveData).send();
     }
 
     public void recruitCancelCollect(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int userId, int id){
-        request(apiService.recruitCancelCollect(userId, id)).setData(liveData).setPageState(pageStateLiveData).send();
+        request(apiService.recruitCancelCollect(userId, id)).setData(liveData).send();
     }
 }

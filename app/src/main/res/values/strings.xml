@@ -145,6 +145,16 @@
     <string name="hint_pwd_pay">请设置支付密码</string>
     <string name="pwd_pay_not_set">还没有设置支付密码</string>
     <string name="pwd_pay_done">支付密码已设置</string>
+    <string name="add_friends">加好友</string>
+    <string name="added">已添加</string>
+    <string name="income_amount">收益金额</string>
+    <string name="income_record">收益记录</string>
+    <string name="buy_success">购买成功 </string>
+    <string name="headlines">基建头条 </string>
+    <string name="wechat_friend">微信好友 </string>
+    <string name="friend_circle">朋友圈 </string>
+    <string name="qq_friend">QQ好友 </string>
+    <string name="qq_stone">QQ空间 </string>
 
     <string name="subscribe_message">订阅信息</string>
     <string name="model_list">列表模式</string>
@@ -206,6 +216,8 @@
     <string name="hint_error_correct">请输入纠错的具体内容</string>
     <string name="select_types_correct">请选择具体的类别</string>
     <string name="order">订单</string>
+    <string name="more">更多</string>
+    <string name="head_detail">头条详情</string>
 
     <string name="release_msg">发布信息</string>
     <string name="release">发布</string>
@@ -273,6 +285,7 @@
     <string name="project_msg">工程信息</string>
     <string name="recruit_msg">招采信息</string>
     <string name="supplier_msg">供应商信息</string>
+    <string name="locus_num">轨迹数量</string>
 
     <string name="format_version_name">当前版本号：v%1$s</string>
     <string name="format_get_verification_code_again">重新获取 (%1$ds)</string>
@@ -313,6 +326,7 @@
     <string name="format_amount_return">已返金额: %1$s元</string>
     <string name="format_price">价格: %1$s元</string>
     <string name="format_pay">请支付: %1$s元！</string>
+    <string name="format_income_degree">%1$d°人脉收益</string>
 
     <string name="please_select_time">请选择时间</string>
     <string name="year">年</string>

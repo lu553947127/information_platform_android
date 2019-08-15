@@ -59,25 +59,25 @@ public abstract class LocusAdapter extends BaseQuickAdapter<TrackBean.ListBean, 
                 .addOnClickListener(R.id.iv_pic_third)
                 .addOnClickListener(R.id.tv_more);
 
+        TextView tvContent = helper.getView(R.id.tv_content);
+        SpanUtils spanUtils = SpanUtils.with(tvContent);
+        spanUtils.append(item.getRemarks());
+        if (!TextUtils.isEmpty(item.getName())){
+            spanUtils.append("，")
+                    .append(mContext.getString(R.string.visitor))
+                    .append(":")
+                    .append(item.getName());
+        }
+        if (!TextUtils.isEmpty(item.getTel())){
+            spanUtils
+                    .append("，")
+                    .append(mContext.getString(R.string.mobile))
+                    .append(":")
+                    .append(item.getTel());
+        }
         if (item.getIs_pay() == 1){
-            helper.setText(R.id.tv_content, item.getRemarks());
+            spanUtils.create();
         }else {
-            TextView tvContent = helper.getView(R.id.tv_content);
-            SpanUtils spanUtils = SpanUtils.with(tvContent);
-            spanUtils.append(item.getRemarks());
-            if (!TextUtils.isEmpty(item.getName())){
-                spanUtils.append("，")
-                        .append(mContext.getString(R.string.visitor))
-                        .append(":")
-                        .append(item.getName());
-            }
-            if (!TextUtils.isEmpty(item.getTel())){
-                spanUtils
-                        .append("，")
-                        .append(mContext.getString(R.string.mobile))
-                        .append(":")
-                        .append(item.getTel());
-            }
             spanUtils.appendSpace(2)
                     .append(mContext.getString(R.string.read_detail))
                     .setFontSize(ConvertUtils.sp2px(13))

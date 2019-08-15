@@ -25,6 +25,7 @@ public class RecruitDetailVm extends BaseViewModel {
     public MutableLiveData<Integer> collectionLiveData;
     public MutableLiveData collectLiveData;
     public MutableLiveData collectCancelLiveData;
+    public int id;
 
     public RecruitDetailVm() {
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
@@ -35,11 +36,11 @@ public class RecruitDetailVm extends BaseViewModel {
         collectCancelLiveData = new MutableLiveData<>();
     }
 
-    public void getDetail(int id){
+    public void getDetail(){
         new RecruitReporitory().recruitDetail(detailLiveData, pageStateLiveData, userId, id);
     }
 
-    public void collect(int id){
+    public void collect(){
         if (collectionLiveData != null && collectionLiveData.getValue() == 1){
             //取消收藏
             new RecruitReporitory().recruitCancelCollect(collectCancelLiveData, pageStateLiveData, userId, id);

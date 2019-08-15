@@ -46,8 +46,8 @@ public class UserRepository extends BaseRepository {
     /**
      * 个人信息
      */
-    public void information(MutableLiveData<UserInfoBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id){
-        request(apiService.information(user_id)).setData(liveData).setPageState(pageStateLiveData).send();
+    public void information(MutableLiveData<UserInfoBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, int uid){
+        request(apiService.information(user_id, uid)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
     /**

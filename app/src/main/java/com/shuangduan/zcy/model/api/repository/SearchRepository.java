@@ -2,8 +2,9 @@ package com.shuangduan.zcy.model.api.repository;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.shuangduan.zcy.model.bean.ProjectInfoBean;
 import com.shuangduan.zcy.model.bean.ProjectSearchBean;
-import com.shuangduan.zcy.model.bean.SearchBean;
+import com.shuangduan.zcy.model.bean.RecruitBean;
 
 import java.util.List;
 
@@ -19,8 +20,12 @@ import java.util.List;
  */
 public class SearchRepository extends BaseRepository {
 
-    public void search(MutableLiveData<SearchBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, String keyWord){
-        request(apiService.keywordList(user_id, keyWord)).setData(liveData).setPageState(pageStateLiveData).send();
+    public void searchProject(MutableLiveData<ProjectInfoBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, String keyWord, int page){
+        request(apiService.searchProject(user_id, keyWord, page)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    public void searchRecruit(MutableLiveData<RecruitBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, String keyWord, int page){
+        request(apiService.searchRecruit(user_id, keyWord, page)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
     public void searchHot(MutableLiveData<List<String>> liveData, int user_id){

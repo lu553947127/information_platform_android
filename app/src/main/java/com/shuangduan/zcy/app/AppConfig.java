@@ -42,6 +42,8 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.io.File;
 
+import cn.jpush.android.api.JPushInterface;
+
 /**
  * <pre>
  *     author : 宁文强
@@ -90,7 +92,7 @@ public class AppConfig {
             initCrash(context);
         }
 
-//        initJPush(context);
+        initJPush(context);
     }
 
     /**
@@ -151,9 +153,9 @@ public class AppConfig {
     /**
      * 极光推送初始化配置
      */
-    /*private static void initJPush(Context context){
+    private static void initJPush(Context context){
         JPushInterface.setDebugMode(BuildConfig.IS_DEBUG);
         JPushInterface.init(context);
-    }*/
+    }
 
 }

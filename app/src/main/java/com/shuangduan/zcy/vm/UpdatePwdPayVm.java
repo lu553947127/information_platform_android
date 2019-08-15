@@ -1,7 +1,5 @@
 package com.shuangduan.zcy.vm;
 
-import android.annotation.SuppressLint;
-
 import androidx.lifecycle.MutableLiveData;
 
 import com.blankj.utilcode.util.SPUtils;
@@ -9,12 +7,6 @@ import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseViewModel;
 import com.shuangduan.zcy.model.api.repository.UserRepository;
 import com.shuangduan.zcy.model.bean.PwdPayStateBean;
-
-import java.util.concurrent.TimeUnit;
-
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * @author 宁文强 QQ:858777523
@@ -32,7 +24,8 @@ public class UpdatePwdPayVm extends BaseViewModel {
     public MutableLiveData setPwdLiveData;
     public MutableLiveData forgetPwdLiveData;
     public MutableLiveData<String> pageStateLiveData;
-    public MutableLiveData<PwdPayStateBean> setStateLiveData;
+    public MutableLiveData<PwdPayStateBean> stateLiveData;
+    public int status;
 
     public UpdatePwdPayVm() {
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
@@ -40,7 +33,7 @@ public class UpdatePwdPayVm extends BaseViewModel {
         forgetPwdLiveData = new MutableLiveData();
         setPwdLiveData = new MutableLiveData();
         pageStateLiveData = new MutableLiveData<>();
-        setStateLiveData = new MutableLiveData<>();
+        stateLiveData = new MutableLiveData<>();
     }
 
     public void updatePwd(String oldPwd, String newPwd){
@@ -56,7 +49,7 @@ public class UpdatePwdPayVm extends BaseViewModel {
     }
 
     public void payPwdState(){
-        new UserRepository().pwdPayState(setStateLiveData, pageStateLiveData, userId);
+        new UserRepository().pwdPayState(stateLiveData, pageStateLiveData, userId);
     }
 
 }

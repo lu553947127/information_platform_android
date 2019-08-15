@@ -6,19 +6,16 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
-//import com.tencent.connect.share.QQShare;
-//import com.tencent.connect.share.QzoneShare;
-//import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
-//import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
-//import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
-//import com.tencent.tauth.IUiListener;
-//import com.tencent.tauth.Tencent;
-
+import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.AppConfig;
 import com.shuangduan.zcy.wxapi.WXUtils;
+import com.tencent.connect.share.QQShare;
+import com.tencent.connect.share.QzoneShare;
 import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
+import com.tencent.tauth.IUiListener;
+import com.tencent.tauth.Tencent;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -63,30 +60,30 @@ public class ShareUtils {
         AppConfig.iwxapi.sendReq(req);
     }
 
-//    public static void shareQQ(Activity context, Tencent tencent, IUiListener listener, String url, String title, String des, String img){
-//        Bundle params = new Bundle();
-//        params.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_DEFAULT);
-//        params.putString(QQShare.SHARE_TO_QQ_TITLE, title);
-//        params.putString(QQShare.SHARE_TO_QQ_SUMMARY,  des);
-//        params.putString(QQShare.SHARE_TO_QQ_TARGET_URL,  url);
-//        params.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, img);
-//        params.putString(QQShare.SHARE_TO_QQ_APP_NAME,  context.getString(R.string.app_name));
-//
-//        tencent.shareToQQ(context, params , listener);
-//    }
+    public static void shareQQ(Activity context, Tencent tencent, IUiListener listener, String url, String title, String des, String img){
+        Bundle params = new Bundle();
+        params.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_DEFAULT);
+        params.putString(QQShare.SHARE_TO_QQ_TITLE, title);
+        params.putString(QQShare.SHARE_TO_QQ_SUMMARY,  des);
+        params.putString(QQShare.SHARE_TO_QQ_TARGET_URL,  url);
+        params.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, img);
+        params.putString(QQShare.SHARE_TO_QQ_APP_NAME,  context.getString(R.string.app_name));
 
-//    public static void shareQQStone(Activity context, Tencent tencent, IUiListener listener, String url, String title, String des, String img){
-//        ArrayList<String> arrayList = new ArrayList<>();
-//        arrayList.add(img);
-//        Bundle params = new Bundle();
-//        params.putInt(QzoneShare.SHARE_TO_QZONE_KEY_TYPE,QzoneShare.SHARE_TO_QZONE_TYPE_IMAGE_TEXT );
-//        params.putString(QzoneShare.SHARE_TO_QQ_TITLE, title);//必填
-//        params.putString(QzoneShare.SHARE_TO_QQ_SUMMARY, des);//选填
-//        params.putString(QzoneShare.SHARE_TO_QQ_TARGET_URL, url);//必填
-//        params.putStringArrayList(QzoneShare.SHARE_TO_QQ_IMAGE_URL, arrayList);
-//
-//        tencent.shareToQzone(context, params , listener);
-//    }
+        tencent.shareToQQ(context, params , listener);
+    }
+
+    public static void shareQQStone(Activity context, Tencent tencent, IUiListener listener, String url, String title, String des, String img){
+        ArrayList<String> arrayList = new ArrayList<>();
+        arrayList.add(img);
+        Bundle params = new Bundle();
+        params.putInt(QzoneShare.SHARE_TO_QZONE_KEY_TYPE,QzoneShare.SHARE_TO_QZONE_TYPE_IMAGE_TEXT );
+        params.putString(QzoneShare.SHARE_TO_QQ_TITLE, title);//必填
+        params.putString(QzoneShare.SHARE_TO_QQ_SUMMARY, des);//选填
+        params.putString(QzoneShare.SHARE_TO_QQ_TARGET_URL, url);//必填
+        params.putStringArrayList(QzoneShare.SHARE_TO_QQ_IMAGE_URL, arrayList);
+
+        tencent.shareToQzone(context, params , listener);
+    }
 
     private static String buildTransaction(final String type) {
         return (type == null) ? String.valueOf(System.currentTimeMillis()) : type + System.currentTimeMillis();

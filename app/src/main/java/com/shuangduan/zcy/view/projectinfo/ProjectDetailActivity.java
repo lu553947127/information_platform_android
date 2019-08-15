@@ -1,5 +1,6 @@
 package com.shuangduan.zcy.view.projectinfo;
 
+import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.view.View;
@@ -35,10 +36,19 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ViewPagerAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
+import com.shuangduan.zcy.dialog.ShareDialog;
+import com.shuangduan.zcy.listener.BaseUiListener;
+import com.shuangduan.zcy.model.api.PageState;
+import com.shuangduan.zcy.utils.ShareUtils;
+import com.shuangduan.zcy.view.mine.RecommendFriendsActivity;
 import com.shuangduan.zcy.view.release.ReleaseListActivity;
+import com.shuangduan.zcy.vm.CoinPayVm;
 import com.shuangduan.zcy.vm.PermissionVm;
 import com.shuangduan.zcy.vm.ProjectDetailVm;
+import com.shuangduan.zcy.vm.ShareVm;
+import com.shuangduan.zcy.vm.UpdatePwdPayVm;
 import com.tbruyelle.rxpermissions2.RxPermissions;
+import com.tencent.tauth.Tencent;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -93,6 +103,9 @@ public class ProjectDetailActivity extends BaseActivity {
     AMap aMap = null;
     private PermissionVm permissionVm;
     private ProjectDetailVm projectDetailVm;
+    private Tencent mTencent;
+    private BaseUiListener qqListener;
+    private ShareVm shareVm;
 
     @Override
     protected int initLayoutRes() {
@@ -186,6 +199,80 @@ public class ProjectDetailActivity extends BaseActivity {
             vp.setCurrentItem(position);
             tabLayout.getTabAt(position).select();
         }
+
+        //紫金币支付，预存工程id
+        CoinPayVm coinPayVm = ViewModelProviders.of(this).get(CoinPayVm.class);
+        coinPayVm.projectId = getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0);
+        coinPayVm.pageStateLiveData.observe(this, s -> {
+            switch (s){
+                case PageState.PAGE_LOADING:
+                    showLoading();
+                    break;
+                default:
+                    hideLoading();
+                    break;
+            }
+        });
+        //支付密码状态查询
+        UpdatePwdPayVm updatePwdPayVm = ViewModelProviders.of(this).get(UpdatePwdPayVm.class);
+        updatePwdPayVm.pageStateLiveData.observe(this, s -> {
+            switch (s){
+                case PageState.PAGE_LOADING:
+                    showLoading();
+                    break;
+                default:
+                    hideLoading();
+                    break;
+            }
+        });
+
+        initShare();
+    }
+
+    /**
+     * 分享
+     */
+    private void initShare(){
+        // 其中APP_ID是分配给第三方应用的appid，类型为String。
+        mTencent = Tencent.createInstance(ShareUtils.app_id_qq, getApplicationContext());
+
+        shareVm = ViewModelProviders.of(this).get(ShareVm.class);
+        shareVm.shareLiveData.observe(this, shareBean -> {
+            final String url = getString(R.string.share_url);
+            final String title = "紫菜云分享";
+            final String des = "租赁共享高端平台";
+
+            qqListener = new BaseUiListener();
+            addDialog(new ShareDialog(this)
+                    .setOnShareListener(new ShareDialog.OnShareListener() {
+                        @Override
+                        public void qq() {
+                            ShareUtils.shareQQ(ProjectDetailActivity.this, mTencent, qqListener, url, title, des, "http://information-api.oss-cn-qingdao.aliyuncs.com/5adb0e33d685223bfe79a51fee17431f.png");
+                        }
+
+                        @Override
+                        public void qqStone() {
+                            ShareUtils.shareQQStone(ProjectDetailActivity.this, mTencent, qqListener, url, title, des, "http://information-api.oss-cn-qingdao.aliyuncs.com/5adb0e33d685223bfe79a51fee17431f.png");
+                        }
+
+                        @Override
+                        public void weChat() {
+                            ShareUtils.shareWeChat(ProjectDetailActivity.this, ShareUtils.FRIEND, url, title, des, shareBean.getBitmap());
+                        }
+
+                        @Override
+                        public void friendCircle() {
+                            ShareUtils.shareWeChat(ProjectDetailActivity.this, ShareUtils.FRIEND_CIRCLE, url, title, des, shareBean.getBitmap());
+                        }
+                    })
+                    .showDialog());
+        });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Tencent.onActivityResultData(requestCode, resultCode, data, qqListener);
     }
 
     @OnClick({R.id.iv_bar_back, R.id.iv_bar_right, R.id.fl_collect, R.id.fl_error, R.id.fl_subscription, R.id.ll_chat, R.id.fl_release})
@@ -196,7 +283,7 @@ public class ProjectDetailActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.iv_bar_right:
-
+                shareVm.getBitmap("http:\\/\\/information-api.oss-cn-qingdao.aliyuncs.com\\/5adb0e33d685223bfe79a51fee17431f.png");
                 break;
             case R.id.fl_collect:
                 projectDetailVm.collect();

@@ -9,8 +9,10 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
+import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.vm.UpdatePwdPayVm;
@@ -46,6 +48,10 @@ public class PwdPayActivity extends BaseActivity {
         tvBarTitle.setText(getString(R.string.pwd_pay));
 
         updatePwdPayVm = ViewModelProviders.of(this).get(UpdatePwdPayVm.class);
+        updatePwdPayVm.stateLiveData.observe(this, pwdPayStateBean -> {
+            SPUtils.getInstance().getInt(SpConfig.PWD_PAY_STATUS, pwdPayStateBean.getStatus());
+            updatePwdPayVm.status = pwdPayStateBean.getStatus();
+        });
         updatePwdPayVm.pageStateLiveData.observe(this, s -> {
             switch (s){
                 case PageState.PAGE_LOADING:
@@ -56,7 +62,12 @@ public class PwdPayActivity extends BaseActivity {
                     break;
             }
         });
-        updatePwdPayVm.payPwdState();
+        int status = SPUtils.getInstance().getInt(SpConfig.PWD_PAY_STATUS, 0);
+        if (status == 1){
+            updatePwdPayVm.status = status;
+        }else {
+            updatePwdPayVm.payPwdState();
+        }
     }
 
     @OnClick({R.id.iv_bar_back, R.id.tv_pwd_set, R.id.tv_pwd_update, R.id.tv_pwd_forget})
@@ -66,21 +77,21 @@ public class PwdPayActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_pwd_set:
-                if (updatePwdPayVm.setStateLiveData.getValue().getStatus() == 1){
+                if (updatePwdPayVm.status == 1){
                     ToastUtils.showShort(getString(R.string.pwd_pay_done));
                     return;
                 }
                 ActivityUtils.startActivity(SetPwdPayActivity.class);
                 break;
             case R.id.tv_pwd_update:
-                if (updatePwdPayVm.setStateLiveData.getValue().getStatus() != 1){
+                if (updatePwdPayVm.status != 1){
                     ToastUtils.showShort(getString(R.string.pwd_pay_not_set));
                     return;
                 }
                 ActivityUtils.startActivity(UpdatePwdPayActivity.class);
                 break;
             case R.id.tv_pwd_forget:
-                if (updatePwdPayVm.setStateLiveData.getValue().getStatus() != 1){
+                if (updatePwdPayVm.status != 1){
                     ToastUtils.showShort(getString(R.string.pwd_pay_not_set));
                     return;
                 }

@@ -1,5 +1,6 @@
 package com.shuangduan.zcy.view.recruit;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,9 +20,15 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.RecruitAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
+import com.shuangduan.zcy.dialog.ShareDialog;
+import com.shuangduan.zcy.listener.BaseUiListener;
 import com.shuangduan.zcy.model.bean.RecruitBean;
+import com.shuangduan.zcy.utils.ShareUtils;
+import com.shuangduan.zcy.view.mine.RecommendFriendsActivity;
 import com.shuangduan.zcy.vm.RecruitVm;
+import com.shuangduan.zcy.vm.ShareVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
+import com.tencent.tauth.Tencent;
 
 import butterknife.BindView;
 import butterknife.OnClick;

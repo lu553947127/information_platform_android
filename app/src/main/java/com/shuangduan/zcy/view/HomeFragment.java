@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,17 +14,27 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ClassifyAdapter;
+import com.shuangduan.zcy.adapter.HomeHeadlinesAdapter;
 import com.shuangduan.zcy.adapter.IncomeStatementAdapter;
+import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseFragment;
+import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.ClassifyBean;
+import com.shuangduan.zcy.model.bean.HomeBannerBean;
+import com.shuangduan.zcy.model.bean.HomeListBean;
+import com.shuangduan.zcy.model.bean.HomePushBean;
 import com.shuangduan.zcy.utils.BarUtils;
 import com.shuangduan.zcy.utils.image.GlideImageLoader;
+import com.shuangduan.zcy.view.headlines.HeadlinesActivity;
+import com.shuangduan.zcy.view.headlines.HeadlinesDetailActivity;
 import com.shuangduan.zcy.view.material.MaterialActivity;
 import com.shuangduan.zcy.view.income.MineIncomeActivity;
 import com.shuangduan.zcy.view.projectinfo.ProjectInfoActivity;
 import com.shuangduan.zcy.view.recruit.RecruitActivity;
 import com.shuangduan.zcy.view.release.ReleaseListActivity;
+import com.shuangduan.zcy.view.search.SearchActivity;
 import com.shuangduan.zcy.view.supplier.SupplierActivity;
+import com.shuangduan.zcy.vm.HomeVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 import com.shuangduan.zcy.weight.MarqueeListView;
 import com.youth.banner.Banner;
@@ -60,12 +71,16 @@ public class HomeFragment extends BaseFragment {
     RecyclerView rvClassify;
     @BindView(R.id.rv_income_statement)
     RecyclerView rvIncomeStatement;
+    @BindView(R.id.rv_infrastructure_headlines)
+    RecyclerView rvHeadlines;
     @BindView(R.id.banner)
     Banner banner;
     @BindView(R.id.marquee)
     MarqueeListView marqueeView;
     @BindView(R.id.tv_subscribe_state)
     TextView tvSubscribeState;
+    IncomeStatementAdapter incomeStatementAdapter;
+    HomeHeadlinesAdapter headlinesAdapter;
 
     public static HomeFragment newInstance() {
 
@@ -116,33 +131,72 @@ public class HomeFragment extends BaseFragment {
             }
         });
 
-        List<String> list2 = new ArrayList<>();
-        for (int i = 0; i < 16; i++) {
-            list2.add("各种各样的收益说明");
-        }
-        rvIncomeStatement.setLayoutManager(new LinearLayoutManager(mContext));
-        rvIncomeStatement.addItemDecoration(new com.shuangduan.zcy.weight.DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
-        IncomeStatementAdapter incomeStatementAdapter = new IncomeStatementAdapter(R.layout.item_income_statement, list2);
-        rvIncomeStatement.setAdapter(incomeStatementAdapter);
-        incomeStatementAdapter.setOnItemClickListener((adapter, view, position) -> {
-
+        HomeVm homeVm = ViewModelProviders.of(this).get(HomeVm.class);
+        homeVm.pushLiveData.observe(this, homePushBeans -> {
+            List<String> marquee = new ArrayList<>();
+            for (HomePushBean bean: homePushBeans) {
+                marquee.add(bean.getTitle());
+            }
+            marqueeView.setContent(marquee);
+            if (homePushBeans != null && homePushBeans.size() > 0){
+                tvSubscribeState.setText(homePushBeans.get(0).getWarrant_status() == 1?"已认购":"未认购");
+            }
         });
+        homeVm.bannerLiveData.observe(this, homeBannerBeans -> {
+            ArrayList<String> pics = new ArrayList<>();
+            ArrayList<String> titles = new ArrayList<>();
+            for (HomeBannerBean bean : homeBannerBeans) {
+                pics.add(bean.getImages());
+                titles.add("");
+            }
+            initBanner(pics, titles);
+        });
+        homeVm.listLiveData.observe(this, homeListBean -> {
+            if (incomeStatementAdapter == null){
+                rvIncomeStatement.setLayoutManager(new LinearLayoutManager(mContext));
+                rvIncomeStatement.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
+                incomeStatementAdapter = new IncomeStatementAdapter(R.layout.item_income_statement, homeListBean.getExplain());
+                rvIncomeStatement.setAdapter(incomeStatementAdapter);
+                incomeStatementAdapter.setOnItemClickListener((adapter, view, position) -> {
 
-        initBanner();
+                });
+            }else {
+                incomeStatementAdapter.setNewData(homeListBean.getExplain());
+            }
 
-        List<String> marquee = new ArrayList<>();
-        marquee.add("让我们荡起双桨");
-        marquee.add("让小船推开波浪");
-        marquee.add("从前有座山，山上有座庙，庙里有个老和尚讲故事，讲的是什么？");
-        marquee.add("花儿为什么这样红");
-        marquee.add("我等的花都谢了");
-        marquee.add("老铁666");
+            if (headlinesAdapter == null){
+                rvHeadlines.setLayoutManager(new LinearLayoutManager(mContext));
+                rvHeadlines.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
+                headlinesAdapter = new HomeHeadlinesAdapter(R.layout.item_headlines, homeListBean.getHeadlines());
+                rvHeadlines.setAdapter(headlinesAdapter);
+                headlinesAdapter.setOnItemClickListener((adapter, view, position) -> {
+                    HomeListBean.HeadlinesBean headlinesBean = headlinesAdapter.getData().get(position);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(CustomConfig.HEADLINES_ID, headlinesBean.getId());
+                    ActivityUtils.startActivity(bundle, HeadlinesDetailActivity.class);
+                });
+            }else {
+                headlinesAdapter.setNewData(homeListBean.getHeadlines());
+            }
+        });
+        homeVm.pageStateLiveData.observe(this, s -> {
+            switch (s){
+                case PageState.PAGE_LOADING:
+                    showLoading();
+                    break;
+                default:
+                    hideLoading();
+                    break;
+            }
+        });
 
         //添加走马灯变化监听
         marqueeView.setLocationListener(new MarqueeListView.LocationListener() {
             @Override
             public void start(int position) {
-                tvSubscribeState.setText(position%2 == 0?"已认购":"未认购");
+                if (homeVm.pushLiveData.getValue() != null && homeVm.pushLiveData.getValue().size() > 0){
+                    tvSubscribeState.setText(homeVm.pushLiveData.getValue().get(position).getWarrant_status() == 1?"已认购":"未认购");
+                }
             }
 
             @Override
@@ -150,7 +204,7 @@ public class HomeFragment extends BaseFragment {
 
             }
         });
-        marqueeView.setContent(marquee);
+        homeVm.getInit();
     }
 
     @Override
@@ -158,11 +212,14 @@ public class HomeFragment extends BaseFragment {
 
     }
 
-    @OnClick({R.id.tv_bar_title})
+    @OnClick({R.id.tv_bar_title, R.id.tv_more})
     void onClick(View view){
         switch (view.getId()){
             case R.id.tv_bar_title:
                 ActivityUtils.startActivity(SearchActivity.class);
+                break;
+            case R.id.tv_more:
+                ActivityUtils.startActivity(HeadlinesActivity.class);
                 break;
         }
     }
@@ -193,12 +250,7 @@ public class HomeFragment extends BaseFragment {
         return list;
     }
 
-    private void initBanner(){
-        ArrayList<Integer> list = new ArrayList<>();
-        list.add(R.drawable.shape_bg_mine);
-        ArrayList<String> titles = new ArrayList<>();
-        titles.add("");
-
+    private void initBanner(ArrayList<String> list, ArrayList<String> titles){
         //设置banner样式
         banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE);
         //设置图片加载器

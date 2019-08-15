@@ -47,6 +47,7 @@ public class UserInfoVm extends BaseViewModel {
     public LiveData expLiveData;
 
     private int userId;
+    public int uid;
     private int sex = 0;
     private String img;
     public int changeType = 0;
@@ -101,7 +102,7 @@ public class UserInfoVm extends BaseViewModel {
     }
 
     public void information(){
-        new UserRepository().information(informationLiveData, pageStateLiveData, userId);
+        new UserRepository().information(informationLiveData, pageStateLiveData, userId, uid);
     }
 
     public void updateUserName(String username){

@@ -24,8 +24,11 @@ import com.shuangduan.zcy.base.BaseFragment;
 import com.shuangduan.zcy.base.BaseLazyFragment;
 import com.shuangduan.zcy.model.bean.LocusBean;
 import com.shuangduan.zcy.model.bean.TrackBean;
+import com.shuangduan.zcy.model.event.RefreshViewLocusEvent;
 import com.shuangduan.zcy.view.PhotoViewActivity;
 import com.shuangduan.zcy.vm.ProjectDetailVm;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -169,5 +172,10 @@ public class ProjectReadFragment extends BaseLazyFragment {
                 refresh.finishLoadMore();
             }
         }
+    }
+
+    @Subscribe()
+    public void payDone(RefreshViewLocusEvent event){
+        projectDetailVm.getViewTrack();
     }
 }

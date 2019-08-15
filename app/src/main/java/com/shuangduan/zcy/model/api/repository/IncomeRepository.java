@@ -36,8 +36,8 @@ public class IncomeRepository extends BaseRepository {
     /**
      * 人脉收益
      */
-    public void incomePeople(MutableLiveData<IncomePeopleBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, int page){
-        request(apiService.incomePeople(user_id, page)).setData(liveData).setPageState(pageStateLiveData).send();
+    public void incomePeople(MutableLiveData<IncomePeopleBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, int page, int type){
+        request(apiService.incomePeople(user_id, page, type)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
     /**

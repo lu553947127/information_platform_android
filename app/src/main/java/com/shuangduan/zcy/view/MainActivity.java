@@ -15,6 +15,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
@@ -26,6 +27,7 @@ import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import butterknife.BindView;
+import cn.jpush.android.api.JPushInterface;
 
 import static com.shuangduan.zcy.app.AppConfig.APP_ID;
 
@@ -69,6 +71,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         regToWx();
+        setAlias();
         if (fragments[0] == null) {
             fragments[0] = HomeFragment.newInstance();
         }
@@ -187,6 +190,18 @@ public class MainActivity extends BaseActivity {
             }
         }, new IntentFilter(ConstantsAPI.ACTION_REFRESH_WXAPP));
 
+    }
+
+    /**
+     * 极光别名
+     */
+    private void setAlias(){
+        int userId = SPUtils.getInstance().getInt(SpConfig.USER_ID, 0);
+        int aliasStatus = SPUtils.getInstance().getInt(SpConfig.ALIAS_STATUS, 0);
+        if (userId != 0 && aliasStatus != 1){
+            LogUtils.i("别名设置", userId);
+            JPushInterface.setAlias(this, userId, String.valueOf(userId));
+        }
     }
 
 }

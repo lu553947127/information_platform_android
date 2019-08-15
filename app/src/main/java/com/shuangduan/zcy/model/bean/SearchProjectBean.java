@@ -12,7 +12,7 @@ import java.util.List;
  * @chang time
  * @class describe
  */
-public class SearchBean {
+public class SearchProjectBean {
 
     /**
      * page : 1

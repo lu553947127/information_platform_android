@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.R;
+import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseFragment;
 import com.shuangduan.zcy.model.api.PageState;
@@ -117,7 +118,9 @@ public class MineFragment extends BaseFragment {
         switch (view.getId()) {
             case R.id.tv_username:
             case R.id.iv_user:
-                ActivityUtils.startActivity(UserInfoActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt(CustomConfig.UID, SPUtils.getInstance().getInt(SpConfig.USER_ID));
+                ActivityUtils.startActivity(bundle, UserInfoActivity.class);
                 break;
             case R.id.tv_balance:
                 ActivityUtils.startActivity(BalanceActivity.class);
