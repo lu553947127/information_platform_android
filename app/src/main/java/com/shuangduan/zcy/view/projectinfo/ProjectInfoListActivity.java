@@ -251,6 +251,16 @@ public class ProjectInfoListActivity extends BaseActivity {
                                 llType.setVisibility(View.GONE);
                                 rlTime.setVisibility(View.GONE);
                                 flSubscription.setVisibility(View.GONE);
+                                tvArea.setTextColor(getResources().getColor(R.color.colorPrimary));
+                                ivExpand.setImageResource(R.drawable.icon_bottom_blue);
+                                tvStage.setTextColor(getResources().getColor(R.color.colorTv));
+                                ivStage.setImageResource(R.drawable.icon_bottom);
+                                tvType.setTextColor(getResources().getColor(R.color.colorTv));
+                                ivType.setImageResource(R.drawable.icon_bottom);
+                                tvTime.setTextColor(getResources().getColor(R.color.colorTv));
+                                ivTime.setImageResource(R.drawable.icon_bottom);
+                                tvSubscribe.setTextColor(getResources().getColor(R.color.colorTv));
+                                ivSubscribe.setImageResource(R.drawable.icon_bottom);
                                 break;
                             case 2:
                                 llArea.setVisibility(View.GONE);
@@ -258,6 +268,16 @@ public class ProjectInfoListActivity extends BaseActivity {
                                 llType.setVisibility(View.GONE);
                                 rlTime.setVisibility(View.GONE);
                                 flSubscription.setVisibility(View.GONE);
+                                tvArea.setTextColor(getResources().getColor(R.color.colorTv));
+                                ivExpand.setImageResource(R.drawable.icon_bottom);
+                                tvStage.setTextColor(getResources().getColor(R.color.colorPrimary));
+                                ivStage.setImageResource(R.drawable.icon_bottom_blue);
+                                tvType.setTextColor(getResources().getColor(R.color.colorTv));
+                                ivType.setImageResource(R.drawable.icon_bottom);
+                                tvTime.setTextColor(getResources().getColor(R.color.colorTv));
+                                ivTime.setImageResource(R.drawable.icon_bottom);
+                                tvSubscribe.setTextColor(getResources().getColor(R.color.colorTv));
+                                ivSubscribe.setImageResource(R.drawable.icon_bottom);
                                 break;
                             case 3:
                                 llArea.setVisibility(View.GONE);
@@ -265,6 +285,16 @@ public class ProjectInfoListActivity extends BaseActivity {
                                 llType.setVisibility(View.VISIBLE);
                                 rlTime.setVisibility(View.GONE);
                                 flSubscription.setVisibility(View.GONE);
+                                tvArea.setTextColor(getResources().getColor(R.color.colorTv));
+                                ivExpand.setImageResource(R.drawable.icon_bottom);
+                                tvStage.setTextColor(getResources().getColor(R.color.colorTv));
+                                ivStage.setImageResource(R.drawable.icon_bottom);
+                                tvType.setTextColor(getResources().getColor(R.color.colorPrimary));
+                                ivType.setImageResource(R.drawable.icon_bottom_blue);
+                                tvTime.setTextColor(getResources().getColor(R.color.colorTv));
+                                ivTime.setImageResource(R.drawable.icon_bottom);
+                                tvSubscribe.setTextColor(getResources().getColor(R.color.colorTv));
+                                ivSubscribe.setImageResource(R.drawable.icon_bottom);
                                 break;
                             case 4:
                                 llArea.setVisibility(View.GONE);
@@ -272,6 +302,16 @@ public class ProjectInfoListActivity extends BaseActivity {
                                 llType.setVisibility(View.GONE);
                                 rlTime.setVisibility(View.VISIBLE);
                                 flSubscription.setVisibility(View.GONE);
+                                tvArea.setTextColor(getResources().getColor(R.color.colorTv));
+                                ivExpand.setImageResource(R.drawable.icon_bottom);
+                                tvStage.setTextColor(getResources().getColor(R.color.colorTv));
+                                ivStage.setImageResource(R.drawable.icon_bottom);
+                                tvType.setTextColor(getResources().getColor(R.color.colorTv));
+                                ivType.setImageResource(R.drawable.icon_bottom);
+                                tvTime.setTextColor(getResources().getColor(R.color.colorPrimary));
+                                ivTime.setImageResource(R.drawable.icon_bottom_blue);
+                                tvSubscribe.setTextColor(getResources().getColor(R.color.colorTv));
+                                ivSubscribe.setImageResource(R.drawable.icon_bottom);
                                 break;
                             case 5:
                                 llArea.setVisibility(View.GONE);
@@ -279,6 +319,16 @@ public class ProjectInfoListActivity extends BaseActivity {
                                 llType.setVisibility(View.GONE);
                                 rlTime.setVisibility(View.GONE);
                                 flSubscription.setVisibility(View.VISIBLE);
+                                tvArea.setTextColor(getResources().getColor(R.color.colorTv));
+                                ivExpand.setImageResource(R.drawable.icon_bottom);
+                                tvStage.setTextColor(getResources().getColor(R.color.colorTv));
+                                ivStage.setImageResource(R.drawable.icon_bottom);
+                                tvType.setTextColor(getResources().getColor(R.color.colorTv));
+                                ivType.setImageResource(R.drawable.icon_bottom);
+                                tvTime.setTextColor(getResources().getColor(R.color.colorTv));
+                                ivTime.setImageResource(R.drawable.icon_bottom);
+                                tvSubscribe.setTextColor(getResources().getColor(R.color.colorPrimary));
+                                ivSubscribe.setImageResource(R.drawable.icon_bottom_blue);
                                 break;
                         }
 
@@ -378,6 +428,16 @@ public class ProjectInfoListActivity extends BaseActivity {
                 llType.setVisibility(View.GONE);
                 rlTime.setVisibility(View.GONE);
                 flSubscription.setVisibility(View.GONE);
+                tvArea.setTextColor(getResources().getColor(R.color.colorPrimary));
+                ivExpand.setImageResource(R.drawable.icon_bottom_blue);
+                tvStage.setTextColor(getResources().getColor(R.color.colorTv));
+                ivStage.setImageResource(R.drawable.icon_bottom);
+                tvType.setTextColor(getResources().getColor(R.color.colorTv));
+                ivType.setImageResource(R.drawable.icon_bottom);
+                tvTime.setTextColor(getResources().getColor(R.color.colorTv));
+                ivTime.setImageResource(R.drawable.icon_bottom);
+                tvSubscribe.setTextColor(getResources().getColor(R.color.colorTv));
+                ivSubscribe.setImageResource(R.drawable.icon_bottom);
                 break;
             case 2:
                 stageFirstAdapter.setNewData(dataStage);
@@ -386,6 +446,16 @@ public class ProjectInfoListActivity extends BaseActivity {
                 llType.setVisibility(View.GONE);
                 rlTime.setVisibility(View.GONE);
                 flSubscription.setVisibility(View.GONE);
+                tvArea.setTextColor(getResources().getColor(R.color.colorTv));
+                ivExpand.setImageResource(R.drawable.icon_bottom);
+                tvStage.setTextColor(getResources().getColor(R.color.colorPrimary));
+                ivStage.setImageResource(R.drawable.icon_bottom_blue);
+                tvType.setTextColor(getResources().getColor(R.color.colorTv));
+                ivType.setImageResource(R.drawable.icon_bottom);
+                tvTime.setTextColor(getResources().getColor(R.color.colorTv));
+                ivTime.setImageResource(R.drawable.icon_bottom);
+                tvSubscribe.setTextColor(getResources().getColor(R.color.colorTv));
+                ivSubscribe.setImageResource(R.drawable.icon_bottom);
                 break;
             case 3:
                 typeFirstAdapter.setNewData(dataType);
@@ -394,6 +464,16 @@ public class ProjectInfoListActivity extends BaseActivity {
                 llType.setVisibility(View.VISIBLE);
                 rlTime.setVisibility(View.GONE);
                 flSubscription.setVisibility(View.GONE);
+                tvArea.setTextColor(getResources().getColor(R.color.colorTv));
+                ivExpand.setImageResource(R.drawable.icon_bottom);
+                tvStage.setTextColor(getResources().getColor(R.color.colorTv));
+                ivStage.setImageResource(R.drawable.icon_bottom);
+                tvType.setTextColor(getResources().getColor(R.color.colorPrimary));
+                ivType.setImageResource(R.drawable.icon_bottom_blue);
+                tvTime.setTextColor(getResources().getColor(R.color.colorTv));
+                ivTime.setImageResource(R.drawable.icon_bottom);
+                tvSubscribe.setTextColor(getResources().getColor(R.color.colorTv));
+                ivSubscribe.setImageResource(R.drawable.icon_bottom);
                 break;
             case 4:
                 llArea.setVisibility(View.GONE);
@@ -401,6 +481,16 @@ public class ProjectInfoListActivity extends BaseActivity {
                 llType.setVisibility(View.GONE);
                 rlTime.setVisibility(View.VISIBLE);
                 flSubscription.setVisibility(View.GONE);
+                tvArea.setTextColor(getResources().getColor(R.color.colorTv));
+                ivExpand.setImageResource(R.drawable.icon_bottom);
+                tvStage.setTextColor(getResources().getColor(R.color.colorTv));
+                ivStage.setImageResource(R.drawable.icon_bottom);
+                tvType.setTextColor(getResources().getColor(R.color.colorTv));
+                ivType.setImageResource(R.drawable.icon_bottom);
+                tvTime.setTextColor(getResources().getColor(R.color.colorPrimary));
+                ivTime.setImageResource(R.drawable.icon_bottom_blue);
+                tvSubscribe.setTextColor(getResources().getColor(R.color.colorTv));
+                ivSubscribe.setImageResource(R.drawable.icon_bottom);
                 break;
             case 5:
                 llArea.setVisibility(View.GONE);
@@ -408,6 +498,16 @@ public class ProjectInfoListActivity extends BaseActivity {
                 llType.setVisibility(View.GONE);
                 rlTime.setVisibility(View.GONE);
                 flSubscription.setVisibility(View.VISIBLE);
+                tvArea.setTextColor(getResources().getColor(R.color.colorTv));
+                ivExpand.setImageResource(R.drawable.icon_bottom);
+                tvStage.setTextColor(getResources().getColor(R.color.colorTv));
+                ivStage.setImageResource(R.drawable.icon_bottom);
+                tvType.setTextColor(getResources().getColor(R.color.colorTv));
+                ivType.setImageResource(R.drawable.icon_bottom);
+                tvTime.setTextColor(getResources().getColor(R.color.colorTv));
+                ivTime.setImageResource(R.drawable.icon_bottom);
+                tvSubscribe.setTextColor(getResources().getColor(R.color.colorPrimary));
+                ivSubscribe.setImageResource(R.drawable.icon_bottom_blue);
                 break;
         }
         if (!popupWindowArea.isShowing()){

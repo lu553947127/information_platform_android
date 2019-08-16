@@ -25,6 +25,7 @@ import com.shuangduan.zcy.model.bean.HomeListBean;
 import com.shuangduan.zcy.model.bean.HomePushBean;
 import com.shuangduan.zcy.utils.BarUtils;
 import com.shuangduan.zcy.utils.image.GlideImageLoader;
+import com.shuangduan.zcy.view.demand.DemandActivity;
 import com.shuangduan.zcy.view.headlines.HeadlinesActivity;
 import com.shuangduan.zcy.view.headlines.HeadlinesDetailActivity;
 import com.shuangduan.zcy.view.material.MaterialActivity;
@@ -126,7 +127,8 @@ public class HomeFragment extends BaseFragment {
                 case ClassifyBean.FBXX:
                     ActivityUtils.startActivity(ReleaseListActivity.class);
                     break;
-                case ClassifyBean.JJTT:
+                case ClassifyBean.FBXQ:
+                    ActivityUtils.startActivity(DemandActivity.class);
                     break;
             }
         });
@@ -246,7 +248,7 @@ public class HomeFragment extends BaseFragment {
         list.add(new ClassifyBean(R.drawable.classify_gys, classifys[4], 5));
         list.add(new ClassifyBean(R.drawable.classify_wdsy, classifys[5], 6));
         list.add(new ClassifyBean(R.drawable.classify_fbxx, classifys[6], 7));
-        list.add(new ClassifyBean(R.drawable.classify_jjtt, classifys[7], 8));
+        list.add(new ClassifyBean(R.drawable.classify_fbxq, classifys[7], 8));
         return list;
     }
 

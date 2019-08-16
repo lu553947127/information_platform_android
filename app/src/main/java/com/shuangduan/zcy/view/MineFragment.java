@@ -23,12 +23,14 @@ import com.shuangduan.zcy.view.mine.FeedbackActivity;
 import com.shuangduan.zcy.view.mine.HelperActivity;
 import com.shuangduan.zcy.view.mine.MineCollectionActivity;
 import com.shuangduan.zcy.view.income.MineIncomeActivity;
+import com.shuangduan.zcy.view.mine.MineDemandActivity;
 import com.shuangduan.zcy.view.mine.MineOrderActivity;
 import com.shuangduan.zcy.view.mine.MineSubActivity;
 import com.shuangduan.zcy.view.mine.PwdPayActivity;
 import com.shuangduan.zcy.view.mine.ReadHistoryActivity;
 import com.shuangduan.zcy.view.mine.RecommendFriendsActivity;
 import com.shuangduan.zcy.view.mine.SetActivity;
+import com.shuangduan.zcy.view.mine.TransRecordActivity;
 import com.shuangduan.zcy.view.mine.UserInfoActivity;
 import com.shuangduan.zcy.view.recharge.RechargeActivity;
 import com.shuangduan.zcy.vm.UserInfoVm;
@@ -129,8 +131,10 @@ public class MineFragment extends BaseFragment {
                 ActivityUtils.startActivity(RechargeActivity.class);
                 break;
             case R.id.tv_my_demand:
+                ActivityUtils.startActivity(MineDemandActivity.class);
                 break;
             case R.id.tv_transaction_record:
+                ActivityUtils.startActivity(TransRecordActivity.class);
                 break;
             case R.id.tv_agreement_manage:
                 break;

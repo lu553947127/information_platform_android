@@ -149,12 +149,13 @@
     <string name="added">已添加</string>
     <string name="income_amount">收益金额</string>
     <string name="income_record">收益记录</string>
-    <string name="buy_success">购买成功 </string>
-    <string name="headlines">基建头条 </string>
-    <string name="wechat_friend">微信好友 </string>
-    <string name="friend_circle">朋友圈 </string>
-    <string name="qq_friend">QQ好友 </string>
-    <string name="qq_stone">QQ空间 </string>
+    <string name="buy_success">购买成功</string>
+    <string name="headlines">基建头条</string>
+    <string name="wechat_friend">微信好友</string>
+    <string name="friend_circle">朋友圈</string>
+    <string name="qq_friend">QQ好友</string>
+    <string name="qq_stone">QQ空间</string>
+    <string name="release_demand">发布需求</string>
 
     <string name="subscribe_message">订阅信息</string>
     <string name="model_list">列表模式</string>
@@ -286,6 +287,9 @@
     <string name="recruit_msg">招采信息</string>
     <string name="supplier_msg">供应商信息</string>
     <string name="locus_num">轨迹数量</string>
+    <string name="find_relationship">找关系</string>
+    <string name="find_substance">找物质</string>
+    <string name="find_buyer">找买家</string>
 
     <string name="format_version_name">当前版本号：v%1$s</string>
     <string name="format_get_verification_code_again">重新获取 (%1$ds)</string>
@@ -327,6 +331,7 @@
     <string name="format_price">价格: %1$s元</string>
     <string name="format_pay">请支付: %1$s元！</string>
     <string name="format_income_degree">%1$d°人脉收益</string>
+    <string name="format_trans_time">交易时间: %1$s</string>
 
     <string name="please_select_time">请选择时间</string>
     <string name="year">年</string>
@@ -343,7 +348,7 @@
         <item>优质供应商</item>
         <item>我的收益</item>
         <item>发布消息</item>
-        <item>基建头条</item>
+        <item>发布需求</item>
     </string-array>
 
     <string-array name="project_detail">
@@ -366,6 +371,17 @@
     <string-array name="project_order">
         <item>概况订单</item>
         <item>轨迹订单</item>
+    </string-array>
+
+    <string-array name="demand_relationship">
+        <item>我发布的 </item>
+        <item>我接单的</item>
+    </string-array>
+
+    <string-array name="demand">
+        <item>找关系</item>
+        <item>找物质</item>
+        <item>找买家</item>
     </string-array>
 
     <string-array name="infrastructure">

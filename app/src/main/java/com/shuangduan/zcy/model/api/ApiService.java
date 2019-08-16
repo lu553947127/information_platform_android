@@ -60,6 +60,10 @@ import com.shuangduan.zcy.model.bean.SupplierBean;
 import com.shuangduan.zcy.model.bean.SupplierDetailBean;
 import com.shuangduan.zcy.model.bean.SupplierJoinImageBean;
 import com.shuangduan.zcy.model.bean.TrackBean;
+import com.shuangduan.zcy.model.bean.TransRecordBean;
+import com.shuangduan.zcy.model.bean.TransRecordDetailBean;
+import com.shuangduan.zcy.model.bean.TransRecordFilterBean;
+import com.shuangduan.zcy.model.bean.TransactionFlowTypeBean;
 import com.shuangduan.zcy.model.bean.TypeBean;
 import com.shuangduan.zcy.model.bean.UploadBean;
 import com.shuangduan.zcy.model.bean.UserInfoBean;
@@ -853,5 +857,26 @@ public interface ApiService {
     Flowable<BaseResponse<HeadlinesDetailBean>> headlinesDetail(
             @Field("user_id") int user_id,
             @Field("id") int id
+    );
+
+    @POST("api/Userinfo/cashFlow")
+    Flowable<BaseResponse<TransRecordBean>> transactionRecord(
+            @Query("user_id") int user_id,
+            @Query("page") int page,
+            @Query("type") int type,
+            @Body TransactionFlowTypeBean flow_type
+    );
+
+    @FormUrlEncoded
+    @POST("/api/Userinfo/cashFlowDetails")
+    Flowable<BaseResponse<TransRecordDetailBean>> transRecordDetail(
+            @Field("user_id") int user_id,
+            @Field("id") int id
+    );
+
+    @FormUrlEncoded
+    @POST("api/Userinfo/cashSearch")
+    Flowable<BaseResponse<TransRecordFilterBean>> transRecordFilter(
+            @Field("user_id") int user_id
     );
 }

@@ -18,7 +18,7 @@ public class ClassifyBean {
     public static final int YZGYS = 5;
     public static final int WDSY = 6;
     public static final int FBXX = 7;
-    public static final int JJTT = 8;
+    public static final int FBXQ = 8;
     private int type;
     private int img;
     private String title;

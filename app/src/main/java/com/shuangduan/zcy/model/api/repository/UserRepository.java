@@ -11,6 +11,10 @@ import com.shuangduan.zcy.model.bean.PwdPayStateBean;
 import com.shuangduan.zcy.model.bean.ReadHistoryBean;
 import com.shuangduan.zcy.model.bean.RecruitBean;
 import com.shuangduan.zcy.model.bean.SubBean;
+import com.shuangduan.zcy.model.bean.TransRecordBean;
+import com.shuangduan.zcy.model.bean.TransRecordDetailBean;
+import com.shuangduan.zcy.model.bean.TransRecordFilterBean;
+import com.shuangduan.zcy.model.bean.TransactionFlowTypeBean;
 import com.shuangduan.zcy.model.bean.UserInfoBean;
 import com.shuangduan.zcy.model.bean.WithdrawBean;
 import com.shuangduan.zcy.model.bean.WithdrawRecordBean;
@@ -253,6 +257,18 @@ public class UserRepository extends BaseRepository {
 
     public void pwdPayState(MutableLiveData<PwdPayStateBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id){
         request(apiService.pwdPayState(user_id)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    public void transRecord(MutableLiveData<TransRecordBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, int page, int type, TransactionFlowTypeBean flow_ype){
+        request(apiService.transactionRecord(user_id, page, type, flow_ype)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    public void transRecordDetail(MutableLiveData<TransRecordDetailBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, int id){
+        request(apiService.transRecordDetail(user_id, id)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    public void transRecordFilter(MutableLiveData<TransRecordFilterBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id){
+        request(apiService.transRecordFilter(user_id)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
 }

@@ -6,80 +6,93 @@
 
     <include layout="@layout/toolbar"/>
 
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="12dp"
-        android:textColor="@color/colorTv"
-        android:textSize="14sp" />
-
-    <TextView
-        android:id="@+id/tv_release_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="14dp"
-        android:layout_marginBottom="15dp"
-        android:textColor="@color/color_666666"
-        android:textSize="12sp"/>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:background="@color/colorBgDark"/>
-
-    <TextView
-        android:id="@+id/tv_intro"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="15dp"
-        android:textColor="@color/colorTv"
-        android:textSize="14sp"
-        android:text="@string/recruit_intro"/>
-
-    <View
-        android:layout_width="50dp"
-        android:layout_height="3dp"
-        android:layout_marginTop="3dp"
-        android:layout_marginLeft="15dp"
-        android:background="@color/colorPrimary"/>
-
-    <TextView
-        android:id="@+id/tv_intro_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:textColor="@color/colorTv"
-        android:textSize="13sp"/>
-
-    <TextView
-        android:id="@+id/tv_intro_time"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:textColor="@color/color_666666"
-        android:textSize="12sp"/>
-
-    <TextView
-        android:id="@+id/tv_intro_content"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:textColor="@color/color_666666"
-        android:textSize="12sp"/>
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="12dp"
+                android:textColor="@color/colorTv"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_release_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="14dp"
+                android:layout_marginBottom="15dp"
+                android:textColor="@color/color_666666"
+                android:textSize="12sp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@color/colorBgDark"/>
+
+            <TextView
+                android:id="@+id/tv_intro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="15dp"
+                android:textColor="@color/colorTv"
+                android:textSize="14sp"
+                android:text="@string/recruit_intro"/>
+
+            <View
+                android:layout_width="50dp"
+                android:layout_height="3dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginLeft="15dp"
+                android:background="@color/colorPrimary"/>
+
+            <TextView
+                android:id="@+id/tv_intro_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:textColor="@color/colorTv"
+                android:textSize="13sp"/>
+
+            <TextView
+                android:id="@+id/tv_intro_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:textColor="@color/color_666666"
+                android:textSize="12sp"/>
+
+            <TextView
+                android:id="@+id/tv_intro_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:textColor="@color/color_666666"
+                android:textSize="12sp"/>
+
+        </LinearLayout>
+
+    </ScrollView>
 
     <View
         android:layout_width="match_parent"

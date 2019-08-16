@@ -1,40 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="96dp"
-    android:padding="15dp">
-
-    <ImageView
-        android:id="@+id/iv_icon"
-        android:layout_width="100dp"
-        android:layout_height="66dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:scaleType="centerCrop"/>
+    android:layout_height="87dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    android:paddingTop="13dp"
+    android:paddingBottom="13dp">
 
     <TextView
         android:id="@+id/tv_title"
-        android:layout_width="0dp"
+        android:layout_width="260dp"
         android:layout_height="wrap_content"
-        app:layout_constraintLeft_toRightOf="@+id/iv_icon"
-        app:layout_constraintTop_toTopOf="@+id/iv_icon"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginLeft="10dp"
         android:singleLine="true"
         android:ellipsize="end"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         android:textColor="@color/colorTv"
         android:textSize="14sp"/>
 
     <TextView
         android:id="@+id/tv_content"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="@+id/tv_title"
         app:layout_constraintTop_toBottomOf="@+id/tv_title"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="7dp"
+        android:layout_marginTop="5dp"
         android:singleLine="true"
         android:ellipsize="end"
         android:textColor="@color/color_666666"
@@ -46,10 +37,17 @@
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="@+id/tv_title"
         app:layout_constraintTop_toBottomOf="@+id/tv_content"
-        android:layout_marginTop="7dp"
-        android:singleLine="true"
-        android:ellipsize="end"
+        android:layout_marginTop="5dp"
         android:textColor="@color/color_666666"
         android:textSize="12sp"/>
+
+    <TextView
+        android:id="@+id/tv_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_title"
+        android:textColor="@color/colorTv"
+        android:textSize="14sp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

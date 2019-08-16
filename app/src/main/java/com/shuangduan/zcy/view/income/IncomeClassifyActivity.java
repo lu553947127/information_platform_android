@@ -62,7 +62,7 @@ public class IncomeClassifyActivity extends BaseActivity {
                 ActivityUtils.startActivity(IncomeProductRightsActivity.class);
                 break;
             case R.id.tv_income_people:
-                bundle.putInt(CustomConfig.PEOPLE_DEGREE, CustomConfig.SIX_DEGREE);
+                bundle.putInt(CustomConfig.PEOPLE_DEGREE, CustomConfig.SEVEN_DEGREE);
                 ActivityUtils.startActivity(bundle, IncomePeopleActivity.class);
                 break;
         }
