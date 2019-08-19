@@ -85,6 +85,7 @@
     <string name="woman">女</string>
     <string name="select_not">未选择</string>
     <string name="hint_real_name">请填写真实姓名</string>
+    <string name="hint_name">请填写姓名</string>
     <string name="please_hint_real_name">为了方便别人找您合作，请填写真实姓名</string>
     <string name="mobile_verification">手机验证</string>
     <string name="hint_new_mobile">请输入新的手机号</string>
@@ -127,6 +128,7 @@
     <string name="pwd_no_same">两次输入的密码不一致</string>
     <string name="pwd_reset_success">密码重置成功</string>
     <string name="no_company">没有相关公司</string>
+    <string name="hint_company">请输入公司公司</string>
     <string name="edit_success">信息编辑成功</string>
     <string name="hint_production">请输入产品信息</string>
     <string name="recharge">充值</string>
@@ -156,6 +158,25 @@
     <string name="qq_friend">QQ好友</string>
     <string name="qq_stone">QQ空间</string>
     <string name="release_demand">发布需求</string>
+    <string name="company_address">公司所在地</string>
+    <string name="service_area">服务地区</string>
+    <string name="hint_address_detail">请输入详细地址</string>
+    <string name="title">标题</string>
+    <string name="commission">佣金</string>
+    <string name="material_name">物资名称</string>
+    <string name="demand_num">需求数量</string>
+    <string name="demand_project">需求项目</string>
+    <string name="price_accept">接受价格</string>
+    <string name="supply_num">供应数量</string>
+    <string name="supply_style">供应方式</string>
+    <string name="supply_address">供应地点</string>
+    <string name="supply_price">供应价格</string>
+    <string name="lease">租赁</string>
+    <string name="sell">售卖</string>
+    <string name="hint_title">请输入标题</string>
+    <string name="hint_commission">请输入佣金</string>
+    <string name="select_time">请选择有效时间</string>
+    <string name="hint_des">请输入具体描述</string>
 
     <string name="subscribe_message">订阅信息</string>
     <string name="model_list">列表模式</string>
@@ -219,6 +240,7 @@
     <string name="order">订单</string>
     <string name="more">更多</string>
     <string name="head_detail">头条详情</string>
+    <string name="contacts_info">联系方式</string>
 
     <string name="release_msg">发布信息</string>
     <string name="release">发布</string>
@@ -249,6 +271,7 @@
     <string name="tel_code">手机号码</string>
     <string name="unit">单位</string>
     <string name="address">地址</string>
+    <string name="address_detail">详细地址</string>
     <string name="push_select">推送选择</string>
     <string name="expected_return_s">预计收益</string>
     <string name="withdraw_income">可提现收益</string>
@@ -290,6 +313,7 @@
     <string name="find_relationship">找关系</string>
     <string name="find_substance">找物质</string>
     <string name="find_buyer">找买家</string>
+    <string name="effective_time">有效时间</string>
 
     <string name="format_version_name">当前版本号：v%1$s</string>
     <string name="format_get_verification_code_again">重新获取 (%1$ds)</string>
@@ -315,7 +339,7 @@
     <string name="format_stage">阶段：%1$s</string>
     <string name="format_type">类别：%1$s</string>
     <string name="format_cycle">周期：%1$s</string>
-    <string name="format_acreage">面积：%1$sm^2</string>
+    <string name="format_acreage">面积：%1$s㎡</string>
     <string name="format_valuation">估价：%1$s</string>
     <string name="format_consumption">消费次数：%1$d次</string>
     <string name="format_locus_num">轨迹信息：%1$d条</string>

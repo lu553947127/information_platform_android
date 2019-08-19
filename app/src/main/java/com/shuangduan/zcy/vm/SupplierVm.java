@@ -11,6 +11,7 @@ import com.shuangduan.zcy.model.api.repository.SupplierRepository;
 import com.shuangduan.zcy.model.bean.SupplierBean;
 import com.shuangduan.zcy.model.bean.SupplierDetailBean;
 import com.shuangduan.zcy.model.bean.SupplierJoinImageBean;
+import com.shuangduan.zcy.model.event.CityEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +34,9 @@ public class SupplierVm extends BaseViewModel {
     private int userId;
     private int page;
     private List<Integer> imageIds;
+    public int cityId;
+    public int provinceId;
+    public MutableLiveData<CityEvent> serviceArea;
 
     public SupplierVm() {
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
@@ -40,6 +44,7 @@ public class SupplierVm extends BaseViewModel {
         detailLiveData = new MutableLiveData<>();
         joinLiveData = new MutableLiveData<>();
         pageStateLiveData = new MutableLiveData<>();
+        serviceArea = new MutableLiveData<>();
     }
 
     public void getSupplier(){
@@ -77,13 +82,23 @@ public class SupplierVm extends BaseViewModel {
         }
     }
 
-    public void join(){
+    public void join(String name, String tel, String company, String address, String product){
+        CityEvent areaValue = serviceArea.getValue();
+        if (areaValue == null || areaValue.business_city == null || areaValue.business_city.length == 0){
+            ToastUtils.showShort("请选择服务地区");
+            return;
+        }
+        if (cityId == 0){
+            ToastUtils.showShort("请选择公司所在地");
+            return;
+        }
         if (imageIds == null || imageIds.size() == 0){
             ToastUtils.showShort("请上传营业执照以及相关文件资料");
             return;
         }
         SupplierJoinImageBean supplierJoinImageBean = new SupplierJoinImageBean();
         supplierJoinImageBean.setImages(imageIds);
-        new SupplierRepository().getSupplierJoin(joinLiveData, pageStateLiveData, userId, supplierJoinImageBean);
+        supplierJoinImageBean.setServe_address(areaValue.business_city);
+        new SupplierRepository().getSupplierJoin(joinLiveData, pageStateLiveData, userId, name, tel, company, address, product, cityId, supplierJoinImageBean);
     }
 }

@@ -8,12 +8,14 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.google.android.material.tabs.TabLayout;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ViewPagerAdapter;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.view.mine.FindBuyerFragment;
+import com.shuangduan.zcy.view.mine.FindRelationshipFragment;
 import com.shuangduan.zcy.view.mine.FindSubstanceFragment;
 
 import butterknife.BindView;
@@ -53,7 +55,7 @@ public class DemandActivity extends BaseActivity {
         tvBarRight.setText(getString(R.string.release));
 
         Fragment[] fragments = new Fragment[]{
-                FindSubstanceFragment.newInstance(),
+                FindRelationshipFragment.newInstance(),
                 FindSubstanceFragment.newInstance(),
                 FindBuyerFragment.newInstance()
         };
@@ -72,7 +74,7 @@ public class DemandActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_bar_right:
-
+                ActivityUtils.startActivity(DemandReleaseActivity.class);
                 break;
         }
     }

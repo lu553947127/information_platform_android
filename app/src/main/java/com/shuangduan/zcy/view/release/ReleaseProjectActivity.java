@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
@@ -372,65 +373,70 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
                 finish();
                 break;
             case R.id.tv_project_type:
-                popupWindow = new CommonPopupWindow.Builder(this)
-                        .setView(R.layout.dialog_release_type)
-                        .setOutsideTouchable(true)
-                        .setBackGroundLevel(0.8f)
-                        .setWidthAndHeight(ConvertUtils.dp2px(260), ViewGroup.LayoutParams.WRAP_CONTENT)
-                        .setViewOnclickListener((popView, layoutResId) -> {
-                            popView.findViewById(R.id.tv_project).setOnClickListener(v -> {
-                                releaseVm.type = 1;
-                                flProjectNameEdit.setVisibility(View.VISIBLE);
-                                tvProjectAddress.setClickable(true);
-                                flProjectStage.setVisibility(View.VISIBLE);
-                                flProjectTypes.setVisibility(View.VISIBLE);
-                                rlProjectCycle.setVisibility(View.VISIBLE);
-                                flProjectAcreage.setVisibility(View.VISIBLE);
-                                flProjectPrice.setVisibility(View.VISIBLE);
-                                flProjectDetail.setVisibility(View.VISIBLE);
-                                flProjectMaterial.setVisibility(View.VISIBLE);
-                                rvContact.setVisibility(View.VISIBLE);
-                                flAdd.setVisibility(View.VISIBLE);
-                                flProjectCompany.setVisibility(View.VISIBLE);
-                                flProjectAddress.setVisibility(View.VISIBLE);
-                                flProjectNameSelect.setVisibility(View.GONE);
-                                flProjectSchedule.setVisibility(View.GONE);
-                                flVisitor.setVisibility(View.GONE);
-                                flMobile.setVisibility(View.GONE);
-                                flUpdateTime.setVisibility(View.GONE);
-                                rlPhoto.setVisibility(View.GONE);
-                                picContentView.setVisibility(View.GONE);
-                                tvProjectType.setText(getString(R.string.project_project));
-                                popupWindow.dismiss();
-                            });
-                            popView.findViewById(R.id.tv_locus).setOnClickListener(v -> {
-                                releaseVm.type = 2;
-                                flProjectNameEdit.setVisibility(View.GONE);
-                                tvProjectAddress.setClickable(false);
-                                flProjectStage.setVisibility(View.GONE);
-                                flProjectTypes.setVisibility(View.GONE);
-                                rlProjectCycle.setVisibility(View.GONE);
-                                flProjectAcreage.setVisibility(View.GONE);
-                                flProjectPrice.setVisibility(View.GONE);
-                                flProjectDetail.setVisibility(View.GONE);
-                                flProjectMaterial.setVisibility(View.GONE);
-                                rvContact.setVisibility(View.GONE);
-                                flAdd.setVisibility(View.GONE);
-                                flProjectCompany.setVisibility(View.GONE);
-                                flProjectAddress.setVisibility(View.GONE);
-                                flProjectNameSelect.setVisibility(View.VISIBLE);
-                                flProjectSchedule.setVisibility(View.VISIBLE);
-                                flVisitor.setVisibility(View.VISIBLE);
-                                flMobile.setVisibility(View.VISIBLE);
-                                flUpdateTime.setVisibility(View.GONE);
-                                rlPhoto.setVisibility(View.VISIBLE);
-                                picContentView.setVisibility(View.VISIBLE);
-                                tvProjectType.setText(getString(R.string.project_locus));
-                                popupWindow.dismiss();
-                            });
-                        })
-                        .create();
+                if (popupWindow == null){
+                    popupWindow = new CommonPopupWindow.Builder(this)
+                            .setView(R.layout.dialog_release_type)
+                            .setOutsideTouchable(true)
+                            .setBackGroundLevel(0.8f)
+                            .setWidthAndHeight(ConvertUtils.dp2px(260), ViewGroup.LayoutParams.WRAP_CONTENT)
+                            .setViewOnclickListener((popView, layoutResId) -> {
+                                popView.findViewById(R.id.tv_project).setOnClickListener(v -> {
+                                    releaseVm.type = 1;
+                                    flProjectNameEdit.setVisibility(View.VISIBLE);
+                                    tvProjectAddress.setClickable(true);
+                                    flProjectStage.setVisibility(View.VISIBLE);
+                                    flProjectTypes.setVisibility(View.VISIBLE);
+                                    rlProjectCycle.setVisibility(View.VISIBLE);
+                                    flProjectAcreage.setVisibility(View.VISIBLE);
+                                    flProjectPrice.setVisibility(View.VISIBLE);
+                                    flProjectDetail.setVisibility(View.VISIBLE);
+                                    flProjectMaterial.setVisibility(View.VISIBLE);
+                                    rvContact.setVisibility(View.VISIBLE);
+                                    flAdd.setVisibility(View.VISIBLE);
+                                    flProjectCompany.setVisibility(View.VISIBLE);
+                                    flProjectAddress.setVisibility(View.VISIBLE);
+                                    flProjectNameSelect.setVisibility(View.GONE);
+                                    flProjectSchedule.setVisibility(View.GONE);
+                                    flVisitor.setVisibility(View.GONE);
+                                    flMobile.setVisibility(View.GONE);
+                                    flUpdateTime.setVisibility(View.GONE);
+                                    rlPhoto.setVisibility(View.GONE);
+                                    picContentView.setVisibility(View.GONE);
+                                    tvProjectType.setText(getString(R.string.project_project));
+                                    popupWindow.dismiss();
+                                });
+                                popView.findViewById(R.id.tv_locus).setOnClickListener(v -> {
+                                    releaseVm.type = 2;
+                                    flProjectNameEdit.setVisibility(View.GONE);
+                                    tvProjectAddress.setClickable(false);
+                                    flProjectStage.setVisibility(View.GONE);
+                                    flProjectTypes.setVisibility(View.GONE);
+                                    rlProjectCycle.setVisibility(View.GONE);
+                                    flProjectAcreage.setVisibility(View.GONE);
+                                    flProjectPrice.setVisibility(View.GONE);
+                                    flProjectDetail.setVisibility(View.GONE);
+                                    flProjectMaterial.setVisibility(View.GONE);
+                                    rvContact.setVisibility(View.GONE);
+                                    flAdd.setVisibility(View.GONE);
+                                    flProjectCompany.setVisibility(View.GONE);
+                                    flProjectAddress.setVisibility(View.GONE);
+                                    flProjectNameSelect.setVisibility(View.VISIBLE);
+                                    flProjectSchedule.setVisibility(View.VISIBLE);
+                                    flVisitor.setVisibility(View.VISIBLE);
+                                    flMobile.setVisibility(View.VISIBLE);
+                                    flUpdateTime.setVisibility(View.GONE);
+                                    rlPhoto.setVisibility(View.VISIBLE);
+                                    picContentView.setVisibility(View.VISIBLE);
+                                    tvProjectType.setText(getString(R.string.project_locus));
+                                    popupWindow.dismiss();
+                                });
+                            })
+                            .create();
+                }
                 if (!popupWindow.isShowing()){
+                    WindowManager.LayoutParams attributes = getWindow().getAttributes();
+                    attributes.alpha = 0.8f;
+                    getWindow().setAttributes(attributes);
                     popupWindow.showAsDropDown(tvProjectType);
                 }
                 break;

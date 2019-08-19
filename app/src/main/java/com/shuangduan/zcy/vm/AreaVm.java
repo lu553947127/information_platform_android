@@ -187,7 +187,7 @@ public class AreaVm extends BaseViewModel {
             List<Integer> idList = new ArrayList<>();
             for (int i = 1; i < dataCity.size(); i++) {
                 if (dataCity.get(i).getIsSelect() == 1) {
-                    if (i == 1){
+                    if (builder.length() == 0){
                         builder.append(dataCity.get(i).getName());
                     }else {
                         builder.append("、").append(dataCity.get(i).getName());

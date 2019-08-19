@@ -14,6 +14,7 @@ import java.util.List;
  */
 public class SupplierJoinImageBean {
     private List<Integer> images;
+    private int[] serve_address;
 
     public List<Integer> getImages() {
         return images;
@@ -21,5 +22,13 @@ public class SupplierJoinImageBean {
 
     public void setImages(List<Integer> images) {
         this.images = images;
+    }
+
+    public int[] getServe_address() {
+        return serve_address;
+    }
+
+    public void setServe_address(int[] serve_address) {
+        this.serve_address = serve_address;
     }
 }

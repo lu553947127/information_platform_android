@@ -54,6 +54,7 @@ import com.shuangduan.zcy.model.bean.RecruitBean;
 import com.shuangduan.zcy.model.bean.RecruitDetailBean;
 import com.shuangduan.zcy.model.bean.RecruitSubBean;
 import com.shuangduan.zcy.model.bean.RegisterBean;
+import com.shuangduan.zcy.model.bean.DemandReleaseBean;
 import com.shuangduan.zcy.model.bean.StageBean;
 import com.shuangduan.zcy.model.bean.SubBean;
 import com.shuangduan.zcy.model.bean.SupplierBean;
@@ -671,6 +672,12 @@ public interface ApiService {
     @POST("api/supplier/supplierApply")
     Flowable<BaseResponse> supplierJoin(
             @Query("user_id") int user_id,
+            @Query("name") String name,
+            @Query("tel") String tel,
+            @Query("company") String company,
+            @Query("address") String address,
+            @Query("product") String product,
+            @Query("city") int city,
             @Body SupplierJoinImageBean joinImageBean
             );
 
@@ -878,5 +885,16 @@ public interface ApiService {
     @POST("api/Userinfo/cashSearch")
     Flowable<BaseResponse<TransRecordFilterBean>> transRecordFilter(
             @Field("user_id") int user_id
+    );
+
+    @FormUrlEncoded
+    @POST("api/Relation/add")
+    Flowable<BaseResponse<DemandReleaseBean>> demandRelease(
+            @Field("user_id") int user_id,
+            @Field("title") String title,
+            @Field("intro") String intro,
+            @Field("start_time") String start_time,
+            @Field("end_time") String end_time,
+            @Field("price") String price
     );
 }

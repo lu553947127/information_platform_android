@@ -5,8 +5,12 @@ import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
 
+import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityOptionsCompat;
@@ -22,10 +26,14 @@ import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.PhotoDialog;
 import com.shuangduan.zcy.model.api.PageState;
+import com.shuangduan.zcy.model.bean.ContactBean;
+import com.shuangduan.zcy.model.event.AddressEvent;
+import com.shuangduan.zcy.model.event.CityEvent;
 import com.shuangduan.zcy.utils.matisse.Glide4Engine;
 import com.shuangduan.zcy.utils.matisse.MatisseCamera;
 import com.shuangduan.zcy.view.PhotoViewActivity;
-import com.shuangduan.zcy.view.release.ReleaseProjectActivity;
+import com.shuangduan.zcy.view.mine.BusinessAreaActivity;
+import com.shuangduan.zcy.view.release.ReleaseAreaSelectActivity;
 import com.shuangduan.zcy.vm.PermissionVm;
 import com.shuangduan.zcy.vm.SupplierVm;
 import com.shuangduan.zcy.vm.UploadPhotoVm;
@@ -35,11 +43,14 @@ import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
+import org.greenrobot.eventbus.Subscribe;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -59,6 +70,20 @@ public class SupplierJoinActivity extends BaseActivity implements BaseDialog.Pho
     Toolbar toolbar;
     @BindView(R.id.pic_content)
     PicContentView picContentView;
+    @BindView(R.id.edt_name)
+    EditText edtName;
+    @BindView(R.id.edt_contact_info)
+    EditText edtContactInfo;
+    @BindView(R.id.edt_company)
+    EditText edtCompany;
+    @BindView(R.id.tv_company_address)
+    TextView tvCompanyAddress;
+    @BindView(R.id.edt_address_detail)
+    EditText edtAddressDetail;
+    @BindView(R.id.tv_service_area)
+    TextView tvServiceArea;
+    @BindView(R.id.edt_production)
+    AppCompatEditText edtProduction;
     private PermissionVm permissionVm;
     private UploadPhotoVm uploadPhotoVm;
     private RxPermissions rxPermissions;
@@ -80,7 +105,7 @@ public class SupplierJoinActivity extends BaseActivity implements BaseDialog.Pho
             finish();
         });
         supplierVm.pageStateLiveData.observe(this, s -> {
-            switch (s){
+            switch (s) {
                 case PageState.PAGE_LOADING:
                     showLoading();
                     break;
@@ -121,7 +146,7 @@ public class SupplierJoinActivity extends BaseActivity implements BaseDialog.Pho
             supplierVm.addImage(uploadBean.getImage_id());
         });
         uploadPhotoVm.mPageStateLiveData.observe(this, s -> {
-            switch (s){
+            switch (s) {
                 case PageState.PAGE_LOADING:
                     showLoading();
                     break;
@@ -211,15 +236,56 @@ public class SupplierJoinActivity extends BaseActivity implements BaseDialog.Pho
         permissionVm.getPermissionAlbum(rxPermissions);
     }
 
-    @OnClick({R.id.iv_bar_back, R.id.tv_confirm})
-    void onClick(View v){
-        switch (v.getId()){
+    @OnClick({R.id.iv_bar_back, R.id.tv_confirm, R.id.tv_company_address, R.id.tv_service_area})
+    void onClick(View v) {
+        switch (v.getId()) {
             case R.id.iv_bar_back:
                 finish();
                 break;
             case R.id.tv_confirm:
-                supplierVm.join();
+                if (TextUtils.isEmpty(edtName.getText().toString())){
+                    ToastUtils.showShort(getString(R.string.hint_name));
+                    return;
+                }
+                if (TextUtils.isEmpty(edtContactInfo.getText().toString())){
+                    ToastUtils.showShort(getString(R.string.hint_mobile_code));
+                    return;
+                }
+                if (TextUtils.isEmpty(edtCompany.getText().toString())){
+                    ToastUtils.showShort(getString(R.string.hint_company));
+                    return;
+                }
+                if (TextUtils.isEmpty(edtAddressDetail.getText().toString())){
+                    ToastUtils.showShort(getString(R.string.hint_address_detail));
+                    return;
+                }
+                if (TextUtils.isEmpty(edtProduction.getText())){
+                    ToastUtils.showShort(getString(R.string.hint_production));
+                    return;
+                }
+                supplierVm.join(edtName.getText().toString(), edtContactInfo.getText().toString(), edtCompany.getText().toString(), edtAddressDetail.getText().toString(), edtProduction.getText().toString());
+                break;
+            case R.id.tv_company_address:
+                Bundle bundle = new Bundle();
+                bundle.putInt(CustomConfig.PROJECT_ADDRESS, 0);
+                ActivityUtils.startActivity(bundle, ReleaseAreaSelectActivity.class);
+                break;
+            case R.id.tv_service_area:
+                ActivityUtils.startActivity(BusinessAreaActivity.class);
                 break;
         }
+    }
+
+    @Subscribe()
+    public void addressEvent(AddressEvent event){
+        tvCompanyAddress.setText(event.getProvince() + " " + event.getCity());
+        supplierVm.cityId = event.getCityId();
+        supplierVm.provinceId = event.getProvinceId();
+    }
+
+    @Subscribe()
+    public void serviceCity(CityEvent event) {
+        supplierVm.serviceArea.postValue(event);
+        tvServiceArea.setText(event.city);
     }
 }

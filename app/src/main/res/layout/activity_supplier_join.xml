@@ -6,6 +6,252 @@
     android:layout_height="match_parent">
 
     <include layout="@layout/toolbar"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorFFF"
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/colorTv"
+            android:textSize="14sp"
+            android:text="@string/name"/>
+
+        <EditText
+            android:id="@+id/edt_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="87dp"
+            android:background="@null"
+            android:singleLine="true"
+            android:textColorHint="@color/colorTvHint"
+            android:textColor="@color/colorTv"
+            android:textSize="14sp"
+            android:hint="@string/please_hint"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="bottom"
+            android:background="@color/colorDivider"/>
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorFFF"
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/colorTv"
+            android:textSize="14sp"
+            android:text="@string/contacts_info"/>
+
+        <EditText
+            android:id="@+id/edt_contact_info"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="87dp"
+            android:background="@null"
+            android:singleLine="true"
+            android:textColorHint="@color/colorTvHint"
+            android:textColor="@color/colorTv"
+            android:textSize="14sp"
+            android:hint="@string/please_hint"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="bottom"
+            android:background="@color/colorDivider"/>
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorFFF"
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/colorTv"
+            android:textSize="14sp"
+            android:text="@string/company_name"/>
+
+        <EditText
+            android:id="@+id/edt_company"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="87dp"
+            android:background="@null"
+            android:singleLine="true"
+            android:textColorHint="@color/colorTvHint"
+            android:textColor="@color/colorTv"
+            android:textSize="14sp"
+            android:hint="@string/please_hint"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="bottom"
+            android:background="@color/colorDivider"/>
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorFFF"
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/colorTv"
+            android:textSize="14sp"
+            android:text="@string/company_address"/>
+
+        <TextView
+            android:id="@+id/tv_company_address"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="87dp"
+            android:background="@null"
+            android:singleLine="true"
+            android:textColorHint="@color/colorTvHint"
+            android:textColor="@color/colorTv"
+            android:textSize="14sp"
+            android:hint="@string/please_select"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="bottom"
+            android:background="@color/colorDivider"/>
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorFFF"
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/colorTv"
+            android:textSize="14sp"
+            android:text="@string/address_detail"/>
+
+        <EditText
+            android:id="@+id/edt_address_detail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="87dp"
+            android:background="@null"
+            android:singleLine="true"
+            android:textColorHint="@color/colorTvHint"
+            android:textColor="@color/colorTv"
+            android:textSize="14sp"
+            android:hint="@string/please_hint"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="bottom"
+            android:background="@color/colorDivider"/>
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorFFF"
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/colorTv"
+            android:textSize="14sp"
+            android:text="@string/service_area"/>
+
+        <TextView
+            android:id="@+id/tv_service_area"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="87dp"
+            android:background="@null"
+            android:singleLine="true"
+            android:textColorHint="@color/colorTvHint"
+            android:textColor="@color/colorTv"
+            android:textSize="14sp"
+            android:hint="@string/please_select"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="bottom"
+            android:background="@color/colorDivider"/>
+
+    </FrameLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="15dp"
+        android:paddingLeft="14dp"
+        android:background="@color/colorFFF"
+        android:textColor="@color/colorTv"
+        android:textSize="14sp"
+        android:text="@string/product"/>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/edt_production"
+        android:layout_width="match_parent"
+        android:layout_height="92dp"
+        android:background="@color/colorFFF"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:gravity="top"
+        android:textColorHint="@color/colorTvHint"
+        android:textColor="@color/colorTv"
+        android:textSize="14sp"
+        android:hint="@string/please_hint"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/divider_15"/>
     
     <FrameLayout
         android:layout_width="match_parent"
@@ -17,9 +263,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:layout_marginLeft="19dp"
-            android:textColor="@color/colorTvHint"
+            android:textColor="@color/colorTv"
             android:textSize="12sp"
-            android:text="请上传营业执照以及相关文件资料"/>
+            android:text="上传执照（营业执照等资质照片，最多上传3张）"/>
 
         <com.shuangduan.zcy.weight.PicContentView
             android:id="@+id/pic_content"
