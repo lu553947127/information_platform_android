@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/toolbar"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_content_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="15dp"
+            android:drawableBottom="@drawable/shape_primary_3"
+            android:drawablePadding="2dp"
+            android:textColor="@color/colorTv"
+            android:textSize="14sp"
+            android:text="概况"/>
+
+        <TextView
+            android:id="@+id/tv_title_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_content_tip"
+            app:layout_constraintTop_toBottomOf="@+id/tv_content_tip"
+            android:layout_marginTop="14dp"
+            android:textColor="@color/color_666666"
+            android:textSize="13sp"
+            android:text="标题: "/>
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toRightOf="@+id/tv_title_tip"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginRight="15dp"
+            app:layout_constraintTop_toTopOf="@+id/tv_title_tip"
+            android:textColor="@color/color_666666"
+            android:textSize="13sp"/>
+
+        <TextView
+            android:id="@+id/tv_commission_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_content_tip"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/color_666666"
+            android:textSize="13sp"
+            android:text="佣金: "/>
+
+        <TextView
+            android:id="@+id/tv_commission"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toRightOf="@+id/tv_commission_tip"
+            app:layout_constraintTop_toTopOf="@+id/tv_commission_tip"
+            android:textColor="@color/color_666666"
+            android:textSize="13sp"/>
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_content_tip"
+            app:layout_constraintTop_toBottomOf="@+id/tv_commission"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/color_666666"
+            android:textSize="13sp"/>
+
+        <TextView
+            android:id="@+id/tv_des_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_content_tip"
+            app:layout_constraintTop_toBottomOf="@+id/tv_time"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/color_666666"
+            android:textSize="13sp"
+            android:text="需求简介: "/>
+
+        <TextView
+            android:id="@+id/tv_des"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toRightOf="@+id/tv_des_tip"
+            app:layout_constraintRight_toRightOf="@+id/tv_title"
+            app:layout_constraintTop_toTopOf="@+id/tv_des_tip"
+            android:textColor="@color/color_666666"
+            android:textSize="13sp"/>
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/colorBgDark"
+            android:layout_marginTop="18dp"
+            app:layout_constraintTop_toBottomOf="@+id/tv_des" />
+
+        <TextView
+            android:id="@+id/tv_contact_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_content_tip"
+            app:layout_constraintTop_toBottomOf="@+id/line"
+            android:layout_marginTop="20dp"
+            android:drawableBottom="@drawable/shape_primary_3"
+            android:drawablePadding="2dp"
+            android:textColor="@color/colorTv"
+            android:textSize="14sp"
+            android:text="联系"/>
+
+        <TextView
+            android:id="@+id/tv_name_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_content_tip"
+            app:layout_constraintTop_toBottomOf="@+id/tv_contact_tip"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/color_666666"
+            android:textSize="13sp"
+            android:text="姓名/公司"/>
+
+        <EditText
+            android:id="@+id/edt_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toRightOf="@+id/tv_name_tip"
+            app:layout_constraintTop_toTopOf="@+id/tv_name_tip"
+            android:layout_marginLeft="13dp"
+            android:minHeight="24dp"
+            android:gravity="top"
+            android:singleLine="true"
+            app:layout_constraintRight_toRightOf="@id/tv_title"
+            android:background="@null"
+            android:textColorHint="@color/colorTvHint"
+            android:textColor="@color/color_666666"
+            android:textSize="13sp"
+            android:hint="@string/please_hint"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            app:layout_constraintLeft_toLeftOf="@+id/edt_name"
+            app:layout_constraintRight_toRightOf="@+id/edt_name"
+            app:layout_constraintTop_toBottomOf="@+id/edt_name"
+            android:background="@color/colorDivider"/>
+
+        <TextView
+            android:id="@+id/tv_tel_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_content_tip"
+            app:layout_constraintTop_toBottomOf="@+id/edt_name"
+            android:layout_marginTop="18dp"
+            android:textColor="@color/color_666666"
+            android:textSize="13sp"
+            android:text="联系方式"/>
+
+        <EditText
+            android:id="@+id/edt_tel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="@+id/edt_name"
+            app:layout_constraintTop_toTopOf="@+id/tv_tel_tip"
+            android:minHeight="24dp"
+            android:gravity="top"
+            app:layout_constraintRight_toRightOf="@id/tv_title"
+            android:background="@null"
+            android:inputType="number"
+            android:maxLength="11"
+            android:singleLine="true"
+            android:textColorHint="@color/colorTvHint"
+            android:textColor="@color/color_666666"
+            android:textSize="13sp"
+            android:hint="@string/please_hint"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            app:layout_constraintLeft_toLeftOf="@+id/edt_tel"
+            app:layout_constraintRight_toRightOf="@+id/edt_tel"
+            app:layout_constraintTop_toBottomOf="@+id/edt_tel"
+            android:background="@color/colorDivider"/>
+
+        <TextView
+            android:id="@+id/tv_remarks_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_content_tip"
+            app:layout_constraintTop_toBottomOf="@+id/edt_tel"
+            android:layout_marginTop="18dp"
+            android:textColor="@color/color_666666"
+            android:textSize="13sp"
+            android:text="备注"/>
+
+        <EditText
+            android:id="@+id/edt_remarks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="@+id/edt_name"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginRight="20dp"
+            app:layout_constraintTop_toTopOf="@+id/tv_remarks_tip"
+            android:background="@null"
+            android:minHeight="40dp"
+            android:gravity="top"
+            android:textColorHint="@color/colorTvHint"
+            android:textColor="@color/color_666666"
+            android:textSize="13sp"
+            android:hint="@string/hint_relationship_remarks"/>
+        
+        <TextView
+            android:id="@+id/tv_confirm"
+            android:layout_width="335dp"
+            style="@style/BtnConfirm"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="30dp"
+            android:text="@string/submit"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

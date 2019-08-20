@@ -132,9 +132,9 @@ public class ProjectLocusFragment extends BaseLazyFragment {
         projectDetailVm = ViewModelProviders.of(mActivity).get(ProjectDetailVm.class);
         projectDetailVm.locusTypeLiveData.observe(this, type -> {
             if (type == 1){
-                tvFilter.setText(getString(R.string.all));
-            }else {
                 tvFilter.setText(getString(R.string.release_by_me));
+            }else {
+                tvFilter.setText(getString(R.string.all));
             }
         });
         projectDetailVm.trackLiveData.observe(this, trackBean -> {

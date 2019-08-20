@@ -1,4 +1,4 @@
-package com.shuangduan.zcy.view.mine;
+package com.shuangduan.zcy.view.demand;
 
 import android.os.Bundle;
 
@@ -12,9 +12,9 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shuangduan.zcy.R;
-import com.shuangduan.zcy.adapter.RecruitOrderAdapter;
+import com.shuangduan.zcy.adapter.DemandAcceptAdapter;
 import com.shuangduan.zcy.base.BaseLazyFragment;
-import com.shuangduan.zcy.vm.OrderVm;
+import com.shuangduan.zcy.vm.DemandRelationshipVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
 import butterknife.BindView;
@@ -23,69 +23,69 @@ import butterknife.BindView;
  * @author 宁文强 QQ:858777523
  * @name information_platform_android
  * @class name：com.shuangduan.zcy.view.mine
- * @class describe  我的需求，找物质
- * @time 2019/8/13 10:42
+ * @class describe  我的需求，找关系, 我接受的
+ * @time 2019/8/12 16:49
  * @change
  * @chang time
  * @class describe
  */
-public class FindSubstanceFragment extends BaseLazyFragment {
+public class DemandMineAcceptFragment extends BaseLazyFragment {
     @BindView(R.id.rv)
     RecyclerView rv;
     @BindView(R.id.refresh)
     SmartRefreshLayout refresh;
-    private OrderVm orderVm;
+    private DemandRelationshipVm demandRelationshipVm;
 
-    public static FindSubstanceFragment newInstance() {
+    public static DemandMineAcceptFragment newInstance() {
 
         Bundle args = new Bundle();
 
-        FindSubstanceFragment fragment = new FindSubstanceFragment();
+        DemandMineAcceptFragment fragment = new DemandMineAcceptFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     protected int initLayout() {
-        return R.layout.fragment_order_recruit;
+        return R.layout.fragment_project_info;
     }
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         rv.setLayoutManager(new LinearLayoutManager(mContext));
         rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
-        RecruitOrderAdapter adapter = new RecruitOrderAdapter(R.layout.item_order_locus, null);
+        DemandAcceptAdapter adapter = new DemandAcceptAdapter(R.layout.item_demand_relationship_release, null);
         adapter.setEmptyView(R.layout.layout_loading, rv);
         rv.setAdapter(adapter);
 
-        orderVm = ViewModelProviders.of(mActivity).get(OrderVm.class);
-        orderVm.recruitLiveData.observe(this, orderListBean -> {
+        demandRelationshipVm = ViewModelProviders.of(mActivity).get(DemandRelationshipVm.class);
+        demandRelationshipVm.acceptLiveData.observe(this, demandRelationshipBean-> {
             isInited = true;
-            if (orderListBean.getPage() == 1) {
-                adapter.setNewData(orderListBean.getList());
+            if (demandRelationshipBean.getPage() == 1) {
+                adapter.setNewData(demandRelationshipBean.getList());
                 adapter.setEmptyView(R.layout.layout_empty, rv);
             }else {
-                adapter.addData(orderListBean.getList());
+                adapter.addData(demandRelationshipBean.getList());
             }
-            setNoMore(orderListBean.getPage(), orderListBean.getCount());
+            setNoMore(demandRelationshipBean.getPage(), demandRelationshipBean.getCount());
         });
 
         refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                orderVm.getMoreRecruitOrder();
+                demandRelationshipVm.getMoreAcceptRelationship();
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                orderVm.getRecruitOrder();
+                demandRelationshipVm.getAcceptRelationship();
             }
         });
     }
 
     @Override
     protected void initDataFromService() {
-        orderVm.getRecruitOrder();
+        demandRelationshipVm.getAcceptRelationship();
     }
 
     private void setNoMore(int page, int count){

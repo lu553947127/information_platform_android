@@ -26,7 +26,7 @@ public class ProjectOrderAdapter extends BaseQuickAdapter<OrderListBean.ListBean
 
     @Override
     protected void convert(BaseViewHolder helper, OrderListBean.ListBean item) {
-        helper.setText(R.id.tv_title, item.getName())
+        helper.setText(R.id.tv_title, item.getTitle())
                 .setText(R.id.tv_content, item.getPhases())
                 .setText(R.id.tv_time, item.getCreate_time())
                 .setText(R.id.tv_amount, String.format(mContext.getString(R.string.format_pay_amount), item.getPrice()));

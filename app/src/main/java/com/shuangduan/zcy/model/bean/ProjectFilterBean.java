@@ -15,9 +15,11 @@ import java.util.List;
 public class ProjectFilterBean {
     private List<Integer> city;
     private List<Integer> type;
+    private List<Integer> phases;
 
-    public ProjectFilterBean(List<Integer> city, List<Integer> type) {
+    public ProjectFilterBean(List<Integer> city, List<Integer> type, List<Integer> phases) {
         this.city = city;
         this.type = type;
+        this.phases = phases;
     }
 }

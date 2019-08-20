@@ -63,13 +63,13 @@
 
         <RelativeLayout
             android:id="@+id/rl_time"
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="40dp">
 
             <TextView
-                android:id="@+id/tv_time_end"
+                android:id="@+id/tv_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
@@ -102,7 +102,7 @@
                 android:text="@string/time_start"/>
 
             <TextView
-                android:id="@+id/time_end"
+                android:id="@+id/tv_time_end"
                 android:layout_width="150dp"
                 android:layout_height="32dp"
                 android:gravity="center"

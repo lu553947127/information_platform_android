@@ -1,4 +1,4 @@
-package com.shuangduan.zcy.view.mine;
+package com.shuangduan.zcy.view.demand;
 
 import android.os.Bundle;
 
@@ -12,9 +12,9 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shuangduan.zcy.R;
-import com.shuangduan.zcy.adapter.LocusOrderAdapter;
+import com.shuangduan.zcy.adapter.DemandReleaseAdapter;
 import com.shuangduan.zcy.base.BaseLazyFragment;
-import com.shuangduan.zcy.vm.OrderVm;
+import com.shuangduan.zcy.vm.DemandRelationshipVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
 import butterknife.BindView;
@@ -23,24 +23,24 @@ import butterknife.BindView;
  * @author 宁文强 QQ:858777523
  * @name information_platform_android
  * @class name：com.shuangduan.zcy.view.mine
- * @class describe  轨迹订单
+ * @class describe  我的需求，找关系, 我发布的
  * @time 2019/8/12 16:49
  * @change
  * @chang time
  * @class describe
  */
-public class OrderLocusFragment extends BaseLazyFragment {
+public class DemandMineReleaseFragment extends BaseLazyFragment {
     @BindView(R.id.rv)
     RecyclerView rv;
     @BindView(R.id.refresh)
     SmartRefreshLayout refresh;
-    private OrderVm orderVm;
+    private DemandRelationshipVm demandRelationshipVm;
 
-    public static OrderLocusFragment newInstance() {
+    public static DemandMineReleaseFragment newInstance() {
 
         Bundle args = new Bundle();
 
-        OrderLocusFragment fragment = new OrderLocusFragment();
+        DemandMineReleaseFragment fragment = new DemandMineReleaseFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -54,38 +54,38 @@ public class OrderLocusFragment extends BaseLazyFragment {
     protected void initDataAndEvent(Bundle savedInstanceState) {
         rv.setLayoutManager(new LinearLayoutManager(mContext));
         rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
-        LocusOrderAdapter adapter = new LocusOrderAdapter(R.layout.item_order_locus, null);
+        DemandReleaseAdapter adapter = new DemandReleaseAdapter(R.layout.item_demand_relationship_release, null);
         adapter.setEmptyView(R.layout.layout_loading, rv);
         rv.setAdapter(adapter);
 
-        orderVm = ViewModelProviders.of(mActivity).get(OrderVm.class);
-        orderVm.locusLiveData.observe(this, orderListBean -> {
+        demandRelationshipVm = ViewModelProviders.of(mActivity).get(DemandRelationshipVm.class);
+        demandRelationshipVm.releaseLiveData.observe(this, demandRelationshipBean -> {
             isInited = true;
-            if (orderListBean.getPage() == 1) {
-                adapter.setNewData(orderListBean.getList());
+            if (demandRelationshipBean.getPage() == 1) {
+                adapter.setNewData(demandRelationshipBean.getList());
                 adapter.setEmptyView(R.layout.layout_empty, rv);
             }else {
-                adapter.addData(orderListBean.getList());
+                adapter.addData(demandRelationshipBean.getList());
             }
-            setNoMore(orderListBean.getPage(), orderListBean.getCount());
+            setNoMore(demandRelationshipBean.getPage(), demandRelationshipBean.getCount());
         });
 
         refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                orderVm.getMoreLocusOrder();
+                demandRelationshipVm.getMoreReleaseRelationship();
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                orderVm.getLocusOrder();
+                demandRelationshipVm.getReleaseRelationship();
             }
         });
     }
 
     @Override
     protected void initDataFromService() {
-        orderVm.getLocusOrder();
+        demandRelationshipVm.getReleaseRelationship();
     }
 
     private void setNoMore(int page, int count){

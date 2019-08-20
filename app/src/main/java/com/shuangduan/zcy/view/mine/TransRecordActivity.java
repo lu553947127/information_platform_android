@@ -168,10 +168,18 @@ public class TransRecordActivity extends BaseActivity {
                 }
                 break;
             case R.id.over:
-                popupWindow.dismiss();
-                over.setVisibility(View.GONE);
+                popDismiss();
                 break;
         }
+    }
+
+    private void popDismiss() {
+        popupWindow.dismiss();
+        tvType.setTextColor(getResources().getColor(R.color.colorTv));
+        ivType.setImageResource(R.drawable.icon_bottom);
+        tvInOut.setTextColor(getResources().getColor(R.color.colorTv));
+        ivInOut.setImageResource(R.drawable.icon_bottom);
+        over.setVisibility(View.GONE);
     }
 
     private CommonPopupWindow popupWindow;
@@ -212,8 +220,7 @@ public class TransRecordActivity extends BaseActivity {
                         }
 
                         view.findViewById(R.id.tv_negative).setOnClickListener(l -> {
-                            popupWindow.dismiss();
-                            over.setVisibility(View.GONE);
+                            popDismiss();
                         });
                         view.findViewById(R.id.tv_positive).setOnClickListener(l -> {
                             if (value != null){
@@ -242,8 +249,7 @@ public class TransRecordActivity extends BaseActivity {
                                 }
                             }
                             transRecordVm.getRecord();
-                            popupWindow.dismiss();
-                            over.setVisibility(View.GONE);
+                            popDismiss();
                         });
                     }).create();
         }

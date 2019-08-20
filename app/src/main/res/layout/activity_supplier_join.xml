@@ -66,6 +66,8 @@
             android:layout_marginLeft="87dp"
             android:background="@null"
             android:singleLine="true"
+            android:inputType="phone"
+            android:maxLength="11"
             android:textColorHint="@color/colorTvHint"
             android:textColor="@color/colorTv"
             android:textSize="14sp"

@@ -14,9 +14,6 @@ import com.google.android.material.tabs.TabLayout;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ViewPagerAdapter;
 import com.shuangduan.zcy.base.BaseActivity;
-import com.shuangduan.zcy.view.mine.FindBuyerFragment;
-import com.shuangduan.zcy.view.mine.FindRelationshipFragment;
-import com.shuangduan.zcy.view.mine.FindSubstanceFragment;
 
 import butterknife.BindView;
 import butterknife.OnClick;

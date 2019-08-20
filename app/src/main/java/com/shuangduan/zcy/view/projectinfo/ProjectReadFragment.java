@@ -19,6 +19,7 @@ import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.LocusAdapter;
+import com.shuangduan.zcy.adapter.LocusReadAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseFragment;
 import com.shuangduan.zcy.base.BaseLazyFragment;
@@ -56,7 +57,7 @@ public class ProjectReadFragment extends BaseLazyFragment {
     @BindView(R.id.rv_locus)
     RecyclerView rvLocus;
     private ProjectDetailVm projectDetailVm;
-    private LocusAdapter locusAdapter;
+    private LocusReadAdapter locusAdapter;
 
     public static ProjectReadFragment newInstance() {
 
@@ -75,12 +76,7 @@ public class ProjectReadFragment extends BaseLazyFragment {
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         rvLocus.setLayoutManager(new LinearLayoutManager(mContext));
-        locusAdapter = new LocusAdapter(R.layout.item_locus, null){
-            @Override
-            public void readDetail(int position, String price) {
-
-            }
-        };
+        locusAdapter = new LocusReadAdapter(R.layout.item_locus, null);
         locusAdapter.setEmptyView(R.layout.layout_loading_top, rvLocus);
         rvLocus.setAdapter(locusAdapter);
         locusAdapter.setOnItemChildClickListener((adapter, view, position) -> {

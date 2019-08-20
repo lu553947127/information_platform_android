@@ -11,6 +11,9 @@ import com.shuangduan.zcy.model.bean.CoinPayResultBean;
 import com.shuangduan.zcy.model.bean.ConsumeBean;
 import com.shuangduan.zcy.model.bean.ContactListBean;
 import com.shuangduan.zcy.model.bean.ContactTypeBean;
+import com.shuangduan.zcy.model.bean.DemandBuyerBean;
+import com.shuangduan.zcy.model.bean.DemandRelationshipBean;
+import com.shuangduan.zcy.model.bean.DemandSubstanceBean;
 import com.shuangduan.zcy.model.bean.HeadlinesBean;
 import com.shuangduan.zcy.model.bean.HeadlinesDetailBean;
 import com.shuangduan.zcy.model.bean.HomeBannerBean;
@@ -55,6 +58,7 @@ import com.shuangduan.zcy.model.bean.RecruitDetailBean;
 import com.shuangduan.zcy.model.bean.RecruitSubBean;
 import com.shuangduan.zcy.model.bean.RegisterBean;
 import com.shuangduan.zcy.model.bean.DemandReleaseBean;
+import com.shuangduan.zcy.model.bean.RelationshipDetailBean;
 import com.shuangduan.zcy.model.bean.StageBean;
 import com.shuangduan.zcy.model.bean.SubBean;
 import com.shuangduan.zcy.model.bean.SupplierBean;
@@ -275,9 +279,7 @@ public interface ApiService {
     @POST("api/Project/dataList")
     Flowable<BaseResponse<ProjectInfoBean>> projectList(
             @Query("user_id")int user_id,
-            @Query("province")String province,
             @Body ProjectFilterBean city,
-            @Query("phases")String phases,
             @Query("stime")String stime,
             @Query("etime")String etime,
             @Query("warrant_status")String warrant_status,
@@ -636,7 +638,7 @@ public interface ApiService {
     @POST("api/Material/dateList")
     Flowable<BaseResponse<MaterialBean>> materialList(
             @Field("user_id") int user_id,
-            @Field("categoryId") int category_id,
+            @Field("category_id") int category_id,
             @Field("type") int type,
             @Field("page") int page
     );
@@ -677,6 +679,7 @@ public interface ApiService {
             @Query("company") String company,
             @Query("address") String address,
             @Query("product") String product,
+            @Query("province") int province,
             @Query("city") int city,
             @Body SupplierJoinImageBean joinImageBean
             );
@@ -889,12 +892,96 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("api/Relation/add")
-    Flowable<BaseResponse<DemandReleaseBean>> demandRelease(
+    Flowable<BaseResponse<DemandReleaseBean>> demandRelationshipRelease(
             @Field("user_id") int user_id,
             @Field("title") String title,
             @Field("intro") String intro,
             @Field("start_time") String start_time,
             @Field("end_time") String end_time,
             @Field("price") String price
+    );
+
+    @FormUrlEncoded
+    @POST("api/Relation/materialAdd")
+    Flowable<BaseResponse<DemandReleaseBean>> demandSubstanceRelease(
+            @Field("user_id") int user_id,
+            @Field("material_name") String material_name,
+            @Field("count") String count,
+            @Field("project_name") String project_name,
+            @Field("address") String address,
+            @Field("acceptance_price") String acceptance_price,
+            @Field("tel") String tel,
+            @Field("way") String way,
+            @Field("start_time") String start_time,
+            @Field("end_time") String end_time
+    );
+
+    @FormUrlEncoded
+    @POST("api/Relation/buyerAdd")
+    Flowable<BaseResponse<DemandReleaseBean>> demandBuyerRelease(
+            @Field("user_id") int user_id,
+            @Field("material_name") String material_name,
+            @Field("count") String count,
+            @Field("project_name") String project_name,
+            @Field("address") String address,
+            @Field("acceptance_price") String acceptance_price,
+            @Field("tel") String tel,
+            @Field("way") String way,
+            @Field("start_time") String start_time,
+            @Field("end_time") String end_time
+    );
+
+    @FormUrlEncoded
+    @POST("api/Relation/relationList")
+    Flowable<BaseResponse<DemandRelationshipBean>> demandRelationship(
+            @Field("user_id") int user_id,
+            @Field("page") int page
+    );
+
+    @FormUrlEncoded
+    @POST("api/Relation/index")
+    Flowable<BaseResponse<DemandRelationshipBean>> demandRelationshipAccept(
+            @Field("user_id") int user_id,
+            @Field("page") int page
+    );
+
+    @FormUrlEncoded
+    @POST("api/Relation/myRelationList")
+    Flowable<BaseResponse<DemandRelationshipBean>> demandRelationshipRelease(
+            @Field("user_id") int user_id,
+            @Field("page") int page
+    );
+
+    @FormUrlEncoded
+    @POST("api/Relation/materialList")
+    Flowable<BaseResponse<DemandSubstanceBean>> demandSubstance(
+            @Field("user_id") int user_id,
+            @Field("page") int page,
+            @Field("is_my") int is_my
+    );
+
+    @FormUrlEncoded
+    @POST("api/Relation/buyerList")
+    Flowable<BaseResponse<DemandBuyerBean>> demandBuyer(
+            @Field("user_id") int user_id,
+            @Field("page") int page,
+            @Field("is_my") int is_my
+    );
+
+    @FormUrlEncoded
+    @POST("api/Relation/orderTaking")
+    Flowable<BaseResponse> orderTaking(
+            @Field("user_id") int user_id,
+            @Field("id") int id,
+            @Field("name") String name,
+            @Field("tel") String tel,
+            @Field("intro") String intro
+    );
+
+    @FormUrlEncoded
+    @POST("api/Relation/details")
+    Flowable<BaseResponse<RelationshipDetailBean>> relationshipDetail(
+            @Field("user_id") int user_id,
+            @Field("id") int id
     );
 }

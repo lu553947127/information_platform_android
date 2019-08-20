@@ -7,22 +7,13 @@ import java.util.List;
  * @name information_platform_android
  * @class name：com.shuangduan.zcy.model.bean
  * @class describe
- * @time 2019/8/12 15:18
+ * @time 2019/8/20 9:06
  * @change
  * @chang time
  * @class describe
  */
-public class SupplierJoinImageBean {
-    private List<Integer> images;
+public class MultiAreaBean {
     private List<Integer> serve_address;
-
-    public List<Integer> getImages() {
-        return images;
-    }
-
-    public void setImages(List<Integer> images) {
-        this.images = images;
-    }
 
     public List<Integer> getServe_address() {
         return serve_address;

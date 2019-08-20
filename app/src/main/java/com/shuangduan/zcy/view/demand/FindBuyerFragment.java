@@ -1,4 +1,4 @@
-package com.shuangduan.zcy.view.mine;
+package com.shuangduan.zcy.view.demand;
 
 import android.os.Bundle;
 
@@ -12,9 +12,9 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shuangduan.zcy.R;
-import com.shuangduan.zcy.adapter.SupplierOrderAdapter;
+import com.shuangduan.zcy.adapter.DemandBuyerAdapter;
 import com.shuangduan.zcy.base.BaseLazyFragment;
-import com.shuangduan.zcy.vm.OrderVm;
+import com.shuangduan.zcy.vm.DemandBuyerVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
 import butterknife.BindView;
@@ -34,7 +34,7 @@ public class FindBuyerFragment extends BaseLazyFragment {
     RecyclerView rv;
     @BindView(R.id.refresh)
     SmartRefreshLayout refresh;
-    private OrderVm orderVm;
+    private DemandBuyerVm demandBuyerVm;
 
     public static FindBuyerFragment newInstance() {
 
@@ -54,38 +54,38 @@ public class FindBuyerFragment extends BaseLazyFragment {
     protected void initDataAndEvent(Bundle savedInstanceState) {
         rv.setLayoutManager(new LinearLayoutManager(mContext));
         rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
-        SupplierOrderAdapter adapter = new SupplierOrderAdapter(R.layout.item_order_supplier, null);
+        DemandBuyerAdapter adapter = new DemandBuyerAdapter(R.layout.item_demand_buyer, null);
         adapter.setEmptyView(R.layout.layout_loading, rv);
         rv.setAdapter(adapter);
 
-        orderVm = ViewModelProviders.of(mActivity).get(OrderVm.class);
-        orderVm.supplierLiveData.observe(this, orderListBean -> {
+        demandBuyerVm = ViewModelProviders.of(mActivity).get(DemandBuyerVm.class);
+        demandBuyerVm.buyerLiveData.observe(this, demandBuyerBean -> {
             isInited = true;
-            if (orderListBean.getPage() == 1) {
-                adapter.setNewData(orderListBean.getList());
+            if (demandBuyerBean.getPage() == 1) {
+                adapter.setNewData(demandBuyerBean.getList());
                 adapter.setEmptyView(R.layout.layout_empty, rv);
             }else {
-                adapter.addData(orderListBean.getList());
+                adapter.addData(demandBuyerBean.getList());
             }
-            setNoMore(orderListBean.getPage(), orderListBean.getCount());
+            setNoMore(demandBuyerBean.getPage(), demandBuyerBean.getCount());
         });
 
         refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                orderVm.getMoreSupplierOrder();
+                demandBuyerVm.getMoreBuyer();
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                orderVm.getSupplierOrder();
+                demandBuyerVm.getBuyer();
             }
         });
     }
 
     @Override
     protected void initDataFromService() {
-        orderVm.getSupplierOrder();
+        demandBuyerVm.getBuyer();
     }
 
     private void setNoMore(int page, int count){

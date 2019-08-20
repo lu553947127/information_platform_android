@@ -1,20 +1,25 @@
-package com.shuangduan.zcy.view.mine;
+package com.shuangduan.zcy.view.demand;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.ActivityUtils;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shuangduan.zcy.R;
-import com.shuangduan.zcy.adapter.LocusOrderAdapter;
+import com.shuangduan.zcy.adapter.FindRelationshipAdapter;
+import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseLazyFragment;
-import com.shuangduan.zcy.vm.OrderVm;
+import com.shuangduan.zcy.model.bean.DemandRelationshipBean;
+import com.shuangduan.zcy.vm.DemandRelationshipVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
 import butterknife.BindView;
@@ -23,69 +28,75 @@ import butterknife.BindView;
  * @author 宁文强 QQ:858777523
  * @name information_platform_android
  * @class name：com.shuangduan.zcy.view.mine
- * @class describe  轨迹订单
- * @time 2019/8/12 16:49
+ * @class describe  发布需求，找关系
+ * @time 2019/8/13 10:42
  * @change
  * @chang time
  * @class describe
  */
-public class OrderLocusFragment extends BaseLazyFragment {
+public class FindRelationshipFragment extends BaseLazyFragment {
     @BindView(R.id.rv)
     RecyclerView rv;
     @BindView(R.id.refresh)
     SmartRefreshLayout refresh;
-    private OrderVm orderVm;
+    private DemandRelationshipVm demandRelationshipVm;
 
-    public static OrderLocusFragment newInstance() {
+    public static FindRelationshipFragment newInstance() {
 
         Bundle args = new Bundle();
 
-        OrderLocusFragment fragment = new OrderLocusFragment();
+        FindRelationshipFragment fragment = new FindRelationshipFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     protected int initLayout() {
-        return R.layout.fragment_project_info;
+        return R.layout.fragment_order_recruit;
     }
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         rv.setLayoutManager(new LinearLayoutManager(mContext));
         rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
-        LocusOrderAdapter adapter = new LocusOrderAdapter(R.layout.item_order_locus, null);
-        adapter.setEmptyView(R.layout.layout_loading, rv);
-        rv.setAdapter(adapter);
+        FindRelationshipAdapter relationshipAdapter = new FindRelationshipAdapter(R.layout.item_demand_relationship, null);
+        relationshipAdapter.setEmptyView(R.layout.layout_loading, rv);
+        rv.setAdapter(relationshipAdapter);
+        relationshipAdapter.setOnItemClickListener((adapter, view, position) -> {
+            DemandRelationshipBean.ListBean listBean = relationshipAdapter.getData().get(position);
+            Bundle bundle = new Bundle();
+            bundle.putInt(CustomConfig.DEMAND_ID, listBean.getId());
+            ActivityUtils.startActivity(bundle, FindRelationshipDetailActivity.class);
+        });
 
-        orderVm = ViewModelProviders.of(mActivity).get(OrderVm.class);
-        orderVm.locusLiveData.observe(this, orderListBean -> {
+        demandRelationshipVm = ViewModelProviders.of(mActivity).get(DemandRelationshipVm.class);
+        demandRelationshipVm.relationshipLiveData.observe(this, relationshipBean -> {
             isInited = true;
-            if (orderListBean.getPage() == 1) {
-                adapter.setNewData(orderListBean.getList());
-                adapter.setEmptyView(R.layout.layout_empty, rv);
+            if (relationshipBean.getPage() == 1) {
+                relationshipAdapter.setNewData(relationshipBean.getList());
+                relationshipAdapter.setEmptyView(R.layout.layout_empty, rv);
             }else {
-                adapter.addData(orderListBean.getList());
+                relationshipAdapter.addData(relationshipBean.getList());
             }
-            setNoMore(orderListBean.getPage(), orderListBean.getCount());
+            setNoMore(relationshipBean.getPage(), relationshipBean.getCount());
         });
 
         refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                orderVm.getMoreLocusOrder();
+                demandRelationshipVm.getMoreRelationship();
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                orderVm.getLocusOrder();
+                demandRelationshipVm.getRelationship();
             }
         });
     }
 
     @Override
     protected void initDataFromService() {
-        orderVm.getLocusOrder();
+        demandRelationshipVm.getRelationship();
     }
 
     private void setNoMore(int page, int count){

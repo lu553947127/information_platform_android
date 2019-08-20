@@ -27,13 +27,13 @@ public class ProjectListVm extends BaseViewModel {
     public MutableLiveData<ProjectInfoBean> projectLiveData;
     private int userId;
     private int page = 1;
-    public String province = null;
-    public int[] city = null;
-    public String phases = null;
-    public int[] type = null;
+    public List<Integer> city = null;
+    public List<Integer> phases = null;
+    public List<Integer> type = null;
     public String stime = null;
     public String etime = null;
     public String warrant_status = null;
+    public int currentSelect = 0;//当前显示的弹窗
 
     /**
      * 初始化数据
@@ -48,14 +48,14 @@ public class ProjectListVm extends BaseViewModel {
     public void projectList(){
         page = 1;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
-        ProjectFilterBean projectFilterBean = new ProjectFilterBean(null, null);
-        new ProjectRepository().projectList(projectLiveData, pageStateLiveData, userId, province, projectFilterBean, phases, stime, etime, warrant_status, page);
+        ProjectFilterBean projectFilterBean = new ProjectFilterBean(city, type, phases);
+        new ProjectRepository().projectList(projectLiveData, pageStateLiveData, userId, projectFilterBean, stime, etime, warrant_status, page);
     }
 
     public void moreProjectList(){
         page++;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
-        ProjectFilterBean projectFilterBean = new ProjectFilterBean(null, null);
-        new ProjectRepository().projectList(projectLiveData, pageStateLiveData, userId, province, projectFilterBean, phases, stime, etime, warrant_status, page);
+        ProjectFilterBean projectFilterBean = new ProjectFilterBean(city, type, phases);
+        new ProjectRepository().projectList(projectLiveData, pageStateLiveData, userId, projectFilterBean, stime, etime, warrant_status, page);
     }
 }

@@ -9,6 +9,7 @@ import com.shuangduan.zcy.base.BaseViewModel;
 import com.shuangduan.zcy.model.api.repository.ProjectRepository;
 import com.shuangduan.zcy.model.bean.StageBean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -102,5 +103,19 @@ public class MultiStageVm extends BaseViewModel {
         }
 
         stageLiveData.postValue(data);
+    }
+
+    public List<Integer> getStageId(){
+        List<StageBean> value = stageLiveData.getValue();
+        if (value == null || value.size() == 0 || value.get(0).getIsSelect() == 1){
+            return null;
+        }
+        List<Integer> stageId = new ArrayList<>();
+        for (int i = 0; i < value.size(); i++) {
+            if (value.get(i).getIsSelect() == 1){
+                stageId.add(value.get(i).getId());
+            }
+        }
+        return stageId.size() != 0? stageId : null;
     }
 }

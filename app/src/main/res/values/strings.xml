@@ -121,7 +121,7 @@
     <string name="hint_new_pwd">请输入新的密码</string>
     <string name="hint_opinion">请在此输入您的意见</string>
     <string name="hint_opinion_error">请输入您的意见</string>
-    <string name="share_url">http://www.shuangduan.com</string>
+    <string name="share_url">zicai365.com</string>
     <string name="share">分享</string>
     <string name="mobile">电话</string>
     <string name="exit_confirm">确认退出登录吗</string>
@@ -314,6 +314,11 @@
     <string name="find_substance">找物质</string>
     <string name="find_buyer">找买家</string>
     <string name="effective_time">有效时间</string>
+    <string name="find_relationship_detail">找关系详情</string>
+    <string name="find_relationship_reply_success">信息提交成功</string>
+    <string name="hint_name_or_company">请输入姓名或公司</string>
+    <string name="hint_contact">请输入联系方式</string>
+    <string name="hint_relationship_remarks">为了您的信息能尽快通过审核，请按照需求详细填写</string>
 
     <string name="format_version_name">当前版本号：v%1$s</string>
     <string name="format_get_verification_code_again">重新获取 (%1$ds)</string>
@@ -343,7 +348,7 @@
     <string name="format_valuation">估价：%1$s</string>
     <string name="format_consumption">消费次数：%1$d次</string>
     <string name="format_locus_num">轨迹信息：%1$d条</string>
-    <string name="format_pay_price">查看此消息请支付%1$s元</string>
+    <string name="format_pay_price">查看此消息请支付%1$s币</string>
     <string name="format_provide">供应：%1$d吨</string>
     <string name="format_sold">已售：%1$d吨</string>
     <string name="format_order_num">%1$d单</string>
@@ -353,9 +358,13 @@
     <string name="format_amount_sub">认购金额: %1$s元</string>
     <string name="format_amount_return">已返金额: %1$s元</string>
     <string name="format_price">价格: %1$s元</string>
-    <string name="format_pay">请支付: %1$s元！</string>
+    <string name="format_price_accept">接受价格: %1$s元</string>
+    <string name="format_pay">请支付: %1$s币！</string>
     <string name="format_income_degree">%1$d°人脉收益</string>
     <string name="format_trans_time">交易时间: %1$s</string>
+    <string name="format_validity_period">有效期: %1$s至%2$s</string>
+    <string name="format_demand_num">需求数量: %1$s吨</string>
+    <string name="format_commission">佣金: %1$s币</string>
 
     <string name="please_select_time">请选择时间</string>
     <string name="year">年</string>

@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.TimeUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -193,16 +194,15 @@ public class ProjectInfoListActivity extends BaseActivity {
                 getTypesData();
                 break;
             case R.id.ll_time:
-                showPopArea(null, null, null, 4);
+                projectListVm.currentSelect = 4;
+                showPopArea(null, null, null);
                 break;
             case R.id.ll_subscribe:
-                showPopArea(null, null, null, 5);
+                projectListVm.currentSelect = 5;
+                showPopArea(null, null, null);
                 break;
             case R.id.over:
-                if (popupWindowArea != null && popupWindowArea.isShowing()){
-                    popupWindowArea.dismiss();
-                }
-                over.setVisibility(View.GONE);
+                popDismiss();
                 break;
         }
     }
@@ -227,7 +227,7 @@ public class ProjectInfoListActivity extends BaseActivity {
     private SelectorFirstAdapter stageFirstAdapter;
     private SelectorFirstAdapter typeFirstAdapter;
     private SelectorSecondAdapter typeSecondAdapter;
-    private void showPopArea(final List<ProvinceBean> dataArea, final List<StageBean> dataStage, final List<TypeBean> dataType, int popType){
+    private void showPopArea(final List<ProvinceBean> dataArea, final List<StageBean> dataStage, final List<TypeBean> dataType){
         if (popupWindowArea == null){
             popupWindowArea = new CommonPopupWindow.Builder(this)
                     .setView(R.layout.dialog_area)
@@ -244,7 +244,7 @@ public class ProjectInfoListActivity extends BaseActivity {
                         tvTimeEnd = view.findViewById(R.id.tv_time_end);
                         cbUnsubscribe = view.findViewById(R.id.cb_unsubscribe);
                         cbSubscribe = view.findViewById(R.id.cb_subscribe);
-                        switch (popType){
+                        switch (projectListVm.currentSelect){
                             case 1:
                                 llArea.setVisibility(View.VISIBLE);
                                 llStage.setVisibility(View.GONE);
@@ -372,31 +372,20 @@ public class ProjectInfoListActivity extends BaseActivity {
                         });
 
                         view.findViewById(R.id.tv_negative).setOnClickListener(v -> {
-                            over.setVisibility(View.VISIBLE);
-                            popupWindowArea.dismiss();
+                            popDismiss();
                         });
                         view.findViewById(R.id.tv_positive).setOnClickListener(v -> {
-                            switch (popType){
+                            switch (projectListVm.currentSelect){
                                 case 1:
-//                                    int[] cityResult = areaVm.getResult();
-//                                    if (cityResult == null){
-//                                        projectListVm.province = null;
-//                                        projectListVm.city = null;
-//                                    }else {
-//                                        projectListVm.city = cityResult;
-//                                        projectListVm.province = String.valueOf(areaVm.getProvinceId());
-//                                    }
+                                    projectListVm.city = areaVm.getCityIds();
+                                    LogUtils.i(areaVm.getStringResult());
                                     break;
                                 case 2:
-//                                    projectListVm.phases = String.valueOf(stageVm.getFirstId());
+                                    projectListVm.phases = stageVm.getStageId();
                                     break;
                                 case 3:
-//                                    int[] typeResult = typeVm.getResult();
-//                                    if (typeResult == null){
-//                                        projectListVm.type = null;
-//                                    }else {
-//                                        projectListVm.city = typeResult;
-//                                    }
+                                    projectListVm.type = typeVm.getSecondIds();
+                                    LogUtils.i(typeVm.getStringResult());
                                     break;
                                 case 4:
                                     projectListVm.stime = tvTimeStart.getText().toString();
@@ -414,13 +403,13 @@ public class ProjectInfoListActivity extends BaseActivity {
                                     }
                                     break;
                             }
-                            over.setVisibility(View.GONE);
-                            popupWindowArea.dismiss();
+                            projectListVm.projectList();
+                            popDismiss();
                         });
                     })
                     .create();
         }
-        switch (popType){
+        switch (projectListVm.currentSelect){
             case 1:
                 provinceAdapter.setNewData(dataArea);
                 llArea.setVisibility(View.VISIBLE);
@@ -516,12 +505,29 @@ public class ProjectInfoListActivity extends BaseActivity {
         }
     }
 
+    private void popDismiss() {
+        over.setVisibility(View.GONE);
+        tvArea.setTextColor(getResources().getColor(R.color.colorTv));
+        ivExpand.setImageResource(R.drawable.icon_bottom);
+        tvStage.setTextColor(getResources().getColor(R.color.colorTv));
+        ivStage.setImageResource(R.drawable.icon_bottom);
+        tvType.setTextColor(getResources().getColor(R.color.colorTv));
+        ivType.setImageResource(R.drawable.icon_bottom);
+        tvTime.setTextColor(getResources().getColor(R.color.colorTv));
+        ivTime.setImageResource(R.drawable.icon_bottom);
+        tvSubscribe.setTextColor(getResources().getColor(R.color.colorTv));
+        ivSubscribe.setImageResource(R.drawable.icon_bottom);
+        if (popupWindowArea != null && popupWindowArea.isShowing())
+            popupWindowArea.dismiss();
+    }
+
     private void initStage(){
         stageVm.stageLiveData.observe(this, stageBeans -> {
             if (!stageVm.inited){
                 stageVm.setStageInit();
             }else {
-                showPopArea(null, stageBeans, null, 2);
+                projectListVm.currentSelect = 2;
+                showPopArea(null, stageBeans, null);
             }
         });
 
@@ -544,7 +550,8 @@ public class ProjectInfoListActivity extends BaseActivity {
         if (stageVm.stageLiveData.getValue() == null){
             stageVm.getStage();
         }else {
-            showPopArea(null, stageVm.stageLiveData.getValue(), null, 2);
+            projectListVm.currentSelect = 2;
+            showPopArea(null, stageVm.stageLiveData.getValue(), null);
         }
     }
 
@@ -557,7 +564,8 @@ public class ProjectInfoListActivity extends BaseActivity {
                 //首次加载，未添加全部，
                 areaVm.setProvinceInit();
             }else {
-                showPopArea(provinceBeans, null, null, 1);
+                projectListVm.currentSelect = 1;
+                showPopArea(provinceBeans, null, null);
             }
         });
         areaVm.cityLiveData.observe(this, cityBeans -> {
@@ -583,7 +591,8 @@ public class ProjectInfoListActivity extends BaseActivity {
         if (areaVm.provinceLiveData.getValue() == null){
             areaVm.getProvince();
         }else {
-            showPopArea(areaVm.provinceLiveData.getValue(), null, null, 1);
+            projectListVm.currentSelect = 1;
+            showPopArea(areaVm.provinceLiveData.getValue(), null, null);
         }
     }
 
@@ -596,7 +605,8 @@ public class ProjectInfoListActivity extends BaseActivity {
                 //首次加载，未添加全部，
                 typeVm.setTypeFirstInit();
             }else {
-                showPopArea(null, null, typeBeans, 3);
+                projectListVm.currentSelect = 3;
+                showPopArea(null, null, typeBeans);
             }
         });
         typeVm.typeSecondLiveData.observe(this, typeBeans1 -> {
@@ -623,7 +633,8 @@ public class ProjectInfoListActivity extends BaseActivity {
         if (typeVm.typeFirstLiveData.getValue() == null){
             typeVm.getTypesFirst();
         }else {
-            showPopArea(null, null, typeVm.typeFirstLiveData.getValue(), 3);
+            projectListVm.currentSelect = 3;
+            showPopArea(null, null, typeVm.typeFirstLiveData.getValue());
         }
     }
 

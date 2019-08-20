@@ -1,11 +1,15 @@
 package com.shuangduan.zcy.adapter;
 
+import android.widget.ImageView;
+
 import androidx.annotation.Nullable;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.model.bean.OrderListBean;
+import com.shuangduan.zcy.utils.image.ImageConfig;
+import com.shuangduan.zcy.utils.image.ImageLoader;
 
 import java.util.List;
 
@@ -31,5 +35,12 @@ public class SupplierOrderAdapter extends BaseQuickAdapter<OrderListBean.ListBea
                 .setText(R.id.tv_mobile, item.getTel())
                 .setText(R.id.tv_time, item.getCreate_time())
                 .setText(R.id.tv_amount, String.format(mContext.getString(R.string.format_pay_amount), item.getPrice()));
+        ImageView ivHeader = helper.getView(R.id.iv_header);
+        ImageLoader.load(mContext, new ImageConfig.Builder()
+                .url(item.getHeadimg())
+                .imageView(ivHeader)
+                .placeholder(R.drawable.default_head)
+                .errorPic(R.drawable.default_head)
+                .build());
     }
 }

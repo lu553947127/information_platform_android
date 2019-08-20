@@ -238,6 +238,13 @@ public class MultiTypeVm extends BaseViewModel {
         firstData.get(0).setIsSelect(1);
         firstData.get(0).getChildList().get(0).setIsSelect(1);
         for (int i = 0; i <firstData.size(); i++) {
+            //如果有省份没有被选中，则为非全选
+            if (firstData.get(i).isSelect != 1){
+                firstData.get(0).setIsSelect(0);
+                firstData.get(0).getChildList().get(0).setIsSelect(0);
+                break;
+            }
+            //如果省份中的城市有没有被选中，则为非全选
             List<TypeBean> childList = firstData.get(i).getChildList();
             if (childList != null){
                 if (childList.get(0).getIsSelect() != 1){
@@ -250,10 +257,77 @@ public class MultiTypeVm extends BaseViewModel {
 
         if (firstData.get(0).getChildList().get(0).getIsSelect() == 1) {
             selectAll = true;//只在全部选中的时候改变为true
+        }else {
+            selectAll = false;
         }
 
         typeFirstLiveData.postValue(firstData);
     }
 
+    private StringBuilder stringBuilder;
+    public List<Integer> getFirstSecondIds(){
+        List<TypeBean> firstList = typeFirstLiveData.getValue();
+        stringBuilder = new StringBuilder();
+        List<Integer> result = new ArrayList<>();
+        if (firstList != null){
+            for (int i = 0; i < firstList.size(); i++) {
+                if (i == 0 && firstList.get(i).getChildList().get(0).getIsSelect() == 1){
+                    //全选，返回null
+                    return null;
+                }else if (firstList.get(i).isSelect == 1){
+                    result.add(firstList.get(i).getId());
+                    if (stringBuilder.length() == 0){
+                        stringBuilder.append(firstList.get(i).getCatname());
+                    }else {
+                        stringBuilder.append(",").append(firstList.get(i).getCatname());
+                    }
+                    List<TypeBean> secondList = firstList.get(i).getChildList();
+                    if (secondList != null){
+                        for (int j = 0; j < secondList.size(); j++) {
+                            if (secondList.get(j).isSelect == 1){
+                                result.add(secondList.get(j).getId());
+                                stringBuilder.append(",").append(secondList.get(j).getCatname());
+                            }
+                        }
+                    }
+                }
+            }
+            return result;
+        }
+        return null;
+    }
 
+    public List<Integer> getSecondIds(){
+        List<TypeBean> firstList = typeFirstLiveData.getValue();
+        stringBuilder = new StringBuilder();
+        List<Integer> result = new ArrayList<>();
+        if (firstList != null){
+            for (int i = 0; i < firstList.size(); i++) {
+                if (i == 0 && firstList.get(i).getChildList().get(0).getIsSelect() == 1){
+                    //全选，返回null
+                    return null;
+                }else if (firstList.get(i).isSelect == 1){
+                    List<TypeBean> secondList = firstList.get(i).getChildList();
+                    if (secondList != null){
+                        for (int j = 0; j < secondList.size(); j++) {
+                            if (secondList.get(j).isSelect == 1){
+                                result.add(secondList.get(j).getId());
+                                if (stringBuilder.length() == 0){
+                                    stringBuilder.append(secondList.get(j).getCatname());
+                                }else {
+                                    stringBuilder.append(",").append(secondList.get(j).getCatname());
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return result;
+        }
+        return null;
+    }
+
+    public String getStringResult(){
+        return stringBuilder != null? stringBuilder.toString():"";
+    }
 }

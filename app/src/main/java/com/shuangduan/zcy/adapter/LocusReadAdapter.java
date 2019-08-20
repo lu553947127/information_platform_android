@@ -1,15 +1,11 @@
 package com.shuangduan.zcy.adapter;
 
-import android.text.TextPaint;
 import android.text.TextUtils;
-import android.text.style.ClickableSpan;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
-import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.SpanUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -31,8 +27,8 @@ import java.util.List;
  * @chang time
  * @class describe
  */
-public abstract class LocusAdapter extends BaseQuickAdapter<TrackBean.ListBean, BaseViewHolder> {
-    public LocusAdapter(int layoutResId, @Nullable List<TrackBean.ListBean> data) {
+public class LocusReadAdapter extends BaseQuickAdapter<TrackBean.ListBean, BaseViewHolder> {
+    public LocusReadAdapter(int layoutResId, @Nullable List<TrackBean.ListBean> data) {
         super(layoutResId, data);
     }
 
@@ -66,25 +62,7 @@ public abstract class LocusAdapter extends BaseQuickAdapter<TrackBean.ListBean, 
                     .append(":")
                     .append(item.getTel());
         }
-        if (item.getIs_pay() == 1){
-            spanUtils.create();
-        }else {
-            spanUtils.appendSpace(2)
-                    .append(mContext.getString(R.string.read_detail))
-                    .setFontSize(ConvertUtils.sp2px(13))
-                    .setForegroundColor(mContext.getResources().getColor(R.color.colorPrimary))
-                    .setClickSpan(new ClickableSpan() {
-                        @Override
-                        public void onClick(View widget) {
-                            readDetail(helper.getLayoutPosition(), item.getPrice());
-                        }
-
-                        @Override
-                        public void updateDrawState(TextPaint ds) {
-
-                        }
-                    }).create();
-        }
+        spanUtils.create();
 
         if (item.getImage() != null){
             if (item.getImage().size() >= 1){
@@ -110,6 +88,4 @@ public abstract class LocusAdapter extends BaseQuickAdapter<TrackBean.ListBean, 
                 .build());
 
     }
-
-    public abstract void readDetail(int position, String price);
 }

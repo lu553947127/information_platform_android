@@ -1,4 +1,4 @@
-package com.shuangduan.zcy.view.mine;
+package com.shuangduan.zcy.view.demand;
 
 import android.os.Bundle;
 
@@ -22,17 +22,17 @@ import butterknife.BindView;
  * @chang time
  * @class describe
  */
-public class FindRelationshipFragment extends BaseLazyFragment {
+public class FindMineRelationshipFragment extends BaseLazyFragment {
     @BindView(R.id.tab_layout)
     TabLayout tabLayout;
     @BindView(R.id.vp)
     ViewPager vp;
 
-    public static FindRelationshipFragment newInstance() {
+    public static FindMineRelationshipFragment newInstance() {
 
         Bundle args = new Bundle();
 
-        FindRelationshipFragment fragment = new FindRelationshipFragment();
+        FindMineRelationshipFragment fragment = new FindMineRelationshipFragment();
         fragment.setArguments(args);
         return fragment;
     }

@@ -1,4 +1,4 @@
-package com.shuangduan.zcy.view.mine;
+package com.shuangduan.zcy.view.demand;
 
 import android.os.Bundle;
 
@@ -12,9 +12,9 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shuangduan.zcy.R;
-import com.shuangduan.zcy.adapter.ProjectOrderAdapter;
+import com.shuangduan.zcy.adapter.DemandMineBuyerAdapter;
 import com.shuangduan.zcy.base.BaseLazyFragment;
-import com.shuangduan.zcy.vm.OrderVm;
+import com.shuangduan.zcy.vm.DemandBuyerVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
 import butterknife.BindView;
@@ -23,69 +23,70 @@ import butterknife.BindView;
  * @author 宁文强 QQ:858777523
  * @name information_platform_android
  * @class name：com.shuangduan.zcy.view.mine
- * @class describe  我的需求，找关系, 我发布的
- * @time 2019/8/12 16:49
+ * @class describe  我的需求，找买家
+ * @time 2019/8/13 10:42
  * @change
  * @chang time
  * @class describe
  */
-public class DemandMineReleaseFragment extends BaseLazyFragment {
+public class FindMineBuyerFragment extends BaseLazyFragment {
     @BindView(R.id.rv)
     RecyclerView rv;
     @BindView(R.id.refresh)
     SmartRefreshLayout refresh;
-    private OrderVm orderVm;
+    private DemandBuyerVm demandBuyerVm;
 
-    public static DemandMineReleaseFragment newInstance() {
+    public static FindMineBuyerFragment newInstance() {
 
         Bundle args = new Bundle();
 
-        DemandMineReleaseFragment fragment = new DemandMineReleaseFragment();
+        FindMineBuyerFragment fragment = new FindMineBuyerFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     protected int initLayout() {
-        return R.layout.fragment_project_info;
+        return R.layout.fragment_order_recruit;
     }
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         rv.setLayoutManager(new LinearLayoutManager(mContext));
         rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
-        ProjectOrderAdapter adapter = new ProjectOrderAdapter(R.layout.item_order_project, null);
+        DemandMineBuyerAdapter adapter = new DemandMineBuyerAdapter(R.layout.item_demand_buyer, null);
         adapter.setEmptyView(R.layout.layout_loading, rv);
         rv.setAdapter(adapter);
 
-        orderVm = ViewModelProviders.of(mActivity).get(OrderVm.class);
-        orderVm.projectLiveData.observe(this, orderListBean -> {
+        demandBuyerVm = ViewModelProviders.of(mActivity).get(DemandBuyerVm.class);
+        demandBuyerVm.isMy = 1;
+        demandBuyerVm.buyerLiveData.observe(this, demandBuyerBean -> {
             isInited = true;
-            if (orderListBean.getPage() == 1) {
-                adapter.setNewData(orderListBean.getList());
+            if (demandBuyerBean.getPage() == 1) {
+                adapter.setNewData(demandBuyerBean.getList());
                 adapter.setEmptyView(R.layout.layout_empty, rv);
             }else {
-                adapter.addData(orderListBean.getList());
+                adapter.addData(demandBuyerBean.getList());
             }
-            setNoMore(orderListBean.getPage(), orderListBean.getCount());
+            setNoMore(demandBuyerBean.getPage(), demandBuyerBean.getCount());
         });
 
         refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                orderVm.getMoreProjectOrder();
+                demandBuyerVm.getMoreBuyer();
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                orderVm.getProjectOrder();
+                demandBuyerVm.getBuyer();
             }
         });
     }
 
     @Override
     protected void initDataFromService() {
-        orderVm.getProjectOrder();
+        demandBuyerVm.getBuyer();
     }
 
     private void setNoMore(int page, int count){

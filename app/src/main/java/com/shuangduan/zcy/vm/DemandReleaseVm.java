@@ -30,9 +30,13 @@ import java.util.Calendar;
  * @class describe
  */
 public class DemandReleaseVm extends BaseViewModel {
+    public static final int RELEASE_TYPE_RELATIONSHIP = 1;
+    public static final int RELEASE_TYPE_SUBSTANCE = 2;
+    public static final int RELEASE_TYPE_BUYER = 3;
     public MutableLiveData<DemandReleaseBean> releaseLiveData;
     public MutableLiveData<String> pageStateLiveData;
     private int userId;
+    public int releaseType = RELEASE_TYPE_RELATIONSHIP;
     public String startTime;
     public String selectEndTime;
     public String endTime;
@@ -58,6 +62,14 @@ public class DemandReleaseVm extends BaseViewModel {
             ToastUtils.showShort(StringUtils.getString(R.string.select_time));
             return;
         }
-        new DemandRepository().demandRelease(releaseLiveData, pageStateLiveData, userId, title, intro, startTime, endTime, price);
+        new DemandRepository().demandRelationshipRelease(releaseLiveData, pageStateLiveData, userId, title, intro, startTime, endTime, price);
+    }
+
+    public void releaseSubstance(){
+//        new DemandRepository().demandSubstanceRelease(releaseLiveData, pageStateLiveData, userId, title, intro, startTime, endTime);
+    }
+
+    public void releaseBuyer(){
+//        new DemandRepository().demandBuyerRelease(releaseLiveData, pageStateLiveData, userId, title, intro, startTime, endTime);
     }
 }

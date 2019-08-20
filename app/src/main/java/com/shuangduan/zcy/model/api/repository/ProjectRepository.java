@@ -42,8 +42,8 @@ public class ProjectRepository extends BaseRepository {
         request(apiService.mapList(user_id, lng, lat)).setDataList(liveData).setPageState(pageState).send();
     }
 
-    public void projectList(MutableLiveData<ProjectInfoBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, String province, ProjectFilterBean filterBean, String phases, String stime, String etime, String warrant_status, int page){
-        request(apiService.projectList(user_id, province, filterBean, phases, stime, etime, warrant_status, page)).setData(liveData).setPageState(pageStateLiveData).send();
+    public void projectList(MutableLiveData<ProjectInfoBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, ProjectFilterBean filterBean, String stime, String etime, String warrant_status, int page){
+        request(apiService.projectList(user_id, filterBean, stime, etime, warrant_status, page)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
     public void projectTypes(MutableLiveData<List<TypeBean>> liveData, MutableLiveData<String> pageStateLiveData, int user_id, int id){

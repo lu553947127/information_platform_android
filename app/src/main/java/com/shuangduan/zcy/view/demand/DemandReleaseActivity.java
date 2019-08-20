@@ -25,10 +25,7 @@ import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.vm.DemandReleaseVm;
 import com.shuangduan.zcy.weight.datepicker.CustomDatePicker;
 
-import java.text.SimpleDateFormat;
-
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -151,6 +148,8 @@ public class DemandReleaseActivity extends BaseActivity {
                             .setWidthAndHeight(ConvertUtils.dp2px(260), ViewGroup.LayoutParams.WRAP_CONTENT)
                             .setViewOnclickListener((popView, layoutResId) -> {
                                 popView.findViewById(R.id.tv_find_relationship).setOnClickListener(l -> {
+                                    tvReleaseType.setText(getString(R.string.find_relationship));
+                                    demandReleaseVm.releaseType = DemandReleaseVm.RELEASE_TYPE_RELATIONSHIP;
                                     flTitle.setVisibility(View.VISIBLE);
                                     flCommission.setVisibility(View.VISIBLE);
                                     flDes.setVisibility(View.VISIBLE);
@@ -167,6 +166,8 @@ public class DemandReleaseActivity extends BaseActivity {
                                     popupWindow.dismiss();
                                 });
                                 popView.findViewById(R.id.tv_find_substance).setOnClickListener(l -> {
+                                    tvReleaseType.setText(getString(R.string.find_substance));
+                                    demandReleaseVm.releaseType = DemandReleaseVm.RELEASE_TYPE_SUBSTANCE;
                                     flTitle.setVisibility(View.GONE);
                                     flCommission.setVisibility(View.GONE);
                                     flDes.setVisibility(View.GONE);
@@ -183,6 +184,8 @@ public class DemandReleaseActivity extends BaseActivity {
                                     popupWindow.dismiss();
                                 });
                                 popView.findViewById(R.id.tv_find_buyer).setOnClickListener(l -> {
+                                    tvReleaseType.setText(getString(R.string.find_buyer));
+                                    demandReleaseVm.releaseType = DemandReleaseVm.RELEASE_TYPE_BUYER;
                                     flTitle.setVisibility(View.GONE);
                                     flCommission.setVisibility(View.GONE);
                                     flDes.setVisibility(View.GONE);
@@ -216,19 +219,29 @@ public class DemandReleaseActivity extends BaseActivity {
                 showTimeDialog();
                 break;
             case R.id.tv_release:
-                if (TextUtils.isEmpty(edtTitle.getText())){
-                    ToastUtils.showShort(getString(R.string.hint_title));
-                    return;
+                switch (demandReleaseVm.releaseType){
+                    case DemandReleaseVm.RELEASE_TYPE_RELATIONSHIP:
+                        if (TextUtils.isEmpty(edtTitle.getText())){
+                            ToastUtils.showShort(getString(R.string.hint_title));
+                            return;
+                        }
+                        if (TextUtils.isEmpty(edtDes.getText())){
+                            ToastUtils.showShort(getString(R.string.hint_des));
+                            return;
+                        }
+                        if (TextUtils.isEmpty(edtCommission.getText())){
+                            ToastUtils.showShort(getString(R.string.hint_commission));
+                            return;
+                        }
+                        demandReleaseVm.releaseRelationShip(edtTitle.getText().toString(), edtDes.getText().toString(), edtCommission.getText().toString());
+                        break;
+                    case DemandReleaseVm.RELEASE_TYPE_SUBSTANCE:
+                        demandReleaseVm.releaseSubstance();
+                        break;
+                    case DemandReleaseVm.RELEASE_TYPE_BUYER:
+                        demandReleaseVm.releaseBuyer();
+                        break;
                 }
-                if (TextUtils.isEmpty(edtDes.getText())){
-                    ToastUtils.showShort(getString(R.string.hint_des));
-                    return;
-                }
-                if (TextUtils.isEmpty(edtCommission.getText())){
-                    ToastUtils.showShort(getString(R.string.hint_commission));
-                    return;
-                }
-                demandReleaseVm.releaseRelationShip(edtTitle.getText().toString(), edtDes.getText().toString(), edtCommission.getText().toString());
                 break;
         }
     }

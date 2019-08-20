@@ -29,8 +29,10 @@ import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.ContactBean;
 import com.shuangduan.zcy.model.event.AddressEvent;
 import com.shuangduan.zcy.model.event.CityEvent;
+import com.shuangduan.zcy.model.event.MultiAreaEvent;
 import com.shuangduan.zcy.utils.matisse.Glide4Engine;
 import com.shuangduan.zcy.utils.matisse.MatisseCamera;
+import com.shuangduan.zcy.view.MultiAreaActivity;
 import com.shuangduan.zcy.view.PhotoViewActivity;
 import com.shuangduan.zcy.view.mine.BusinessAreaActivity;
 import com.shuangduan.zcy.view.release.ReleaseAreaSelectActivity;
@@ -271,7 +273,7 @@ public class SupplierJoinActivity extends BaseActivity implements BaseDialog.Pho
                 ActivityUtils.startActivity(bundle, ReleaseAreaSelectActivity.class);
                 break;
             case R.id.tv_service_area:
-                ActivityUtils.startActivity(BusinessAreaActivity.class);
+                ActivityUtils.startActivity(MultiAreaActivity.class);
                 break;
         }
     }
@@ -284,8 +286,8 @@ public class SupplierJoinActivity extends BaseActivity implements BaseDialog.Pho
     }
 
     @Subscribe()
-    public void serviceCity(CityEvent event) {
+    public void serviceCity(MultiAreaEvent event) {
         supplierVm.serviceArea.postValue(event);
-        tvServiceArea.setText(event.city);
+        tvServiceArea.setText(event.getStringResult());
     }
 }

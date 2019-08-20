@@ -12,6 +12,7 @@ import com.shuangduan.zcy.model.bean.SupplierBean;
 import com.shuangduan.zcy.model.bean.SupplierDetailBean;
 import com.shuangduan.zcy.model.bean.SupplierJoinImageBean;
 import com.shuangduan.zcy.model.event.CityEvent;
+import com.shuangduan.zcy.model.event.MultiAreaEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +37,7 @@ public class SupplierVm extends BaseViewModel {
     private List<Integer> imageIds;
     public int cityId;
     public int provinceId;
-    public MutableLiveData<CityEvent> serviceArea;
+    public MutableLiveData<MultiAreaEvent> serviceArea;
 
     public SupplierVm() {
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
@@ -83,8 +84,8 @@ public class SupplierVm extends BaseViewModel {
     }
 
     public void join(String name, String tel, String company, String address, String product){
-        CityEvent areaValue = serviceArea.getValue();
-        if (areaValue == null || areaValue.business_city == null || areaValue.business_city.length == 0){
+        MultiAreaEvent areaValue = serviceArea.getValue();
+        if (areaValue == null || areaValue.getCityResult() == null || areaValue.getCityResult().size() == 0){
             ToastUtils.showShort("请选择服务地区");
             return;
         }
@@ -98,7 +99,7 @@ public class SupplierVm extends BaseViewModel {
         }
         SupplierJoinImageBean supplierJoinImageBean = new SupplierJoinImageBean();
         supplierJoinImageBean.setImages(imageIds);
-        supplierJoinImageBean.setServe_address(areaValue.business_city);
-        new SupplierRepository().getSupplierJoin(joinLiveData, pageStateLiveData, userId, name, tel, company, address, product, cityId, supplierJoinImageBean);
+        supplierJoinImageBean.setServe_address(areaValue.getCityResult());
+        new SupplierRepository().getSupplierJoin(joinLiveData, pageStateLiveData, userId, name, tel, company, address, product, provinceId, cityId, supplierJoinImageBean);
     }
 }

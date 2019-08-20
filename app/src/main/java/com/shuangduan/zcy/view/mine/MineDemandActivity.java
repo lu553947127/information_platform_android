@@ -8,13 +8,15 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
-import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ViewPagerAdapter;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.pop.CommonPopupWindow;
+import com.shuangduan.zcy.view.demand.FindMineBuyerFragment;
+import com.shuangduan.zcy.view.demand.FindMineRelationshipFragment;
+import com.shuangduan.zcy.view.demand.FindMineSubstanceFragment;
 import com.shuangduan.zcy.weight.MyViewPager;
 
 import butterknife.BindView;
@@ -52,9 +54,9 @@ public class MineDemandActivity extends BaseActivity {
         tvBarRight.setText(getString(R.string.filter));
 
         Fragment[] fragments = new Fragment[]{
-                FindRelationshipFragment.newInstance(),
-                FindSubstanceFragment.newInstance(),
-                FindBuyerFragment.newInstance()
+                FindMineRelationshipFragment.newInstance(),
+                FindMineSubstanceFragment.newInstance(),
+                FindMineBuyerFragment.newInstance()
         };
         vp.setOffscreenPageLimit(2);
         vp.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), fragments, null));
