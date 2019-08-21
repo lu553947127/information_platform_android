@@ -55,6 +55,8 @@ public class CustomConfig {
     public static final String HEADLINES_ID = "headlines_id";
     public static final String TRANS_RECORD_ID = "trans_record_id";
     public static final String DEMAND_ID = "demand_id";
+    public static final String FIND_RELATIONSHIP_ID = "find_relationship_id";
+    public static final String IS_MY = "is_my";
 
     public static final String PEOPLE_DEGREE = "people_degree";
     public static final int FIRST_DEGREE = 1;//1°人脉收益

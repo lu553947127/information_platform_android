@@ -130,6 +130,9 @@
         <activity android:name="com.shuangduan.zcy.view.demand.DemandActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.view.demand.DemandReleaseActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.view.demand.FindRelationshipDetailActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.shuangduan.zcy.view.demand.FindSubstanceDetailActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.shuangduan.zcy.view.demand.ReleaseRelationshipOrderActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.shuangduan.zcy.view.demand.FindBuyerDetailActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.view.PhotoViewActivity" android:screenOrientation="portrait" android:theme="@style/PhotoViewTheme"/>
         <activity android:name="com.shuangduan.zcy.view.MultiAreaActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
         <activity android:name="com.shuangduan.zcy.view.PayActivity" android:screenOrientation="portrait"/>

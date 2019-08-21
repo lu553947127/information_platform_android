@@ -29,6 +29,6 @@ public class DemandAcceptAdapter extends BaseQuickAdapter<DemandRelationshipBean
         helper.setText(R.id.tv_title, item.getTitle())
                 .setText(R.id.tv_time, String.format(mContext.getString(R.string.format_validity_period), item.getStart_time(), item.getEnd_time()))
                 .setText(R.id.tv_commission, String.format(mContext.getString(R.string.format_commission), item.getPrice()))
-                .setText(R.id.tv_status, item.getStatus());
+                .setText(R.id.tv_status, item.getStatus_name());
     }
 }

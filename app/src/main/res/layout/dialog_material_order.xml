@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="260dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/tv_name_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="25dp"
+        android:textColorHint="@color/colorTv"
+        android:textSize="13sp"
+        android:text="产品名称:"/>
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@+id/tv_name_tip"
+        app:layout_constraintTop_toTopOf="@+id/tv_name_tip"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="25dp"
+        android:layout_marginLeft="27dp"
+        android:textColorHint="@color/color_666666"
+        android:textSize="13sp"/>
+
+    <TextView
+        android:id="@+id/tv_suit_num_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="@+id/tv_name_tip"
+        app:layout_constraintTop_toBottomOf="@+id/tv_name"
+        android:layout_marginTop="10dp"
+        android:textColorHint="@color/colorTv"
+        android:textSize="13sp"
+        android:text="预定套数:"/>
+
+    <TextView
+        android:id="@+id/tv_suit_t_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="@+id/tv_name_tip"
+        app:layout_constraintTop_toBottomOf="@+id/tv_suit_num_tip"
+        android:layout_marginTop="10dp"
+        android:textColorHint="@color/colorTv"
+        android:textSize="13sp"
+        android:text="预定吨数:"/>
+
+    <TextView
+        android:id="@+id/tv_amount_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="@+id/tv_name_tip"
+        app:layout_constraintTop_toBottomOf="@+id/tv_suit_t_tip"
+        android:layout_marginTop="10dp"
+        android:textColorHint="@color/colorTv"
+        android:textSize="13sp"
+        android:text="预计金额:"/>
+
+    <TextView
+        android:id="@+id/tv_owner_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="@+id/tv_name_tip"
+        app:layout_constraintTop_toBottomOf="@+id/tv_amount_tip"
+        android:layout_marginTop="10dp"
+        android:textColorHint="@color/colorTv"
+        android:textSize="13sp"
+        android:text="预订人:"/>
+
+    <TextView
+        android:id="@+id/tv_tel_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="@+id/tv_name_tip"
+        app:layout_constraintTop_toBottomOf="@+id/tv_owner_tip"
+        android:layout_marginTop="10dp"
+        android:textColorHint="@color/colorTv"
+        android:textSize="13sp"
+        android:text="预订人:"/>
+
+    <TextView
+        android:id="@+id/tv_suit_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="@+id/tv_name"
+        app:layout_constraintTop_toTopOf="@+id/tv_suit_num_tip"
+        android:textColorHint="@color/color_666666"
+        android:textSize="13sp"/>
+
+    <TextView
+        android:id="@+id/tv_suit_t"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="@+id/tv_name"
+        app:layout_constraintTop_toTopOf="@+id/tv_suit_t_tip"
+        android:textColorHint="@color/color_666666"
+        android:textSize="13sp"/>
+
+    <TextView
+        android:id="@+id/tv_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="@+id/tv_name"
+        app:layout_constraintTop_toTopOf="@+id/tv_amount_tip"
+        android:textColorHint="@color/color_666666"
+        android:textSize="13sp"/>
+
+    <TextView
+        android:id="@+id/tv_owner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="@+id/tv_name"
+        app:layout_constraintTop_toTopOf="@+id/tv_owner_tip"
+        android:textColorHint="@color/color_666666"
+        android:textSize="13sp"/>
+
+    <TextView
+        android:id="@+id/tv_tel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="@+id/tv_name"
+        app:layout_constraintTop_toTopOf="@+id/tv_tel_tip"
+        android:textColorHint="@color/color_666666"
+        android:textSize="13sp"/>
+
+    <TextView
+        android:id="@+id/tv_negative"
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        app:layout_constraintLeft_toLeftOf="@+id/tv_name_tip"
+        app:layout_constraintTop_toBottomOf="@+id/tv_tel"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/selector_btn_confirm_gray"
+        android:gravity="center"
+        android:textColor="@color/color_666666"
+        android:textSize="14sp"
+        android:text="@string/negative"/>
+
+    <TextView
+        android:id="@+id/tv_positive"
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        app:layout_constraintLeft_toRightOf="@+id/tv_negative"
+        app:layout_constraintTop_toTopOf="@+id/tv_negative"
+        android:layout_marginLeft="40dp"
+        android:background="@drawable/selector_btn_confirm"
+        android:gravity="center"
+        android:textColor="@color/colorFFF"
+        android:textSize="14sp"
+        android:text="@string/positive"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

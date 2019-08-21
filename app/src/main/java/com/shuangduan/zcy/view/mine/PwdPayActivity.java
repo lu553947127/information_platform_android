@@ -12,6 +12,7 @@ import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
+import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.PageState;
@@ -66,7 +67,15 @@ public class PwdPayActivity extends BaseActivity {
         if (status == 1){
             updatePwdPayVm.status = status;
         }else {
-            updatePwdPayVm.payPwdState();
+            int isVerified = SPUtils.getInstance().getInt(SpConfig.IS_VERIFIED, 0);
+            if (isVerified == 2){
+                updatePwdPayVm.payPwdState();
+            }else {
+                Bundle bundle = new Bundle();
+                bundle.putString(CustomConfig.UPLOAD_TYPE, CustomConfig.uploadTypeIdCard);
+                ActivityUtils.startActivity(bundle, AuthenticationActivity.class);
+                finish();
+            }
         }
     }
 

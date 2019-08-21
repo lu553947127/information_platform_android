@@ -14,16 +14,20 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.TimeUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
+import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.pop.CommonPopupWindow;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.vm.DemandReleaseVm;
 import com.shuangduan.zcy.weight.datepicker.CustomDatePicker;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -99,6 +103,10 @@ public class DemandReleaseActivity extends BaseActivity {
     EditText edtContactsInfo;
     @BindView(R.id.fl_contacts_info)
     FrameLayout flContactsInfo;
+    @BindView(R.id.edt_owner)
+    EditText edtOwner;
+    @BindView(R.id.fl_owner)
+    FrameLayout flOwner;
     @BindView(R.id.edt_des)
     EditText edtDes;
     @BindView(R.id.fl_des)
@@ -115,10 +123,19 @@ public class DemandReleaseActivity extends BaseActivity {
         tvBarTitle.setText(getString(R.string.release));
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
 
+        cbSell.setChecked(true);
         demandReleaseVm = ViewModelProviders.of(this).get(DemandReleaseVm.class);
         tvTimeStart.setText( demandReleaseVm.startTime + " 至");
         demandReleaseVm.releaseLiveData.observe(this, demandReleaseBean -> {
-            finish();
+            if (demandReleaseVm.releaseType == DemandReleaseVm.RELEASE_TYPE_RELATIONSHIP){
+                Bundle bundle = new Bundle();
+                bundle.putInt(CustomConfig.FIND_RELATIONSHIP_ID, demandReleaseBean.getId());
+                ActivityUtils.startActivity(bundle, ReleaseRelationshipOrderActivity.class);
+                finish();
+            }else {
+                ToastUtils.showShort(getString(R.string.release_success));
+                finish();
+            }
         });
         demandReleaseVm.pageStateLiveData.observe(this, s -> {
             switch (s){
@@ -159,6 +176,7 @@ public class DemandReleaseActivity extends BaseActivity {
                                     flProjectAddress.setVisibility(View.GONE);
                                     flPriceAccept.setVisibility(View.GONE);
                                     flContactsInfo.setVisibility(View.GONE);
+                                    flOwner.setVisibility(View.GONE);
                                     flSupplyNum.setVisibility(View.GONE);
                                     flSupplyStyle.setVisibility(View.GONE);
                                     flSupplyAddress.setVisibility(View.GONE);
@@ -177,6 +195,7 @@ public class DemandReleaseActivity extends BaseActivity {
                                     flProjectAddress.setVisibility(View.VISIBLE);
                                     flPriceAccept.setVisibility(View.VISIBLE);
                                     flContactsInfo.setVisibility(View.VISIBLE);
+                                    flOwner.setVisibility(View.VISIBLE);
                                     flSupplyNum.setVisibility(View.GONE);
                                     flSupplyStyle.setVisibility(View.GONE);
                                     flSupplyAddress.setVisibility(View.GONE);
@@ -195,6 +214,7 @@ public class DemandReleaseActivity extends BaseActivity {
                                     flProjectAddress.setVisibility(View.GONE);
                                     flPriceAccept.setVisibility(View.GONE);
                                     flContactsInfo.setVisibility(View.VISIBLE);
+                                    flOwner.setVisibility(View.VISIBLE);
                                     flSupplyNum.setVisibility(View.VISIBLE);
                                     flSupplyStyle.setVisibility(View.VISIBLE);
                                     flSupplyAddress.setVisibility(View.VISIBLE);
@@ -212,8 +232,12 @@ public class DemandReleaseActivity extends BaseActivity {
                 }
                 break;
             case R.id.cb_lease:
+                demandReleaseVm.way = 2;
+                cbSell.setChecked(false);
                 break;
             case R.id.cb_sell:
+                demandReleaseVm.way = 1;
+                cbLease.setChecked(false);
                 break;
             case R.id.tv_time_end:
                 showTimeDialog();
@@ -236,10 +260,64 @@ public class DemandReleaseActivity extends BaseActivity {
                         demandReleaseVm.releaseRelationShip(edtTitle.getText().toString(), edtDes.getText().toString(), edtCommission.getText().toString());
                         break;
                     case DemandReleaseVm.RELEASE_TYPE_SUBSTANCE:
-                        demandReleaseVm.releaseSubstance();
+                        if (TextUtils.isEmpty(edtMaterialName.getText())){
+                            ToastUtils.showShort(getString(R.string.hint_material_name));
+                            return;
+                        }
+                        if (TextUtils.isEmpty(edtDemandNum.getText())){
+                            ToastUtils.showShort(getString(R.string.hint_demand_num));
+                            return;
+                        }
+                        if (TextUtils.isEmpty(edtDemandProject.getText())){
+                            ToastUtils.showShort(getString(R.string.hint_demand_project));
+                            return;
+                        }
+                        if (TextUtils.isEmpty(edtProjectAddress.getText())){
+                            ToastUtils.showShort(getString(R.string.hint_project_address));
+                            return;
+                        }
+                        if (TextUtils.isEmpty(edtPriceAccept.getText())){
+                            ToastUtils.showShort(getString(R.string.hint_price_accept));
+                            return;
+                        }
+                        if (TextUtils.isEmpty(edtOwner.getText())){
+                            ToastUtils.showShort(getString(R.string.hint_owner));
+                            return;
+                        }
+                        if (TextUtils.isEmpty(edtContactsInfo.getText())){
+                            ToastUtils.showShort(getString(R.string.hint_contact));
+                            return;
+                        }
+                        demandReleaseVm.releaseSubstance(edtMaterialName.getText().toString(), edtDemandNum.getText().toString(), edtDemandProject.getText().toString(),
+                                edtProjectAddress.getText().toString(), edtPriceAccept.getText().toString(), edtContactsInfo.getText().toString(), edtOwner.getText().toString());
                         break;
                     case DemandReleaseVm.RELEASE_TYPE_BUYER:
-                        demandReleaseVm.releaseBuyer();
+                        if (TextUtils.isEmpty(edtMaterialName.getText())){
+                            ToastUtils.showShort(getString(R.string.hint_material_name));
+                            return;
+                        }
+                        if (TextUtils.isEmpty(edtSupplyNum.getText())){
+                            ToastUtils.showShort(getString(R.string.hint_supply_num));
+                            return;
+                        }
+                        if (TextUtils.isEmpty(edtSupplyAddress.getText())){
+                            ToastUtils.showShort(getString(R.string.hint_supply_address));
+                            return;
+                        }
+                        if (TextUtils.isEmpty(edtSupplyPrice.getText())){
+                            ToastUtils.showShort(getString(R.string.hint_price_supply));
+                            return;
+                        }
+                        if (TextUtils.isEmpty(edtOwner.getText())){
+                            ToastUtils.showShort(getString(R.string.hint_owner));
+                            return;
+                        }
+                        if (TextUtils.isEmpty(edtContactsInfo.getText())){
+                            ToastUtils.showShort(getString(R.string.hint_contact));
+                            return;
+                        }
+                        demandReleaseVm.releaseBuyer(edtMaterialName.getText().toString(), edtSupplyNum.getText().toString(), edtSupplyAddress.getText().toString(),
+                                edtSupplyPrice.getText().toString(), edtContactsInfo.getText().toString(), edtOwner.getText().toString());
                         break;
                 }
                 break;
@@ -253,7 +331,7 @@ public class DemandReleaseActivity extends BaseActivity {
         CustomDatePicker customDatePicker = new CustomDatePicker(this, time -> {
             demandReleaseVm.endTime = time;
             tvTimeEnd.setText(time);
-        }, "yyyy-MM-dd", demandReleaseVm.startTime, demandReleaseVm.selectEndTime);
+        }, "yyyy-MM-dd", demandReleaseVm.startTime, "2100-12-31");
         customDatePicker.showSpecificTime(false);
         customDatePicker.show(TimeUtils.getNowString());
     }

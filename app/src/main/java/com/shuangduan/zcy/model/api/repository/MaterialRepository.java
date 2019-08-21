@@ -30,4 +30,8 @@ public class MaterialRepository extends BaseRepository {
     public void getCategory(MutableLiveData<List<MaterialCategoryBean>> liveData, MutableLiveData<String> pageStateLiveData, int userId, int category_id){
         request(apiService.getCategory(userId, category_id)).setDataList(liveData).setPageState(pageStateLiveData).send();
     }
+
+    public void materialOrder(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int userId, int id, int buy_stock){
+        request(apiService.materialOrder(userId, id, buy_stock)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
 }

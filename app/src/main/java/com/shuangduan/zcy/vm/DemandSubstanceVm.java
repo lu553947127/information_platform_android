@@ -8,6 +8,7 @@ import com.shuangduan.zcy.base.BaseViewModel;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.api.repository.DemandRepository;
 import com.shuangduan.zcy.model.bean.DemandSubstanceBean;
+import com.shuangduan.zcy.model.bean.SubstanceDetailBean;
 
 /**
  * @author 宁文强 QQ:858777523
@@ -24,12 +25,16 @@ public class DemandSubstanceVm extends BaseViewModel {
     private int page;
     public int isMy = 0;
     public MutableLiveData<DemandSubstanceBean> substanceLiveData;
+    public MutableLiveData<SubstanceDetailBean> detailLiveData;
     public MutableLiveData<String> pageStateLiveData;
+    public int id;
+    public int currentPay = 0;
 
     public DemandSubstanceVm() {
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
         substanceLiveData = new MutableLiveData<>();
         pageStateLiveData = new MutableLiveData<>();
+        detailLiveData = new MutableLiveData<>();
     }
 
     public void getSubstance(){
@@ -42,5 +47,9 @@ public class DemandSubstanceVm extends BaseViewModel {
         page ++;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
         new DemandRepository().demandSubstance(substanceLiveData, pageStateLiveData, userId, page, isMy);
+    }
+
+    public void getDetail(){
+        new DemandRepository().substanceDetail(detailLiveData, pageStateLiveData, userId, id);
     }
 }

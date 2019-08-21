@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
@@ -27,6 +28,7 @@ import com.bumptech.glide.request.target.SizeReadyCallback;
 import com.bumptech.glide.request.target.Target;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
+import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.PhotoDialog;
@@ -143,6 +145,7 @@ public class AuthenticationActivity extends BaseActivity implements BaseDialog.P
             }
         });
         authenticationVm.authenticationLiveData.observe(this, o -> {
+            SPUtils.getInstance().put(SpConfig.IS_VERIFIED, 2);
             ToastUtils.showShort("认证成功");
             finish();
         });

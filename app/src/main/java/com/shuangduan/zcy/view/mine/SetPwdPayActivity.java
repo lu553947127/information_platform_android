@@ -10,6 +10,7 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -100,6 +101,14 @@ public class SetPwdPayActivity extends BaseActivity {
                     break;
             }
         });
+
+        int isVerified = SPUtils.getInstance().getInt(SpConfig.IS_VERIFIED, 0);
+        if (isVerified != 2){
+            Bundle bundle = new Bundle();
+            bundle.putString(CustomConfig.UPLOAD_TYPE, CustomConfig.uploadTypeIdCard);
+            ActivityUtils.startActivity(bundle, AuthenticationActivity.class);
+            finish();
+        }
     }
 
     @OnClick({R.id.iv_bar_back, R.id.tv_send_verification_code, R.id.tv_confirm})

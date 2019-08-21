@@ -6,6 +6,7 @@ import com.shuangduan.zcy.model.bean.BankCardBean;
 import com.shuangduan.zcy.model.bean.BankCardDisBean;
 import com.shuangduan.zcy.model.bean.BaseListResponse;
 import com.shuangduan.zcy.model.bean.BaseResponse;
+import com.shuangduan.zcy.model.bean.BuyerDetailBean;
 import com.shuangduan.zcy.model.bean.CityBean;
 import com.shuangduan.zcy.model.bean.CoinPayResultBean;
 import com.shuangduan.zcy.model.bean.ConsumeBean;
@@ -59,8 +60,10 @@ import com.shuangduan.zcy.model.bean.RecruitSubBean;
 import com.shuangduan.zcy.model.bean.RegisterBean;
 import com.shuangduan.zcy.model.bean.DemandReleaseBean;
 import com.shuangduan.zcy.model.bean.RelationshipDetailBean;
+import com.shuangduan.zcy.model.bean.RelationshipOrderBean;
 import com.shuangduan.zcy.model.bean.StageBean;
 import com.shuangduan.zcy.model.bean.SubBean;
+import com.shuangduan.zcy.model.bean.SubstanceDetailBean;
 import com.shuangduan.zcy.model.bean.SupplierBean;
 import com.shuangduan.zcy.model.bean.SupplierDetailBean;
 import com.shuangduan.zcy.model.bean.SupplierJoinImageBean;
@@ -658,6 +661,14 @@ public interface ApiService {
     );
 
     @FormUrlEncoded
+    @POST("api/Material/order")
+    Flowable<BaseListResponse> materialOrder(
+            @Field("user_id") int user_id,
+            @Field("id") int id,
+            @Field("buy_stock") int buy_stock
+    );
+
+    @FormUrlEncoded
     @POST("api/supplier/supplierList")
     Flowable<BaseResponse<SupplierBean>> supplierList(
             @Field("user_id") int user_id,
@@ -832,6 +843,30 @@ public interface ApiService {
     );
 
     @FormUrlEncoded
+    @POST("api/Relation/payMaterial")
+    Flowable<BaseResponse<CoinPayResultBean>> payFindSubstance(
+            @Field("user_id") int user_id,
+            @Field("id") int id,
+            @Field("coin_password") String coin_password
+    );
+
+    @FormUrlEncoded
+    @POST("api/Relation/payBuyer")
+    Flowable<BaseResponse<CoinPayResultBean>> payFindBuyer(
+            @Field("user_id") int user_id,
+            @Field("id") int id,
+            @Field("coin_password") String coin_password
+    );
+
+    @FormUrlEncoded
+    @POST("api/Relation/pay")
+    Flowable<BaseResponse<CoinPayResultBean>> payRelationshipRelease(
+            @Field("user_id") int user_id,
+            @Field("id") int id,
+            @Field("coin_password") String coin_password
+    );
+
+    @FormUrlEncoded
     @POST("api/index/index")
     Flowable<BaseListResponse<HomePushBean>> homePush(
             @Field("user_id") int user_id
@@ -911,7 +946,7 @@ public interface ApiService {
             @Field("address") String address,
             @Field("acceptance_price") String acceptance_price,
             @Field("tel") String tel,
-            @Field("way") String way,
+            @Field("real_name") String real_name,
             @Field("start_time") String start_time,
             @Field("end_time") String end_time
     );
@@ -922,13 +957,20 @@ public interface ApiService {
             @Field("user_id") int user_id,
             @Field("material_name") String material_name,
             @Field("count") String count,
-            @Field("project_name") String project_name,
             @Field("address") String address,
             @Field("acceptance_price") String acceptance_price,
             @Field("tel") String tel,
-            @Field("way") String way,
+            @Field("real_name") String real_name,
+            @Field("way") int way,
             @Field("start_time") String start_time,
             @Field("end_time") String end_time
+    );
+
+    @FormUrlEncoded
+    @POST("api/Relation/waitPay")
+    Flowable<BaseResponse<RelationshipOrderBean>> relationshipReleaseOrder(
+            @Field("user_id") int user_id,
+            @Field("id") int id
     );
 
     @FormUrlEncoded
@@ -981,6 +1023,20 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("api/Relation/details")
     Flowable<BaseResponse<RelationshipDetailBean>> relationshipDetail(
+            @Field("user_id") int user_id,
+            @Field("id") int id
+    );
+
+    @FormUrlEncoded
+    @POST("api/Relation/materialDetail")
+    Flowable<BaseResponse<SubstanceDetailBean>> substanceDetail(
+            @Field("user_id") int user_id,
+            @Field("id") int id
+    );
+
+    @FormUrlEncoded
+    @POST("api/Relation/buyerDetail")
+    Flowable<BaseResponse<BuyerDetailBean>> buyerDetail(
             @Field("user_id") int user_id,
             @Field("id") int id
     );

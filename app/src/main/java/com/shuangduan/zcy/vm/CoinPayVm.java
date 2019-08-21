@@ -24,11 +24,17 @@ public class CoinPayVm extends BaseViewModel {
     public MutableLiveData<CoinPayResultBean> locusPayLiveData;
     public MutableLiveData<CoinPayResultBean> supplierPayLiveData;
     public MutableLiveData<CoinPayResultBean> recruitPayLiveData;
+    public MutableLiveData<CoinPayResultBean> findSubstancePayLiveData;
+    public MutableLiveData<CoinPayResultBean> findBuyerPayLiveData;
+    public MutableLiveData<CoinPayResultBean> releaseRelationshipPayLiveData;
     public MutableLiveData<String> pageStateLiveData;
     public int projectId;
     public int locusId;
     public int supplierId;
     public int recruitId;
+    public int findSubstanceId;
+    public int findBuyerId;
+    public int releaseRelationshipId;
 
     public CoinPayVm() {
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
@@ -37,6 +43,9 @@ public class CoinPayVm extends BaseViewModel {
         locusPayLiveData = new MutableLiveData<>();
         supplierPayLiveData = new MutableLiveData<>();
         recruitPayLiveData = new MutableLiveData<>();
+        findSubstancePayLiveData = new MutableLiveData<>();
+        findBuyerPayLiveData = new MutableLiveData<>();
+        releaseRelationshipPayLiveData = new MutableLiveData<>();
     }
 
     public void payProject(String pwd){
@@ -53,5 +62,17 @@ public class CoinPayVm extends BaseViewModel {
 
     public void payRecruit(String pwd){
         new PayRepository().payRecruit(recruitPayLiveData, pageStateLiveData, userId, recruitId, pwd);
+    }
+
+    public void payFindSubstance(String pwd){
+        new PayRepository().payFindSubstance(findSubstancePayLiveData, pageStateLiveData, userId, findSubstanceId, pwd);
+    }
+
+    public void payFindBuyer(String pwd){
+        new PayRepository().payFindBuyer(findBuyerPayLiveData, pageStateLiveData, userId, findBuyerId, pwd);
+    }
+
+    public void payRelationshipRelease(String pwd){
+        new PayRepository().payRelationshipRelease(releaseRelationshipPayLiveData, pageStateLiveData, userId, releaseRelationshipId, pwd);
     }
 }

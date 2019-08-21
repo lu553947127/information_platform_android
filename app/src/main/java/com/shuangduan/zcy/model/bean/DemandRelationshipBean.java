@@ -59,6 +59,7 @@ public class DemandRelationshipBean {
         private String create_time;
         private String company;
         private String status;
+        private String status_name;
         private int reply_id;
 
         public int getId() {
@@ -111,6 +112,14 @@ public class DemandRelationshipBean {
 
         public String getStatus() {
             return status;
+        }
+
+        public String getStatus_name() {
+            return status_name;
+        }
+
+        public void setStatus_name(String status_name) {
+            this.status_name = status_name;
         }
 
         public void setStatus(String status) {

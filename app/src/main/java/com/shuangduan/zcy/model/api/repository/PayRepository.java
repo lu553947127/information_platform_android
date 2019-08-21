@@ -52,4 +52,25 @@ public class PayRepository extends BaseRepository {
         request(apiService.payRecruit(userId, id, coin_password)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
+    /**
+     * 紫金币支付找物质信息
+     */
+    public void payFindSubstance(MutableLiveData<CoinPayResultBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int id, String coin_password){
+        request(apiService.payFindSubstance(userId, id, coin_password)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    /**
+     * 紫金币支付找买家信息
+     */
+    public void payFindBuyer(MutableLiveData<CoinPayResultBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int id, String coin_password){
+        request(apiService.payFindBuyer(userId, id, coin_password)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    /**
+     * 紫金币支付发布找关系佣金
+     */
+    public void payRelationshipRelease(MutableLiveData<CoinPayResultBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int id, String coin_password){
+        request(apiService.payRelationshipRelease(userId, id, coin_password)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
 }

@@ -7,13 +7,16 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.DemandBuyerAdapter;
+import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseLazyFragment;
+import com.shuangduan.zcy.model.bean.DemandBuyerBean;
 import com.shuangduan.zcy.vm.DemandBuyerVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
@@ -54,18 +57,24 @@ public class FindBuyerFragment extends BaseLazyFragment {
     protected void initDataAndEvent(Bundle savedInstanceState) {
         rv.setLayoutManager(new LinearLayoutManager(mContext));
         rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
-        DemandBuyerAdapter adapter = new DemandBuyerAdapter(R.layout.item_demand_buyer, null);
-        adapter.setEmptyView(R.layout.layout_loading, rv);
-        rv.setAdapter(adapter);
+        DemandBuyerAdapter buyerAdapter = new DemandBuyerAdapter(R.layout.item_demand_buyer, null);
+        buyerAdapter.setEmptyView(R.layout.layout_loading, rv);
+        rv.setAdapter(buyerAdapter);
+        buyerAdapter.setOnItemClickListener((adapter1, view, position) -> {
+            DemandBuyerBean.ListBean listBean = buyerAdapter.getData().get(position);
+            Bundle bundle = new Bundle();
+            bundle.putInt(CustomConfig.DEMAND_ID, listBean.getId());
+            ActivityUtils.startActivity(bundle, FindBuyerDetailActivity.class);
+        });
 
         demandBuyerVm = ViewModelProviders.of(mActivity).get(DemandBuyerVm.class);
         demandBuyerVm.buyerLiveData.observe(this, demandBuyerBean -> {
             isInited = true;
             if (demandBuyerBean.getPage() == 1) {
-                adapter.setNewData(demandBuyerBean.getList());
-                adapter.setEmptyView(R.layout.layout_empty, rv);
+                buyerAdapter.setNewData(demandBuyerBean.getList());
+                buyerAdapter.setEmptyView(R.layout.layout_empty, rv);
             }else {
-                adapter.addData(demandBuyerBean.getList());
+                buyerAdapter.addData(demandBuyerBean.getList());
             }
             setNoMore(demandBuyerBean.getPage(), demandBuyerBean.getCount());
         });

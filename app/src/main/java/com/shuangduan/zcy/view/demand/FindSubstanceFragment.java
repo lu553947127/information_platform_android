@@ -7,13 +7,16 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.FindSubstanceAdapter;
+import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseLazyFragment;
+import com.shuangduan.zcy.model.bean.DemandSubstanceBean;
 import com.shuangduan.zcy.vm.DemandSubstanceVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
@@ -54,18 +57,24 @@ public class FindSubstanceFragment extends BaseLazyFragment {
     protected void initDataAndEvent(Bundle savedInstanceState) {
         rv.setLayoutManager(new LinearLayoutManager(mContext));
         rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
-        FindSubstanceAdapter adapter = new FindSubstanceAdapter(R.layout.item_demand_substance, null);
-        adapter.setEmptyView(R.layout.layout_loading, rv);
-        rv.setAdapter(adapter);
+        FindSubstanceAdapter substanceAdapter = new FindSubstanceAdapter(R.layout.item_demand_substance, null);
+        substanceAdapter.setEmptyView(R.layout.layout_loading, rv);
+        rv.setAdapter(substanceAdapter);
+        substanceAdapter.setOnItemClickListener((adapter, view, position) -> {
+            DemandSubstanceBean.ListBean listBean = substanceAdapter.getData().get(position);
+            Bundle bundle = new Bundle();
+            bundle.putInt(CustomConfig.DEMAND_ID, listBean.getId());
+            ActivityUtils.startActivity(bundle, FindSubstanceDetailActivity.class);
+        });
 
         demandSubstanceVm = ViewModelProviders.of(mActivity).get(DemandSubstanceVm.class);
         demandSubstanceVm.substanceLiveData.observe(this, demandSubstanceBean -> {
             isInited = true;
             if (demandSubstanceBean.getPage() == 1) {
-                adapter.setNewData(demandSubstanceBean.getList());
-                adapter.setEmptyView(R.layout.layout_empty, rv);
+                substanceAdapter.setNewData(demandSubstanceBean.getList());
+                substanceAdapter.setEmptyView(R.layout.layout_empty, rv);
             }else {
-                adapter.addData(demandSubstanceBean.getList());
+                substanceAdapter.addData(demandSubstanceBean.getList());
             }
             setNoMore(demandSubstanceBean.getPage(), demandSubstanceBean.getCount());
         });

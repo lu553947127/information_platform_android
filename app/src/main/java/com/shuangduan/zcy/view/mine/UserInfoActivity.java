@@ -257,8 +257,14 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
                 ActivityUtils.startActivity(bundle, UpdateResultActivity.class);
                 break;
             case R.id.fl_id_card:
-                bundle.putString(CustomConfig.UPLOAD_TYPE, CustomConfig.uploadTypeIdCard);
-                ActivityUtils.startActivity(bundle, AuthenticationActivity.class);
+                int isVerified = SPUtils.getInstance().getInt(SpConfig.IS_VERIFIED, 0);
+                if (isVerified != 2){
+                    bundle.putString(CustomConfig.UPLOAD_TYPE, CustomConfig.uploadTypeIdCard);
+                    ActivityUtils.startActivity(bundle, AuthenticationActivity.class);
+                    finish();
+                }else {
+                    ToastUtils.showShort("已认证完成");
+                }
                 break;
             case R.id.fl_company:
                 bundle.putString(CustomConfig.SEARCH_TYPE, CustomConfig.searchTypeCompany);

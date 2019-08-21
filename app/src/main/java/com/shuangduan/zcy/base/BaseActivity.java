@@ -18,6 +18,7 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.MyApplication;
 import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.LoadDialog;
+import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.event.BaseEvent;
 import com.shuangduan.zcy.utils.AutoUtils;
 
@@ -74,6 +75,17 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
     public void hideLoading() {
         if (loadDialog != null){
             loadDialog.hideDialog();
+        }
+    }
+
+    public void showPageState(String s){
+        switch (s){
+            case PageState.PAGE_LOADING:
+                showLoading();
+                break;
+            default:
+                hideLoading();
+                break;
         }
     }
 

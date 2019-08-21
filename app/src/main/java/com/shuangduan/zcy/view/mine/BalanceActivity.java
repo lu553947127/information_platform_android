@@ -64,6 +64,7 @@ public class BalanceActivity extends BaseActivity {
                         Bundle bundle = new Bundle();
                         bundle.putString(CustomConfig.UPLOAD_TYPE, CustomConfig.uploadTypeIdCard);
                         ActivityUtils.startActivity(bundle, AuthenticationActivity.class);
+                        finish();
                         break;
             }
         });

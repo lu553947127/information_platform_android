@@ -389,7 +389,7 @@
             android:text="@string/supply_style"/>
 
         <CheckBox
-            android:id="@+id/cb_lease"
+            android:id="@+id/cb_sell"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:button="@drawable/selector_cb"
@@ -398,10 +398,10 @@
             android:layout_marginLeft="101dp"
             android:textColor="@color/color_666666"
             android:textSize="14sp"
-            android:text="@string/lease"/>
+            android:text="@string/sell"/>
 
         <CheckBox
-            android:id="@+id/cb_sell"
+            android:id="@+id/cb_lease"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:button="@drawable/selector_cb"
@@ -410,7 +410,7 @@
             android:layout_marginLeft="200dp"
             android:textColor="@color/color_666666"
             android:textSize="14sp"
-            android:text="@string/sell"/>
+            android:text="@string/lease"/>
 
         <View
             android:layout_width="match_parent"
@@ -553,6 +553,44 @@
             android:background="@color/colorDivider"/>
 
     </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/fl_owner"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorFFF"
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/colorTv"
+            android:textSize="14sp"
+            android:text="联系人"/>
+
+        <EditText
+            android:id="@+id/edt_owner"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="101dp"
+            android:background="@null"
+            android:singleLine="true"
+            android:textColorHint="@color/colorTvHint"
+            android:textColor="@color/colorTv"
+            android:textSize="14sp"
+            android:hint="@string/please_hint"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="bottom"
+            android:background="@color/colorDivider"/>
+
+    </FrameLayout>
 
     <FrameLayout
         android:id="@+id/fl_contacts_info"

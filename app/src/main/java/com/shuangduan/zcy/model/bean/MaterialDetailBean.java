@@ -34,7 +34,9 @@ public class MaterialDetailBean {
     private int sell_stock;
     private int agent_id;
     private int tonne;
+    private String oss_path;
     private String intro;
+    private String image;
     private int amount;
     private int sell_amount;
     private String agent_name;
@@ -134,5 +136,21 @@ public class MaterialDetailBean {
 
     public void setOrder_count(int order_count) {
         this.order_count = order_count;
+    }
+
+    public String getOss_path() {
+        return oss_path;
+    }
+
+    public void setOss_path(String oss_path) {
+        this.oss_path = oss_path;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }
