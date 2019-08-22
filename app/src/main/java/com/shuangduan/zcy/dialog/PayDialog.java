@@ -53,12 +53,11 @@ public class PayDialog extends BaseDialog {
 
     @Override
     void initData() {
+        getWindow().getDecorView().setBackgroundResource(R.color.colorBgDark);
         setCancelOutside(false);
         setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
-        setHeight(ConvertUtils.dp2px(420));
         setGravity(Gravity.BOTTOM);
         DialogUtils.enterBottomAnim(this);
-        getWindow().getDecorView().setBackgroundResource(R.color.colorBgDark);
     }
 
     @Override

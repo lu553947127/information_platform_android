@@ -173,6 +173,7 @@
 
             <FrameLayout
                 android:id="@+id/fl_office"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/selector_bg_custom"
@@ -245,6 +246,7 @@
 
             <FrameLayout
                 android:id="@+id/fl_business_exp"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/selector_bg_custom"

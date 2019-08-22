@@ -12,7 +12,7 @@ package com.shuangduan.zcy.app;
 
 public class RefreshConfig {
 
-    /*加载*/
+    /*demand_ing*/
     public static final int LOADING = 0;
     /*刷新*/
     public static final int REFRESH = 1;

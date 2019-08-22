@@ -2,6 +2,7 @@ package com.shuangduan.zcy.model.api.repository;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.shuangduan.zcy.model.bean.ExplainDetailBean;
 import com.shuangduan.zcy.model.bean.HeadlinesBean;
 import com.shuangduan.zcy.model.bean.HeadlinesDetailBean;
 import com.shuangduan.zcy.model.bean.HomeBannerBean;
@@ -44,5 +45,9 @@ public class HomeRepository extends BaseRepository {
 
     public void headlinesDetail(MutableLiveData<HeadlinesDetailBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int id){
         request(apiService.headlinesDetail(userId, id)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    public void explainDetail(MutableLiveData<ExplainDetailBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int id){
+        request(apiService.explainDetail(userId, id)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 }

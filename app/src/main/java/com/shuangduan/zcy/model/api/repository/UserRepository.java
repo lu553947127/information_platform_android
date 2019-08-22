@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.shuangduan.zcy.model.bean.AuthenBean;
 import com.shuangduan.zcy.model.bean.BankCardBean;
 import com.shuangduan.zcy.model.bean.BankCardDisBean;
+import com.shuangduan.zcy.model.bean.BusinessAreaBean;
 import com.shuangduan.zcy.model.bean.MyPhasesBean;
 import com.shuangduan.zcy.model.bean.ProjectCollectBean;
 import com.shuangduan.zcy.model.bean.PwdPayStateBean;
@@ -19,6 +20,7 @@ import com.shuangduan.zcy.model.bean.UserInfoBean;
 import com.shuangduan.zcy.model.bean.WithdrawBean;
 import com.shuangduan.zcy.model.bean.WithdrawRecordBean;
 import com.shuangduan.zcy.model.event.CityEvent;
+import com.shuangduan.zcy.model.event.MultiAreaEvent;
 
 import java.util.List;
 
@@ -36,7 +38,7 @@ public class UserRepository extends BaseRepository {
     /**
      * 录入信息
      */
-    public void setInfo(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int user_id, String username, int sex, String company, String position, CityEvent business_city, int experience, String managing_products){
+    public void setInfo(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int user_id, String username, int sex, String company, String position, BusinessAreaBean business_city, int experience, String managing_products){
         request(apiService.setInfo(user_id, username, sex, company, position, business_city, experience, managing_products)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
@@ -92,7 +94,7 @@ public class UserRepository extends BaseRepository {
     /**
      * 更新城市
      */
-    public void updateBusinessCity(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int user_id, CityEvent businessCity){
+    public void updateBusinessCity(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int user_id, BusinessAreaBean businessCity){
         request(apiService.updateBusinessCity(user_id, businessCity)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 

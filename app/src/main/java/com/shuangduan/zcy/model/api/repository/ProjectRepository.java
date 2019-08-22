@@ -11,6 +11,9 @@ import com.shuangduan.zcy.model.bean.MapBean;
 import com.shuangduan.zcy.model.bean.ProjectFilterBean;
 import com.shuangduan.zcy.model.bean.ProjectInfoBean;
 import com.shuangduan.zcy.model.bean.ProjectMineBean;
+import com.shuangduan.zcy.model.bean.ProjectSubConfirmBean;
+import com.shuangduan.zcy.model.bean.ProjectSubFirstBean;
+import com.shuangduan.zcy.model.bean.ProjectSubViewBean;
 import com.shuangduan.zcy.model.bean.ProvinceBean;
 import com.shuangduan.zcy.model.bean.RecruitSubBean;
 import com.shuangduan.zcy.model.bean.StageBean;
@@ -81,6 +84,18 @@ public class ProjectRepository extends BaseRepository {
 
     public void recruitSub(MutableLiveData<RecruitSubBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, int page){
         request(apiService.recruitSub(user_id, page)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    public void startWarrant(MutableLiveData<ProjectSubFirstBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, int id){
+        request(apiService.startWarrant(user_id, id)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    public void confirmWarrant(MutableLiveData<ProjectSubConfirmBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, int id, int month, String order_sn){
+        request(apiService.confirmWarrant(user_id, id, month, order_sn)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    public void viewWarrant(MutableLiveData<ProjectSubViewBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, int id){
+        request(apiService.viewWarrant(user_id, id)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
 }

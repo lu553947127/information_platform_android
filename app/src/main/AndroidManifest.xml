@@ -85,6 +85,7 @@
         <activity android:name="com.shuangduan.zcy.view.mine.UpdatePwdPayActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
         <activity android:name="com.shuangduan.zcy.view.mine.ForgetPwdPayActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
         <activity android:name="com.shuangduan.zcy.view.mine.SetPwdPayActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
+        <activity android:name="com.shuangduan.zcy.view.mine.ExplainDetailActivity" android:screenOrientation="portrait" />
         <activity android:name="com.shuangduan.zcy.view.mine.TransRecordActivity" android:screenOrientation="portrait" />
         <activity android:name="com.shuangduan.zcy.view.mine.TransRecordDetailActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
         <activity android:name="com.shuangduan.zcy.view.mine.MineDemandActivity" android:screenOrientation="portrait" />
@@ -133,6 +134,8 @@
         <activity android:name="com.shuangduan.zcy.view.demand.FindSubstanceDetailActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.view.demand.ReleaseRelationshipOrderActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.view.demand.FindBuyerDetailActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.shuangduan.zcy.view.demand.FindRelationshipAcceptDetailActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.shuangduan.zcy.view.demand.FindRelationshipReleaseDetailActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.view.PhotoViewActivity" android:screenOrientation="portrait" android:theme="@style/PhotoViewTheme"/>
         <activity android:name="com.shuangduan.zcy.view.MultiAreaActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
         <activity android:name="com.shuangduan.zcy.view.PayActivity" android:screenOrientation="portrait"/>

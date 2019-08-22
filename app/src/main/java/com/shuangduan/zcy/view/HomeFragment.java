@@ -30,6 +30,7 @@ import com.shuangduan.zcy.view.headlines.HeadlinesActivity;
 import com.shuangduan.zcy.view.headlines.HeadlinesDetailActivity;
 import com.shuangduan.zcy.view.material.MaterialActivity;
 import com.shuangduan.zcy.view.income.MineIncomeActivity;
+import com.shuangduan.zcy.view.mine.ExplainDetailActivity;
 import com.shuangduan.zcy.view.projectinfo.ProjectInfoActivity;
 import com.shuangduan.zcy.view.recruit.RecruitActivity;
 import com.shuangduan.zcy.view.release.ReleaseListActivity;
@@ -160,7 +161,10 @@ public class HomeFragment extends BaseFragment {
                 incomeStatementAdapter = new IncomeStatementAdapter(R.layout.item_income_statement, homeListBean.getExplain());
                 rvIncomeStatement.setAdapter(incomeStatementAdapter);
                 incomeStatementAdapter.setOnItemClickListener((adapter, view, position) -> {
-
+                    HomeListBean.ExplainBean explainBean = incomeStatementAdapter.getData().get(position);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(CustomConfig.EXPLAIN_ID, explainBean.getId());
+                    ActivityUtils.startActivity(bundle, ExplainDetailActivity.class);
                 });
             }else {
                 incomeStatementAdapter.setNewData(homeListBean.getExplain());

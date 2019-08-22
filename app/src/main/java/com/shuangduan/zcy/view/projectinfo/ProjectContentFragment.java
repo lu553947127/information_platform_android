@@ -13,6 +13,7 @@ import com.amap.api.maps.model.LatLng;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.bumptech.glide.Glide;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ContactAdapter;
 import com.shuangduan.zcy.app.SpConfig;
@@ -28,6 +29,7 @@ import com.shuangduan.zcy.vm.CoinPayVm;
 import com.shuangduan.zcy.vm.ProjectDetailVm;
 import com.shuangduan.zcy.vm.UpdatePwdPayVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
+import com.shuangduan.zcy.weight.RichText;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -57,7 +59,7 @@ public class ProjectContentFragment extends BaseFragment {
     @BindView(R.id.tv_price)
     TextView tvPrice;
     @BindView(R.id.tv_detail)
-    TextView tvDetail;
+    RichText tvDetail;
     @BindView(R.id.tv_material)
     TextView tvMaterial;
     @BindView(R.id.rv_contact)
@@ -108,7 +110,8 @@ public class ProjectContentFragment extends BaseFragment {
             tvCycle.setText(String.format(getString(R.string.format_cycle), detail.getCycle()));
             tvAcreage.setText(String.format(getString(R.string.format_acreage), detail.getAcreage()));
             tvPrice.setText(String.format(getString(R.string.format_valuation), detail.getValuation()));
-            tvDetail.setText(detail.getIntro());
+            tvDetail.setGlide(Glide.with(this));
+            tvDetail.setHtml(detail.getIntro());
             tvMaterial.setText(detail.getMaterials());
             tvReadDetail.setVisibility(detail.getIs_pay() == 1? View.GONE: View.VISIBLE);
 

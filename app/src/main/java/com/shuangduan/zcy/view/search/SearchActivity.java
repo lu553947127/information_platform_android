@@ -16,6 +16,7 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.android.flexbox.FlexboxLayout;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.SearchHistoryAdapter;
@@ -83,6 +84,12 @@ public class SearchActivity extends BaseActivity {
         rv.setLayoutManager(new LinearLayoutManager(this));
         searchAdapter = new SearchHistoryAdapter(R.layout.item_search_history, null);
         rv.setAdapter(searchAdapter);
+        searchAdapter.setOnItemClickListener((adapter, view, position) -> {
+            String s = searchAdapter.getData().get(position);
+            Bundle bundle = new Bundle();
+            bundle.putString(CustomConfig.KEYWORD, s);
+            ActivityUtils.startActivity(bundle, SearchResultActivity.class);
+        });
         searchVm.historyLiveData.observe(this, history -> {
             searchAdapter.setNewData(history);
         });

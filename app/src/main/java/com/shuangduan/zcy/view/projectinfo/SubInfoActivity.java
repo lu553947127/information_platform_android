@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.BarUtils;
 import com.github.mikephil.charting.charts.LineChart;
@@ -13,7 +14,10 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.shuangduan.zcy.R;
+import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
+import com.shuangduan.zcy.model.bean.ProjectSubViewBean;
+import com.shuangduan.zcy.vm.GoToSubVm;
 
 import java.util.ArrayList;
 
@@ -60,12 +64,21 @@ public class SubInfoActivity extends BaseActivity {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.subscription_msg));
 
-        tvSubPerson.setText("王某某");
-        tvSubTime.setText("2019-07-01 18:25");
-        tvHoldTime.setText("2019-07-01至2019-07-31");
-        tvReadPeopleNum.setText("12人");
-        tvExpectedReturn.setText("2000元");
-        tvGenerateRevenue.setText("1000元");
+        GoToSubVm goToSubVm = ViewModelProviders.of(this).get(GoToSubVm.class);
+        goToSubVm.projectId = getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0);
+        goToSubVm.viewLiveData.observe(this, projectSubViewBean -> {
+            ProjectSubViewBean.InfoBean info = projectSubViewBean.getInfo();
+            tvSubPerson.setText(info.getUsername());
+            tvSubTime.setText(info.getCreate_time());
+            tvHoldTime.setText(String.format(getString(R.string.format_validity_period_less), info.getStart_time(), info.getEnd_time()));
+            tvReadPeopleNum.setText(String.valueOf(info.getCount()));
+            tvExpectedReturn.setText(info.getExpect_price());
+            tvGenerateRevenue.setText(info.getIncome_price());
+        });
+        goToSubVm.pageStateLiveData.observe(this, s -> {
+            showPageState(s);
+        });
+        goToSubVm.viewWarrant();
 
         ArrayList<Entry> values = new ArrayList<>();
         values.add(new Entry(0, 50));

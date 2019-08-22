@@ -8,6 +8,8 @@ import com.shuangduan.zcy.base.BaseViewModel;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.api.repository.DemandRepository;
 import com.shuangduan.zcy.model.bean.DemandRelationshipBean;
+import com.shuangduan.zcy.model.bean.FindRelationshipAcceptBean;
+import com.shuangduan.zcy.model.bean.FindRelationshipReleaseBean;
 import com.shuangduan.zcy.model.bean.RelationshipDetailBean;
 
 /**
@@ -29,9 +31,12 @@ public class DemandRelationshipVm extends BaseViewModel {
     public MutableLiveData<DemandRelationshipBean> acceptLiveData;
     public MutableLiveData<DemandRelationshipBean> releaseLiveData;
     public MutableLiveData<RelationshipDetailBean> relationshipDetailLiveData;
+    public MutableLiveData<FindRelationshipReleaseBean> relationshipReleaseDetailLiveData;
+    public MutableLiveData<FindRelationshipAcceptBean> relationshipAcceptDetailLiveData;
     public MutableLiveData<String> pageStateLiveData;
     public MutableLiveData replyLiveData;
     public int id;
+    public int relationships_reply_id;
 
     public DemandRelationshipVm() {
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
@@ -41,6 +46,8 @@ public class DemandRelationshipVm extends BaseViewModel {
         pageStateLiveData = new MutableLiveData<>();
         replyLiveData = new MutableLiveData();
         relationshipDetailLiveData = new MutableLiveData<>();
+        relationshipReleaseDetailLiveData = new MutableLiveData<>();
+        relationshipAcceptDetailLiveData = new MutableLiveData<>();
     }
 
     public void getRelationship(){
@@ -85,5 +92,13 @@ public class DemandRelationshipVm extends BaseViewModel {
 
     public void relationshipDetail(){
         new DemandRepository().relationshipDetail(relationshipDetailLiveData, pageStateLiveData, userId, id);
+    }
+
+    public void releaseDetail(){
+        new DemandRepository().mineReleaseRelationshipDetail(relationshipReleaseDetailLiveData, pageStateLiveData, userId, id);
+    }
+
+    public void acceptDetail(){
+        new DemandRepository().mineAcceptRelationshipDetail(relationshipAcceptDetailLiveData, pageStateLiveData, userId, relationships_reply_id);
     }
 }

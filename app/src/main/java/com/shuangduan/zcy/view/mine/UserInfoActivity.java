@@ -27,6 +27,7 @@ import com.shuangduan.zcy.model.event.CityEvent;
 import com.shuangduan.zcy.model.event.CompanyEvent;
 import com.shuangduan.zcy.model.event.EmailEvent;
 import com.shuangduan.zcy.model.event.MobileEvent;
+import com.shuangduan.zcy.model.event.MultiAreaEvent;
 import com.shuangduan.zcy.model.event.OfficeEvent;
 import com.shuangduan.zcy.model.event.ProductionEvent;
 import com.shuangduan.zcy.model.event.UserNameEvent;
@@ -35,6 +36,7 @@ import com.shuangduan.zcy.utils.image.ImageConfig;
 import com.shuangduan.zcy.utils.image.ImageLoader;
 import com.shuangduan.zcy.utils.matisse.Glide4Engine;
 import com.shuangduan.zcy.utils.matisse.MatisseCamera;
+import com.shuangduan.zcy.view.MultiAreaActivity;
 import com.shuangduan.zcy.vm.PermissionVm;
 import com.shuangduan.zcy.vm.UploadPhotoVm;
 import com.shuangduan.zcy.vm.UserInfoVm;
@@ -166,7 +168,7 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
         });
         userInfoVm.areaLiveData.observe(this, o -> {
             ToastUtils.showShort(getString(R.string.edit_success));
-            tvBusinessArea.setText(userInfoVm.area.getValue().city);
+            tvBusinessArea.setText(userInfoVm.multiAreaLiveData.getValue().getStringResult());
         });
         userInfoVm.expLiveData.observe(this, o -> {
             ToastUtils.showShort(getString(R.string.edit_success));
@@ -275,7 +277,7 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
                 ActivityUtils.startActivity(bundle, CompanySearchActivity.class);
                 break;
             case R.id.fl_business_area:
-                ActivityUtils.startActivity(BusinessAreaActivity.class);
+                ActivityUtils.startActivity(MultiAreaActivity.class);
                 break;
             case R.id.fl_business_exp:
                 new BusinessExpDialog(this)
@@ -343,8 +345,8 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
     }
 
     @Subscribe()
-    public void updateCity(CityEvent event) {
-        userInfoVm.area.postValue(event);
+    public void serviceCity(MultiAreaEvent event) {
+        userInfoVm.multiAreaLiveData.postValue(event);
     }
 
     @Subscribe()

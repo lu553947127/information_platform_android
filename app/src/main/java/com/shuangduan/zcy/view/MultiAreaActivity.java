@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.SelectorFirstAdapter;
 import com.shuangduan.zcy.adapter.SelectorSecondAdapter;
@@ -109,6 +110,10 @@ public class MultiAreaActivity extends BaseActivity {
                 break;
             case R.id.tv_bar_right:
                 List<Integer> cityResult = areaVm.getProvinceCityIds();
+                if (cityResult == null){
+                    ToastUtils.showShort("请选择业务地区");
+                    return;
+                }
                 String stringResult = areaVm.getStringResult();
                 EventBus.getDefault().post(new MultiAreaEvent(cityResult, stringResult));
                 finish();

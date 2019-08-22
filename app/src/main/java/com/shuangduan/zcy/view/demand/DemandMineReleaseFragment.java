@@ -1,19 +1,24 @@
 package com.shuangduan.zcy.view.demand;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.ActivityUtils;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.DemandReleaseAdapter;
+import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseLazyFragment;
+import com.shuangduan.zcy.model.bean.DemandRelationshipBean;
 import com.shuangduan.zcy.vm.DemandRelationshipVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
@@ -54,18 +59,24 @@ public class DemandMineReleaseFragment extends BaseLazyFragment {
     protected void initDataAndEvent(Bundle savedInstanceState) {
         rv.setLayoutManager(new LinearLayoutManager(mContext));
         rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
-        DemandReleaseAdapter adapter = new DemandReleaseAdapter(R.layout.item_demand_relationship_release, null);
-        adapter.setEmptyView(R.layout.layout_loading, rv);
-        rv.setAdapter(adapter);
+        DemandReleaseAdapter releaseAdapter = new DemandReleaseAdapter(R.layout.item_demand_relationship_release, null);
+        releaseAdapter.setEmptyView(R.layout.layout_loading, rv);
+        rv.setAdapter(releaseAdapter);
+        releaseAdapter.setOnItemClickListener((adapter, view, position) -> {
+            DemandRelationshipBean.ListBean listBean = releaseAdapter.getData().get(position);
+            Bundle bundle = new Bundle();
+            bundle.putInt(CustomConfig.DEMAND_ID, listBean.getId());
+            ActivityUtils.startActivity(bundle, FindRelationshipReleaseDetailActivity.class);
+        });
 
         demandRelationshipVm = ViewModelProviders.of(mActivity).get(DemandRelationshipVm.class);
         demandRelationshipVm.releaseLiveData.observe(this, demandRelationshipBean -> {
             isInited = true;
             if (demandRelationshipBean.getPage() == 1) {
-                adapter.setNewData(demandRelationshipBean.getList());
-                adapter.setEmptyView(R.layout.layout_empty, rv);
+                releaseAdapter.setNewData(demandRelationshipBean.getList());
+                releaseAdapter.setEmptyView(R.layout.layout_empty, rv);
             }else {
-                adapter.addData(demandRelationshipBean.getList());
+                releaseAdapter.addData(demandRelationshipBean.getList());
             }
             setNoMore(demandRelationshipBean.getPage(), demandRelationshipBean.getCount());
         });

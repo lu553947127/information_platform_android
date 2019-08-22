@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="45dp">
+
+    <TextView
+        android:id="@+id/tv_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="15dp"
+        android:textColor="@color/colorTv"
+        android:textSize="13sp"/>
+
+    <TextView
+        android:id="@+id/tv_pay"
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center_vertical|end"
+        android:layout_marginRight="15dp"
+        style="@style/BtnConfirm"
+        android:textSize="14sp"
+        android:text="@string/pay"/>
+
+</FrameLayout>

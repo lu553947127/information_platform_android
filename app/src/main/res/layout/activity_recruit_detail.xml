@@ -79,7 +79,7 @@
                 android:textColor="@color/color_666666"
                 android:textSize="12sp"/>
 
-            <TextView
+            <com.shuangduan.zcy.weight.RichText
                 android:id="@+id/tv_intro_content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

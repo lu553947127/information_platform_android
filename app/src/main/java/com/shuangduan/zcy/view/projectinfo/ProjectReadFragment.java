@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.bumptech.glide.Glide;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
@@ -28,6 +29,7 @@ import com.shuangduan.zcy.model.bean.TrackBean;
 import com.shuangduan.zcy.model.event.RefreshViewLocusEvent;
 import com.shuangduan.zcy.view.PhotoViewActivity;
 import com.shuangduan.zcy.vm.ProjectDetailVm;
+import com.shuangduan.zcy.weight.RichText;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -49,7 +51,7 @@ import butterknife.BindView;
 public class ProjectReadFragment extends BaseLazyFragment {
 
     @BindView(R.id.tv_detail)
-    TextView tvDetail;
+    RichText tvDetail;
     @BindView(R.id.tv_material)
     TextView tvMaterial;
     @BindView(R.id.refresh)
@@ -100,7 +102,8 @@ public class ProjectReadFragment extends BaseLazyFragment {
 
         projectDetailVm = ViewModelProviders.of(mActivity).get(ProjectDetailVm.class);
         projectDetailVm.introLiveData.observe(this, intro ->{
-            tvDetail.setText(intro);
+            tvDetail.setGlide(Glide.with(this));
+            tvDetail.setHtml(intro);
         });
         projectDetailVm.materialLiveData.observe(this, materials -> {
             tvMaterial.setText(materials);

@@ -58,7 +58,7 @@ public class RecruitSearchFragment extends BaseLazyFragment {
     protected void initDataAndEvent(Bundle savedInstanceState) {
         rv.setLayoutManager(new LinearLayoutManager(mContext));
         rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
-        RecruitSearchAdapter recruitAdapter = new RecruitSearchAdapter(R.layout.item_project_info, null);
+        RecruitSearchAdapter recruitAdapter = new RecruitSearchAdapter(R.layout.item_recruit, null);
         recruitAdapter.setEmptyView(R.layout.layout_loading, rv);
         rv.setAdapter(recruitAdapter);
         recruitAdapter.setOnItemClickListener((adapter, view, position) -> {

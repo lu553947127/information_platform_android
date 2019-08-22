@@ -6,6 +6,7 @@ import com.shuangduan.zcy.model.bean.BankCardBean;
 import com.shuangduan.zcy.model.bean.BankCardDisBean;
 import com.shuangduan.zcy.model.bean.BaseListResponse;
 import com.shuangduan.zcy.model.bean.BaseResponse;
+import com.shuangduan.zcy.model.bean.BusinessAreaBean;
 import com.shuangduan.zcy.model.bean.BuyerDetailBean;
 import com.shuangduan.zcy.model.bean.CityBean;
 import com.shuangduan.zcy.model.bean.CoinPayResultBean;
@@ -15,6 +16,9 @@ import com.shuangduan.zcy.model.bean.ContactTypeBean;
 import com.shuangduan.zcy.model.bean.DemandBuyerBean;
 import com.shuangduan.zcy.model.bean.DemandRelationshipBean;
 import com.shuangduan.zcy.model.bean.DemandSubstanceBean;
+import com.shuangduan.zcy.model.bean.ExplainDetailBean;
+import com.shuangduan.zcy.model.bean.FindRelationshipAcceptBean;
+import com.shuangduan.zcy.model.bean.FindRelationshipReleaseBean;
 import com.shuangduan.zcy.model.bean.HeadlinesBean;
 import com.shuangduan.zcy.model.bean.HeadlinesDetailBean;
 import com.shuangduan.zcy.model.bean.HomeBannerBean;
@@ -46,6 +50,9 @@ import com.shuangduan.zcy.model.bean.ProjectInfoBean;
 import com.shuangduan.zcy.model.bean.ProjectMineBean;
 import com.shuangduan.zcy.model.bean.ProjectSearchBean;
 import com.shuangduan.zcy.model.bean.ProjectSubBean;
+import com.shuangduan.zcy.model.bean.ProjectSubConfirmBean;
+import com.shuangduan.zcy.model.bean.ProjectSubFirstBean;
+import com.shuangduan.zcy.model.bean.ProjectSubViewBean;
 import com.shuangduan.zcy.model.bean.ProvinceBean;
 import com.shuangduan.zcy.model.bean.PwdPayStateBean;
 import com.shuangduan.zcy.model.bean.ReSetPwdBean;
@@ -78,6 +85,7 @@ import com.shuangduan.zcy.model.bean.UserInfoBean;
 import com.shuangduan.zcy.model.bean.WithdrawBean;
 import com.shuangduan.zcy.model.bean.WithdrawRecordBean;
 import com.shuangduan.zcy.model.event.CityEvent;
+import com.shuangduan.zcy.model.event.MultiAreaEvent;
 
 import io.reactivex.Flowable;
 import okhttp3.MultipartBody;
@@ -161,7 +169,7 @@ public interface ApiService {
             @Query("sex")int sex,
             @Query("company")String company,
             @Query("position")String position,
-            @Body CityEvent business_city,
+            @Body BusinessAreaBean business_city,
             @Query("experience")int experience,
             @Query("managing_products")String managing_products
     );
@@ -197,7 +205,7 @@ public interface ApiService {
     @POST("api/Userinfo/setInfo")
     Flowable<BaseResponse> updateBusinessCity(
             @Query("user_id") int user_id,
-            @Body CityEvent business_city
+            @Body BusinessAreaBean business_city
     );
 
     @FormUrlEncoded
@@ -657,7 +665,7 @@ public interface ApiService {
     @POST("api/Material/getCategory")
     Flowable<BaseListResponse<MaterialCategoryBean>> getCategory(
             @Field("user_id") int user_id,
-            @Field("categoryId") int category_id
+            @Field("category_id") int category_id
     );
 
     @FormUrlEncoded
@@ -867,6 +875,15 @@ public interface ApiService {
     );
 
     @FormUrlEncoded
+    @POST("api/Project/payWarrant")
+    Flowable<BaseResponse<CoinPayResultBean>> payWarrant(
+            @Field("user_id") int user_id,
+            @Field("id") int id,
+            @Field("order_id") int order_id,
+            @Field("coin_password") String coin_password
+    );
+
+    @FormUrlEncoded
     @POST("api/index/index")
     Flowable<BaseListResponse<HomePushBean>> homePush(
             @Field("user_id") int user_id
@@ -900,6 +917,13 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("api/Headline/getDetail")
     Flowable<BaseResponse<HeadlinesDetailBean>> headlinesDetail(
+            @Field("user_id") int user_id,
+            @Field("id") int id
+    );
+
+    @FormUrlEncoded
+    @POST("api/index/details")
+    Flowable<BaseResponse<ExplainDetailBean>> explainDetail(
             @Field("user_id") int user_id,
             @Field("id") int id
     );
@@ -1037,6 +1061,43 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("api/Relation/buyerDetail")
     Flowable<BaseResponse<BuyerDetailBean>> buyerDetail(
+            @Field("user_id") int user_id,
+            @Field("id") int id
+    );
+
+    @FormUrlEncoded
+    @POST("api/Relation/myDetails")
+    Flowable<BaseResponse<FindRelationshipReleaseBean>> mineReleaseRelationshipDetail(
+            @Field("user_id") int user_id,
+            @Field("id") int id
+    );
+
+    @FormUrlEncoded
+    @POST("api/Relation/detail")
+    Flowable<BaseResponse<FindRelationshipAcceptBean>> mineAcceptRelationshipDetail(
+            @Field("user_id") int user_id,
+            @Field("relationships_reply_id") int relationships_reply_id
+    );
+
+    @FormUrlEncoded
+    @POST("api/Project/startWarrant")
+    Flowable<BaseResponse<ProjectSubFirstBean>> startWarrant(
+            @Field("user_id") int user_id,
+            @Field("id") int id
+    );
+
+    @FormUrlEncoded
+    @POST("api/Project/confirmWarrant")
+    Flowable<BaseResponse<ProjectSubConfirmBean>> confirmWarrant(
+            @Field("user_id") int user_id,
+            @Field("id") int id,
+            @Field("months") int months,
+            @Field("order_sn") String order_sn
+    );
+
+    @FormUrlEncoded
+    @POST("api/Project/viewWarrant")
+    Flowable<BaseResponse<ProjectSubViewBean>> viewWarrant(
             @Field("user_id") int user_id,
             @Field("id") int id
     );

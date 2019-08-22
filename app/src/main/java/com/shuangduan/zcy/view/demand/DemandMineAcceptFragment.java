@@ -7,13 +7,16 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.DemandAcceptAdapter;
+import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseLazyFragment;
+import com.shuangduan.zcy.model.bean.DemandRelationshipBean;
 import com.shuangduan.zcy.vm.DemandRelationshipVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
@@ -54,18 +57,24 @@ public class DemandMineAcceptFragment extends BaseLazyFragment {
     protected void initDataAndEvent(Bundle savedInstanceState) {
         rv.setLayoutManager(new LinearLayoutManager(mContext));
         rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
-        DemandAcceptAdapter adapter = new DemandAcceptAdapter(R.layout.item_demand_relationship_release, null);
-        adapter.setEmptyView(R.layout.layout_loading, rv);
-        rv.setAdapter(adapter);
+        DemandAcceptAdapter acceptAdapter = new DemandAcceptAdapter(R.layout.item_demand_relationship_release, null);
+        acceptAdapter.setEmptyView(R.layout.layout_loading, rv);
+        rv.setAdapter(acceptAdapter);
+        acceptAdapter.setOnItemClickListener((adapter, view, position) -> {
+            DemandRelationshipBean.ListBean listBean = acceptAdapter.getData().get(position);
+            Bundle bundle = new Bundle();
+            bundle.putInt(CustomConfig.DEMAND_ID, listBean.getId());
+            ActivityUtils.startActivity(bundle, FindRelationshipAcceptDetailActivity.class);
+        });
 
         demandRelationshipVm = ViewModelProviders.of(mActivity).get(DemandRelationshipVm.class);
         demandRelationshipVm.acceptLiveData.observe(this, demandRelationshipBean-> {
             isInited = true;
             if (demandRelationshipBean.getPage() == 1) {
-                adapter.setNewData(demandRelationshipBean.getList());
-                adapter.setEmptyView(R.layout.layout_empty, rv);
+                acceptAdapter.setNewData(demandRelationshipBean.getList());
+                acceptAdapter.setEmptyView(R.layout.layout_empty, rv);
             }else {
-                adapter.addData(demandRelationshipBean.getList());
+                acceptAdapter.addData(demandRelationshipBean.getList());
             }
             setNoMore(demandRelationshipBean.getPage(), demandRelationshipBean.getCount());
         });

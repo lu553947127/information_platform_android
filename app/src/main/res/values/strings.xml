@@ -281,7 +281,7 @@
     <string name="address">地址</string>
     <string name="address_detail">详细地址</string>
     <string name="push_select">推送选择</string>
-    <string name="expected_return_s">预计收益</string>
+    <string name="expected_return_s">总收益</string>
     <string name="withdraw_income">可提现收益</string>
     <string name="income_trend_s">收益走向</string>
     <string name="recharge_amount">充值额度</string>
@@ -312,7 +312,7 @@
     <string name="income_locus">发布信息轨迹收益</string>
     <string name="income_msg">认购信息收益</string>
     <string name="income_product_rights">认购品权收益</string>
-    <string name="income_people">6°人脉收益</string>
+    <string name="income_people">3°人脉收益</string>
     <string name="supplier">优质供应商</string>
     <string name="supplier_join">加入供应商</string>
     <string name="supplier_join_success">申请成功，请等待审核...</string>
@@ -321,17 +321,18 @@
     <string name="supplier_msg">供应商信息</string>
     <string name="locus_num">轨迹数量</string>
     <string name="find_relationship">找关系</string>
-    <string name="find_substance">找物质</string>
+    <string name="find_substance">找物资</string>
     <string name="find_buyer">找买家</string>
     <string name="effective_time">有效时间</string>
     <string name="find_relationship_detail">找关系详情</string>
-    <string name="find_substance_detail">找物质详情</string>
+    <string name="find_substance_detail">找物资详情</string>
     <string name="find_buyer_detail">找买家详情</string>
     <string name="find_relationship_reply_success">信息提交成功</string>
     <string name="hint_name_or_company">请输入姓名或公司</string>
     <string name="hint_contact">请输入联系方式</string>
     <string name="hint_owner">请输入联系人</string>
     <string name="hint_relationship_remarks">为了您的信息能尽快通过审核，请按照需求详细填写</string>
+    <string name="explain">收益说明书</string>
 
     <string name="format_version_name">当前版本号：v%1$s</string>
     <string name="format_get_verification_code_again">重新获取 (%1$ds)</string>
@@ -427,7 +428,7 @@
 
     <string-array name="demand">
         <item>找关系</item>
-        <item>找物质</item>
+        <item>找物资</item>
         <item>找买家</item>
     </string-array>
 

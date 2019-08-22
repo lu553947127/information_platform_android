@@ -27,6 +27,7 @@ public class CoinPayVm extends BaseViewModel {
     public MutableLiveData<CoinPayResultBean> findSubstancePayLiveData;
     public MutableLiveData<CoinPayResultBean> findBuyerPayLiveData;
     public MutableLiveData<CoinPayResultBean> releaseRelationshipPayLiveData;
+    public MutableLiveData<CoinPayResultBean> warrantPayLiveData;
     public MutableLiveData<String> pageStateLiveData;
     public int projectId;
     public int locusId;
@@ -35,6 +36,7 @@ public class CoinPayVm extends BaseViewModel {
     public int findSubstanceId;
     public int findBuyerId;
     public int releaseRelationshipId;
+    public int orderId;
 
     public CoinPayVm() {
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
@@ -46,6 +48,7 @@ public class CoinPayVm extends BaseViewModel {
         findSubstancePayLiveData = new MutableLiveData<>();
         findBuyerPayLiveData = new MutableLiveData<>();
         releaseRelationshipPayLiveData = new MutableLiveData<>();
+        warrantPayLiveData = new MutableLiveData<>();
     }
 
     public void payProject(String pwd){
@@ -74,5 +77,9 @@ public class CoinPayVm extends BaseViewModel {
 
     public void payRelationshipRelease(String pwd){
         new PayRepository().payRelationshipRelease(releaseRelationshipPayLiveData, pageStateLiveData, userId, releaseRelationshipId, pwd);
+    }
+
+    public void payWarrant(String pwd){
+        new PayRepository().payWarrant(warrantPayLiveData, pageStateLiveData, userId, projectId, orderId, pwd);
     }
 }

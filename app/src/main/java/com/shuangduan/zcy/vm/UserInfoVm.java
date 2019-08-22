@@ -6,14 +6,15 @@ import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseViewModel;
 import com.shuangduan.zcy.model.api.repository.UserRepository;
+import com.shuangduan.zcy.model.bean.BusinessAreaBean;
 import com.shuangduan.zcy.model.bean.UserInfoBean;
 import com.shuangduan.zcy.model.event.AvatarEvent;
-import com.shuangduan.zcy.model.event.CityEvent;
+import com.shuangduan.zcy.model.event.MultiAreaEvent;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -41,10 +42,10 @@ public class UserInfoVm extends BaseViewModel {
     public LiveData companyLiveData;
     public MutableLiveData<String> office;
     public LiveData officeLiveData;
-    public MutableLiveData<CityEvent> area;
     public LiveData areaLiveData;
     public MutableLiveData<Integer> experience;
     public LiveData expLiveData;
+    public MutableLiveData<MultiAreaEvent> multiAreaLiveData;
 
     private int userId;
     public int uid;
@@ -76,10 +77,12 @@ public class UserInfoVm extends BaseViewModel {
             new UserRepository().updatePosition(data, pageStateLiveData, userId, input);
             return data;
         });
-        area = new MutableLiveData<>();
-        areaLiveData = Transformations.switchMap(area, (Function<CityEvent, LiveData<Object>>) input -> {
+        multiAreaLiveData = new MutableLiveData<>();
+        areaLiveData = Transformations.switchMap(multiAreaLiveData, (Function<MultiAreaEvent, LiveData<Object>>) input -> {
             MutableLiveData data = new MutableLiveData();
-            new UserRepository().updateBusinessCity(data, pageStateLiveData, userId, input);
+            BusinessAreaBean businessAreaBean = new BusinessAreaBean();
+            businessAreaBean.setBusiness_city(input.getCityResult());
+            new UserRepository().updateBusinessCity(data, pageStateLiveData, userId, businessAreaBean);
             return data;
         });
         experience = new MutableLiveData<>();
@@ -93,8 +96,10 @@ public class UserInfoVm extends BaseViewModel {
         });
     }
 
-    public void infoSet(String username, int sex, String company, String position, CityEvent business_city, int experience, String managing_products){
-        new UserRepository().setInfo(infoLiveData, pageStateLiveData, userId, username, sex, company, position, business_city, experience, managing_products);
+    public void infoSet(String username, int sex, String company, String position, MultiAreaEvent business_city, int experience, String managing_products){
+        BusinessAreaBean businessAreaBean = new BusinessAreaBean();
+        businessAreaBean.setBusiness_city(business_city.getCityResult());
+        new UserRepository().setInfo(infoLiveData, pageStateLiveData, userId, username, sex, company, position, businessAreaBean, experience, managing_products);
     }
 
     public void userInfo(){

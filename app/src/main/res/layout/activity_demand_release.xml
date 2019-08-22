@@ -607,7 +607,7 @@
             android:layout_gravity="center_vertical"
             android:textColor="@color/colorTv"
             android:textSize="14sp"
-            android:text="@string/contact_info"/>
+            android:text="@string/contacts_info"/>
 
         <EditText
             android:id="@+id/edt_contacts_info"

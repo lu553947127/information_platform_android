@@ -237,6 +237,7 @@
                 android:layout_height="10dp"/>
 
             <FrameLayout
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/selector_bg_custom"

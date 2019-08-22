@@ -23,8 +23,10 @@ import com.shuangduan.zcy.dialog.SubscriptionTypeDialog;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.event.CityEvent;
 import com.shuangduan.zcy.model.event.CompanyEvent;
+import com.shuangduan.zcy.model.event.MultiAreaEvent;
 import com.shuangduan.zcy.utils.AndroidBug5497Workaround;
 import com.shuangduan.zcy.view.MainActivity;
+import com.shuangduan.zcy.view.MultiAreaActivity;
 import com.shuangduan.zcy.view.mine.BusinessAreaActivity;
 import com.shuangduan.zcy.vm.MineSubVm;
 import com.shuangduan.zcy.vm.UserInfoVm;
@@ -80,7 +82,6 @@ public class UserInfoInputActivity extends BaseActivity {
     private int sex = 0;
     /*业务经验 1:"0-3年",2:"2-3年",3:"3-5年",4:"5-10年"*/
     private int exp = 0;
-    private CityEvent area;
     private UserInfoVm userInfoVm;
     private MineSubVm mineSubVm;
 
@@ -156,7 +157,7 @@ public class UserInfoInputActivity extends BaseActivity {
                         sex,
                         edtCompany.getText().toString(),
                         edtOffice.getText().toString(),
-                        area,
+                        userInfoVm.multiAreaLiveData.getValue(),
                         exp,
                         edtProduction.getText().toString());
                 break;
@@ -178,7 +179,7 @@ public class UserInfoInputActivity extends BaseActivity {
                         }).showDialog());
                 break;
             case R.id.tv_business_area:
-                ActivityUtils.startActivity(BusinessAreaActivity.class);
+                ActivityUtils.startActivity(MultiAreaActivity.class);
                 break;
             case R.id.tv_business_exp:
                 new BusinessExpDialog(this)
@@ -191,10 +192,10 @@ public class UserInfoInputActivity extends BaseActivity {
         }
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void cityChange(CityEvent event){
-        tvBusinessArea.setText(event.city);
-        area = event;
+    @Subscribe()
+    public void serviceCity(MultiAreaEvent event) {
+        userInfoVm.multiAreaLiveData.postValue(event);
+        tvBusinessArea.setText(event.getStringResult());
     }
 
     /**

@@ -274,47 +274,26 @@ public class MultiAreaVm extends BaseViewModel {
                     //全选，返回null
                     return null;
                 }else if (provinceList.get(i).isSelect == 1){
-                    result.add(provinceList.get(i).getId());
-                    if (stringBuilder.length() == 0){
-                        stringBuilder.append(provinceList.get(i).getName());
-                    }else {
-                        stringBuilder.append(",").append(provinceList.get(i).getName());
-                    }
                     List<CityBean> cityList = provinceList.get(i).getCityList();
                     if (cityList != null){
                         for (int j = 0; j < cityList.size(); j++) {
-                            if (cityList.get(j).isSelect == 1){
-                                result.add(cityList.get(j).getId());
-                                stringBuilder.append(",").append(cityList.get(j).getName());
-                            }
-                        }
-                    }
-                }
-            }
-            return result;
-        }
-        return null;
-    }
-
-    public List<Integer> getCityIds(){
-        List<ProvinceBean> provinceList = provinceLiveData.getValue();
-        stringBuilder = new StringBuilder();
-        List<Integer> result = new ArrayList<>();
-        if (provinceList != null){
-            for (int i = 0; i < provinceList.size(); i++) {
-                if (i == 0 && provinceList.get(i).getCityList().get(0).getIsSelect() == 1){
-                    //全选，返回null
-                    return null;
-                }else if (provinceList.get(i).isSelect == 1){
-                    List<CityBean> cityList = provinceList.get(i).getCityList();
-                    if (cityList != null){
-                        for (int j = 0; j < cityList.size(); j++) {
-                            if (cityList.get(j).isSelect == 1){
+                            if (j == 0){
+                                if (cityList.get(j).getIsSelect() == 1){
+                                    //省全部
+                                    result.add(provinceList.get(i).getId());
+                                    if (stringBuilder.length() == 0){
+                                        stringBuilder.append(provinceList.get(i).getName());
+                                    }else {
+                                        stringBuilder.append("、").append(provinceList.get(i).getName());
+                                    }
+                                    break;
+                                }
+                            }else if (cityList.get(j).isSelect == 1){
                                 result.add(cityList.get(j).getId());
                                 if (stringBuilder.length() == 0){
                                     stringBuilder.append(cityList.get(j).getName());
                                 }else {
-                                    stringBuilder.append(",").append(cityList.get(j).getName());
+                                    stringBuilder.append("、").append(cityList.get(j).getName());
                                 }
                             }
                         }

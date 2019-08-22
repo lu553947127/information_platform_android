@@ -7,6 +7,8 @@ import com.shuangduan.zcy.model.bean.DemandBuyerBean;
 import com.shuangduan.zcy.model.bean.DemandRelationshipBean;
 import com.shuangduan.zcy.model.bean.DemandReleaseBean;
 import com.shuangduan.zcy.model.bean.DemandSubstanceBean;
+import com.shuangduan.zcy.model.bean.FindRelationshipAcceptBean;
+import com.shuangduan.zcy.model.bean.FindRelationshipReleaseBean;
 import com.shuangduan.zcy.model.bean.RelationshipDetailBean;
 import com.shuangduan.zcy.model.bean.RelationshipOrderBean;
 import com.shuangduan.zcy.model.bean.SubstanceDetailBean;
@@ -62,5 +64,11 @@ public class DemandRepository extends BaseRepository {
     }
     public void buyerDetail(MutableLiveData<BuyerDetailBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, int id){
         request(apiService.buyerDetail(user_id, id)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+    public void mineReleaseRelationshipDetail(MutableLiveData<FindRelationshipReleaseBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, int id){
+        request(apiService.mineReleaseRelationshipDetail(user_id, id)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+    public void mineAcceptRelationshipDetail(MutableLiveData<FindRelationshipAcceptBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, int id){
+        request(apiService.mineAcceptRelationshipDetail(user_id, id)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 }

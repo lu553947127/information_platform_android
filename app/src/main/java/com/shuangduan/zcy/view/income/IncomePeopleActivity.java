@@ -57,7 +57,11 @@ public class IncomePeopleActivity extends BaseActivity {
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         int degree = getIntent().getIntExtra(CustomConfig.PEOPLE_DEGREE, CustomConfig.FIRST_DEGREE);
-        tvBarTitle.setText(String.format(getString(R.string.format_income_degree), degree));
+        if (degree == 7){
+            tvBarTitle.setText(String.format(getString(R.string.format_income_degree), 3));
+        }else {
+            tvBarTitle.setText(String.format(getString(R.string.format_income_degree), degree));
+        }
 
         incomeReleaseVm = ViewModelProviders.of(this).get(IncomePeopleVm.class);
         incomeReleaseVm.type = degree;

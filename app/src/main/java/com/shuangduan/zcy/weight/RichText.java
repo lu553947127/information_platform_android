@@ -80,6 +80,7 @@ import java.util.regex.Pattern;
  *                 startPhotoActivity(imgUrl);
  *             }
  *         });
+ *     tvContent.setHtml(headlinesDetailBean.getContent());
  *     version: 1.0
  * </pre>
  */

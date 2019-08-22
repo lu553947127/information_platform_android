@@ -73,4 +73,11 @@ public class PayRepository extends BaseRepository {
         request(apiService.payRelationshipRelease(userId, id, coin_password)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
+    /**
+     * 紫金币支付工程信息认购
+     */
+    public void payWarrant(MutableLiveData<CoinPayResultBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int id, int orderId, String coin_password){
+        request(apiService.payWarrant(userId, id, orderId, coin_password)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
 }

@@ -39,6 +39,7 @@ import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.ShareDialog;
 import com.shuangduan.zcy.listener.BaseUiListener;
 import com.shuangduan.zcy.model.api.PageState;
+import com.shuangduan.zcy.model.event.WarrantSuccessEvent;
 import com.shuangduan.zcy.utils.ShareUtils;
 import com.shuangduan.zcy.view.mine.RecommendFriendsActivity;
 import com.shuangduan.zcy.view.release.ReleaseListActivity;
@@ -49,6 +50,8 @@ import com.shuangduan.zcy.vm.ShareVm;
 import com.shuangduan.zcy.vm.UpdatePwdPayVm;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.tencent.tauth.Tencent;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -275,6 +278,13 @@ public class ProjectDetailActivity extends BaseActivity {
         Tencent.onActivityResultData(requestCode, resultCode, data, qqListener);
     }
 
+    @Subscribe()
+    public void warrantSuccess(WarrantSuccessEvent event){
+        projectDetailVm.getDetail();
+        projectDetailVm.getTrack();
+        projectDetailVm.getViewTrack();
+    }
+
     @OnClick({R.id.iv_bar_back, R.id.iv_bar_right, R.id.fl_collect, R.id.fl_error, R.id.fl_subscription, R.id.ll_chat, R.id.fl_release})
     void onClick(View view){
         Bundle bundle = new Bundle();
@@ -308,7 +318,8 @@ public class ProjectDetailActivity extends BaseActivity {
             case R.id.fl_subscription:
                 switch (projectDetailVm.subscribeLiveData.getValue()){
                     case 1:
-                        ActivityUtils.startActivity(SubInfoActivity.class);
+                        bundle.putInt(CustomConfig.PROJECT_ID, getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0));
+                        ActivityUtils.startActivity(bundle, SubInfoActivity.class);
                         break;
                     case 0:
                         bundle.putInt(CustomConfig.PROJECT_ID, getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0));

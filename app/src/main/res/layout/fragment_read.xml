@@ -29,7 +29,7 @@
                 android:textSize="13sp"
                 android:text="@string/detail"/>
 
-            <TextView
+            <com.shuangduan.zcy.weight.RichText
                 android:id="@+id/tv_detail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

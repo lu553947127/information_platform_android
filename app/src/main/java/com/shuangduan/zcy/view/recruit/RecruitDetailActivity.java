@@ -17,6 +17,7 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.bumptech.glide.Glide;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ViewPagerAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
@@ -35,6 +36,7 @@ import com.shuangduan.zcy.vm.CoinPayVm;
 import com.shuangduan.zcy.vm.RecruitDetailVm;
 import com.shuangduan.zcy.vm.ShareVm;
 import com.shuangduan.zcy.vm.UpdatePwdPayVm;
+import com.shuangduan.zcy.weight.RichText;
 import com.tencent.tauth.Tencent;
 
 import butterknife.BindView;
@@ -76,7 +78,7 @@ public class RecruitDetailActivity extends BaseActivity {
     @BindView(R.id.tv_intro_time)
     TextView tvIntroTime;
     @BindView(R.id.tv_intro_content)
-    TextView tvIntroContent;
+    RichText tvIntroContent;
     private int id;
     private RecruitDetailVm recruitDetailVm;
     private UpdatePwdPayVm updatePwdPayVm;
@@ -105,7 +107,8 @@ public class RecruitDetailActivity extends BaseActivity {
             tvIntroTitle.setText(recruitDetailBean.getTitle());
             tvReleaseTime.setText(String.format(getString(R.string.format_release_time), recruitDetailBean.getStart_time()));
             tvIntroTime.setText(String.format(getString(R.string.format_release_time), recruitDetailBean.getStart_time()));
-            tvIntroContent.setText(recruitDetailBean.getContent());
+            tvIntroContent.setGlide(Glide.with(this));
+            tvIntroContent.setHtml(recruitDetailBean.getContent());
             recruitDetailVm.collectionLiveData.postValue(recruitDetailBean.getCollection());
             llReadDetail.setVisibility(recruitDetailBean.getIs_pay() == 1?View.GONE:View.VISIBLE);
         });

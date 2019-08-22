@@ -198,6 +198,7 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_agreement_manage"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@drawable/selector_bg_custom"
@@ -211,7 +212,7 @@
             android:textSize="16sp"
             android:text="@string/agreement_manage"/>
 
-        <include layout="@layout/divider_15"/>
+        <include android:visibility="gone" layout="@layout/divider_15"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_pwd_pay"

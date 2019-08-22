@@ -377,7 +377,7 @@ public class ProjectInfoListActivity extends BaseActivity {
                         view.findViewById(R.id.tv_positive).setOnClickListener(v -> {
                             switch (projectListVm.currentSelect){
                                 case 1:
-                                    projectListVm.city = areaVm.getCityIds();
+                                    projectListVm.city = areaVm.getProvinceCityIds();
                                     LogUtils.i(areaVm.getStringResult());
                                     break;
                                 case 2:
