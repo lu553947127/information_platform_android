@@ -124,6 +124,11 @@ public class ProjectLocusFragment extends BaseLazyFragment {
                 case R.id.tv_more:
                     showPic(listBean, 2, view);
                     break;
+                case R.id.iv_mark:
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(CustomConfig.UID, listBean.getUser_id());
+                    ActivityUtils.startActivity(bundle, LocusOwnerDetailActivity.class);
+                    break;
             }
         });
 

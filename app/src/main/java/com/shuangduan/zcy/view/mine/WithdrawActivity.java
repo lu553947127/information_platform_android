@@ -118,6 +118,12 @@ public class WithdrawActivity extends BaseActivity {
                 }
                 break;
             case R.id.tv_confirm:
+                if (withdrawVm.withdrawBankcardId == 0){
+                    ToastUtils.showShort(getString(R.string.please_bind_bank_card));
+                    //去绑定
+                    ActivityUtils.startActivity(BindBankCardActivity.class);
+                    return;
+                }
                 if (StringUtils.isTrimEmpty(edtMoney.getText().toString())){
                     ToastUtils.showShort("输入具体提现金额");
                     return;

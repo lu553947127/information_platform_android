@@ -82,7 +82,7 @@ public class ProjectReadFragment extends BaseLazyFragment {
         locusAdapter.setEmptyView(R.layout.layout_loading_top, rvLocus);
         rvLocus.setAdapter(locusAdapter);
         locusAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-            TrackBean.ListBean listBean = projectDetailVm.trackLiveData.getValue().getList().get(position);
+            TrackBean.ListBean listBean = locusAdapter.getData().get(position);
             switch (view.getId()){
                 case R.id.iv_pic_first:
                     showPic(listBean, 0, view);
@@ -95,6 +95,11 @@ public class ProjectReadFragment extends BaseLazyFragment {
                     break;
                 case R.id.tv_more:
                     showPic(listBean, 2, view);
+                    break;
+                case R.id.iv_mark:
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(CustomConfig.UID, listBean.getUser_id());
+                    ActivityUtils.startActivity(bundle, LocusOwnerDetailActivity.class);
                     break;
             }
         });

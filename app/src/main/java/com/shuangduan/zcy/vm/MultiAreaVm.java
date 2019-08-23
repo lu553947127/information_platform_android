@@ -8,6 +8,7 @@ import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseViewModel;
 import com.shuangduan.zcy.model.api.repository.ProjectRepository;
 import com.shuangduan.zcy.model.bean.CityBean;
+import com.shuangduan.zcy.model.bean.ProjectFilterBean;
 import com.shuangduan.zcy.model.bean.ProvinceBean;
 
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ public class MultiAreaVm extends BaseViewModel {
     private String cityResult = "";
     public boolean provinceInited = false;
     public int prePosition = 0;//上一个选中的位置
-    private boolean selectAll = true;
+    public boolean selectAll = true;
 
     public MultiAreaVm() {
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
@@ -60,7 +61,7 @@ public class MultiAreaVm extends BaseViewModel {
             if (provinceList == null) return;
             for (ProvinceBean bean: provinceList) {
                 //默认全选
-                bean.setIsSelect(1);
+                bean.setIsSelect(selectAll?1:0);
             }
             ProvinceBean provinceBean = new ProvinceBean();
             provinceBean.setName("全部");
@@ -70,7 +71,7 @@ public class MultiAreaVm extends BaseViewModel {
 
             List<CityBean> cityList = new ArrayList<>();
             CityBean childBean = new CityBean();
-            childBean.setIsSelect(1);
+            childBean.setIsSelect(selectAll?1:0);
             childBean.setId(0);
             childBean.setName("全部");
             cityList.add(childBean);
@@ -263,6 +264,43 @@ public class MultiAreaVm extends BaseViewModel {
         provinceLiveData.postValue(provinceData);
     }
 
+    public ProjectFilterBean getProjectFilterArea(){
+        ProjectFilterBean projectFilterBean = new ProjectFilterBean();
+        List<ProvinceBean> provinceList = provinceLiveData.getValue();
+        List<Integer> provinceResult = new ArrayList<>();
+        List<Integer> cityResult = new ArrayList<>();
+        if (provinceList != null){
+            for (int i = 0; i < provinceList.size(); i++) {
+                if (i == 0 && provinceList.get(i).getCityList().get(0).getIsSelect() == 1){
+                    //全选，返回null
+                    return null;
+                }else if (provinceList.get(i).isSelect == 1){
+                    List<CityBean> cityList = provinceList.get(i).getCityList();
+                    if (cityList != null){
+                        for (int j = 0; j < cityList.size(); j++) {
+                            if (j == 0){
+                                if (cityList.get(j).getIsSelect() == 1){
+                                    //省全部
+                                    provinceResult.add(provinceList.get(i).getId());
+                                    break;
+                                }
+                            }else if (cityList.get(j).isSelect == 1){
+                                cityResult.add(cityList.get(j).getId());
+                            }
+                        }
+                    }else {
+                        //省全部
+                        provinceResult.add(provinceList.get(i).getId());
+                    }
+                }
+            }
+            projectFilterBean.setProvince(provinceResult);
+            projectFilterBean.setCity(cityResult);
+            return projectFilterBean;
+        }
+        return null;
+    }
+
     private StringBuilder stringBuilder;
     public List<Integer> getProvinceCityIds(){
         List<ProvinceBean> provinceList = provinceLiveData.getValue();
@@ -296,6 +334,14 @@ public class MultiAreaVm extends BaseViewModel {
                                     stringBuilder.append("、").append(cityList.get(j).getName());
                                 }
                             }
+                        }
+                    }else {
+                        //省全部
+                        result.add(provinceList.get(i).getId());
+                        if (stringBuilder.length() == 0){
+                            stringBuilder.append(provinceList.get(i).getName());
+                        }else {
+                            stringBuilder.append("、").append(provinceList.get(i).getName());
                         }
                     }
                 }

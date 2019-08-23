@@ -74,7 +74,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
     @Override
     public void hideLoading() {
         if (loadDialog != null){
-            loadDialog.hideDialog();
+            loadDialog.dismiss();
         }
     }
 

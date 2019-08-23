@@ -44,7 +44,8 @@ public class LocusReadAdapter extends BaseQuickAdapter<TrackBean.ListBean, BaseV
                 .addOnClickListener(R.id.iv_pic_first)
                 .addOnClickListener(R.id.iv_pic_second)
                 .addOnClickListener(R.id.iv_pic_third)
-                .addOnClickListener(R.id.tv_more);
+                .addOnClickListener(R.id.tv_more)
+                .addOnClickListener(R.id.iv_mark);
 
         TextView tvContent = helper.getView(R.id.tv_content);
         SpanUtils spanUtils = SpanUtils.with(tvContent);

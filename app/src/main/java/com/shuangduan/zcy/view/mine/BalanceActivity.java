@@ -82,12 +82,12 @@ public class BalanceActivity extends BaseActivity {
 
     @OnClick({R.id.iv_bar_back, R.id.tv_loose_change_withdraw, R.id.tv_bank_card, R.id.tv_withdraw_record})
     void onClick(View view){
+        int isVerified = SPUtils.getInstance().getInt(SpConfig.IS_VERIFIED);
         switch (view.getId()){
             case R.id.iv_bar_back:
                 finish();
                 break;
             case R.id.tv_loose_change_withdraw:
-                int isVerified = SPUtils.getInstance().getInt(SpConfig.IS_VERIFIED);
                 if (isVerified == 2){
                     //认证成功
                     ActivityUtils.startActivity(WithdrawActivity.class);
@@ -96,10 +96,20 @@ public class BalanceActivity extends BaseActivity {
                 }
                 break;
             case R.id.tv_bank_card:
-                ActivityUtils.startActivity(BankCardListActivity.class);
+                if (isVerified == 2){
+                    //认证成功
+                    ActivityUtils.startActivity(BankCardListActivity.class);
+                }else {
+                    withdrawVm.authentication();
+                }
                 break;
             case R.id.tv_withdraw_record:
-                ActivityUtils.startActivity(WithdrawRecordActivity.class);
+                if (isVerified == 2){
+                    //认证成功
+                    ActivityUtils.startActivity(WithdrawRecordActivity.class);
+                }else {
+                    withdrawVm.authentication();
+                }
                 break;
         }
     }

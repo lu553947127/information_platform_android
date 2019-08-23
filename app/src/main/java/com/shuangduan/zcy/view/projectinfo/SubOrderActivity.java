@@ -57,10 +57,6 @@ public class SubOrderActivity extends BaseActivity {
     TextView tvProjectName;
     @BindView(R.id.tv_sub_amount)
     TextView tvSubAmount;
-    @BindView(R.id.tv_sub_person)
-    TextView tvSubPerson;
-    @BindView(R.id.tv_contact_info)
-    TextView tvContactInfo;
     @BindView(R.id.tv_order_num)
     TextView tvOrderNum;
     @BindView(R.id.tv_sub_cycle)
@@ -83,8 +79,6 @@ public class SubOrderActivity extends BaseActivity {
         confirmBean = getIntent().getParcelableExtra(CustomConfig.ORDER);
         tvProjectName.setText(confirmBean.getTitle());
         tvSubAmount.setText(confirmBean.getPrice());
-        tvSubPerson.setText(SPUtils.getInstance().getString(SpConfig.USERNAME));
-        tvContactInfo.setText(SPUtils.getInstance().getString(SpConfig.MOBILE));
         tvOrderNum.setText(confirmBean.getOrder_sn());
         tvSubCycle.setText(confirmBean.getTime());
         String price = "<font>共计支付</font><font color = '#EF583E'>" + confirmBean.getPrice() +"</font><font>元</font>";

@@ -124,14 +124,18 @@ public abstract class BaseDialog extends Dialog {
      * @return
      */
     public BaseDialog hideDialog(){
-        dialog.hide();
+        dialog.dismiss();
         return this;
     }
 
     @Override
-    public void hide() {
-        unbinder.unbind();
-        super.hide();
+    public void dismiss() {
+        try {
+            unbinder.unbind();
+        }catch (Exception e){
+            //重复解绑问题
+        }
+        super.dismiss();
     }
 
     public CallBack callBack;

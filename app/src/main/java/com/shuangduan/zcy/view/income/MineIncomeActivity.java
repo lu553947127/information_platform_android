@@ -11,9 +11,11 @@ import androidx.lifecycle.ViewModelProviders;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IDataSet;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.base.BaseActivity;
@@ -50,6 +52,8 @@ public class MineIncomeActivity extends BaseActivity {
     @BindView(R.id.chart)
     LineChart chart;
     private MineIncomeVm mineIncomeVm;
+    private ArrayList<Entry> values;
+    private String[] xShow;
 
     @Override
     protected int initLayoutRes() {
@@ -61,25 +65,7 @@ public class MineIncomeActivity extends BaseActivity {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.my_income));
 
-        ArrayList<Entry> values = new ArrayList<>();
-        LineDataSet set = new LineDataSet(values, "收益(万元)");
-        chart.animateXY(1500, 1500);
-        //关闭背景颜色
-        chart.setDrawGridBackground(false);
-        //线的颜色
-        set.setColor(getResources().getColor(R.color.colorPrimary));
-        //节点显示
-        set.setDrawCircles(false);
-        set.setDrawValues(false);
-        //关闭简介
-        chart.getDescription().setEnabled(false);
-        //关闭手势
-        chart.setTouchEnabled(false);
-        //关闭x轴数值显示
-        chart.getXAxis().setEnabled(false);
-        //关闭右侧Y轴
-        chart.getAxisRight().setEnabled(false);
-        chart.setData(new LineData(set));
+        initChart();
 
         mineIncomeVm = ViewModelProviders.of(this).get(MineIncomeVm.class);
         mineIncomeVm.incomeLiveData.observe(this, mineIncomeBean -> {
@@ -87,10 +73,23 @@ public class MineIncomeActivity extends BaseActivity {
             tvExpectedReturn.setText(proceeds.getAll_funds());
             tvWithdrawIncome.setText(proceeds.getCoin());
             List<MineIncomeBean.ListBean> list = mineIncomeBean.getList();
+
             values.clear();
-            for (MineIncomeBean.ListBean bean : list) {
-//                values.add(new Entry(bean.getListtime(), bean.getPrice()));
+            xShow = new String[list.size()];
+            for (int i = 0; i < list.size(); i++) {
+                MineIncomeBean.ListBean bean = list.get(i);
+                values.add(new Entry(i, bean.getPrice()));
+                xShow[i] = bean.getListtime();
             }
+            IndexAxisValueFormatter indexAxisValueFormatter = new IndexAxisValueFormatter(xShow);
+            chart.getXAxis().setValueFormatter(indexAxisValueFormatter);
+            chart.getXAxis().setLabelCount(list.size());
+            chart.getXAxis().setAxisMaximum(list.size());
+            chart.getXAxis().setDrawLabels(true);//绘制标签  指x轴上的对应数值
+            LineDataSet lineDataSet = (LineDataSet) chart.getData().getDataSetByIndex(0);
+            lineDataSet.setValues(values);
+            chart.getData().notifyDataChanged();
+            chart.notifyDataSetChanged();
         });
         mineIncomeVm.pageStateLiveData.observe(this, s -> {
             switch (s){
@@ -103,6 +102,30 @@ public class MineIncomeActivity extends BaseActivity {
             }
         });
         mineIncomeVm.myIncome();
+    }
+
+    private void initChart() {
+        values = new ArrayList<>();
+        LineDataSet set = new LineDataSet(values, "收益(元)");
+        chart.animateXY(1500, 1500);
+        //关闭背景颜色
+        chart.setDrawGridBackground(false);
+        //线的颜色
+        set.setColor(getResources().getColor(R.color.colorPrimary));
+        //节点显示
+        set.setDrawCircles(true);
+        set.setDrawValues(true);
+        //关闭简介
+        chart.getDescription().setEnabled(false);
+        //关闭手势
+        chart.setTouchEnabled(false);
+        //关闭x轴数值显示
+        chart.getXAxis().setEnabled(true);
+        chart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);//设置x轴的显示位置
+        chart.getXAxis().setDrawAxisLine(true);
+        //关闭右侧Y轴
+        chart.getAxisRight().setEnabled(false);
+        chart.setData(new LineData(set));
     }
 
     @OnClick({R.id.iv_bar_back, R.id.tv_read_detail})

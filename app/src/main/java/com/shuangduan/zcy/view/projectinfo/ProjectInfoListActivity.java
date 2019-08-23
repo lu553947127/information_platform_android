@@ -34,6 +34,7 @@ import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.pop.CommonPopupWindow;
 import com.shuangduan.zcy.model.api.PageState;
+import com.shuangduan.zcy.model.bean.ProjectFilterBean;
 import com.shuangduan.zcy.model.bean.ProjectInfoBean;
 import com.shuangduan.zcy.model.bean.ProvinceBean;
 import com.shuangduan.zcy.model.bean.StageBean;
@@ -377,8 +378,14 @@ public class ProjectInfoListActivity extends BaseActivity {
                         view.findViewById(R.id.tv_positive).setOnClickListener(v -> {
                             switch (projectListVm.currentSelect){
                                 case 1:
-                                    projectListVm.city = areaVm.getProvinceCityIds();
-                                    LogUtils.i(areaVm.getStringResult());
+                                    ProjectFilterBean projectFilterArea = areaVm.getProjectFilterArea();
+                                    if (projectFilterArea != null){
+                                        projectListVm.province = projectFilterArea.getProvince();
+                                        projectListVm.city = projectFilterArea.getCity();
+                                    }else {
+                                        projectListVm.province = null;
+                                        projectListVm.city = null;
+                                    }
                                     break;
                                 case 2:
                                     projectListVm.phases = stageVm.getStageId();

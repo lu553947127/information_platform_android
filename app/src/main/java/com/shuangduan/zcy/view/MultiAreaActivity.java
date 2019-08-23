@@ -63,6 +63,7 @@ public class MultiAreaActivity extends BaseActivity {
         tvBarRight.setText(getString(R.string.save));
 
         areaVm = ViewModelProviders.of(this).get(MultiAreaVm.class);
+        areaVm.selectAll = false;
 
         rvProvince.setLayoutManager(new LinearLayoutManager(this));
         rvCity.setLayoutManager(new LinearLayoutManager(this));

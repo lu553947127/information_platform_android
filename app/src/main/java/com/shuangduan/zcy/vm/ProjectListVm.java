@@ -27,6 +27,7 @@ public class ProjectListVm extends BaseViewModel {
     public MutableLiveData<ProjectInfoBean> projectLiveData;
     private int userId;
     private int page = 1;
+    public List<Integer> province = null;
     public List<Integer> city = null;
     public List<Integer> phases = null;
     public List<Integer> type = null;
@@ -48,14 +49,22 @@ public class ProjectListVm extends BaseViewModel {
     public void projectList(){
         page = 1;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
-        ProjectFilterBean projectFilterBean = new ProjectFilterBean(city, type, phases);
+        ProjectFilterBean projectFilterBean = new ProjectFilterBean();
+        projectFilterBean.setProvince(province);
+        projectFilterBean.setCity(city);
+        projectFilterBean.setType(type);
+        projectFilterBean.setPhases(phases);
         new ProjectRepository().projectList(projectLiveData, pageStateLiveData, userId, projectFilterBean, stime, etime, warrant_status, page);
     }
 
     public void moreProjectList(){
         page++;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
-        ProjectFilterBean projectFilterBean = new ProjectFilterBean(city, type, phases);
+        ProjectFilterBean projectFilterBean = new ProjectFilterBean();
+        projectFilterBean.setProvince(province);
+        projectFilterBean.setCity(city);
+        projectFilterBean.setType(type);
+        projectFilterBean.setPhases(phases);
         new ProjectRepository().projectList(projectLiveData, pageStateLiveData, userId, projectFilterBean, stime, etime, warrant_status, page);
     }
 }

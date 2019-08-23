@@ -100,7 +100,7 @@ public abstract class BaseLazyFragment extends Fragment implements IView {
     @Override
     public void hideLoading() {
         if (loadDialog != null){
-            loadDialog.hideDialog();
+            loadDialog.dismiss();
         }
     }
 
