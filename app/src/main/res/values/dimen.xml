@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <dimen name="dimenTvStates">15sp</dimen>
+    <dimen name="dimenTvStates">13sp</dimen>
 
 </resources>

@@ -19,9 +19,12 @@ import com.shuangduan.zcy.adapter.ProjectMineAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseLazyFragment;
 import com.shuangduan.zcy.model.bean.ProjectMineBean;
+import com.shuangduan.zcy.model.event.ProjectReleaseEvent;
 import com.shuangduan.zcy.view.projectinfo.ProjectDetailActivity;
 import com.shuangduan.zcy.vm.MineReleaseVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
 
@@ -76,8 +79,8 @@ public class ProjectInfoFragment extends BaseLazyFragment {
         });
 
         mineReleaseVm = ViewModelProviders.of(this).get(MineReleaseVm.class);
-        mineReleaseVm.myProject();
         mineReleaseVm.projectLiveData.observe(this, projectMineBean -> {
+            isInited = true;
             if (projectMineBean.getPage() == 1) {
                 adapter.setNewData(projectMineBean.getList());
                 adapter.setEmptyView(R.layout.layout_empty, rv);
@@ -102,7 +105,12 @@ public class ProjectInfoFragment extends BaseLazyFragment {
 
     @Override
     protected void initDataFromService() {
+        mineReleaseVm.myProject();
+    }
 
+    @Subscribe()
+    public void releaseSuccess(ProjectReleaseEvent event){
+        mineReleaseVm.myProject();
     }
 
     private void setNoMore(int page, int count){

@@ -17,9 +17,12 @@ import com.shuangduan.zcy.adapter.LocusMineAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseLazyFragment;
 import com.shuangduan.zcy.model.bean.LocusMineBean;
+import com.shuangduan.zcy.model.event.LocusRefreshEvent;
 import com.shuangduan.zcy.view.projectinfo.ProjectDetailActivity;
 import com.shuangduan.zcy.vm.MineReleaseVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
 
@@ -71,8 +74,8 @@ public class LocusFragment extends BaseLazyFragment {
         });
 
         mineReleaseVm = ViewModelProviders.of(this).get(MineReleaseVm.class);
-        mineReleaseVm.myProjectTract();
         mineReleaseVm.trackLiveData.observe(this, locusMineBean -> {
+            isInited = true;
             if (locusMineBean.getPage() == 1) {
                 adapter.setNewData(locusMineBean.getList());
                 adapter.setEmptyView(R.layout.layout_empty, rv);
@@ -98,7 +101,12 @@ public class LocusFragment extends BaseLazyFragment {
 
     @Override
     protected void initDataFromService() {
+        mineReleaseVm.myProjectTract();
+    }
 
+    @Subscribe()
+    public void releaseSuccess(LocusRefreshEvent event){
+        mineReleaseVm.myProjectTract();
     }
 
     private void setNoMore(int page, int count){

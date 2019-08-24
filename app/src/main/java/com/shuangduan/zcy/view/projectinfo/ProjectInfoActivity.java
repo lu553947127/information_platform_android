@@ -26,6 +26,7 @@ import com.amap.api.maps.model.animation.ScaleAnimation;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.ConvertUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
@@ -174,12 +175,15 @@ public class ProjectInfoActivity extends BaseActivity {
 
         //添加marker
         ArrayList<Marker> markerArrayList = aMap.addMarkers(markers, false);
-        for (int i = 0; i < markerArrayList.size(); i++) {
-            //遍历添加的marker,给marker添加额外数据
-            markerArrayList.get(i).setObject(i);
+        if (markerArrayList != null){
+            for (int i = 0; i < markerArrayList.size(); i++) {
+                //遍历添加的marker,给marker添加额外数据
+                markerArrayList.get(i).setObject(i);
+            }
         }
 
         aMap.setOnMarkerClickListener(marker -> {
+            LogUtils.i(marker.getId());
             //点击的marker是定位的小蓝点，不走动画和弹窗
             if ("Marker1".equals(marker.getId())) return true;
             //上一个标记marker
@@ -243,7 +247,7 @@ public class ProjectInfoActivity extends BaseActivity {
         tvTitle.setText(title);
         tvContent.setText(mapBean.getIntro());
         tvType.setText(mapBean.getPhases());
-        tvReaders.setText(String.format(getString(R.string.format_num_of_readers), mapBean.getSubscription_num()));
+        tvReaders.setText(String.format(getString(R.string.format_num_of_collector), mapBean.getSubscription_num()));
         tvTime.setText(String.format(getString(R.string.format_update_time), mapBean.getUpdate_time()));
 
         if (!popupWindow.isShowing()) {

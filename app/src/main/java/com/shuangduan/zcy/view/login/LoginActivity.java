@@ -3,6 +3,7 @@ package com.shuangduan.zcy.view.login;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.WindowManager;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatEditText;
@@ -78,8 +79,6 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
-        AndroidBug5497Workaround.assistActivity(findViewById(android.R.id.content));
-
         loginVm = ViewModelProviders.of(this).get(LoginVm.class);
 
         loginVm.timeLiveDataLiveData.observe(this, aLong -> {

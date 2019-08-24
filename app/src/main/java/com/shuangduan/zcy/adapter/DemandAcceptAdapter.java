@@ -36,7 +36,7 @@ public class DemandAcceptAdapter extends BaseQuickAdapter<DemandRelationshipBean
 
         TextView tvStatus = helper.getView(R.id.tv_status);
         switch (item.getStatus_name()){
-            case "通过":
+            case "审核成功":
                 tvStatus.setTextColor(mContext.getResources().getColor(R.color.color_EF583E));
                 break;
             case "审核中":

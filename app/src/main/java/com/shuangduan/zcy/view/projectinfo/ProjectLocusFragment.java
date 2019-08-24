@@ -110,7 +110,7 @@ public class ProjectLocusFragment extends BaseLazyFragment {
         locusAdapter.setEmptyView(R.layout.layout_loading_top, rvLocus);
         rvLocus.setAdapter(locusAdapter);
         locusAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-            TrackBean.ListBean listBean = projectDetailVm.trackLiveData.getValue().getList().get(position);
+            TrackBean.ListBean listBean = locusAdapter.getData().get(position);
             switch (view.getId()){
                 case R.id.iv_pic_first:
                     showPic(listBean, 0, view);
@@ -154,7 +154,7 @@ public class ProjectLocusFragment extends BaseLazyFragment {
         });
 
         //支付密码状态查询
-        updatePwdPayVm = ViewModelProviders.of(mActivity).get(UpdatePwdPayVm.class);
+        updatePwdPayVm = ViewModelProviders.of(this).get(UpdatePwdPayVm.class);
 
         //紫金币支付
         coinPayVm = ViewModelProviders.of(mActivity).get(CoinPayVm.class);

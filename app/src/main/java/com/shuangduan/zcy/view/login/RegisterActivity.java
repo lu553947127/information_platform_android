@@ -60,8 +60,6 @@ public class RegisterActivity extends BaseActivity {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
-        AndroidBug5497Workaround.assistActivity(findViewById(android.R.id.content));
-
         loginVm = ViewModelProviders.of(this).get(LoginVm.class);
         loginVm.timeLiveDataLiveData.observe(this, aLong -> {
             if (aLong == -1) {

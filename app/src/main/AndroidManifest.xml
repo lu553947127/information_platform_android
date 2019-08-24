@@ -49,8 +49,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.shuangduan.zcy.view.login.RegisterActivity" android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity android:name="com.shuangduan.zcy.view.login.LoginActivity" android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity android:name="com.shuangduan.zcy.view.login.LoginActivity" android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity android:name="com.shuangduan.zcy.view.login.RegisterActivity" android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity android:name="com.shuangduan.zcy.view.login.UserInfoInputActivity" android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity android:name="com.shuangduan.zcy.view.MainActivity" android:screenOrientation="portrait" />
         <activity android:name="com.shuangduan.zcy.view.login.MobileVerificationActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
@@ -58,7 +58,7 @@
         <activity android:name="com.shuangduan.zcy.view.mine.WithdrawActivity" android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustResize" android:theme="@style/AppThemeBgGray" />
         <activity android:name="com.shuangduan.zcy.view.mine.UpdateNameActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
         <activity android:name="com.shuangduan.zcy.view.mine.UpdateMobileActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
-        <activity android:name="com.shuangduan.zcy.view.mine.UpdatePwdActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
+        <activity android:name="com.shuangduan.zcy.view.mine.UpdatePwdActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray" android:windowSoftInputMode="stateHidden|adjustResize"/>
         <activity android:name="com.shuangduan.zcy.view.mine.UpdateResultActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
         <activity android:name="com.shuangduan.zcy.view.mine.UpdateEmailActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
         <activity android:name="com.shuangduan.zcy.view.mine.AuthenticationActivity" android:screenOrientation="portrait"/>
@@ -113,6 +113,7 @@
         <activity android:name="com.shuangduan.zcy.view.recruit.RecruitActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.view.recruit.RecruitDetailActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.view.material.MaterialActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.shuangduan.zcy.view.material.MaterialOrderSuccessActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.view.material.MaterialDetailActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
         <activity android:name="com.shuangduan.zcy.view.supplier.SupplierActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.view.supplier.SupplierDetailActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>

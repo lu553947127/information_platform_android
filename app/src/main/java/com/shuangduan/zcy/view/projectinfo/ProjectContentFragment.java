@@ -120,7 +120,7 @@ public class ProjectContentFragment extends BaseFragment {
         });
 
         //支付密码状态查询
-        updatePwdPayVm = ViewModelProviders.of(mActivity).get(UpdatePwdPayVm.class);
+        updatePwdPayVm = ViewModelProviders.of(this).get(UpdatePwdPayVm.class);
         updatePwdPayVm.stateLiveData.observe(this, pwdPayStateBean -> {
             int status = pwdPayStateBean.getStatus();
             SPUtils.getInstance().put(SpConfig.PWD_PAY_STATUS, status);

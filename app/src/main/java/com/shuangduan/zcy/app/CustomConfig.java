@@ -33,6 +33,7 @@ public class CustomConfig {
     public static final String uploadTypeIdCard = "id_card";
     public static final String uploadTypeBusinessCard = "business_card";
     public static final String PROJECT_ID = "project_id";
+    public static final String PROJECT_NAME = "project_name";
     public static final String PROVINCE_NAME = "province_name";
     public static final String CITY_NAME = "city_name";
     public static final String PROVINCE_ID = "province_id";
@@ -59,6 +60,7 @@ public class CustomConfig {
     public static final String FIND_RELATIONSHIP_ID = "find_relationship_id";
     public static final String IS_MY = "is_my";
     public static final String ORDER = "order";
+    public static final String RELEASE_TYPE = "release_type";//0发布项目1发布轨迹
 
     public static final String PEOPLE_DEGREE = "people_degree";
     public static final int FIRST_DEGREE = 1;//1°人脉收益

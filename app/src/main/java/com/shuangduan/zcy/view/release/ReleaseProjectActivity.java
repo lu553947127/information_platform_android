@@ -26,6 +26,7 @@ import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.TimeUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ReleaseContactAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
@@ -38,6 +39,7 @@ import com.shuangduan.zcy.model.bean.ContactBean;
 import com.shuangduan.zcy.model.event.AddressEvent;
 import com.shuangduan.zcy.model.event.ContactTypeEvent;
 import com.shuangduan.zcy.model.event.LocationEvent;
+import com.shuangduan.zcy.model.event.LocusRefreshEvent;
 import com.shuangduan.zcy.model.event.ProjectNameEvent;
 import com.shuangduan.zcy.model.event.StageEvent;
 import com.shuangduan.zcy.model.event.TypesEvent;
@@ -56,6 +58,7 @@ import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.File;
@@ -235,8 +238,16 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
             }
         });
 
-        releaseVm.releaseProjectLiveData.observe(this, o -> finish());
-        releaseVm.releaseLocusLiveData.observe(this, o -> finish());
+        releaseVm.releaseProjectLiveData.observe(this, o -> {
+//            EventBus.getDefault().post(new LocusRefreshEvent());
+            ToastUtils.showShort(getString(R.string.release_success));
+            finish();
+        });
+        releaseVm.releaseLocusLiveData.observe(this, o -> {
+//            EventBus.getDefault().post(new LocusRefreshEvent());
+            ToastUtils.showShort(getString(R.string.release_success));
+            finish();
+        });
         releaseVm.pageStateLiveData.observe(this, s -> {
             switch (s){
                 case PageState.PAGE_LOADING:
@@ -247,6 +258,14 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
                         break;
             }
         });
+
+        if (getIntent().getIntExtra(CustomConfig.RELEASE_TYPE, 0) == 1) {
+            clickLocus();
+            tvProjectType.setClickable(false);
+            tvProjectName.setText(getIntent().getStringExtra(CustomConfig.PROJECT_NAME));
+            releaseVm.projectId = getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0);
+            tvProjectName.setClickable(false);
+        }
     }
 
     private void photoSet() {
@@ -406,28 +425,7 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
                                     popupWindow.dismiss();
                                 });
                                 popView.findViewById(R.id.tv_locus).setOnClickListener(v -> {
-                                    releaseVm.type = 2;
-                                    flProjectNameEdit.setVisibility(View.GONE);
-                                    tvProjectAddress.setClickable(false);
-                                    flProjectStage.setVisibility(View.GONE);
-                                    flProjectTypes.setVisibility(View.GONE);
-                                    rlProjectCycle.setVisibility(View.GONE);
-                                    flProjectAcreage.setVisibility(View.GONE);
-                                    flProjectPrice.setVisibility(View.GONE);
-                                    flProjectDetail.setVisibility(View.GONE);
-                                    flProjectMaterial.setVisibility(View.GONE);
-                                    rvContact.setVisibility(View.GONE);
-                                    flAdd.setVisibility(View.GONE);
-                                    flProjectCompany.setVisibility(View.GONE);
-                                    flProjectAddress.setVisibility(View.GONE);
-                                    flProjectNameSelect.setVisibility(View.VISIBLE);
-                                    flProjectSchedule.setVisibility(View.VISIBLE);
-                                    flVisitor.setVisibility(View.VISIBLE);
-                                    flMobile.setVisibility(View.VISIBLE);
-                                    flUpdateTime.setVisibility(View.GONE);
-                                    rlPhoto.setVisibility(View.VISIBLE);
-                                    picContentView.setVisibility(View.VISIBLE);
-                                    tvProjectType.setText(getString(R.string.project_locus));
+                                    clickLocus();
                                     popupWindow.dismiss();
                                 });
                             })
@@ -471,6 +469,31 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
                 }
                 break;
         }
+    }
+
+    private void clickLocus() {
+        releaseVm.type = 2;
+        flProjectNameEdit.setVisibility(View.GONE);
+        tvProjectAddress.setClickable(false);
+        flProjectStage.setVisibility(View.GONE);
+        flProjectTypes.setVisibility(View.GONE);
+        rlProjectCycle.setVisibility(View.GONE);
+        flProjectAcreage.setVisibility(View.GONE);
+        flProjectPrice.setVisibility(View.GONE);
+        flProjectDetail.setVisibility(View.GONE);
+        flProjectMaterial.setVisibility(View.GONE);
+        rvContact.setVisibility(View.GONE);
+        flAdd.setVisibility(View.GONE);
+        flProjectCompany.setVisibility(View.GONE);
+        flProjectAddress.setVisibility(View.GONE);
+        flProjectNameSelect.setVisibility(View.VISIBLE);
+        flProjectSchedule.setVisibility(View.VISIBLE);
+        flVisitor.setVisibility(View.VISIBLE);
+        flMobile.setVisibility(View.VISIBLE);
+        flUpdateTime.setVisibility(View.GONE);
+        rlPhoto.setVisibility(View.VISIBLE);
+        picContentView.setVisibility(View.VISIBLE);
+        tvProjectType.setText(getString(R.string.project_locus));
     }
 
     /**

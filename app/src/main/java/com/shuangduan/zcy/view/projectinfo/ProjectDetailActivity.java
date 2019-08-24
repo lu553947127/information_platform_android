@@ -39,10 +39,10 @@ import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.ShareDialog;
 import com.shuangduan.zcy.listener.BaseUiListener;
 import com.shuangduan.zcy.model.api.PageState;
+import com.shuangduan.zcy.model.event.LocusRefreshEvent;
 import com.shuangduan.zcy.model.event.WarrantSuccessEvent;
 import com.shuangduan.zcy.utils.ShareUtils;
-import com.shuangduan.zcy.view.mine.RecommendFriendsActivity;
-import com.shuangduan.zcy.view.release.ReleaseListActivity;
+import com.shuangduan.zcy.view.release.ReleaseProjectActivity;
 import com.shuangduan.zcy.vm.CoinPayVm;
 import com.shuangduan.zcy.vm.PermissionVm;
 import com.shuangduan.zcy.vm.ProjectDetailVm;
@@ -285,6 +285,12 @@ public class ProjectDetailActivity extends BaseActivity {
         projectDetailVm.getViewTrack();
     }
 
+    @Subscribe()
+    public void releaseSuccess(LocusRefreshEvent event){
+        projectDetailVm.getTrack();
+        projectDetailVm.getViewTrack();
+    }
+
     @OnClick({R.id.iv_bar_back, R.id.iv_bar_right, R.id.fl_collect, R.id.fl_error, R.id.fl_subscription, R.id.ll_chat, R.id.fl_release})
     void onClick(View view){
         Bundle bundle = new Bundle();
@@ -328,7 +334,10 @@ public class ProjectDetailActivity extends BaseActivity {
                 }
                 break;
             case R.id.fl_release:
-                ActivityUtils.startActivity(ReleaseListActivity.class);
+                bundle.putInt(CustomConfig.RELEASE_TYPE, 1);
+                bundle.putInt(CustomConfig.PROJECT_ID, getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0));
+                bundle.putString(CustomConfig.PROJECT_NAME, tvTitle.getText().toString());
+                ActivityUtils.startActivity(bundle, ReleaseProjectActivity.class);
                 break;
         }
     }

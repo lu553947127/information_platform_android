@@ -30,14 +30,14 @@ public class AndroidBug5497Workaround {
     private ViewGroup.LayoutParams frameLayoutParams;
 
     private AndroidBug5497Workaround(View content) {
-        if (content != null)
-        { mChildOfContent = content;
-        mChildOfContent.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            public void onGlobalLayout() {
+        if (content != null) {
+            mChildOfContent = content;
+            mChildOfContent.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                public void onGlobalLayout() {
                 possiblyResizeChildOfContent();
             }
-        });
-        frameLayoutParams = mChildOfContent.getLayoutParams();
+            });
+            frameLayoutParams = mChildOfContent.getLayoutParams();
         }
     }
 

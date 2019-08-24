@@ -135,7 +135,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="@+id/tv_material_name"
-        app:layout_constraintTop_toTopOf="@+id/tv_contact_tip"
+        app:layout_constraintTop_toTopOf="@+id/tv_owner_tip"
         android:textColor="@color/color_666666"
         android:textSize="13sp"/>
 

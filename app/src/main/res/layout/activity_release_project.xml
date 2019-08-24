@@ -523,7 +523,7 @@
 
             <FrameLayout
                 android:id="@+id/fl_project_schedule"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@color/colorFFF"
