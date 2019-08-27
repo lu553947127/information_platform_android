@@ -71,7 +71,8 @@ public class PermissionVm extends BaseViewModel {
     @SuppressLint("CheckResult")
     public void getPermissionLocation(RxPermissions rxPermissions){
         rxPermissions.request(
-                Manifest.permission.ACCESS_COARSE_LOCATION)
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION)
                 .subscribe(aBoolean -> {
                     if (aBoolean){
                         liveData.postValue(PERMISSION_LOCATION);

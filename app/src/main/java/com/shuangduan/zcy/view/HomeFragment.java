@@ -31,6 +31,7 @@ import com.shuangduan.zcy.view.headlines.HeadlinesDetailActivity;
 import com.shuangduan.zcy.view.material.MaterialActivity;
 import com.shuangduan.zcy.view.income.MineIncomeActivity;
 import com.shuangduan.zcy.view.mine.ExplainDetailActivity;
+import com.shuangduan.zcy.view.mine.MineSubActivity;
 import com.shuangduan.zcy.view.projectinfo.ProjectInfoActivity;
 import com.shuangduan.zcy.view.recruit.RecruitActivity;
 import com.shuangduan.zcy.view.release.ReleaseListActivity;
@@ -65,8 +66,6 @@ public class HomeFragment extends BaseFragment {
     View fakeStatusBar;
     @BindView(R.id.tv_bar_title)
     TextView tvBarTitle;
-    @BindView(R.id.iv_search)
-    ImageView ivSearch;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.rv_classify)
@@ -218,7 +217,7 @@ public class HomeFragment extends BaseFragment {
 
     }
 
-    @OnClick({R.id.tv_bar_title, R.id.tv_more})
+    @OnClick({R.id.tv_bar_title, R.id.tv_more, R.id.iv_subscribed})
     void onClick(View view){
         switch (view.getId()){
             case R.id.tv_bar_title:
@@ -226,6 +225,9 @@ public class HomeFragment extends BaseFragment {
                 break;
             case R.id.tv_more:
                 ActivityUtils.startActivity(HeadlinesActivity.class);
+                break;
+            case R.id.iv_subscribed:
+                ActivityUtils.startActivity(MineSubActivity.class);
                 break;
         }
     }

@@ -33,7 +33,7 @@ public class MaterialDetailVm extends BaseViewModel {
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
         detailLiveData = new MutableLiveData<>();
         pageStateLiveData = new MutableLiveData<>();
-        orderLiveData = new MutableLiveData<>();
+        orderLiveData = new MutableLiveData();
         suitNumLiveData = new MutableLiveData<>();
         suitNumLiveData.postValue(0);
     }

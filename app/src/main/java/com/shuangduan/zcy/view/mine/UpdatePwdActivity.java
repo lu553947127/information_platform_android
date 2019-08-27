@@ -68,6 +68,7 @@ public class UpdatePwdActivity extends BaseActivity {
                 tvSendVerificationCode.setClickable(true);
             }else {
                 tvSendVerificationCode.setText(String.format(getString(R.string.format_get_verification_code_again), aLong));
+                tvSendVerificationCode.setClickable(false);
             }
         });
     }

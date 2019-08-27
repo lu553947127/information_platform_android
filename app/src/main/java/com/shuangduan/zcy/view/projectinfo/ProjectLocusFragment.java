@@ -24,10 +24,12 @@ import com.shuangduan.zcy.base.BaseLazyFragment;
 import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.CustomDialog;
 import com.shuangduan.zcy.dialog.PayDialog;
+import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.TrackBean;
 import com.shuangduan.zcy.model.event.RefreshViewLocusEvent;
 import com.shuangduan.zcy.view.PayActivity;
 import com.shuangduan.zcy.view.PhotoViewActivity;
+import com.shuangduan.zcy.view.mine.SetPwdPayActivity;
 import com.shuangduan.zcy.view.recharge.RechargeActivity;
 import com.shuangduan.zcy.vm.CoinPayVm;
 import com.shuangduan.zcy.vm.ProjectDetailVm;
@@ -153,36 +155,7 @@ public class ProjectLocusFragment extends BaseLazyFragment {
             setNoMore(trackBean.getPage(), trackBean.getCount());
         });
 
-        //支付密码状态查询
-        updatePwdPayVm = ViewModelProviders.of(this).get(UpdatePwdPayVm.class);
-
-        //紫金币支付
-        coinPayVm = ViewModelProviders.of(mActivity).get(CoinPayVm.class);
-        coinPayVm.locusPayLiveData.observe(this, coinPayResultBean -> {
-            if (coinPayResultBean.getPay_status() == 1){
-                ToastUtils.showShort(getString(R.string.buy_success));
-                projectDetailVm.getTrack();
-                //刷新已查看列表
-                EventBus.getDefault().post(new RefreshViewLocusEvent());
-            }else {
-                //余额不足
-                addDialog(new CustomDialog(mActivity)
-                        .setIcon(R.drawable.icon_error)
-                        .setTip("余额不足")
-                        .setCallBack(new BaseDialog.CallBack() {
-                            @Override
-                            public void cancel() {
-
-                            }
-
-                            @Override
-                            public void ok(String s) {
-                                ActivityUtils.startActivity(RechargeActivity.class);
-                            }
-                        })
-                        .showDialog());
-            }
-        });
+        initPay();
     }
 
     @Override
@@ -245,6 +218,68 @@ public class ProjectLocusFragment extends BaseLazyFragment {
                 refresh.finishLoadMore();
             }
         }
+    }
+
+    private void initPay(){
+        //支付密码状态查询
+        updatePwdPayVm = ViewModelProviders.of(this).get(UpdatePwdPayVm.class);
+        updatePwdPayVm.stateLiveData.observe(this, pwdPayStateBean -> {
+            int status = pwdPayStateBean.getStatus();
+            SPUtils.getInstance().put(SpConfig.PWD_PAY_STATUS, status);
+            if (status == 1){
+                goToPay();
+            }else {
+                ActivityUtils.startActivity(SetPwdPayActivity.class);
+            }
+        });
+        updatePwdPayVm.pageStateLiveData.observe(this, s -> {
+            switch (s){
+                case PageState.PAGE_LOADING:
+                    showLoading();
+                    break;
+                default:
+                    hideLoading();
+                    break;
+            }
+        });
+
+        //紫金币支付
+        coinPayVm = ViewModelProviders.of(this).get(CoinPayVm.class);
+        coinPayVm.locusPayLiveData.observe(this, coinPayResultBean -> {
+            if (coinPayResultBean.getPay_status() == 1){
+                ToastUtils.showShort(getString(R.string.buy_success));
+                projectDetailVm.getTrack();
+                //刷新已查看列表
+                EventBus.getDefault().post(new RefreshViewLocusEvent());
+            }else {
+                //余额不足
+                addDialog(new CustomDialog(mActivity)
+                        .setIcon(R.drawable.icon_error)
+                        .setTip("余额不足")
+                        .setCallBack(new BaseDialog.CallBack() {
+                            @Override
+                            public void cancel() {
+
+                            }
+
+                            @Override
+                            public void ok(String s) {
+                                ActivityUtils.startActivity(RechargeActivity.class);
+                            }
+                        })
+                        .showDialog());
+            }
+        });
+        coinPayVm.pageStateLiveData.observe(this, s -> {
+            switch (s){
+                case PageState.PAGE_LOADING:
+                    showLoading();
+                    break;
+                default:
+                    hideLoading();
+                    break;
+            }
+        });
     }
 
     /**

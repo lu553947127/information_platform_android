@@ -1,5 +1,6 @@
 package com.shuangduan.zcy.view.projectinfo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -30,8 +31,11 @@ import com.blankj.utilcode.util.LogUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
+import com.shuangduan.zcy.dialog.BaseDialog;
+import com.shuangduan.zcy.dialog.CustomDialog;
 import com.shuangduan.zcy.dialog.pop.CommonPopupWindow;
 import com.shuangduan.zcy.model.bean.MapBean;
+import com.shuangduan.zcy.utils.GpsUtils;
 import com.shuangduan.zcy.view.search.SearchActivity;
 import com.shuangduan.zcy.vm.PermissionVm;
 import com.shuangduan.zcy.vm.ProjectInfoVm;
@@ -89,12 +93,36 @@ public class ProjectInfoActivity extends BaseActivity {
         permissionVm = ViewModelProviders.of(this).get(PermissionVm.class);
         permissionVm.getLiveData().observe(this, integer -> {
             if (integer == PermissionVm.PERMISSION_LOCATION){
-                init();
+                if (GpsUtils.isOPen(this)){
+                    init();
+                }else {
+                    new CustomDialog(this)
+                            .setTip("为了更好的为您服务，请您打开您的GPS!")
+                            .setCallBack(new BaseDialog.CallBack() {
+                                @Override
+                                public void cancel() {
+                                    finish();
+                                }
+
+                                @Override
+                                public void ok(String s) {
+                                    GpsUtils.openGPS(ProjectInfoActivity.this);
+                                }
+                            }).showDialog();
+                }
             }
         });
         permissionVm.getPermissionLocation(new RxPermissions(this));
 
         projectInfoVm = ViewModelProviders.of(this).get(ProjectInfoVm.class);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 0){
+            init();
+        }
     }
 
     /**
@@ -129,6 +157,7 @@ public class ProjectInfoActivity extends BaseActivity {
         aMap.getUiSettings().setRotateGesturesEnabled(false);//设置地图不能旋转
         aMap.getUiSettings().setMyLocationButtonEnabled(false);//设置默认定位按钮是否显示，非必需设置。
         aMap.setOnMyLocationChangeListener(location -> {
+            LogUtils.i(location.getLongitude(), location.getLatitude());
             projectInfoVm.mapList(location.getLongitude(), location.getLatitude());
             projectInfoVm.mapLiveData.observe(ProjectInfoActivity.this, mapBeans -> {
                 //marker经纬度数据

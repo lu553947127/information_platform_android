@@ -69,7 +69,7 @@ public class LocusOwnerDetailActivity extends BaseActivity {
             tvCompany.setText(userInfoBean.getCompany());
             tvOffice.setText(userInfoBean.getPosition());
             tvBusinessArea.setText(userInfoBean.getBusiness_city());
-            tvBusinessExp.setText(userInfoBean.getExperience() > 0 ? getResources().getStringArray(R.array.experience_list)[userInfoBean.getExperience() - 1]: "");
+            tvBusinessExp.setText(userInfoBean.getExperience() > 0 ? getResources().getStringArray(R.array.experience_list)[userInfoBean.getExperience() - 1] + "年": "");
             tvProduction.setText(userInfoBean.getManaging_products());
             switch (userInfoBean.getSex()){
                 case 0:

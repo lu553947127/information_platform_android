@@ -78,7 +78,7 @@ public class PeopleInfoActivity extends BaseActivity {
             tvOffice.setText(peopleDetailBean.getPosition());
             tvBusinessArea.setText(peopleDetailBean.getBusiness_city());
             if (peopleDetailBean.getExperience() >= 1 && peopleDetailBean.getExperience() <= 4)
-                tvBusinessExp.setText(getResources().getStringArray(R.array.experience_list)[peopleDetailBean.getExperience() - 1]);
+                tvBusinessExp.setText(getResources().getStringArray(R.array.experience_list)[peopleDetailBean.getExperience() - 1] + "年");
             tvLocusNum.setText(peopleDetailBean.getCount() + "条");
             tvIncomeAmount.setText(String.format(getString(R.string.format_amount), peopleDetailBean.getPrice()));
 

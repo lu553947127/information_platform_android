@@ -90,6 +90,7 @@ public class MobileVerificationActivity extends BaseActivity {
                 tvSendVerificationCode.setClickable(true);
             }else {
                 tvSendVerificationCode.setText(String.format(getString(R.string.format_get_verification_code_again), aLong));
+                tvSendVerificationCode.setClickable(false);
             }
         });
         loginVm.pageStateLiveData.observe(this, s -> {

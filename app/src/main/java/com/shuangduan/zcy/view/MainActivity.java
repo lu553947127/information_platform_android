@@ -21,6 +21,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
+import com.shuangduan.zcy.rongyun.view.CircleFragment;
 import com.shuangduan.zcy.view.login.UserInfoInputActivity;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
@@ -41,6 +42,7 @@ public class MainActivity extends BaseActivity {
     private String[] tags = {
             "home",
             "people",
+            "circle",
             "mine"
     };
 
@@ -59,8 +61,10 @@ public class MainActivity extends BaseActivity {
             fragments[0] = fragment;
         if (fragments[1] == null && fragment instanceof PeopleFragment)
             fragments[1] = fragment;
-        if (fragments[2] == null && fragment instanceof MineFragment)
+        if (fragments[2] == null && fragment instanceof CircleFragment)
             fragments[2] = fragment;
+        if (fragments[3] == null && fragment instanceof MineFragment)
+            fragments[3] = fragment;
     }
 
     @Override
@@ -79,7 +83,10 @@ public class MainActivity extends BaseActivity {
             fragments[1] = PeopleFragment.newInstance();
         }
         if (fragments[2] == null) {
-            fragments[2] = MineFragment.newInstance();
+            fragments[2] = CircleFragment.newInstance();
+        }
+        if (fragments[3] == null) {
+            fragments[3] = MineFragment.newInstance();
         }
 
         //初始化选中首页
@@ -97,8 +104,11 @@ public class MainActivity extends BaseActivity {
                 case R.id.rb_people:
                     currentChecked = 1;
                     break;
-                case R.id.rb_mine:
+                case R.id.rb_circle:
                     currentChecked = 2;
+                    break;
+                case R.id.rb_mine:
+                    currentChecked = 3;
                     break;
             }
             //选中项不变不做处理

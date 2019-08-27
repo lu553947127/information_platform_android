@@ -118,6 +118,7 @@ public class MaterialDetailActivity extends BaseActivity {
             tvTotalPrice.setText(String.valueOf(price * integer * agent_id));
         });
         materialDetailVm.orderLiveData.observe(this, o -> {
+            LogUtils.i("成功");
             ActivityUtils.startActivity(MaterialOrderSuccessActivity.class);
         });
         materialDetailVm.pageStateLiveData.observe(this, s -> {

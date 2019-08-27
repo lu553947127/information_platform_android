@@ -54,7 +54,7 @@ public class MaterialOrderDialog extends BaseDialog {
     @Override
     void initData() {
         setWidth(ConvertUtils.dp2px(260));
-        setHeight(ConvertUtils.dp2px(260));
+        setHeight(ConvertUtils.dp2px(280));
         DialogUtils.enterCustomAnim(this);
     }
 

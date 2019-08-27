@@ -97,6 +97,7 @@ public class SubInfoActivity extends BaseActivity {
             chart.getXAxis().setValueFormatter(indexAxisValueFormatter);
             chart.getXAxis().setLabelCount(list.size());
             chart.getXAxis().setAxisMaximum(list.size());
+            chart.getAxisLeft().setAxisMinimum(0);
             chart.getXAxis().setDrawLabels(true);//绘制标签  指x轴上的对应数值
             LineDataSet lineDataSet = (LineDataSet) chart.getData().getDataSetByIndex(0);
             lineDataSet.setValues(values);
@@ -122,6 +123,7 @@ public class SubInfoActivity extends BaseActivity {
         values = new ArrayList<>();
         LineDataSet set = new LineDataSet(values, "收益(元)");
         chart.animateXY(1500, 1500);
+        chart.setNoDataText("没有数据啊");
         //关闭背景颜色
         chart.setDrawGridBackground(false);
         //线的颜色

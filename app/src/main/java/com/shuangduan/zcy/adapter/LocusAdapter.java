@@ -63,8 +63,6 @@ public abstract class LocusAdapter extends BaseQuickAdapter<TrackBean.ListBean, 
         if (!TextUtils.isEmpty(item.getTel())){
             spanUtils
                     .append("，")
-                    .append(mContext.getString(R.string.mobile))
-                    .append(":")
                     .append(item.getTel());
         }
         if (item.getIs_pay() == 1){

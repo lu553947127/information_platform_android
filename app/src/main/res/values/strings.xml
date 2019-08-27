@@ -6,6 +6,7 @@
 
     <string name="home">首页</string>
     <string name="people">人脉</string>
+    <string name="circle">工程圈</string>
     <string name="mine">我的</string>
 
     <string name="net_error">没有网络，点击重试</string>
@@ -249,6 +250,7 @@
     <string name="more">更多</string>
     <string name="head_detail">头条详情</string>
     <string name="contacts_info">联系方式</string>
+    <string name="des">具体描述</string>
 
     <string name="release_msg">发布信息</string>
     <string name="release">发布</string>
@@ -452,10 +454,10 @@
     </string-array>
 
     <string-array name="experience_list">
-        <item>0–1年</item>
-        <item>1–2年</item>
-        <item>2–3年</item>
-        <item>3–5年</item>
+        <item>0–1</item>
+        <item>1–2</item>
+        <item>2–3</item>
+        <item>3–5</item>
     </string-array>
 
 </resources>

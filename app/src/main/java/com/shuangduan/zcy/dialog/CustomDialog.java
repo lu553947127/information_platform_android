@@ -44,7 +44,7 @@ public class CustomDialog extends BaseDialog {
     @Override
     void initData() {
         setWidth(ConvertUtils.dp2px(260));
-        setCancelOutside(true);
+        setCancelOutside(false);
         DialogUtils.enterCustomAnim(this);
         tvTip.setText(tip);
         if (iconRes != 0){

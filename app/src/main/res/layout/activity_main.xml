@@ -43,6 +43,12 @@
             android:text="@string/people"/>
 
         <androidx.appcompat.widget.AppCompatRadioButton
+            android:id="@+id/rb_circle"
+            style="@style/MainRb"
+            android:drawableTop="@drawable/selector_circle"
+            android:text="@string/circle"/>
+
+        <androidx.appcompat.widget.AppCompatRadioButton
             android:id="@+id/rb_mine"
             style="@style/MainRb"
             android:drawableTop="@drawable/selector_mine"

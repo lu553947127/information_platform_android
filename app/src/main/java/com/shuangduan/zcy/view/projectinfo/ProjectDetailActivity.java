@@ -203,32 +203,6 @@ public class ProjectDetailActivity extends BaseActivity {
             tabLayout.getTabAt(position).select();
         }
 
-        //紫金币支付，预存工程id
-        CoinPayVm coinPayVm = ViewModelProviders.of(this).get(CoinPayVm.class);
-        coinPayVm.projectId = getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0);
-        coinPayVm.pageStateLiveData.observe(this, s -> {
-            switch (s){
-                case PageState.PAGE_LOADING:
-                    showLoading();
-                    break;
-                default:
-                    hideLoading();
-                    break;
-            }
-        });
-        //支付密码状态查询
-        UpdatePwdPayVm updatePwdPayVm = ViewModelProviders.of(this).get(UpdatePwdPayVm.class);
-        updatePwdPayVm.pageStateLiveData.observe(this, s -> {
-            switch (s){
-                case PageState.PAGE_LOADING:
-                    showLoading();
-                    break;
-                default:
-                    hideLoading();
-                    break;
-            }
-        });
-
         initShare();
     }
 

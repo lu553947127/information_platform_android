@@ -121,7 +121,7 @@ public class ProjectSubViewBean {
          */
 
         private String time;
-        private int value;
+        private float value;
 
         public String getTime() {
             return time;
@@ -131,11 +131,11 @@ public class ProjectSubViewBean {
             this.time = time;
         }
 
-        public int getValue() {
+        public float getValue() {
             return value;
         }
 
-        public void setValue(int value) {
+        public void setValue(float value) {
             this.value = value;
         }
     }

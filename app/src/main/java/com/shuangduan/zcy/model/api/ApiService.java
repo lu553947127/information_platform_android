@@ -670,7 +670,7 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("api/Material/order")
-    Flowable<BaseListResponse> materialOrder(
+    Flowable<BaseResponse> materialOrder(
             @Field("user_id") int user_id,
             @Field("id") int id,
             @Field("buy_stock") int buy_stock

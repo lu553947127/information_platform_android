@@ -6,6 +6,7 @@ import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.widget.NestedScrollView;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -123,10 +125,10 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
     EditText edtProjectMaterial;
     @BindView(R.id.fl_project_material)
     FrameLayout flProjectMaterial;
-    @BindView(R.id.edt_project_schedule)
-    EditText edtProjectSchedule;
-    @BindView(R.id.fl_project_schedule)
-    FrameLayout flProjectSchedule;
+    @BindView(R.id.edt_project_des)
+    EditText edtProjectDes;
+    @BindView(R.id.fl_project_des)
+    FrameLayout flProjectDes;
     @BindView(R.id.edt_visitor)
     EditText edtVisitor;
     @BindView(R.id.fl_visitor)
@@ -159,6 +161,8 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
     FrameLayout flProjectCompany;
     @BindView(R.id.edt_project_company)
     EditText edtProjectCompany;
+    @BindView(R.id.scrollView)
+    NestedScrollView scrollView;
     private PermissionVm permissionVm;
     private RxPermissions rxPermissions;
     private ReleaseVm releaseVm;
@@ -415,7 +419,7 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
                                     flProjectCompany.setVisibility(View.VISIBLE);
                                     flProjectAddress.setVisibility(View.VISIBLE);
                                     flProjectNameSelect.setVisibility(View.GONE);
-                                    flProjectSchedule.setVisibility(View.GONE);
+                                    flProjectDes.setVisibility(View.GONE);
                                     flVisitor.setVisibility(View.GONE);
                                     flMobile.setVisibility(View.GONE);
                                     flUpdateTime.setVisibility(View.GONE);
@@ -465,7 +469,7 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
                 if (releaseVm.type == 1) {
                     releaseVm.releaseProject(edtProjectName.getText().toString(), edtProjectCompany.getText().toString(), edtProjectAcreage.getText().toString(), edtProjectPrice.getText().toString(), edtProjectDetail.getText().toString(), edtProjectMaterial.getText().toString());
                 }else if (releaseVm.type == 2){
-                    releaseVm.releaseLocus(edtProjectSchedule.getText().toString(), edtVisitor.getText().toString(), edtMobile.getText().toString());
+                    releaseVm.releaseLocus(edtProjectDes.getText().toString(), edtVisitor.getText().toString(), edtMobile.getText().toString());
                 }
                 break;
         }
@@ -487,7 +491,7 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
         flProjectCompany.setVisibility(View.GONE);
         flProjectAddress.setVisibility(View.GONE);
         flProjectNameSelect.setVisibility(View.VISIBLE);
-        flProjectSchedule.setVisibility(View.VISIBLE);
+        flProjectDes.setVisibility(View.VISIBLE);
         flVisitor.setVisibility(View.VISIBLE);
         flMobile.setVisibility(View.VISIBLE);
         flUpdateTime.setVisibility(View.GONE);
@@ -556,5 +560,46 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
     public void projectNameEvent(ProjectNameEvent event){
         tvProjectName.setText(event.getName());
         releaseVm.projectId = event.getId();
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+
+        return super.onTouchEvent(event);
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        View view = getCurrentFocus();
+        //触摸的是EditText并且当前EditText可以滚动则将事件交给EditText处理；否则将事件交由其父类处理
+        if (view != null && (view.getId() == R.id.edt_project_des && canVerticalScroll(edtProjectDes))) {
+            view.getParent().requestDisallowInterceptTouchEvent(true);
+            if (ev.getAction() == MotionEvent.ACTION_UP) {
+                view.getParent().requestDisallowInterceptTouchEvent(false);
+            }
+        }
+        return super.dispatchTouchEvent(ev);
+    }
+
+    /**
+     * EditText竖直方向是否可以滚动
+     * @param editText 需要判断的EditText
+     * @return true：可以滚动  false：不可以滚动
+     */
+    private boolean canVerticalScroll(EditText editText) {
+        //滚动的距离
+        int scrollY = editText.getScrollY();
+        //控件内容的总高度
+        int scrollRange = editText.getLayout().getHeight();
+        //控件实际显示的高度
+        int scrollExtent = editText.getHeight() - editText.getCompoundPaddingTop() -editText.getCompoundPaddingBottom();
+        //控件内容总高度与实际显示高度的差值
+        int scrollDifference = scrollRange - scrollExtent;
+
+        if(scrollDifference == 0) {
+            return false;
+        }
+
+        return (scrollY > 0) || (scrollY < scrollDifference - 1);
     }
 }

@@ -72,7 +72,7 @@ public class SupplierDetailActivity extends BaseActivity {
             tvCompany.setText(supplierDetailBean.getCompany());
             tvOffice.setText(supplierDetailBean.getPosition());
             tvBusinessArea.setText(supplierDetailBean.getServe_address());
-            tvBusinessExp.setText(supplierDetailBean.getExperience() > 0 ? getResources().getStringArray(R.array.experience_list)[supplierDetailBean.getExperience() - 1]: "");
+            tvBusinessExp.setText(supplierDetailBean.getExperience() > 0 ? getResources().getStringArray(R.array.experience_list)[supplierDetailBean.getExperience() - 1] + "年": "");
             tvProduction.setText(supplierDetailBean.getProduct());
             switch (supplierDetailBean.getSex()){
                 case 0:

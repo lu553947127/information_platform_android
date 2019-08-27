@@ -59,8 +59,6 @@ public class LocusReadAdapter extends BaseQuickAdapter<TrackBean.ListBean, BaseV
         if (!TextUtils.isEmpty(item.getTel())){
             spanUtils
                     .append("，")
-                    .append(mContext.getString(R.string.mobile))
-                    .append(":")
                     .append(item.getTel());
         }
         spanUtils.create();

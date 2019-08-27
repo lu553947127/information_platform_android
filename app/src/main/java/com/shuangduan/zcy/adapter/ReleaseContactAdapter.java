@@ -59,8 +59,7 @@ public abstract class ReleaseContactAdapter extends BaseQuickAdapter<ContactBean
 
             @Override
             public void afterTextChanged(Editable s) {
-
-
+                unitChange(edtUnit.getText().toString(), helper.getLayoutPosition());
             }
         });
 
@@ -69,7 +68,7 @@ public abstract class ReleaseContactAdapter extends BaseQuickAdapter<ContactBean
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus){
-                    unitChange(edtPrinciple.getText().toString(), helper.getLayoutPosition());
+                    principleChange(edtPrinciple.getText().toString(), helper.getLayoutPosition());
                 }
             }
         });
@@ -94,7 +93,7 @@ public abstract class ReleaseContactAdapter extends BaseQuickAdapter<ContactBean
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus){
-                    unitChange(edtMobile.getText().toString(), helper.getLayoutPosition());
+                    mobileChange(edtMobile.getText().toString(), helper.getLayoutPosition());
                 }
             }
         });

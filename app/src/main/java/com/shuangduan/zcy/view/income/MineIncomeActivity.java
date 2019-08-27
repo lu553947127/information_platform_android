@@ -108,6 +108,7 @@ public class MineIncomeActivity extends BaseActivity {
         values = new ArrayList<>();
         LineDataSet set = new LineDataSet(values, "收益(元)");
         chart.animateXY(1500, 1500);
+        chart.setNoDataText("没有数据啊");
         //关闭背景颜色
         chart.setDrawGridBackground(false);
         //线的颜色
@@ -123,6 +124,7 @@ public class MineIncomeActivity extends BaseActivity {
         chart.getXAxis().setEnabled(true);
         chart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);//设置x轴的显示位置
         chart.getXAxis().setDrawAxisLine(true);
+        chart.getAxisLeft().setAxisMinimum(0);
         //关闭右侧Y轴
         chart.getAxisRight().setEnabled(false);
         chart.setData(new LineData(set));
