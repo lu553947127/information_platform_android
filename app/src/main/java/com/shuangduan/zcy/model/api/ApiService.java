@@ -25,6 +25,11 @@ import com.shuangduan.zcy.model.bean.HomeBannerBean;
 import com.shuangduan.zcy.model.bean.HomeListBean;
 import com.shuangduan.zcy.model.bean.HomeListDetailBean;
 import com.shuangduan.zcy.model.bean.HomePushBean;
+import com.shuangduan.zcy.model.bean.IMFriendApplyDetailBean;
+import com.shuangduan.zcy.model.bean.IMFriendApplyListBean;
+import com.shuangduan.zcy.model.bean.IMFriendApplyOperationBean;
+import com.shuangduan.zcy.model.bean.IMFriendSearchBean;
+import com.shuangduan.zcy.model.bean.IMTokenBean;
 import com.shuangduan.zcy.model.bean.IncomeLocusBean;
 import com.shuangduan.zcy.model.bean.IncomeMsgBean;
 import com.shuangduan.zcy.model.bean.IncomePeopleBean;
@@ -1100,5 +1105,50 @@ public interface ApiService {
     Flowable<BaseResponse<ProjectSubViewBean>> viewWarrant(
             @Field("user_id") int user_id,
             @Field("id") int id
+    );
+
+    @FormUrlEncoded
+    @POST("api/WeChat/getToken")
+    Flowable<BaseResponse<IMTokenBean>> getIMToken(
+            @Field("user_id") int user_id
+    );
+
+    @FormUrlEncoded
+    @POST("api/Friend/search")
+    Flowable<BaseResponse<IMFriendSearchBean>> imFriendSearch(
+            @Field("user_id") int user_id,
+            @Field("name") String name,
+            @Field("page") int page
+    );
+
+    @FormUrlEncoded
+    @POST("api/Friend/apply")
+    Flowable<BaseResponse> imFriendApply(
+            @Field("user_id") int user_id,
+            @Field("receive_user_id") int receive_user_id,
+            @Field("msg") String msg
+    );
+
+    @FormUrlEncoded
+    @POST("api/Friend/applyDetail")
+    Flowable<BaseResponse<IMFriendApplyDetailBean>> imFriendApplyDetail(
+            @Field("user_id") int user_id,
+            @Field("id") int id
+    );
+
+    @FormUrlEncoded
+    @POST("api/Friend/applyList")
+    Flowable<BaseResponse<IMFriendApplyListBean>> imFriendApplyList(
+            @Field("user_id") int user_id,
+            @Field("page") int page
+    );
+
+    @FormUrlEncoded
+    @POST("api/Friend/operation")
+    Flowable<BaseResponse<IMFriendApplyOperationBean>> imFriendApplyOperation(
+            @Field("user_id") int user_id,
+            @Field("id") int id,
+            @Field("status") int status,
+            @Field("msg") String msg
     );
 }

@@ -27,6 +27,8 @@ import com.shuangduan.zcy.view.recharge.RechargeResultActivity;
 import com.shuangduan.zcy.wxapi.PayVm;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.lang.ref.WeakReference;
 import java.util.Map;
 import java.util.Objects;

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.RadioGroup;
 
@@ -25,12 +26,15 @@ import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.rongyun.view.CircleFragment;
 import com.shuangduan.zcy.view.login.UserInfoInputActivity;
 import com.shuangduan.zcy.vm.AuthenticationVm;
+import com.shuangduan.zcy.vm.IMConnectVm;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import butterknife.BindView;
 import cn.jpush.android.api.JPushInterface;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
 
 import static com.shuangduan.zcy.app.AppConfig.APP_ID;
 
@@ -128,6 +132,10 @@ public class MainActivity extends BaseActivity {
         });
         authenticationVm.pageStateLiveData.observe(this, this::showPageState);
         authenticationVm.authentication();
+
+        //初始化，融云链接服务器
+        IMConnectVm imConnectVm = ViewModelProviders.of(this).get(IMConnectVm.class);
+        imConnectVm.connect(SPUtils.getInstance().getString(SpConfig.IM_TOKEN));
     }
 
     /**

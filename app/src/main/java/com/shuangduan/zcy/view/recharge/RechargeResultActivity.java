@@ -13,7 +13,10 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.PageState;
+import com.shuangduan.zcy.model.event.RechargeSuccessEvent;
 import com.shuangduan.zcy.vm.RechargeVm;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -57,6 +60,9 @@ public class RechargeResultActivity extends BaseActivity {
             tvPayResult.setText(rechargeResultBean.getStatus() == 1? getString(R.string.recharge_success):getString(R.string.recharge_fail));
             tvPayStyle.setText(getIntent().getIntExtra(CustomConfig.PAY_STYLE, 2) == CustomConfig.PAY_STYLE_ALIPAY? getString(R.string.ali_pay):getString(R.string.wechat_pay));
             tvAmount.setText(String.format(getString(R.string.format_amount_rmb), getIntent().getStringExtra(CustomConfig.RECHARGE_AMOUNT)));
+            if (rechargeResultBean.getStatus() == 1){
+                EventBus.getDefault().post(new RechargeSuccessEvent());
+            }
         });
         rechargeVm.pageStateLiveData.observe(this, s -> {
             switch (s){

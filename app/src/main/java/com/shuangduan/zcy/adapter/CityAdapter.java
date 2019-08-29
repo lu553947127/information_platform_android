@@ -1,5 +1,7 @@
 package com.shuangduan.zcy.adapter;
 
+import android.widget.TextView;
+
 import androidx.annotation.Nullable;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;

@@ -21,6 +21,7 @@ import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.RegisterBean;
 import com.shuangduan.zcy.utils.AndroidBug5497Workaround;
 import com.shuangduan.zcy.view.MainActivity;
+import com.shuangduan.zcy.vm.IMConnectVm;
 import com.shuangduan.zcy.vm.LoginVm;
 
 import java.util.Objects;
@@ -52,6 +53,7 @@ public class RegisterActivity extends BaseActivity {
     AppCompatEditText edtMobileInvite;
 
     private LoginVm loginVm;
+    private IMConnectVm imConnectVm;
 
     @Override
     protected int initLayoutRes() {
@@ -71,6 +73,16 @@ public class RegisterActivity extends BaseActivity {
                 tvSendVerificationCode.setClickable(false);
             }
         });
+
+        //初始化，融云链接服务器
+        imConnectVm = ViewModelProviders.of(this).get(IMConnectVm.class);
+        imConnectVm.tokenLiveData.observe(this, imTokenBean -> {
+            String token = imTokenBean.getToken();
+            SPUtils.getInstance().put(SpConfig.IM_TOKEN, token);
+            ActivityUtils.startActivity(MainActivity.class);
+            finish();
+        });
+        imConnectVm.pageStateLiveData.observe(this, this::showPageState);
 
     }
 
@@ -109,8 +121,9 @@ public class RegisterActivity extends BaseActivity {
                 SPUtils.getInstance().put(SpConfig.TOKEN, loginBean.getToken());
                 SPUtils.getInstance().put(SpConfig.MOBILE, loginBean.getTel());
                 SPUtils.getInstance().put(SpConfig.INFO_STATUS, loginBean.getInfo_status());
-                ActivityUtils.startActivity(MainActivity.class);
-                finish();
+
+                imConnectVm.userId = loginBean.getUser_id();
+                imConnectVm.getToken();
             });
         });
         loginVm.pageStateLiveData.observe(this, s -> {

@@ -14,6 +14,7 @@ import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseFragment;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.event.AvatarEvent;
+import com.shuangduan.zcy.model.event.RechargeSuccessEvent;
 import com.shuangduan.zcy.model.event.UserNameEvent;
 import com.shuangduan.zcy.utils.BarUtils;
 import com.shuangduan.zcy.utils.image.ImageConfig;
@@ -184,6 +185,11 @@ public class MineFragment extends BaseFragment {
                 .errorPic(R.drawable.default_head)
                 .imageView(ivUser)
                 .build());
+    }
+
+    @Subscribe()
+    public void rechargeSuccess(RechargeSuccessEvent event){
+        userInfoVm.userInfo();
     }
 
 }

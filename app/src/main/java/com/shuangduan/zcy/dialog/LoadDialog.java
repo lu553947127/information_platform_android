@@ -57,7 +57,9 @@ public class LoadDialog extends BaseDialog{
 
     @Override
     public BaseDialog hideDialog() {
-        showNum--;
+        if (showNum > 0){
+            showNum--;
+        }
         LogUtils.i("cishu",showNum);
         if (showNum > 0){
             return this;

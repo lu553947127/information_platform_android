@@ -66,4 +66,7 @@ public class SpConfig {
     /*推送别名是否设置*/
     public static final String ALIAS_STATUS = "alias_status";
 
+    /*融云token*/
+    public static final String IM_TOKEN = "im_token";
+
 }

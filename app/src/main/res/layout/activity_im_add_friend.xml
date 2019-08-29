@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <View
+        android:id="@+id/fake_status_bar"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <include android:id="@+id/toolbar" layout="@layout/toolbar"/>
+
+    <ImageView
+        android:id="@+id/iv_header"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="28dp"/>
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@+id/iv_header"
+        app:layout_constraintLeft_toRightOf="@+id/iv_header"
+        app:layout_constraintBottom_toTopOf="@+id/tv_content"
+        android:layout_marginLeft="10dp"
+        android:textColor="@color/colorTv"
+        android:textSize="14sp"/>
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/tv_name"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_header"
+        app:layout_constraintRight_toLeftOf="@+id/tv_name"
+        android:textColor="@color/color_666666"
+        android:textSize="12sp"/>
+    
+    <EditText
+        android:id="@+id/edt_msg"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        app:layout_constraintTop_toBottomOf="@+id/iv_header"
+        android:layout_marginTop="10dp"
+        android:gravity="top"
+        android:background="@color/color_F4F2F7"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginRight="28dp"
+        android:textColorHint="@color/colorTvHint"
+        android:textColor="@color/colorTv"
+        android:textSize="13sp"
+        android:hint="留言"/>
+
+    <TextView
+        android:id="@+id/tv_confirm"
+        android:layout_width="320dp"
+        style="@style/BtnConfirm"
+        android:layout_marginTop="30dp"
+        app:layout_constraintTop_toBottomOf="@+id/edt_msg"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text="@string/submit"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

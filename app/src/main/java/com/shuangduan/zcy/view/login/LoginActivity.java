@@ -23,6 +23,7 @@ import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.utils.AndroidBug5497Workaround;
 import com.shuangduan.zcy.view.MainActivity;
 import com.shuangduan.zcy.view.mine.UpdatePwdActivity;
+import com.shuangduan.zcy.vm.IMConnectVm;
 import com.shuangduan.zcy.vm.LoginVm;
 
 import java.util.Objects;
@@ -65,6 +66,7 @@ public class LoginActivity extends BaseActivity {
     private final int LOGIN_VERIFICATION_CODE = 2;
     /*默认账号登录*/
     private int loginStyle = LOGIN_ACCOUNT;
+    private IMConnectVm imConnectVm;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -91,6 +93,16 @@ public class LoginActivity extends BaseActivity {
                 tvSendVerificationCode.setClickable(false);
             }
         });
+
+        //初始化，融云链接服务器
+        imConnectVm = ViewModelProviders.of(this).get(IMConnectVm.class);
+        imConnectVm.tokenLiveData.observe(this, imTokenBean -> {
+            String token = imTokenBean.getToken();
+            SPUtils.getInstance().put(SpConfig.IM_TOKEN, token);
+            ActivityUtils.startActivity(MainActivity.class);
+            finish();
+        });
+        imConnectVm.pageStateLiveData.observe(this, this::showPageState);
     }
 
     @OnClick({R.id.tv_login_account, R.id.tv_login_verification_code, R.id.tv_send_verification_code, R.id.tv_login, R.id.tv_forget_pwd})
@@ -152,8 +164,9 @@ public class LoginActivity extends BaseActivity {
             SPUtils.getInstance().put(SpConfig.TOKEN, loginBean.getToken());
             SPUtils.getInstance().put(SpConfig.MOBILE, loginBean.getTel());
             SPUtils.getInstance().put(SpConfig.INFO_STATUS, loginBean.getInfo_status());
-            ActivityUtils.startActivity(MainActivity.class);
-            finish();
+
+            imConnectVm.userId = loginBean.getUser_id();
+            imConnectVm.getToken();
         });
         loginVm.pageStateLiveData.observe(this, s -> {
             LogUtils.i(s);

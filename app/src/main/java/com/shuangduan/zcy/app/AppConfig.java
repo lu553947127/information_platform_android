@@ -43,6 +43,7 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import java.io.File;
 
 import cn.jpush.android.api.JPushInterface;
+import io.rong.imkit.RongIM;
 
 /**
  * <pre>
@@ -93,6 +94,8 @@ public class AppConfig {
         }
 
         initJPush(context);
+
+        initRongYun(context);
     }
 
     /**
@@ -156,6 +159,11 @@ public class AppConfig {
     private static void initJPush(Context context){
         JPushInterface.setDebugMode(BuildConfig.IS_DEBUG);
         JPushInterface.init(context);
+    }
+
+    private static void initRongYun(Context context){
+        //融云初始化
+        RongIM.init(context, "pwe86ga5p43i6");
     }
 
 }
