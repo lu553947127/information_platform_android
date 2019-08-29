@@ -14,6 +14,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ViewPagerAdapter;
 import com.shuangduan.zcy.base.BaseActivity;
+import com.shuangduan.zcy.utils.AuthenticationUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -71,6 +72,7 @@ public class DemandActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_bar_right:
+                if (!AuthenticationUtils.Authentication()) return;
                 ActivityUtils.startActivity(DemandReleaseActivity.class);
                 break;
         }

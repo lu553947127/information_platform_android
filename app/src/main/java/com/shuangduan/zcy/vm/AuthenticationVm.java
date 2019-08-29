@@ -7,6 +7,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseViewModel;
 import com.shuangduan.zcy.model.api.repository.UserRepository;
+import com.shuangduan.zcy.model.bean.AuthenBean;
 
 /**
  * @author 宁文强 QQ:858777523
@@ -21,6 +22,7 @@ import com.shuangduan.zcy.model.api.repository.UserRepository;
 public class AuthenticationVm extends BaseViewModel {
     private int userId;
     public MutableLiveData authenticationLiveData;
+    public MutableLiveData<AuthenBean> authenticationStatusLiveData;
     public MutableLiveData<String> pageStateLiveData;
     public String image_front = null;
     public String image_reverse_site = null;
@@ -29,6 +31,7 @@ public class AuthenticationVm extends BaseViewModel {
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
         authenticationLiveData = new MutableLiveData<>();
         pageStateLiveData = new MutableLiveData<>();
+        authenticationStatusLiveData = new MutableLiveData<>();
     }
 
     public void idCard(){
@@ -41,5 +44,12 @@ public class AuthenticationVm extends BaseViewModel {
             return;
         }
         new UserRepository().idcard(authenticationLiveData, pageStateLiveData, userId, image_front, image_reverse_site);
+    }
+
+    /**
+     * 实名认证检测
+     */
+    public void authentication(){
+        new UserRepository().authentication(authenticationStatusLiveData, pageStateLiveData, userId);
     }
 }

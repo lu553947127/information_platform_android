@@ -22,14 +22,12 @@ import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.PhotoDialog;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.event.BankcardUpdateEvent;
-import com.shuangduan.zcy.utils.image.ImageConfig;
-import com.shuangduan.zcy.utils.image.ImageLoader;
 import com.shuangduan.zcy.utils.matisse.Glide4Engine;
 import com.shuangduan.zcy.utils.matisse.MatisseCamera;
+import com.shuangduan.zcy.vm.AuthenticationVm;
 import com.shuangduan.zcy.vm.BankCardVm;
 import com.shuangduan.zcy.vm.PermissionVm;
 import com.shuangduan.zcy.vm.UploadPhotoVm;
-import com.shuangduan.zcy.vm.WithdrawVm;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
@@ -72,7 +70,7 @@ public class BindBankCardActivity extends BaseActivity implements BaseDialog.Pho
     private PermissionVm permissionVm;
     private RxPermissions rxPermissions;
     private UploadPhotoVm uploadPhotoVm;
-    private WithdrawVm withdrawVm;
+    private AuthenticationVm authenticationVm;
     private BankCardVm bankCardVm;
 
     @Override
@@ -124,12 +122,12 @@ public class BindBankCardActivity extends BaseActivity implements BaseDialog.Pho
         });
 
 
-        withdrawVm = ViewModelProviders.of(this).get(WithdrawVm.class);
-        withdrawVm.authenticationLiveData.observe(this, authenBean -> {
+        authenticationVm = ViewModelProviders.of(this).get(AuthenticationVm.class);
+        authenticationVm.authenticationStatusLiveData.observe(this, authenBean -> {
             tvRealName.setText(authenBean.getReal_name());
             tvIdentityNumber.setText(authenBean.getIdentity_card());
         });
-        withdrawVm.authentication();
+        authenticationVm.authentication();
 
         bankCardVm = ViewModelProviders.of(this).get(BankCardVm.class);
         bankCardVm.disLiveData.observe(this, bankCardDisBean -> {

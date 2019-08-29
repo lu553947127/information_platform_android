@@ -1,9 +1,11 @@
 package com.shuangduan.zcy.vm;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.base.BaseViewModel;
 import com.shuangduan.zcy.model.bean.ShareBean;
 import com.shuangduan.zcy.utils.ShareUtils;
@@ -31,13 +33,14 @@ public class ShareVm extends BaseViewModel {
         shareLiveData = new MutableLiveData<>();
     }
 
-    public void getBitmap(String url){
+    public void getBitmap(String url, Bitmap defaultBitmap){
         addDisposable(Flowable.just(url)
                 .subscribeOn(Schedulers.io())
                 .map(new Function<String, Bitmap>() {
                     @Override
                     public Bitmap apply(String s) throws Exception {
-                        return ShareUtils.getBitMBitmap(s);
+                        Bitmap bitMBitmap = ShareUtils.getBitMBitmap(s);
+                        return bitMBitmap != null? bitMBitmap: defaultBitmap;
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())

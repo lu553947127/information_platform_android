@@ -1,6 +1,7 @@
 package com.shuangduan.zcy.view.projectinfo;
 
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.view.View;
@@ -41,6 +42,7 @@ import com.shuangduan.zcy.listener.BaseUiListener;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.event.LocusRefreshEvent;
 import com.shuangduan.zcy.model.event.WarrantSuccessEvent;
+import com.shuangduan.zcy.utils.AuthenticationUtils;
 import com.shuangduan.zcy.utils.ShareUtils;
 import com.shuangduan.zcy.view.release.ReleaseProjectActivity;
 import com.shuangduan.zcy.vm.CoinPayVm;
@@ -273,7 +275,7 @@ public class ProjectDetailActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.iv_bar_right:
-                shareVm.getBitmap("http:\\/\\/information-api.oss-cn-qingdao.aliyuncs.com\\/5adb0e33d685223bfe79a51fee17431f.png");
+                shareVm.getBitmap("http:\\/\\/information-api.oss-cn-qingdao.aliyuncs.com\\/5adb0e33d685223bfe79a51fee17431f.png", BitmapFactory.decodeResource(getResources(), R.drawable.default_pic));
                 break;
             case R.id.fl_collect:
                 projectDetailVm.collect();
@@ -308,6 +310,7 @@ public class ProjectDetailActivity extends BaseActivity {
                 }
                 break;
             case R.id.fl_release:
+                if (!AuthenticationUtils.Authentication()) return;
                 bundle.putInt(CustomConfig.RELEASE_TYPE, 1);
                 bundle.putInt(CustomConfig.PROJECT_ID, getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0));
                 bundle.putString(CustomConfig.PROJECT_NAME, tvTitle.getText().toString());

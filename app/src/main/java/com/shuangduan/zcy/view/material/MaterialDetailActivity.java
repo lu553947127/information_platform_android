@@ -7,29 +7,25 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
-import com.blankj.utilcode.util.SpanUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
-import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.MaterialOrderDialog;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.MaterialDetailBean;
 import com.shuangduan.zcy.utils.image.ImageConfig;
 import com.shuangduan.zcy.utils.image.ImageLoader;
 import com.shuangduan.zcy.view.mine.AuthenticationActivity;
-import com.shuangduan.zcy.view.mine.WithdrawActivity;
+import com.shuangduan.zcy.vm.AuthenticationVm;
 import com.shuangduan.zcy.vm.MaterialDetailVm;
-import com.shuangduan.zcy.vm.WithdrawVm;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -76,7 +72,7 @@ public class MaterialDetailActivity extends BaseActivity {
     @BindView(R.id.tv_intro)
     TextView tvIntro;
     private MaterialDetailVm materialDetailVm;
-    private WithdrawVm withdrawVm;
+    private AuthenticationVm authenticationVm;
 
     @Override
     protected int initLayoutRes() {
@@ -132,8 +128,8 @@ public class MaterialDetailActivity extends BaseActivity {
             }
         });
 
-        withdrawVm = ViewModelProviders.of(this).get(WithdrawVm.class);
-        withdrawVm.authenticationLiveData.observe(this, authenBean -> {
+        authenticationVm = ViewModelProviders.of(this).get(AuthenticationVm.class);
+        authenticationVm.authenticationStatusLiveData.observe(this, authenBean -> {
             switch (authenBean.getCard_status()){
                 case 1:
                     ToastUtils.showShort("审核中，请等待审核成功后进入");
@@ -158,7 +154,7 @@ public class MaterialDetailActivity extends BaseActivity {
                     break;
             }
         });
-        withdrawVm.pageStateLiveData.observe(this, s -> {
+        authenticationVm.pageStateLiveData.observe(this, s -> {
             switch (s){
                 case PageState.PAGE_LOADING:
                     showLoading();
@@ -203,7 +199,7 @@ public class MaterialDetailActivity extends BaseActivity {
                                 materialDetailVm.pre();
                             }).showDialog();
                 }else {
-                    withdrawVm.authentication();
+                    authenticationVm.authentication();
                 }
                 break;
         }

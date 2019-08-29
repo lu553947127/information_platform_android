@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
@@ -23,6 +24,7 @@ import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.rongyun.view.CircleFragment;
 import com.shuangduan.zcy.view.login.UserInfoInputActivity;
+import com.shuangduan.zcy.vm.AuthenticationVm;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -119,6 +121,13 @@ public class MainActivity extends BaseActivity {
         });
 
         checkInfoState();
+        //初始实名状态查询
+        AuthenticationVm authenticationVm = ViewModelProviders.of(this).get(AuthenticationVm.class);
+        authenticationVm.authenticationStatusLiveData.observe(this, authenBean -> {
+            SPUtils.getInstance().put(SpConfig.IS_VERIFIED, authenBean.getCard_status());
+        });
+        authenticationVm.pageStateLiveData.observe(this, this::showPageState);
+        authenticationVm.authentication();
     }
 
     /**

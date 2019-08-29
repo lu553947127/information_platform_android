@@ -1,6 +1,7 @@
 package com.shuangduan.zcy.view.mine;
 
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 
@@ -102,7 +103,7 @@ public class RecommendFriendsActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_share:
-                shareVm.getBitmap("http:\\/\\/information-api.oss-cn-qingdao.aliyuncs.com\\/5adb0e33d685223bfe79a51fee17431f.png");
+                shareVm.getBitmap("http://information-api.oss-cn-qingdao.aliyuncs.com/5adb0e33d685223bfe79a51fee17431f.png", BitmapFactory.decodeResource(getResources(), R.drawable.default_pic));
                 break;
         }
     }

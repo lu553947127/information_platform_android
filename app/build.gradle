@@ -120,5 +120,4 @@ dependencies {
     implementation files('libs\\open_sdk_r6019_lite.jar')
     implementation 'cn.jiguang.sdk:jpush:3.3.4'  // 此处以JPush 3.3.4 版本为例。
     api 'cn.jiguang.sdk:jcore:2.1.2'  // 此处以JCore 2.1.2 版本为例。
-
 }

@@ -12,17 +12,20 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ClassifyAdapter;
 import com.shuangduan.zcy.adapter.HomeHeadlinesAdapter;
 import com.shuangduan.zcy.adapter.IncomeStatementAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
+import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseFragment;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.ClassifyBean;
 import com.shuangduan.zcy.model.bean.HomeBannerBean;
 import com.shuangduan.zcy.model.bean.HomeListBean;
 import com.shuangduan.zcy.model.bean.HomePushBean;
+import com.shuangduan.zcy.utils.AuthenticationUtils;
 import com.shuangduan.zcy.utils.BarUtils;
 import com.shuangduan.zcy.utils.image.GlideImageLoader;
 import com.shuangduan.zcy.view.demand.DemandActivity;
@@ -125,6 +128,7 @@ public class HomeFragment extends BaseFragment {
                     ActivityUtils.startActivity(MineIncomeActivity.class);
                     break;
                 case ClassifyBean.FBXX:
+                    if (!AuthenticationUtils.Authentication()) return;
                     ActivityUtils.startActivity(ReleaseListActivity.class);
                     break;
                 case ClassifyBean.FBXQ:

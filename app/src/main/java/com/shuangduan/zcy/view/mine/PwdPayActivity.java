@@ -16,7 +16,11 @@ import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.PageState;
+import com.shuangduan.zcy.model.event.PwdPaySetEvent;
+import com.shuangduan.zcy.vm.AuthenticationVm;
 import com.shuangduan.zcy.vm.UpdatePwdPayVm;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -37,6 +41,7 @@ public class PwdPayActivity extends BaseActivity {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     private UpdatePwdPayVm updatePwdPayVm;
+    private AuthenticationVm authenticationVm;
 
     @Override
     protected int initLayoutRes() {
@@ -48,6 +53,7 @@ public class PwdPayActivity extends BaseActivity {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.pwd_pay));
 
+        authenticationVm = ViewModelProviders.of(this).get(AuthenticationVm.class);
         updatePwdPayVm = ViewModelProviders.of(this).get(UpdatePwdPayVm.class);
         updatePwdPayVm.stateLiveData.observe(this, pwdPayStateBean -> {
             SPUtils.getInstance().getInt(SpConfig.PWD_PAY_STATUS, pwdPayStateBean.getStatus());
@@ -63,6 +69,21 @@ public class PwdPayActivity extends BaseActivity {
                     break;
             }
         });
+        authenticationVm.authenticationStatusLiveData.observe(this, authenBean -> {
+            SPUtils.getInstance().put(SpConfig.IS_VERIFIED, authenBean.getCard_status());
+            if (authenBean.getCard_status() == 2){
+                //认证过了
+                updatePwdPayVm.payPwdState();
+            }else {
+                Bundle bundle = new Bundle();
+                bundle.putString(CustomConfig.UPLOAD_TYPE, CustomConfig.uploadTypeIdCard);
+                ActivityUtils.startActivity(bundle, AuthenticationActivity.class);
+                finish();
+            }
+        });
+        authenticationVm.pageStateLiveData.observe(this, s -> {
+            showPageState(s);
+        });
         int status = SPUtils.getInstance().getInt(SpConfig.PWD_PAY_STATUS, 0);
         if (status == 1){
             updatePwdPayVm.status = status;
@@ -71,10 +92,7 @@ public class PwdPayActivity extends BaseActivity {
             if (isVerified == 2){
                 updatePwdPayVm.payPwdState();
             }else {
-                Bundle bundle = new Bundle();
-                bundle.putString(CustomConfig.UPLOAD_TYPE, CustomConfig.uploadTypeIdCard);
-                ActivityUtils.startActivity(bundle, AuthenticationActivity.class);
-                finish();
+                authenticationVm.authentication();
             }
         }
     }
@@ -107,5 +125,10 @@ public class PwdPayActivity extends BaseActivity {
                 ActivityUtils.startActivity(ForgetPwdPayActivity.class);
                 break;
         }
+    }
+
+    @Subscribe()
+    public void stateUpdate(PwdPaySetEvent event){
+        updatePwdPayVm.status = 1;
     }
 }

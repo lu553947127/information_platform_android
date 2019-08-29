@@ -1,6 +1,7 @@
 package com.shuangduan.zcy.view.recruit;
 
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -199,7 +200,7 @@ public class RecruitDetailActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.iv_bar_right:
-                shareVm.getBitmap("http:\\/\\/information-api.oss-cn-qingdao.aliyuncs.com\\/5adb0e33d685223bfe79a51fee17431f.png");
+                shareVm.getBitmap("http:\\/\\/information-api.oss-cn-qingdao.aliyuncs.com\\/5adb0e33d685223bfe79a51fee17431f.png", BitmapFactory.decodeResource(getResources(), R.drawable.default_pic));
                 break;
             case R.id.ll_collect:
                 recruitDetailVm.collect();

@@ -29,7 +29,6 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="15dp"
                 android:background="@drawable/selector_toolbar"
-                android:scaleType="centerInside"
                 android:src="@drawable/default_head"/>
 
             <TextView

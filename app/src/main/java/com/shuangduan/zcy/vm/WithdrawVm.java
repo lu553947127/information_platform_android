@@ -26,7 +26,6 @@ import java.util.List;
  */
 public class WithdrawVm extends BaseViewModel {
     private int userId;
-    public MutableLiveData<AuthenBean> authenticationLiveData;
     public MutableLiveData<WithdrawBean> withdrawLiveData;
     public MutableLiveData<List<BankCardBean>> bankcardLiveData;
     public MutableLiveData<WithdrawRecordBean> recordLiveData;
@@ -38,20 +37,12 @@ public class WithdrawVm extends BaseViewModel {
 
     public WithdrawVm() {
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
-        authenticationLiveData = new MutableLiveData<>();
         pageStateLiveData = new MutableLiveData<>();
         withdrawLiveData = new MutableLiveData<>();
         bankcardLiveData = new MutableLiveData<>();
         recordLiveData = new MutableLiveData<>();
         recordDetailLiveData = new MutableLiveData<>();
         operateLiveData = new MutableLiveData<>();
-    }
-
-    /**
-     * 实名认证检测
-     */
-    public void authentication(){
-        new UserRepository().authentication(authenticationLiveData, pageStateLiveData, userId);
     }
 
     public void withdrawMsg(){

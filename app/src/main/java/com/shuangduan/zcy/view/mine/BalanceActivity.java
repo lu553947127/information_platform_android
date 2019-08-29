@@ -16,10 +16,9 @@ import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.PageState;
-import com.shuangduan.zcy.vm.WithdrawVm;
+import com.shuangduan.zcy.vm.AuthenticationVm;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -37,7 +36,7 @@ public class BalanceActivity extends BaseActivity {
     AppCompatTextView tvBarTitle;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    private WithdrawVm withdrawVm;
+    private AuthenticationVm authenticationVm;
 
     @Override
     protected int initLayoutRes() {
@@ -49,8 +48,8 @@ public class BalanceActivity extends BaseActivity {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.balance));
 
-        withdrawVm = ViewModelProviders.of(this).get(WithdrawVm.class);
-        withdrawVm.authenticationLiveData.observe(this, authenBean -> {
+        authenticationVm = ViewModelProviders.of(this).get(AuthenticationVm.class);
+        authenticationVm.authenticationStatusLiveData.observe(this, authenBean -> {
             switch (authenBean.getCard_status()){
                 case 1:
                     ToastUtils.showShort("审核中，请等待审核成功后进入");
@@ -68,7 +67,7 @@ public class BalanceActivity extends BaseActivity {
                         break;
             }
         });
-        withdrawVm.pageStateLiveData.observe(this, s -> {
+        authenticationVm.pageStateLiveData.observe(this, s -> {
             switch (s){
                 case PageState.PAGE_LOADING:
                     showLoading();
@@ -92,7 +91,7 @@ public class BalanceActivity extends BaseActivity {
                     //认证成功
                     ActivityUtils.startActivity(WithdrawActivity.class);
                 }else {
-                    withdrawVm.authentication();
+                    authenticationVm.authentication();
                 }
                 break;
             case R.id.tv_bank_card:
@@ -100,7 +99,7 @@ public class BalanceActivity extends BaseActivity {
                     //认证成功
                     ActivityUtils.startActivity(BankCardListActivity.class);
                 }else {
-                    withdrawVm.authentication();
+                    authenticationVm.authentication();
                 }
                 break;
             case R.id.tv_withdraw_record:
@@ -108,7 +107,7 @@ public class BalanceActivity extends BaseActivity {
                     //认证成功
                     ActivityUtils.startActivity(WithdrawRecordActivity.class);
                 }else {
-                    withdrawVm.authentication();
+                    authenticationVm.authentication();
                 }
                 break;
         }

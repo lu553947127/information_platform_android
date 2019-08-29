@@ -19,8 +19,11 @@ import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.PageState;
+import com.shuangduan.zcy.model.event.PwdPaySetEvent;
 import com.shuangduan.zcy.vm.SmsCodeVm;
 import com.shuangduan.zcy.vm.UpdatePwdPayVm;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -67,6 +70,8 @@ public class SetPwdPayActivity extends BaseActivity {
         updatePwdPayVm = ViewModelProviders.of(this).get(UpdatePwdPayVm.class);
         updatePwdPayVm.setPwdLiveData.observe(this, o -> {
             ToastUtils.showShort(getString(R.string.pwd_pay_set_success));
+            SPUtils.getInstance().put(SpConfig.PWD_PAY_STATUS, 1);
+            EventBus.getDefault().post(new PwdPaySetEvent());
             finish();
         });
         smsCodeVm.smsDataLiveData.observe(this, o -> {
@@ -79,6 +84,7 @@ public class SetPwdPayActivity extends BaseActivity {
                 tvSendVerificationCode.setClickable(true);
             }else {
                 tvSendVerificationCode.setText(String.format(getString(R.string.format_get_verification_code_again), aLong));
+                tvSendVerificationCode.setClickable(false);
             }
         });
         updatePwdPayVm.pageStateLiveData.observe(this, s -> {
