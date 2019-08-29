@@ -187,6 +187,8 @@
     <string name="hint_price_supply">请输入供应价格</string>
     <string name="hint_supply_address">请输入供应地址</string>
 
+    <string name="friends_new_notice">好友提醒</string>
+
     <string name="subscribe_message">订阅信息</string>
     <string name="model_list">列表模式</string>
     <string name="collection">收藏</string>

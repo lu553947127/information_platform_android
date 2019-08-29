@@ -33,6 +33,7 @@ public class IMAddVm extends BaseViewModel {
     private int pageSearch;
     public String searchName;
     public int receiverId;
+    private int pageNewFriend;
 
     public IMAddVm() {
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
@@ -58,5 +59,21 @@ public class IMAddVm extends BaseViewModel {
 
     public void apply(String msg){
         new IMRepository().imFriendApply(applyLiveData, pageStateLiveData, userId, receiverId, msg);
+    }
+
+    public void newFriendList(){
+        pageNewFriend = 1;
+        pageStateLiveData.postValue(PageState.PAGE_REFRESH);
+        new IMRepository().imFriendApplyList(applyListLiveData, pageStateLiveData, userId, pageNewFriend);
+    }
+
+    public void moreNewFriendList(){
+        pageNewFriend ++;
+        pageStateLiveData.postValue(PageState.PAGE_REFRESH);
+        new IMRepository().imFriendApplyList(applyListLiveData, pageStateLiveData, userId, pageNewFriend);
+    }
+
+    public void operateNewFriend(int id, int status){
+        new IMRepository().imFriendApplyOperation(applyOperateLiveData, pageStateLiveData, userId, id, status, "");
     }
 }

@@ -49,11 +49,14 @@ public class CircleFragment extends BaseFragment {
 
     }
 
-    @OnClick({R.id.tv_bar_title})
+    @OnClick({R.id.tv_bar_title, R.id.iv_message})
     void onClick(View view){
         switch (view.getId()){
             case R.id.tv_bar_title:
                 ActivityUtils.startActivity(IMSearchActivity.class);
+                break;
+            case R.id.iv_message:
+                ActivityUtils.startActivity(IMContactActivity.class);
                 break;
                 default:
                     break;

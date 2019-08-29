@@ -5,6 +5,10 @@
 
     <include layout="@layout/toolbar"/>
 
-    <include layout="@layout/layout_refresh_rv"/>
+    <TextView
+        android:id="@+id/tv_new_friends"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="新的朋友"/>
 
 </LinearLayout>
