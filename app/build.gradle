@@ -18,10 +18,6 @@ android {
         versionName rootProject.ext.versionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-//        ndk {
-//            //设置支持的SO库架构
-//            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86","x86_64"
-//        }
         ndk {
             //选择要添加的对应 cpu 类型的 .so 库。
             abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a'
