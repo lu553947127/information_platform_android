@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
         release {
-            storeFile file('D:\\Android\\apk\\zcy\\zcy.jks')
+            storeFile file('D:\\Android\\workspace\\information_platform_android\\app\\zcy.jks')
             storePassword 'boyuan123456'
             keyAlias = 'boyuan'
             keyPassword 'boyuan123456'
