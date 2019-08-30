@@ -92,11 +92,16 @@ public class BankCardListActivity extends BaseActivity {
         bankCardVm.bankcardList();
     }
 
+    @Override
+    public boolean isUseEventBus() {
+        return true;
+    }
+
     @OnClick(R.id.iv_bar_back)
     void onClick(){finish();};
 
-    @Subscribe()
-    public void updateBankcard(BankcardUpdateEvent event){
+    @Subscribe
+    public void onEventUpdateBankcard(BankcardUpdateEvent event){
         bankCardVm.bankcardList();
     }
 }

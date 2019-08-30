@@ -133,9 +133,11 @@ public class MainActivity extends BaseActivity {
         authenticationVm.pageStateLiveData.observe(this, this::showPageState);
         authenticationVm.authentication();
 
-        //初始化，融云链接服务器
-        IMConnectVm imConnectVm = ViewModelProviders.of(this).get(IMConnectVm.class);
-        imConnectVm.connect(SPUtils.getInstance().getString(SpConfig.IM_TOKEN));
+        if (SPUtils.getInstance().getInt(SpConfig.INFO_STATUS) == 1){
+            //初始化，融云链接服务器
+            IMConnectVm imConnectVm = ViewModelProviders.of(this).get(IMConnectVm.class);
+            imConnectVm.connect(SPUtils.getInstance().getString(SpConfig.IM_TOKEN));
+        }
     }
 
     /**
@@ -170,7 +172,7 @@ public class MainActivity extends BaseActivity {
      * 检测信息是否录入过
      */
     private void checkInfoState(){
-        if (SPUtils.getInstance().getInt(SpConfig.INFO_STATUS) == 0){
+        if (SPUtils.getInstance().getInt(SpConfig.INFO_STATUS) != 1){
             ActivityUtils.startActivity(UserInfoInputActivity.class);
         }
     }

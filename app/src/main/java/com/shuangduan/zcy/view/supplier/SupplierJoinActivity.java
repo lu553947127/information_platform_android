@@ -97,6 +97,11 @@ public class SupplierJoinActivity extends BaseActivity implements BaseDialog.Pho
     }
 
     @Override
+    public boolean isUseEventBus() {
+        return true;
+    }
+
+    @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.supplier_join));
@@ -278,15 +283,15 @@ public class SupplierJoinActivity extends BaseActivity implements BaseDialog.Pho
         }
     }
 
-    @Subscribe()
-    public void addressEvent(AddressEvent event){
+    @Subscribe
+    public void onEventAddressEvent(AddressEvent event){
         tvCompanyAddress.setText(event.getProvince() + " " + event.getCity());
         supplierVm.cityId = event.getCityId();
         supplierVm.provinceId = event.getProvinceId();
     }
 
-    @Subscribe()
-    public void serviceCity(MultiAreaEvent event) {
+    @Subscribe
+    public void onEventServiceCity(MultiAreaEvent event) {
         supplierVm.serviceArea.postValue(event);
         tvServiceArea.setText(event.getStringResult());
     }

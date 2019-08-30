@@ -12,7 +12,6 @@ import androidx.core.content.ContextCompat;
 
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.KeyboardUtils;
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.Utils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.MyApplication;
@@ -24,7 +23,6 @@ import com.shuangduan.zcy.utils.AutoUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -51,7 +49,6 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
         AutoUtils.setCustomDensity(this, MyApplication.getInstance());
         setContentView(initLayoutRes());
         unBinder = ButterKnife.bind(this);
-        EventBus.getDefault().register(this);
 
         if (!isTranslationBar){
             //透明状态栏
@@ -94,9 +91,24 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
 
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onBaseEvent(BaseEvent normalEvent) {
+    public boolean isUseEventBus(){
+        return false;
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (isUseEventBus()){
+            EventBus.getDefault().register(this);
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (isUseEventBus()){
+            EventBus.getDefault().unregister(this);
+        }
     }
 
     @Override
@@ -117,7 +129,6 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
     @Override
     protected void onDestroy() {
         unBinder.unbind();
-        EventBus.getDefault().unregister(this);
         if (loadDialog != null){
             loadDialog.dismiss();
             loadDialog = null;

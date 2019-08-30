@@ -114,6 +114,11 @@ public class MineFragment extends BaseFragment {
         userInfoVm.userInfo();
     }
 
+    @Override
+    public boolean isUseEventBus() {
+        return true;
+    }
+
     @OnClick({R.id.tv_username, R.id.iv_user, R.id.tv_my_subscription, R.id.fl_order, R.id.fl_income, R.id.tv_balance, R.id.tv_my_demand, R.id.tv_transaction_record,
             R.id.tv_agreement_manage, R.id.tv_pwd_pay, R.id.tv_recharge,
             R.id.tv_read_history, R.id.tv_feedback, R.id.tv_recommend_friends, R.id.tv_my_collection, R.id.tv_set, R.id.tv_helper})
@@ -172,13 +177,13 @@ public class MineFragment extends BaseFragment {
         }
     }
 
-    @Subscribe()
-    public void updateUserName(UserNameEvent event){
+    @Subscribe
+    public void onEventUpdateUserName(UserNameEvent event){
         tvUsername.setText(event.username);
     }
 
-    @Subscribe()
-    public void updateAvatar(AvatarEvent event){
+    @Subscribe
+    public void onEventUpdateAvatar(AvatarEvent event){
         ImageLoader.load(mContext, new ImageConfig.Builder()
                 .url(event.getAvatar())
                 .placeholder(R.drawable.default_head)
@@ -187,8 +192,8 @@ public class MineFragment extends BaseFragment {
                 .build());
     }
 
-    @Subscribe()
-    public void rechargeSuccess(RechargeSuccessEvent event){
+    @Subscribe
+    public void onEventRechargeSuccess(RechargeSuccessEvent event){
         userInfoVm.userInfo();
     }
 

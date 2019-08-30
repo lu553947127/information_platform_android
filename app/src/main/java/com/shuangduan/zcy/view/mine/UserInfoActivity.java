@@ -216,6 +216,11 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
         userInfoVm.information();
     }
 
+    @Override
+    public boolean isUseEventBus() {
+        return true;
+    }
+
     @OnClick({R.id.iv_bar_back, R.id.iv_user, R.id.fl_name, R.id.fl_sex, R.id.fl_mobile, R.id.fl_email, R.id.fl_id_card,
             R.id.fl_company, R.id.fl_office, R.id.fl_business_area, R.id.fl_business_exp, R.id.tv_production_tip, R.id.tv_production})
     void onClick(View view) {
@@ -319,38 +324,38 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
         permissionVm.getPermissionAlbum(rxPermissions);
     }
 
-    @Subscribe()
-    public void updateUserName(UserNameEvent event) {
+    @Subscribe
+    public void onEventUpdateUserName(UserNameEvent event) {
         tvName.setText(event.username);
     }
 
-    @Subscribe()
-    public void updateMobile(MobileEvent event) {
+    @Subscribe
+    public void onEventUpdateMobile(MobileEvent event) {
         tvMobile.setText(event.mobile);
     }
 
-    @Subscribe()
-    public void updateEmail(EmailEvent event) {
+    @Subscribe
+    public void onEventUpdateEmail(EmailEvent event) {
         tvEmail.setText(event.email);
     }
 
-    @Subscribe()
-    public void updateCompany(CompanyEvent event) {
+    @Subscribe
+    public void onEventUpdateCompany(CompanyEvent event) {
         tvCompany.setText(event.company);
     }
 
-    @Subscribe()
-    public void updateOffice(OfficeEvent event) {
+    @Subscribe
+    public void onEventUpdateOffice(OfficeEvent event) {
         tvOffice.setText(event.office);
     }
 
-    @Subscribe()
-    public void serviceCity(MultiAreaEvent event) {
+    @Subscribe
+    public void onEventServiceCity(MultiAreaEvent event) {
         userInfoVm.multiAreaLiveData.postValue(event);
     }
 
-    @Subscribe()
-    public void updateProduction(ProductionEvent event) {
+    @Subscribe
+    public void onEventUpdateProduction(ProductionEvent event) {
         tvProduction.setText(event.production);
     }
 

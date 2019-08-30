@@ -60,6 +60,11 @@ public class WithdrawActivity extends BaseActivity {
     }
 
     @Override
+    public boolean isUseEventBus() {
+        return true;
+    }
+
+    @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.withdraw));
@@ -133,8 +138,8 @@ public class WithdrawActivity extends BaseActivity {
         }
     }
 
-    @Subscribe()
-    public void updateBankcard(BankcardUpdateEvent event){
+    @Subscribe
+    public void onEventUpdateBankcard(BankcardUpdateEvent event){
         withdrawVm.bankcardList();
     }
 

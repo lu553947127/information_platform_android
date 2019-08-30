@@ -1,6 +1,7 @@
 package com.shuangduan.zcy.view.login;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -13,6 +14,8 @@ import androidx.lifecycle.ViewModelProviders;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.StringUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
@@ -28,6 +31,7 @@ import com.shuangduan.zcy.utils.AndroidBug5497Workaround;
 import com.shuangduan.zcy.view.MainActivity;
 import com.shuangduan.zcy.view.MultiAreaActivity;
 import com.shuangduan.zcy.view.mine.BusinessAreaActivity;
+import com.shuangduan.zcy.vm.IMConnectVm;
 import com.shuangduan.zcy.vm.MineSubVm;
 import com.shuangduan.zcy.vm.UserInfoVm;
 
@@ -43,7 +47,7 @@ import butterknife.OnClick;
  * @author 宁文强 QQ:858777523
  * @name ZICAICloudPlatform
  * @class name：com.example.zicaicloudplatform.view.activity
- * @class describe
+ * @class describe     首次登录需要录入信息
  * @time 2019/7/5 10:53
  * @change
  * @chang time
@@ -91,15 +95,31 @@ public class UserInfoInputActivity extends BaseActivity {
     }
 
     @Override
+    public boolean isUseEventBus() {
+        return true;
+    }
+
+    @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         AndroidBug5497Workaround.assistActivity(findViewById(android.R.id.content));
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.base_info));
         tvBarRight.setText(getString(R.string.save));
 
+        IMConnectVm imConnectVm;
+        //初始化，融云链接服务器
+        imConnectVm = ViewModelProviders.of(this).get(IMConnectVm.class);
+        imConnectVm.tokenLiveData.observe(this, imTokenBean -> {
+            String token = imTokenBean.getToken();
+            SPUtils.getInstance().put(SpConfig.IM_TOKEN, token);
+        });
+
         userInfoVm = ViewModelProviders.of(this).get(UserInfoVm.class);
         userInfoVm.infoLiveData.observe(this, o -> {
             SPUtils.getInstance().put(SpConfig.INFO_STATUS, 1);
+            //获取融云token
+            imConnectVm.getToken();
+
             mineSubVm.myPhases();
         });
         userInfoVm.pageStateLiveData.observe(this, s -> {
@@ -153,6 +173,10 @@ public class UserInfoInputActivity extends BaseActivity {
                 ActivityUtils.finishAllActivities();
                 break;
             case R.id.tv_bar_right:
+                if (StringUtils.isTrimEmpty(edtName.getText().toString())){
+                    ToastUtils.showShort("请输入姓名");
+                    return;
+                }
                 userInfoVm.infoSet(Objects.requireNonNull(edtName.getText()).toString(),
                         sex,
                         edtCompany.getText().toString(),
@@ -192,8 +216,8 @@ public class UserInfoInputActivity extends BaseActivity {
         }
     }
 
-    @Subscribe()
-    public void serviceCity(MultiAreaEvent event) {
+    @Subscribe
+    public void onEventServiceCity(MultiAreaEvent event) {
         userInfoVm.multiAreaLiveData.postValue(event);
         tvBusinessArea.setText(event.getStringResult());
     }

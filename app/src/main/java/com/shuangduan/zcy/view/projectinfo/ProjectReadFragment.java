@@ -76,6 +76,11 @@ public class ProjectReadFragment extends BaseLazyFragment {
     }
 
     @Override
+    public boolean isUseEventBus() {
+        return true;
+    }
+
+    @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         rvLocus.setLayoutManager(new LinearLayoutManager(mContext));
         locusAdapter = new LocusReadAdapter(R.layout.item_locus, null);
@@ -178,8 +183,8 @@ public class ProjectReadFragment extends BaseLazyFragment {
         }
     }
 
-    @Subscribe()
-    public void payDone(RefreshViewLocusEvent event){
+    @Subscribe
+    public void onEventPayDone(RefreshViewLocusEvent event){
         projectDetailVm.getViewTrack();
     }
 }

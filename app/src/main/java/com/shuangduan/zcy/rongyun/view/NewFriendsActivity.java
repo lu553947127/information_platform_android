@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
@@ -23,6 +24,11 @@ import com.shuangduan.zcy.weight.DividerItemDecoration;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.rong.imlib.IRongCallback;
+import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.Message;
+import io.rong.message.TextMessage;
 
 /**
  * @author 宁文强 QQ:858777523
@@ -73,6 +79,8 @@ public class NewFriendsActivity extends BaseActivity {
         });
         newFriendAdapter.setOnItemClickListener((adapter, view, position) -> {
             //进入聊天界面
+            IMFriendApplyListBean.ListBean listBean = newFriendAdapter.getData().get(position);
+            chatDemo(listBean.getApply_user_id());
         });
 
         imAddVm.applyListLiveData.observe(this, imFriendApplyListBean -> {
@@ -96,6 +104,8 @@ public class NewFriendsActivity extends BaseActivity {
                 imAddVm.newFriendList();
             }
         });
+
+        imAddVm.newFriendList();
     }
 
     private void setNoMore(int page, int count){
@@ -120,4 +130,35 @@ public class NewFriendsActivity extends BaseActivity {
 
     @OnClick(R.id.iv_bar_back)
     void onClick(){finish();}
+
+    private void chatDemo(int id){
+        //模拟会话，用于后台消息同步调试
+        // 构造 TextMessage 实例
+        TextMessage myTextMessage = TextMessage.obtain("李彤彤，在吗");
+
+        /* 生成 Message 对象。
+         */
+        Message myMessage = Message.obtain(String.valueOf(id), Conversation.ConversationType.PRIVATE, myTextMessage);
+
+/**
+ * 发送消息。
+ */
+        RongIMClient.getInstance().sendMessage(myMessage, null, null, new IRongCallback.ISendMessageCallback() {
+            @Override
+            public void onAttached(Message message) {
+                //消息本地数据库存储成功的回调
+            }
+
+            @Override
+            public void onSuccess(Message message) {
+                //消息通过网络发送成功的回调
+                LogUtils.i(message.getContent());
+            }
+
+            @Override
+            public void onError(Message message, RongIMClient.ErrorCode errorCode) {
+                //消息发送失败的回调
+            }
+        });
+    }
 }

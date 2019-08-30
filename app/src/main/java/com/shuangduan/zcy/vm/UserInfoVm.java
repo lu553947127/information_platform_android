@@ -98,7 +98,9 @@ public class UserInfoVm extends BaseViewModel {
 
     public void infoSet(String username, int sex, String company, String position, MultiAreaEvent business_city, int experience, String managing_products){
         BusinessAreaBean businessAreaBean = new BusinessAreaBean();
-        businessAreaBean.setBusiness_city(business_city.getCityResult());
+        if (business_city != null){
+            businessAreaBean.setBusiness_city(business_city.getCityResult());
+        }
         new UserRepository().setInfo(infoLiveData, pageStateLiveData, userId, username, sex, company, position, businessAreaBean, experience, managing_products);
     }
 

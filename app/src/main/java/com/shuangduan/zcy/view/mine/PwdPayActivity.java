@@ -97,6 +97,11 @@ public class PwdPayActivity extends BaseActivity {
         }
     }
 
+    @Override
+    public boolean isUseEventBus() {
+        return true;
+    }
+
     @OnClick({R.id.iv_bar_back, R.id.tv_pwd_set, R.id.tv_pwd_update, R.id.tv_pwd_forget})
     void onClick(View view){
         switch (view.getId()){
@@ -127,8 +132,8 @@ public class PwdPayActivity extends BaseActivity {
         }
     }
 
-    @Subscribe()
-    public void stateUpdate(PwdPaySetEvent event){
+    @Subscribe
+    public void onEventStateUpdate(PwdPaySetEvent event){
         updatePwdPayVm.status = 1;
     }
 }

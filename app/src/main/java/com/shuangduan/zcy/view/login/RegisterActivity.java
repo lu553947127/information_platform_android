@@ -122,8 +122,12 @@ public class RegisterActivity extends BaseActivity {
                 SPUtils.getInstance().put(SpConfig.MOBILE, loginBean.getTel());
                 SPUtils.getInstance().put(SpConfig.INFO_STATUS, loginBean.getInfo_status());
 
-                imConnectVm.userId = loginBean.getUser_id();
-                imConnectVm.getToken();
+                if (loginBean.getInfo_status() == 1){
+                    imConnectVm.userId = loginBean.getUser_id();
+                    imConnectVm.getToken();
+                }else {
+                    ActivityUtils.startActivity(UserInfoInputActivity.class);
+                }
             });
         });
         loginVm.pageStateLiveData.observe(this, s -> {

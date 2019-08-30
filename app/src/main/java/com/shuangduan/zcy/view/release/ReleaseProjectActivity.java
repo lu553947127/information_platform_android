@@ -176,6 +176,11 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
     }
 
     @Override
+    public boolean isUseEventBus() {
+        return true;
+    }
+
+    @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         AndroidBug5497Workaround.assistActivity(findViewById(android.R.id.content));
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
@@ -513,8 +518,8 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
         customDatePicker.show(TimeUtils.getNowString());
     }
 
-    @Subscribe()
-    public void locationEvent(LocationEvent event){
+    @Subscribe
+    public void onEventLocationEvent(LocationEvent event){
         releaseVm.province = event.getProvinceId();
         releaseVm.city = event.getCityId();
         DecimalFormat df = new DecimalFormat("#.000000");
@@ -523,20 +528,20 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
         tvProjectAddress.setText(event.getProvince() + event.getCity());
     }
 
-    @Subscribe()
-    public void stageEvent(StageEvent event){
+    @Subscribe
+    public void onEventStageEvent(StageEvent event){
         releaseVm.phases = event.getId();
         tvProjectStage.setText(event.getName());
     }
 
-    @Subscribe()
-    public void typesEvent(TypesEvent event){
+    @Subscribe
+    public void onEventTypesEvent(TypesEvent event){
         releaseVm.types = event.getId();
         tvProjectTypes.setText(event.getName());
     }
 
-    @Subscribe()
-    public void contactEvent(ContactTypeEvent event){
+    @Subscribe
+    public void onEventContactEvent(ContactTypeEvent event){
         List<ContactBean> list = releaseVm.contactLiveData.getValue();
         if (list != null){
             list.get(releaseVm.editContactTypePos).setType(event.getBean());
@@ -545,8 +550,8 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
         }
     }
 
-    @Subscribe()
-    public void addressEvent(AddressEvent event){
+    @Subscribe
+    public void onEventAddressEvent(AddressEvent event){
         List<ContactBean> list = releaseVm.contactLiveData.getValue();
         if (list != null){
             list.get(releaseVm.editContactTypePos).setAddress(event.getProvince() + event.getCity());
@@ -556,8 +561,8 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
         }
     }
 
-    @Subscribe()
-    public void projectNameEvent(ProjectNameEvent event){
+    @Subscribe
+    public void onEventProjectNameEvent(ProjectNameEvent event){
         tvProjectName.setText(event.getName());
         releaseVm.projectId = event.getId();
     }

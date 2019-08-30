@@ -118,6 +118,11 @@ public class ProjectDetailActivity extends BaseActivity {
     }
 
     @Override
+    public boolean isUseEventBus() {
+        return true;
+    }
+
+    @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         mapView.onCreate(savedInstanceState);// 此方法必须重写
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
@@ -254,15 +259,15 @@ public class ProjectDetailActivity extends BaseActivity {
         Tencent.onActivityResultData(requestCode, resultCode, data, qqListener);
     }
 
-    @Subscribe()
-    public void warrantSuccess(WarrantSuccessEvent event){
+    @Subscribe
+    public void onEventWarrantSuccess(WarrantSuccessEvent event){
         projectDetailVm.getDetail();
         projectDetailVm.getTrack();
         projectDetailVm.getViewTrack();
     }
 
-    @Subscribe()
-    public void releaseSuccess(LocusRefreshEvent event){
+    @Subscribe
+    public void onEventReleaseSuccess(LocusRefreshEvent event){
         projectDetailVm.getTrack();
         projectDetailVm.getViewTrack();
     }

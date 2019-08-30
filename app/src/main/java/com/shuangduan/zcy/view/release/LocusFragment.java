@@ -104,8 +104,13 @@ public class LocusFragment extends BaseLazyFragment {
         mineReleaseVm.myProjectTract();
     }
 
-    @Subscribe()
-    public void releaseSuccess(LocusRefreshEvent event){
+    @Override
+    public boolean isUseEventBus() {
+        return true;
+    }
+
+    @Subscribe
+    public void onEventReleaseSuccess(LocusRefreshEvent event){
         mineReleaseVm.myProjectTract();
     }
 

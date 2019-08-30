@@ -61,6 +61,11 @@ public class ProjectInfoFragment extends BaseLazyFragment {
     }
 
     @Override
+    public boolean isUseEventBus() {
+        return true;
+    }
+
+    @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         rv.setLayoutManager(new LinearLayoutManager(mContext));
         rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
@@ -108,8 +113,8 @@ public class ProjectInfoFragment extends BaseLazyFragment {
         mineReleaseVm.myProject();
     }
 
-    @Subscribe()
-    public void releaseSuccess(ProjectReleaseEvent event){
+    @Subscribe
+    public void onEventReleaseSuccess(ProjectReleaseEvent event){
         mineReleaseVm.myProject();
     }
 

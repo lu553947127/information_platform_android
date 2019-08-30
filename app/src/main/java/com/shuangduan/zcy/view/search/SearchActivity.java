@@ -63,6 +63,11 @@ public class SearchActivity extends BaseActivity {
     }
 
     @Override
+    public boolean isUseEventBus() {
+        return true;
+    }
+
+    @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.search));
@@ -130,8 +135,8 @@ public class SearchActivity extends BaseActivity {
         }
     }
 
-    @Subscribe()
-    public void historyChange(SearchHistoryEvent event){
+    @Subscribe
+    public void onEventHistoryChange(SearchHistoryEvent event){
         searchVm.getHistory();
     }
 }

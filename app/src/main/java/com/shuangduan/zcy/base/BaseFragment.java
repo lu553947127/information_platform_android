@@ -59,7 +59,9 @@ public abstract class BaseFragment extends Fragment implements IView {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(initLayout(), container, false);
         unBinder = ButterKnife.bind(this, view);
-        EventBus.getDefault().register(this);
+        if (isUseEventBus()){
+            EventBus.getDefault().register(this);
+        }
         return view;
     }
 
@@ -94,9 +96,8 @@ public abstract class BaseFragment extends Fragment implements IView {
 
     }
 
-    @Subscribe()
-    public void onNormalEvent(BaseEvent normalEvent){
-
+    public boolean isUseEventBus(){
+        return false;
     }
 
     public void addDialog(BaseDialog dialog){
@@ -106,7 +107,9 @@ public abstract class BaseFragment extends Fragment implements IView {
     @Override
     public void onDestroyView() {
         unBinder.unbind();
-        EventBus.getDefault().unregister(this);
+        if (isUseEventBus()){
+            EventBus.getDefault().unregister(this);
+        }
         if (loadDialog != null){
             loadDialog.dismiss();
             loadDialog = null;

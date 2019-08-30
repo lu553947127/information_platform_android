@@ -2,32 +2,24 @@ package com.shuangduan.zcy.app;
 
 import android.Manifest;
 import android.app.Application;
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Environment;
-import android.provider.SyncStateContract;
 import android.view.Gravity;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.CrashUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
-import com.scwang.smartrefresh.header.MaterialHeader;
-import com.shuangduan.zcy.R;
-import com.shuangduan.zcy.callback.EmptyCallback;
-import com.shuangduan.zcy.callback.ErrorCallback;
-import com.shuangduan.zcy.callback.LoadingCallback;
-import com.shuangduan.zcy.callback.TimeOutCallback;
 import com.kingja.loadsir.callback.SuccessCallback;
 import com.kingja.loadsir.core.LoadSir;
+import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreator;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreator;
@@ -35,8 +27,11 @@ import com.scwang.smartrefresh.layout.api.RefreshFooter;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
-import com.scwang.smartrefresh.layout.header.ClassicsHeader;
-import com.tencent.mm.opensdk.constants.ConstantsAPI;
+import com.shuangduan.zcy.R;
+import com.shuangduan.zcy.callback.EmptyCallback;
+import com.shuangduan.zcy.callback.ErrorCallback;
+import com.shuangduan.zcy.callback.LoadingCallback;
+import com.shuangduan.zcy.callback.TimeOutCallback;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
@@ -149,7 +144,7 @@ public class AppConfig {
     private static void initCrash(final Context context) {
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             File externalStorageDirectory = Environment.getExternalStorageDirectory();
-            CrashUtils.init(externalStorageDirectory.getPath() + "/happy_poetry_school/crash/");
+            CrashUtils.init(externalStorageDirectory.getPath() + "/zcy/crash/");
         }
     }
 
