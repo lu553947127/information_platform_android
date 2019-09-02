@@ -91,15 +91,9 @@ public abstract class BaseFragment extends Fragment implements IView {
         }
     }
 
-    @Override
-    public void showContent() {
-
-    }
-
-    public boolean isUseEventBus(){
-        return false;
-    }
-
+    /**
+     * 保险起见的dialog关闭，防止内存泄漏
+     */
     public void addDialog(BaseDialog dialog){
         dialogArray.put(dialogArray.size(), dialog);
     }
@@ -107,7 +101,7 @@ public abstract class BaseFragment extends Fragment implements IView {
     @Override
     public void onDestroyView() {
         unBinder.unbind();
-        if (isUseEventBus()){
+        if (isUseEventBus() && EventBus.getDefault().isRegistered(this)){
             EventBus.getDefault().unregister(this);
         }
         if (loadDialog != null){
@@ -128,6 +122,11 @@ public abstract class BaseFragment extends Fragment implements IView {
      * @return 布局
      */
     protected abstract int initLayout();
+
+    /**
+     * EventBus开关
+     */
+    public abstract boolean isUseEventBus();
 
     /**
      * 初始化数据

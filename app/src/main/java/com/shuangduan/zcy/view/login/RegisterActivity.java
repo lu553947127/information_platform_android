@@ -61,6 +61,11 @@ public class RegisterActivity extends BaseActivity {
     }
 
     @Override
+    public boolean isUseEventBus() {
+        return false;
+    }
+
+    @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         loginVm = ViewModelProviders.of(this).get(LoginVm.class);
         loginVm.timeLiveDataLiveData.observe(this, aLong -> {

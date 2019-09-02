@@ -54,6 +54,11 @@ public class IncomePeopleActivity extends BaseActivity {
     }
 
     @Override
+    public boolean isUseEventBus() {
+        return false;
+    }
+
+    @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         int degree = getIntent().getIntExtra(CustomConfig.PEOPLE_DEGREE, CustomConfig.FIRST_DEGREE);

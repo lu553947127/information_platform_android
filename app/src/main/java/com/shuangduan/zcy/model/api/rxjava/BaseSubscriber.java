@@ -21,7 +21,7 @@ import java.util.List;
  *     author : 宁文强
  *     e-mail : ningwenqiang@lanhuiplay.com
  *     time   : 2018/07/30
- *     desc   :
+ *     desc   : subscriber封装
  *     version: 1.0
  * </pre>
  */

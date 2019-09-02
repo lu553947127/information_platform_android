@@ -12,7 +12,7 @@ import com.shuangduan.zcy.R;
  * @author 宁文强 QQ:858777523
  * @name information_platform_android
  * @class name：com.shuangduan.zicaicloudplatform.dialog
- * @class describe
+ * @class describe  加载中弹窗
  * @time 2019/7/10 16:54
  * @change
  * @chang time

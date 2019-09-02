@@ -43,6 +43,11 @@ public class ProjectOrderFragment extends BaseLazyFragment {
     }
 
     @Override
+    public boolean isUseEventBus() {
+        return false;
+    }
+
+    @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         Fragment[] fragments = new Fragment[]{
                 OrderContentFragment.newInstance(),

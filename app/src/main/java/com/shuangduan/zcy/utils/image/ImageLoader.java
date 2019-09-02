@@ -16,7 +16,7 @@ import com.bumptech.glide.request.RequestOptions;
  *     author : 宁文强
  *     e-mail : ningwenqiang@lanhuiplay.com
  *     time   : 2018/08/07
- *     desc   :
+ *     desc   : 图片加载
  *     version: 1.0
  * </pre>
  */

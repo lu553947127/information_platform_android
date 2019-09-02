@@ -155,6 +155,14 @@ public interface ApiService {
     );
 
     @FormUrlEncoded
+    @POST("api/Userinfo/setPassword")
+    Flowable<BaseResponse> resetPassword(
+            @Field("user_id")int user_id,
+            @Field("old_password")String old_password,
+            @Field("password")String password
+    );
+
+    @FormUrlEncoded
     @POST("api/Userinfo/outLogin")
     Flowable<BaseResponse> outLogin(
             @Field("user_id")int user_id

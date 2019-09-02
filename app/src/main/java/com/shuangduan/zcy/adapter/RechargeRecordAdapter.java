@@ -28,6 +28,6 @@ public class RechargeRecordAdapter extends BaseQuickAdapter<RechargeRecordBean.L
     protected void convert(BaseViewHolder helper, RechargeRecordBean.ListBean item) {
         helper.setText(R.id.tv_title, "充值")
                 .setText(R.id.tv_time, item.getCreate_time())
-                .setText(R.id.tv_amount, "+" + item.getPrice() + "币");
+                .setText(R.id.tv_amount, "+" + item.getPrice() + "紫金币");
     }
 }

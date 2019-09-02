@@ -49,6 +49,10 @@ public class ResponseErrorListenerImpl implements ResponseErrorListener {
         ToastUtils.showLong(msg);
     }
 
+    /**
+     * 自定义错误处理，非200
+     *  可根据后台提供错误码信息
+     */
     private String convertStatusCode(ApiException exception) {
         String msg;
         if (exception.getErrorCode() == 500) {

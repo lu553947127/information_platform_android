@@ -7,7 +7,7 @@ import java.util.List;
  *     author : 宁文强
  *     e-mail : ningwenqiang@lanhuiplay.com
  *     time   : 2018/05/16
- *     desc   :
+ *     desc   : data为数组集合
  *     version: 1.0
  * </pre>
  */

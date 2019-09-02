@@ -12,7 +12,7 @@ package com.shuangduan.zcy.app;
 
 public class BuildConfig {
 
-    public static final boolean IS_DEBUG = true;
-    public static final boolean IS_SHOW_LOG = true;
+    public static final boolean IS_DEBUG = true;//debug开关
+    public static final boolean IS_SHOW_LOG = true;//log日志开关
 
 }

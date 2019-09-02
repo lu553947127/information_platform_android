@@ -12,10 +12,14 @@ package com.shuangduan.zcy.base;
 
 public interface IView {
 
+    /**
+     * 加载中
+     */
     void showLoading();
 
+    /**
+     * 隐藏
+     */
     void hideLoading();
-
-    void showContent();
 
 }

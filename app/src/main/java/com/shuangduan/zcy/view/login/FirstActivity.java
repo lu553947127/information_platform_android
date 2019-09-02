@@ -50,6 +50,11 @@ public class FirstActivity extends BaseActivity {
     }
 
     @Override
+    public boolean isUseEventBus() {
+        return false;
+    }
+
+    @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         //设置状态栏颜色模式
         BarUtils.setStatusBarLightMode(this, true);

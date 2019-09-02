@@ -79,6 +79,11 @@ public class BindBankCardActivity extends BaseActivity implements BaseDialog.Pho
     }
 
     @Override
+    public boolean isUseEventBus() {
+        return false;
+    }
+
+    @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.bank_card_message));

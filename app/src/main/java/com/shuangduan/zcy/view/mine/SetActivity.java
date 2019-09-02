@@ -12,7 +12,6 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.R;
-import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.CustomDialog;
@@ -47,6 +46,11 @@ public class SetActivity extends BaseActivity {
     @Override
     protected int initLayoutRes() {
         return R.layout.activity_set;
+    }
+
+    @Override
+    public boolean isUseEventBus() {
+        return false;
     }
 
     @Override
@@ -112,7 +116,7 @@ public class SetActivity extends BaseActivity {
                             hideLoading();
                             break;
                         case PageState.PAGE_LOADING:
-                            showContent();
+                            showLoading();
                             break;
                     }
                 });

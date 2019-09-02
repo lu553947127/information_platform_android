@@ -119,6 +119,11 @@ public class DemandReleaseActivity extends BaseActivity {
     }
 
     @Override
+    public boolean isUseEventBus() {
+        return false;
+    }
+
+    @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         tvBarTitle.setText(getString(R.string.release));
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);

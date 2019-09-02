@@ -68,3 +68,16 @@
 -keepclassmembers class ** {
     public void onEvent*(**);
 }
+
+-keepattributes Exceptions,InnerClasses
+
+-keepattributes Signature
+
+#RongCloud SDK（ 记得补充keep 自定义的 BroadcastReceiver）
+-keep class io.rong.** {*;}
+-keep class cn.rongcloud.** {*;}
+-keep class * implements io.rong.imlib.model.MessageContent {*;}
+-dontwarn io.rong.push.**
+-dontnote com.xiaomi.**
+-dontnote com.google.android.gms.gcm.**
+-dontnote io.rong.**

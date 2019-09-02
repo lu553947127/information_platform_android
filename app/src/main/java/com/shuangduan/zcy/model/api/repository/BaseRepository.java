@@ -21,7 +21,7 @@ import io.reactivex.schedulers.Schedulers;
  * @author 宁文强 QQ:858777523
  * @name information_platform_android
  * @class name：com.shuangduan.zcy.model.api.repository
- * @class describe
+ * @class describe  网络请求处理
  * @time 2019/7/18 9:36
  * @change
  * @chang time
@@ -75,6 +75,15 @@ public class BaseRepository<T> {
 
     /**
      * 返回数据类型BaseResponse
+     * data为 objec
+     * 后台数据格式{
+     *                  code:200,
+     *                  msg: ,
+     *                  time: ,
+     *                  data: {
+     *
+     *                  }
+     *              }
      * @return
      */
     public BaseRepository<T> setData(MutableLiveData<T> data) {
@@ -84,6 +93,15 @@ public class BaseRepository<T> {
 
     /**
      * 返回数据类型BaseListResponse
+     * data为 数组集合
+     * 后台数据格式{
+     *                  code:200,
+     *                  msg: ,
+     *                  time: ,
+     *                  data: [
+     *
+     *                  ]
+     *              }
      * @return
      */
     public BaseRepository<T> setDataList(MutableLiveData<List<T>> dataList){

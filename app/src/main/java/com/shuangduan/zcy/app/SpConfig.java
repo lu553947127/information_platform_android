@@ -5,7 +5,7 @@ package com.shuangduan.zcy.app;
  *     author : 宁文强
  *     e-mail : ningwenqiang@lanhuiplay.com
  *     time   : 2018/05/19
- *     desc   : Sp保存数据的key
+ *     desc   : SharePreference保存数据的key
  *     version: 1.0
  * </pre>
  */

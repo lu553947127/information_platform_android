@@ -59,9 +59,10 @@
         <activity android:name="com.shuangduan.zcy.view.mine.WithdrawActivity" android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustResize" android:theme="@style/AppThemeBgGray" />
         <activity android:name="com.shuangduan.zcy.view.mine.UpdateNameActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
         <activity android:name="com.shuangduan.zcy.view.mine.UpdateMobileActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
-        <activity android:name="com.shuangduan.zcy.view.mine.UpdatePwdActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray" android:windowSoftInputMode="stateHidden|adjustResize"/>
+        <activity android:name="com.shuangduan.zcy.view.mine.ForgetPwdActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray" android:windowSoftInputMode="stateHidden|adjustResize"/>
         <activity android:name="com.shuangduan.zcy.view.mine.UpdateResultActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
         <activity android:name="com.shuangduan.zcy.view.mine.UpdateEmailActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
+        <activity android:name="com.shuangduan.zcy.view.mine.UpdatePwdActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.view.mine.AuthenticationActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.view.mine.BindBankCardActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.view.mine.CompanySearchActivity" android:screenOrientation="portrait"/>
@@ -158,8 +159,8 @@
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT"/>
-            <data android:scheme="wx2e2f0d4ccdf3e52f"/>
-        </intent-filter>
+                <data android:scheme="wx2e2f0d4ccdf3e52f"/>
+            </intent-filter>
         </activity>
 
         <provider
@@ -221,6 +222,7 @@
         </receiver>
 
         <!--极光推送 end-->
+
     </application>
 
 </manifest>

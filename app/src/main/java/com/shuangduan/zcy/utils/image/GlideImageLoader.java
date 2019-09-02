@@ -9,7 +9,7 @@ import com.youth.banner.loader.ImageLoader;
  * @author 宁文强 QQ:858777523
  * @name information_platform_android
  * @class name：com.shuangduan.zcy.utils.image
- * @class describe
+ * @class describe  banner专用
  * @time 2019/7/11 15:38
  * @change
  * @chang time

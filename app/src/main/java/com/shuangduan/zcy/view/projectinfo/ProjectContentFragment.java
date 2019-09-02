@@ -85,6 +85,11 @@ public class ProjectContentFragment extends BaseFragment {
     }
 
     @Override
+    public boolean isUseEventBus() {
+        return false;
+    }
+
+    @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
 
         rvContact.setLayoutManager(new LinearLayoutManager(mContext));

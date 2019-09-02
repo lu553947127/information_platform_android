@@ -79,6 +79,11 @@ public class ProjectLocusFragment extends BaseLazyFragment {
     }
 
     @Override
+    public boolean isUseEventBus() {
+        return false;
+    }
+
+    @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         tvFilter.setText(getString(R.string.release_by_me));
         rvLocus.setLayoutManager(new LinearLayoutManager(mContext));

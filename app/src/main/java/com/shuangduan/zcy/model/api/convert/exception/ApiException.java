@@ -5,7 +5,7 @@ package com.shuangduan.zcy.model.api.convert.exception;
  *     author : 宁文强
  *     e-mail : ningwenqiang@lanhuiplay.com
  *     time   : 2018/07/30
- *     desc   :
+ *     desc   : 自定义异常类型
  *     version: 1.0
  * </pre>
  */

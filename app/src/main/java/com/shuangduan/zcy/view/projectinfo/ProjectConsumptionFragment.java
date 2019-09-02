@@ -55,6 +55,11 @@ public class ProjectConsumptionFragment extends BaseLazyFragment {
     }
 
     @Override
+    public boolean isUseEventBus() {
+        return false;
+    }
+
+    @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         rvConsumption.setLayoutManager(new LinearLayoutManager(mContext));
         rvConsumption.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));

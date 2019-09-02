@@ -10,7 +10,7 @@ import com.tencent.tauth.UiError;
  *     author : 宁文强
  *     e-mail : ningwenqiang@lanhuiplay.com
  *     time   : 2019/01/11
- *     desc   :
+ *     desc   : qq分享监听
  *     version: 1.0
  * </pre>
  */

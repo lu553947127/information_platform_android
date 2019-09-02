@@ -26,7 +26,7 @@ import butterknife.Unbinder;
  * <pre>
  *     author : nwq
  *     time   : 2018/04/03
- *     desc   :
+ *     desc   : 懒加载
  *     version: 1.0
  * </pre>
  */
@@ -38,11 +38,8 @@ public abstract class BaseLazyFragment extends Fragment implements IView {
     private Unbinder unBinder;
     public Bundle arguments;
     private LoadDialog loadDialog;
-    private boolean isPrepared = false;
-    /**
-     * 数据是否已从服务器拉取，拉取成功后设为true
-     */
-    public boolean isInited = false;
+    private boolean isPrepared = false;//页面ui初始化完成
+    public boolean isInited = false;//数据是否已从服务器拉取，拉取成功后设为true
     private SparseArray<BaseDialog> dialogArray = new SparseArray<>();
 
     @Override
@@ -106,15 +103,9 @@ public abstract class BaseLazyFragment extends Fragment implements IView {
         }
     }
 
-    @Override
-    public void showContent() {
-
-    }
-
-    public boolean isUseEventBus(){
-        return false;
-    }
-
+    /**
+     * 保险起见的dialog关闭，防止内存泄漏
+     */
     public void addDialog(BaseDialog dialog){
         dialogArray.put(dialogArray.size(), dialog);
     }
@@ -122,7 +113,7 @@ public abstract class BaseLazyFragment extends Fragment implements IView {
     @Override
     public void onDestroyView() {
         unBinder.unbind();
-        if (isUseEventBus()){
+        if (isUseEventBus() && EventBus.getDefault().isRegistered(this)){
             EventBus.getDefault().unregister(this);
         }
         if (loadDialog != null){
@@ -143,6 +134,11 @@ public abstract class BaseLazyFragment extends Fragment implements IView {
      * @return 布局
      */
     protected abstract int initLayout();
+
+    /**
+     * EventBus开关
+     */
+    public abstract boolean isUseEventBus();
 
     /**
      * 初始化数据

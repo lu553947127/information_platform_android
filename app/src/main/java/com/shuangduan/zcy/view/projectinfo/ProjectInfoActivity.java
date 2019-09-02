@@ -80,6 +80,11 @@ public class ProjectInfoActivity extends BaseActivity {
     }
 
     @Override
+    public boolean isUseEventBus() {
+        return false;
+    }
+
+    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);

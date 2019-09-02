@@ -18,7 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  *     author : 宁文强
  *     e-mail : ningwenqiang@lanhuiplay.com
  *     time   : 2018/04/04
- *     desc   :
+ *     desc   : retrofit帮助类
  *     version: 1.0
  * </pre>
  */

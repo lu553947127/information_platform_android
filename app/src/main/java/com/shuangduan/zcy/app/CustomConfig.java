@@ -5,7 +5,7 @@ package com.shuangduan.zcy.app;
  *     author : 宁文强
  *     e-mail : ningwenqiang@lanhuiplay.com
  *     time   : 2018/07/31
- *     desc   :
+ *     desc   : 静态参数集合
  *     version: 1.0
  * </pre>
  */

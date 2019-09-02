@@ -8,7 +8,7 @@ import com.kingja.loadsir.callback.Callback;
  *     author : 宁文强
  *     e-mail : ningwenqiang@lanhuiplay.com
  *     time   : 2018/09/19
- *     desc   :
+ *     desc   : 请求超时界面
  *     version: 1.0
  * </pre>
  */

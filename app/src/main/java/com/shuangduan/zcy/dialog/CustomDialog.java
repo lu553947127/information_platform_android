@@ -17,7 +17,7 @@ import butterknife.OnClick;
  * @author 宁文强 QQ:858777523
  * @name information_platform_android
  * @class name：com.shuangduan.zcy.dialog
- * @class describe
+ * @class describe  双按钮弹窗
  * @time 2019/7/12 17:24
  * @change
  * @chang time

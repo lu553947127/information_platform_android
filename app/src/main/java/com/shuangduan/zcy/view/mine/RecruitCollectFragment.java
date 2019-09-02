@@ -55,6 +55,11 @@ public class RecruitCollectFragment extends BaseLazyFragment {
     }
 
     @Override
+    public boolean isUseEventBus() {
+        return false;
+    }
+
+    @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         rv.setLayoutManager(new LinearLayoutManager(mContext));
         rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
@@ -73,7 +78,7 @@ public class RecruitCollectFragment extends BaseLazyFragment {
             isInited = true;
             if (recruitBean.getPage() == 1) {
                 recruitAdapter.setNewData(recruitBean.getList());
-                recruitAdapter.setEmptyView(R.layout.layout_empty_top, rv);
+                recruitAdapter.setEmptyView(R.layout.layout_empty, rv);
             }else {
                 recruitAdapter.addData(recruitBean.getList());
             }

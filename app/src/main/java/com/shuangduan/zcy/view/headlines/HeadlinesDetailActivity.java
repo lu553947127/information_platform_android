@@ -54,6 +54,11 @@ public class HeadlinesDetailActivity extends BaseActivity {
     }
 
     @Override
+    public boolean isUseEventBus() {
+        return false;
+    }
+
+    @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.head_detail));
@@ -65,20 +70,6 @@ public class HeadlinesDetailActivity extends BaseActivity {
             tvTitle.setText(headlinesDetailBean.getTitle());
             tvTime.setText(headlinesDetailBean.getCreate_time());
             tvContent.setGlide(Glide.with(this));
-            tvContent.setOnRichClickListener(new RichText.CustomRichClickListener(){
-                @Override
-                public void onNormalUrl(String url) {
-//                    Bundle bundle = new Bundle();
-//                    bundle.putString(CustomConfig.TITLE, getString(R.string.app_name));
-//                    bundle.putString(CustomConfig.URL, url);
-//                    ActivityUtils.startActivity(bundle, WebActivity.class);
-                }
-
-                @Override
-                public void OnImg(String imgUrl) {
-                    startPhotoActivity(imgUrl);
-                }
-            });
             tvContent.setHtml(headlinesDetailBean.getContent());
         });
         headlinesVm.pageStateLiveData.observe(this, s -> {

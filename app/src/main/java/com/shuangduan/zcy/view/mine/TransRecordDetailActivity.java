@@ -55,6 +55,11 @@ public class TransRecordDetailActivity extends BaseActivity {
     }
 
     @Override
+    public boolean isUseEventBus() {
+        return false;
+    }
+
+    @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.transaction_record));
@@ -64,11 +69,11 @@ public class TransRecordDetailActivity extends BaseActivity {
             if (transRecordDetailBean.getType() == 1){
                 //收入
                 tvAmount.setTextColor(getResources().getColor(R.color.color_EF583E));
-                tvAmount.setText(String.format("+%1$s币", transRecordDetailBean.getPrice()));
+                tvAmount.setText(String.format("+%1$s紫金币", transRecordDetailBean.getPrice()));
                 tvInOut.setText("收入");
             }else if (transRecordDetailBean.getType() == 2){
                 tvAmount.setTextColor(getResources().getColor(R.color.colorTv));
-                tvAmount.setText(String.format("-%1$s币", transRecordDetailBean.getPrice()));
+                tvAmount.setText(String.format("-%1$s紫金币", transRecordDetailBean.getPrice()));
                 tvInOut.setText("支出");
             }
             tvTitle.setText(transRecordDetailBean.getTitle());

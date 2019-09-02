@@ -3,7 +3,6 @@ package com.shuangduan.zcy.view.login;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.WindowManager;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatEditText;
@@ -20,9 +19,8 @@ import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.PageState;
-import com.shuangduan.zcy.utils.AndroidBug5497Workaround;
 import com.shuangduan.zcy.view.MainActivity;
-import com.shuangduan.zcy.view.mine.UpdatePwdActivity;
+import com.shuangduan.zcy.view.mine.ForgetPwdActivity;
 import com.shuangduan.zcy.vm.IMConnectVm;
 import com.shuangduan.zcy.vm.LoginVm;
 
@@ -80,6 +78,11 @@ public class LoginActivity extends BaseActivity {
     }
 
     @Override
+    public boolean isUseEventBus() {
+        return false;
+    }
+
+    @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         loginVm = ViewModelProviders.of(this).get(LoginVm.class);
 
@@ -121,7 +124,7 @@ public class LoginActivity extends BaseActivity {
                 login();
                 break;
             case R.id.tv_forget_pwd:
-                ActivityUtils.startActivity(UpdatePwdActivity.class);
+                ActivityUtils.startActivity(ForgetPwdActivity.class);
                 break;
         }
     }
@@ -148,7 +151,7 @@ public class LoginActivity extends BaseActivity {
         String verificationCode = Objects.requireNonNull(edtVerificationCode.getText()).toString();
         if (loginStyle == LOGIN_ACCOUNT){
             if (TextUtils.isEmpty(edtPwd.getText())) {
-                ToastUtils.showShort(R.string.pwd_error);
+                ToastUtils.showShort(R.string.pwd_empty);
                 return;
             }
             loginVm.accountLogin(account, pwd, DeviceUtils.getAndroidID());

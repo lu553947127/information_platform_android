@@ -140,6 +140,7 @@ public class WithdrawActivity extends BaseActivity {
 
     @Subscribe
     public void onEventUpdateBankcard(BankcardUpdateEvent event){
+        withdrawVm.withdrawMsg();
         withdrawVm.bankcardList();
     }
 

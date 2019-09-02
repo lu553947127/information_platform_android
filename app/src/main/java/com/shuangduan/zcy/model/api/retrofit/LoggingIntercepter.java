@@ -21,7 +21,7 @@ import okio.BufferedSource;
  *     author : 宁文强
  *     e-mail : ningwenqiang@lanhuiplay.com
  *     time   : 2018/06/19
- *     desc   :
+ *     desc   : 网络请求结果拦截器
  *     version: 1.0
  * </pre>
  */

@@ -39,21 +39,26 @@ import butterknife.Unbinder;
 public abstract class BaseActivity extends AppCompatActivity implements IView {
 
     private Unbinder unBinder;
-    public boolean isTranslationBar = false;
+    public boolean isTranslationBar = false;//透明状态栏开关
     private LoadDialog loadDialog;
     private SparseArray<BaseDialog> dialogArray = new SparseArray<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //适配初始化
         AutoUtils.setCustomDensity(this, MyApplication.getInstance());
         setContentView(initLayoutRes());
         unBinder = ButterKnife.bind(this);
+        if (isUseEventBus()){
+            EventBus.getDefault().register(this);
+        }
 
         if (!isTranslationBar){
-            //透明状态栏
+            //主题色状态栏
             BarUtils.setStatusBarColor(this, ContextCompat.getColor(Utils.getApp(), R.color.colorStatusBar), false);
         } else {
+            //透明状态栏
             BarUtils.setStatusBarColor(this, ContextCompat.getColor(Utils.getApp(), android.R.color.transparent), false);
         }
 
@@ -75,6 +80,9 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
         }
     }
 
+    /**
+     * 加载状态处理
+     */
     public void showPageState(String s){
         switch (s){
             case PageState.PAGE_LOADING:
@@ -83,31 +91,6 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
             default:
                 hideLoading();
                 break;
-        }
-    }
-
-    @Override
-    public void showContent() {
-
-    }
-
-    public boolean isUseEventBus(){
-        return false;
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if (isUseEventBus()){
-            EventBus.getDefault().register(this);
-        }
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (isUseEventBus()){
-            EventBus.getDefault().unregister(this);
         }
     }
 
@@ -122,6 +105,9 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
         return super.dispatchTouchEvent(ev);
     }
 
+    /**
+     * 保险起见的dialog关闭，防止内存泄漏
+     */
     public void addDialog(BaseDialog dialog){
         dialogArray.put(dialogArray.size(), dialog);
     }
@@ -129,6 +115,9 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
     @Override
     protected void onDestroy() {
         unBinder.unbind();
+        if (isUseEventBus() && EventBus.getDefault().isRegistered(this)){
+            EventBus.getDefault().unregister(this);
+        }
         if (loadDialog != null){
             loadDialog.dismiss();
             loadDialog = null;
@@ -143,6 +132,11 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
     }
 
     protected abstract int initLayoutRes();
+
+    /**
+     * EventBus开关
+     */
+    public abstract boolean isUseEventBus();
 
     protected abstract void initDataAndEvent(Bundle savedInstanceState);
 

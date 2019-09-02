@@ -23,7 +23,7 @@ import io.reactivex.disposables.Disposable;
 
 public class BaseViewModel extends ViewModel {
 
-    private CompositeDisposable compositeDisposable;
+    private CompositeDisposable compositeDisposable;//RxJava
 
     @Override
     protected void onCleared() {

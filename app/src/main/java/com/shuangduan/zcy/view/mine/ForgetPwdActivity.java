@@ -3,7 +3,6 @@ package com.shuangduan.zcy.view.mine;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatTextView;
@@ -11,15 +10,12 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.BarUtils;
-import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
-import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.PageState;
-import com.shuangduan.zcy.vm.SmsCodeVm;
-import com.shuangduan.zcy.vm.UpdatePwdPayVm;
+import com.shuangduan.zcy.vm.LoginVm;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -27,32 +23,34 @@ import butterknife.OnClick;
 /**
  * @author 宁文强 QQ:858777523
  * @name information_platform_android
- * @class name：com.shuangduan.zcy.view.mine
- * @class describe 忘记支付密码
- * @time 2019/8/13 18:05
+ * @class name：com.shuangduan.zicaicloudplatform.view.activity
+ * @class describe  修改密码
+ * @time 2019/7/10 13:49
  * @change
  * @chang time
  * @class describe
  */
-public class ForgetPwdPayActivity extends BaseActivity {
+public class ForgetPwdActivity extends BaseActivity {
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.tv_account)
-    TextView tvAccount;
+    @BindView(R.id.edt_account)
+    AppCompatEditText edtAccount;
     @BindView(R.id.edt_SMS_code)
     AppCompatEditText edtSMSCode;
     @BindView(R.id.tv_send_verification_code)
     AppCompatTextView tvSendVerificationCode;
     @BindView(R.id.edt_pwd)
     AppCompatEditText edtPwd;
-    private UpdatePwdPayVm updatePwdPayVm;
-    private SmsCodeVm smsCodeVm;
+    @BindView(R.id.edt_pwd_again)
+    AppCompatEditText edtPwdAgain;
+
+    private LoginVm loginVm;
 
     @Override
     protected int initLayoutRes() {
-        return R.layout.activity_pwd_pay_set;
+        return R.layout.activity_forget_pwd;
     }
 
     @Override
@@ -63,19 +61,10 @@ public class ForgetPwdPayActivity extends BaseActivity {
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
-        tvBarTitle.setText(getString(R.string.update_pwd));
-        tvAccount.setText(SPUtils.getInstance().getString(SpConfig.MOBILE));
+        tvBarTitle.setText(getString(R.string.forget_pwd_title));
 
-        smsCodeVm = ViewModelProviders.of(this).get(SmsCodeVm.class);
-        updatePwdPayVm = ViewModelProviders.of(this).get(UpdatePwdPayVm.class);
-        updatePwdPayVm.forgetPwdLiveData.observe(this, o -> {
-            ToastUtils.showShort(getString(R.string.pwd_pay_set_success));
-            finish();
-        });
-        smsCodeVm.smsDataLiveData.observe(this, o -> {
-            smsCodeVm.sendVerificationCode();
-        });
-        smsCodeVm.timeLiveDataLiveData.observe(this, aLong -> {
+        loginVm = ViewModelProviders.of(this).get(LoginVm.class);
+        loginVm.timeLiveDataLiveData.observe(this, aLong -> {
             if (aLong == -1) {
                 //重新获取
                 tvSendVerificationCode.setText(getString(R.string.send_again));
@@ -83,26 +72,6 @@ public class ForgetPwdPayActivity extends BaseActivity {
             }else {
                 tvSendVerificationCode.setText(String.format(getString(R.string.format_get_verification_code_again), aLong));
                 tvSendVerificationCode.setClickable(false);
-            }
-        });
-        updatePwdPayVm.pageStateLiveData.observe(this, s -> {
-            switch (s){
-                case PageState.PAGE_LOADING:
-                    showLoading();
-                    break;
-                default:
-                    hideLoading();
-                    break;
-            }
-        });
-        smsCodeVm.pageStateLiveData.observe(this, s -> {
-            switch (s){
-                case PageState.PAGE_LOADING:
-                    showLoading();
-                    break;
-                default:
-                    hideLoading();
-                    break;
             }
         });
     }
@@ -115,15 +84,18 @@ public class ForgetPwdPayActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_send_verification_code:
-                if (TextUtils.isEmpty(tvAccount.getText())){
+                if (TextUtils.isEmpty(edtAccount.getText())){
                     ToastUtils.showShort(getString(R.string.hint_mobile_code));
                     return;
                 }
-                mobile = tvAccount.getText().toString();
-                smsCodeVm.smsCode(mobile, CustomConfig.SMS_PWD_PAY);
+                mobile = edtAccount.getText().toString();
+                loginVm.smsCode(mobile, CustomConfig.SMS_FORGET_PWD);
+                loginVm.smsDataLiveData.observe(this, o -> {
+                    loginVm.sendVerificationCode();
+                });
                 break;
             case R.id.tv_confirm:
-                if (TextUtils.isEmpty(tvAccount.getText())){
+                if (TextUtils.isEmpty(edtAccount.getText())){
                     ToastUtils.showShort(getString(R.string.hint_mobile_code));
                     return;
                 }
@@ -132,13 +104,36 @@ public class ForgetPwdPayActivity extends BaseActivity {
                     return;
                 }
                 if (TextUtils.isEmpty(edtPwd.getText())){
-                    ToastUtils.showShort(getString(R.string.hint_pwd_pay));
+                    ToastUtils.showShort(getString(R.string.hint_pwd));
                     return;
                 }
-                mobile = tvAccount.getText().toString();
+                if (TextUtils.isEmpty(edtPwdAgain.getText())){
+                    ToastUtils.showShort(getString(R.string.hint_new_pwd));
+                    return;
+                }
+                mobile = edtAccount.getText().toString();
                 String code = edtSMSCode.getText().toString();
+                String pwdAgain = edtPwdAgain.getText().toString();
                 String pwd = edtPwd.getText().toString();
-                updatePwdPayVm.forgetPwdPay(mobile, code, pwd);
+                if (!pwd.equals(pwdAgain)){
+                    ToastUtils.showShort(getString(R.string.pwd_no_same));
+                    return;
+                }
+                loginVm.resetPwd(mobile, code, pwd);
+                loginVm.resetPwdLiveData.observe(this, reSetPwdBean -> {
+                    ToastUtils.showShort(getString(R.string.pwd_reset_success));
+                    finish();
+                });
+                loginVm.pageStateLiveData.observe(this, s -> {
+                    switch (s){
+                        case PageState.PAGE_LOADING:
+                            showLoading();
+                            break;
+                        default:
+                            hideLoading();
+                            break;
+                    }
+                });
                 break;
         }
     }

@@ -50,6 +50,13 @@ public class UserRepository extends BaseRepository {
     }
 
     /**
+     *  修改登录密码
+     */
+    public void resetPassword(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int user_id, String oldPwd, String newPwd){
+        request(apiService.resetPassword(user_id, oldPwd, newPwd)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    /**
      * 个人信息
      */
     public void information(MutableLiveData<UserInfoBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, int uid){

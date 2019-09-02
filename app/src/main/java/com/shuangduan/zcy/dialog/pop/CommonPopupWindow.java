@@ -9,7 +9,7 @@ import android.widget.PopupWindow;
  *     author : 宁文强
  *     e-mail : ningwenqiang@lanhuiplay.com
  *     time   : 2018/05/07
- *     desc   :
+ *     desc   : 通用PopWindow
  *     version: 1.0
  * </pre>
  */

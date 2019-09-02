@@ -90,6 +90,11 @@ public class AuthenticationActivity extends BaseActivity implements BaseDialog.P
     }
 
     @Override
+    public boolean isUseEventBus() {
+        return false;
+    }
+
+    @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarRight.setText(getString(R.string.save));
