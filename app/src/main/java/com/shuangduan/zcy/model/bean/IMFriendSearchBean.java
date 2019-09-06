@@ -1,8 +1,5 @@
 package com.shuangduan.zcy.model.bean;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import java.util.List;
 
 /**
@@ -16,116 +13,160 @@ import java.util.List;
  * @class describe
  */
 public class IMFriendSearchBean {
-
     /**
-     * page : 1
-     * count : 1
-     * list : [{"id":21,"username":"李彤","tel":"15665892858","image":"http://information-api.oss-cn-qingdao.aliyuncs.com/d8599639c512386c19c893e1038eca63.png"}]
+     * code : 200
+     * msg : 成功
+     * time : 1567751529
+     * data : {"friend":[{"userId":21,"name":"李彤1","portraitUri":"http://information-api.oss-cn-qingdao.aliyuncs.com/d8599639c512386c19c893e1038eca63.png","company":"技术上就是就是就是"},{"userId":20,"name":"王宝宝1李","portraitUri":"http://information-api.oss-cn-qingdao.aliyuncs.com/d8599639c512386c19c893e1038eca63.png","company":"济南双端1科技有限公司"},{"userId":19,"name":"荣云测试1李","portraitUri":"http://information-api.oss-cn-qingdao.aliyuncs.com/581db79fb67428a12e518269b14ff8fd.jpeg","company":"哇哈哈公司"}],"group":[{"group_id":15,"group_name":"新模式李","province":"内蒙古自治区","city":"包头市"},{"group_id":14,"group_name":"提供给李","province":"河北省","city":"唐山市"},{"group_id":9,"group_name":"丹锡李高速公路克什克腾至承德联络线克什克腾（经棚）至乌兰布统 （蒙冀界）段公路施工总承包","province":"内蒙古自治区","city":""}]}
      */
 
-    private int page;
-    private int count;
-    private List<ListBean> list;
+    private String code;
+    private String msg;
+    private int time;
+    private DataBean data;
 
-    public int getPage() {
-        return page;
+    public String getCode() {
+        return code;
     }
 
-    public void setPage(int page) {
-        this.page = page;
+    public void setCode(String code) {
+        this.code = code;
     }
 
-    public int getCount() {
-        return count;
+    public String getMsg() {
+        return msg;
     }
 
-    public void setCount(int count) {
-        this.count = count;
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 
-    public List<ListBean> getList() {
-        return list;
+    public int getTime() {
+        return time;
     }
 
-    public void setList(List<ListBean> list) {
-        this.list = list;
+    public void setTime(int time) {
+        this.time = time;
     }
 
-    public static class ListBean implements Parcelable {
-        /**
-         * id : 21
-         * username : 李彤
-         * tel : 15665892858
-         * image : http://information-api.oss-cn-qingdao.aliyuncs.com/d8599639c512386c19c893e1038eca63.png
-         */
+    public DataBean getData() {
+        return data;
+    }
 
-        private int id;
-        private String username;
-        private String tel;
-        private String image;
+    public void setData(DataBean data) {
+        this.data = data;
+    }
 
-        protected ListBean(Parcel in) {
-            id = in.readInt();
-            username = in.readString();
-            tel = in.readString();
-            image = in.readString();
+    public static class DataBean {
+        private List<FriendBean> friend;
+        private List<GroupBean> group;
+
+        public List<FriendBean> getFriend() {
+            return friend;
         }
 
-        public static final Creator<ListBean> CREATOR = new Creator<ListBean>() {
-            @Override
-            public ListBean createFromParcel(Parcel in) {
-                return new ListBean(in);
+        public void setFriend(List<FriendBean> friend) {
+            this.friend = friend;
+        }
+
+        public List<GroupBean> getGroup() {
+            return group;
+        }
+
+        public void setGroup(List<GroupBean> group) {
+            this.group = group;
+        }
+
+        public static class FriendBean {
+            /**
+             * userId : 21
+             * name : 李彤1
+             * portraitUri : http://information-api.oss-cn-qingdao.aliyuncs.com/d8599639c512386c19c893e1038eca63.png
+             * company : 技术上就是就是就是
+             */
+
+            private int userId;
+            private String name;
+            private String portraitUri;
+            private String company;
+
+            public int getUserId() {
+                return userId;
             }
 
-            @Override
-            public ListBean[] newArray(int size) {
-                return new ListBean[size];
+            public void setUserId(int userId) {
+                this.userId = userId;
             }
-        };
 
-        public int getId() {
-            return id;
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public String getPortraitUri() {
+                return portraitUri;
+            }
+
+            public void setPortraitUri(String portraitUri) {
+                this.portraitUri = portraitUri;
+            }
+
+            public String getCompany() {
+                return company;
+            }
+
+            public void setCompany(String company) {
+                this.company = company;
+            }
         }
 
-        public void setId(int id) {
-            this.id = id;
-        }
+        public static class GroupBean {
+            /**
+             * group_id : 15
+             * group_name : 新模式李
+             * province : 内蒙古自治区
+             * city : 包头市
+             */
 
-        public String getUsername() {
-            return username;
-        }
+            private int group_id;
+            private String group_name;
+            private String province;
+            private String city;
 
-        public void setUsername(String username) {
-            this.username = username;
-        }
+            public int getGroup_id() {
+                return group_id;
+            }
 
-        public String getTel() {
-            return tel;
-        }
+            public void setGroup_id(int group_id) {
+                this.group_id = group_id;
+            }
 
-        public void setTel(String tel) {
-            this.tel = tel;
-        }
+            public String getGroup_name() {
+                return group_name;
+            }
 
-        public String getImage() {
-            return image;
-        }
+            public void setGroup_name(String group_name) {
+                this.group_name = group_name;
+            }
 
-        public void setImage(String image) {
-            this.image = image;
-        }
+            public String getProvince() {
+                return province;
+            }
 
-        @Override
-        public int describeContents() {
-            return 0;
-        }
+            public void setProvince(String province) {
+                this.province = province;
+            }
 
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
-            dest.writeInt(id);
-            dest.writeString(username);
-            dest.writeString(tel);
-            dest.writeString(image);
+            public String getCity() {
+                return city;
+            }
+
+            public void setCity(String city) {
+                this.city = city;
+            }
         }
     }
 }

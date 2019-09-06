@@ -1,6 +1,5 @@
 package com.shuangduan.zcy.adapter;
 
-import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 
@@ -10,6 +9,7 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.model.bean.IMFriendSearchBean;
 import com.shuangduan.zcy.utils.image.ImageConfig;
 import com.shuangduan.zcy.utils.image.ImageLoader;
+import com.shuangduan.zcy.weight.CircleImageView;
 
 import java.util.List;
 
@@ -23,17 +23,17 @@ import java.util.List;
  * @chang time
  * @class describe
  */
-public class IMSearchAdapter extends BaseQuickAdapter<IMFriendSearchBean.ListBean, BaseViewHolder> {
-    public IMSearchAdapter(int layoutResId, @Nullable List<IMFriendSearchBean.ListBean> data) {
+public class IMSearchAdapter extends BaseQuickAdapter<IMFriendSearchBean.DataBean.FriendBean, BaseViewHolder> {
+    public IMSearchAdapter(int layoutResId, @Nullable List<IMFriendSearchBean.DataBean.FriendBean> data) {
         super(layoutResId, data);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, IMFriendSearchBean.ListBean item) {
-        helper.setText(R.id.tv_name, item.getUsername());
-        ImageView ivHead = helper.getView(R.id.iv_header);
+    protected void convert(BaseViewHolder helper, IMFriendSearchBean.DataBean.FriendBean item) {
+        helper.setText(R.id.tv_name, item.getName());
+        CircleImageView ivHead = helper.getView(R.id.iv_header);
         ImageLoader.load(mContext, new ImageConfig.Builder()
-                .url(item.getImage())
+                .url(item.getPortraitUri())
                 .imageView(ivHead)
                 .placeholder(R.drawable.default_head)
                 .errorPic(R.drawable.default_head)

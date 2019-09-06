@@ -80,7 +80,7 @@ public class LocationMapActivity extends BaseActivity {
         tvBarTitle.setText(getString(R.string.location_select));
         tvBarRight.setText(getString(R.string.save));
 
-        mMapView = findViewById(R.id.map);
+        mMapView = (MapView) findViewById(R.id.map);
         mMapView.onCreate(savedInstanceState);// 此方法必须重写
 
         cityName = getIntent().getStringExtra(CustomConfig.CITY_NAME);

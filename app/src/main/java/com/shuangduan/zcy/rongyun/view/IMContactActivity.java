@@ -17,6 +17,7 @@ import com.shuangduan.zcy.base.BaseActivity;
  * @class describe
  */
 public class IMContactActivity extends BaseActivity {
+
     @Override
     protected int initLayoutRes() {
         return R.layout.activity_im_contact;

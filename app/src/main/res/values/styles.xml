@@ -9,6 +9,9 @@
         <!-- enable window content transitions -->
         <item name="android:windowActivityTransitions" tools:targetApi="lollipop">true</item>
         <item name="android:windowBackground">@color/colorFFF</item>
+        <!--（第一级页面不让Activity透明）解决右滑退出黑屏问题,但是并不适用所有系统-->
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowSoftInputMode">adjustPan</item>
     </style>
 
     <!--通用theme-->

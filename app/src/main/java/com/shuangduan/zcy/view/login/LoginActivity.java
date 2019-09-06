@@ -70,6 +70,7 @@ public class LoginActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         isTranslationBar = true;
         super.onCreate(savedInstanceState);
+        getSwipeBackLayout().setEnableGesture(false);
     }
 
     @Override

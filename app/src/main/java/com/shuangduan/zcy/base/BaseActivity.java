@@ -19,6 +19,10 @@ import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.LoadDialog;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.event.BaseEvent;
+import com.shuangduan.zcy.swipeback.SwipeBackActivityBase;
+import com.shuangduan.zcy.swipeback.SwipeBackActivityHelper;
+import com.shuangduan.zcy.swipeback.SwipeBackLayout;
+import com.shuangduan.zcy.swipeback.SwipeBackUtils;
 import com.shuangduan.zcy.utils.AutoUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -36,12 +40,14 @@ import butterknife.Unbinder;
  * </pre>
  */
 
-public abstract class BaseActivity extends AppCompatActivity implements IView {
+public abstract class BaseActivity extends AppCompatActivity implements IView, SwipeBackActivityBase {
 
     private Unbinder unBinder;
     public boolean isTranslationBar = false;//透明状态栏开关
     private LoadDialog loadDialog;
     private SparseArray<BaseDialog> dialogArray = new SparseArray<>();
+
+    private SwipeBackActivityHelper mHelper;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,6 +69,10 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
         }
 
         initDataAndEvent(savedInstanceState);
+
+        //右滑退出初始化
+        mHelper = new SwipeBackActivityHelper(this);
+        mHelper.onActivityCreate();
     }
 
     @Override
@@ -159,4 +169,35 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
         return false;
     }
 
+
+    //以下为右滑退出重写方法
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mHelper.onPostCreate();
+    }
+
+    @Override
+    public View findViewById(int id) {
+        View v = super.findViewById(id);
+        if (v == null && mHelper != null)
+            return mHelper.findViewById(id);
+        return v;
+    }
+
+    @Override
+    public SwipeBackLayout getSwipeBackLayout() {
+        return mHelper.getSwipeBackLayout();
+    }
+
+    @Override
+    public void setSwipeBackEnable(boolean enable) {
+        getSwipeBackLayout().setEnableGesture(enable);
+    }
+
+    @Override
+    public void scrollToFinishActivity() {
+        SwipeBackUtils.convertActivityToTranslucent(this);
+        getSwipeBackLayout().scrollToFinishActivity();
+    }
 }

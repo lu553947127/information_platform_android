@@ -63,6 +63,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void onAttachFragment(@NonNull Fragment fragment) {
+        getSwipeBackLayout().setEnableGesture(false);
         if (fragments[0] == null && fragment instanceof HomeFragment)
             fragments[0] = fragment;
         if (fragments[1] == null && fragment instanceof PeopleFragment)

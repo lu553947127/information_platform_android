@@ -65,7 +65,7 @@ public class IMConnectVm extends BaseViewModel {
              */
             @Override
             public void onSuccess(String userid) {
-                LogUtils.i("rongyun登录成功");
+                LogUtils.i("rongyun登录成功"+userid);
             }
 
             /**

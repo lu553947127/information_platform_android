@@ -68,24 +68,24 @@ public class IMAddFriendActivity extends BaseActivity {
         BarUtils.setStatusBarColor(fakeStatusBar, getResources().getColor(R.color.colorPrimary));
         tvBarTitle.setText(getString(R.string.add_friends));
 
-        IMFriendSearchBean.ListBean listBean = getIntent().getParcelableExtra(CustomConfig.FRIEND_DATA);
-        if (listBean != null){
-            tvName.setText(listBean.getUsername());
-            ImageLoader.load(this, new ImageConfig.Builder()
-                    .url(listBean.getImage())
-                    .imageView(ivHeader)
-                    .placeholder(R.drawable.default_head)
-                    .errorPic(R.drawable.default_head)
-                    .build());
-        }
+//        IMFriendSearchBean.ListBean listBean = getIntent().getParcelableExtra(CustomConfig.FRIEND_DATA);
+//        if (listBean != null){
+//            tvName.setText(listBean.getUsername());
+//            ImageLoader.load(this, new ImageConfig.Builder()
+//                    .url(listBean.getImage())
+//                    .imageView(ivHeader)
+//                    .placeholder(R.drawable.default_head)
+//                    .errorPic(R.drawable.default_head)
+//                    .build());
+//        }
 
-        imAddVm = ViewModelProviders.of(this).get(IMAddVm.class);
-        assert listBean != null;
-        imAddVm.receiverId = listBean.getId();
-        imAddVm.applyOperateLiveData.observe(this, imFriendApplyOperationBean -> {
-
-        });
-        imAddVm.pageStateLiveData.observe(this, this::showPageState);
+//        imAddVm = ViewModelProviders.of(this).get(IMAddVm.class);
+//        assert listBean != null;
+//        imAddVm.receiverId = listBean.getId();
+//        imAddVm.applyOperateLiveData.observe(this, imFriendApplyOperationBean -> {
+//
+//        });
+//        imAddVm.pageStateLiveData.observe(this, this::showPageState);
     }
 
     @OnClick({R.id.iv_bar_back, R.id.tv_confirm})

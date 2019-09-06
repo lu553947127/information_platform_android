@@ -92,7 +92,7 @@ public class ProjectInfoActivity extends BaseActivity {
         ivBarRight.setImageResource(R.drawable.icon_search);
         tvBarRight.setVisibility(View.GONE);
 
-        mMapView = findViewById(R.id.map);
+        mMapView = (MapView) findViewById(R.id.map);
         mMapView.onCreate(savedInstanceState);// 此方法必须重写
 
         permissionVm = ViewModelProviders.of(this).get(PermissionVm.class);

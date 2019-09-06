@@ -1,6 +1,7 @@
 package com.shuangduan.zcy.app;
 
 import android.Manifest;
+import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -159,6 +160,29 @@ public class AppConfig {
     private static void initRongYun(Context context){
         //融云初始化
         RongIM.init(context, "pwe86ga5p43i6");
+    }
+
+    /**
+     * 获得当前进程的名字
+     *
+     * @param context
+     * @return 进程号
+     */
+    public static String getCurProcessName(Context context) {
+
+        int pid = android.os.Process.myPid();
+
+        ActivityManager activityManager = (ActivityManager) context
+                .getSystemService(Context.ACTIVITY_SERVICE);
+
+        for (ActivityManager.RunningAppProcessInfo appProcess : activityManager
+                .getRunningAppProcesses()) {
+
+            if (appProcess.pid == pid) {
+                return appProcess.processName;
+            }
+        }
+        return null;
     }
 
 }

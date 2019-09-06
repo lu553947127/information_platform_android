@@ -1,41 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whisper">
 
     <include layout="@layout/toolbar"/>
 
-    <EditText
-        android:id="@+id/edt_keyword"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="32dp"
-        android:layout_marginLeft="14dp"
-        android:layout_marginRight="14dp"
-        android:layout_marginTop="15dp"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:singleLine="true"
-        android:gravity="center_vertical"
-        android:background="@drawable/shape_bg_search"
-        android:textColorHint="@color/colorTvHint"
-        android:textColor="@color/color_666666"
-        android:textSize="13sp"
-        android:hint="@string/hint_keyword"/>
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/background">
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
-        android:id="@+id/refresh">
+        <EditText
+            android:id="@+id/edt_keyword"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:layout_marginLeft="14dp"
+            android:layout_marginRight="14dp"
+            android:layout_marginTop="15dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:singleLine="true"
+            android:gravity="center_vertical"
+            android:background="@drawable/shape_bg_search"
+            android:textColorHint="@color/colorTvHint"
+            android:textColor="@color/color_666666"
+            android:textSize="13sp"
+            android:imeOptions="actionSearch"
+            android:hint="@string/hint_keyword"/>
 
-        <androidx.recyclerview.widget.RecyclerView
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="15dp"
+            android:textColor="@color/color_40000000"
+            android:textSize="13sp"
+            android:text="联系人"/>
+        <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
             android:id="@+id/rv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:overScrollMode="never">
+            android:overScrollMode="never"/>
 
-        </androidx.recyclerview.widget.RecyclerView>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="20dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:gravity="center_vertical"
+            android:drawableRight="@drawable/icon_next"
+            android:textColor="@color/color_666666"
+            android:textSize="14sp"
+            android:text="更多联系人"/>
+    </LinearLayout>
 
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/background"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="15dp"
+            android:textColor="@color/color_40000000"
+            android:textSize="13sp"
+            android:text="群聊"/>
+        <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
+            android:id="@+id/rv2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="20dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:gravity="center_vertical"
+            android:drawableRight="@drawable/icon_next"
+            android:textColor="@color/color_666666"
+            android:textSize="14sp"
+            android:text="更多群聊"/>
+    </LinearLayout>
+
 
 </LinearLayout>

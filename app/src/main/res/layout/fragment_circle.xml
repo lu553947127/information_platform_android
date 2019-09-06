@@ -47,6 +47,7 @@
                 android:textSize="12sp"
                 android:hint="@string/hint_keyword"/>
 
+
             <ImageView
                 android:id="@+id/iv_message"
                 android:layout_width="wrap_content"
@@ -57,7 +58,7 @@
                 android:scaleType="centerInside"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
-                android:src="@drawable/icon_notice"/>
+                android:src="@drawable/icon_tixing"/>
 
         </RelativeLayout>
 

@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
         release {
-            storeFile file('D:\\Android\\workspace\\information_platform_android\\app\\zcy.jks')
+            storeFile file('/Users/luhongxiang/AndroidStudioProjects/information_platform_android/app/zcy.jks')
             storePassword 'boyuan123456'
             keyAlias = 'boyuan'
             keyPassword 'boyuan123456'
@@ -79,6 +79,13 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
 
+    //gson解析
+    //noinspection GradleDependency
+    implementation 'com.google.code.gson:gson:2.7'
+
+    //多功能网络请求框架(方便上传附件)
+    implementation 'com.lzy.net:okgo:3.0.4'
+
     //解决超过65546代码的问题
     implementation 'com.android.support:multidex:1.0.3'
 
@@ -119,4 +126,7 @@ dependencies {
     api 'cn.rongcloud.sdk:im_kit:2.9.22'
     //im_kit必须依赖im_lib，所以需要加入对应依赖
     api 'cn.rongcloud.sdk:im_lib:2.9.22'
+
+    //带侧滑删除的列表
+    implementation 'com.yanzhenjie:recyclerview-swipe:1.1.4'
 }
