@@ -1,5 +1,6 @@
 package com.shuangduan.zcy.vm;
 
+import android.net.Uri;
 import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
@@ -13,6 +14,7 @@ import com.shuangduan.zcy.model.bean.IMTokenBean;
 
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.UserInfo;
 
 /**
  * @author 宁文强 QQ:858777523

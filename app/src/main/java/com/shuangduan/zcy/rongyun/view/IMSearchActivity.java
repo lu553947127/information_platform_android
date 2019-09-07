@@ -5,54 +5,42 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.constant.RefreshState;
-import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.IMSearchAdapter;
 import com.shuangduan.zcy.adapter.IMSearchGroupAdapter;
 import com.shuangduan.zcy.app.Common;
-import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
 import com.shuangduan.zcy.model.bean.IMFriendSearchBean;
-import com.shuangduan.zcy.vm.IMAddVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.rong.imkit.RongIM;
 
 /**
  * @author 宁文强 QQ:858777523
@@ -72,15 +60,21 @@ public class IMSearchActivity extends BaseActivity {
     @BindView(R.id.edt_keyword)
     EditText edtKeyword;
     @BindView(R.id.rv)
-    SwipeMenuRecyclerView rv;
+    RecyclerView rv;
     @BindView(R.id.rv2)
-    SwipeMenuRecyclerView rv2;
+    RecyclerView rv2;
+    @BindView(R.id.tv_more_friend)
+    TextView tvFriend;
+    @BindView(R.id.tv_more_group)
+    TextView tvGroup;
 
     private IMSearchAdapter imSearchAdapter;
     private List<IMFriendSearchBean.DataBean.FriendBean> list=new ArrayList<>();
 
     private IMSearchGroupAdapter imSearchGroupAdapter;
     private List<IMFriendSearchBean.DataBean.GroupBean> list_group=new ArrayList<>();
+
+    private IMFriendSearchBean imFriendSearchBean;
 
     @Override
     protected int initLayoutRes() {
@@ -110,25 +104,19 @@ public class IMSearchActivity extends BaseActivity {
         rv2.setAdapter(imSearchGroupAdapter);
 
         getFriendSearch();
-
-
-//        imSearchAdapter.setOnItemClickListener((adapter, view, position) -> {
-//            IMFriendSearchBean.ListBean listBean = imSearchAdapter.getData().get(position);
-//            Bundle bundle = new Bundle();
-//            bundle.putParcelable(CustomConfig.FRIEND_DATA, listBean);
-//            ActivityUtils.startActivity(bundle, IMAddFriendActivity.class);
-//        });
-
-        IMAddVm imAddVm = ViewModelProviders.of(this).get(IMAddVm.class);
-//        imAddVm.searchLiveData.observe(this, imFriendSearchBean -> {
-//            if (imFriendSearchBean.getPage() == 1) {
-//                imSearchAdapter.setNewData(imFriendSearchBean.getList());
-//                imSearchAdapter.setEmptyView(R.layout.layout_empty, rv);
-//            }else {
-//                imSearchAdapter.addData(imFriendSearchBean.getList());
-//            }
 //            setNoMore(imFriendSearchBean.getPage(), imFriendSearchBean.getCount());
-//        });
+
+        imSearchAdapter.setOnItemClickListener((adapter, view, position) -> {
+            RongIM.getInstance().startPrivateChat(IMSearchActivity.this, imFriendSearchBean.getData().getFriend().get(position).getUserId()
+                    , imFriendSearchBean.getData().getFriend().get(position).getName());
+        });
+        imSearchGroupAdapter.setOnItemClickListener((adapter, view, position) -> {
+            RongIM.getInstance().startGroupChat(IMSearchActivity.this
+                    , imFriendSearchBean.getData().getGroup().get(position).getGroup_id()
+                    , imFriendSearchBean.getData().getGroup().get(position).getGroup_name());
+            ToastUtils.showShort(imFriendSearchBean.getData().getGroup().get(position).getGroup_name());
+        });
+
         edtKeyword.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -215,14 +203,14 @@ public class IMSearchActivity extends BaseActivity {
                         Log.e("TAG","请求成功"+response.body());
                         Gson gson=new Gson();
                         try {
-                            IMFriendSearchBean bean=gson.fromJson(response.body(),IMFriendSearchBean.class);
-                            if (bean.getCode().equals("200")){
+                            imFriendSearchBean=gson.fromJson(response.body(),IMFriendSearchBean.class);
+                            if (imFriendSearchBean.getCode().equals("200")){
                                 list.clear();
-                                list.addAll(bean.getData().getFriend());
+                                list.addAll(imFriendSearchBean.getData().getFriend());
                                 imSearchAdapter.notifyDataSetChanged();
 
                                 list_group.clear();
-                                list_group.addAll(bean.getData().getGroup());
+                                list_group.addAll(imFriendSearchBean.getData().getGroup());
                                 imSearchGroupAdapter.notifyDataSetChanged();
                             }else {
 //                                imSearchAdapter.setNewData(bean.getData().getFriend());
@@ -231,13 +219,34 @@ public class IMSearchActivity extends BaseActivity {
                                 list.clear();
                                 list_group.clear();
                             }
-                        }catch (JsonSyntaxException e){
-                        }catch (IllegalStateException e){
+                        }catch (JsonSyntaxException | IllegalStateException ignored){
+                            ToastUtils.showShort(getString(R.string.request_error));
                         }
                     }
                 });
     }
 
-    @OnClick(R.id.iv_bar_back)
-    void onClick(){finish();}
+    @OnClick({R.id.iv_bar_back,R.id.tv_more_friend,R.id.tv_more_group})
+    void onClick(View view){
+        switch (view.getId()) {
+            case R.id.iv_bar_back:
+                finish();
+                break;
+            case R.id.tv_more_friend:
+                if (list!=null&&list.size()!=0){
+
+                }else {
+                    ToastUtils.showShort(getString(R.string.im_no_friend));
+                }
+                break;
+            case R.id.tv_more_group:
+                if (list_group!=null&&list_group.size()!=0){
+
+                }else {
+                    ToastUtils.showShort(getString(R.string.im_no_group));
+                }
+                break;
+        }
+
+    }
 }

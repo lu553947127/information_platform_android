@@ -6,7 +6,7 @@
 
     <include layout="@layout/toolbar"/>
 
-    <ScrollView
+    <com.shuangduan.zcy.utils.ElasticScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorBgDark">
@@ -380,12 +380,20 @@
                 android:textColor="@color/colorTv"
                 android:textSize="14sp"/>
 
+            <TextView
+                android:id="@+id/tv_add_friend"
+                android:layout_width="335dp"
+                style="@style/BtnConfirm"
+                android:layout_marginTop="35dp"
+                android:text="@string/im_add_friend"
+                android:visibility="gone"/>
+
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="20dp" />
 
         </LinearLayout>
 
-    </ScrollView>
+    </com.shuangduan.zcy.utils.ElasticScrollView>
 
 </LinearLayout>

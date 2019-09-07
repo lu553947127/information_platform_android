@@ -107,7 +107,6 @@ public class AppConfig {
         ToastUtils.setMsgTextSize(13);
         ToastUtils.setMsgColor(Color.parseColor("#ffffff"));
         ToastUtils.setBgResource(R.drawable.shape_bg_toast);
-
     }
 
     /**

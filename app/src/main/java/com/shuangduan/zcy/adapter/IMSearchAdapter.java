@@ -1,14 +1,18 @@
 package com.shuangduan.zcy.adapter;
 
+import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.shuangduan.zcy.R;
+import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.model.bean.IMFriendSearchBean;
 import com.shuangduan.zcy.utils.image.ImageConfig;
 import com.shuangduan.zcy.utils.image.ImageLoader;
+import com.shuangduan.zcy.view.mine.UserInfoActivity;
 import com.shuangduan.zcy.weight.CircleImageView;
 
 import java.util.List;
@@ -38,5 +42,10 @@ public class IMSearchAdapter extends BaseQuickAdapter<IMFriendSearchBean.DataBea
                 .placeholder(R.drawable.default_head)
                 .errorPic(R.drawable.default_head)
                 .build());
+        ivHead.setOnClickListener(view -> {
+            Bundle bundle = new Bundle();
+            bundle.putInt(CustomConfig.UID, Integer.parseInt(item.getUserId()));
+            ActivityUtils.startActivity(bundle, UserInfoActivity.class);
+        });
     }
 }

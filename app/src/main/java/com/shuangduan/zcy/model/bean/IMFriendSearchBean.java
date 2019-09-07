@@ -85,16 +85,16 @@ public class IMFriendSearchBean {
              * company : 技术上就是就是就是
              */
 
-            private int userId;
+            private String userId;
             private String name;
             private String portraitUri;
             private String company;
 
-            public int getUserId() {
+            public String getUserId() {
                 return userId;
             }
 
-            public void setUserId(int userId) {
+            public void setUserId(String userId) {
                 this.userId = userId;
             }
 
@@ -131,16 +131,16 @@ public class IMFriendSearchBean {
              * city : 包头市
              */
 
-            private int group_id;
+            private String group_id;
             private String group_name;
             private String province;
             private String city;
 
-            public int getGroup_id() {
+            public String getGroup_id() {
                 return group_id;
             }
 
-            public void setGroup_id(int group_id) {
+            public void setGroup_id(String group_id) {
                 this.group_id = group_id;
             }
 

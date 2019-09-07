@@ -391,6 +391,15 @@
     <string name="format_demand_num">需求数量: %1$s</string>
     <string name="format_commission">佣金: %1$s紫金币</string>
 
+    <string name="im_no_friend">暂无更多联系人</string>
+    <string name="im_no_group">暂无更多群聊</string>
+    <string name="im_add_friend">加好友</string>
+    <string name="im_search_friend">联系人</string>
+    <string name="im_search_friend_more">更多联系人</string>
+    <string name="im_search_group">群聊</string>
+    <string name="im_search_group_more">更多群聊</string>
+    <string name="im_contacts_new_friend">新的朋友</string>
+
     <string name="please_select_time">请选择时间</string>
     <string name="year">年</string>
     <string name="month">月</string>

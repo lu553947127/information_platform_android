@@ -91,6 +91,10 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
     AppCompatTextView tvBusinessExp;
     @BindView(R.id.tv_production)
     TextView tvProduction;
+    @BindView(R.id.tv_production_tip)
+    TextView tvProductionTip;
+    @BindView(R.id.tv_add_friend)
+    TextView tvAddFriend;
 
     private PermissionVm permissionVm;
     private RxPermissions rxPermissions;
@@ -107,6 +111,32 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.base_info));
         int uid = getIntent().getIntExtra(CustomConfig.UID, 0);
+
+        if (SPUtils.getInstance().getInt(SpConfig.USER_ID)!=uid){
+            ivUser.setClickable(false);
+            findViewById(R.id.fl_name).setClickable(false);
+            tvName.setCompoundDrawables(null,null,null,null);
+            findViewById(R.id.fl_sex).setClickable(false);
+            tvSex.setCompoundDrawables(null,null,null,null);
+            findViewById(R.id.fl_mobile).setClickable(false);
+            tvMobile.setCompoundDrawables(null,null,null,null);
+            findViewById(R.id.fl_id_card).setClickable(false);
+            tvIdCard.setCompoundDrawables(null,null,null,null);
+            findViewById(R.id.fl_email).setClickable(false);
+            tvEmail.setCompoundDrawables(null,null,null,null);
+            findViewById(R.id.fl_company).setClickable(false);
+            tvCompany.setCompoundDrawables(null,null,null,null);
+            findViewById(R.id.fl_office).setClickable(false);
+            tvOffice.setCompoundDrawables(null,null,null,null);
+            findViewById(R.id.fl_business_area).setClickable(false);
+            tvBusinessArea.setCompoundDrawables(null,null,null,null);
+            findViewById(R.id.fl_business_exp).setClickable(false);
+            tvBusinessExp.setCompoundDrawables(null,null,null,null);
+            tvProductionTip.setClickable(false);
+            tvProductionTip.setCompoundDrawables(null,null,null,null);
+            findViewById(R.id.tv_production).setClickable(false);
+            tvAddFriend.setVisibility(View.VISIBLE);
+        }
 
         uploadPhotoVm = ViewModelProviders.of(this).get(UploadPhotoVm.class);
         userInfoVm = ViewModelProviders.of(this).get(UserInfoVm.class);
