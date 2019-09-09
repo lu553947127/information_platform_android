@@ -14,6 +14,7 @@ import com.shuangduan.zcy.base.BaseActivity;
 import java.util.Locale;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import io.rong.imkit.fragment.ConversationFragment;
 import io.rong.imlib.model.Conversation;
 
@@ -70,4 +71,7 @@ public class IMPrivateChatActivity extends BaseActivity {
         transaction.add(R.id.activity_im_contact_fragment, fragment);
         transaction.commitAllowingStateLoss();
     }
+
+    @OnClick(R.id.iv_bar_back)
+    void onClick(){finish();}
 }

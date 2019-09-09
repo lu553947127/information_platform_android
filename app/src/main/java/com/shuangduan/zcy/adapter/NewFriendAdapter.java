@@ -8,6 +8,9 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.model.bean.IMFriendApplyListBean;
+import com.shuangduan.zcy.utils.image.ImageConfig;
+import com.shuangduan.zcy.utils.image.ImageLoader;
+import com.shuangduan.zcy.weight.CircleImageView;
 
 import java.util.List;
 
@@ -21,18 +24,24 @@ import java.util.List;
  * @chang time
  * @class describe
  */
-public class NewFriendAdapter extends BaseQuickAdapter<IMFriendApplyListBean.ListBean, BaseViewHolder> {
-    public NewFriendAdapter(int layoutResId, @Nullable List<IMFriendApplyListBean.ListBean> data) {
+public class NewFriendAdapter extends BaseQuickAdapter<IMFriendApplyListBean.DataBean.ListBean, BaseViewHolder> {
+    public NewFriendAdapter(int layoutResId, @Nullable List<IMFriendApplyListBean.DataBean.ListBean> data) {
         super(layoutResId, data);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, IMFriendApplyListBean.ListBean item) {
+    protected void convert(BaseViewHolder helper, IMFriendApplyListBean.DataBean.ListBean item) {
         helper.setText(R.id.tv_name, item.getUsername())
                 .setText(R.id.tv_time, item.getCreate_time())
                 .setText(R.id.tv_msg, item.getApply_user_msg())
                 .setVisible(R.id.tv_refuse, item.getApply_status() == 1);
-
+        CircleImageView ivHead = helper.getView(R.id.civ_header);
+        ImageLoader.load(mContext, new ImageConfig.Builder()
+                .url(item.getImage())
+                .imageView(ivHead)
+                .placeholder(R.drawable.default_head)
+                .errorPic(R.drawable.default_head)
+                .build());
         TextView tvAccept = helper.getView(R.id.tv_accept);
         switch (item.getApply_status()){
             case 1:

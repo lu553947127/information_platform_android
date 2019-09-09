@@ -135,7 +135,6 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
             tvProductionTip.setClickable(false);
             tvProductionTip.setCompoundDrawables(null,null,null,null);
             findViewById(R.id.tv_production).setClickable(false);
-            tvAddFriend.setVisibility(View.VISIBLE);
         }
 
         uploadPhotoVm = ViewModelProviders.of(this).get(UploadPhotoVm.class);
@@ -154,6 +153,11 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
             if (userInfoBean.getExperience() >= 1 && userInfoBean.getExperience() <= 4)
                 tvBusinessExp.setText(getResources().getStringArray(R.array.experience_list)[userInfoBean.getExperience() - 1] + "年");
             tvProduction.setText(userInfoBean.getManaging_products());
+            if (userInfoBean.getApply_status()!=null && userInfoBean.getApply_status().equals("1")){
+                tvAddFriend.setVisibility(View.VISIBLE);
+            }else {
+                tvAddFriend.setVisibility(View.GONE);
+            }
         });
         userInfoVm.avatarLiveData.observe(this, s -> {
             ImageLoader.load(this, new ImageConfig.Builder()

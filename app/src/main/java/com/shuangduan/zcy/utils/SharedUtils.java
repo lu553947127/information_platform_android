@@ -1,43 +1,36 @@
 package com.shuangduan.zcy.utils;
 
-import android.content.Context;
-import android.content.SharedPreferences;
+import java.lang.ref.WeakReference;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SharedUtils {
 
-    private Context ctx;//上下文，获取去shared
+    private Map dataList = new HashMap<>();
+    private static volatile SharedUtils instance;
 
-    public SharedUtils(Context ctx){
-        this.ctx = ctx;
+    public static SharedUtils getInstance() {
+        if(instance==null) {
+            synchronized(SharedUtils.class) {
+                if(instance==null) {
+                    instance = new SharedUtils();
+                }
+            }
+        }
+        return instance;
     }
 
-    //本地存储方法
-    public void addShared(String key, String value , String name){
-        //SharedPreferences的获取
-        SharedPreferences shared = ctx.getSharedPreferences(name, Context.MODE_PRIVATE);
-        //editor->添加并提交内容以及clear
-        SharedPreferences.Editor editor = shared.edit();
-        //添加要保存内容
-        editor.putString(key, value);
-        //提交要保存内容
-        editor.commit();
+    public void setData(String key, Object o) {
+        WeakReference value =new WeakReference<>(o);
+        dataList.put(key, value);
     }
 
-    //本地获取方法
-    public String getShared(String key, String name){
-
-        //SharedPreferences的获取
-        SharedPreferences shared = ctx.getSharedPreferences(name, Context.MODE_PRIVATE);
-        //按照传入key获取value如果key不存在返回参数二添加的默认内容
-        String result = shared.getString(key, "-1");
-        return result;
-    }
-
-    //本地清空方法
-    public void clearShared(String name){
-        SharedPreferences shared = ctx.getSharedPreferences(name, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = shared.edit();
-        editor.clear();
-        editor.commit();
+    public Object getData(String key) {
+        WeakReference reference = (WeakReference) dataList.get(key);
+        if(reference !=null) {
+            Object o = reference.get();
+            return o;
+        }
+        return null;
     }
 }

@@ -16,6 +16,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
@@ -114,7 +115,6 @@ public class IMSearchActivity extends BaseActivity {
             RongIM.getInstance().startGroupChat(IMSearchActivity.this
                     , imFriendSearchBean.getData().getGroup().get(position).getGroup_id()
                     , imFriendSearchBean.getData().getGroup().get(position).getGroup_name());
-            ToastUtils.showShort(imFriendSearchBean.getData().getGroup().get(position).getGroup_name());
         });
 
         edtKeyword.addTextChangedListener(new TextWatcher() {
@@ -234,14 +234,14 @@ public class IMSearchActivity extends BaseActivity {
                 break;
             case R.id.tv_more_friend:
                 if (list!=null&&list.size()!=0){
-
+                    ActivityUtils.startActivity(IMFriendMoreActivity.class);
                 }else {
                     ToastUtils.showShort(getString(R.string.im_no_friend));
                 }
                 break;
             case R.id.tv_more_group:
                 if (list_group!=null&&list_group.size()!=0){
-
+                    ActivityUtils.startActivity(IMGroupMoreActivity.class);
                 }else {
                     ToastUtils.showShort(getString(R.string.im_no_group));
                 }

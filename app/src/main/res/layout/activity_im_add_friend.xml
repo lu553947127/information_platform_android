@@ -14,7 +14,7 @@
 
     <include android:id="@+id/toolbar" layout="@layout/toolbar"/>
 
-    <ImageView
+    <com.shuangduan.zcy.weight.CircleImageView
         android:id="@+id/iv_header"
         android:layout_width="48dp"
         android:layout_height="48dp"
@@ -32,7 +32,7 @@
         app:layout_constraintBottom_toTopOf="@+id/tv_content"
         android:layout_marginLeft="10dp"
         android:textColor="@color/colorTv"
-        android:textSize="14sp"/>
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/tv_content"
@@ -40,9 +40,10 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/tv_name"
         app:layout_constraintBottom_toBottomOf="@+id/iv_header"
-        app:layout_constraintRight_toLeftOf="@+id/tv_name"
+        app:layout_constraintLeft_toRightOf="@+id/iv_header"
+        android:layout_marginLeft="10dp"
         android:textColor="@color/color_666666"
-        android:textSize="12sp"/>
+        android:textSize="12sp" />
     
     <EditText
         android:id="@+id/edt_msg"

@@ -4,6 +4,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
+
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
 import com.blankj.utilcode.util.ActivityUtils;
@@ -21,6 +23,7 @@ import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseFragment;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
+import com.shuangduan.zcy.model.bean.IMFriendApplyCountBean;
 import com.shuangduan.zcy.model.bean.IMWechatGroupInfoBean;
 import com.shuangduan.zcy.model.bean.IMWechatUserInfoBean;
 import com.shuangduan.zcy.model.event.AvatarEvent;
@@ -29,6 +32,7 @@ import com.shuangduan.zcy.utils.image.ImageConfig;
 import com.shuangduan.zcy.utils.image.ImageLoader;
 import com.shuangduan.zcy.vm.UserInfoVm;
 import com.shuangduan.zcy.weight.CircleImageView;
+import com.shuangduan.zcy.weight.DragPointView;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -60,7 +64,11 @@ public class CircleFragment extends BaseFragment implements RongIM.UserInfoProvi
     View fakeStatusBar;
     @BindView(R.id.iv_header)
     CircleImageView iv_header;
+    @BindView(R.id.tv_number)
+    TextView tvNumber;
     private UserInfoVm userInfoVm;
+
+    int count=0;
 
     public static CircleFragment newInstance() {
 
@@ -84,7 +92,6 @@ public class CircleFragment extends BaseFragment implements RongIM.UserInfoProvi
     protected void initDataAndEvent(Bundle savedInstanceState) {
 
         BarUtils.setStatusBarColorRes(fakeStatusBar, getResources().getColor(R.color.colorPrimary));
-
         FragmentManager fragmentManage = getChildFragmentManager();
         ConversationListFragment fragement = (ConversationListFragment) fragmentManage.findFragmentById(R.id.conversationlist);
         Uri uri = Uri.parse("rong://" + MyApplication.getInstance().getApplicationInfo().packageName).buildUpon()
@@ -119,7 +126,7 @@ public class CircleFragment extends BaseFragment implements RongIM.UserInfoProvi
         });
         //根据 userId 去你的用户系统里查询对应的用户信息返回给融云 SDK。
         RongIM.setUserInfoProvider(this::getFriendData, true);
-
+        //设置群聊列表数据
         RongIM.setGroupInfoProvider(this::getGroupData,true);
     }
 
@@ -199,6 +206,49 @@ public class CircleFragment extends BaseFragment implements RongIM.UserInfoProvi
         return null;
     }
 
+    //好友申请数量
+    private void getFriendApplyCount() {
+
+        OkGo.<String>post(RetrofitHelper.BASE_TEST_URL+ Common.FRIEND_APPLY_COUNT)
+                .tag(this)
+                .headers("token", SPUtils.getInstance().getString(SpConfig.TOKEN))//请求头
+                .params("user_id", SPUtils.getInstance().getInt(SpConfig.USER_ID))//用户编号
+                .execute(new com.lzy.okgo.callback.StringCallback() {//返回值
+
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+                        LogUtils.i(response);
+                    }
+
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        LogUtils.i(response);
+                        Log.e("TAG","请求成功"+response.body());
+                        Gson gson=new Gson();
+                        try {
+                            IMFriendApplyCountBean bean=gson.fromJson(response.body(), IMFriendApplyCountBean.class);
+                            if (bean.getCode().equals("200")){
+                                count=bean.getData().getCount();
+                                if (count == 0) {
+                                    tvNumber.setVisibility(View.INVISIBLE);
+                                } else if (count > 0 && count < 100) {
+                                    tvNumber.setVisibility(View.VISIBLE);
+                                    tvNumber.setText(String.valueOf(count));
+                                } else {
+                                    tvNumber.setVisibility(View.VISIBLE);
+                                    tvNumber.setText(R.string.im_no_read_message);
+                                }
+                            }else {
+                                tvNumber.setVisibility(View.INVISIBLE);
+                            }
+                        }catch (JsonSyntaxException | IllegalStateException ignored){
+                            ToastUtils.showShort(getString(R.string.request_error));
+                        }
+                    }
+                });
+    }
+
     @Override
     protected void initDataFromService() {
         userInfoVm.userInfo();
@@ -231,5 +281,11 @@ public class CircleFragment extends BaseFragment implements RongIM.UserInfoProvi
     @Override
     public UserInfo getUserInfo(String userId) {
         return null;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getFriendApplyCount();
     }
 }
