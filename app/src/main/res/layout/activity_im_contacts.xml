@@ -48,14 +48,14 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:orientation="horizontal">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
             android:textColor="@color/color_40000000"
             android:textSize="13sp"
@@ -63,13 +63,46 @@
         <TextView
             android:layout_width="17dp"
             android:layout_height="17dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="5dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="75dp"
             android:background="@drawable/progressbar_red"
             android:textColor="@color/colorBgDark"
             android:gravity="center"
             android:textSize="11sp"
             android:text="1"/>
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/icon_next"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"/>
 
-    </LinearLayout>
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/divider_15" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:textColor="@color/color_40000000"
+            android:textSize="13sp"
+            android:text="@string/im_contacts_new_friend"/>
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/icon_next"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"/>
+
+    </RelativeLayout>
 </LinearLayout>

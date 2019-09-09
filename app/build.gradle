@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
         release {
-            storeFile file('/Users/luhongxiang/AndroidStudioProjects/information_platform_android/app/zcy.jks')
+            storeFile file('D:\\Android\\work\\information_platform_android\\app\\zcy.jks')
             storePassword 'boyuan123456'
             keyAlias = 'boyuan'
             keyPassword 'boyuan123456'
@@ -20,7 +20,7 @@ android {
 
         ndk {
             //选择要添加的对应 cpu 类型的 .so 库。
-            abiFilters "armeabi-v7a"
+            abiFilters "armeabi-v7a","x86"
             // 还可以添加 'x86', 'x86_64', 'mips', 'mips64', 'armeabi', 'arm64-v8a'
         }
 
