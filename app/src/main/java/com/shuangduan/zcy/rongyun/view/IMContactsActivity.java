@@ -42,6 +42,17 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import io.rong.imkit.RongIM;
 
+/**
+ * @author 鹿鸿祥 QQ:553947127
+ * @name information_platform_android
+ * @class name：com.shuangduan.zcy.rongyun.view
+ * @class describe  我的通讯录
+ * @time 2019/8/29 17:51
+ * @change
+ * @chang time
+ * @class describe
+ */
+
 public class IMContactsActivity extends BaseActivity {
 
     @BindView(R.id.tv_bar_title)
@@ -125,20 +136,22 @@ public class IMContactsActivity extends BaseActivity {
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        LogUtils.i(response);
+                        LogUtils.i(response.body());
                     }
 
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-                        LogUtils.i(response);
-                        Log.e("TAG","请求成功"+response.body());
-                        Gson gson=new Gson();
+                        LogUtils.i(response.body());
                         try {
-                             imGroupListBean=gson.fromJson(response.body(), IMGroupListBean.class);
+                             imGroupListBean=new Gson().fromJson(response.body(), IMGroupListBean.class);
                             if (imGroupListBean.getCode().equals("200")){
                                 listGroup.clear();
                                 listGroup.addAll(imGroupListBean.getData().getList());
-                                imGroupListAdapter.notifyDataSetChanged();
+                                if(listGroup!=null&&listGroup.size()!=0){
+                                    imGroupListAdapter.notifyDataSetChanged();
+                                }else {
+                                    imGroupListAdapter.setEmptyView(R.layout.layout_empty, rvGroup);
+                                }
                             }else {
                                 imGroupListAdapter.setEmptyView(R.layout.layout_empty, rvGroup);
                                 listGroup.clear();
@@ -162,20 +175,22 @@ public class IMContactsActivity extends BaseActivity {
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        LogUtils.i(response);
+                        LogUtils.i(response.body());
                     }
 
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-                        LogUtils.i(response);
-                        Log.e("TAG","请求成功"+response.body());
-                        Gson gson=new Gson();
+                        LogUtils.i(response.body());
                         try {
-                            imFriendListBean=gson.fromJson(response.body(), IMFriendListBean.class);
+                            imFriendListBean=new Gson().fromJson(response.body(), IMFriendListBean.class);
                             if (imFriendListBean.getCode().equals("200")){
                                 listFriend.clear();
                                 listFriend.addAll(imFriendListBean.getData().getList());
-                                imFriendListAdapter.notifyDataSetChanged();
+                                if(listFriend!=null&&listFriend.size()!=0){
+                                    imFriendListAdapter.notifyDataSetChanged();
+                                }else {
+                                    imFriendListAdapter.setEmptyView(R.layout.layout_empty, rvFriend);
+                                }
                             }else {
                                 imFriendListAdapter.setEmptyView(R.layout.layout_empty, rvFriend);
                                 listFriend.clear();
@@ -199,16 +214,14 @@ public class IMContactsActivity extends BaseActivity {
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        LogUtils.i(response);
+                        LogUtils.i(response.body());
                     }
 
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-                        LogUtils.i(response);
-                        Log.e("TAG","请求成功"+response.body());
-                        Gson gson=new Gson();
+                        LogUtils.i(response.body());
                         try {
-                            IMFriendApplyCountBean bean=gson.fromJson(response.body(), IMFriendApplyCountBean.class);
+                            IMFriendApplyCountBean bean=new Gson().fromJson(response.body(), IMFriendApplyCountBean.class);
                             if (bean.getCode().equals("200")){
                                 if (bean.getData().getCount()!=0){
                                     tvNumber.setText(String.valueOf(bean.getData().getCount()));

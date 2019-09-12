@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include layout="@layout/toolbar"/>
+    <com.shuangduan.zcy.utils.ElasticScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorBgDark">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorFFF">
+                <TextView
+                    android:id="@+id/tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/shape_home_mark"
+                    android:drawablePadding="7dp"
+                    android:layout_marginTop="10dp"
+                    android:paddingLeft="16dp"
+                    android:textColor="@color/colorTv"
+                    android:textSize="15sp"
+                    android:text="群成员"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv"
+                    android:layout_marginTop="10dp"/>
+            </RelativeLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/selector_bg_custom"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="14dp"
+                android:paddingRight="14dp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/colorTv"
+                    android:textSize="14sp"
+                    android:text="@string/im_group_details_name"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="87dp"
+                    android:singleLine="true"
+                    android:textColor="@color/color_666666"
+                    android:textSize="14sp"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_gravity="bottom"
+                    android:background="@color/colorDivider"/>
+
+            </FrameLayout>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/selector_bg_custom"
+                android:paddingLeft="14dp"
+                android:paddingRight="14dp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/colorTv"
+                    android:textSize="14sp"
+                    android:text="@string/im_group_details_address"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="87dp"
+                    android:singleLine="true"
+                    android:textColor="@color/color_666666"
+                    android:textSize="14sp"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_gravity="bottom"
+                    android:background="@color/colorDivider"/>
+
+            </FrameLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/selector_bg_custom"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="14dp"
+                android:paddingRight="14dp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/colorTv"
+                    android:textSize="14sp"
+                    android:text="@string/im_group_details_no_message"/>
+
+                <com.shuangduan.zcy.weight.SwitchView
+                    android:id="@+id/sv"
+                    android:layout_width="48dp"
+                    android:layout_height="40dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="15dp"/>
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_add_friend"
+                android:layout_width="335dp"
+                style="@style/BtnConfirm"
+                android:layout_marginTop="35dp"
+                android:text="@string/im_group_exit_group"
+                android:visibility="gone"/>
+        </LinearLayout>
+    </com.shuangduan.zcy.utils.ElasticScrollView>
+
+</LinearLayout>

@@ -2,12 +2,17 @@ package com.shuangduan.zcy.rongyun.view;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.base.BaseActivity;
 
@@ -19,7 +24,7 @@ import io.rong.imkit.fragment.ConversationFragment;
 import io.rong.imlib.model.Conversation;
 
 /**
- * @author 宁文强 QQ:858777523
+ * @author 鹿鸿祥 QQ:553947127
  * @name information_platform_android
  * @class name：com.shuangduan.zcy.rongyun.view
  * @class describe  单聊页面
@@ -34,6 +39,10 @@ public class IMPrivateChatActivity extends BaseActivity {
     AppCompatTextView tvBarTitle;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.tv_bar_right)
+    TextView tvBarRight;
+    @BindView(R.id.iv_bar_right)
+    ImageView ivBarRight;
 
     private ConversationFragment fragment;
     private Conversation.ConversationType mConversationType;
@@ -56,8 +65,12 @@ public class IMPrivateChatActivity extends BaseActivity {
                 .getLastPathSegment().toUpperCase(Locale.US));
         user_id = getIntent().getData().getQueryParameter("targetId");
         tvBarTitle.setText(getIntent().getData().getQueryParameter("title"));
-
         enterFragment(mConversationType, user_id);//加载页面
+        //判断是否为群聊还是单聊
+        if (mConversationType.getName().equals("group")){
+            tvBarRight.setVisibility(View.GONE);
+            ivBarRight.setImageResource(R.drawable.icon_more);
+        }
     }
 
     //加载会话页面
@@ -72,6 +85,17 @@ public class IMPrivateChatActivity extends BaseActivity {
         transaction.commitAllowingStateLoss();
     }
 
-    @OnClick(R.id.iv_bar_back)
-    void onClick(){finish();}
+    @OnClick({R.id.iv_bar_back,R.id.iv_bar_right})
+    void onClick(View view){
+        switch (view.getId()){
+            case R.id.iv_bar_back:
+                finish();
+                break;
+            case R.id.iv_bar_right:
+                Bundle bundle = new Bundle();
+                bundle.putString("group_id", user_id);
+                ActivityUtils.startActivity(bundle,IMGroupDetailsActivity.class);
+                break;
+        }
+    }
 }

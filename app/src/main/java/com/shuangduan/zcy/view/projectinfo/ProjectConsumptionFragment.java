@@ -10,13 +10,18 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.ActivityUtils;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ConsumptionAdapter;
+import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseLazyFragment;
+import com.shuangduan.zcy.model.bean.ConsumeBean;
+import com.shuangduan.zcy.view.mine.UserInfoActivity;
 import com.shuangduan.zcy.vm.ProjectDetailVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
@@ -66,6 +71,13 @@ public class ProjectConsumptionFragment extends BaseLazyFragment {
         consumptionAdapter = new ConsumptionAdapter(R.layout.item_consumption, null);
         consumptionAdapter.setEmptyView(R.layout.layout_loading_top, rvConsumption);
         rvConsumption.setAdapter(consumptionAdapter);
+
+        consumptionAdapter.setOnItemClickListener((adapter, view, position) -> {
+            ConsumeBean.ListBean bean=consumptionAdapter.getData().get(position);
+            Bundle bundle = new Bundle();
+            bundle.putInt(CustomConfig.UID, Integer.parseInt(String.valueOf(bean.getUser_id())));
+            ActivityUtils.startActivity(bundle, UserInfoActivity.class);
+        });
 
         refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override

@@ -31,6 +31,7 @@ import com.shuangduan.zcy.model.event.MultiAreaEvent;
 import com.shuangduan.zcy.model.event.OfficeEvent;
 import com.shuangduan.zcy.model.event.ProductionEvent;
 import com.shuangduan.zcy.model.event.UserNameEvent;
+import com.shuangduan.zcy.rongyun.view.IMAddFriendActivity;
 import com.shuangduan.zcy.utils.AndroidBug5497Workaround;
 import com.shuangduan.zcy.utils.image.ImageConfig;
 import com.shuangduan.zcy.utils.image.ImageLoader;
@@ -154,7 +155,9 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
                 tvBusinessExp.setText(getResources().getStringArray(R.array.experience_list)[userInfoBean.getExperience() - 1] + "年");
             tvProduction.setText(userInfoBean.getManaging_products());
             if (userInfoBean.getApply_status()!=null && userInfoBean.getApply_status().equals("1")){
-                tvAddFriend.setVisibility(View.VISIBLE);
+                if (SPUtils.getInstance().getInt(SpConfig.USER_ID)!=uid){
+                    tvAddFriend.setVisibility(View.VISIBLE);
+                }
             }else {
                 tvAddFriend.setVisibility(View.GONE);
             }
@@ -256,7 +259,8 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
     }
 
     @OnClick({R.id.iv_bar_back, R.id.iv_user, R.id.fl_name, R.id.fl_sex, R.id.fl_mobile, R.id.fl_email, R.id.fl_id_card,
-            R.id.fl_company, R.id.fl_office, R.id.fl_business_area, R.id.fl_business_exp, R.id.tv_production_tip, R.id.tv_production})
+            R.id.fl_company, R.id.fl_office, R.id.fl_business_area, R.id.fl_business_exp, R.id.tv_production_tip, R.id.tv_production
+            ,R.id.tv_add_friend})
     void onClick(View view) {
         Bundle bundle = new Bundle();
         switch (view.getId()) {
@@ -330,6 +334,11 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
             case R.id.tv_production:
                 bundle.putString(CustomConfig.PRODUCTION, tvProduction.getText().toString());
                 ActivityUtils.startActivity(bundle, UpdateProductionActivity.class);
+                break;
+            case R.id.tv_add_friend:
+                bundle.putInt(CustomConfig.FRIEND_DATA, 0);
+
+                ActivityUtils.startActivity(bundle, IMAddFriendActivity.class);
                 break;
         }
     }

@@ -1,8 +1,10 @@
 package com.shuangduan.zcy.adapter;
 
+import android.annotation.SuppressLint;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -29,6 +31,7 @@ public class NewFriendAdapter extends BaseQuickAdapter<IMFriendApplyListBean.Dat
         super(layoutResId, data);
     }
 
+    @SuppressLint("NewApi")
     @Override
     protected void convert(BaseViewHolder helper, IMFriendApplyListBean.DataBean.ListBean item) {
         helper.setText(R.id.tv_name, item.getUsername())
@@ -50,11 +53,13 @@ public class NewFriendAdapter extends BaseQuickAdapter<IMFriendApplyListBean.Dat
                 break;
             case 2:
                 tvAccept.setText("已接受");
-                tvAccept.setBackgroundColor(mContext.getResources().getColor(R.color.color_F4F2F7));
+                tvAccept.setBackground(mContext.getDrawable(R.drawable.shape_btn_confirm_gray_20));
+                tvAccept.setTextColor(ContextCompat.getColor(mContext,R.color.color_646464));
                 break;
             case 3:
                 tvAccept.setText("已拒绝");
-                tvAccept.setBackgroundColor(mContext.getResources().getColor(R.color.color_F4F2F7));
+                tvAccept.setBackground(mContext.getDrawable(R.drawable.shape_btn_confirm_gray_20));
+                tvAccept.setTextColor(ContextCompat.getColor(mContext,R.color.color_646464));
                 break;
         }
     }

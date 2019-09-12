@@ -129,4 +129,5 @@ dependencies {
 
     //带侧滑删除的列表
     implementation 'com.yanzhenjie:recyclerview-swipe:1.1.4'
+    api 'com.android.support:support-v4:26.0.0'
 }

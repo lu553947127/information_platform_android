@@ -1,18 +1,13 @@
 package com.shuangduan.zcy.rongyun.view;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.LogUtils;
@@ -29,18 +24,16 @@ import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
 import com.shuangduan.zcy.model.bean.IMFriendOperationBean;
-import com.shuangduan.zcy.model.bean.IMFriendSearchBean;
+import com.shuangduan.zcy.model.bean.UserInfoBean;
 import com.shuangduan.zcy.utils.image.ImageConfig;
 import com.shuangduan.zcy.utils.image.ImageLoader;
-import com.shuangduan.zcy.vm.IMAddVm;
 import com.shuangduan.zcy.weight.CircleImageView;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * @author 宁文强 QQ:858777523
+ * @author 鹿鸿祥 QQ:553947127
  * @name information_platform_android
  * @class name：com.shuangduan.zcy.rongyun.view
  * @class describe  融云加好友
@@ -65,7 +58,7 @@ public class IMAddFriendActivity extends BaseActivity {
     TextView tvContent;
     @BindView(R.id.edt_msg)
     EditText edtMsg;
-
+    int friend_data;
     private String id,name,msg,image;
 
     @Override
@@ -81,7 +74,7 @@ public class IMAddFriendActivity extends BaseActivity {
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.setStatusBarColor(fakeStatusBar, getResources().getColor(R.color.colorPrimary));
-        int friend_data = getIntent().getIntExtra(CustomConfig.FRIEND_DATA, 0);
+        friend_data = getIntent().getIntExtra(CustomConfig.FRIEND_DATA, 0);
         if (friend_data==3){
             tvBarTitle.setText(getString(R.string.refuse_friends));
         }else {
@@ -120,21 +113,54 @@ public class IMAddFriendActivity extends BaseActivity {
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        LogUtils.i(response);
+                        LogUtils.i(response.body());
                     }
 
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-                        LogUtils.i(response);
-                        Log.e("TAG","请求成功"+response.body());
-                        Gson gson=new Gson();
+                        LogUtils.i(response.body());
                         try {
-                            IMFriendOperationBean bean=gson.fromJson(response.body(), IMFriendOperationBean.class);
-                            Log.e("TAG","bean.getCode()"+bean.getCode());
+                            IMFriendOperationBean bean=new Gson().fromJson(response.body(), IMFriendOperationBean.class);
                             if (bean.getCode().equals("200")){
                                 finish();
                             }else {
                                 ToastUtils.showShort(getString(R.string.request_error));
+                            }
+                        }catch (JsonSyntaxException | IllegalStateException ignored){
+                            ToastUtils.showShort(getString(R.string.request_error));
+                        }
+                    }
+                });
+    }
+
+    //好友添加/拒绝验证
+    private void getFriendApply(String user_id,String msg) {
+
+        OkGo.<String>post(RetrofitHelper.BASE_TEST_URL+ Common.FRIEND_APPLY)
+                .tag(this)
+                .headers("token", SPUtils.getInstance().getString(SpConfig.TOKEN))//请求头
+                .params("user_id", SPUtils.getInstance().getInt(SpConfig.USER_ID))//用户编号
+                .params("receive_user_id",user_id)//接受/拒绝用户编号
+                .params("msg",msg)//接受/拒绝原因
+                .execute(new com.lzy.okgo.callback.StringCallback() {//返回值
+
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+                        LogUtils.i(response.body());
+                        ToastUtils.showShort(getString(R.string.request_error));
+                    }
+
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        LogUtils.i(response.body());
+                        try {
+                            IMFriendOperationBean bean=new Gson().fromJson(response.body(), IMFriendOperationBean.class);
+                            if (bean.getCode().equals("200")){
+                                ToastUtils.showShort(bean.getMsg());
+                                finish();
+                            }else {
+                                ToastUtils.showShort(bean.getMsg());
                             }
                         }catch (JsonSyntaxException | IllegalStateException ignored){
                             ToastUtils.showShort(getString(R.string.request_error));
@@ -150,7 +176,11 @@ public class IMAddFriendActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_confirm:
-                getFriendOperation(id,"3",edtMsg.getText().toString());
+                if (friend_data==3){
+                    getFriendOperation(id,"3",edtMsg.getText().toString());
+                }else {
+                    getFriendApply(id,edtMsg.getText().toString());
+                }
                 break;
         }
     }

@@ -1,6 +1,7 @@
 package com.shuangduan.zcy.view.projectinfo;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
@@ -8,8 +9,10 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
+import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.utils.image.ImageConfig;
 import com.shuangduan.zcy.utils.image.ImageLoader;
@@ -50,6 +53,8 @@ public class LocusOwnerDetailActivity extends BaseActivity {
     AppCompatTextView tvBusinessExp;
     @BindView(R.id.tv_production)
     TextView tvProduction;
+    @BindView(R.id.tv_add_friend)
+    TextView tvAddFriend;
     private UserInfoVm userInfoVm;
 
     @Override
@@ -93,6 +98,11 @@ public class LocusOwnerDetailActivity extends BaseActivity {
                     .errorPic(R.drawable.default_head)
                     .imageView(ivUser)
                     .build());
+            if (userInfoBean.getApply_status()!=null && userInfoBean.getApply_status().equals("1")){
+                tvAddFriend.setVisibility(View.VISIBLE);
+            }else {
+                tvAddFriend.setVisibility(View.GONE);
+            }
         });
         userInfoVm.pageStateLiveData.observe(this, s -> {
             showPageState(s);

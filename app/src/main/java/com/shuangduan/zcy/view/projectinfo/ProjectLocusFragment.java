@@ -27,7 +27,6 @@ import com.shuangduan.zcy.dialog.PayDialog;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.TrackBean;
 import com.shuangduan.zcy.model.event.RefreshViewLocusEvent;
-import com.shuangduan.zcy.view.PayActivity;
 import com.shuangduan.zcy.view.PhotoViewActivity;
 import com.shuangduan.zcy.view.mine.SetPwdPayActivity;
 import com.shuangduan.zcy.view.recharge.RechargeActivity;

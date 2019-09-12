@@ -2,12 +2,22 @@ package com.shuangduan.zcy.app;
 
 public class Common {
 
+    //人员详情
+    public static final String USER_INFO="/api/Userinfo/information";
     //好友群组搜索列表
     public static final String FRIEND_SEARCH="/api/Friend/search";
+    //搜索 更多好友列表
+    public static final String SEARCH_FRIEND="/api/Friend/searchFriend";
+    //搜索 更多群聊列表
+    public static final String SEARCH_GROUP="/api/Friend/searchGroup";
     //会话列表人员头像名称显示
     public static final String WECHAT_USER_INFO="/api/Wechat/userInfo";
     //会话列表群组头像名称显示
     public static final String WECHAT_GROUP_INFO="/api/wechat/groupInfo";
+    //群聊详情
+    public static final String WECHAT_GROUP="/api/Wechat/groupList";
+    //好友添加验证
+    public static final String FRIEND_APPLY="/api/Friend/apply";
 
     //通讯录 群组列表
     public static final String WECHAT_MY_GROUP="/api/wechat/myGroup";

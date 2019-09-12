@@ -30,7 +30,7 @@
 
     <style name="BtnConfirmGray" parent="BtnConfirm">
         <item name="android:background">@drawable/shape_btn_confirm_gray_20</item>
-        <item name="android:textColor">@color/color_666666</item>
+        <item name="android:textColor">@color/color_646464</item>
     </style>
 
     <style name="MessageHint">

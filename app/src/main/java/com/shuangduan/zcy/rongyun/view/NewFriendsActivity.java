@@ -49,7 +49,7 @@ import io.rong.imlib.model.Message;
 import io.rong.message.TextMessage;
 
 /**
- * @author 宁文强 QQ:858777523
+ * @author 鹿鸿祥 QQ:553947127
  * @name information_platform_android
  * @class name：com.shuangduan.zcy.rongyun.view
  * @class describe  新的好友列表
@@ -109,6 +109,7 @@ public class NewFriendsActivity extends BaseActivity {
             }
         });
 
+        refresh.setEnableLoadMore(false);
         refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
@@ -141,12 +142,12 @@ public class NewFriendsActivity extends BaseActivity {
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
                         LogUtils.i(response);
                         Log.e("TAG","请求成功"+response.body());
-                        Gson gson=new Gson();
                         try {
-                            imFriendApplyListBean=gson.fromJson(response.body(), IMFriendApplyListBean.class);
+                            imFriendApplyListBean=new Gson().fromJson(response.body(), IMFriendApplyListBean.class);
                             if (imFriendApplyListBean.getCode().equals("200")){
                                 list.clear();
                                 list.addAll(imFriendApplyListBean.getData().getList());
+                                setNoMore(imFriendApplyListBean.getData().getPage(),imFriendApplyListBean.getData().getCount());
                                 if(list!=null&&list.size()!=0){
                                     newFriendAdapter.notifyDataSetChanged();
                                 }else {
@@ -185,9 +186,8 @@ public class NewFriendsActivity extends BaseActivity {
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
                         LogUtils.i(response);
                         Log.e("TAG","请求成功"+response.body());
-                        Gson gson=new Gson();
                         try {
-                            IMFriendOperationBean bean=gson.fromJson(response.body(), IMFriendOperationBean.class);
+                            IMFriendOperationBean bean=new Gson().fromJson(response.body(), IMFriendOperationBean.class);
                             if (bean.getCode().equals("200")){
                                 getNewFriendList();
                             }else {
@@ -199,7 +199,6 @@ public class NewFriendsActivity extends BaseActivity {
                     }
                 });
     }
-
 
     private void setNoMore(int page, int count){
         if (page == 1){

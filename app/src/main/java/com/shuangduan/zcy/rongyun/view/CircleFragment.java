@@ -1,9 +1,11 @@
 package com.shuangduan.zcy.rongyun.view;
 
+import android.annotation.SuppressLint;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.fragment.app.FragmentManager;
@@ -12,6 +14,9 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.lzy.okgo.OkGo;
@@ -32,18 +37,14 @@ import com.shuangduan.zcy.utils.image.ImageConfig;
 import com.shuangduan.zcy.utils.image.ImageLoader;
 import com.shuangduan.zcy.vm.UserInfoVm;
 import com.shuangduan.zcy.weight.CircleImageView;
-import com.shuangduan.zcy.weight.DragPointView;
+import com.shuangduan.zcy.weight.NoScrollViewPager;
 
 import org.greenrobot.eventbus.Subscribe;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.rong.imkit.RongIM;
-import io.rong.imkit.RongIM.GroupInfoProvider;
 import io.rong.imkit.fragment.ConversationListFragment;
-import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Group;
 import io.rong.imlib.model.UserInfo;
@@ -67,8 +68,10 @@ public class CircleFragment extends BaseFragment implements RongIM.UserInfoProvi
     @BindView(R.id.tv_number)
     TextView tvNumber;
     private UserInfoVm userInfoVm;
-
-    int count=0;
+    private NoScrollViewPager viewPager;
+    private RelativeLayout relativeLayout;
+    private TextView number;
+    private int count=0;
 
     public static CircleFragment newInstance() {
 
@@ -88,6 +91,7 @@ public class CircleFragment extends BaseFragment implements RongIM.UserInfoProvi
         return false;
     }
 
+    @SuppressLint("CutPasteId")
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
 
@@ -124,10 +128,33 @@ public class CircleFragment extends BaseFragment implements RongIM.UserInfoProvi
                     break;
             }
         });
+
+        getBadgeViewInitView();
+
         //根据 userId 去你的用户系统里查询对应的用户信息返回给融云 SDK。
         RongIM.setUserInfoProvider(this::getFriendData, true);
         //设置群聊列表数据
         RongIM.setGroupInfoProvider(this::getGroupData,true);
+    }
+
+    //设置底部消息提醒数字布局
+    private void getBadgeViewInitView() {
+        viewPager= getActivity().findViewById(R.id.view_pager);
+        //底部标题栏右上角标设置
+        //获取整个的NavigationView
+        BottomNavigationView navigation =getActivity().findViewById(R.id.navigation);
+        BottomNavigationMenuView menuView = (BottomNavigationMenuView) navigation.getChildAt(0);
+        //这里就是获取所添加的每一个Tab(或者叫menu)，设置在标题栏的位置
+        View tab = menuView.getChildAt(2);
+        BottomNavigationItemView itemView = (BottomNavigationItemView) tab;
+        //加载我们的角标View，新创建的一个布局
+        View badge = LayoutInflater.from(getContext()).inflate(R.layout.layout_apply_count, menuView, false);
+        //添加到Tab上
+        itemView.addView(badge);
+        //显示角标数字
+        relativeLayout = badge.findViewById(R.id.rl);
+        //显示/隐藏整个视图
+        number=badge.findViewById(R.id.number);
     }
 
     //会话列表头像名称显示
@@ -143,19 +170,18 @@ public class CircleFragment extends BaseFragment implements RongIM.UserInfoProvi
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        LogUtils.i(response);
+                        LogUtils.i(response.body());
                     }
 
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-                        LogUtils.i(response);
-                        Log.e("TAG","请求成功"+response.body());
-                        Gson gson=new Gson();
+                        LogUtils.i(response.body());
                         try {
-                            IMWechatUserInfoBean bean=gson.fromJson(response.body(),IMWechatUserInfoBean.class);
+                            IMWechatUserInfoBean bean=new Gson().fromJson(response.body(),IMWechatUserInfoBean.class);
                             if (bean.getCode().equals("200")){
                                 RongIM.getInstance().refreshUserInfoCache(new UserInfo(bean.getData().getUserId()
-                                        ,bean.getData().getName(),Uri.parse(bean.getData().getPortraitUri())));
+                                        ,bean.getData().getName()
+                                        ,Uri.parse(bean.getData().getPortraitUri())));
                             }else {
                                 ToastUtils.showShort(getString(R.string.request_error));
                             }
@@ -180,19 +206,17 @@ public class CircleFragment extends BaseFragment implements RongIM.UserInfoProvi
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        LogUtils.i(response);
+                        LogUtils.i(response.body());
                     }
 
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-                        LogUtils.i(response);
-                        Log.e("TAG","请求成功"+response.body());
-                        Gson gson=new Gson();
+                        LogUtils.i(response.body());
                         try {
-                            IMWechatGroupInfoBean bean=gson.fromJson(response.body(),IMWechatGroupInfoBean.class);
+                            IMWechatGroupInfoBean bean=new Gson().fromJson(response.body(),IMWechatGroupInfoBean.class);
                             if (bean.getCode().equals("200")){
-                                Group groupInfo;
-                                groupInfo = new Group(bean.getData().getGroupId(), bean.getData().getGroupName()
+                                Group groupInfo = new Group(bean.getData().getGroupId()
+                                        , bean.getData().getGroupName()
                                         , Uri.parse(bean.getData().getGroupName()));
                                 RongIM.getInstance().refreshGroupInfoCache(groupInfo);
                             }else {
@@ -207,7 +231,7 @@ public class CircleFragment extends BaseFragment implements RongIM.UserInfoProvi
     }
 
     //好友申请数量
-    private void getFriendApplyCount() {
+    private void getFriendApplyCount(int i) {
 
         OkGo.<String>post(RetrofitHelper.BASE_TEST_URL+ Common.FRIEND_APPLY_COUNT)
                 .tag(this)
@@ -218,16 +242,14 @@ public class CircleFragment extends BaseFragment implements RongIM.UserInfoProvi
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        LogUtils.i(response);
+                        LogUtils.i(response.body());
                     }
 
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-                        LogUtils.i(response);
-                        Log.e("TAG","请求成功"+response.body());
-                        Gson gson=new Gson();
+                        LogUtils.i(response.body());
                         try {
-                            IMFriendApplyCountBean bean=gson.fromJson(response.body(), IMFriendApplyCountBean.class);
+                            IMFriendApplyCountBean bean=new Gson().fromJson(response.body(), IMFriendApplyCountBean.class);
                             if (bean.getCode().equals("200")){
                                 count=bean.getData().getCount();
                                 if (count == 0) {
@@ -238,6 +260,17 @@ public class CircleFragment extends BaseFragment implements RongIM.UserInfoProvi
                                 } else {
                                     tvNumber.setVisibility(View.VISIBLE);
                                     tvNumber.setText(R.string.im_no_read_message);
+                                }
+                                //设置底部标签数量
+                                int counts=i+count;
+                                if (counts < 1) {
+                                    relativeLayout.setVisibility(View.GONE);
+                                } else if (counts < 100) {
+                                    relativeLayout.setVisibility(View.VISIBLE);
+                                    number.setText(" " + counts + " ");
+                                } else {
+                                    relativeLayout.setVisibility(View.VISIBLE);
+                                    number.setText("99+");
                                 }
                             }else {
                                 tvNumber.setVisibility(View.INVISIBLE);
@@ -264,7 +297,7 @@ public class CircleFragment extends BaseFragment implements RongIM.UserInfoProvi
                 .build());
     }
 
-    @OnClick({R.id.tv_bar_title, R.id.iv_message})
+    @OnClick({R.id.tv_bar_title, R.id.iv_message,R.id.iv_header})
     void onClick(View view){
         switch (view.getId()){
             case R.id.tv_bar_title:
@@ -272,6 +305,9 @@ public class CircleFragment extends BaseFragment implements RongIM.UserInfoProvi
                 break;
             case R.id.iv_message:
                 ActivityUtils.startActivity(IMContactsActivity.class);
+                break;
+            case R.id.iv_header:
+                viewPager.setCurrentItem(3);
                 break;
                 default:
                     break;
@@ -286,6 +322,10 @@ public class CircleFragment extends BaseFragment implements RongIM.UserInfoProvi
     @Override
     public void onResume() {
         super.onResume();
-        getFriendApplyCount();
+        RongIM.getInstance().addUnReadMessageCountChangedObserver(i -> {
+            LogUtils.i(i);
+            // i 是未读数量
+            getFriendApplyCount(i);
+        }, Conversation.ConversationType.PRIVATE,Conversation.ConversationType.GROUP);
     }
 }

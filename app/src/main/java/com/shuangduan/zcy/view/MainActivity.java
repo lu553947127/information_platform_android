@@ -6,73 +6,47 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.KeyEvent;
-import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.viewpager.widget.ViewPager;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.shuangduan.zcy.R;
+import com.shuangduan.zcy.adapter.FragmentAdapter;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.rongyun.view.CircleFragment;
 import com.shuangduan.zcy.view.login.UserInfoInputActivity;
 import com.shuangduan.zcy.vm.AuthenticationVm;
 import com.shuangduan.zcy.vm.IMConnectVm;
+import com.shuangduan.zcy.weight.NoScrollViewPager;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import cn.jpush.android.api.JPushInterface;
-import io.rong.imkit.RongIM;
-import io.rong.imlib.RongIMClient;
 
 import static com.shuangduan.zcy.app.AppConfig.APP_ID;
 
 public class MainActivity extends BaseActivity {
 
-    @BindView(R.id.rg_main)
-    RadioGroup rgMain;
-
-    private Fragment[] fragments = new Fragment[4];
-
-    private String[] tags = {
-            "home",
-            "people",
-            "circle",
-            "mine"
-    };
-
-    /**
-     * 默认选中
-     */
-    private int currentChecked = 0;
-    /**
-     * 上一次选中
-     */
-    private int oldChecked = -1;
-
-    @Override
-    public void onAttachFragment(@NonNull Fragment fragment) {
-        getSwipeBackLayout().setEnableGesture(false);
-        if (fragments[0] == null && fragment instanceof HomeFragment)
-            fragments[0] = fragment;
-        if (fragments[1] == null && fragment instanceof PeopleFragment)
-            fragments[1] = fragment;
-        if (fragments[2] == null && fragment instanceof CircleFragment)
-            fragments[2] = fragment;
-        if (fragments[3] == null && fragment instanceof MineFragment)
-            fragments[3] = fragment;
-    }
+    @BindView(R.id.navigation)
+    BottomNavigationView navigation;
+    @BindView(R.id.view_pager)
+    NoScrollViewPager viewPager;
+    List<Fragment> mFragments;
+    FragmentAdapter fragmentAdapter;
 
     @Override
     protected int initLayoutRes() {
@@ -85,51 +59,16 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
+    public void onAttachFragment(@NonNull Fragment fragment) {
+        super.onAttachFragment(fragment);
+        getSwipeBackLayout().setEnableGesture(false);
+    }
+
+    @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         regToWx();
         setAlias();
-        if (fragments[0] == null) {
-            fragments[0] = HomeFragment.newInstance();
-        }
-        if (fragments[1] == null) {
-            fragments[1] = PeopleFragment.newInstance();
-        }
-        if (fragments[2] == null) {
-            fragments[2] = CircleFragment.newInstance();
-        }
-        if (fragments[3] == null) {
-            fragments[3] = MineFragment.newInstance();
-        }
-
-        //初始化选中首页
-        rgMain.check(R.id.rb_home);
-        switchFragment(currentChecked);
-
-        rgMain.setOnCheckedChangeListener((group, checkedId) -> {
-
-            oldChecked = currentChecked;
-
-            switch (checkedId) {
-                case R.id.rb_home:
-                    currentChecked = 0;
-                    break;
-                case R.id.rb_people:
-                    currentChecked = 1;
-                    break;
-                case R.id.rb_circle:
-                    currentChecked = 2;
-                    break;
-                case R.id.rb_mine:
-                    currentChecked = 3;
-                    break;
-            }
-            //选中项不变不做处理
-            if (oldChecked != currentChecked) {
-                switchFragment(currentChecked);
-            }
-
-        });
-
+        initBottomNavigation();
         checkInfoState();
         //初始实名状态查询
         AuthenticationVm authenticationVm = ViewModelProviders.of(this).get(AuthenticationVm.class);
@@ -146,32 +85,71 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    /**
-     * 切换fragment
-     * @param position
-     */
-    private void switchFragment(int position) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-
-        if (!fragments[position].isAdded()) {
-            //存在上一个界面，先隐藏
-            if (oldChecked == -1) {
-                transaction.add(R.id.frame_main, fragments[position], tags[position])
-                        .commit();
-            } else {
-                transaction.add(R.id.frame_main, fragments[position], tags[position])
-                        .hide(fragments[oldChecked])
-                        .commit();
+    //底部标签栏点击切换
+    public void initBottomNavigation() {
+        //fragment布局初始化
+        mFragments = new ArrayList<>();
+        mFragments.add(HomeFragment.newInstance());
+        mFragments.add(PeopleFragment.newInstance());
+        mFragments.add(CircleFragment.newInstance());
+        mFragments.add(MineFragment.newInstance());
+        fragmentAdapter=new FragmentAdapter(getSupportFragmentManager(),this,mFragments);
+        viewPager.setAdapter(fragmentAdapter);
+        //设置默认首页为第一个fragment
+        viewPager.setCurrentItem(0);
+        navigation.setOnNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.menu_home:
+                    viewPager.setCurrentItem(0);
+                    break;
+                case R.id.menu_people:
+                    viewPager.setCurrentItem(1);
+                    break;
+                case R.id.menu_circle:
+                    viewPager.setCurrentItem(2);
+                    break;
+                case R.id.menu_mime:
+                    viewPager.setCurrentItem(3);
+                    break;
+                default:
+                    break;
             }
-        } else {
-            FragmentTransaction show = transaction.show(fragments[position]);
-            if (oldChecked != -1) {
-                show.hide(fragments[oldChecked]);
-            }
-            show.commit();
-        }
+            // 这里注意返回true,否则点击失效
+            return true;
+        });
 
+        //viewpager+fragment联合navigation使用多页面间切换监听
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                //注意这个方法滑动时会调用多次，下面是参数解释：
+                //position当前所处页面索引,滑动调用的最后一次绝对是滑动停止所在页面
+                //positionOffset:表示从位置的页面偏移的[0,1]的值。
+                //positionOffsetPixels:以像素为单位的值，表示与位置的偏移
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                //该方法只在滑动停止时调用，position滑动停止所在页面位置
+                //当滑动到某一位置，导航栏对应位置被按下
+                navigation.getMenu().getItem(position).setChecked(true);
+                //这里使用navigation.setSelectedItemId(position);无效，
+                //setSelectedItemId(position)的官网原句：Set the selected
+                //menu item ID. This behaves the same as tapping on an item
+                //未找到原因
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                //这个方法在滑动是调用三次，分别对应下面三种状态
+                //这个方法对于发现用户何时开始拖动，
+                //何时寻呼机自动调整到当前页面，或何时完全停止/空闲非常有用。
+                //state表示新的滑动状态，有三个值：
+                //SCROLL_STATE_IDLE：开始滑动（空闲状态->滑动），实际值为0
+                //SCROLL_STATE_DRAGGING：正在被拖动，实际值为1
+                //SCROLL_STATE_SETTLING：拖动结束,实际值为2
+            }
+        });
     }
 
     /**
@@ -238,5 +216,4 @@ public class MainActivity extends BaseActivity {
             JPushInterface.setAlias(this, userId, String.valueOf(userId));
         }
     }
-
 }

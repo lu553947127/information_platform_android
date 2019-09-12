@@ -3,57 +3,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.MainActivity">
 
-    <FrameLayout
-        android:id="@+id/frame_main"
+    <com.shuangduan.zcy.weight.NoScrollViewPager
+        android:id="@+id/view_pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorBgDark"
-        android:layout_above="@+id/line1">
+        android:layout_height="match_parent">
 
-    </FrameLayout>
+    </com.shuangduan.zcy.weight.NoScrollViewPager>
 
-    <View
-        android:id="@+id/line1"
-        android:background="@color/colorDivider"
-        android:layout_above="@+id/rg_main"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/navigation"
         android:layout_width="match_parent"
-        android:layout_height="1px"/>
-
-    <RadioGroup
-        android:id="@+id/rg_main"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/colorFFF">
+        android:background="@color/colorFFF"
+        app:itemIconTint="@drawable/bottom_navigation_item_selector"
+        app:itemTextColor="@drawable/bottom_navigation_item_selector"
+        app:menu="@menu/btn_menu"
+        app:labelVisibilityMode="labeled" >
 
-        <androidx.appcompat.widget.AppCompatRadioButton
-            android:id="@+id/rb_home"
-            style="@style/MainRb"
-            android:checked="true"
-            android:drawableTop="@drawable/selector_home"
-            android:text="@string/home"/>
-
-        <androidx.appcompat.widget.AppCompatRadioButton
-            android:id="@+id/rb_people"
-            style="@style/MainRb"
-            android:drawableTop="@drawable/selector_people"
-            android:text="@string/people"/>
-
-        <androidx.appcompat.widget.AppCompatRadioButton
-            android:id="@+id/rb_circle"
-            style="@style/MainRb"
-            android:drawableTop="@drawable/selector_circle"
-            android:text="@string/circle"/>
-
-        <androidx.appcompat.widget.AppCompatRadioButton
-            android:id="@+id/rb_mine"
-            style="@style/MainRb"
-            android:drawableTop="@drawable/selector_mine"
-            android:text="@string/mine"/>
-
-    </RadioGroup>
-
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
 </RelativeLayout>

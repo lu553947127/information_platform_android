@@ -44,7 +44,7 @@ import butterknife.OnClick;
 import io.rong.imkit.RongIM;
 
 /**
- * @author 宁文强 QQ:858777523
+ * @author 鹿鸿祥 QQ:553947127
  * @name information_platform_android
  * @class name：com.shuangduan.zcy.rongyun.view
  * @class describe  融云搜索好友
@@ -148,38 +148,7 @@ public class IMSearchActivity extends BaseActivity {
             }
             return false;
         });
-//        refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
-//            @Override
-//            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-//                imAddVm.searchMore();
-//            }
-//
-//            @Override
-//            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-//                imAddVm.search();
-//            }
-//        });
     }
-//
-//    private void setNoMore(int page, int count){
-//        if (page == 1){
-//            if (page * 10 >= count){
-//                if (refresh.getState() == RefreshState.None){
-//                    refresh.setNoMoreData(true);
-//                }else {
-//                    refresh.finishRefreshWithNoMoreData();
-//                }
-//            }else {
-//                refresh.finishRefresh();
-//            }
-//        }else {
-//            if (page * 10 >= count){
-//                refresh.finishLoadMoreWithNoMoreData();
-//            }else {
-//                refresh.finishLoadMore();
-//            }
-//        }
-//    }
 
     //好友群组搜索列表
     private void getFriendSearch() {
@@ -194,26 +163,32 @@ public class IMSearchActivity extends BaseActivity {
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        LogUtils.i(response);
+                        LogUtils.i(response.body());
                     }
 
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-                        LogUtils.i(response);
-                        Log.e("TAG","请求成功"+response.body());
-                        Gson gson=new Gson();
+                        LogUtils.i(response.body());
                         try {
-                            imFriendSearchBean=gson.fromJson(response.body(),IMFriendSearchBean.class);
+                            imFriendSearchBean=new Gson().fromJson(response.body(),IMFriendSearchBean.class);
                             if (imFriendSearchBean.getCode().equals("200")){
                                 list.clear();
                                 list.addAll(imFriendSearchBean.getData().getFriend());
-                                imSearchAdapter.notifyDataSetChanged();
+                                if(list!=null&&list.size()!=0){
+                                    imSearchAdapter.notifyDataSetChanged();
+                                }else {
+                                    imSearchAdapter.setEmptyView(R.layout.layout_empty, rv);
+                                }
 
                                 list_group.clear();
                                 list_group.addAll(imFriendSearchBean.getData().getGroup());
-                                imSearchGroupAdapter.notifyDataSetChanged();
+                                if(list_group!=null&&list_group.size()!=0){
+                                    imSearchGroupAdapter.notifyDataSetChanged();
+                                }else {
+                                    imSearchGroupAdapter.setEmptyView(R.layout.layout_empty, rv2);
+                                }
+
                             }else {
-//                                imSearchAdapter.setNewData(bean.getData().getFriend());
                                 imSearchAdapter.setEmptyView(R.layout.layout_empty, rv);
                                 imSearchGroupAdapter.setEmptyView(R.layout.layout_empty, rv2);
                                 list.clear();
@@ -234,14 +209,18 @@ public class IMSearchActivity extends BaseActivity {
                 break;
             case R.id.tv_more_friend:
                 if (list!=null&&list.size()!=0){
-                    ActivityUtils.startActivity(IMFriendMoreActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("name", edtKeyword.getText().toString());
+                    ActivityUtils.startActivity(bundle,IMFriendMoreActivity.class);
                 }else {
                     ToastUtils.showShort(getString(R.string.im_no_friend));
                 }
                 break;
             case R.id.tv_more_group:
                 if (list_group!=null&&list_group.size()!=0){
-                    ActivityUtils.startActivity(IMGroupMoreActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("name", edtKeyword.getText().toString());
+                    ActivityUtils.startActivity(bundle,IMGroupMoreActivity.class);
                 }else {
                     ToastUtils.showShort(getString(R.string.im_no_group));
                 }

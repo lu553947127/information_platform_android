@@ -1,8 +1,10 @@
 package com.shuangduan.zcy.view;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
@@ -12,19 +14,31 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.ToastUtils;
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.model.Response;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ClassifyAdapter;
 import com.shuangduan.zcy.adapter.HomeHeadlinesAdapter;
 import com.shuangduan.zcy.adapter.IncomeStatementAdapter;
+import com.shuangduan.zcy.app.Common;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseFragment;
 import com.shuangduan.zcy.model.api.PageState;
+import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
 import com.shuangduan.zcy.model.bean.ClassifyBean;
 import com.shuangduan.zcy.model.bean.HomeBannerBean;
 import com.shuangduan.zcy.model.bean.HomeListBean;
 import com.shuangduan.zcy.model.bean.HomePushBean;
+import com.shuangduan.zcy.model.bean.IMFriendApplyCountBean;
 import com.shuangduan.zcy.utils.AuthenticationUtils;
 import com.shuangduan.zcy.utils.BarUtils;
 import com.shuangduan.zcy.utils.image.GlideImageLoader;
@@ -52,6 +66,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.Conversation;
 
 /**
  * @author 宁文强 QQ:858777523
@@ -83,8 +99,11 @@ public class HomeFragment extends BaseFragment {
     MarqueeListView marqueeView;
     @BindView(R.id.tv_subscribe_state)
     TextView tvSubscribeState;
-    IncomeStatementAdapter incomeStatementAdapter;
-    HomeHeadlinesAdapter headlinesAdapter;
+    private IncomeStatementAdapter incomeStatementAdapter;
+    private HomeHeadlinesAdapter headlinesAdapter;
+    private RelativeLayout relativeLayout;
+    private TextView number;
+    private int count=0;
 
     public static HomeFragment newInstance() {
 
@@ -219,6 +238,7 @@ public class HomeFragment extends BaseFragment {
             }
         });
         homeVm.getInit();
+        getBadgeViewInitView();
     }
 
     @Override
@@ -288,4 +308,73 @@ public class HomeFragment extends BaseFragment {
         banner.start();
     }
 
+    //设置底部消息提醒数字布局
+    private void getBadgeViewInitView() {
+        //底部标题栏右上角标设置
+        //获取整个的NavigationView
+        BottomNavigationView navigation =getActivity().findViewById(R.id.navigation);
+        BottomNavigationMenuView menuView = (BottomNavigationMenuView) navigation.getChildAt(0);
+        //这里就是获取所添加的每一个Tab(或者叫menu)，设置在标题栏的位置
+        View tab = menuView.getChildAt(2);
+        BottomNavigationItemView itemView = (BottomNavigationItemView) tab;
+        //加载我们的角标View，新创建的一个布局
+        View badge = LayoutInflater.from(getContext()).inflate(R.layout.layout_apply_count, menuView, false);
+        //添加到Tab上
+        itemView.addView(badge);
+        //显示角标数字
+        relativeLayout = badge.findViewById(R.id.rl);
+        //显示/隐藏整个视图
+        number=badge.findViewById(R.id.number);
+    }
+
+    //好友申请数量
+    private void getFriendApplyCount(int i) {
+
+        OkGo.<String>post(RetrofitHelper.BASE_TEST_URL+ Common.FRIEND_APPLY_COUNT)
+                .tag(this)
+                .headers("token", SPUtils.getInstance().getString(SpConfig.TOKEN))//请求头
+                .params("user_id", SPUtils.getInstance().getInt(SpConfig.USER_ID))//用户编号
+                .execute(new com.lzy.okgo.callback.StringCallback() {//返回值
+
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+                        LogUtils.i(response.body());
+                    }
+
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        LogUtils.i(response.body());
+                        try {
+                            IMFriendApplyCountBean bean=new Gson().fromJson(response.body(), IMFriendApplyCountBean.class);
+                            if (bean.getCode().equals("200")){
+                                count=bean.getData().getCount();
+                                //设置底部标签数量
+                                int counts=i+count;
+                                if (counts < 1) {
+                                    relativeLayout.setVisibility(View.GONE);
+                                } else if (counts < 100) {
+                                    relativeLayout.setVisibility(View.VISIBLE);
+                                    number.setText(" " + counts + " ");
+                                } else {
+                                    relativeLayout.setVisibility(View.VISIBLE);
+                                    number.setText("99+");
+                                }
+                            }
+                        }catch (JsonSyntaxException | IllegalStateException ignored){
+                            ToastUtils.showShort(getString(R.string.request_error));
+                        }
+                    }
+                });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        RongIM.getInstance().addUnReadMessageCountChangedObserver(i -> {
+            LogUtils.i(i);
+            // i 是未读数量
+            getFriendApplyCount(i);
+        }, Conversation.ConversationType.PRIVATE,Conversation.ConversationType.GROUP);
+    }
 }
