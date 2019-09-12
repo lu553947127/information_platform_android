@@ -159,6 +159,10 @@ public class IMGroupInfoBean {
             private String image;
             private String username;
 
+            public ListBean(String username) {
+                this.username = username;
+            }
+
             public int getId() {
                 return id;
             }

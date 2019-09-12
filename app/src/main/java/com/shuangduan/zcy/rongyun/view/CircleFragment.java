@@ -136,7 +136,7 @@ public class CircleFragment extends BaseFragment implements RongIM.UserInfoProvi
         RongIM.setUserInfoProvider(this::getFriendData, true);
         //设置群聊列表数据
         RongIM.setGroupInfoProvider(this::getGroupData,true);
-
+        //获取未读消息数量
         RongIM.getInstance().addUnReadMessageCountChangedObserver(i -> {
             LogUtils.i(i);
             // i 是未读数量
@@ -261,9 +261,6 @@ public class CircleFragment extends BaseFragment implements RongIM.UserInfoProvi
                             IMFriendApplyCountBean bean=new Gson().fromJson(response.body(), IMFriendApplyCountBean.class);
                             if (bean.getCode().equals("200")){
                                 count=bean.getData().getCount();
-                                Log.e("TAG","response.body()"+response.body());
-                                Log.e("TAG","count"+count);
-
                                 if (count == 0) {
                                     tvNumber.setVisibility(View.INVISIBLE);
                                 } else if (count > 0 && count < 100) {

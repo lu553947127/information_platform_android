@@ -161,6 +161,7 @@
         <activity android:name="com.shuangduan.zcy.rongyun.view.IMFriendMoreActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.rongyun.view.IMGroupMoreActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.shuangduan.zcy.rongyun.view.IMGroupDetailsActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.shuangduan.zcy.rongyun.view.IMGroupMembersActivity" android:screenOrientation="portrait"/>
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:label="@string/app_name"

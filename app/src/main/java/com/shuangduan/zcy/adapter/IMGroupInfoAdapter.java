@@ -32,11 +32,20 @@ public class IMGroupInfoAdapter extends BaseQuickAdapter<IMGroupInfoBean.DataBea
     protected void convert(BaseViewHolder helper, IMGroupInfoBean.DataBean.ListBean item) {
         helper.setText(R.id.tv_name, item.getUsername());
         CircleImageView ivHead = helper.getView(R.id.iv_icon);
-        ImageLoader.load(mContext, new ImageConfig.Builder()
-                .url(item.getImage())
-                .imageView(ivHead)
-                .placeholder(R.drawable.default_head)
-                .errorPic(R.drawable.default_head)
-                .build());
+        if (item.getUsername().equals("更多")){
+            ImageLoader.load(mContext, new ImageConfig.Builder()
+                    .url("")
+                    .imageView(ivHead)
+                    .placeholder(R.drawable.icon_friend_more)
+                    .errorPic(R.drawable.icon_friend_more)
+                    .build());
+        }else {
+            ImageLoader.load(mContext, new ImageConfig.Builder()
+                    .url(item.getImage())
+                    .imageView(ivHead)
+                    .placeholder(R.drawable.default_head)
+                    .errorPic(R.drawable.default_head)
+                    .build());
+        }
     }
 }

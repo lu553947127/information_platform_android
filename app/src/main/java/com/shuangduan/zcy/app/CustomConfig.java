@@ -63,6 +63,8 @@ public class CustomConfig {
     public static final String RELEASE_TYPE = "release_type";//0发布项目1发布轨迹
     public static final String FRIEND_DATA = "friend_data";
 
+    public static final String MORE = "更多";
+
     public static final String PEOPLE_DEGREE = "people_degree";
     public static final int FIRST_DEGREE = 1;//1°人脉收益
     public static final int SECOND_DEGREE = 2;//2°人脉收益

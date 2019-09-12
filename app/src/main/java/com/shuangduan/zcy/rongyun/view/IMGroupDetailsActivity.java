@@ -2,6 +2,7 @@ package com.shuangduan.zcy.rongyun.view;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -90,13 +91,18 @@ public class IMGroupDetailsActivity extends BaseActivity implements SwitchView.O
         imGroupInfoAdapter = new IMGroupInfoAdapter(R.layout.adapter_im_group_info, list);
         imGroupInfoAdapter.setEmptyView(R.layout.layout_loading, recyclerView);
         recyclerView.setAdapter(imGroupInfoAdapter);
-        View footerView=getLayoutInflater().inflate(R.layout.adapter_im_group_info_footer,null);
-        footerView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT));
-        imGroupInfoAdapter.addFooterView(footerView);
+
         imGroupInfoAdapter.setOnItemClickListener((adapter, view, position) -> {
-            Bundle bundle = new Bundle();
-            bundle.putInt(CustomConfig.UID, imGroupInfoBean.getData().getList().get(position).getId());
-            ActivityUtils.startActivity(bundle, UserInfoActivity.class);
+
+            if (position==list.size()-1){
+                Bundle bundle = new Bundle();
+                bundle.putString("group_id", group_id);
+                ActivityUtils.startActivity(bundle, IMGroupMembersActivity.class);
+            }else {
+                Bundle bundle = new Bundle();
+                bundle.putInt(CustomConfig.UID, imGroupInfoBean.getData().getList().get(position).getId());
+                ActivityUtils.startActivity(bundle, UserInfoActivity.class);
+            }
         });
         //获取会话提醒状态
         RongIM.getInstance().getConversationNotificationStatus(Conversation.ConversationType.DISCUSSION, group_id, new RongIMClient.ResultCallback<Conversation.ConversationNotificationStatus>() {
@@ -173,6 +179,8 @@ public class IMGroupDetailsActivity extends BaseActivity implements SwitchView.O
                                 tvAddress.setText(imGroupInfoBean.getData().getInfo().getProvince()+imGroupInfoBean.getData().getInfo().getCity());
                                 list.clear();
                                 list.addAll(imGroupInfoBean.getData().getList());
+                                //添加最后一个更多按钮
+                                list.add(new IMGroupInfoBean.DataBean.ListBean("更多"));
                                 if (list!=null&&list.size()!=0){
                                     imGroupInfoAdapter.notifyDataSetChanged();
                                 }else {

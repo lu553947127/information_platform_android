@@ -409,6 +409,7 @@
     <string name="im_group_details_address">项目地址</string>
     <string name="im_group_details_no_message">消息免打扰</string>
     <string name="im_group_exit_group">退出群聊</string>
+    <string name="im_group_group_members">群成员</string>
 
     <string name="please_select_time">请选择时间</string>
     <string name="year">年</string>
