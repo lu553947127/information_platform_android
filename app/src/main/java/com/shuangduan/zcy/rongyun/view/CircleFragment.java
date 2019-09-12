@@ -3,6 +3,7 @@ package com.shuangduan.zcy.rongyun.view;
 import android.annotation.SuppressLint;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -65,7 +66,7 @@ public class CircleFragment extends BaseFragment implements RongIM.UserInfoProvi
     View fakeStatusBar;
     @BindView(R.id.iv_header)
     CircleImageView iv_header;
-    @BindView(R.id.tv_number)
+//    @BindView(R.id.tv_numbers)
     TextView tvNumber;
     private UserInfoVm userInfoVm;
     private NoScrollViewPager viewPager;
@@ -93,7 +94,7 @@ public class CircleFragment extends BaseFragment implements RongIM.UserInfoProvi
 
     @SuppressLint("CutPasteId")
     @Override
-    protected void initDataAndEvent(Bundle savedInstanceState) {
+    protected void initDataAndEvent(Bundle savedInstanceState,View view) {
 
         BarUtils.setStatusBarColorRes(fakeStatusBar, getResources().getColor(R.color.colorPrimary));
         FragmentManager fragmentManage = getChildFragmentManager();
@@ -129,16 +130,24 @@ public class CircleFragment extends BaseFragment implements RongIM.UserInfoProvi
             }
         });
 
-        getBadgeViewInitView();
+        getBadgeViewInitView(view);
 
         //根据 userId 去你的用户系统里查询对应的用户信息返回给融云 SDK。
         RongIM.setUserInfoProvider(this::getFriendData, true);
         //设置群聊列表数据
         RongIM.setGroupInfoProvider(this::getGroupData,true);
+
+        RongIM.getInstance().addUnReadMessageCountChangedObserver(i -> {
+            LogUtils.i(i);
+            // i 是未读数量
+            getFriendApplyCount(i);
+        }, Conversation.ConversationType.PRIVATE,Conversation.ConversationType.GROUP);
     }
 
     //设置底部消息提醒数字布局
-    private void getBadgeViewInitView() {
+    private void getBadgeViewInitView(View view) {
+        //因为黄油刀在碎片重绘时初始化空指针异常，则用view视图来显示
+        tvNumber=view.findViewById(R.id.tv_numbers);
         viewPager= getActivity().findViewById(R.id.view_pager);
         //底部标题栏右上角标设置
         //获取整个的NavigationView
@@ -252,6 +261,9 @@ public class CircleFragment extends BaseFragment implements RongIM.UserInfoProvi
                             IMFriendApplyCountBean bean=new Gson().fromJson(response.body(), IMFriendApplyCountBean.class);
                             if (bean.getCode().equals("200")){
                                 count=bean.getData().getCount();
+                                Log.e("TAG","response.body()"+response.body());
+                                Log.e("TAG","count"+count);
+
                                 if (count == 0) {
                                     tvNumber.setVisibility(View.INVISIBLE);
                                 } else if (count > 0 && count < 100) {
@@ -319,13 +331,4 @@ public class CircleFragment extends BaseFragment implements RongIM.UserInfoProvi
         return null;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        RongIM.getInstance().addUnReadMessageCountChangedObserver(i -> {
-            LogUtils.i(i);
-            // i 是未读数量
-            getFriendApplyCount(i);
-        }, Conversation.ConversationType.PRIVATE,Conversation.ConversationType.GROUP);
-    }
 }

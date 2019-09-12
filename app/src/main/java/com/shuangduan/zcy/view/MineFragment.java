@@ -82,7 +82,7 @@ public class MineFragment extends BaseFragment {
     }
 
     @Override
-    protected void initDataAndEvent(Bundle savedInstanceState) {
+    protected void initDataAndEvent(Bundle savedInstanceState, View v) {
         BarUtils.setStatusBarColor(fakeStatusBar, R.drawable.shape_bg_mine);
         userInfoVm = ViewModelProviders.of(mActivity).get(UserInfoVm.class);
         userInfoVm.getInfoLiveData.observe(this, userInfoBean -> {

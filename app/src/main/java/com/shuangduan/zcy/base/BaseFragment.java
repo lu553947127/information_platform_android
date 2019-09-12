@@ -1,6 +1,5 @@
 package com.shuangduan.zcy.base;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.SparseArray;
@@ -15,10 +14,8 @@ import androidx.fragment.app.FragmentActivity;
 
 import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.LoadDialog;
-import com.shuangduan.zcy.model.event.BaseEvent;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -68,7 +65,7 @@ public abstract class BaseFragment extends Fragment implements IView {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initDataAndEvent(savedInstanceState);
+        initDataAndEvent(savedInstanceState,view);
         load();
     }
 
@@ -132,7 +129,7 @@ public abstract class BaseFragment extends Fragment implements IView {
      * 初始化数据
      * @param savedInstanceState 数据状态
      */
-    protected abstract void initDataAndEvent(Bundle savedInstanceState);
+    protected abstract void initDataAndEvent(Bundle savedInstanceState,View view);
 
     /**
      * 从服务器获取数据

@@ -90,7 +90,7 @@ public class ProjectContentFragment extends BaseFragment {
     }
 
     @Override
-    protected void initDataAndEvent(Bundle savedInstanceState) {
+    protected void initDataAndEvent(Bundle savedInstanceState, View v) {
 
         rvContact.setLayoutManager(new LinearLayoutManager(mContext));
         rvContact.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
