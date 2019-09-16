@@ -289,7 +289,7 @@ public class HomeFragment extends BaseFragment {
 
     private void initBanner(ArrayList<String> list, ArrayList<String> titles){
         //设置banner样式
-        banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE);
+        banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);
         //设置图片加载器
         banner.setImageLoader(new GlideImageLoader());
         //设置图片集合

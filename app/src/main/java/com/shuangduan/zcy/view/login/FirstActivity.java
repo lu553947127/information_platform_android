@@ -13,16 +13,10 @@ import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
-import com.shuangduan.zcy.model.event.BaseEvent;
-import com.shuangduan.zcy.model.event.CityEvent;
 import com.shuangduan.zcy.utils.LoginUtils;
 import com.shuangduan.zcy.view.MainActivity;
-import com.shuangduan.zcy.view.login.LoginActivity;
-import com.shuangduan.zcy.view.login.RegisterActivity;
 import com.shuangduan.zcy.vm.IMConnectVm;
 
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.OnClick;
 
@@ -59,10 +53,8 @@ public class FirstActivity extends BaseActivity {
         //设置状态栏颜色模式
         BarUtils.setStatusBarLightMode(this, true);
         LogUtils.i("启动");
-
         if (LoginUtils.isLogin()){
             ActivityUtils.startActivity(MainActivity.class);
-
             //这里连一遍融云
             if (SPUtils.getInstance().getInt(SpConfig.INFO_STATUS) == 1){
                 //初始化，融云链接服务器

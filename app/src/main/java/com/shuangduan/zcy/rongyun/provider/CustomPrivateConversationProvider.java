@@ -1,20 +1,12 @@
 package com.shuangduan.zcy.rongyun.provider;
 
-import android.content.Context;
-import android.net.Uri;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.shuangduan.zcy.R;
 
 import io.rong.imkit.model.UIConversation;
 import io.rong.imkit.widget.provider.GroupConversationProvider;
-import io.rong.imkit.widget.provider.PrivateConversationProvider;
 
 /**
  * @author 宁文强 QQ:858777523

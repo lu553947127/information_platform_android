@@ -255,6 +255,8 @@ public class ProjectLocusFragment extends BaseLazyFragment {
                 projectDetailVm.getTrack();
                 //刷新已查看列表
                 EventBus.getDefault().post(new RefreshViewLocusEvent());
+                //加入工程圈讨论组（群聊）
+
             }else {
                 //余额不足
                 addDialog(new CustomDialog(mActivity)

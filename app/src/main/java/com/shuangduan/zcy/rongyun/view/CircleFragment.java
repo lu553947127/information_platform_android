@@ -60,7 +60,7 @@ import io.rong.imlib.model.UserInfo;
  * @chang time
  * @class describe
  */
-public class CircleFragment extends BaseFragment implements RongIM.UserInfoProvider {
+public class CircleFragment extends BaseFragment {
 
     @BindView(R.id.fake_status_bar)
     View fakeStatusBar;
@@ -89,7 +89,7 @@ public class CircleFragment extends BaseFragment implements RongIM.UserInfoProvi
 
     @Override
     public boolean isUseEventBus() {
-        return false;
+        return true;
     }
 
     @SuppressLint("CutPasteId")
@@ -322,10 +322,4 @@ public class CircleFragment extends BaseFragment implements RongIM.UserInfoProvi
                     break;
         }
     }
-
-    @Override
-    public UserInfo getUserInfo(String userId) {
-        return null;
-    }
-
 }
