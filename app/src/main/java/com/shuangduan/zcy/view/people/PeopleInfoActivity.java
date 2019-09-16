@@ -2,6 +2,7 @@ package com.shuangduan.zcy.view.people;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
@@ -13,6 +14,7 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.PageState;
+import com.shuangduan.zcy.rongyun.view.IMAddFriendActivity;
 import com.shuangduan.zcy.utils.image.ImageConfig;
 import com.shuangduan.zcy.utils.image.ImageLoader;
 import com.shuangduan.zcy.vm.IncomePeopleVm;
@@ -56,6 +58,8 @@ public class PeopleInfoActivity extends BaseActivity {
     AppCompatTextView tvLocusNum;
     @BindView(R.id.tv_income_amount)
     AppCompatTextView tvIncomeAmount;
+    @BindView(R.id.tv_add_friend)
+    TextView tvAddFriend;
     private IncomePeopleVm incomePeopleVm;
 
     @Override
@@ -93,6 +97,11 @@ public class PeopleInfoActivity extends BaseActivity {
                     .errorPic(R.drawable.default_head)
                     .imageView(ivUser)
                     .build());
+            if (peopleDetailBean.getApply_status()!=null && peopleDetailBean.getApply_status().equals("1")){
+                tvAddFriend.setVisibility(View.VISIBLE);
+            }else {
+                tvAddFriend.setVisibility(View.GONE);
+            }
         });
 
         incomePeopleVm.pageStateLiveData.observe(this, s -> {
@@ -109,16 +118,26 @@ public class PeopleInfoActivity extends BaseActivity {
         incomePeopleVm.getDetail();
     }
 
-    @OnClick({R.id.iv_bar_back, R.id.fl_income_record})
+    @OnClick({R.id.iv_bar_back, R.id.fl_income_record,R.id.tv_add_friend})
     void onClick(View view){
+        Bundle bundle = new Bundle();
         switch (view.getId()){
             case R.id.iv_bar_back:
                 finish();
                 break;
             case R.id.fl_income_record:
-                Bundle bundle = new Bundle();
                 bundle.putInt(CustomConfig.UID, incomePeopleVm.uid);
                 ActivityUtils.startActivity(bundle, IncomeRecordActivity.class);
+                break;
+            case R.id.tv_add_friend:
+                incomePeopleVm.detailLiveData.observe(this, userInfoBean -> {
+                    bundle.putInt(CustomConfig.FRIEND_DATA, 0);
+                    bundle.putString("id", String.valueOf(userInfoBean.getId()));
+                    bundle.putString("name",userInfoBean.getUsername());
+                    bundle.putString("msg",userInfoBean.getCompany());
+                    bundle.putString("image",userInfoBean.getImage());
+                });
+                ActivityUtils.startActivity(bundle, IMAddFriendActivity.class);
                 break;
         }
     }

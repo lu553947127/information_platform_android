@@ -1,10 +1,12 @@
 package com.shuangduan.zcy.rongyun.view;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
@@ -28,7 +30,9 @@ import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
+import com.shuangduan.zcy.model.bean.IMFriendOperationBean;
 import com.shuangduan.zcy.model.bean.IMGroupInfoBean;
+import com.shuangduan.zcy.view.MainActivity;
 import com.shuangduan.zcy.view.mine.UserInfoActivity;
 import com.shuangduan.zcy.weight.SwitchView;
 
@@ -36,6 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
@@ -65,6 +70,8 @@ public class IMGroupDetailsActivity extends BaseActivity implements SwitchView.O
     AppCompatTextView tvAddress;
     @BindView(R.id.sv)
     SwitchView switchView;
+    @BindView(R.id.tv_add_friend)
+    TextView tvExitGroup;
     String group_id;
     IMGroupInfoBean imGroupInfoBean;
     IMGroupInfoAdapter imGroupInfoAdapter;
@@ -99,9 +106,11 @@ public class IMGroupDetailsActivity extends BaseActivity implements SwitchView.O
                 bundle.putString("group_id", group_id);
                 ActivityUtils.startActivity(bundle, IMGroupMembersActivity.class);
             }else {
-                Bundle bundle = new Bundle();
-                bundle.putInt(CustomConfig.UID, imGroupInfoBean.getData().getList().get(position).getId());
-                ActivityUtils.startActivity(bundle, UserInfoActivity.class);
+                if (imGroupInfoBean.getData().getList().get(position).getId()!=SPUtils.getInstance().getInt(SpConfig.USER_ID)){
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(CustomConfig.UID, imGroupInfoBean.getData().getList().get(position).getId());
+                    ActivityUtils.startActivity(bundle, UserInfoActivity.class);
+                }
             }
         });
         //获取会话提醒状态
@@ -197,6 +206,53 @@ public class IMGroupDetailsActivity extends BaseActivity implements SwitchView.O
                 });
     }
 
+    //退群
+    private void getExitGroup() {
+
+        OkGo.<String>post(RetrofitHelper.BASE_TEST_URL+ Common.WECHAT_QUIT_GROUP)
+                .tag(this)
+                .headers("token", SPUtils.getInstance().getString(SpConfig.TOKEN))//请求头
+                .params("user_id", SPUtils.getInstance().getInt(SpConfig.USER_ID))//用户编号
+                .params("group_id",group_id)//接受/拒绝用户编号
+                .execute(new com.lzy.okgo.callback.StringCallback() {//返回值
+
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+                        LogUtils.i(response);
+                    }
+
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        LogUtils.i(response);
+                        Log.e("TAG","请求成功"+response.body());
+                        try {
+                            IMFriendOperationBean bean=new Gson().fromJson(response.body(), IMFriendOperationBean.class);
+                            if (bean.getCode().equals("200")){
+                                RongIM.getInstance().removeConversation(Conversation.ConversationType.GROUP, group_id, new RongIMClient.ResultCallback<Boolean>() {
+                                    @Override
+                                    public void onSuccess(Boolean aBoolean) {
+                                        Intent intent = new Intent(IMGroupDetailsActivity.this, MainActivity.class);
+                                        intent.putExtra("statueCar", "1");
+                                        startActivity(intent);
+                                        finish();
+                                    }
+
+                                    @Override
+                                    public void onError(RongIMClient.ErrorCode e) {
+
+                                    }
+                                });
+                            }else {
+                                ToastUtils.showShort(getString(R.string.request_error));
+                            }
+                        }catch (JsonSyntaxException | IllegalStateException ignored){
+                            ToastUtils.showShort(getString(R.string.request_error));
+                        }
+                    }
+                });
+    }
+
     @Override
     public void toggleToOn(SwitchView view) {
         switch (view.getId()){
@@ -213,6 +269,18 @@ public class IMGroupDetailsActivity extends BaseActivity implements SwitchView.O
             case R.id.sv:
                 switchView.setOpened(false);
                 setConverstionNotif(Conversation.ConversationType.GROUP,group_id,false);
+                break;
+        }
+    }
+
+    @OnClick({R.id.iv_bar_back, R.id.tv_add_friend})
+    void onClick(View view){
+        switch (view.getId()){
+            case R.id.iv_bar_back:
+                finish();
+                break;
+            case R.id.tv_add_friend:
+                getExitGroup();
                 break;
         }
     }

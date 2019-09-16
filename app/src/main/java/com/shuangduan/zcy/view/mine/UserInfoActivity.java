@@ -23,7 +23,6 @@ import com.shuangduan.zcy.dialog.BusinessExpDialog;
 import com.shuangduan.zcy.dialog.PhotoDialog;
 import com.shuangduan.zcy.dialog.SexDialog;
 import com.shuangduan.zcy.model.api.PageState;
-import com.shuangduan.zcy.model.event.CityEvent;
 import com.shuangduan.zcy.model.event.CompanyEvent;
 import com.shuangduan.zcy.model.event.EmailEvent;
 import com.shuangduan.zcy.model.event.MobileEvent;
@@ -32,7 +31,6 @@ import com.shuangduan.zcy.model.event.OfficeEvent;
 import com.shuangduan.zcy.model.event.ProductionEvent;
 import com.shuangduan.zcy.model.event.UserNameEvent;
 import com.shuangduan.zcy.rongyun.view.IMAddFriendActivity;
-import com.shuangduan.zcy.utils.AndroidBug5497Workaround;
 import com.shuangduan.zcy.utils.image.ImageConfig;
 import com.shuangduan.zcy.utils.image.ImageLoader;
 import com.shuangduan.zcy.utils.matisse.Glide4Engine;
@@ -52,7 +50,6 @@ import org.greenrobot.eventbus.Subscribe;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -66,6 +63,7 @@ import butterknife.OnClick;
  * @class describe
  */
 public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCallBack {
+
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
     @BindView(R.id.toolbar)
@@ -336,8 +334,13 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
                 ActivityUtils.startActivity(bundle, UpdateProductionActivity.class);
                 break;
             case R.id.tv_add_friend:
-                bundle.putInt(CustomConfig.FRIEND_DATA, 0);
-
+                userInfoVm.informationLiveData.observe(this, userInfoBean -> {
+                    bundle.putInt(CustomConfig.FRIEND_DATA, 0);
+                    bundle.putString("id", String.valueOf(userInfoBean.getId()));
+                    bundle.putString("name",userInfoBean.getUsername());
+                    bundle.putString("msg",userInfoBean.getCompany());
+                    bundle.putString("image",userInfoBean.getImage());
+                });
                 ActivityUtils.startActivity(bundle, IMAddFriendActivity.class);
                 break;
         }

@@ -132,8 +132,7 @@
                 android:layout_width="335dp"
                 style="@style/BtnConfirm"
                 android:layout_marginTop="35dp"
-                android:text="@string/im_group_exit_group"
-                android:visibility="gone"/>
+                android:text="@string/im_group_exit_group"/>
         </LinearLayout>
     </com.shuangduan.zcy.utils.ElasticScrollView>
 

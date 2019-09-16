@@ -18,6 +18,8 @@ public class Common {
     public static final String WECHAT_GROUP="/api/Wechat/groupList";
     //好友添加验证
     public static final String FRIEND_APPLY="/api/Friend/apply";
+    //群聊退出
+    public static final String WECHAT_QUIT_GROUP="/api/Wechat/quitGroup";
 
     //通讯录 群组列表
     public static final String WECHAT_MY_GROUP="/api/wechat/myGroup";

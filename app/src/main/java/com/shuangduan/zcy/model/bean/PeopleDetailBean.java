@@ -1,6 +1,5 @@
 package com.shuangduan.zcy.model.bean;
 
-import java.util.List;
 
 /**
  * @author 宁文强 QQ:858777523
@@ -43,6 +42,15 @@ public class PeopleDetailBean {
     private String managing_products;
     private int count;
     private String price;
+    private String apply_status;
+
+    public String getApply_status() {
+        return apply_status;
+    }
+
+    public void setApply_status(String apply_status) {
+        this.apply_status = apply_status;
+    }
 
     public int getId() {
         return id;

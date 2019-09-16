@@ -40,6 +40,8 @@ import java.io.File;
 
 import cn.jpush.android.api.JPushInterface;
 import io.rong.imkit.RongIM;
+import io.rong.push.RongPushClient;
+import io.rong.push.pushconfig.PushConfig;
 
 /**
  * <pre>
@@ -159,6 +161,16 @@ public class AppConfig {
     private static void initRongYun(Context context){
         //融云初始化
         RongIM.init(context, "pwe86ga5p43i6");
+        //融云推送初始化
+        PushConfig config = new PushConfig
+                .Builder()
+                .enableHWPush(true)
+                .enableMiPush("2882303761517473625", "5451747338625")
+                .enableMeiZuPush("112988", "2fa951a802ac4bd5843d694517307896")
+                .enableVivoPush(true)
+                .enableFCM(true)
+                .build();
+        RongPushClient.setPushConfig(config);
     }
 
     /**

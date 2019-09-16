@@ -194,12 +194,9 @@ public class ProjectDetailActivity extends BaseActivity {
         });
 
         permissionVm = ViewModelProviders.of(this).get(PermissionVm.class);
-        permissionVm.getLiveData().observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer integer) {
-                if (integer == PermissionVm.PERMISSION_LOCATION){
-                    init();
-                }
+        permissionVm.getLiveData().observe(this, integer -> {
+            if (integer == PermissionVm.PERMISSION_LOCATION){
+                init();
             }
         });
         permissionVm.getPermissionLocation(new RxPermissions(this));

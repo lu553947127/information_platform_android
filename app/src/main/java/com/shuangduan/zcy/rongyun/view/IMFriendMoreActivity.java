@@ -36,6 +36,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import io.rong.imkit.RongIM;
 
 /**
@@ -172,4 +173,6 @@ public class IMFriendMoreActivity extends BaseActivity {
                 });
     }
 
+    @OnClick({R.id.iv_bar_back})
+    void onClick(){ finish(); }
 }

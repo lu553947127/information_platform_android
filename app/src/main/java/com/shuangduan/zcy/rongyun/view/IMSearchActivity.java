@@ -105,7 +105,6 @@ public class IMSearchActivity extends BaseActivity {
         rv2.setAdapter(imSearchGroupAdapter);
 
         getFriendSearch();
-//            setNoMore(imFriendSearchBean.getPage(), imFriendSearchBean.getCount());
 
         imSearchAdapter.setOnItemClickListener((adapter, view, position) -> {
             RongIM.getInstance().startPrivateChat(IMSearchActivity.this, imFriendSearchBean.getData().getFriend().get(position).getUserId()
@@ -130,8 +129,6 @@ public class IMSearchActivity extends BaseActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-//                imAddVm.searchName = s.toString();
-//                imAddVm.search();
                 getFriendSearch();
             }
         });

@@ -66,7 +66,7 @@ public class IMGroupInfoBean {
          */
 
         private InfoBean info;
-        private String page;
+        private int page;
         private int count;
         private List<ListBean> list;
 
@@ -78,11 +78,11 @@ public class IMGroupInfoBean {
             this.info = info;
         }
 
-        public String getPage() {
+        public int getPage() {
             return page;
         }
 
-        public void setPage(String page) {
+        public void setPage(int page) {
             this.page = page;
         }
 

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 
 import androidx.annotation.NonNull;
@@ -150,6 +151,15 @@ public class MainActivity extends BaseActivity {
                 //SCROLL_STATE_SETTLING：拖动结束,实际值为2
             }
         });
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        String statueCar = intent.getStringExtra("statueCar");
+        if (!TextUtils.isEmpty(statueCar)) {
+            viewPager.setCurrentItem(2);
+        }
     }
 
     /**
