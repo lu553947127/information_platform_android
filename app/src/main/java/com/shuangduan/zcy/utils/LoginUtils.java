@@ -1,10 +1,13 @@
 package com.shuangduan.zcy.utils;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.shuangduan.zcy.app.SpConfig;
+import com.shuangduan.zcy.view.login.FirstStartActivity;
 import com.shuangduan.zcy.view.login.LoginActivity;
+import com.shuangduan.zcy.view.login.WelcomeActivity;
 
 /**
  * <pre>
@@ -43,4 +46,17 @@ public class LoginUtils {
         return true;
     }
 
+
+    /**
+     * 检测是否第一次打开app
+     * @return
+     */
+    public static boolean isFirstApp(){
+        int first = SPUtils.getInstance().getInt(SpConfig.FIRST_APP);
+        LogUtils.i(first);
+        if (first==-1){
+            return false;
+        }
+        return true;
+    }
 }

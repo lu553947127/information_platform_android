@@ -1,8 +1,5 @@
 package com.shuangduan.zcy.vm;
 
-import android.net.Uri;
-import android.util.Log;
-
 import androidx.lifecycle.MutableLiveData;
 
 import com.blankj.utilcode.util.LogUtils;
@@ -14,7 +11,6 @@ import com.shuangduan.zcy.model.bean.IMTokenBean;
 
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
-import io.rong.imlib.model.UserInfo;
 
 /**
  * @author 宁文强 QQ:858777523
@@ -67,7 +63,7 @@ public class IMConnectVm extends BaseViewModel {
              */
             @Override
             public void onSuccess(String userid) {
-                LogUtils.i("rongyun登录成功"+userid);
+                LogUtils.i("融云连接成功"+userid);
             }
 
             /**

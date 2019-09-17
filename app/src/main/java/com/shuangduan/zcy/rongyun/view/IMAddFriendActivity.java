@@ -111,12 +111,12 @@ public class IMAddFriendActivity extends BaseActivity {
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        LogUtils.i(response.body());
+                        LogUtils.json(response.body());
                     }
 
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-                        LogUtils.i(response.body());
+                        LogUtils.json(response.body());
                         try {
                             IMFriendOperationBean bean=new Gson().fromJson(response.body(), IMFriendOperationBean.class);
                             if (bean.getCode().equals("200")){
@@ -145,13 +145,13 @@ public class IMAddFriendActivity extends BaseActivity {
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        LogUtils.i(response.body());
+                        LogUtils.json(response.body());
                         ToastUtils.showShort(getString(R.string.request_error));
                     }
 
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-                        LogUtils.i(response.body());
+                        LogUtils.json(response.body());
                         try {
                             IMFriendOperationBean bean=new Gson().fromJson(response.body(), IMFriendOperationBean.class);
                             if (bean.getCode().equals("200")){

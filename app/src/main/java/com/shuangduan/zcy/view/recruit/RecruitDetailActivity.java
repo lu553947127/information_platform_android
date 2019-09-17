@@ -194,7 +194,6 @@ public class RecruitDetailActivity extends BaseActivity {
                     break;
             }
         });
-
         initShare();
     }
 

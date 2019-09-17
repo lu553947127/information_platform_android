@@ -39,6 +39,7 @@ import com.shuangduan.zcy.model.bean.ProjectInfoBean;
 import com.shuangduan.zcy.model.bean.ProvinceBean;
 import com.shuangduan.zcy.model.bean.StageBean;
 import com.shuangduan.zcy.model.bean.TypeBean;
+import com.shuangduan.zcy.view.search.SearchActivity;
 import com.shuangduan.zcy.vm.MultiAreaVm;
 import com.shuangduan.zcy.vm.MultiStageVm;
 import com.shuangduan.zcy.vm.MultiTypeVm;
@@ -66,6 +67,8 @@ public class ProjectInfoListActivity extends BaseActivity {
     AppCompatTextView tvBarTitle;
     @BindView(R.id.iv_bar_right)
     AppCompatImageView ivBarRight;
+    @BindView(R.id.tv_bar_right)
+    AppCompatTextView tvBarRight;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.tv_area)
@@ -117,7 +120,8 @@ public class ProjectInfoListActivity extends BaseActivity {
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getResources().getStringArray(R.array.classify)[0]);
-
+        ivBarRight.setImageResource(R.drawable.icon_search);
+        tvBarRight.setVisibility(View.GONE);
         projectListVm = ViewModelProviders.of(this).get(ProjectListVm.class);
         areaVm = ViewModelProviders.of(this).get(MultiAreaVm.class);
         stageVm = ViewModelProviders.of(this).get(MultiStageVm.class);
@@ -189,6 +193,7 @@ public class ProjectInfoListActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.iv_bar_right:
+                ActivityUtils.startActivity(SearchActivity.class);
                 break;
             case R.id.ll_area:
                 getAreaData();

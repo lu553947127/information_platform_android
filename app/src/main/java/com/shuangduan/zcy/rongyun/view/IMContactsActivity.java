@@ -136,12 +136,12 @@ public class IMContactsActivity extends BaseActivity {
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        LogUtils.i(response.body());
+                        LogUtils.json(response.body());
                     }
 
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-                        LogUtils.i(response.body());
+                        LogUtils.json(response.body());
                         try {
                              imGroupListBean=new Gson().fromJson(response.body(), IMGroupListBean.class);
                             if (imGroupListBean.getCode().equals("200")){
@@ -175,12 +175,12 @@ public class IMContactsActivity extends BaseActivity {
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        LogUtils.i(response.body());
+                        LogUtils.json(response.body());
                     }
 
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-                        LogUtils.i(response.body());
+                        LogUtils.json(response.body());
                         try {
                             imFriendListBean=new Gson().fromJson(response.body(), IMFriendListBean.class);
                             if (imFriendListBean.getCode().equals("200")){
@@ -214,12 +214,12 @@ public class IMContactsActivity extends BaseActivity {
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        LogUtils.i(response.body());
+                        LogUtils.json(response.body());
                     }
 
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-                        LogUtils.i(response.body());
+                        LogUtils.json(response.body());
                         try {
                             IMFriendApplyCountBean bean=new Gson().fromJson(response.body(), IMFriendApplyCountBean.class);
                             if (bean.getCode().equals("200")){
@@ -239,7 +239,7 @@ public class IMContactsActivity extends BaseActivity {
                 });
     }
 
-    @OnClick({R.id.rl_new_friend,R.id.rl_my_group,R.id.rl_my_friend,R.id.tv_bar_title})
+    @OnClick({R.id.iv_bar_back,R.id.rl_new_friend,R.id.rl_my_group,R.id.rl_my_friend,R.id.tv_bar_title})
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_bar_back:

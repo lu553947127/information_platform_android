@@ -22,6 +22,7 @@
     <string name="empty_consume">目前还没有已消费信息</string>
     <string name="empty_contact">目前还没有联系人信息</string>
 
+    <string name="first_app">跳过</string>
     <string name="positive">确定</string>
     <string name="login">登录</string>
     <string name="register">注册</string>

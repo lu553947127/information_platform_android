@@ -16,7 +16,7 @@ import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.CustomDialog;
 import com.shuangduan.zcy.model.api.PageState;
-import com.shuangduan.zcy.view.login.FirstActivity;
+import com.shuangduan.zcy.view.login.WelcomeActivity;
 import com.shuangduan.zcy.vm.ExitVm;
 
 import butterknife.BindView;
@@ -103,7 +103,7 @@ public class SetActivity extends BaseActivity {
                                 @Override
                                 public void ok(String s) {
                                     SPUtils.getInstance().clear();
-                                    ActivityUtils.startActivity(FirstActivity.class);
+                                    ActivityUtils.startActivity(WelcomeActivity.class);
                                     ActivityUtils.finishAllActivitiesExceptNewest();
                                 }
                             }).showDialog();

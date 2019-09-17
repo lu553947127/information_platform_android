@@ -12,6 +12,9 @@ package com.shuangduan.zcy.app;
 
 public class SpConfig {
 
+    /*第一个打开app标识*/
+    public static final String FIRST_APP = "first_app";
+
     /*用户密码*/
     public static final String PASSWORD = "password";
 

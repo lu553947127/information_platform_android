@@ -67,7 +67,7 @@ public class IMPrivateChatActivity extends BaseActivity implements RongIM.Conver
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
-        BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
+//        BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         mConversationType = Conversation.ConversationType.valueOf(getIntent().getData()
                 .getLastPathSegment().toUpperCase(Locale.US));
         user_id = getIntent().getData().getQueryParameter("targetId");

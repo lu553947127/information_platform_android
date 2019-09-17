@@ -1,6 +1,6 @@
 package com.shuangduan.zcy.view.release;
 
-import android.app.Activity;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
@@ -28,12 +28,12 @@ import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.TimeUtils;
-import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ReleaseContactAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BaseDialog;
+import com.shuangduan.zcy.dialog.BottomSheetDialogs;
 import com.shuangduan.zcy.dialog.PhotoDialog;
 import com.shuangduan.zcy.dialog.pop.CommonPopupWindow;
 import com.shuangduan.zcy.model.api.PageState;
@@ -169,6 +169,7 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
     private CommonPopupWindow popupWindow;
     private ReleaseContactAdapter releaseContactAdapter;
     private UploadPhotoVm uploadPhotoVm;
+    private BottomSheetDialogs btn_dialog;
 
     @Override
     protected int initLayoutRes() {
@@ -248,13 +249,13 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
         });
 
         releaseVm.releaseProjectLiveData.observe(this, o -> {
-//            EventBus.getDefault().post(new LocusRefreshEvent());
-            ToastUtils.showShort(getString(R.string.release_success));
+            EventBus.getDefault().post(new LocusRefreshEvent());
+//            ToastUtils.showShort(getString(R.string.release_success));
             finish();
         });
         releaseVm.releaseLocusLiveData.observe(this, o -> {
-//            EventBus.getDefault().post(new LocusRefreshEvent());
-            ToastUtils.showShort(getString(R.string.release_success));
+            EventBus.getDefault().post(new LocusRefreshEvent());
+//            ToastUtils.showShort(getString(R.string.release_success));
             finish();
         });
         releaseVm.pageStateLiveData.observe(this, s -> {
@@ -401,51 +402,53 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
                 finish();
                 break;
             case R.id.tv_project_type:
-                if (popupWindow == null){
-                    popupWindow = new CommonPopupWindow.Builder(this)
-                            .setView(R.layout.dialog_release_type)
-                            .setOutsideTouchable(true)
-                            .setBackGroundLevel(0.8f)
-                            .setWidthAndHeight(ConvertUtils.dp2px(260), ViewGroup.LayoutParams.WRAP_CONTENT)
-                            .setViewOnclickListener((popView, layoutResId) -> {
-                                popView.findViewById(R.id.tv_project).setOnClickListener(v -> {
-                                    releaseVm.type = 1;
-                                    flProjectNameEdit.setVisibility(View.VISIBLE);
-                                    tvProjectAddress.setClickable(true);
-                                    flProjectStage.setVisibility(View.VISIBLE);
-                                    flProjectTypes.setVisibility(View.VISIBLE);
-                                    rlProjectCycle.setVisibility(View.VISIBLE);
-                                    flProjectAcreage.setVisibility(View.VISIBLE);
-                                    flProjectPrice.setVisibility(View.VISIBLE);
-                                    flProjectDetail.setVisibility(View.VISIBLE);
-                                    flProjectMaterial.setVisibility(View.VISIBLE);
-                                    rvContact.setVisibility(View.VISIBLE);
-                                    flAdd.setVisibility(View.VISIBLE);
-                                    flProjectCompany.setVisibility(View.VISIBLE);
-                                    flProjectAddress.setVisibility(View.VISIBLE);
-                                    flProjectNameSelect.setVisibility(View.GONE);
-                                    flProjectDes.setVisibility(View.GONE);
-                                    flVisitor.setVisibility(View.GONE);
-                                    flMobile.setVisibility(View.GONE);
-                                    flUpdateTime.setVisibility(View.GONE);
-                                    rlPhoto.setVisibility(View.GONE);
-                                    picContentView.setVisibility(View.GONE);
-                                    tvProjectType.setText(getString(R.string.project_project));
-                                    popupWindow.dismiss();
-                                });
-                                popView.findViewById(R.id.tv_locus).setOnClickListener(v -> {
-                                    clickLocus();
-                                    popupWindow.dismiss();
-                                });
-                            })
-                            .create();
-                }
-                if (!popupWindow.isShowing()){
-                    WindowManager.LayoutParams attributes = getWindow().getAttributes();
-                    attributes.alpha = 0.8f;
-                    getWindow().setAttributes(attributes);
-                    popupWindow.showAsDropDown(tvProjectType);
-                }
+                getBottomWindow();
+                btn_dialog.show();
+//                if (popupWindow == null){
+//                    popupWindow = new CommonPopupWindow.Builder(this)
+//                            .setView(R.layout.dialog_release_type)
+//                            .setOutsideTouchable(true)
+//                            .setBackGroundLevel(0.8f)
+//                            .setWidthAndHeight(ConvertUtils.dp2px(260), ViewGroup.LayoutParams.WRAP_CONTENT)
+//                            .setViewOnclickListener((popView, layoutResId) -> {
+//                                popView.findViewById(R.id.tv_project).setOnClickListener(v -> {
+//                                    releaseVm.type = 1;
+//                                    flProjectNameEdit.setVisibility(View.VISIBLE);
+//                                    tvProjectAddress.setClickable(true);
+//                                    flProjectStage.setVisibility(View.VISIBLE);
+//                                    flProjectTypes.setVisibility(View.VISIBLE);
+//                                    rlProjectCycle.setVisibility(View.VISIBLE);
+//                                    flProjectAcreage.setVisibility(View.VISIBLE);
+//                                    flProjectPrice.setVisibility(View.VISIBLE);
+//                                    flProjectDetail.setVisibility(View.VISIBLE);
+//                                    flProjectMaterial.setVisibility(View.VISIBLE);
+//                                    rvContact.setVisibility(View.VISIBLE);
+//                                    flAdd.setVisibility(View.VISIBLE);
+//                                    flProjectCompany.setVisibility(View.VISIBLE);
+//                                    flProjectAddress.setVisibility(View.VISIBLE);
+//                                    flProjectNameSelect.setVisibility(View.GONE);
+//                                    flProjectDes.setVisibility(View.GONE);
+//                                    flVisitor.setVisibility(View.GONE);
+//                                    flMobile.setVisibility(View.GONE);
+//                                    flUpdateTime.setVisibility(View.GONE);
+//                                    rlPhoto.setVisibility(View.GONE);
+//                                    picContentView.setVisibility(View.GONE);
+//                                    tvProjectType.setText(getString(R.string.project_project));
+//                                    popupWindow.dismiss();
+//                                });
+//                                popView.findViewById(R.id.tv_locus).setOnClickListener(v -> {
+//                                    clickLocus();
+//                                    popupWindow.dismiss();
+//                                });
+//                            })
+//                            .create();
+//                }
+//                if (!popupWindow.isShowing()){
+//                    WindowManager.LayoutParams attributes = getWindow().getAttributes();
+//                    attributes.alpha = 0.8f;
+//                    getWindow().setAttributes(attributes);
+//                    popupWindow.showAsDropDown(tvProjectType);
+//                }
                 break;
             case R.id.tv_project_address:
                 Bundle bundle = new Bundle();
@@ -607,4 +610,55 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
 
         return (scrollY > 0) || (scrollY < scrollDifference - 1);
     }
+
+    //底部弹出框
+    @SuppressLint("RestrictedApi")
+    private void getBottomWindow() {
+        //底部滑动对话框
+        btn_dialog = new BottomSheetDialogs(this);
+        //设置自定view
+        View dialog_view = this.getLayoutInflater().inflate(R.layout.dialog_release_type, null);
+        //把布局添加进去
+        btn_dialog.setContentView(dialog_view);
+        //去除系统默认的背景色
+        try {
+            // hack bg color of the BottomSheetDialog
+            ViewGroup parent = (ViewGroup) dialog_view.getParent();
+            parent.setBackgroundResource(android.R.color.transparent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        TextView tv_project=dialog_view.findViewById(R.id.tv_project);
+        TextView tv_locus=dialog_view.findViewById(R.id.tv_locus);
+        tv_project.setOnClickListener(view -> {
+            releaseVm.type = 1;
+            flProjectNameEdit.setVisibility(View.VISIBLE);
+            tvProjectAddress.setClickable(true);
+            flProjectStage.setVisibility(View.VISIBLE);
+            flProjectTypes.setVisibility(View.VISIBLE);
+            rlProjectCycle.setVisibility(View.VISIBLE);
+            flProjectAcreage.setVisibility(View.VISIBLE);
+            flProjectPrice.setVisibility(View.VISIBLE);
+            flProjectDetail.setVisibility(View.VISIBLE);
+            flProjectMaterial.setVisibility(View.VISIBLE);
+            rvContact.setVisibility(View.VISIBLE);
+            flAdd.setVisibility(View.VISIBLE);
+            flProjectCompany.setVisibility(View.VISIBLE);
+            flProjectAddress.setVisibility(View.VISIBLE);
+            flProjectNameSelect.setVisibility(View.GONE);
+            flProjectDes.setVisibility(View.GONE);
+            flVisitor.setVisibility(View.GONE);
+            flMobile.setVisibility(View.GONE);
+            flUpdateTime.setVisibility(View.GONE);
+            rlPhoto.setVisibility(View.GONE);
+            picContentView.setVisibility(View.GONE);
+            tvProjectType.setText(getString(R.string.project_project));
+            btn_dialog.cancel();
+        });
+        tv_locus.setOnClickListener(view -> {
+            clickLocus();
+            btn_dialog.cancel();
+        });
+    }
+
 }

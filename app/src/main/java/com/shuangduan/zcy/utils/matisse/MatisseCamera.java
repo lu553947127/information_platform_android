@@ -78,24 +78,19 @@ public class MatisseCamera {
         if (takePictureIntent.resolveActivity(activity.getPackageManager()) != null) {
             // Create the File where the photo should go
             File photoFile = null;
-            try {
-                photoFile = createImageFile();
-            } catch (IOException ex) {
-                // Error occurred while creating the File
-            }
+            photoFile = createImageFile();
             // Continue only if the File was successfully created
             if (photoFile != null) {
-                photoURI = FileProvider.getUriForFile(activity, authority,
-                        photoFile);
+                photoURI = FileProvider.getUriForFile(activity, authority, photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 activity.startActivityForResult(takePictureIntent, requestCode);
             }
         }
     }
 
-    static String mCurrentPhotoPath;
+    private static String mCurrentPhotoPath;
 
-    private File createImageFile() throws IOException {
+    private File createImageFile() {
         // Create an image file name
         String timeStamp =
                 new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
@@ -114,7 +109,6 @@ public class MatisseCamera {
         if (!Environment.MEDIA_MOUNTED.equals(EnvironmentCompat.getStorageState(tempFile))) {
             return null;
         }
-
         return tempFile;
     }
 

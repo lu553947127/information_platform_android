@@ -1,7 +1,13 @@
 package com.shuangduan.zcy.view.search;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import androidx.appcompat.widget.Toolbar;
@@ -9,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -21,6 +28,8 @@ import com.shuangduan.zcy.model.event.SearchHistoryEvent;
 import com.shuangduan.zcy.vm.SearchVm;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -36,6 +45,7 @@ import butterknife.OnClick;
  * @class describe
  */
 public class SearchResultActivity extends BaseActivity {
+
     @BindView(R.id.edt_bar_title)
     EditText edtBarTitle;
     @BindView(R.id.toolbar)
@@ -45,6 +55,7 @@ public class SearchResultActivity extends BaseActivity {
     @BindView(R.id.vp)
     ViewPager vp;
     private SearchVm searchVm;
+    private String project_type;
 
     @Override
     protected int initLayoutRes() {
@@ -59,7 +70,7 @@ public class SearchResultActivity extends BaseActivity {
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
-
+        project_type=getIntent().getStringExtra(CustomConfig.PROJECT_TYPE);
         Fragment[] fragments = new Fragment[]{
                 ProjectSearchFragment.newInstance(),
                 RecruitSearchFragment.newInstance()
@@ -69,6 +80,9 @@ public class SearchResultActivity extends BaseActivity {
         vp.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), fragments, getResources().getStringArray(R.array.mine_sub)));
         tabLayout.setupWithViewPager(vp);
 
+        if (!TextUtils.isEmpty(project_type)){
+            vp.setCurrentItem(1);
+        }
         searchVm = ViewModelProviders.of(this).get(SearchVm.class);
         searchVm.historyLiveData.observe(this, history -> {
             EventBus.getDefault().post(new SearchHistoryEvent());
@@ -78,6 +92,46 @@ public class SearchResultActivity extends BaseActivity {
         edtBarTitle.setText(getIntent().getStringExtra(CustomConfig.KEYWORD));
         //进入后初次搜索
         searchVm.search();
+
+        //重新键盘，改成搜索键盘，点击搜索键即可完成搜索
+        edtBarTitle.setOnEditorActionListener((textView, i, keyEvent) -> {
+            if (i == EditorInfo.IME_ACTION_SEARCH) {
+                // 先隐藏键盘
+                ((InputMethodManager) Objects.requireNonNull(edtBarTitle.getContext()
+                        .getSystemService(Context.INPUT_METHOD_SERVICE)))
+                        .hideSoftInputFromWindow(Objects.requireNonNull(this.getCurrentFocus()).getWindowToken(),
+                                InputMethodManager.HIDE_NOT_ALWAYS);
+                // 搜索，进行自己要的操作...
+                searchVm.keyword = edtBarTitle.getText().toString();
+                searchVm.search();
+                return true;
+            }
+            return false;
+        });
+        //监听键盘开始搜索
+        edtBarTitle.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (null != editable) {
+                    if (StringUtils.isTrimEmpty(editable.toString())){
+                        ToastUtils.showShort(getString(R.string.hint_keyword));
+                        return;
+                    }
+                    searchVm.keyword = edtBarTitle.getText().toString();
+                    searchVm.search();
+                }
+            }
+        });
     }
 
     @OnClick({R.id.iv_bar_back, R.id.tv_bar_right})

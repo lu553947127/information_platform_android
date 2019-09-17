@@ -189,7 +189,6 @@ public class MainActivity extends BaseActivity {
             }
             return true;
         }
-
         return super.onKeyDown(keyCode, event);
     }
 

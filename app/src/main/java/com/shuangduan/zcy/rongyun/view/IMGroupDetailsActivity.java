@@ -174,13 +174,13 @@ public class IMGroupDetailsActivity extends BaseActivity implements SwitchView.O
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        LogUtils.i(response.body());
+                        LogUtils.json(response.body());
                     }
 
                     @SuppressLint("SetTextI18n")
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-                        LogUtils.i(response.body());
+                        LogUtils.json(response.body());
                         try {
                             imGroupInfoBean=new Gson().fromJson(response.body(), IMGroupInfoBean.class);
                             if (imGroupInfoBean.getCode().equals("200")){
@@ -219,13 +219,12 @@ public class IMGroupDetailsActivity extends BaseActivity implements SwitchView.O
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        LogUtils.i(response);
+                        LogUtils.json(response.body());
                     }
 
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-                        LogUtils.i(response);
-                        Log.e("TAG","请求成功"+response.body());
+                        LogUtils.json(response.body());
                         try {
                             IMFriendOperationBean bean=new Gson().fromJson(response.body(), IMFriendOperationBean.class);
                             if (bean.getCode().equals("200")){

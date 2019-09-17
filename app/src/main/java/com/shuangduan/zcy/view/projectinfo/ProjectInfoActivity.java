@@ -37,6 +37,7 @@ import com.shuangduan.zcy.dialog.pop.CommonPopupWindow;
 import com.shuangduan.zcy.model.bean.MapBean;
 import com.shuangduan.zcy.utils.GpsUtils;
 import com.shuangduan.zcy.view.search.SearchActivity;
+import com.shuangduan.zcy.view.search.SearchResultActivity;
 import com.shuangduan.zcy.vm.PermissionVm;
 import com.shuangduan.zcy.vm.ProjectInfoVm;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -51,7 +52,7 @@ import butterknife.OnClick;
  * @author 宁文强 QQ:858777523
  * @name information_platform_android
  * @class name：com.shuangduan.zcy.view.activity
- * @class describe
+ * @class 工程信息
  * @time 2019/7/11 16:58
  * @change
  * @chang time
@@ -156,7 +157,7 @@ public class ProjectInfoActivity extends BaseActivity {
      * 设置一些amap的属性
      */
     private void setUpMap() {
-        aMap.moveCamera(CameraUpdateFactory.zoomTo(15));
+        aMap.moveCamera(CameraUpdateFactory.zoomTo(16));
         aMap.setMyLocationEnabled(true);// 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
         aMap.getUiSettings().setMyLocationButtonEnabled(true);// 设置默认定位按钮是否显示
         aMap.getUiSettings().setRotateGesturesEnabled(false);//设置地图不能旋转
@@ -340,6 +341,11 @@ public class ProjectInfoActivity extends BaseActivity {
                 break;
             case R.id.iv_bar_right:
                 ActivityUtils.startActivity(SearchActivity.class);
+
+//                Bundle bundle = new Bundle();
+//                bundle.putString(CustomConfig.KEYWORD, "");
+//                bundle.putString(CustomConfig.PROJECT_TYPE, "");
+//                ActivityUtils.startActivity(bundle, SearchResultActivity.class);
                 break;
             case R.id.fl_list:
                 ActivityUtils.startActivity(ProjectInfoListActivity.class);

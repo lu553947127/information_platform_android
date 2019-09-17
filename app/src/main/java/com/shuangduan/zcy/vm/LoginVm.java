@@ -61,7 +61,6 @@ public class LoginVm extends BaseViewModel {
                     //倒计时结束，重置按钮，并停止获取请求
                     timeLiveDataLiveData.postValue((long) -1);
                 });
-
     }
 
     public void smsCode(String tel, int type){

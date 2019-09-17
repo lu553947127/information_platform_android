@@ -2,6 +2,7 @@ package com.shuangduan.zcy.view.projectinfo;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -12,12 +13,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.model.Response;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.LocusAdapter;
+import com.shuangduan.zcy.app.Common;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseLazyFragment;
@@ -25,6 +32,8 @@ import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.CustomDialog;
 import com.shuangduan.zcy.dialog.PayDialog;
 import com.shuangduan.zcy.model.api.PageState;
+import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
+import com.shuangduan.zcy.model.bean.IMFriendApplyCountBean;
 import com.shuangduan.zcy.model.bean.TrackBean;
 import com.shuangduan.zcy.model.event.RefreshViewLocusEvent;
 import com.shuangduan.zcy.view.PhotoViewActivity;
@@ -52,6 +61,7 @@ import butterknife.OnClick;
  * @class describe
  */
 public class ProjectLocusFragment extends BaseLazyFragment {
+
     @BindView(R.id.tv_filter)
     TextView tvFilter;
     @BindView(R.id.refresh)
@@ -62,11 +72,12 @@ public class ProjectLocusFragment extends BaseLazyFragment {
     private LocusAdapter locusAdapter;
     private UpdatePwdPayVm updatePwdPayVm;
     private CoinPayVm coinPayVm;
+    private static int project_id;
 
-    public static ProjectLocusFragment newInstance() {
-
+    public static ProjectLocusFragment newInstance(int id) {
         Bundle args = new Bundle();
-
+        args.putInt("id", id);
+        project_id=id;
         ProjectLocusFragment fragment = new ProjectLocusFragment();
         fragment.setArguments(args);
         return fragment;
@@ -125,8 +136,6 @@ public class ProjectLocusFragment extends BaseLazyFragment {
                     showPic(listBean, 1, view);
                     break;
                 case R.id.iv_pic_third:
-                    showPic(listBean, 2, view);
-                    break;
                 case R.id.tv_more:
                     showPic(listBean, 2, view);
                     break;
@@ -251,12 +260,8 @@ public class ProjectLocusFragment extends BaseLazyFragment {
         coinPayVm = ViewModelProviders.of(this).get(CoinPayVm.class);
         coinPayVm.locusPayLiveData.observe(this, coinPayResultBean -> {
             if (coinPayResultBean.getPay_status() == 1){
-                ToastUtils.showShort(getString(R.string.buy_success));
-                projectDetailVm.getTrack();
-                //刷新已查看列表
-                EventBus.getDefault().post(new RefreshViewLocusEvent());
                 //加入工程圈讨论组（群聊）
-
+                getJoinGroup();
             }else {
                 //余额不足
                 addDialog(new CustomDialog(mActivity)
@@ -298,4 +303,41 @@ public class ProjectLocusFragment extends BaseLazyFragment {
                 })
                 .showDialog());
     }
+
+    //加入讨论组
+    private void getJoinGroup() {
+
+        OkGo.<String>post(RetrofitHelper.BASE_TEST_URL+ Common.WECHAT_JOIN_GROUP)
+                .tag(this)
+                .headers("token", SPUtils.getInstance().getString(SpConfig.TOKEN))//请求头
+                .params("user_id", SPUtils.getInstance().getInt(SpConfig.USER_ID))//用户编号
+                .params("id",project_id)
+                .execute(new com.lzy.okgo.callback.StringCallback() {//返回值
+
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+                        LogUtils.json(response.body());
+                    }
+
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        LogUtils.json(response.body());
+                        try {
+                            IMFriendApplyCountBean bean=new Gson().fromJson(response.body(), IMFriendApplyCountBean.class);
+                            if (bean.getCode().equals("200")){
+                                ToastUtils.showShort(getString(R.string.buy_success));
+                                projectDetailVm.getTrack();
+                                //刷新已查看列表
+                                EventBus.getDefault().post(new RefreshViewLocusEvent());
+                            }else {
+                                ToastUtils.showShort(getString(R.string.request_error));
+                            }
+                        }catch (JsonSyntaxException | IllegalStateException ignored){
+                            ToastUtils.showShort(getString(R.string.request_error));
+                        }
+                    }
+                });
+    }
+
 }

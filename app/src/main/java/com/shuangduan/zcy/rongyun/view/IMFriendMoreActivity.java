@@ -145,12 +145,12 @@ public class IMFriendMoreActivity extends BaseActivity {
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        LogUtils.i(response.body());
+                        LogUtils.json(response.body());
                     }
 
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-                        LogUtils.i(response.body());
+                        LogUtils.json(response.body());
                         try {
                             imFriendListBean=new Gson().fromJson(response.body(), IMFriendListBean.class);
                             if (imFriendListBean.getCode().equals("200")){

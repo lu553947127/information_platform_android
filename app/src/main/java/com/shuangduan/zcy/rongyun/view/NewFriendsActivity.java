@@ -135,13 +135,12 @@ public class NewFriendsActivity extends BaseActivity {
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        LogUtils.i(response);
+                        LogUtils.json(response.body());
                     }
 
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-                        LogUtils.i(response);
-                        Log.e("TAG","请求成功"+response.body());
+                        LogUtils.json(response.body());
                         try {
                             imFriendApplyListBean=new Gson().fromJson(response.body(), IMFriendApplyListBean.class);
                             if (imFriendApplyListBean.getCode().equals("200")){
@@ -179,13 +178,12 @@ public class NewFriendsActivity extends BaseActivity {
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        LogUtils.i(response);
+                        LogUtils.json(response.body());
                     }
 
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-                        LogUtils.i(response);
-                        Log.e("TAG","请求成功"+response.body());
+                        LogUtils.json(response.body());
                         try {
                             IMFriendOperationBean bean=new Gson().fromJson(response.body(), IMFriendOperationBean.class);
                             if (bean.getCode().equals("200")){

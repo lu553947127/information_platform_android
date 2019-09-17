@@ -142,8 +142,7 @@ public class SupplierJoinActivity extends BaseActivity implements BaseDialog.Pho
                         .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
                         .thumbnailScale(0.85f)
                         .theme(R.style.Matisse_Dracula)
-                        .captureStrategy(
-                                new CaptureStrategy(true, "com.shuangduan.zcy.fileprovider"))
+                        .captureStrategy(new CaptureStrategy(true, "com.shuangduan.zcy.fileprovider"))
                         .imageEngine(new Glide4Engine())
                         .forResult(PermissionVm.REQUEST_CODE_CHOOSE_HEAD);
             }

@@ -36,21 +36,15 @@ public class ShareVm extends BaseViewModel {
     public void getBitmap(String url, Bitmap defaultBitmap){
         addDisposable(Flowable.just(url)
                 .subscribeOn(Schedulers.io())
-                .map(new Function<String, Bitmap>() {
-                    @Override
-                    public Bitmap apply(String s) throws Exception {
-                        Bitmap bitMBitmap = ShareUtils.getBitMBitmap(s);
-                        return bitMBitmap != null? bitMBitmap: defaultBitmap;
-                    }
+                .map(s -> {
+                    Bitmap bitMBitmap = ShareUtils.getBitMBitmap(s);
+                    return bitMBitmap != null? bitMBitmap: defaultBitmap;
                 })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<Bitmap>() {
-                    @Override
-                    public void accept(Bitmap bitmap) throws Exception {
-                        ShareBean shareBean = new ShareBean();
-                        shareBean.setBitmap(bitmap);
-                        shareLiveData.postValue(shareBean);
-                    }
+                .subscribe(bitmap -> {
+                    ShareBean shareBean = new ShareBean();
+                    shareBean.setBitmap(bitmap);
+                    shareLiveData.postValue(shareBean);
                 }));
     }
 }

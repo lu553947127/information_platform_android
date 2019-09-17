@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.SpConfig;
@@ -30,17 +29,24 @@ import butterknife.OnClick;
  * @chang time
  * @class describe
  */
-public class FirstActivity extends BaseActivity {
+public class WelcomeActivity extends BaseActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         isTranslationBar = true;
         super.onCreate(savedInstanceState);
+        getSwipeBackLayout().setEnableGesture(false);
+        if (LoginUtils.isFirstApp()){
+            getIntoActivity();
+        }else {
+            ActivityUtils.startActivity(FirstStartActivity.class);
+            finish();
+        }
     }
 
     @Override
     protected int initLayoutRes() {
-        return R.layout.activity_first;
+        return R.layout.activity_welcome;
     }
 
     @Override
@@ -52,7 +58,9 @@ public class FirstActivity extends BaseActivity {
     protected void initDataAndEvent(Bundle savedInstanceState) {
         //设置状态栏颜色模式
         BarUtils.setStatusBarLightMode(this, true);
-        LogUtils.i("启动");
+    }
+
+    private void getIntoActivity() {
         if (LoginUtils.isLogin()){
             ActivityUtils.startActivity(MainActivity.class);
             //这里连一遍融云
@@ -61,6 +69,7 @@ public class FirstActivity extends BaseActivity {
                 IMConnectVm imConnectVm = ViewModelProviders.of(this).get(IMConnectVm.class);
                 imConnectVm.connect(SPUtils.getInstance().getString(SpConfig.IM_TOKEN));
             }
+            SPUtils.getInstance().put(SpConfig.FIRST_APP, 1);
         }
     }
 

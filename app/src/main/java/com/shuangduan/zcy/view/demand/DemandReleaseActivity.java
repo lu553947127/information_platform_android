@@ -1,7 +1,9 @@
 package com.shuangduan.zcy.view.demand;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -22,12 +24,17 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
+import com.shuangduan.zcy.dialog.BottomSheetDialogs;
 import com.shuangduan.zcy.dialog.pop.CommonPopupWindow;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.vm.DemandReleaseVm;
 import com.shuangduan.zcy.weight.datepicker.CustomDatePicker;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -112,6 +119,7 @@ public class DemandReleaseActivity extends BaseActivity {
     @BindView(R.id.fl_des)
     FrameLayout flDes;
     private DemandReleaseVm demandReleaseVm;
+    private BottomSheetDialogs btn_dialog;
 
     @Override
     protected int initLayoutRes() {
@@ -162,79 +170,81 @@ public class DemandReleaseActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_release_type:
-                if (popupWindow == null){
-                    popupWindow = new CommonPopupWindow.Builder(this)
-                            .setView(R.layout.dialog_release_demand)
-                            .setOutsideTouchable(true)
-                            .setBackGroundLevel(0.8f)
-                            .setWidthAndHeight(ConvertUtils.dp2px(260), ViewGroup.LayoutParams.WRAP_CONTENT)
-                            .setViewOnclickListener((popView, layoutResId) -> {
-                                popView.findViewById(R.id.tv_find_relationship).setOnClickListener(l -> {
-                                    tvReleaseType.setText(getString(R.string.find_relationship));
-                                    demandReleaseVm.releaseType = DemandReleaseVm.RELEASE_TYPE_RELATIONSHIP;
-                                    flTitle.setVisibility(View.VISIBLE);
-                                    flCommission.setVisibility(View.VISIBLE);
-                                    flDes.setVisibility(View.VISIBLE);
-                                    flMaterialName.setVisibility(View.GONE);
-                                    flDemandNum.setVisibility(View.GONE);
-                                    flDemandProject.setVisibility(View.GONE);
-                                    flProjectAddress.setVisibility(View.GONE);
-                                    flPriceAccept.setVisibility(View.GONE);
-                                    flContactsInfo.setVisibility(View.GONE);
-                                    flOwner.setVisibility(View.GONE);
-                                    flSupplyNum.setVisibility(View.GONE);
-                                    flSupplyStyle.setVisibility(View.GONE);
-                                    flSupplyAddress.setVisibility(View.GONE);
-                                    flSupplyPrice.setVisibility(View.GONE);
-                                    popupWindow.dismiss();
-                                });
-                                popView.findViewById(R.id.tv_find_substance).setOnClickListener(l -> {
-                                    tvReleaseType.setText(getString(R.string.find_substance));
-                                    demandReleaseVm.releaseType = DemandReleaseVm.RELEASE_TYPE_SUBSTANCE;
-                                    flTitle.setVisibility(View.GONE);
-                                    flCommission.setVisibility(View.GONE);
-                                    flDes.setVisibility(View.GONE);
-                                    flMaterialName.setVisibility(View.VISIBLE);
-                                    flDemandNum.setVisibility(View.VISIBLE);
-                                    flDemandProject.setVisibility(View.VISIBLE);
-                                    flProjectAddress.setVisibility(View.VISIBLE);
-                                    flPriceAccept.setVisibility(View.VISIBLE);
-                                    flContactsInfo.setVisibility(View.VISIBLE);
-                                    flOwner.setVisibility(View.VISIBLE);
-                                    flSupplyNum.setVisibility(View.GONE);
-                                    flSupplyStyle.setVisibility(View.GONE);
-                                    flSupplyAddress.setVisibility(View.GONE);
-                                    flSupplyPrice.setVisibility(View.GONE);
-                                    popupWindow.dismiss();
-                                });
-                                popView.findViewById(R.id.tv_find_buyer).setOnClickListener(l -> {
-                                    tvReleaseType.setText(getString(R.string.find_buyer));
-                                    demandReleaseVm.releaseType = DemandReleaseVm.RELEASE_TYPE_BUYER;
-                                    flTitle.setVisibility(View.GONE);
-                                    flCommission.setVisibility(View.GONE);
-                                    flDes.setVisibility(View.GONE);
-                                    flMaterialName.setVisibility(View.VISIBLE);
-                                    flDemandNum.setVisibility(View.GONE);
-                                    flDemandProject.setVisibility(View.GONE);
-                                    flProjectAddress.setVisibility(View.GONE);
-                                    flPriceAccept.setVisibility(View.GONE);
-                                    flContactsInfo.setVisibility(View.VISIBLE);
-                                    flOwner.setVisibility(View.VISIBLE);
-                                    flSupplyNum.setVisibility(View.VISIBLE);
-                                    flSupplyStyle.setVisibility(View.VISIBLE);
-                                    flSupplyAddress.setVisibility(View.VISIBLE);
-                                    flSupplyPrice.setVisibility(View.VISIBLE);
-                                    popupWindow.dismiss();
-                                });
-                            })
-                            .create();
-                }
-                if (!popupWindow.isShowing()){
-                    WindowManager.LayoutParams attributes = getWindow().getAttributes();
-                    attributes.alpha = 0.8f;
-                    getWindow().setAttributes(attributes);
-                    popupWindow.showAsDropDown(tvReleaseType);
-                }
+                getBottomWindow();
+                btn_dialog.show();
+//                if (popupWindow == null){
+//                    popupWindow = new CommonPopupWindow.Builder(this)
+//                            .setView(R.layout.dialog_release_demand)
+//                            .setOutsideTouchable(true)
+//                            .setBackGroundLevel(0.8f)
+//                            .setWidthAndHeight(ConvertUtils.dp2px(260), ViewGroup.LayoutParams.WRAP_CONTENT)
+//                            .setViewOnclickListener((popView, layoutResId) -> {
+//                                popView.findViewById(R.id.tv_find_relationship).setOnClickListener(l -> {
+//                                    tvReleaseType.setText(getString(R.string.find_relationship));
+//                                    demandReleaseVm.releaseType = DemandReleaseVm.RELEASE_TYPE_RELATIONSHIP;
+//                                    flTitle.setVisibility(View.VISIBLE);
+//                                    flCommission.setVisibility(View.VISIBLE);
+//                                    flDes.setVisibility(View.VISIBLE);
+//                                    flMaterialName.setVisibility(View.GONE);
+//                                    flDemandNum.setVisibility(View.GONE);
+//                                    flDemandProject.setVisibility(View.GONE);
+//                                    flProjectAddress.setVisibility(View.GONE);
+//                                    flPriceAccept.setVisibility(View.GONE);
+//                                    flContactsInfo.setVisibility(View.GONE);
+//                                    flOwner.setVisibility(View.GONE);
+//                                    flSupplyNum.setVisibility(View.GONE);
+//                                    flSupplyStyle.setVisibility(View.GONE);
+//                                    flSupplyAddress.setVisibility(View.GONE);
+//                                    flSupplyPrice.setVisibility(View.GONE);
+//                                    popupWindow.dismiss();
+//                                });
+//                                popView.findViewById(R.id.tv_find_substance).setOnClickListener(l -> {
+//                                    tvReleaseType.setText(getString(R.string.find_substance));
+//                                    demandReleaseVm.releaseType = DemandReleaseVm.RELEASE_TYPE_SUBSTANCE;
+//                                    flTitle.setVisibility(View.GONE);
+//                                    flCommission.setVisibility(View.GONE);
+//                                    flDes.setVisibility(View.GONE);
+//                                    flMaterialName.setVisibility(View.VISIBLE);
+//                                    flDemandNum.setVisibility(View.VISIBLE);
+//                                    flDemandProject.setVisibility(View.VISIBLE);
+//                                    flProjectAddress.setVisibility(View.VISIBLE);
+//                                    flPriceAccept.setVisibility(View.VISIBLE);
+//                                    flContactsInfo.setVisibility(View.VISIBLE);
+//                                    flOwner.setVisibility(View.VISIBLE);
+//                                    flSupplyNum.setVisibility(View.GONE);
+//                                    flSupplyStyle.setVisibility(View.GONE);
+//                                    flSupplyAddress.setVisibility(View.GONE);
+//                                    flSupplyPrice.setVisibility(View.GONE);
+//                                    popupWindow.dismiss();
+//                                });
+//                                popView.findViewById(R.id.tv_find_buyer).setOnClickListener(l -> {
+//                                    tvReleaseType.setText(getString(R.string.find_buyer));
+//                                    demandReleaseVm.releaseType = DemandReleaseVm.RELEASE_TYPE_BUYER;
+//                                    flTitle.setVisibility(View.GONE);
+//                                    flCommission.setVisibility(View.GONE);
+//                                    flDes.setVisibility(View.GONE);
+//                                    flMaterialName.setVisibility(View.VISIBLE);
+//                                    flDemandNum.setVisibility(View.GONE);
+//                                    flDemandProject.setVisibility(View.GONE);
+//                                    flProjectAddress.setVisibility(View.GONE);
+//                                    flPriceAccept.setVisibility(View.GONE);
+//                                    flContactsInfo.setVisibility(View.VISIBLE);
+//                                    flOwner.setVisibility(View.VISIBLE);
+//                                    flSupplyNum.setVisibility(View.VISIBLE);
+//                                    flSupplyStyle.setVisibility(View.VISIBLE);
+//                                    flSupplyAddress.setVisibility(View.VISIBLE);
+//                                    flSupplyPrice.setVisibility(View.VISIBLE);
+//                                    popupWindow.dismiss();
+//                                });
+//                            })
+//                            .create();
+//                }
+//                if (!popupWindow.isShowing()){
+//                    WindowManager.LayoutParams attributes = getWindow().getAttributes();
+//                    attributes.alpha = 0.8f;
+//                    getWindow().setAttributes(attributes);
+//                    popupWindow.showAsDropDown(tvReleaseType);
+//                }
                 break;
             case R.id.cb_lease:
                 demandReleaseVm.way = 2;
@@ -336,8 +346,87 @@ public class DemandReleaseActivity extends BaseActivity {
         CustomDatePicker customDatePicker = new CustomDatePicker(this, time -> {
             demandReleaseVm.endTime = time;
             tvTimeEnd.setText(time);
-        }, "yyyy-MM-dd", demandReleaseVm.startTime, "2100-12-31");
+        }, "yyyy-MM-dd",demandReleaseVm.startTime , "2100-12-31");
         customDatePicker.showSpecificTime(false);
         customDatePicker.show(TimeUtils.getNowString());
+    }
+
+    //底部弹出框
+    @SuppressLint("RestrictedApi")
+    private void getBottomWindow() {
+        //底部滑动对话框
+        btn_dialog = new BottomSheetDialogs(this);
+        //设置自定view
+        View dialog_view = this.getLayoutInflater().inflate(R.layout.dialog_release_demand, null);
+        //把布局添加进去
+        btn_dialog.setContentView(dialog_view);
+        //去除系统默认的背景色
+        try {
+            // hack bg color of the BottomSheetDialog
+            ViewGroup parent = (ViewGroup) dialog_view.getParent();
+            parent.setBackgroundResource(android.R.color.transparent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        TextView tv_find_relationship=dialog_view.findViewById(R.id.tv_find_relationship);
+        TextView tv_find_substance=dialog_view.findViewById(R.id.tv_find_substance);
+        TextView tv_find_buyer=dialog_view.findViewById(R.id.tv_find_buyer);
+        tv_find_relationship.setOnClickListener(view -> {
+            tvReleaseType.setText(getString(R.string.find_relationship));
+            demandReleaseVm.releaseType = DemandReleaseVm.RELEASE_TYPE_RELATIONSHIP;
+            flTitle.setVisibility(View.VISIBLE);
+            flCommission.setVisibility(View.VISIBLE);
+            flDes.setVisibility(View.VISIBLE);
+            flMaterialName.setVisibility(View.GONE);
+            flDemandNum.setVisibility(View.GONE);
+            flDemandProject.setVisibility(View.GONE);
+            flProjectAddress.setVisibility(View.GONE);
+            flPriceAccept.setVisibility(View.GONE);
+            flContactsInfo.setVisibility(View.GONE);
+            flOwner.setVisibility(View.GONE);
+            flSupplyNum.setVisibility(View.GONE);
+            flSupplyStyle.setVisibility(View.GONE);
+            flSupplyAddress.setVisibility(View.GONE);
+            flSupplyPrice.setVisibility(View.GONE);
+            btn_dialog.cancel();
+        });
+        tv_find_substance.setOnClickListener(view -> {
+            tvReleaseType.setText(getString(R.string.find_substance));
+            demandReleaseVm.releaseType = DemandReleaseVm.RELEASE_TYPE_SUBSTANCE;
+            flTitle.setVisibility(View.GONE);
+            flCommission.setVisibility(View.GONE);
+            flDes.setVisibility(View.GONE);
+            flMaterialName.setVisibility(View.VISIBLE);
+            flDemandNum.setVisibility(View.VISIBLE);
+            flDemandProject.setVisibility(View.VISIBLE);
+            flProjectAddress.setVisibility(View.VISIBLE);
+            flPriceAccept.setVisibility(View.VISIBLE);
+            flContactsInfo.setVisibility(View.VISIBLE);
+            flOwner.setVisibility(View.VISIBLE);
+            flSupplyNum.setVisibility(View.GONE);
+            flSupplyStyle.setVisibility(View.GONE);
+            flSupplyAddress.setVisibility(View.GONE);
+            flSupplyPrice.setVisibility(View.GONE);
+            btn_dialog.cancel();
+        });
+        tv_find_buyer.setOnClickListener(v -> {
+            tvReleaseType.setText(getString(R.string.find_buyer));
+            demandReleaseVm.releaseType = DemandReleaseVm.RELEASE_TYPE_BUYER;
+            flTitle.setVisibility(View.GONE);
+            flCommission.setVisibility(View.GONE);
+            flDes.setVisibility(View.GONE);
+            flMaterialName.setVisibility(View.VISIBLE);
+            flDemandNum.setVisibility(View.GONE);
+            flDemandProject.setVisibility(View.GONE);
+            flProjectAddress.setVisibility(View.GONE);
+            flPriceAccept.setVisibility(View.GONE);
+            flContactsInfo.setVisibility(View.VISIBLE);
+            flOwner.setVisibility(View.VISIBLE);
+            flSupplyNum.setVisibility(View.VISIBLE);
+            flSupplyStyle.setVisibility(View.VISIBLE);
+            flSupplyAddress.setVisibility(View.VISIBLE);
+            flSupplyPrice.setVisibility(View.VISIBLE);
+            btn_dialog.cancel();
+        });
     }
 }

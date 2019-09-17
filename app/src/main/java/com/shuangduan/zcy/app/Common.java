@@ -20,6 +20,10 @@ public class Common {
     public static final String FRIEND_APPLY="/api/Friend/apply";
     //群聊退出
     public static final String WECHAT_QUIT_GROUP="/api/Wechat/quitGroup";
+    //群聊加入
+    public static final String WECHAT_JOIN_GROUP="/api/wechat/joinGroup";
+    //查询是否加群
+    public static final String WECHAT_MEMBERS_STATUS="/api/Wechat/membersStatus";
 
     //通讯录 群组列表
     public static final String WECHAT_MY_GROUP="/api/wechat/myGroup";

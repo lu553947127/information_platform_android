@@ -1,9 +1,10 @@
 package com.shuangduan.zcy.view.recruit;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
@@ -20,15 +21,11 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.RecruitAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
-import com.shuangduan.zcy.dialog.ShareDialog;
-import com.shuangduan.zcy.listener.BaseUiListener;
 import com.shuangduan.zcy.model.bean.RecruitBean;
-import com.shuangduan.zcy.utils.ShareUtils;
-import com.shuangduan.zcy.view.mine.RecommendFriendsActivity;
+import com.shuangduan.zcy.view.search.SearchActivity;
+import com.shuangduan.zcy.view.search.SearchResultActivity;
 import com.shuangduan.zcy.vm.RecruitVm;
-import com.shuangduan.zcy.vm.ShareVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
-import com.tencent.tauth.Tencent;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -44,8 +41,13 @@ import butterknife.OnClick;
  * @class describe
  */
 public class RecruitActivity extends BaseActivity {
+
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
+    @BindView(R.id.iv_bar_right)
+    AppCompatImageView ivBarRight;
+    @BindView(R.id.tv_bar_right)
+    AppCompatTextView tvBarRight;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.rv)
@@ -68,7 +70,8 @@ public class RecruitActivity extends BaseActivity {
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getResources().getStringArray(R.array.classify)[1]);
-
+        ivBarRight.setImageResource(R.drawable.icon_search);
+        tvBarRight.setVisibility(View.GONE);
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
         RecruitAdapter recruitAdapter = new RecruitAdapter(R.layout.item_recruit, null);
@@ -126,6 +129,22 @@ public class RecruitActivity extends BaseActivity {
         }
     }
 
-    @OnClick(R.id.iv_bar_back)
-    void onClick(){finish();}
+    @OnClick({R.id.iv_bar_back, R.id.iv_bar_right})
+    void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.iv_bar_back:
+                finish();
+                break;
+            case R.id.iv_bar_right:
+                Bundle bundle = new Bundle();
+                bundle.putString(CustomConfig.PROJECT_TYPE, "1");
+                ActivityUtils.startActivity(bundle,SearchActivity.class);
+
+//                Bundle bundle = new Bundle();
+//                bundle.putString(CustomConfig.KEYWORD, "");
+//                bundle.putString(CustomConfig.PROJECT_TYPE, "1");
+//                ActivityUtils.startActivity(bundle, SearchResultActivity.class);
+                break;
+        }
+    }
 }

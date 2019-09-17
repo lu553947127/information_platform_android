@@ -89,7 +89,6 @@ public class ProjectSearchFragment extends BaseLazyFragment {
             }
             setNoMore(searchProjectBean.getPage(), searchProjectBean.getCount());
         });
-
         refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {

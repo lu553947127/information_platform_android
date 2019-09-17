@@ -31,17 +31,30 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.tabs.TabLayout;
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.model.Response;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ViewPagerAdapter;
+import com.shuangduan.zcy.app.Common;
 import com.shuangduan.zcy.app.CustomConfig;
+import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.ShareDialog;
 import com.shuangduan.zcy.listener.BaseUiListener;
 import com.shuangduan.zcy.model.api.PageState;
+import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
+import com.shuangduan.zcy.model.bean.IMFriendApplyCountBean;
+import com.shuangduan.zcy.model.bean.ProjectMembersStatusBean;
 import com.shuangduan.zcy.model.event.LocusRefreshEvent;
+import com.shuangduan.zcy.model.event.RefreshViewLocusEvent;
 import com.shuangduan.zcy.model.event.WarrantSuccessEvent;
+import com.shuangduan.zcy.rongyun.view.IMSearchActivity;
 import com.shuangduan.zcy.utils.AuthenticationUtils;
 import com.shuangduan.zcy.utils.ShareUtils;
 import com.shuangduan.zcy.view.release.ReleaseProjectActivity;
@@ -53,10 +66,12 @@ import com.shuangduan.zcy.vm.UpdatePwdPayVm;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.tencent.tauth.Tencent;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.rong.imkit.RongIM;
 
 /**
  * @author 宁文强 QQ:858777523
@@ -148,7 +163,7 @@ public class ProjectDetailActivity extends BaseActivity {
 
         fragments = new Fragment[4];
         fragments[0] = ProjectContentFragment.newInstance();
-        fragments[1] = ProjectLocusFragment.newInstance();
+        fragments[1] = ProjectLocusFragment.newInstance(getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0));
         fragments[2] = ProjectReadFragment.newInstance();
         fragments[3] = ProjectConsumptionFragment.newInstance();
 
@@ -297,7 +312,7 @@ public class ProjectDetailActivity extends BaseActivity {
                 ActivityUtils.startActivity(bundle, ProjectErrorActivity.class);
                 break;
             case R.id.ll_chat:
-
+                getMembersStatus();
                 break;
             case R.id.fl_subscription:
                 switch (projectDetailVm.subscribeLiveData.getValue()){
@@ -319,6 +334,41 @@ public class ProjectDetailActivity extends BaseActivity {
                 ActivityUtils.startActivity(bundle, ReleaseProjectActivity.class);
                 break;
         }
+    }
+
+    //查询当前登陆人在选择工程是否有讨论组
+    private void getMembersStatus() {
+
+        OkGo.<String>post(RetrofitHelper.BASE_TEST_URL+ Common.WECHAT_MEMBERS_STATUS)
+                .tag(this)
+                .headers("token", SPUtils.getInstance().getString(SpConfig.TOKEN))//请求头
+                .params("user_id", SPUtils.getInstance().getInt(SpConfig.USER_ID))//用户编号
+                .params("project_id",getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0))
+                .execute(new com.lzy.okgo.callback.StringCallback() {//返回值
+
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+                        LogUtils.json(response.body());
+                    }
+
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        LogUtils.json(response.body());
+                        try {
+                            ProjectMembersStatusBean bean=new Gson().fromJson(response.body(), ProjectMembersStatusBean.class);
+                            if (bean.getCode().equals("200")){
+                                RongIM.getInstance().startGroupChat(ProjectDetailActivity.this
+                                        , bean.getData().getGroupId()
+                                        , bean.getData().getGroupName());
+                            }else {
+                                ToastUtils.showShort(bean.getMsg());
+                            }
+                        }catch (JsonSyntaxException | IllegalStateException ignored){
+                            ToastUtils.showShort(getString(R.string.request_error));
+                        }
+                    }
+                });
     }
 
     /**

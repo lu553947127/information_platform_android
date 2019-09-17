@@ -1,8 +1,14 @@
 package com.shuangduan.zcy.view.search;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -28,6 +34,8 @@ import com.shuangduan.zcy.vm.SearchVm;
 
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.Objects;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -42,6 +50,7 @@ import butterknife.OnClick;
  * @class describe
  */
 public class SearchActivity extends BaseActivity {
+
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
     @BindView(R.id.toolbar)
@@ -56,6 +65,7 @@ public class SearchActivity extends BaseActivity {
     RecyclerView rv;
     private SearchVm searchVm;
     private SearchHistoryAdapter searchAdapter;
+    private String project_type;
 
     @Override
     protected int initLayoutRes() {
@@ -72,6 +82,8 @@ public class SearchActivity extends BaseActivity {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.search));
 
+        project_type=getIntent().getStringExtra(CustomConfig.PROJECT_TYPE);
+
         searchVm = ViewModelProviders.of(this).get(SearchVm.class);
         searchVm.hotLiveData.observe(this, list -> {
             for (String s : list) {
@@ -80,6 +92,7 @@ public class SearchActivity extends BaseActivity {
                 itemHot.setOnClickListener(l -> {
                     Bundle bundle = new Bundle();
                     bundle.putString(CustomConfig.KEYWORD, s);
+                    bundle.putString(CustomConfig.PROJECT_TYPE, project_type);
                     ActivityUtils.startActivity(bundle, SearchResultActivity.class);
                 });
                 flHot.addView(itemHot);
@@ -93,6 +106,7 @@ public class SearchActivity extends BaseActivity {
             String s = searchAdapter.getData().get(position);
             Bundle bundle = new Bundle();
             bundle.putString(CustomConfig.KEYWORD, s);
+            bundle.putString(CustomConfig.PROJECT_TYPE, project_type);
             ActivityUtils.startActivity(bundle, SearchResultActivity.class);
         });
         searchVm.historyLiveData.observe(this, history -> {
@@ -112,6 +126,50 @@ public class SearchActivity extends BaseActivity {
 
         searchVm.getHot();//获取热点搜索
         searchVm.getHistory();
+
+        //重新键盘，改成搜索键盘，点击搜索键即可完成搜索
+        edtKeyword.setOnEditorActionListener((textView, i, keyEvent) -> {
+            if (i == EditorInfo.IME_ACTION_SEARCH) {
+                // 先隐藏键盘
+                ((InputMethodManager) Objects.requireNonNull(edtKeyword.getContext()
+                        .getSystemService(Context.INPUT_METHOD_SERVICE)))
+                        .hideSoftInputFromWindow(Objects.requireNonNull(this.getCurrentFocus()).getWindowToken(),
+                                InputMethodManager.HIDE_NOT_ALWAYS);
+                // 搜索，进行自己要的操作...
+                Bundle bundle = new Bundle();
+                bundle.putString(CustomConfig.KEYWORD, edtKeyword.getText().toString());
+                bundle.putString(CustomConfig.PROJECT_TYPE, project_type);
+                ActivityUtils.startActivity(bundle, SearchResultActivity.class);
+                return true;
+            }
+            return false;
+        });
+//        //监听键盘开始搜索
+//        edtKeyword.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//                if (null != editable) {
+//                    if (StringUtils.isTrimEmpty(editable.toString())){
+//                        ToastUtils.showShort(getString(R.string.hint_keyword));
+//                        return;
+//                    }
+//                    Bundle bundle = new Bundle();
+//                    bundle.putString(CustomConfig.KEYWORD, editable.toString());
+//                    bundle.putString(CustomConfig.PROJECT_TYPE, project_type);
+//                    ActivityUtils.startActivity(bundle, SearchResultActivity.class);
+//                }
+//            }
+//        });
     }
 
     @OnClick({R.id.iv_bar_back, R.id.tv_positive, R.id.iv_del})
@@ -127,6 +185,7 @@ public class SearchActivity extends BaseActivity {
                 }
                 Bundle bundle = new Bundle();
                 bundle.putString(CustomConfig.KEYWORD, edtKeyword.getText().toString());
+                bundle.putString(CustomConfig.PROJECT_TYPE, project_type);
                 ActivityUtils.startActivity(bundle, SearchResultActivity.class);
                 break;
             case R.id.iv_del:
@@ -139,4 +198,5 @@ public class SearchActivity extends BaseActivity {
     public void onEventHistoryChange(SearchHistoryEvent event){
         searchVm.getHistory();
     }
+
 }

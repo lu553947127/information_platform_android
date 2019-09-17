@@ -63,6 +63,7 @@ import com.youth.banner.Transformer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -312,7 +313,7 @@ public class HomeFragment extends BaseFragment {
     private void getBadgeViewInitView() {
         //底部标题栏右上角标设置
         //获取整个的NavigationView
-        BottomNavigationView navigation =getActivity().findViewById(R.id.navigation);
+        BottomNavigationView navigation = Objects.requireNonNull(getActivity()).findViewById(R.id.navigation);
         BottomNavigationMenuView menuView = (BottomNavigationMenuView) navigation.getChildAt(0);
         //这里就是获取所添加的每一个Tab(或者叫menu)，设置在标题栏的位置
         View tab = menuView.getChildAt(2);
@@ -339,12 +340,12 @@ public class HomeFragment extends BaseFragment {
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        LogUtils.i(response.body());
+                        LogUtils.json(response.body());
                     }
 
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-                        LogUtils.i(response.body());
+                        LogUtils.json(response.body());
                         try {
                             IMFriendApplyCountBean bean=new Gson().fromJson(response.body(), IMFriendApplyCountBean.class);
                             if (bean.getCode().equals("200")){

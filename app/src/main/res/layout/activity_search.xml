@@ -26,6 +26,7 @@
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:singleLine="true"
+            android:imeOptions="actionSearch"
             android:textColorHint="@color/colorTvHint"
             android:textColor="@color/colorTv"
             android:textSize="13sp"

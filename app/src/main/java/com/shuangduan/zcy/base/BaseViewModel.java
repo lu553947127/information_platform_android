@@ -1,12 +1,6 @@
 package com.shuangduan.zcy.base;
 
-import android.util.SparseArray;
-
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
-import com.shuangduan.zcy.model.api.convert.exception.ErrorHandlerFactory;
-import com.shuangduan.zcy.model.api.convert.exception.ResponseErrorListenerImpl;
 
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;

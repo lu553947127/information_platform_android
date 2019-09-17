@@ -15,7 +15,8 @@ import android.widget.PopupWindow;
  */
 
 public class CommonPopupWindow extends PopupWindow {
-    final PopupController controller;
+
+    private final PopupController controller;
 
     @Override
     public int getWidth() {

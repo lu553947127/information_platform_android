@@ -160,17 +160,18 @@ public class IMSearchActivity extends BaseActivity {
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        LogUtils.i(response.body());
+                        LogUtils.json(response.body());
                     }
 
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-                        LogUtils.i(response.body());
+                        LogUtils.json(response.body());
                         try {
                             imFriendSearchBean=new Gson().fromJson(response.body(),IMFriendSearchBean.class);
                             if (imFriendSearchBean.getCode().equals("200")){
                                 list.clear();
                                 list.addAll(imFriendSearchBean.getData().getFriend());
+                                imSearchAdapter.setKeyword(edtKeyword.getText().toString());
                                 if(list!=null&&list.size()!=0){
                                     imSearchAdapter.notifyDataSetChanged();
                                 }else {
@@ -179,6 +180,7 @@ public class IMSearchActivity extends BaseActivity {
 
                                 list_group.clear();
                                 list_group.addAll(imFriendSearchBean.getData().getGroup());
+                                imSearchGroupAdapter.setKeyword(edtKeyword.getText().toString());
                                 if(list_group!=null&&list_group.size()!=0){
                                     imSearchGroupAdapter.notifyDataSetChanged();
                                 }else {

@@ -43,6 +43,7 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:singleLine="true"
+                android:imeOptions="actionSearch"
                 android:textColorHint="@color/colorFFF"
                 android:textSize="12sp"
                 android:hint="@string/hint_keyword"/>
