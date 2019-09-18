@@ -6,7 +6,7 @@
     android:paddingLeft="25dp"
     android:paddingRight="25dp"
     android:layout_width="260dp"
-    android:layout_height="223dp">
+    android:layout_height="233dp">
 
     <TextView
         android:id="@+id/tv_title"

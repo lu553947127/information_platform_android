@@ -2,7 +2,6 @@ package com.shuangduan.zcy.view.projectinfo;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -36,6 +35,7 @@ import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
 import com.shuangduan.zcy.model.bean.IMFriendApplyCountBean;
 import com.shuangduan.zcy.model.bean.TrackBean;
 import com.shuangduan.zcy.model.event.RefreshViewLocusEvent;
+import com.shuangduan.zcy.utils.LoginUtils;
 import com.shuangduan.zcy.view.PhotoViewActivity;
 import com.shuangduan.zcy.view.mine.SetPwdPayActivity;
 import com.shuangduan.zcy.view.recharge.RechargeActivity;
@@ -330,8 +330,11 @@ public class ProjectLocusFragment extends BaseLazyFragment {
                                 projectDetailVm.getTrack();
                                 //刷新已查看列表
                                 EventBus.getDefault().post(new RefreshViewLocusEvent());
+                            }else if (bean.getCode().equals("-1")){
+                                ToastUtils.showShort(bean.getMsg());
+                                LoginUtils.getExitLogin(getActivity());
                             }else {
-                                ToastUtils.showShort(getString(R.string.request_error));
+                                ToastUtils.showShort(bean.getMsg());
                             }
                         }catch (JsonSyntaxException | IllegalStateException ignored){
                             ToastUtils.showShort(getString(R.string.request_error));

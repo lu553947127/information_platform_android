@@ -23,6 +23,7 @@ import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
 import com.shuangduan.zcy.model.bean.IMFriendOperationBean;
+import com.shuangduan.zcy.utils.LoginUtils;
 import com.shuangduan.zcy.utils.image.ImageConfig;
 import com.shuangduan.zcy.utils.image.ImageLoader;
 import com.shuangduan.zcy.weight.CircleImageView;
@@ -121,8 +122,11 @@ public class IMAddFriendActivity extends BaseActivity {
                             IMFriendOperationBean bean=new Gson().fromJson(response.body(), IMFriendOperationBean.class);
                             if (bean.getCode().equals("200")){
                                 finish();
+                            }else if (bean.getCode().equals("-1")){
+                                ToastUtils.showShort(bean.getMsg());
+                                LoginUtils.getExitLogin(IMAddFriendActivity.this);
                             }else {
-                                ToastUtils.showShort(getString(R.string.request_error));
+                                ToastUtils.showShort(bean.getMsg());
                             }
                         }catch (JsonSyntaxException | IllegalStateException ignored){
                             ToastUtils.showShort(getString(R.string.request_error));
@@ -157,6 +161,9 @@ public class IMAddFriendActivity extends BaseActivity {
                             if (bean.getCode().equals("200")){
                                 ToastUtils.showShort(bean.getMsg());
                                 finish();
+                            }else if (bean.getCode().equals("-1")){
+                                ToastUtils.showShort(bean.getMsg());
+                                LoginUtils.getExitLogin(IMAddFriendActivity.this);
                             }else {
                                 ToastUtils.showShort(bean.getMsg());
                             }

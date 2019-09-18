@@ -26,6 +26,7 @@ import com.shuangduan.zcy.weight.CircleImageView;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.rong.imkit.RongIM;
 
 /**
  * @author 宁文强 QQ:858777523
@@ -104,9 +105,9 @@ public class LocusOwnerDetailActivity extends BaseActivity {
                     .imageView(ivUser)
                     .build());
             if (userInfoBean.getApply_status()!=null && userInfoBean.getApply_status().equals("1")){
-                tvAddFriend.setVisibility(View.VISIBLE);
+                tvAddFriend.setText(getString(R.string.im_add_friend));
             }else {
-                tvAddFriend.setVisibility(View.GONE);
+                tvAddFriend.setText(getString(R.string.im_send_message));
             }
         });
         userInfoVm.pageStateLiveData.observe(this, s -> {
@@ -124,13 +125,18 @@ public class LocusOwnerDetailActivity extends BaseActivity {
                 break;
             case R.id.tv_add_friend:
                 userInfoVm.informationLiveData.observe(this, userInfoBean -> {
-                    bundle.putInt(CustomConfig.FRIEND_DATA, 0);
-                    bundle.putString("id", String.valueOf(userInfoBean.getId()));
-                    bundle.putString("name",userInfoBean.getUsername());
-                    bundle.putString("msg",userInfoBean.getCompany());
-                    bundle.putString("image",userInfoBean.getImage());
+                    if (userInfoBean.getApply_status()!=null && userInfoBean.getApply_status().equals("1")){
+                        bundle.putInt(CustomConfig.FRIEND_DATA, 0);
+                        bundle.putString("id", String.valueOf(userInfoBean.getId()));
+                        bundle.putString("name",userInfoBean.getUsername());
+                        bundle.putString("msg",userInfoBean.getCompany());
+                        bundle.putString("image",userInfoBean.getImage());
+                        ActivityUtils.startActivity(bundle, IMAddFriendActivity.class);
+                    }else {
+                        RongIM.getInstance().startPrivateChat(LocusOwnerDetailActivity.this, String.valueOf(userInfoBean.getId())
+                                , userInfoBean.getUsername());
+                    }
                 });
-                ActivityUtils.startActivity(bundle, IMAddFriendActivity.class);
                 break;
         }
     }

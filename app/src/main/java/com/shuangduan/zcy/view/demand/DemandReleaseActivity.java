@@ -342,11 +342,19 @@ public class DemandReleaseActivity extends BaseActivity {
     /**
      * 时间选择器
      */
+    @SuppressLint("SimpleDateFormat")
     private void showTimeDialog(){
+        SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar c = Calendar.getInstance();
+        c.setTime(new Date());
+        c.add(Calendar.DAY_OF_MONTH, 1);
+        Date tomorrow = c.getTime();
+        f.format(tomorrow);
+
         CustomDatePicker customDatePicker = new CustomDatePicker(this, time -> {
             demandReleaseVm.endTime = time;
             tvTimeEnd.setText(time);
-        }, "yyyy-MM-dd",demandReleaseVm.startTime , "2100-12-31");
+        }, "yyyy-MM-dd", f.format(tomorrow) , "2100-12-31");
         customDatePicker.showSpecificTime(false);
         customDatePicker.show(TimeUtils.getNowString());
     }

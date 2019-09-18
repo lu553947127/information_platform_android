@@ -1,5 +1,6 @@
 package com.shuangduan.zcy.weight.datepicker;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -67,6 +68,7 @@ public class DatePickerView extends View {
     private Timer timer;
     private MyTimerTask mTask;
 
+    @SuppressLint("HandlerLeak")
     private Handler updateHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {

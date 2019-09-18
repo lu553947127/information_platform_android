@@ -28,6 +28,7 @@ import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.TimeUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ReleaseContactAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
@@ -249,13 +250,13 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
         });
 
         releaseVm.releaseProjectLiveData.observe(this, o -> {
-            EventBus.getDefault().post(new LocusRefreshEvent());
-//            ToastUtils.showShort(getString(R.string.release_success));
+//            EventBus.getDefault().post(new LocusRefreshEvent());
+            ToastUtils.showShort(getString(R.string.release_success));
             finish();
         });
         releaseVm.releaseLocusLiveData.observe(this, o -> {
-            EventBus.getDefault().post(new LocusRefreshEvent());
-//            ToastUtils.showShort(getString(R.string.release_success));
+//            EventBus.getDefault().post(new LocusRefreshEvent());
+            ToastUtils.showShort(getString(R.string.release_success));
             finish();
         });
         releaseVm.pageStateLiveData.observe(this, s -> {
@@ -521,6 +522,7 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
         customDatePicker.show(TimeUtils.getNowString());
     }
 
+    @SuppressLint("SetTextI18n")
     @Subscribe
     public void onEventLocationEvent(LocationEvent event){
         releaseVm.province = event.getProvinceId();

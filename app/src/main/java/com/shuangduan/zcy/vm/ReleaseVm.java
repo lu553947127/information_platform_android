@@ -168,6 +168,8 @@ public class ReleaseVm extends BaseViewModel {
         }
         ContactListBean contactListBean = new ContactListBean();
         contactListBean.setContact(list);
+        LogUtils.i(list);
+
         new ProjectRepository().addProject(releaseProjectLiveData, pageStateLiveData,userId, title, company, province, city, phases, types, start_time, end_time, acreage, valuation, intro, materials, longitude, latitude, contactListBean);
     }
 

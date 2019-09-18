@@ -273,8 +273,7 @@
                 android:layout_width="335dp"
                 style="@style/BtnConfirm"
                 android:layout_marginTop="35dp"
-                android:text="@string/im_add_friend"
-                android:visibility="gone"/>
+                android:text="@string/im_add_friend" />
 
             <Space
                 android:layout_width="match_parent"

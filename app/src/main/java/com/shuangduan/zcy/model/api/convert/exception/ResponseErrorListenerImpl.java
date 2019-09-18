@@ -8,6 +8,7 @@ import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonParseException;
+import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.view.login.WelcomeActivity;
 
 import org.json.JSONException;
@@ -66,8 +67,10 @@ public class ResponseErrorListenerImpl implements ResponseErrorListener {
         } else if (exception.getErrorCode() == -1){
             msg = "账户失效，请重新登录";
             SPUtils.getInstance().clear();
+            SPUtils.getInstance().put(SpConfig.FIRST_APP, 1);
             ActivityUtils.startActivity(WelcomeActivity.class);
             ActivityUtils.finishAllActivitiesExceptNewest();
+
         }else {
             msg = exception.getMsg();
         }

@@ -38,7 +38,7 @@ import butterknife.OnClick;
  * @author 宁文强 QQ:858777523
  * @name information_platform_android
  * @class name：com.shuangduan.zcy.view.search
- * @class describe
+ * @class 项目搜索页
  * @time 2019/8/15 11:40
  * @change
  * @chang time

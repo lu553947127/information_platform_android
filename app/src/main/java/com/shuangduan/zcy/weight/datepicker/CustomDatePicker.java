@@ -18,6 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * <pre>
@@ -81,8 +82,8 @@ public class CustomDatePicker {
             endCalendar = Calendar.getInstance();
             SimpleDateFormat sdf = new SimpleDateFormat(timeStyle, Locale.CHINA);
             try {
-                startCalendar.setTime(sdf.parse(startDate));
-                endCalendar.setTime(sdf.parse(endDate));
+                startCalendar.setTime(Objects.requireNonNull(sdf.parse(startDate)));
+                endCalendar.setTime(Objects.requireNonNull(sdf.parse(endDate)));
             } catch (ParseException e) {
                 e.printStackTrace();
             }

@@ -1,5 +1,7 @@
 package com.shuangduan.zcy.utils;
 
+import android.app.Activity;
+
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
@@ -8,6 +10,8 @@ import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.view.login.FirstStartActivity;
 import com.shuangduan.zcy.view.login.LoginActivity;
 import com.shuangduan.zcy.view.login.WelcomeActivity;
+
+import java.util.Objects;
 
 /**
  * <pre>
@@ -58,5 +62,17 @@ public class LoginUtils {
             return false;
         }
         return true;
+    }
+
+    /**
+     * token出错账号顶下线
+     * @return
+     */
+    public static void getExitLogin(Activity activity){
+        SPUtils.getInstance().clear();
+        SPUtils.getInstance().put(SpConfig.FIRST_APP, 1);
+        ActivityUtils.startActivity(WelcomeActivity.class);
+        ActivityUtils.finishAllActivitiesExceptNewest();
+        Objects.requireNonNull(activity).finish();
     }
 }

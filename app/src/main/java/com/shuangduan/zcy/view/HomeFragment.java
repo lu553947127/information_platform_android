@@ -39,8 +39,10 @@ import com.shuangduan.zcy.model.bean.HomeBannerBean;
 import com.shuangduan.zcy.model.bean.HomeListBean;
 import com.shuangduan.zcy.model.bean.HomePushBean;
 import com.shuangduan.zcy.model.bean.IMFriendApplyCountBean;
+import com.shuangduan.zcy.rongyun.view.NewFriendsActivity;
 import com.shuangduan.zcy.utils.AuthenticationUtils;
 import com.shuangduan.zcy.utils.BarUtils;
+import com.shuangduan.zcy.utils.LoginUtils;
 import com.shuangduan.zcy.utils.image.GlideImageLoader;
 import com.shuangduan.zcy.view.demand.DemandActivity;
 import com.shuangduan.zcy.view.headlines.HeadlinesActivity;
@@ -361,6 +363,9 @@ public class HomeFragment extends BaseFragment {
                                     relativeLayout.setVisibility(View.VISIBLE);
                                     number.setText("99+");
                                 }
+                            }else if (bean.getCode().equals("-1")) {
+                                ToastUtils.showShort(bean.getMsg());
+                                LoginUtils.getExitLogin(getActivity());
                             }
                         }catch (JsonSyntaxException | IllegalStateException ignored){
                             ToastUtils.showShort(getString(R.string.request_error));

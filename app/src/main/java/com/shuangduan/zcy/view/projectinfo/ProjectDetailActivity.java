@@ -55,7 +55,9 @@ import com.shuangduan.zcy.model.event.LocusRefreshEvent;
 import com.shuangduan.zcy.model.event.RefreshViewLocusEvent;
 import com.shuangduan.zcy.model.event.WarrantSuccessEvent;
 import com.shuangduan.zcy.rongyun.view.IMSearchActivity;
+import com.shuangduan.zcy.rongyun.view.NewFriendsActivity;
 import com.shuangduan.zcy.utils.AuthenticationUtils;
+import com.shuangduan.zcy.utils.LoginUtils;
 import com.shuangduan.zcy.utils.ShareUtils;
 import com.shuangduan.zcy.view.release.ReleaseProjectActivity;
 import com.shuangduan.zcy.vm.CoinPayVm;
@@ -361,6 +363,9 @@ public class ProjectDetailActivity extends BaseActivity {
                                 RongIM.getInstance().startGroupChat(ProjectDetailActivity.this
                                         , bean.getData().getGroupId()
                                         , bean.getData().getGroupName());
+                            }else if (bean.getCode().equals("-1")){
+                                ToastUtils.showShort(bean.getMsg());
+                                LoginUtils.getExitLogin(ProjectDetailActivity.this);
                             }else {
                                 ToastUtils.showShort(bean.getMsg());
                             }

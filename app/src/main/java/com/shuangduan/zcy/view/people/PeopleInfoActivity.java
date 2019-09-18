@@ -17,6 +17,7 @@ import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.rongyun.view.IMAddFriendActivity;
 import com.shuangduan.zcy.utils.image.ImageConfig;
 import com.shuangduan.zcy.utils.image.ImageLoader;
+import com.shuangduan.zcy.view.mine.UserInfoActivity;
 import com.shuangduan.zcy.vm.IncomePeopleVm;
 import com.shuangduan.zcy.vm.UserInfoVm;
 import com.shuangduan.zcy.weight.CircleImageView;
@@ -24,6 +25,7 @@ import com.shuangduan.zcy.weight.CircleImageView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.rong.imkit.RongIM;
 
 /**
  * @author 宁文强 QQ:858777523
@@ -98,9 +100,9 @@ public class PeopleInfoActivity extends BaseActivity {
                     .imageView(ivUser)
                     .build());
             if (peopleDetailBean.getApply_status()!=null && peopleDetailBean.getApply_status().equals("1")){
-                tvAddFriend.setVisibility(View.VISIBLE);
+                tvAddFriend.setText(getString(R.string.im_add_friend));
             }else {
-                tvAddFriend.setVisibility(View.GONE);
+                tvAddFriend.setText(getString(R.string.im_send_message));
             }
         });
 
@@ -130,14 +132,19 @@ public class PeopleInfoActivity extends BaseActivity {
                 ActivityUtils.startActivity(bundle, IncomeRecordActivity.class);
                 break;
             case R.id.tv_add_friend:
-                incomePeopleVm.detailLiveData.observe(this, userInfoBean -> {
-                    bundle.putInt(CustomConfig.FRIEND_DATA, 0);
-                    bundle.putString("id", String.valueOf(userInfoBean.getId()));
-                    bundle.putString("name",userInfoBean.getUsername());
-                    bundle.putString("msg",userInfoBean.getCompany());
-                    bundle.putString("image",userInfoBean.getImage());
+                incomePeopleVm.detailLiveData.observe(this, peopleDetailBean -> {
+                    if (peopleDetailBean.getApply_status()!=null && peopleDetailBean.getApply_status().equals("1")){
+                        bundle.putInt(CustomConfig.FRIEND_DATA, 0);
+                        bundle.putString("id", String.valueOf(peopleDetailBean.getId()));
+                        bundle.putString("name",peopleDetailBean.getUsername());
+                        bundle.putString("msg",peopleDetailBean.getCompany());
+                        bundle.putString("image",peopleDetailBean.getImage());
+                        ActivityUtils.startActivity(bundle, IMAddFriendActivity.class);
+                    }else {
+                        RongIM.getInstance().startPrivateChat(PeopleInfoActivity.this, String.valueOf(peopleDetailBean.getId())
+                                , peopleDetailBean.getUsername());
+                    }
                 });
-                ActivityUtils.startActivity(bundle, IMAddFriendActivity.class);
                 break;
         }
     }

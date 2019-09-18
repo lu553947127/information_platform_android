@@ -86,13 +86,10 @@ public class UserInfoVm extends BaseViewModel {
             return data;
         });
         experience = new MutableLiveData<>();
-        expLiveData = Transformations.switchMap(experience, new Function<Integer, LiveData<Object>>() {
-            @Override
-            public LiveData<Object> apply(Integer input) {
-                MutableLiveData data = new MutableLiveData();
-                new UserRepository().updateExperience(data, pageStateLiveData, userId, input);
-                return data;
-            }
+        expLiveData = Transformations.switchMap(experience, (Function<Integer, LiveData<Object>>) input -> {
+            MutableLiveData data = new MutableLiveData();
+            new UserRepository().updateExperience(data, pageStateLiveData, userId, input);
+            return data;
         });
     }
 

@@ -33,6 +33,7 @@ import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
 import com.shuangduan.zcy.model.bean.IMFriendApplyCountBean;
 import com.shuangduan.zcy.model.bean.IMFriendListBean;
 import com.shuangduan.zcy.model.bean.IMGroupListBean;
+import com.shuangduan.zcy.utils.LoginUtils;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
 import java.util.ArrayList;
@@ -152,6 +153,9 @@ public class IMContactsActivity extends BaseActivity {
                                 }else {
                                     imGroupListAdapter.setEmptyView(R.layout.layout_empty, rvGroup);
                                 }
+                            }else if (imGroupListBean.getCode().equals("-1")){
+                                ToastUtils.showShort(imGroupListBean.getMsg());
+                                LoginUtils.getExitLogin(IMContactsActivity.this);
                             }else {
                                 imGroupListAdapter.setEmptyView(R.layout.layout_empty, rvGroup);
                                 listGroup.clear();
@@ -191,6 +195,9 @@ public class IMContactsActivity extends BaseActivity {
                                 }else {
                                     imFriendListAdapter.setEmptyView(R.layout.layout_empty, rvFriend);
                                 }
+//                            }else if (imFriendListBean.getCode().equals("-1")){
+//                                ToastUtils.showShort(imFriendListBean.getMsg());
+//                                LoginUtils.getExitLogin(IMContactsActivity.this);
                             }else {
                                 imFriendListAdapter.setEmptyView(R.layout.layout_empty, rvFriend);
                                 listFriend.clear();
@@ -229,6 +236,9 @@ public class IMContactsActivity extends BaseActivity {
                                 }else {
                                     tvNumber.setVisibility(View.GONE);
                                 }
+//                            }else if (bean.getCode().equals("-1")){
+//                                ToastUtils.showShort(bean.getMsg());
+//                                LoginUtils.getExitLogin(IMContactsActivity.this);
                             }else {
                                 tvNumber.setVisibility(View.GONE);
                             }

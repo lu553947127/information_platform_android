@@ -33,6 +33,7 @@ import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
 import com.shuangduan.zcy.model.bean.IMFriendApplyListBean;
 import com.shuangduan.zcy.model.bean.IMFriendOperationBean;
+import com.shuangduan.zcy.utils.LoginUtils;
 import com.shuangduan.zcy.utils.SharedUtils;
 import com.shuangduan.zcy.vm.IMAddVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
@@ -152,6 +153,9 @@ public class NewFriendsActivity extends BaseActivity {
                                 }else {
                                     newFriendAdapter.setEmptyView(R.layout.layout_empty, rv);
                                 }
+                            }else if (imFriendApplyListBean.getCode().equals("-1")){
+                                ToastUtils.showShort(imFriendApplyListBean.getMsg());
+                                LoginUtils.getExitLogin(NewFriendsActivity.this);
                             }else {
                                 newFriendAdapter.setEmptyView(R.layout.layout_empty, rv);
                                 list.clear();
@@ -188,8 +192,11 @@ public class NewFriendsActivity extends BaseActivity {
                             IMFriendOperationBean bean=new Gson().fromJson(response.body(), IMFriendOperationBean.class);
                             if (bean.getCode().equals("200")){
                                 getNewFriendList();
+                            }else if (bean.getCode().equals("-1")){
+                                ToastUtils.showShort(bean.getMsg());
+                                LoginUtils.getExitLogin(NewFriendsActivity.this);
                             }else {
-                                ToastUtils.showShort(getString(R.string.request_error));
+                                ToastUtils.showShort(bean.getMsg());
                             }
                         }catch (JsonSyntaxException | IllegalStateException ignored){
                             ToastUtils.showShort(getString(R.string.request_error));

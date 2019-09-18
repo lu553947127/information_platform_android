@@ -30,6 +30,7 @@ import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
 import com.shuangduan.zcy.model.bean.IMFriendListBean;
+import com.shuangduan.zcy.utils.LoginUtils;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
 import java.util.ArrayList;
@@ -162,6 +163,9 @@ public class IMFriendMoreActivity extends BaseActivity {
                                 }else {
                                     imFriendListAdapter.setEmptyView(R.layout.layout_empty, rvFriend);
                                 }
+                            }else if (imFriendListBean.getCode().equals("-1")){
+                                ToastUtils.showShort(imFriendListBean.getMsg());
+                                LoginUtils.getExitLogin(IMFriendMoreActivity.this);
                             }else {
                                 imFriendListAdapter.setEmptyView(R.layout.layout_empty, rvFriend);
                                 listFriend.clear();

@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
 import com.blankj.utilcode.util.ActivityUtils;
@@ -22,6 +23,9 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.Common;
 import com.shuangduan.zcy.app.MyApplication;
@@ -34,13 +38,17 @@ import com.shuangduan.zcy.model.bean.IMWechatGroupInfoBean;
 import com.shuangduan.zcy.model.bean.IMWechatUserInfoBean;
 import com.shuangduan.zcy.model.event.AvatarEvent;
 import com.shuangduan.zcy.utils.BarUtils;
+import com.shuangduan.zcy.utils.LoginUtils;
 import com.shuangduan.zcy.utils.image.ImageConfig;
 import com.shuangduan.zcy.utils.image.ImageLoader;
+import com.shuangduan.zcy.view.login.WelcomeActivity;
 import com.shuangduan.zcy.vm.UserInfoVm;
 import com.shuangduan.zcy.weight.CircleImageView;
 import com.shuangduan.zcy.weight.NoScrollViewPager;
 
 import org.greenrobot.eventbus.Subscribe;
+
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -66,6 +74,8 @@ public class CircleFragment extends BaseFragment {
     View fakeStatusBar;
     @BindView(R.id.iv_header)
     CircleImageView iv_header;
+    @BindView(R.id.refresh)
+    SmartRefreshLayout refresh;
 //    @BindView(R.id.tv_numbers)
     TextView tvNumber;
     private UserInfoVm userInfoVm;
@@ -130,6 +140,23 @@ public class CircleFragment extends BaseFragment {
             }
         });
 
+        refresh.setEnableLoadMore(false);
+        refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                RongIM.getInstance().addUnReadMessageCountChangedObserver(i -> {
+                    LogUtils.i(i);
+                    // i 是未读数量
+                    getFriendApplyCount(i);
+                }, Conversation.ConversationType.PRIVATE,Conversation.ConversationType.GROUP);
+                refreshLayout.finishRefresh(2000);
+            }
+        });
         getBadgeViewInitView(view);
 
         //根据 userId 去你的用户系统里查询对应的用户信息返回给融云 SDK。
@@ -148,7 +175,7 @@ public class CircleFragment extends BaseFragment {
     private void getBadgeViewInitView(View view) {
         //因为黄油刀在碎片重绘时初始化空指针异常，则用view视图来显示
         tvNumber=view.findViewById(R.id.tv_numbers);
-        viewPager= getActivity().findViewById(R.id.view_pager);
+        viewPager= Objects.requireNonNull(getActivity()).findViewById(R.id.view_pager);
         //底部标题栏右上角标设置
         //获取整个的NavigationView
         BottomNavigationView navigation =getActivity().findViewById(R.id.navigation);
@@ -191,8 +218,11 @@ public class CircleFragment extends BaseFragment {
                                 RongIM.getInstance().refreshUserInfoCache(new UserInfo(bean.getData().getUserId()
                                         ,bean.getData().getName()
                                         ,Uri.parse(bean.getData().getPortraitUri())));
+//                            }else if (bean.getCode().equals("-1")){
+//                                ToastUtils.showShort(bean.getMsg());
+//                                LoginUtils.getExitLogin(getActivity());
                             }else {
-                                ToastUtils.showShort(getString(R.string.request_error));
+                                ToastUtils.showShort(bean.getMsg());
                             }
                         }catch (JsonSyntaxException | IllegalStateException ignored){
                             ToastUtils.showShort(getString(R.string.request_error));
@@ -228,8 +258,11 @@ public class CircleFragment extends BaseFragment {
                                         , bean.getData().getGroupName()
                                         , Uri.parse(bean.getData().getGroupName()));
                                 RongIM.getInstance().refreshGroupInfoCache(groupInfo);
+//                            }else if (bean.getCode().equals("-1")){
+//                                ToastUtils.showShort(bean.getMsg());
+//                                LoginUtils.getExitLogin(getActivity());
                             }else {
-                                ToastUtils.showShort(getString(R.string.request_error));
+                                ToastUtils.showShort(bean.getMsg());
                             }
                         }catch (JsonSyntaxException | IllegalStateException ignored){
                             ToastUtils.showShort(getString(R.string.request_error));
@@ -281,6 +314,9 @@ public class CircleFragment extends BaseFragment {
                                     relativeLayout.setVisibility(View.VISIBLE);
                                     number.setText("99+");
                                 }
+//                            }else if (bean.getCode().equals("-1")){
+//                                ToastUtils.showShort(bean.getMsg());
+//                                LoginUtils.getExitLogin(getActivity());
                             }else {
                                 tvNumber.setVisibility(View.INVISIBLE);
                             }

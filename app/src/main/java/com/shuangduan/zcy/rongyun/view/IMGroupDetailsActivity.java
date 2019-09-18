@@ -32,6 +32,7 @@ import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
 import com.shuangduan.zcy.model.bean.IMFriendOperationBean;
 import com.shuangduan.zcy.model.bean.IMGroupInfoBean;
+import com.shuangduan.zcy.utils.LoginUtils;
 import com.shuangduan.zcy.view.MainActivity;
 import com.shuangduan.zcy.view.mine.UserInfoActivity;
 import com.shuangduan.zcy.weight.SwitchView;
@@ -195,6 +196,9 @@ public class IMGroupDetailsActivity extends BaseActivity implements SwitchView.O
                                 }else {
                                     imGroupInfoAdapter.setEmptyView(R.layout.layout_empty, recyclerView);
                                 }
+                            }else if (imGroupInfoBean.getCode().equals("-1")){
+                                ToastUtils.showShort(imGroupInfoBean.getMsg());
+                                LoginUtils.getExitLogin(IMGroupDetailsActivity.this);
                             }else {
                                 imGroupInfoAdapter.setEmptyView(R.layout.layout_empty, recyclerView);
                                 list.clear();
@@ -242,8 +246,11 @@ public class IMGroupDetailsActivity extends BaseActivity implements SwitchView.O
 
                                     }
                                 });
+                            }else if (bean.getCode().equals("-1")){
+                                ToastUtils.showShort(bean.getMsg());
+                                LoginUtils.getExitLogin(IMGroupDetailsActivity.this);
                             }else {
-                                ToastUtils.showShort(getString(R.string.request_error));
+                                ToastUtils.showShort(bean.getMsg());
                             }
                         }catch (JsonSyntaxException | IllegalStateException ignored){
                             ToastUtils.showShort(getString(R.string.request_error));

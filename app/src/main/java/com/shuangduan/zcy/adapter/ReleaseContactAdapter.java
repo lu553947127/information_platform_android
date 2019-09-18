@@ -2,16 +2,14 @@ package com.shuangduan.zcy.adapter;
 
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.View;
 import android.widget.EditText;
-
 import androidx.annotation.Nullable;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.model.bean.ContactBean;
-
 import java.util.List;
 
 /**
@@ -37,13 +35,14 @@ public abstract class ReleaseContactAdapter extends BaseQuickAdapter<ContactBean
                 .setText(R.id.tv_type, item.getType() == null ? "" : item.getType().getType_name())
                 .setText(R.id.tv_address, item.getAddress());
 
+        LogUtils.i(item.getType() == null ? "" :item.getType().getType_name());
+        LogUtils.i(item.getAddress());
+        LogUtils.i(item.getPhone_type());
+
         EditText edtUnit = helper.getView(R.id.edt_unit);
-        edtUnit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus){
-                    unitChange(edtUnit.getText().toString(), helper.getLayoutPosition());
-                }
+        edtUnit.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus){
+                unitChange(edtUnit.getText().toString(), helper.getLayoutPosition());
             }
         });
         edtUnit.addTextChangedListener(new TextWatcher() {
@@ -64,12 +63,9 @@ public abstract class ReleaseContactAdapter extends BaseQuickAdapter<ContactBean
         });
 
         EditText edtPrinciple = helper.getView(R.id.edt_principle);
-        edtPrinciple.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus){
-                    principleChange(edtPrinciple.getText().toString(), helper.getLayoutPosition());
-                }
+        edtPrinciple.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus){
+                principleChange(edtPrinciple.getText().toString(), helper.getLayoutPosition());
             }
         });
         edtPrinciple.addTextChangedListener(new TextWatcher() {
@@ -89,12 +85,9 @@ public abstract class ReleaseContactAdapter extends BaseQuickAdapter<ContactBean
             }
         });
         EditText edtMobile = helper.getView(R.id.edt_mobile);
-        edtMobile.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus){
-                    mobileChange(edtMobile.getText().toString(), helper.getLayoutPosition());
-                }
+        edtMobile.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus){
+                mobileChange(edtMobile.getText().toString(), helper.getLayoutPosition());
             }
         });
         edtMobile.addTextChangedListener(new TextWatcher() {

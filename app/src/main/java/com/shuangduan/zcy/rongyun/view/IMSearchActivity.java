@@ -33,6 +33,7 @@ import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
 import com.shuangduan.zcy.model.bean.IMFriendSearchBean;
+import com.shuangduan.zcy.utils.LoginUtils;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
 import java.util.ArrayList;
@@ -173,23 +174,27 @@ public class IMSearchActivity extends BaseActivity {
                                 list.addAll(imFriendSearchBean.getData().getFriend());
                                 imSearchAdapter.setKeyword(edtKeyword.getText().toString());
                                 if(list!=null&&list.size()!=0){
+                                    rv.setVisibility(View.VISIBLE);
                                     imSearchAdapter.notifyDataSetChanged();
                                 }else {
-                                    imSearchAdapter.setEmptyView(R.layout.layout_empty, rv);
+                                    rv.setVisibility(View.GONE);
                                 }
 
                                 list_group.clear();
                                 list_group.addAll(imFriendSearchBean.getData().getGroup());
                                 imSearchGroupAdapter.setKeyword(edtKeyword.getText().toString());
                                 if(list_group!=null&&list_group.size()!=0){
+                                    rv2.setVisibility(View.VISIBLE);
                                     imSearchGroupAdapter.notifyDataSetChanged();
                                 }else {
-                                    imSearchGroupAdapter.setEmptyView(R.layout.layout_empty, rv2);
+                                    rv2.setVisibility(View.GONE);
                                 }
-
+                            }else if (imFriendSearchBean.getCode().equals("-1")){
+                                ToastUtils.showShort(imFriendSearchBean.getMsg());
+                                LoginUtils.getExitLogin(IMSearchActivity.this);
                             }else {
-                                imSearchAdapter.setEmptyView(R.layout.layout_empty, rv);
-                                imSearchGroupAdapter.setEmptyView(R.layout.layout_empty, rv2);
+                                rv.setVisibility(View.GONE);
+                                rv2.setVisibility(View.GONE);
                                 list.clear();
                                 list_group.clear();
                             }

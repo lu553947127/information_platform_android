@@ -30,7 +30,7 @@ public class BankCardDialogAdapter extends BaseQuickAdapter<BankCardBean, BaseVi
 
     @Override
     protected void convert(BaseViewHolder helper, BankCardBean item) {
-        helper.setText(R.id.tv_name, item.getType_name());
+        helper.setText(R.id.tv_name, item.getType_name()+"("+item.getLast_num()+")");
         ImageView ivIcon = helper.getView(R.id.iv_icon);
         ImageLoader.load(mContext, new ImageConfig.Builder()
                 .url(item.getIcon())

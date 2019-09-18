@@ -1,12 +1,16 @@
 package com.shuangduan.zcy.view.mine;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.ActivityUtils;
@@ -52,7 +56,10 @@ public class WithdrawActivity extends BaseActivity {
     TextView tvWithdrawalAmount;
     @BindView(R.id.tv_bank_card)
     TextView tvBankCard;
+    @BindView(R.id.tv_confirm)
+    TextView tvConfirm;
     private WithdrawVm withdrawVm;
+    private double coin;
 
     @Override
     protected int initLayoutRes() {
@@ -74,6 +81,7 @@ public class WithdrawActivity extends BaseActivity {
         withdrawVm = ViewModelProviders.of(this).get(WithdrawVm.class);
         withdrawVm.withdrawLiveData.observe(this, withdrawBean -> {
             tvWithdrawalAmount.setText(String.format(getString(R.string.format_withdraw_now), withdrawBean.getCoin()));
+            coin= Double.parseDouble(withdrawBean.getCoin());
         });
         withdrawVm.bankcardLiveData.observe(this, bankCardBeans -> {
             if (bankCardBeans == null || bankCardBeans.size() == 0){
@@ -98,6 +106,37 @@ public class WithdrawActivity extends BaseActivity {
         });
         withdrawVm.withdrawMsg();
         withdrawVm.bankcardList();
+        //监听键盘
+        edtMoney.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @SuppressLint("StringFormatMatches")
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (null != editable) {
+                    double money=Double.valueOf(editable.toString());
+                    if (money>coin){
+                        tvWithdrawalAmount.setText(getString(R.string.format_withdraw_no));
+                        tvWithdrawalAmount.setTextColor(ContextCompat.getColor(WithdrawActivity.this,R.color.color_EF583E));
+                        tvConfirm.setBackgroundResource(R.drawable.selector_btn_confirm_gray);
+                        tvConfirm.setClickable(false);
+                    }else {
+                        tvWithdrawalAmount.setText(String.format(getString(R.string.format_withdraw_now), coin));
+                        tvWithdrawalAmount.setTextColor(ContextCompat.getColor(WithdrawActivity.this,R.color.colorTvHint));
+                        tvConfirm.setBackgroundResource(R.drawable.selector_btn_confirm);
+                        tvConfirm.setClickable(true);
+                    }
+                }
+            }
+        });
     }
 
     @OnClick({R.id.iv_bar_back, R.id.tv_bank_card, R.id.tv_confirm})

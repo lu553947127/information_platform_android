@@ -32,6 +32,7 @@ import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
 import com.shuangduan.zcy.model.bean.IMGroupInfoBean;
+import com.shuangduan.zcy.utils.LoginUtils;
 import com.shuangduan.zcy.view.mine.UserInfoActivity;
 
 import java.util.ArrayList;
@@ -163,6 +164,9 @@ public class IMGroupMembersActivity extends BaseActivity {
                                 }else {
                                     imGroupInfoAdapter.setEmptyView(R.layout.layout_empty, recyclerView);
                                 }
+                            }else if (imGroupInfoBean.getCode().equals("-1")){
+                                ToastUtils.showShort(imGroupInfoBean.getMsg());
+                                LoginUtils.getExitLogin(IMGroupMembersActivity.this);
                             }else {
                                 imGroupInfoAdapter.setEmptyView(R.layout.layout_empty, recyclerView);
                                 list.clear();

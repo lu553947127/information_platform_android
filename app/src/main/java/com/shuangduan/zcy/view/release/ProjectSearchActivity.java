@@ -1,8 +1,13 @@
 package com.shuangduan.zcy.view.release;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
@@ -27,10 +32,13 @@ import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.bean.ProjectSearchBean;
 import com.shuangduan.zcy.model.event.ProjectNameEvent;
 import com.shuangduan.zcy.view.mine.AuthenticationActivity;
+import com.shuangduan.zcy.view.search.SearchResultActivity;
 import com.shuangduan.zcy.vm.ProjectSearchVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -121,6 +129,44 @@ public class ProjectSearchActivity extends BaseActivity {
             }
         });
 
+        //重新键盘，改成搜索键盘，点击搜索键即可完成搜索
+        edtKeyword.setOnEditorActionListener((textView, i, keyEvent) -> {
+            if (i == EditorInfo.IME_ACTION_SEARCH) {
+                // 先隐藏键盘
+                ((InputMethodManager) Objects.requireNonNull(edtKeyword.getContext()
+                        .getSystemService(Context.INPUT_METHOD_SERVICE)))
+                        .hideSoftInputFromWindow(Objects.requireNonNull(this.getCurrentFocus()).getWindowToken(),
+                                InputMethodManager.HIDE_NOT_ALWAYS);
+                // 搜索，进行自己要的操作...
+                projectSearchVm.search(edtKeyword.getText().toString());
+                if (projectSearchAdapter != null)
+                    projectSearchAdapter.setKeyword(edtKeyword.getText().toString());
+                return true;
+            }
+            return false;
+        });
+
+        //监听键盘开始搜索
+        edtKeyword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (null != editable) {
+                    projectSearchVm.search(editable.toString());
+                    if (projectSearchAdapter != null)
+                        projectSearchAdapter.setKeyword(editable.toString());
+                }
+            }
+        });
     }
 
     private void noMoreData(int page, int count){
