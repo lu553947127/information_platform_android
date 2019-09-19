@@ -33,6 +33,18 @@ android {
         resConfigs "zh-rCN", "zh-rHK", "zh-rTW", "en"
         multiDexEnabled true
     }
+    //设置apk的打包名称(as3.5版本后不能带中文)
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            def fileName
+            if (variant.buildType.name == 'release') {
+                fileName = "app.release.apk"
+            } else if (variant.buildType.name == 'debug') {
+                fileName = "zcy.debug.apk"
+            }
+            outputFileName = fileName
+        }
+    }
     buildTypes {
         release {
             shrinkResources true

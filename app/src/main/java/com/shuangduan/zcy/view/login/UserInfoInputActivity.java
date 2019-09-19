@@ -170,7 +170,8 @@ public class UserInfoInputActivity extends BaseActivity {
     void onClick(View view){
         switch (view.getId()){
             case R.id.iv_bar_back:
-                ActivityUtils.finishAllActivities();
+//                ActivityUtils.finishAllActivities();
+                finish();
                 break;
             case R.id.tv_bar_right:
                 if (StringUtils.isTrimEmpty(edtName.getText().toString())){
@@ -179,8 +180,8 @@ public class UserInfoInputActivity extends BaseActivity {
                 }
                 userInfoVm.infoSet(Objects.requireNonNull(edtName.getText()).toString(),
                         sex,
-                        edtCompany.getText().toString(),
-                        edtOffice.getText().toString(),
+                        Objects.requireNonNull(edtCompany.getText()).toString(),
+                        Objects.requireNonNull(edtOffice.getText()).toString(),
                         userInfoVm.multiAreaLiveData.getValue(),
                         exp,
                         edtProduction.getText().toString());
@@ -222,17 +223,17 @@ public class UserInfoInputActivity extends BaseActivity {
         tvBusinessArea.setText(event.getStringResult());
     }
 
-    /**
-     * 返回键退出应用
-     */
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            ActivityUtils.finishAllActivities();
-            return true;
-        }
-
-        return super.onKeyDown(keyCode, event);
-    }
+//    /**
+//     * 返回键退出应用
+//     */
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        if (keyCode == KeyEvent.KEYCODE_BACK) {
+//            ActivityUtils.finishAllActivities();
+//            return true;
+//        }
+//
+//        return super.onKeyDown(keyCode, event);
+//    }
 
 }

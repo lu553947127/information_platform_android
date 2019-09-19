@@ -1,5 +1,6 @@
 package com.shuangduan.zcy.weight;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.BitmapFactory;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,7 +32,6 @@ import java.util.Locale;
 
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
@@ -143,14 +144,15 @@ public class PicContentView extends RecyclerView {
             }
         }
 
+        @NonNull
         @Override
-        public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View inflate = LayoutInflater.from(getContext()).inflate(R.layout.item_rv_pic, parent, false);
             return new Holder(inflate);
         }
 
         @Override
-        public void onBindViewHolder(final Holder holder, final int position) {
+        public void onBindViewHolder(@NonNull final Holder holder, final int position) {
             //除最后一个item外，均设置图片
             if (couldAdd){
                 if (position != (list.size() - 1)){
@@ -180,25 +182,19 @@ public class PicContentView extends RecyclerView {
             }
 
 
-            holder.ivPic.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int pos = holder.getLayoutPosition();
-                    if (pos == list.size() - 1 && couldAdd){
-                        listener.add();
-                    }else {
-                        listener.see(holder.ivPic, pos);
-                    }
+            holder.ivPic.setOnClickListener(v -> {
+                int pos = holder.getLayoutPosition();
+                if (pos == list.size() - 1 && couldAdd){
+                    listener.add();
+                }else {
+                    listener.see(holder.ivPic, pos);
                 }
             });
 
-            holder.ivDelete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int pos = holder.getLayoutPosition();
-                    listener.delete(pos);
-                    deleteData(pos);
-                }
+            holder.ivDelete.setOnClickListener(v -> {
+                int pos = holder.getLayoutPosition();
+                listener.delete(pos);
+                deleteData(pos);
             });
         }
 
@@ -214,10 +210,10 @@ public class PicContentView extends RecyclerView {
 
     class Holder extends BaseViewHolder{
 
-        public ImageView ivPic;
-        public ImageView ivDelete;
+        ImageView ivPic;
+        ImageView ivDelete;
 
-        public Holder(View itemView) {
+        Holder(View itemView) {
             super(itemView);
             ivPic = itemView.findViewById(R.id.iv_pic);
             ivDelete = itemView.findViewById(R.id.iv_delete);
@@ -280,56 +276,45 @@ public class PicContentView extends RecyclerView {
      * 多张图片同时压缩容易OOM,采用单张依次压缩
      * @param photo
      */
+    @SuppressLint("CheckResult")
     private void withRx(final List<PicContentBean> photo) {
         //如果uri为空，代表为网络图片，无需压缩，直接增加即可
         Flowable.just(photo)
                 .observeOn(Schedulers.io())
-                .map(new Function<List<PicContentBean>, List<File>>() {
-                    @Override
-                    public List<File> apply(@NonNull List<PicContentBean> list) throws Exception {
-                        List<String> pics = new ArrayList<>();
-                        for (PicContentBean pic : list) {
-                            if (pic.getUri() == null){
-                                picAdapter.insertData(pic);
-                            }else {
-                                pics.add(PathUtils.getPath(context, pic.getUri()));
-                            }
+                .map(list -> {
+                    List<String> pics = new ArrayList<>();
+                    for (PicContentBean pic : list) {
+                        if (pic.getUri() == null){
+                            picAdapter.insertData(pic);
+                        }else {
+                            pics.add(PathUtils.getPath(context, pic.getUri()));
                         }
-
-                        return Luban.with(context)
-                                .setTargetDir(getPath())
-                                .load(pics)
-                                .get();
                     }
+
+                    return Luban.with(context)
+                            .setTargetDir(getPath())
+                            .load(pics)
+                            .get();
                 })
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnError(new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) {
-                        ToastUtils.showShort(throwable.getMessage());
-                        LogUtils.i(throwable.getMessage());
-                    }
+                .doOnError(throwable -> {
+                    ToastUtils.showShort(throwable.getMessage());
+                    LogUtils.i(throwable.getMessage());
                 })
                 .onErrorResumeNext(Flowable.<List<File>>empty())
-                .subscribe(new Consumer<List<File>>() {
-                    @Override
-                    public void accept(@NonNull List<File> list) {
-                        for (File file : list) {
-                            showResult(file);
+                .subscribe(list -> {
+                    for (File file : list) {
+                        showResult(file);
 
-                            Uri uri = Uri.fromFile(file);
-                            LogUtils.i(uri);
+                        Uri uri = Uri.fromFile(file);
+                        LogUtils.i(uri);
 
-                            picAdapter.insertData(new PicContentBean(uri, null, 0));
+                        picAdapter.insertData(new PicContentBean(uri, null, 0));
 
-                        }
                     }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                         LogUtils.i(throwable.getMessage());
-                        ToastUtils.showShort("图片过大，请一张一张上传");
-                    }
+                }, throwable -> {
+                     LogUtils.i(throwable.getMessage());
+                    ToastUtils.showShort("图片过大，请一张一张上传");
                 });
 
     }

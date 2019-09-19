@@ -23,7 +23,7 @@ import java.util.List;
  * @class describe
  */
 public abstract class ReleaseContactAdapter extends BaseQuickAdapter<ContactBean, BaseViewHolder> {
-    public ReleaseContactAdapter(int layoutResId, @Nullable List<ContactBean> data) {
+    protected ReleaseContactAdapter(int layoutResId, @Nullable List<ContactBean> data) {
         super(layoutResId, data);
     }
 
@@ -35,9 +35,7 @@ public abstract class ReleaseContactAdapter extends BaseQuickAdapter<ContactBean
                 .setText(R.id.tv_type, item.getType() == null ? "" : item.getType().getType_name())
                 .setText(R.id.tv_address, item.getAddress());
 
-        LogUtils.i(item.getType() == null ? "" :item.getType().getType_name());
-        LogUtils.i(item.getAddress());
-        LogUtils.i(item.getPhone_type());
+
 
         EditText edtUnit = helper.getView(R.id.edt_unit);
         edtUnit.setOnFocusChangeListener((v, hasFocus) -> {

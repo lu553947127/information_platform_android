@@ -68,6 +68,7 @@ import java.io.File;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -291,8 +292,7 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
             @Override
             public void see(View view, int position) {
                 //获取图片，移除最后的加号图片
-                List<PicContentView.PicContentBean> picContentList = new ArrayList<>();
-                picContentList.addAll(picContentView.getList());
+                List<PicContentView.PicContentBean> picContentList = new ArrayList<>(picContentView.getList());
                 picContentList.remove(picContentList.size() - 1);
                 ArrayList<String> list = new ArrayList<>();
                 for (PicContentView.PicContentBean pic : picContentList) {
@@ -309,7 +309,7 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     //共享shareElement这个View
                     ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(ReleaseProjectActivity.this, view, "shareElement");
-                    ActivityUtils.startActivity(bundle, PhotoViewActivity.class, activityOptionsCompat.toBundle());
+                    ActivityUtils.startActivity(bundle, PhotoViewActivity.class, Objects.requireNonNull(activityOptionsCompat.toBundle()));
                 } else {
                     ActivityUtils.startActivity(bundle, PhotoViewActivity.class);
                 }
@@ -559,9 +559,9 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
     public void onEventAddressEvent(AddressEvent event){
         List<ContactBean> list = releaseVm.contactLiveData.getValue();
         if (list != null){
-            list.get(releaseVm.editContactTypePos).setAddress(event.getProvince() + event.getCity());
-            list.get(releaseVm.editContactTypePos).setProvince(event.getProvinceId());
-            list.get(releaseVm.editContactTypePos).setCity(event.getCityId());
+            list.get(releaseVm.editContactAddressPos).setAddress(event.getProvince() + event.getCity());
+            list.get(releaseVm.editContactAddressPos).setProvince(event.getProvinceId());
+            list.get(releaseVm.editContactAddressPos).setCity(event.getCityId());
             releaseVm.contactLiveData.postValue(list);
         }
     }
@@ -614,7 +614,7 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
     }
 
     //底部弹出框
-    @SuppressLint("RestrictedApi")
+    @SuppressLint({"RestrictedApi","InflateParams"})
     private void getBottomWindow() {
         //底部滑动对话框
         btn_dialog = new BottomSheetDialogs(this);

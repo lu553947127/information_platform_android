@@ -1,5 +1,6 @@
 package com.shuangduan.zcy.view.supplier;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
@@ -50,6 +51,7 @@ import org.greenrobot.eventbus.Subscribe;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -78,8 +80,8 @@ public class SupplierJoinActivity extends BaseActivity implements BaseDialog.Pho
     EditText edtContactInfo;
     @BindView(R.id.edt_company)
     EditText edtCompany;
-    @BindView(R.id.tv_company_address)
-    TextView tvCompanyAddress;
+    @BindView(R.id.tv_scale)
+    TextView tvScale;
     @BindView(R.id.edt_address_detail)
     EditText edtAddressDetail;
     @BindView(R.id.tv_service_area)
@@ -175,8 +177,7 @@ public class SupplierJoinActivity extends BaseActivity implements BaseDialog.Pho
             @Override
             public void see(View view, int position) {
                 //获取图片，移除最后的加号图片
-                List<PicContentView.PicContentBean> picContentList = new ArrayList<>();
-                picContentList.addAll(picContentView.getList());
+                List<PicContentView.PicContentBean> picContentList = new ArrayList<>(picContentView.getList());
                 picContentList.remove(picContentList.size() - 1);
                 ArrayList<String> list = new ArrayList<>();
                 for (PicContentView.PicContentBean pic : picContentList) {
@@ -193,11 +194,10 @@ public class SupplierJoinActivity extends BaseActivity implements BaseDialog.Pho
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     //共享shareElement这个View
                     ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(SupplierJoinActivity.this, view, "shareElement");
-                    ActivityUtils.startActivity(bundle, PhotoViewActivity.class, activityOptionsCompat.toBundle());
+                    ActivityUtils.startActivity(bundle, PhotoViewActivity.class, Objects.requireNonNull(activityOptionsCompat.toBundle()));
                 } else {
                     ActivityUtils.startActivity(bundle, PhotoViewActivity.class);
                 }
-
             }
 
             @Override
@@ -242,7 +242,7 @@ public class SupplierJoinActivity extends BaseActivity implements BaseDialog.Pho
         permissionVm.getPermissionAlbum(rxPermissions);
     }
 
-    @OnClick({R.id.iv_bar_back, R.id.tv_confirm, R.id.tv_company_address, R.id.tv_service_area})
+    @OnClick({R.id.iv_bar_back, R.id.tv_confirm, R.id.tv_scale, R.id.tv_service_area})
     void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_bar_back:
@@ -271,7 +271,7 @@ public class SupplierJoinActivity extends BaseActivity implements BaseDialog.Pho
                 }
                 supplierVm.join(edtName.getText().toString(), edtContactInfo.getText().toString(), edtCompany.getText().toString(), edtAddressDetail.getText().toString(), edtProduction.getText().toString());
                 break;
-            case R.id.tv_company_address:
+            case R.id.tv_scale:
                 Bundle bundle = new Bundle();
                 bundle.putInt(CustomConfig.PROJECT_ADDRESS, 0);
                 ActivityUtils.startActivity(bundle, ReleaseAreaSelectActivity.class);
@@ -282,9 +282,10 @@ public class SupplierJoinActivity extends BaseActivity implements BaseDialog.Pho
         }
     }
 
+    @SuppressLint("SetTextI18n")
     @Subscribe
     public void onEventAddressEvent(AddressEvent event){
-        tvCompanyAddress.setText(event.getProvince() + " " + event.getCity());
+        tvScale.setText(event.getProvince() + " " + event.getCity());
         supplierVm.cityId = event.getCityId();
         supplierVm.provinceId = event.getProvinceId();
     }

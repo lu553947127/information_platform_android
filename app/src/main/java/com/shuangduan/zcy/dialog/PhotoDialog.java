@@ -37,25 +37,14 @@ public class PhotoDialog extends BaseDialog {
 
     @Override
     void initEvent() {
-        findViewById(R.id.tv_photo).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                photoCallBack.camera();
-                hideDialog();
-            }
+        findViewById(R.id.tv_photo).setOnClickListener(v -> {
+            photoCallBack.camera();
+            hideDialog();
         });
-        findViewById(R.id.tv_select_pic).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                photoCallBack.album();
-                hideDialog();
-            }
+        findViewById(R.id.tv_select_pic).setOnClickListener(v -> {
+            photoCallBack.album();
+            hideDialog();
         });
-        findViewById(R.id.tv_cancel).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hideDialog();
-            }
-        });
+        findViewById(R.id.tv_cancel).setOnClickListener(v -> hideDialog());
     }
 }

@@ -17,6 +17,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -99,9 +100,11 @@ public class CustomDatePicker {
             datePickerDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             datePickerDialog.setContentView(R.layout.custom_date_picker);
             Window window = datePickerDialog.getWindow();
+            assert window != null;
             window.setGravity(Gravity.BOTTOM);
             WindowManager manager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
             DisplayMetrics dm = new DisplayMetrics();
+            assert manager != null;
             manager.getDefaultDisplay().getMetrics(dm);
             WindowManager.LayoutParams lp = window.getAttributes();
             lp.width = dm.widthPixels;
@@ -110,30 +113,22 @@ public class CustomDatePicker {
     }
 
     private void initView() {
-        year_pv = (DatePickerView) datePickerDialog.findViewById(R.id.year_pv);
-        month_pv = (DatePickerView) datePickerDialog.findViewById(R.id.month_pv);
-        day_pv = (DatePickerView) datePickerDialog.findViewById(R.id.day_pv);
-        hour_pv = (DatePickerView) datePickerDialog.findViewById(R.id.hour_pv);
-        minute_pv = (DatePickerView) datePickerDialog.findViewById(R.id.minute_pv);
-        tv_cancel = (TextView) datePickerDialog.findViewById(R.id.tv_cancel);
-        tv_select = (TextView) datePickerDialog.findViewById(R.id.tv_select);
-        hour_text = (TextView) datePickerDialog.findViewById(R.id.hour_text);
-        minute_text = (TextView) datePickerDialog.findViewById(R.id.minute_text);
+        year_pv = datePickerDialog.findViewById(R.id.year_pv);
+        month_pv = datePickerDialog.findViewById(R.id.month_pv);
+        day_pv = datePickerDialog.findViewById(R.id.day_pv);
+        hour_pv = datePickerDialog.findViewById(R.id.hour_pv);
+        minute_pv = datePickerDialog.findViewById(R.id.minute_pv);
+        tv_cancel = datePickerDialog.findViewById(R.id.tv_cancel);
+        tv_select = datePickerDialog.findViewById(R.id.tv_select);
+        hour_text = datePickerDialog.findViewById(R.id.hour_text);
+        minute_text = datePickerDialog.findViewById(R.id.minute_text);
 
-        tv_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                datePickerDialog.dismiss();
-            }
-        });
+        tv_cancel.setOnClickListener(view -> datePickerDialog.dismiss());
 
-        tv_select.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SimpleDateFormat sdf = new SimpleDateFormat(timeStyle, Locale.CHINA);
-                handler.handle(sdf.format(selectedCalender.getTime()));
-                datePickerDialog.dismiss();
-            }
+        tv_select.setOnClickListener(view -> {
+            SimpleDateFormat sdf = new SimpleDateFormat(timeStyle, Locale.CHINA);
+            handler.handle(sdf.format(selectedCalender.getTime()));
+            datePickerDialog.dismiss();
         });
     }
 
@@ -271,7 +266,7 @@ public class CustomDatePicker {
      * 将“0-9”转换为“00-09”
      */
     private String formatTimeUnit(int unit) {
-        return unit < 10 ? "0" + String.valueOf(unit) : String.valueOf(unit);
+        return unit < 10 ? "0" + unit : String.valueOf(unit);
     }
 
     private void initArrayList() {
@@ -303,45 +298,28 @@ public class CustomDatePicker {
 
 
     private void addListener() {
-        year_pv.setOnSelectListener(new DatePickerView.onSelectListener() {
-            @Override
-            public void onSelect(String text, int position) {
-                selectedCalender.set(Calendar.YEAR, Integer.parseInt(text));
-                monthChange();
-            }
+        year_pv.setOnSelectListener((text, position) -> {
+            selectedCalender.set(Calendar.YEAR, Integer.parseInt(text));
+            monthChange();
         });
 
-        month_pv.setOnSelectListener(new DatePickerView.onSelectListener() {
-            @Override
-            public void onSelect(String text, int position) {
-                selectedCalender.set(Calendar.DAY_OF_MONTH, 1);
-                selectedCalender.set(Calendar.MONTH, Integer.parseInt(text) - 1);
-                dayChange();
-            }
+        month_pv.setOnSelectListener((text, position) -> {
+            selectedCalender.set(Calendar.DAY_OF_MONTH, 1);
+            selectedCalender.set(Calendar.MONTH, Integer.parseInt(text) - 1);
+            dayChange();
         });
 
-        day_pv.setOnSelectListener(new DatePickerView.onSelectListener() {
-            @Override
-            public void onSelect(String text, int position) {
-                selectedCalender.set(Calendar.DAY_OF_MONTH, Integer.parseInt(text));
-                hourChange();
-            }
+        day_pv.setOnSelectListener((text, position) -> {
+            selectedCalender.set(Calendar.DAY_OF_MONTH, Integer.parseInt(text));
+            hourChange();
         });
 
-        hour_pv.setOnSelectListener(new DatePickerView.onSelectListener() {
-            @Override
-            public void onSelect(String text, int position) {
-                selectedCalender.set(Calendar.HOUR_OF_DAY, Integer.parseInt(text));
-                minuteChange();
-            }
+        hour_pv.setOnSelectListener((text, position) -> {
+            selectedCalender.set(Calendar.HOUR_OF_DAY, Integer.parseInt(text));
+            minuteChange();
         });
 
-        minute_pv.setOnSelectListener(new DatePickerView.onSelectListener() {
-            @Override
-            public void onSelect(String text, int position) {
-                selectedCalender.set(Calendar.MINUTE, Integer.parseInt(text));
-            }
-        });
+        minute_pv.setOnSelectListener((text, position) -> selectedCalender.set(Calendar.MINUTE, Integer.parseInt(text)));
     }
 
     private void monthChange() {
@@ -365,12 +343,7 @@ public class CustomDatePicker {
         month_pv.setSelected(0);
         executeAnimator(month_pv);
 
-        month_pv.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                dayChange();
-            }
-        }, 100);
+        month_pv.postDelayed(this::dayChange, 100);
 
     }
 
@@ -397,12 +370,7 @@ public class CustomDatePicker {
         day_pv.setSelected(0);
         executeAnimator(day_pv);
 
-        day_pv.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                hourChange();
-            }
-        }, 100);
+        day_pv.postDelayed(this::hourChange, 100);
 
     }
 
@@ -433,12 +401,7 @@ public class CustomDatePicker {
             executeAnimator(hour_pv);
         }
 
-        hour_pv.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                minuteChange();
-            }
-        }, 100);
+        hour_pv.postDelayed(this::minuteChange, 100);
     }
 
     private void minuteChange() {

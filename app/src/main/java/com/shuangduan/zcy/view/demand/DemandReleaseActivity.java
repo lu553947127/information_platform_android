@@ -3,10 +3,8 @@ package com.shuangduan.zcy.view.demand;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -18,7 +16,6 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
-import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.TimeUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
@@ -29,9 +26,8 @@ import com.shuangduan.zcy.dialog.pop.CommonPopupWindow;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.vm.DemandReleaseVm;
 import com.shuangduan.zcy.weight.datepicker.CustomDatePicker;
-
-import org.greenrobot.eventbus.EventBus;
-
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -344,6 +340,7 @@ public class DemandReleaseActivity extends BaseActivity {
      */
     @SuppressLint("SimpleDateFormat")
     private void showTimeDialog(){
+
         SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
         Calendar c = Calendar.getInstance();
         c.setTime(new Date());
@@ -352,8 +349,23 @@ public class DemandReleaseActivity extends BaseActivity {
         f.format(tomorrow);
 
         CustomDatePicker customDatePicker = new CustomDatePicker(this, time -> {
-            demandReleaseVm.endTime = time;
-            tvTimeEnd.setText(time);
+
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            try {
+                Date dd = df.parse(time);
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(dd);
+                calendar.add(Calendar.DAY_OF_MONTH, 1);//加一天
+                String times=df.format(calendar.getTime());
+                demandReleaseVm.endTime = time;
+                if (time.equals(demandReleaseVm.startTime)){
+                    tvTimeEnd.setText(times);
+                }else {
+                    tvTimeEnd.setText(time);
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }, "yyyy-MM-dd", f.format(tomorrow) , "2100-12-31");
         customDatePicker.showSpecificTime(false);
         customDatePicker.show(TimeUtils.getNowString());

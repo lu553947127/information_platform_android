@@ -337,9 +337,7 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
                 }
                 new BusinessExpDialog(this)
                         .setSelected(userInfoVm.experience.getValue() == null ? experience : userInfoVm.experience.getValue() - 1)
-                        .setSingleCallBack((item, position) -> {
-                            userInfoVm.experience.postValue(position + 1);
-                        })
+                        .setSingleCallBack((item, position) -> userInfoVm.experience.postValue(position + 1))
                         .showDialog();
                 break;
             case R.id.tv_production_tip:

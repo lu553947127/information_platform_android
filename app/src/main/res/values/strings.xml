@@ -27,7 +27,7 @@
     <string name="login">登录</string>
     <string name="register">注册</string>
     <string name="account_error">账号错误</string>
-    <string name="mobile_error">手机号错误</string>
+    <string name="mobile_error">请输入手机号</string>
     <string name="pwd_error">密码错误</string>
     <string name="pwd_empty">请输入密码</string>
     <string name="sms_error">请输入验证码</string>
@@ -105,6 +105,8 @@
     <string name="authentication">身份认证</string>
     <string name="hint_keyword">请输入关键字</string>
     <string name="company_name">公司名称</string>
+    <string name="company_website">公司网址</string>
+    <string name="scale_select">人员规模</string>
     <string name="upload_business_card">上传名片</string>
     <string name="bank_card_message">银行卡信息</string>
     <string name="account_name">账户名</string>
@@ -163,7 +165,7 @@
     <string name="qq_friend">QQ好友</string>
     <string name="qq_stone">QQ空间</string>
     <string name="release_demand">发布需求</string>
-    <string name="company_address">公司所在地</string>
+    <string name="scale">人员规模</string>
     <string name="service_area">服务地区</string>
     <string name="hint_address_detail">请输入详细地址</string>
     <string name="title">标题</string>
@@ -289,7 +291,7 @@
     <string name="tel_code">手机号码</string>
     <string name="unit">单位</string>
     <string name="address">地址</string>
-    <string name="address_detail">详细地址</string>
+    <string name="address_detail">公司地址</string>
     <string name="push_select">推送选择</string>
     <string name="expected_return_s">总收益</string>
     <string name="withdraw_income">可提现收益</string>
@@ -374,6 +376,7 @@
     <string name="format_valuation">估价：%1$s</string>
     <string name="format_consumption">消费次数：%1$d次</string>
     <string name="format_locus_num">轨迹信息：%1$d条</string>
+    <string name="format_pay_price_release">发布此消息请支付%1$s紫金币</string>
     <string name="format_pay_price">查看此消息请支付%1$s紫金币</string>
     <string name="format_provide">供应：%1$d吨</string>
     <string name="format_sold">已售：%1$d吨</string>
@@ -401,8 +404,10 @@
     <string name="im_send_message">发消息</string>
     <string name="im_search_friend">联系人</string>
     <string name="im_search_friend_more">更多联系人</string>
+    <string name="im_friend_more">更多好友</string>
     <string name="im_search_group">群聊</string>
     <string name="im_search_group_more">更多群聊</string>
+    <string name="im_group_more">更多工程群</string>
     <string name="im_contacts_new_friend">新的朋友</string>
     <string name="im_contacts_my_group">我的工程群</string>
     <string name="im_contacts_my_friend">我的好友</string>
@@ -488,4 +493,10 @@
         <item>5–10</item>
     </string-array>
 
+    <string-array name="scale_list">
+        <item>0–50</item>
+        <item>50–100</item>
+        <item>100–500</item>
+        <item>500–1000</item>
+    </string-array>
 </resources>

@@ -18,6 +18,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -67,7 +68,8 @@ public class IMGroupMoreActivity extends BaseActivity {
     List<IMGroupListBean.DataBean.ListBean> listGroup=new ArrayList<>();
     IMGroupListBean imGroupListBean;
     String name;
-    int page=1;
+    int pageSize=10;
+    int count;
 
     @Override
     protected int initLayoutRes() {
@@ -91,18 +93,31 @@ public class IMGroupMoreActivity extends BaseActivity {
         rvGroup.setAdapter(imGroupListAdapter);
 
         name=getIntent().getStringExtra("name");
-        name=getIntent().getStringExtra("name");
+
         refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                page++;
-                getGroupList(page);
+                if (pageSize<count){
+                    pageSize+=10;
+                    if (name!=null){
+                        getGroupList("1",pageSize);
+                    }else {
+                        getGroupList("",pageSize);
+                    }
+                    refreshLayout.finishLoadMore(2000);
+                }else {
+                    refresh.finishLoadMoreWithNoMoreData();
+                }
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                page=1;
-                getGroupList(page);
+                if (name!=null){
+                    getGroupList("1",pageSize);
+                }else {
+                    getGroupList("",pageSize);
+                }
+                refresh.finishRefresh(2000);
             }
         });
         imGroupListAdapter.setOnItemClickListener((adapter, view, position) -> {
@@ -110,72 +125,67 @@ public class IMGroupMoreActivity extends BaseActivity {
                     , imGroupListBean.getData().getList().get(position).getGroup_id()
                     , imGroupListBean.getData().getList().get(position).getGroup_name());
         });
-        getGroupList(page);
-    }
-
-    private void setNoMore(int page, int count){
-        if (page == 1){
-            if (page * 10 >= count){
-                if (refresh.getState() == RefreshState.None){
-                    refresh.setNoMoreData(true);
-                }else {
-                    refresh.finishRefreshWithNoMoreData();
-                }
-            }else {
-                refresh.finishRefresh();
-            }
+        if (name!=null){
+            getGroupList("1",pageSize);
         }else {
-            if (page * 10 >= count){
-                refresh.finishLoadMoreWithNoMoreData();
-            }else {
-                refresh.finishLoadMore();
-            }
+            getGroupList("",pageSize);
         }
     }
 
     //我的群组列表
-    private void getGroupList(int page) {
+    private void getGroupList(String size,int pageSize) {
 
-        OkGo.<String>post(RetrofitHelper.BASE_TEST_URL+ Common.SEARCH_GROUP)
-                .tag(this)
-                .headers("token", SPUtils.getInstance().getString(SpConfig.TOKEN))//请求头
-                .params("user_id", SPUtils.getInstance().getInt(SpConfig.USER_ID))//用户编号
-                .params("name",name)
-                .params("page",page)
-                .execute(new com.lzy.okgo.callback.StringCallback() {//返回值
+        if(size.equals("1")){
+            OkGo.<String>post(RetrofitHelper.BASE_TEST_URL+ Common.SEARCH_GROUP)
+                    .tag(this)
+                    .headers("token", SPUtils.getInstance().getString(SpConfig.TOKEN))//请求头
+                    .params("user_id", SPUtils.getInstance().getInt(SpConfig.USER_ID))//用户编号
+                    .params("name",name)
+                    .params("pageSize",pageSize)
+                    .execute(new MyStringCallback());
+        }else {
+            OkGo.<String>post(RetrofitHelper.BASE_TEST_URL+ Common.WECHAT_MY_GROUP)
+                    .tag(this)
+                    .headers("token", SPUtils.getInstance().getString(SpConfig.TOKEN))//请求头
+                    .params("user_id", SPUtils.getInstance().getInt(SpConfig.USER_ID))//用户编号
+                    .params("pageSize",pageSize)
+                    .execute(new MyStringCallback());
+        }
+    }
 
-                    @Override
-                    public void onError(Response<String> response) {
-                        super.onError(response);
-                        LogUtils.json(response.body());
+    public class MyStringCallback extends StringCallback {
+
+        @Override
+        public void onError(Response<String> response) {
+            super.onError(response);
+            LogUtils.json(response.body());
+        }
+
+        @Override
+        public void onSuccess(Response<String> response) {
+            LogUtils.json(response.body());
+            try {
+                imGroupListBean=new Gson().fromJson(response.body(), IMGroupListBean.class);
+                if (imGroupListBean.getCode().equals("200")){
+                    listGroup.clear();
+                    listGroup.addAll(imGroupListBean.getData().getList());
+                    count=imGroupListBean.getData().getCount();
+                    if(listGroup!=null&&listGroup.size()!=0){
+                        imGroupListAdapter.notifyDataSetChanged();
+                    }else {
+                        imGroupListAdapter.setEmptyView(R.layout.layout_empty, rvGroup);
                     }
-
-                    @Override
-                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-                        LogUtils.json(response.body());
-                        try {
-                            imGroupListBean=new Gson().fromJson(response.body(), IMGroupListBean.class);
-                            if (imGroupListBean.getCode().equals("200")){
-                                listGroup.clear();
-                                listGroup.addAll(imGroupListBean.getData().getList());
-                                setNoMore(imGroupListBean.getData().getPage(),imGroupListBean.getData().getCount());
-                                if(listGroup!=null&&listGroup.size()!=0){
-                                    imGroupListAdapter.notifyDataSetChanged();
-                                }else {
-                                    imGroupListAdapter.setEmptyView(R.layout.layout_empty, rvGroup);
-                                }
-                            }else if (imGroupListBean.getCode().equals("-1")){
-                                ToastUtils.showShort(imGroupListBean.getMsg());
-                                LoginUtils.getExitLogin(IMGroupMoreActivity.this);
-                            }else {
-                                imGroupListAdapter.setEmptyView(R.layout.layout_empty, rvGroup);
-                                listGroup.clear();
-                            }
-                        }catch (JsonSyntaxException | IllegalStateException ignored){
-                            ToastUtils.showShort(getString(R.string.request_error));
-                        }
-                    }
-                });
+                }else if (imGroupListBean.getCode().equals("-1")){
+                    ToastUtils.showShort(imGroupListBean.getMsg());
+                    LoginUtils.getExitLogin(IMGroupMoreActivity.this);
+                }else {
+                    imGroupListAdapter.setEmptyView(R.layout.layout_empty, rvGroup);
+                    listGroup.clear();
+                }
+            }catch (JsonSyntaxException | IllegalStateException ignored){
+                ToastUtils.showShort(getString(R.string.request_error));
+            }
+        }
     }
 
     @OnClick({R.id.iv_bar_back})

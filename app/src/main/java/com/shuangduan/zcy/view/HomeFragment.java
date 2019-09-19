@@ -282,7 +282,7 @@ public class HomeFragment extends BaseFragment {
         list.add(new ClassifyBean(R.drawable.classify_xxgc, classifys[0], 1));
         list.add(new ClassifyBean(R.drawable.classify_zcxx, classifys[1], 2));
         list.add(new ClassifyBean(R.drawable.classify_jjwz, classifys[2], 3));
-        list.add(new ClassifyBean(R.drawable.classify_pqzx, classifys[3], 4));
+//        list.add(new ClassifyBean(R.drawable.classify_pqzx, classifys[3], 4));
         list.add(new ClassifyBean(R.drawable.classify_gys, classifys[4], 5));
         list.add(new ClassifyBean(R.drawable.classify_wdsy, classifys[5], 6));
         list.add(new ClassifyBean(R.drawable.classify_fbxx, classifys[6], 7));
@@ -298,7 +298,7 @@ public class HomeFragment extends BaseFragment {
         //设置图片集合
         banner.setImages(list);
         //设置banner动画效果
-        banner.setBannerAnimation(Transformer.DepthPage);
+        banner.setBannerAnimation(Transformer.Default);
         //设置标题集合（当banner样式有显示title时）
         banner.setBannerTitles(titles);
         //设置自动轮播，默认为true

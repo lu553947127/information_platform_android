@@ -76,6 +76,10 @@ public class IMContactsActivity extends BaseActivity {
     ImageView ivFriend;
     @BindView(R.id.tv_number)
     TextView tvNumber;
+    @BindView(R.id.tv_more_group)
+    TextView tvGroup;
+    @BindView(R.id.tv_more_friend)
+    TextView tvFriend;
     IMGroupListAdapter imGroupListAdapter;
     List<IMGroupListBean.DataBean.ListBean> listGroup=new ArrayList<>();
     IMGroupListBean imGroupListBean;
@@ -96,8 +100,8 @@ public class IMContactsActivity extends BaseActivity {
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
-        setBackgroundData(rvGroup,ivGroup);
-        setBackgroundData(rvFriend,ivFriend);
+        setBackgroundData(rvGroup,ivGroup,tvGroup);
+        setBackgroundData(rvFriend,ivFriend,tvFriend);
 
         rvGroup.setLayoutManager(new LinearLayoutManager(this));
         rvGroup.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
@@ -249,8 +253,9 @@ public class IMContactsActivity extends BaseActivity {
                 });
     }
 
-    @OnClick({R.id.iv_bar_back,R.id.rl_new_friend,R.id.rl_my_group,R.id.rl_my_friend,R.id.tv_bar_title})
+    @OnClick({R.id.iv_bar_back,R.id.rl_new_friend,R.id.rl_my_group,R.id.rl_my_friend,R.id.tv_bar_title,R.id.tv_more_group,R.id.tv_more_friend})
     void onClick(View view) {
+        Bundle bundle = new Bundle();
         switch (view.getId()) {
             case R.id.iv_bar_back:
                 finish();
@@ -262,23 +267,31 @@ public class IMContactsActivity extends BaseActivity {
                 ActivityUtils.startActivity(NewFriendsActivity.class);
                 break;
             case R.id.rl_my_group:
-                setBackgroundData(rvGroup,ivGroup);
+                setBackgroundData(rvGroup,ivGroup,tvGroup);
                 break;
             case R.id.rl_my_friend:
-                setBackgroundData(rvFriend,ivFriend);
+                setBackgroundData(rvFriend,ivFriend,tvFriend);
+                break;
+            case R.id.tv_more_group:
+                ActivityUtils.startActivity(bundle,IMGroupMoreActivity.class);
+                break;
+            case R.id.tv_more_friend:
+                ActivityUtils.startActivity(bundle,IMFriendMoreActivity.class);
                 break;
         }
     }
 
     //切换按钮状态
     @SuppressLint("NewApi")
-    private void setBackgroundData(RecyclerView recyclerView,ImageView imageView) {
+    private void setBackgroundData(RecyclerView recyclerView,ImageView imageView,TextView textView) {
         if (recyclerView.getVisibility() == View.GONE) {
             imageView.setBackgroundResource(R.drawable.icon_up);
             recyclerView.setVisibility(View.VISIBLE);
+            textView.setVisibility(View.VISIBLE);
         } else {
             imageView.setBackgroundResource(R.drawable.icon_bottom);
             recyclerView.setVisibility(View.GONE);
+            textView.setVisibility(View.GONE);
         }
     }
 

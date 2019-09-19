@@ -36,22 +36,22 @@
         android:networkSecurityConfig="@xml/network_config"
         tools:ignore="GoogleAppIndexingWarning,UnusedAttribute">
         <!-- 欢迎页-->
-        <activity android:name="com.shuangduan.zcy.view.login.WelcomeActivity" android:theme="@style/SplashTheme" android:screenOrientation="portrait">
+        <activity android:name="com.shuangduan.zcy.view.login.WelcomeActivity" android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <!-- 引导页-->
-        <activity android:name="com.shuangduan.zcy.view.login.FirstStartActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.shuangduan.zcy.view.login.FirstStartActivity"/>
         <!-- 登录页-->
-        <activity android:name="com.shuangduan.zcy.view.login.LoginActivity" android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity android:name="com.shuangduan.zcy.view.login.LoginActivity" android:windowSoftInputMode="stateHidden|adjustPan" />
         <!-- 注册页-->
-        <activity android:name="com.shuangduan.zcy.view.login.RegisterActivity" android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity android:name="com.shuangduan.zcy.view.login.RegisterActivity" android:windowSoftInputMode="stateHidden|adjustPan" />
         <!-- 首次登陆需要录入信息页-->
-        <activity android:name="com.shuangduan.zcy.view.login.UserInfoInputActivity" android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity android:name="com.shuangduan.zcy.view.login.UserInfoInputActivity" android:windowSoftInputMode="stateHidden|adjustResize"  android:launchMode="singleTop" />
         <!-- 首页-->
-        <activity android:name="com.shuangduan.zcy.view.MainActivity" android:screenOrientation="portrait" android:launchMode="singleTask" >
+        <activity android:name="com.shuangduan.zcy.view.MainActivity"  android:launchMode="singleTask" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -62,98 +62,98 @@
             </intent-filter>
         </activity>
         <!-- 手机邮箱验证页-->
-        <activity android:name="com.shuangduan.zcy.view.login.MobileVerificationActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
-        <activity android:name="com.shuangduan.zcy.view.mine.UserInfoActivity" android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity android:name="com.shuangduan.zcy.view.mine.WithdrawActivity" android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustResize" android:theme="@style/AppThemeBgGray" />
-        <activity android:name="com.shuangduan.zcy.view.mine.UpdateNameActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
-        <activity android:name="com.shuangduan.zcy.view.mine.UpdateMobileActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
-        <activity android:name="com.shuangduan.zcy.view.mine.ForgetPwdActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray" android:windowSoftInputMode="stateHidden|adjustResize"/>
-        <activity android:name="com.shuangduan.zcy.view.mine.UpdateResultActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
-        <activity android:name="com.shuangduan.zcy.view.mine.UpdateEmailActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
-        <activity android:name="com.shuangduan.zcy.view.mine.UpdatePwdActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.view.mine.AuthenticationActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.view.mine.BindBankCardActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.view.mine.CompanySearchActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.view.mine.BusinessAreaActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.view.mine.HelperActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.view.mine.SetActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
-        <activity android:name="com.shuangduan.zcy.view.mine.AboutOursActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.view.mine.RecommendFriendsActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.view.mine.FeedbackActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.view.mine.ReadHistoryActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.view.mine.MineSubActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.view.mine.MineCollectionActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.view.mine.BalanceActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
-        <activity android:name="com.shuangduan.zcy.view.mine.BankCardListActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
-        <activity android:name="com.shuangduan.zcy.view.mine.WithdrawRecordActivity" android:screenOrientation="portrait" />
-        <activity android:name="com.shuangduan.zcy.view.mine.WithdrawDetailActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
-        <activity android:name="com.shuangduan.zcy.view.mine.UnbindBankCardActivity" android:screenOrientation="portrait" />
-        <activity android:name="com.shuangduan.zcy.view.mine.UpdateProductionActivity" android:screenOrientation="portrait" />
-        <activity android:name="com.shuangduan.zcy.view.mine.MineOrderActivity" android:screenOrientation="portrait" />
-        <activity android:name="com.shuangduan.zcy.view.mine.OrderSubActivity" android:screenOrientation="portrait" />
-        <activity android:name="com.shuangduan.zcy.view.mine.PwdPayActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
-        <activity android:name="com.shuangduan.zcy.view.mine.UpdatePwdPayActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
-        <activity android:name="com.shuangduan.zcy.view.mine.ForgetPwdPayActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
-        <activity android:name="com.shuangduan.zcy.view.mine.SetPwdPayActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
-        <activity android:name="com.shuangduan.zcy.view.mine.ExplainDetailActivity" android:screenOrientation="portrait" />
-        <activity android:name="com.shuangduan.zcy.view.mine.TransRecordActivity" android:screenOrientation="portrait" />
-        <activity android:name="com.shuangduan.zcy.view.mine.TransRecordDetailActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
-        <activity android:name="com.shuangduan.zcy.view.mine.MineDemandActivity" android:screenOrientation="portrait" />
-        <activity android:name="com.shuangduan.zcy.view.recharge.RechargeActivity" android:screenOrientation="portrait" />
-        <activity android:name="com.shuangduan.zcy.view.recharge.RechargeRecordActivity" android:screenOrientation="portrait" />
-        <activity android:name="com.shuangduan.zcy.view.recharge.RechargeResultActivity" android:screenOrientation="portrait" />
-        <activity android:name="com.shuangduan.zcy.view.recharge.RechargeRecordDetailActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray" />
-        <activity android:name="com.shuangduan.zcy.view.income.MineIncomeActivity" android:screenOrientation="portrait" />
-        <activity android:name="com.shuangduan.zcy.view.income.IncomeClassifyActivity" android:screenOrientation="portrait" />
-        <activity android:name="com.shuangduan.zcy.view.income.IncomeReleaseActivity" android:screenOrientation="portrait" />
-        <activity android:name="com.shuangduan.zcy.view.income.IncomeProductRightsActivity" android:screenOrientation="portrait" />
-        <activity android:name="com.shuangduan.zcy.view.income.IncomePeopleActivity" android:screenOrientation="portrait" />
-        <activity android:name="com.shuangduan.zcy.view.income.IncomeLocusActivity" android:screenOrientation="portrait" />
-        <activity android:name="com.shuangduan.zcy.view.income.IncomeMsgActivity" android:screenOrientation="portrait" />
-        <activity android:name="com.shuangduan.zcy.view.people.PeopleInfoActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
-        <activity android:name="com.shuangduan.zcy.view.people.IncomeRecordActivity" android:screenOrientation="portrait" />
-        <activity android:name="com.shuangduan.zcy.view.projectinfo.ProjectInfoActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.view.projectinfo.ProjectInfoListActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.view.projectinfo.ProjectDetailActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
-        <activity android:name="com.shuangduan.zcy.view.projectinfo.GoToSubActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.view.projectinfo.SubOrderActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.view.projectinfo.SubInfoActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.view.projectinfo.ProjectErrorActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.view.projectinfo.LocusOwnerDetailActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.view.recruit.RecruitActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.view.recruit.RecruitDetailActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.view.material.MaterialActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.view.material.MaterialOrderSuccessActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.view.material.MaterialDetailActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
-        <activity android:name="com.shuangduan.zcy.view.supplier.SupplierActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.view.supplier.SupplierDetailActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
-        <activity android:name="com.shuangduan.zcy.view.supplier.SupplierJoinActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
-        <activity android:name="com.shuangduan.zcy.view.release.ReleaseListActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.view.release.ReleaseProjectActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray" android:windowSoftInputMode="stateHidden|adjustResize"/>
-        <activity android:name="com.shuangduan.zcy.view.release.ReleaseTypeSelectActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.view.release.ReleaseAreaSelectActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.view.release.LocationMapActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.view.release.ContactTypeActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.view.release.ProjectSearchActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.view.release.ReleaseStageSelectActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
-        <activity android:name="com.shuangduan.zcy.view.search.SearchActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.view.search.SearchResultActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.view.headlines.HeadlinesActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.view.headlines.HeadlinesDetailActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.view.demand.DemandActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.view.demand.DemandReleaseActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.view.demand.FindRelationshipDetailActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.view.demand.FindSubstanceDetailActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.view.demand.ReleaseRelationshipOrderActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.view.demand.FindBuyerDetailActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.view.demand.FindRelationshipAcceptDetailActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.view.demand.FindRelationshipReleaseDetailActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.view.PhotoViewActivity" android:screenOrientation="portrait" android:theme="@style/PhotoViewTheme"/>
-        <activity android:name="com.shuangduan.zcy.view.MultiAreaActivity" android:screenOrientation="portrait" android:theme="@style/AppThemeBgGray"/>
-        <activity android:name="com.shuangduan.zcy.view.PayActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.rongyun.view.IMSearchActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.rongyun.view.IMAddFriendActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.rongyun.view.IMPrivateChatActivity" android:configChanges="orientation|screenSize" android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustResize">
+        <activity android:name="com.shuangduan.zcy.view.login.MobileVerificationActivity" android:theme="@style/AppThemeBgGray"/>
+        <activity android:name="com.shuangduan.zcy.view.mine.UserInfoActivity"  android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity android:name="com.shuangduan.zcy.view.mine.WithdrawActivity" android:windowSoftInputMode="stateHidden|adjustResize" android:theme="@style/AppThemeBgGray" />
+        <activity android:name="com.shuangduan.zcy.view.mine.UpdateNameActivity" android:theme="@style/AppThemeBgGray"/>
+        <activity android:name="com.shuangduan.zcy.view.mine.UpdateMobileActivity" android:theme="@style/AppThemeBgGray"/>
+        <activity android:name="com.shuangduan.zcy.view.mine.ForgetPwdActivity" android:theme="@style/AppThemeBgGray" android:windowSoftInputMode="stateHidden|adjustResize"/>
+        <activity android:name="com.shuangduan.zcy.view.mine.UpdateResultActivity" android:theme="@style/AppThemeBgGray"/>
+        <activity android:name="com.shuangduan.zcy.view.mine.UpdateEmailActivity" android:theme="@style/AppThemeBgGray"/>
+        <activity android:name="com.shuangduan.zcy.view.mine.UpdatePwdActivity" />
+        <activity android:name="com.shuangduan.zcy.view.mine.AuthenticationActivity" />
+        <activity android:name="com.shuangduan.zcy.view.mine.BindBankCardActivity" />
+        <activity android:name="com.shuangduan.zcy.view.mine.CompanySearchActivity" />
+        <activity android:name="com.shuangduan.zcy.view.mine.BusinessAreaActivity" />
+        <activity android:name="com.shuangduan.zcy.view.mine.HelperActivity" />
+        <activity android:name="com.shuangduan.zcy.view.mine.SetActivity"  android:theme="@style/AppThemeBgGray"/>
+        <activity android:name="com.shuangduan.zcy.view.mine.AboutOursActivity" />
+        <activity android:name="com.shuangduan.zcy.view.mine.RecommendFriendsActivity" />
+        <activity android:name="com.shuangduan.zcy.view.mine.FeedbackActivity" />
+        <activity android:name="com.shuangduan.zcy.view.mine.ReadHistoryActivity" />
+        <activity android:name="com.shuangduan.zcy.view.mine.MineSubActivity" />
+        <activity android:name="com.shuangduan.zcy.view.mine.MineCollectionActivity" />
+        <activity android:name="com.shuangduan.zcy.view.mine.BalanceActivity"  android:theme="@style/AppThemeBgGray"/>
+        <activity android:name="com.shuangduan.zcy.view.mine.BankCardListActivity"  android:theme="@style/AppThemeBgGray"/>
+        <activity android:name="com.shuangduan.zcy.view.mine.WithdrawRecordActivity" />
+        <activity android:name="com.shuangduan.zcy.view.mine.WithdrawDetailActivity"  android:theme="@style/AppThemeBgGray"/>
+        <activity android:name="com.shuangduan.zcy.view.mine.UnbindBankCardActivity"  />
+        <activity android:name="com.shuangduan.zcy.view.mine.UpdateProductionActivity"  />
+        <activity android:name="com.shuangduan.zcy.view.mine.MineOrderActivity"  />
+        <activity android:name="com.shuangduan.zcy.view.mine.OrderSubActivity" />
+        <activity android:name="com.shuangduan.zcy.view.mine.PwdPayActivity"  android:theme="@style/AppThemeBgGray"/>
+        <activity android:name="com.shuangduan.zcy.view.mine.UpdatePwdPayActivity"  android:theme="@style/AppThemeBgGray"/>
+        <activity android:name="com.shuangduan.zcy.view.mine.ForgetPwdPayActivity"  android:theme="@style/AppThemeBgGray"/>
+        <activity android:name="com.shuangduan.zcy.view.mine.SetPwdPayActivity"  android:theme="@style/AppThemeBgGray"/>
+        <activity android:name="com.shuangduan.zcy.view.mine.ExplainDetailActivity"  />
+        <activity android:name="com.shuangduan.zcy.view.mine.TransRecordActivity"  />
+        <activity android:name="com.shuangduan.zcy.view.mine.TransRecordDetailActivity"  android:theme="@style/AppThemeBgGray"/>
+        <activity android:name="com.shuangduan.zcy.view.mine.MineDemandActivity"  />
+        <activity android:name="com.shuangduan.zcy.view.recharge.RechargeActivity"  />
+        <activity android:name="com.shuangduan.zcy.view.recharge.RechargeRecordActivity"  />
+        <activity android:name="com.shuangduan.zcy.view.recharge.RechargeResultActivity"  />
+        <activity android:name="com.shuangduan.zcy.view.recharge.RechargeRecordDetailActivity"  android:theme="@style/AppThemeBgGray" />
+        <activity android:name="com.shuangduan.zcy.view.income.MineIncomeActivity" />
+        <activity android:name="com.shuangduan.zcy.view.income.IncomeClassifyActivity"  />
+        <activity android:name="com.shuangduan.zcy.view.income.IncomeReleaseActivity" />
+        <activity android:name="com.shuangduan.zcy.view.income.IncomeProductRightsActivity"  />
+        <activity android:name="com.shuangduan.zcy.view.income.IncomePeopleActivity"  />
+        <activity android:name="com.shuangduan.zcy.view.income.IncomeLocusActivity"  />
+        <activity android:name="com.shuangduan.zcy.view.income.IncomeMsgActivity"  />
+        <activity android:name="com.shuangduan.zcy.view.people.PeopleInfoActivity"  android:theme="@style/AppThemeBgGray"/>
+        <activity android:name="com.shuangduan.zcy.view.people.IncomeRecordActivity"  />
+        <activity android:name="com.shuangduan.zcy.view.projectinfo.ProjectInfoActivity" />
+        <activity android:name="com.shuangduan.zcy.view.projectinfo.ProjectInfoListActivity" />
+        <activity android:name="com.shuangduan.zcy.view.projectinfo.ProjectDetailActivity"  android:theme="@style/AppThemeBgGray"/>
+        <activity android:name="com.shuangduan.zcy.view.projectinfo.GoToSubActivity" />
+        <activity android:name="com.shuangduan.zcy.view.projectinfo.SubOrderActivity" />
+        <activity android:name="com.shuangduan.zcy.view.projectinfo.SubInfoActivity" />
+        <activity android:name="com.shuangduan.zcy.view.projectinfo.ProjectErrorActivity" />
+        <activity android:name="com.shuangduan.zcy.view.projectinfo.LocusOwnerDetailActivity"/>
+        <activity android:name="com.shuangduan.zcy.view.recruit.RecruitActivity" />
+        <activity android:name="com.shuangduan.zcy.view.recruit.RecruitDetailActivity" />
+        <activity android:name="com.shuangduan.zcy.view.material.MaterialActivity" />
+        <activity android:name="com.shuangduan.zcy.view.material.MaterialOrderSuccessActivity" />
+        <activity android:name="com.shuangduan.zcy.view.material.MaterialDetailActivity"  android:theme="@style/AppThemeBgGray"/>
+        <activity android:name="com.shuangduan.zcy.view.supplier.SupplierActivity" />
+        <activity android:name="com.shuangduan.zcy.view.supplier.SupplierDetailActivity"  android:theme="@style/AppThemeBgGray"/>
+        <activity android:name="com.shuangduan.zcy.view.supplier.SupplierJoinActivity"  android:theme="@style/AppThemeBgGray"/>
+        <activity android:name="com.shuangduan.zcy.view.release.ReleaseListActivity" />
+        <activity android:name="com.shuangduan.zcy.view.release.ReleaseProjectActivity"  android:theme="@style/AppThemeBgGray" android:windowSoftInputMode="stateHidden|adjustResize"/>
+        <activity android:name="com.shuangduan.zcy.view.release.ReleaseTypeSelectActivity" />
+        <activity android:name="com.shuangduan.zcy.view.release.ReleaseAreaSelectActivity" />
+        <activity android:name="com.shuangduan.zcy.view.release.LocationMapActivity" />
+        <activity android:name="com.shuangduan.zcy.view.release.ContactTypeActivity" />
+        <activity android:name="com.shuangduan.zcy.view.release.ProjectSearchActivity"/>
+        <activity android:name="com.shuangduan.zcy.view.release.ReleaseStageSelectActivity" android:theme="@style/AppThemeBgGray"/>
+        <activity android:name="com.shuangduan.zcy.view.search.SearchActivity"/>
+        <activity android:name="com.shuangduan.zcy.view.search.SearchResultActivity" />
+        <activity android:name="com.shuangduan.zcy.view.headlines.HeadlinesActivity"/>
+        <activity android:name="com.shuangduan.zcy.view.headlines.HeadlinesDetailActivity" />
+        <activity android:name="com.shuangduan.zcy.view.demand.DemandActivity" />
+        <activity android:name="com.shuangduan.zcy.view.demand.DemandReleaseActivity" />
+        <activity android:name="com.shuangduan.zcy.view.demand.FindRelationshipDetailActivity" />
+        <activity android:name="com.shuangduan.zcy.view.demand.FindSubstanceDetailActivity" />
+        <activity android:name="com.shuangduan.zcy.view.demand.ReleaseRelationshipOrderActivity" />
+        <activity android:name="com.shuangduan.zcy.view.demand.FindBuyerDetailActivity" />
+        <activity android:name="com.shuangduan.zcy.view.demand.FindRelationshipAcceptDetailActivity" />
+        <activity android:name="com.shuangduan.zcy.view.demand.FindRelationshipReleaseDetailActivity" />
+        <activity android:name="com.shuangduan.zcy.view.PhotoViewActivity"  android:theme="@style/PhotoViewTheme"/>
+        <activity android:name="com.shuangduan.zcy.view.MultiAreaActivity"  android:theme="@style/AppThemeBgGray"/>
+        <activity android:name="com.shuangduan.zcy.view.PayActivity" />
+        <activity android:name="com.shuangduan.zcy.rongyun.view.IMSearchActivity" />
+        <activity android:name="com.shuangduan.zcy.rongyun.view.IMAddFriendActivity" />
+        <activity android:name="com.shuangduan.zcy.rongyun.view.IMPrivateChatActivity" android:configChanges="orientation|screenSize"  android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -163,14 +163,14 @@
                     android:scheme="rong" />
             </intent-filter>
         </activity>
-        <activity android:name="com.shuangduan.zcy.rongyun.view.NewFriendsActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.wxapi.WXPayEntryActivity" android:screenOrientation="portrait" android:launchMode="singleTop" android:exported="true"/>
-        <activity android:name="com.shuangduan.zcy.rongyun.view.IMContactsActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.rongyun.view.IMFriendMoreActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.rongyun.view.IMGroupMoreActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.rongyun.view.IMGroupDetailsActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.shuangduan.zcy.rongyun.view.IMGroupMembersActivity" android:screenOrientation="portrait"/>
-        <!-- 分享-->
+        <activity android:name="com.shuangduan.zcy.rongyun.view.NewFriendsActivity" />
+        <activity android:name="com.shuangduan.zcy.wxapi.WXPayEntryActivity"  android:launchMode="singleTop" android:exported="true"/>
+        <activity android:name="com.shuangduan.zcy.rongyun.view.IMContactsActivity" />
+        <activity android:name="com.shuangduan.zcy.rongyun.view.IMFriendMoreActivity" />
+        <activity android:name="com.shuangduan.zcy.rongyun.view.IMGroupMoreActivity" />
+        <activity android:name="com.shuangduan.zcy.rongyun.view.IMGroupDetailsActivity" />
+        <activity android:name="com.shuangduan.zcy.rongyun.view.IMGroupMembersActivity" />
+        <!-- 微信分享-->
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:label="@string/app_name"
@@ -212,7 +212,7 @@
                 android:resource="@xml/file_paths_private">
             </meta-data>
         </provider>
-        <!--QQ start-->
+        <!--QQ分享 start-->
         <activity
             android:name="com.tencent.tauth.AuthActivity"
             android:noHistory="true"

@@ -14,6 +14,7 @@ import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseFragment;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.event.AvatarEvent;
+import com.shuangduan.zcy.model.event.CoinEvent;
 import com.shuangduan.zcy.model.event.RechargeSuccessEvent;
 import com.shuangduan.zcy.model.event.UserNameEvent;
 import com.shuangduan.zcy.utils.BarUtils;
@@ -37,6 +38,7 @@ import com.shuangduan.zcy.view.recharge.RechargeActivity;
 import com.shuangduan.zcy.vm.UserInfoVm;
 import com.shuangduan.zcy.weight.CircleImageView;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
@@ -90,6 +92,7 @@ public class MineFragment extends BaseFragment {
             tvUsername.setText(userInfoBean.getUsername());
             tvNumOfPeople.setText(String.format(getString(R.string.format_num_of_people), userInfoBean.getCount()));
             tvBalance.setText(String.format(getString(R.string.format_balance), userInfoBean.getCoin()));
+            EventBus.getDefault().post(new CoinEvent( userInfoBean.getCoin()));
             ImageLoader.load(mContext, new ImageConfig.Builder()
                     .url(userInfoBean.getImage_thumbnail())
                     .placeholder(R.drawable.default_head)
@@ -177,6 +180,12 @@ public class MineFragment extends BaseFragment {
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        userInfoVm.userInfo();
+    }
+
     @Subscribe
     public void onEventUpdateUserName(UserNameEvent event){
         tvUsername.setText(event.username);
@@ -197,4 +206,8 @@ public class MineFragment extends BaseFragment {
         userInfoVm.userInfo();
     }
 
+    @Subscribe
+    public void onEventCoin(CoinEvent event){
+        tvBalance.setText(event.coin);
+    }
 }

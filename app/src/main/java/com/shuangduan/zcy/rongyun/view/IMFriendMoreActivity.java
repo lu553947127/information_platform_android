@@ -2,7 +2,6 @@ package com.shuangduan.zcy.rongyun.view;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,10 +17,10 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.IMFriendListAdapter;
@@ -67,7 +66,8 @@ public class IMFriendMoreActivity extends BaseActivity {
     List<IMFriendListBean.DataBean.ListBean> listFriend=new ArrayList<>();
     IMFriendListBean imFriendListBean;
     String name;
-    int page=1;
+    int pageSize=10;
+    int count;
 
     @Override
     protected int initLayoutRes() {
@@ -94,87 +94,93 @@ public class IMFriendMoreActivity extends BaseActivity {
         refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                page++;
-                getFriendList(page);
+                if (pageSize<count){
+                    pageSize+=10;
+                    if (name!=null){
+                        getFriendList("1",pageSize);
+                    }else {
+                        getFriendList("",pageSize);
+                    }
+                    refreshLayout.finishLoadMore(2000);
+                }else {
+                    refresh.finishLoadMoreWithNoMoreData();
+                }
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                page=1;
-                getFriendList(page);
+                if (name!=null){
+                    getFriendList("1",pageSize);
+                }else {
+                    getFriendList("",pageSize);
+                }
+                refresh.finishRefresh(2000);
             }
         });
         imFriendListAdapter.setOnItemClickListener((adapter, view, position) -> {
             RongIM.getInstance().startPrivateChat(IMFriendMoreActivity.this, imFriendListBean.getData().getList().get(position).getUserId()
                     , imFriendListBean.getData().getList().get(position).getName());
         });
-        getFriendList(page);
-    }
-
-
-    private void setNoMore(int page, int count){
-        if (page == 1){
-            if (page * 10 >= count){
-                if (refresh.getState() == RefreshState.None){
-                    refresh.setNoMoreData(true);
-                }else {
-                    refresh.finishRefreshWithNoMoreData();
-                }
-            }else {
-                refresh.finishRefresh();
-            }
+        if (name!=null){
+            getFriendList("1",pageSize);
         }else {
-            if (page * 10 >= count){
-                refresh.finishLoadMoreWithNoMoreData();
-            }else {
-                refresh.finishLoadMore();
-            }
+            getFriendList("",pageSize);
         }
     }
 
     //我的好友列表
-    private void getFriendList(int page) {
+    private void getFriendList(String size,int pageSize) {
+        if (size.equals("1")){
+            OkGo.<String>post(RetrofitHelper.BASE_TEST_URL+ Common.SEARCH_FRIEND)
+                    .tag(this)
+                    .headers("token", SPUtils.getInstance().getString(SpConfig.TOKEN))//请求头
+                    .params("user_id", SPUtils.getInstance().getInt(SpConfig.USER_ID))//用户编号
+                    .params("name",name)
+                    .params("pageSize",pageSize)
+                    .execute(new MyStringCallback());
+        }else {
+            OkGo.<String>post(RetrofitHelper.BASE_TEST_URL+ Common.WECHAT_MY_FRIEND)
+                    .tag(this)
+                    .headers("token", SPUtils.getInstance().getString(SpConfig.TOKEN))//请求头
+                    .params("user_id", SPUtils.getInstance().getInt(SpConfig.USER_ID))//用户编号
+                    .params("pageSize",pageSize)
+                    .execute(new MyStringCallback());
+        }
+    }
 
-        OkGo.<String>post(RetrofitHelper.BASE_TEST_URL+ Common.SEARCH_FRIEND)
-                .tag(this)
-                .headers("token", SPUtils.getInstance().getString(SpConfig.TOKEN))//请求头
-                .params("user_id", SPUtils.getInstance().getInt(SpConfig.USER_ID))//用户编号
-                .params("name",name)
-                .params("page",page)
-                .execute(new com.lzy.okgo.callback.StringCallback() {//返回值
+    public class MyStringCallback extends StringCallback {
 
-                    @Override
-                    public void onError(Response<String> response) {
-                        super.onError(response);
-                        LogUtils.json(response.body());
+        @Override
+        public void onError(Response<String> response) {
+            super.onError(response);
+            LogUtils.json(response.body());
+        }
+
+        @Override
+        public void onSuccess(Response<String> response) {
+            LogUtils.json(response.body());
+            try {
+                imFriendListBean=new Gson().fromJson(response.body(), IMFriendListBean.class);
+                if (imFriendListBean.getCode().equals("200")){
+                    listFriend.clear();
+                    listFriend.addAll(imFriendListBean.getData().getList());
+                    count=imFriendListBean.getData().getCount();
+                    if(listFriend!=null&&listFriend.size()!=0){
+                        imFriendListAdapter.notifyDataSetChanged();
+                    }else {
+                        imFriendListAdapter.setEmptyView(R.layout.layout_empty, rvFriend);
                     }
-
-                    @Override
-                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-                        LogUtils.json(response.body());
-                        try {
-                            imFriendListBean=new Gson().fromJson(response.body(), IMFriendListBean.class);
-                            if (imFriendListBean.getCode().equals("200")){
-                                listFriend.clear();
-                                listFriend.addAll(imFriendListBean.getData().getList());
-                                setNoMore(imFriendListBean.getData().getPage(),imFriendListBean.getData().getCount());
-                                if(listFriend!=null&&listFriend.size()!=0){
-                                    imFriendListAdapter.notifyDataSetChanged();
-                                }else {
-                                    imFriendListAdapter.setEmptyView(R.layout.layout_empty, rvFriend);
-                                }
-                            }else if (imFriendListBean.getCode().equals("-1")){
-                                ToastUtils.showShort(imFriendListBean.getMsg());
-                                LoginUtils.getExitLogin(IMFriendMoreActivity.this);
-                            }else {
-                                imFriendListAdapter.setEmptyView(R.layout.layout_empty, rvFriend);
-                                listFriend.clear();
-                            }
-                        }catch (JsonSyntaxException | IllegalStateException ignored){
-                            ToastUtils.showShort(getString(R.string.request_error));
-                        }
-                    }
-                });
+                }else if (imFriendListBean.getCode().equals("-1")){
+                    ToastUtils.showShort(imFriendListBean.getMsg());
+                    LoginUtils.getExitLogin(IMFriendMoreActivity.this);
+                }else {
+                    imFriendListAdapter.setEmptyView(R.layout.layout_empty, rvFriend);
+                    listFriend.clear();
+                }
+            }catch (JsonSyntaxException | IllegalStateException ignored){
+                ToastUtils.showShort(getString(R.string.request_error));
+            }
+        }
     }
 
     @OnClick({R.id.iv_bar_back})

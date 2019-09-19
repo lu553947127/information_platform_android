@@ -16,7 +16,6 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
@@ -118,14 +117,11 @@ public class SupplierActivity extends BaseActivity {
                     break;
             }
         });
-        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter1, View view, int position) {
-                SupplierBean.ListBean listBean = adapter.getData().get(position);
-                Bundle bundle = new Bundle();
-                bundle.putInt(CustomConfig.SUPPLIER_ID, listBean.getId());
-                ActivityUtils.startActivity(bundle, SupplierDetailActivity.class);
-            }
+        adapter.setOnItemClickListener((adapter1, view, position) -> {
+            SupplierBean.ListBean listBean = adapter.getData().get(position);
+            Bundle bundle = new Bundle();
+            bundle.putInt(CustomConfig.SUPPLIER_ID, listBean.getId());
+            ActivityUtils.startActivity(bundle, SupplierDetailActivity.class);
         });
 
         SupplierVm supplierVm = ViewModelProviders.of(this).get(SupplierVm.class);

@@ -73,6 +73,5 @@ public class LoginUtils {
         SPUtils.getInstance().put(SpConfig.FIRST_APP, 1);
         ActivityUtils.startActivity(WelcomeActivity.class);
         ActivityUtils.finishAllActivitiesExceptNewest();
-        Objects.requireNonNull(activity).finish();
     }
 }

@@ -1,24 +1,14 @@
 package com.shuangduan.zcy.model.api.repository;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.annotation.SuppressLint;
 import android.os.Environment;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Transformations;
-
-import com.blankj.utilcode.util.FileUtils;
-import com.blankj.utilcode.util.ImageUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.blankj.utilcode.util.ZipUtils;
 import com.shuangduan.zcy.app.MyApplication;
 import com.shuangduan.zcy.model.api.PageState;
-import com.shuangduan.zcy.model.api.rxjava.BaseSubscriber;
 import com.shuangduan.zcy.model.bean.UploadBean;
-import com.shuangduan.zcy.utils.ShareUtils;
-
 import org.reactivestreams.Subscription;
 
 import java.io.File;
@@ -48,48 +38,26 @@ import top.zibin.luban.Luban;
  */
 public class UploadRepository extends BaseRepository {
 
+    @SuppressLint("CheckResult")
     public void uploadPhoto(MutableLiveData<UploadBean> liveData, MutableLiveData<String> pageStateLiveData, final int userId, String path){
         List<File> list = new ArrayList<>();
         list.add(new File(path));
         //如果uri为空，代表为网络图片，无需压缩，直接增加即可
         Flowable.just(list)
                 .observeOn(Schedulers.io())
-                .doOnSubscribe(new Consumer<Subscription>() {
-                    @Override
-                    public void accept(Subscription subscription) throws Exception {
-                        pageStateLiveData.postValue(PageState.PAGE_LOADING);
-                    }
-                })
-                .map(new Function<List<File>, List<File>>() {
-                    @Override
-                    public List<File> apply(@NonNull List<File> list) throws Exception {
-                        return Luban.with(MyApplication.getInstance())
-                                .ignoreBy(1024)
-                                .setTargetDir(getPath())
-                                .load(list)
-                                .get();
-                    }
-                })
+                .doOnSubscribe(subscription -> pageStateLiveData.postValue(PageState.PAGE_LOADING))
+                .map(list1 -> Luban.with(MyApplication.getInstance())
+                        .ignoreBy(1024)
+                        .setTargetDir(getPath())
+                        .load(list1)
+                        .get())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnError(new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) {
-                        ToastUtils.showShort(throwable.getMessage());
-                        LogUtils.i(throwable.getMessage());
-                    }
+                .doOnError(throwable -> {
+                    ToastUtils.showShort(throwable.getMessage());
+                    LogUtils.i(throwable.getMessage());
                 })
                 .onErrorResumeNext(Flowable.<List<File>>empty())
-                .subscribe(new Consumer<List<File>>() {
-                    @Override
-                    public void accept(@NonNull List<File> files) {
-                        upload(liveData, pageStateLiveData, userId, files.get(0));
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        ToastUtils.showShort("图片过大");
-                    }
-                });
+                .subscribe(files -> upload(liveData, pageStateLiveData, userId, files.get(0)), throwable -> ToastUtils.showShort("图片过大"));
     }
 
     private String getPath() {
@@ -103,12 +71,10 @@ public class UploadRepository extends BaseRepository {
 
     private void upload(MutableLiveData<UploadBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, File file){
         // 创建 RequestBody，用于封装 请求RequestBody
-        RequestBody requestFile =
-                RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
 
         // MultipartBody.Part is used to send also the actual file name
-        MultipartBody.Part body =
-                MultipartBody.Part.createFormData("file", file.getName(), requestFile);
+        MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
 
         request(apiService.upload(userId, body)).setData(liveData).setPageState(pageStateLiveData).send();
     }

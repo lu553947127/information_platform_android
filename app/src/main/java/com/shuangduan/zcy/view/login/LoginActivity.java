@@ -1,5 +1,6 @@
 package com.shuangduan.zcy.view.login;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -19,6 +20,7 @@ import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.PageState;
+import com.shuangduan.zcy.utils.SharesUtils;
 import com.shuangduan.zcy.view.MainActivity;
 import com.shuangduan.zcy.view.mine.ForgetPwdActivity;
 import com.shuangduan.zcy.vm.IMConnectVm;
@@ -65,6 +67,7 @@ public class LoginActivity extends BaseActivity {
     /*默认账号登录*/
     private int loginStyle = LOGIN_ACCOUNT;
     private IMConnectVm imConnectVm;
+    private SharesUtils shareUtils;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -85,6 +88,7 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
+        shareUtils=new SharesUtils(this);
         loginVm = ViewModelProviders.of(this).get(LoginVm.class);
 
         loginVm.timeLiveDataLiveData.observe(this, aLong -> {
@@ -164,11 +168,12 @@ public class LoginActivity extends BaseActivity {
             loginVm.codeLogin(account, verificationCode, DeviceUtils.getAndroidID());
         }
         loginVm.accountLoginLiveData.observe(this, loginBean -> {
+
             SPUtils.getInstance().put(SpConfig.USER_ID, loginBean.getUser_id());
             SPUtils.getInstance().put(SpConfig.TOKEN, loginBean.getToken());
             SPUtils.getInstance().put(SpConfig.MOBILE, loginBean.getTel());
             SPUtils.getInstance().put(SpConfig.INFO_STATUS, loginBean.getInfo_status());
-
+            shareUtils.addShared("info_status", String.valueOf(loginBean.getInfo_status()), "login");
             if (loginBean.getInfo_status() == 1){
                 imConnectVm.userId = loginBean.getUser_id();
                 imConnectVm.getToken();

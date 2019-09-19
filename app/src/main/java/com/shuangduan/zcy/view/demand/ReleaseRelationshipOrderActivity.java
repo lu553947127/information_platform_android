@@ -144,7 +144,7 @@ public class ReleaseRelationshipOrderActivity extends BaseActivity {
 
     private void showPayDialog(String price){
         addDialog(new CustomDialog(this)
-                .setTip(String.format(getString(R.string.format_pay_price), price))
+                .setTip(String.format(getString(R.string.format_pay_price_release), price))
                 .setCallBack(new BaseDialog.CallBack() {
                     @Override
                     public void cancel() {

@@ -1,291 +1,410 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
     <include layout="@layout/toolbar"/>
 
-    <FrameLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/colorFFF"
-        android:paddingLeft="14dp"
-        android:paddingRight="14dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:textColor="@color/colorTv"
-            android:textSize="14sp"
-            android:text="@string/name"/>
-
-        <EditText
-            android:id="@+id/edt_name"
+        android:layout_height="match_parent">
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:layout_marginLeft="87dp"
-            android:background="@null"
-            android:singleLine="true"
-            android:textColorHint="@color/colorTvHint"
-            android:textColor="@color/colorTv"
-            android:textSize="14sp"
-            android:hint="@string/please_hint"/>
+            android:orientation="vertical">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_gravity="bottom"
-            android:background="@color/colorDivider"/>
 
-    </FrameLayout>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/colorFFF"
+                android:paddingLeft="14dp"
+                android:paddingRight="14dp">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/colorFFF"
-        android:paddingLeft="14dp"
-        android:paddingRight="14dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/colorTv"
+                    android:textSize="14sp"
+                    android:text="@string/company_name"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:textColor="@color/colorTv"
-            android:textSize="14sp"
-            android:text="@string/contacts_info"/>
+                <EditText
+                    android:id="@+id/edt_company"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="87dp"
+                    android:background="@null"
+                    android:singleLine="true"
+                    android:textColorHint="@color/colorTvHint"
+                    android:textColor="@color/colorTv"
+                    android:textSize="14sp"
+                    android:hint="@string/please_hint"/>
 
-        <EditText
-            android:id="@+id/edt_contact_info"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:layout_marginLeft="87dp"
-            android:background="@null"
-            android:singleLine="true"
-            android:inputType="number"
-            android:textColorHint="@color/colorTvHint"
-            android:textColor="@color/colorTv"
-            android:textSize="14sp"
-            android:hint="@string/please_hint"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_gravity="bottom"
+                    android:background="@color/colorDivider"/>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_gravity="bottom"
-            android:background="@color/colorDivider"/>
+            </FrameLayout>
 
-    </FrameLayout>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/colorFFF"
+                android:paddingLeft="14dp"
+                android:paddingRight="14dp">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/colorFFF"
-        android:paddingLeft="14dp"
-        android:paddingRight="14dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/colorTv"
+                    android:textSize="14sp"
+                    android:text="@string/address_detail"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:textColor="@color/colorTv"
-            android:textSize="14sp"
-            android:text="@string/company_name"/>
+                <EditText
+                    android:id="@+id/edt_address_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="87dp"
+                    android:background="@null"
+                    android:singleLine="true"
+                    android:textColorHint="@color/colorTvHint"
+                    android:textColor="@color/colorTv"
+                    android:textSize="14sp"
+                    android:hint="@string/please_hint"/>
 
-        <EditText
-            android:id="@+id/edt_company"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:layout_marginLeft="87dp"
-            android:background="@null"
-            android:singleLine="true"
-            android:textColorHint="@color/colorTvHint"
-            android:textColor="@color/colorTv"
-            android:textSize="14sp"
-            android:hint="@string/please_hint"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_gravity="bottom"
+                    android:background="@color/colorDivider"/>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_gravity="bottom"
-            android:background="@color/colorDivider"/>
+            </FrameLayout>
 
-    </FrameLayout>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/colorFFF"
+                android:paddingLeft="14dp"
+                android:paddingRight="14dp">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/colorFFF"
-        android:paddingLeft="14dp"
-        android:paddingRight="14dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/colorTv"
+                    android:textSize="14sp"
+                    android:text="@string/scale"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:textColor="@color/colorTv"
-            android:textSize="14sp"
-            android:text="@string/company_address"/>
+                <TextView
+                    android:id="@+id/tv_scale"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="87dp"
+                    android:background="@null"
+                    android:singleLine="true"
+                    android:textColorHint="@color/colorTvHint"
+                    android:textColor="@color/colorTv"
+                    android:textSize="14sp"
+                    android:hint="@string/please_select"/>
 
-        <TextView
-            android:id="@+id/tv_company_address"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:layout_marginLeft="87dp"
-            android:background="@null"
-            android:singleLine="true"
-            android:textColorHint="@color/colorTvHint"
-            android:textColor="@color/colorTv"
-            android:textSize="14sp"
-            android:hint="@string/please_select"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_gravity="bottom"
+                    android:background="@color/colorDivider"/>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_gravity="bottom"
-            android:background="@color/colorDivider"/>
+            </FrameLayout>
 
-    </FrameLayout>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/colorFFF"
+                android:paddingLeft="14dp"
+                android:paddingRight="14dp">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/colorFFF"
-        android:paddingLeft="14dp"
-        android:paddingRight="14dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/colorTv"
+                    android:textSize="14sp"
+                    android:text="@string/company_website"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:textColor="@color/colorTv"
-            android:textSize="14sp"
-            android:text="@string/address_detail"/>
+                <EditText
+                    android:id="@+id/edt_company_website"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="87dp"
+                    android:background="@null"
+                    android:singleLine="true"
+                    android:textColorHint="@color/colorTvHint"
+                    android:textColor="@color/colorTv"
+                    android:textSize="14sp"
+                    android:hint="@string/please_hint"/>
 
-        <EditText
-            android:id="@+id/edt_address_detail"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:layout_marginLeft="87dp"
-            android:background="@null"
-            android:singleLine="true"
-            android:textColorHint="@color/colorTvHint"
-            android:textColor="@color/colorTv"
-            android:textSize="14sp"
-            android:hint="@string/please_hint"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_gravity="bottom"
+                    android:background="@color/colorDivider"/>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_gravity="bottom"
-            android:background="@color/colorDivider"/>
+            </FrameLayout>
 
-    </FrameLayout>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/colorFFF"
+                android:paddingLeft="14dp"
+                android:paddingRight="14dp">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/colorFFF"
-        android:paddingLeft="14dp"
-        android:paddingRight="14dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/colorTv"
+                    android:textSize="14sp"
+                    android:text="@string/name"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:textColor="@color/colorTv"
-            android:textSize="14sp"
-            android:text="@string/service_area"/>
+                <EditText
+                    android:id="@+id/edt_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="87dp"
+                    android:background="@null"
+                    android:singleLine="true"
+                    android:textColorHint="@color/colorTvHint"
+                    android:textColor="@color/colorTv"
+                    android:textSize="14sp"
+                    android:hint="@string/please_hint"/>
 
-        <TextView
-            android:id="@+id/tv_service_area"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:layout_marginLeft="87dp"
-            android:background="@null"
-            android:singleLine="true"
-            android:textColorHint="@color/colorTvHint"
-            android:textColor="@color/colorTv"
-            android:textSize="14sp"
-            android:hint="@string/please_select"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_gravity="bottom"
+                    android:background="@color/colorDivider"/>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_gravity="bottom"
-            android:background="@color/colorDivider"/>
+            </FrameLayout>
 
-    </FrameLayout>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/colorFFF"
+                android:paddingLeft="14dp"
+                android:paddingRight="14dp">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="15dp"
-        android:paddingLeft="14dp"
-        android:background="@color/colorFFF"
-        android:textColor="@color/colorTv"
-        android:textSize="14sp"
-        android:text="@string/product"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/colorTv"
+                    android:textSize="14sp"
+                    android:text="@string/contacts_info"/>
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/edt_production"
-        android:layout_width="match_parent"
-        android:layout_height="92dp"
-        android:background="@color/colorFFF"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:gravity="top"
-        android:textColorHint="@color/colorTvHint"
-        android:textColor="@color/colorTv"
-        android:textSize="14sp"
-        android:hint="@string/please_hint"/>
+                <EditText
+                    android:id="@+id/edt_contact_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="87dp"
+                    android:background="@null"
+                    android:singleLine="true"
+                    android:inputType="number"
+                    android:textColorHint="@color/colorTvHint"
+                    android:textColor="@color/colorTv"
+                    android:textSize="14sp"
+                    android:hint="@string/please_hint"/>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@drawable/divider_15"/>
-    
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="107dp"
-        android:background="@color/colorFFF">
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_gravity="bottom"
+                    android:background="@color/colorDivider"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:layout_marginLeft="19dp"
-            android:textColor="@color/colorTv"
-            android:textSize="12sp"
-            android:text="上传执照（营业执照等资质照片，最多上传3张）"/>
+            </FrameLayout>
 
-        <com.shuangduan.zcy.weight.PicContentView
-            android:id="@+id/pic_content"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:overScrollMode="never"
-            app:maxSize="3"
-            android:layout_marginLeft="19dp"
-            android:layout_marginTop="37dp">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/colorFFF"
+                android:paddingLeft="14dp"
+                android:paddingRight="14dp">
 
-        </com.shuangduan.zcy.weight.PicContentView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/colorTv"
+                    android:textSize="14sp"
+                    android:text="@string/service_area"/>
 
-    </FrameLayout>
+                <TextView
+                    android:id="@+id/tv_service_area"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="87dp"
+                    android:background="@null"
+                    android:singleLine="true"
+                    android:textColorHint="@color/colorTvHint"
+                    android:textColor="@color/colorTv"
+                    android:textSize="14sp"
+                    android:hint="@string/please_select"/>
 
-    <TextView
-        android:id="@+id/tv_confirm"
-        android:layout_width="335dp"
-        style="@style/BtnConfirm"
-        android:layout_marginTop="30dp"
-        android:text="@string/submit"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_gravity="bottom"
+                    android:background="@color/colorDivider"/>
+
+            </FrameLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="15dp"
+                android:paddingLeft="14dp"
+                android:background="@color/colorFFF"
+                android:textColor="@color/colorTv"
+                android:textSize="14sp"
+                android:text="@string/product"/>
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edt_production"
+                android:layout_width="match_parent"
+                android:layout_height="92dp"
+                android:background="@color/colorFFF"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:gravity="top"
+                android:textColorHint="@color/colorTvHint"
+                android:textColor="@color/colorTv"
+                android:textSize="14sp"
+                android:hint="@string/please_hint"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@drawable/divider_15"/>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="107dp"
+                android:background="@color/colorFFF">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="14dp"
+                    android:textColor="@color/colorTv"
+                    android:textSize="14sp"
+                    android:text="上传执照（营业执照等资质照片，最多上传3张）"/>
+
+                <com.shuangduan.zcy.weight.PicContentView
+                    android:id="@+id/pic_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:overScrollMode="never"
+                    app:maxSize="3"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="37dp">
+
+                </com.shuangduan.zcy.weight.PicContentView>
+
+            </FrameLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@drawable/divider_15"/>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="107dp"
+                android:background="@color/colorFFF">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="14dp"
+                    android:textColor="@color/colorTv"
+                    android:textSize="14sp"
+                    android:text="授权申请"/>
+
+                <com.shuangduan.zcy.weight.PicContentView
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:overScrollMode="never"
+                    app:maxSize="3"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="37dp"
+                    android:visibility="gone">
+
+                </com.shuangduan.zcy.weight.PicContentView>
+
+            </FrameLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@drawable/divider_15"/>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="107dp"
+                android:background="@color/colorFFF">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="14dp"
+                    android:textColor="@color/colorTv"
+                    android:textSize="14sp"
+                    android:text="公司logo"/>
+
+                <com.shuangduan.zcy.weight.PicContentView
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:overScrollMode="never"
+                    app:maxSize="3"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="37dp"
+                    android:visibility="gone">
+
+                </com.shuangduan.zcy.weight.PicContentView>
+
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/tv_confirm"
+                android:layout_width="335dp"
+                style="@style/BtnConfirm"
+                android:layout_marginTop="30dp"
+                android:text="@string/submit"/>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="30dp" />
+
+        </LinearLayout>
+    </ScrollView>
+
 
 </LinearLayout>

@@ -2,9 +2,7 @@ package com.shuangduan.zcy.dialog;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.os.Bundle;
-import android.view.Window;
 import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
@@ -138,7 +136,7 @@ public abstract class BaseDialog extends Dialog {
         super.dismiss();
     }
 
-    public CallBack callBack;
+    CallBack callBack;
 
     public interface CallBack{
         void cancel();
@@ -150,7 +148,7 @@ public abstract class BaseDialog extends Dialog {
         return this;
     }
 
-    public SingleCallBack singleCallBack;
+    SingleCallBack singleCallBack;
 
     public interface SingleCallBack{
         void click(String item, int position);
@@ -161,7 +159,7 @@ public abstract class BaseDialog extends Dialog {
         return this;
     }
 
-    public PhotoCallBack photoCallBack;
+    PhotoCallBack photoCallBack;
 
     public interface PhotoCallBack{
         void camera();
