@@ -4,22 +4,29 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:layout_width="341dp"
-        android:layout_height="266dp"
-        android:layout_marginTop="86dp"
-        android:layout_marginLeft="24dp"
-        android:src="@drawable/icon_login"/>
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:background="@drawable/icon_login"/>
 
-    <TextView
-        android:id="@+id/tv_login"
-        style="@style/BtnConfirm"
-        android:layout_marginTop="115dp"
-        android:text="@string/login"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="5dp"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tv_register"
-        style="@style/BtnConfirmWhite"
-        android:layout_marginTop="25dp"
-        android:text="@string/register"/>
+        <TextView
+            android:id="@+id/tv_login"
+            style="@style/BtnConfirmWhite_9"
+            android:text="@string/login"/>
+
+        <TextView
+            android:id="@+id/tv_register"
+            style="@style/BtnConfirm"
+            android:layout_marginTop="31dp"
+            android:text="@string/register"/>
+    </LinearLayout>
+
 
 </LinearLayout>

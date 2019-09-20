@@ -58,8 +58,6 @@ public class WelcomeActivity extends BaseActivity {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
-        //设置状态栏颜色模式
-        BarUtils.setStatusBarLightMode(this, true);
         shareUtils=new SharesUtils(this);
     }
 

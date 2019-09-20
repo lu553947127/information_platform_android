@@ -15,8 +15,8 @@ public class ClassifyBean {
     public static final int ZCXX = 2;
     public static final int JJWZ = 3;
     public static final int PQZX = 4;
-    public static final int YZGYS = 5;
-    public static final int WDSY = 6;
+    public static final int WDSY = 5;
+    public static final int YZGYS = 6;
     public static final int FBXX = 7;
     public static final int FBXQ = 8;
     private int type;

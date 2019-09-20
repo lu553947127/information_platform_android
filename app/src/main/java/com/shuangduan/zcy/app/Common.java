@@ -2,6 +2,8 @@ package com.shuangduan.zcy.app;
 
 public class Common {
 
+    //版本升级
+    public static final String VERSION_UPGRADE="/api/Passport/versionUpgrade";
     //人员详情
     public static final String USER_INFO="/api/Userinfo/information";
     //好友群组搜索列表
@@ -35,4 +37,7 @@ public class Common {
     public static final String FRIEND_APPLY_LIST="/api/Friend/applyList";
     //通讯录 好友添加验证
     public static final String FRIEND_OPERATION="/api/Friend/operation";
+
+    //个人中心 帮助
+    public static final String USER_INFO_HELP="/api/Userinfo/help";
 }

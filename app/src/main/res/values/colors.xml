@@ -29,7 +29,8 @@
     <color name="color_F88037">#F88037</color>
     <color name="whisper">#F7F5FA</color>
     <color name="color_ff000000">#ff000000</color>
-
+    <color name="color_EE573E">#EE573E</color>
+    <color name="color_6358F7">#6358F7</color>
     <!--时间选择器颜色-->
     <color name="text1">#6a5ff8</color>
     <color name="text2">#B1B1B1</color>

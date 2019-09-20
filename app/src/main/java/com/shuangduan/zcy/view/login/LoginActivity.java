@@ -1,6 +1,5 @@
 package com.shuangduan.zcy.view.login;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;

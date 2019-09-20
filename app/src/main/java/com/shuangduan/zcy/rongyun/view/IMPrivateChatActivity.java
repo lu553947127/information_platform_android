@@ -21,6 +21,7 @@ import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.view.mine.UserInfoActivity;
 
 import java.util.Locale;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -68,8 +69,8 @@ public class IMPrivateChatActivity extends BaseActivity implements RongIM.Conver
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
 //        BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
-        mConversationType = Conversation.ConversationType.valueOf(getIntent().getData()
-                .getLastPathSegment().toUpperCase(Locale.US));
+        mConversationType = Conversation.ConversationType.
+                valueOf(Objects.requireNonNull(Objects.requireNonNull(getIntent().getData()).getLastPathSegment()).toUpperCase(Locale.US));
         user_id = getIntent().getData().getQueryParameter("targetId");
         tvBarTitle.setText(getIntent().getData().getQueryParameter("title"));
         enterFragment(mConversationType, user_id);//加载页面
@@ -77,6 +78,8 @@ public class IMPrivateChatActivity extends BaseActivity implements RongIM.Conver
         if (mConversationType.getName().equals("group")){
             tvBarRight.setVisibility(View.GONE);
             ivBarRight.setImageResource(R.drawable.icon_more);
+        }else if (mConversationType.getName().equals("private")){
+            ivBarRight.setVisibility(View.GONE);
         }
         //设置会话页面操作监听
         RongIM.setConversationClickListener(this);

@@ -120,11 +120,9 @@ public class IMGroupMoreActivity extends BaseActivity {
                 refresh.finishRefresh(2000);
             }
         });
-        imGroupListAdapter.setOnItemClickListener((adapter, view, position) -> {
-            RongIM.getInstance().startGroupChat(IMGroupMoreActivity.this
-                    , imGroupListBean.getData().getList().get(position).getGroup_id()
-                    , imGroupListBean.getData().getList().get(position).getGroup_name());
-        });
+        imGroupListAdapter.setOnItemClickListener((adapter, view, position) -> RongIM.getInstance().startGroupChat(IMGroupMoreActivity.this
+                , imGroupListBean.getData().getList().get(position).getGroup_id()
+                , imGroupListBean.getData().getList().get(position).getGroup_name()));
         if (name!=null){
             getGroupList("1",pageSize);
         }else {

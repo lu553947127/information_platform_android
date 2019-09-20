@@ -117,6 +117,7 @@ public class RichText extends AppCompatTextView {
 
         WindowManager wm = (WindowManager) mContext.getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics metrics = new DisplayMetrics();
+        assert wm != null;
         wm.getDefaultDisplay().getMetrics(metrics);
         density = metrics.density;
         screenWidth = metrics.widthPixels;
@@ -159,54 +160,51 @@ public class RichText extends AppCompatTextView {
     @NonNull
     private Html.ImageGetter initImageGetter() {
         //处理图片
-        return new Html.ImageGetter() {
-            //加载网络图片
-            @Override
-            public Drawable getDrawable(final String source) {
+        //加载网络图片
+        return source -> {
 
-                final LevelListDrawable drawable = new LevelListDrawable();
-                drawableMap.put(source, drawable);
-                if (glideRm == null){
-                    throw new NullPointerException("没有注入Glide.with(context)");
-                }
-                glideRm.asBitmap()
-                        .apply(new RequestOptions().placeholder(R.drawable.default_pic))
-                        .load(source).into(new SimpleTarget<Bitmap>() {
-                    @Override
-                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+            final LevelListDrawable drawable = new LevelListDrawable();
+            drawableMap.put(source, drawable);
+            if (glideRm == null){
+                throw new NullPointerException("没有注入Glide.with(context)");
+            }
+            glideRm.asBitmap()
+                    .apply(new RequestOptions().placeholder(R.drawable.default_pic))
+                    .load(source).into(new SimpleTarget<Bitmap>() {
+                @Override
+                public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
 
-                        int corner = 8;
-                        int width = (int) (resource.getWidth() * density);
-                        int height = (int) (resource.getHeight() * density);
-                        int mWidth = getWidth();
+                    int corner = 8;
+                    int width = (int) (resource.getWidth() * density);
+                    int height = (int) (resource.getHeight() * density);
+                    int mWidth = getWidth();
 
-                        if (width > mWidth){
-                            if (mWidth != 0){
-                                height = height * mWidth/width;
-                                corner = corner * width/mWidth;
-                                width = mWidth;
-                            }else if (width > screenWidth){
-                                //列表中有时取不到宽度，取屏幕一半
-                                mWidth = screenWidth/2;
-                                height = height * mWidth/width;
-                                corner = corner * width/mWidth;
-                                width = mWidth;
-                            }
+                    if (width > mWidth){
+                        if (mWidth != 0){
+                            height = height * mWidth/width;
+                            corner = corner * width/mWidth;
+                            width = mWidth;
+                        }else if (width > screenWidth){
+                            //列表中有时取不到宽度，取屏幕一半
+                            mWidth = screenWidth/2;
+                            height = height * mWidth/width;
+                            corner = corner * width/mWidth;
+                            width = mWidth;
                         }
-
-                        Bitmap roundedCornerBitmap = getRoundedCornerBitmap(resource, corner);
-                        BitmapDrawable bitmapDrawable = new BitmapDrawable(getResources(), roundedCornerBitmap);
-                        drawable.addLevel(1, 1, bitmapDrawable);
-                        drawable.setBounds(0, 0, width, height);
-                        drawable.setLevel(1);
-
-                        setText(getText());
-                        refreshDrawableState();
                     }
 
-                });
-                return drawableMap.get(source);
-            }
+                    Bitmap roundedCornerBitmap = getRoundedCornerBitmap(resource, corner);
+                    BitmapDrawable bitmapDrawable = new BitmapDrawable(getResources(), roundedCornerBitmap);
+                    drawable.addLevel(1, 1, bitmapDrawable);
+                    drawable.setBounds(0, 0, width, height);
+                    drawable.setLevel(1);
+
+                    setText(getText());
+                    refreshDrawableState();
+                }
+
+            });
+            return drawableMap.get(source);
         };
     }
 

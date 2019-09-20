@@ -3,7 +3,6 @@ package com.shuangduan.zcy.view;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -32,17 +31,19 @@ import com.shuangduan.zcy.app.Common;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseFragment;
+import com.shuangduan.zcy.dialog.UpdateManager;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
+import com.shuangduan.zcy.model.bean.VersionUpgradesBean;
 import com.shuangduan.zcy.model.bean.ClassifyBean;
 import com.shuangduan.zcy.model.bean.HomeBannerBean;
 import com.shuangduan.zcy.model.bean.HomeListBean;
 import com.shuangduan.zcy.model.bean.HomePushBean;
 import com.shuangduan.zcy.model.bean.IMFriendApplyCountBean;
-import com.shuangduan.zcy.rongyun.view.NewFriendsActivity;
 import com.shuangduan.zcy.utils.AuthenticationUtils;
 import com.shuangduan.zcy.utils.BarUtils;
 import com.shuangduan.zcy.utils.LoginUtils;
+import com.shuangduan.zcy.utils.VersionUtils;
 import com.shuangduan.zcy.utils.image.GlideImageLoader;
 import com.shuangduan.zcy.view.demand.DemandActivity;
 import com.shuangduan.zcy.view.headlines.HeadlinesActivity;
@@ -92,8 +93,7 @@ public class HomeFragment extends BaseFragment {
     Toolbar toolbar;
     @BindView(R.id.rv_classify)
     RecyclerView rvClassify;
-    @BindView(R.id.rv_income_statement)
-    RecyclerView rvIncomeStatement;
+
     @BindView(R.id.rv_infrastructure_headlines)
     RecyclerView rvHeadlines;
     @BindView(R.id.banner)
@@ -102,7 +102,6 @@ public class HomeFragment extends BaseFragment {
     MarqueeListView marqueeView;
     @BindView(R.id.tv_subscribe_state)
     TextView tvSubscribeState;
-    private IncomeStatementAdapter incomeStatementAdapter;
     private HomeHeadlinesAdapter headlinesAdapter;
     private RelativeLayout relativeLayout;
     private TextView number;
@@ -148,11 +147,11 @@ public class HomeFragment extends BaseFragment {
                     break;
                 case ClassifyBean.PQZX:
                     break;
-                case ClassifyBean.YZGYS:
-                    ActivityUtils.startActivity(SupplierActivity.class);
-                    break;
                 case ClassifyBean.WDSY:
                     ActivityUtils.startActivity(MineIncomeActivity.class);
+                    break;
+                case ClassifyBean.YZGYS:
+                    ActivityUtils.startActivity(SupplierActivity.class);
                     break;
                 case ClassifyBean.FBXX:
                     if (!AuthenticationUtils.Authentication()) return;
@@ -185,20 +184,6 @@ public class HomeFragment extends BaseFragment {
             initBanner(pics, titles);
         });
         homeVm.listLiveData.observe(this, homeListBean -> {
-            if (incomeStatementAdapter == null){
-                rvIncomeStatement.setLayoutManager(new LinearLayoutManager(mContext));
-                rvIncomeStatement.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
-                incomeStatementAdapter = new IncomeStatementAdapter(R.layout.item_income_statement, homeListBean.getExplain());
-                rvIncomeStatement.setAdapter(incomeStatementAdapter);
-                incomeStatementAdapter.setOnItemClickListener((adapter, view, position) -> {
-                    HomeListBean.ExplainBean explainBean = incomeStatementAdapter.getData().get(position);
-                    Bundle bundle = new Bundle();
-                    bundle.putInt(CustomConfig.EXPLAIN_ID, explainBean.getId());
-                    ActivityUtils.startActivity(bundle, ExplainDetailActivity.class);
-                });
-            }else {
-                incomeStatementAdapter.setNewData(homeListBean.getExplain());
-            }
 
             if (headlinesAdapter == null){
                 rvHeadlines.setLayoutManager(new LinearLayoutManager(mContext));
@@ -283,8 +268,8 @@ public class HomeFragment extends BaseFragment {
         list.add(new ClassifyBean(R.drawable.classify_zcxx, classifys[1], 2));
         list.add(new ClassifyBean(R.drawable.classify_jjwz, classifys[2], 3));
 //        list.add(new ClassifyBean(R.drawable.classify_pqzx, classifys[3], 4));
-        list.add(new ClassifyBean(R.drawable.classify_gys, classifys[4], 5));
-        list.add(new ClassifyBean(R.drawable.classify_wdsy, classifys[5], 6));
+        list.add(new ClassifyBean(R.drawable.classify_wdsy, classifys[4], 5));
+        list.add(new ClassifyBean(R.drawable.classify_gys, classifys[5], 6));
         list.add(new ClassifyBean(R.drawable.classify_fbxx, classifys[6], 7));
         list.add(new ClassifyBean(R.drawable.classify_fbxq, classifys[7], 8));
         return list;
@@ -374,6 +359,42 @@ public class HomeFragment extends BaseFragment {
                 });
     }
 
+    //版本升级
+    private void getAndroidVersionUpgrades() {
+
+        OkGo.<String>post(RetrofitHelper.BASE_TEST_URL+ Common.VERSION_UPGRADE)
+                .tag(this)
+                .headers("token", SPUtils.getInstance().getString(SpConfig.TOKEN))//请求头
+                .params("version", VersionUtils.getVerName(Objects.requireNonNull(getActivity())))//版本号
+//                .params("version", "1")//版本号
+                .params("type", "1")//升级类型：1 安卓，2 ios
+                .execute(new com.lzy.okgo.callback.StringCallback() {//返回值
+
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+                        LogUtils.json(response.body());
+                    }
+
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        LogUtils.json(response.body());
+                        try {
+                            VersionUpgradesBean bean=new Gson().fromJson(response.body(), VersionUpgradesBean.class);
+                            if (bean.getCode().equals("200")){
+                                if (bean.getData().getStatus().equals("1")){
+                                    //版本更新弹出框显示
+                                    UpdateManager manager = new UpdateManager(getActivity(), bean);
+                                    manager.checkUpdate();
+                                }
+                            }
+                        }catch (JsonSyntaxException | IllegalStateException ignored){
+                            ToastUtils.showShort(getString(R.string.request_error));
+                        }
+                    }
+                });
+    }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -382,5 +403,6 @@ public class HomeFragment extends BaseFragment {
             // i 是未读数量
             getFriendApplyCount(i);
         }, Conversation.ConversationType.PRIVATE,Conversation.ConversationType.GROUP);
+        getAndroidVersionUpgrades();
     }
 }

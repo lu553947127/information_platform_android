@@ -28,6 +28,13 @@
         <item name="android:textColor">@color/color_6a5ff8</item>
     </style>
 
+    <style name="BtnConfirmWhite_9" parent="BtnConfirm">
+        <item name="android:layout_width">305dp</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:background">@drawable/icon_login_background</item>
+        <item name="android:textColor">@color/color_6a5ff8</item>
+    </style>
+
     <style name="BtnConfirmGray" parent="BtnConfirm">
         <item name="android:background">@drawable/shape_btn_confirm_gray_20</item>
         <item name="android:textColor">@color/color_646464</item>

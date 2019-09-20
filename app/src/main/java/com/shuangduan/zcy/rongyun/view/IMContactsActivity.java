@@ -108,11 +108,9 @@ public class IMContactsActivity extends BaseActivity {
         imGroupListAdapter = new IMGroupListAdapter(R.layout.item_im_group_list, listGroup);
         imGroupListAdapter.setEmptyView(R.layout.layout_loading, rvGroup);
         rvGroup.setAdapter(imGroupListAdapter);
-        imGroupListAdapter.setOnItemClickListener((adapter, view, position) -> {
-            RongIM.getInstance().startGroupChat(IMContactsActivity.this
-                    , imGroupListBean.getData().getList().get(position).getGroup_id()
-                    , imGroupListBean.getData().getList().get(position).getGroup_name());
-        });
+        imGroupListAdapter.setOnItemClickListener((adapter, view, position) -> RongIM.getInstance().startGroupChat(IMContactsActivity.this
+                , imGroupListBean.getData().getList().get(position).getGroup_id()
+                , imGroupListBean.getData().getList().get(position).getGroup_name()));
 
         rvFriend.setLayoutManager(new LinearLayoutManager(this));
         rvFriend.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
@@ -120,10 +118,8 @@ public class IMContactsActivity extends BaseActivity {
         imFriendListAdapter.setEmptyView(R.layout.layout_loading, rvFriend);
         rvFriend.setAdapter(imFriendListAdapter);
 
-        imFriendListAdapter.setOnItemClickListener((adapter, view, position) -> {
-            RongIM.getInstance().startPrivateChat(IMContactsActivity.this, imFriendListBean.getData().getList().get(position).getUserId()
-                    , imFriendListBean.getData().getList().get(position).getName());
-        });
+        imFriendListAdapter.setOnItemClickListener((adapter, view, position) -> RongIM.getInstance().startPrivateChat(IMContactsActivity.this, imFriendListBean.getData().getList().get(position).getUserId()
+                , imFriendListBean.getData().getList().get(position).getName()));
 
         getGroupList();
         getFriendList();

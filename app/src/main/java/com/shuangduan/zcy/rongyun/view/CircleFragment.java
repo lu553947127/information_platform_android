@@ -115,7 +115,7 @@ public class CircleFragment extends BaseFragment {
                 .appendQueryParameter(Conversation.ConversationType.GROUP.getName(), "false")//设置群组会话是否聚合显示
                 .appendQueryParameter(Conversation.ConversationType.PUBLIC_SERVICE.getName(), "false")//公共服务号
                 .appendQueryParameter(Conversation.ConversationType.APP_PUBLIC_SERVICE.getName(), "false")//公共服务号
-                .appendQueryParameter(Conversation.ConversationType.SYSTEM.getName(), "true")//系统
+                .appendQueryParameter(Conversation.ConversationType.SYSTEM.getName(), "false")//系统
                 .build();
         fragement.setUri(uri);
 
@@ -153,7 +153,7 @@ public class CircleFragment extends BaseFragment {
                     LogUtils.i(i);
                     // i 是未读数量
                     getFriendApplyCount(i);
-                }, Conversation.ConversationType.PRIVATE,Conversation.ConversationType.GROUP);
+                }, Conversation.ConversationType.PRIVATE,Conversation.ConversationType.GROUP,Conversation.ConversationType.SYSTEM);
                 refreshLayout.finishRefresh(2000);
             }
         });
@@ -168,7 +168,7 @@ public class CircleFragment extends BaseFragment {
             LogUtils.i(i);
             // i 是未读数量
             getFriendApplyCount(i);
-        }, Conversation.ConversationType.PRIVATE,Conversation.ConversationType.GROUP);
+        }, Conversation.ConversationType.PRIVATE,Conversation.ConversationType.GROUP,Conversation.ConversationType.SYSTEM);
     }
 
     //设置底部消息提醒数字布局

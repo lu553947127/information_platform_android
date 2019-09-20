@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.Entry;
@@ -18,9 +19,12 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IDataSet;
 import com.shuangduan.zcy.R;
+import com.shuangduan.zcy.app.CustomConfig;
+import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.MineIncomeBean;
+import com.shuangduan.zcy.view.mine.AboutOursActivity;
 import com.shuangduan.zcy.vm.MineIncomeVm;
 
 import java.util.ArrayList;
@@ -43,6 +47,8 @@ import butterknife.OnClick;
 public class MineIncomeActivity extends BaseActivity {
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
+    @BindView(R.id.tv_bar_right)
+    AppCompatTextView tvBarRight;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.tv_expected_return)
@@ -69,7 +75,7 @@ public class MineIncomeActivity extends BaseActivity {
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.my_income));
-
+        tvBarRight.setText(getString(R.string.my_income_explain));
         initChart();
 
         mineIncomeVm = ViewModelProviders.of(this).get(MineIncomeVm.class);
@@ -135,7 +141,7 @@ public class MineIncomeActivity extends BaseActivity {
         chart.setData(new LineData(set));
     }
 
-    @OnClick({R.id.iv_bar_back, R.id.tv_read_detail})
+    @OnClick({R.id.iv_bar_back, R.id.tv_read_detail,R.id.tv_bar_right})
     void onClick(View view){
         switch (view.getId()){
             case R.id.iv_bar_back:
@@ -143,6 +149,11 @@ public class MineIncomeActivity extends BaseActivity {
                 break;
             case R.id.tv_read_detail:
                 ActivityUtils.startActivity(IncomeClassifyActivity.class);
+                break;
+            case R.id.tv_bar_right:
+                Bundle bundle = new Bundle();
+                bundle.putString("income", "1");
+                ActivityUtils.startActivity(bundle,AboutOursActivity.class);
                 break;
         }
     }

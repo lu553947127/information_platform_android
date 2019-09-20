@@ -59,6 +59,7 @@
     <string name="save">保存</string>
     <string name="my_order">我的订单</string>
     <string name="my_income">我的收益</string>
+    <string name="my_income_explain">收益说明</string>
     <string name="my_subscription">我的订阅</string>
     <string name="my_demand">我的需求</string>
     <string name="transaction_record">交易记录</string>
@@ -192,8 +193,12 @@
     <string name="hint_price_accept">请输入接受价格</string>
     <string name="hint_price_supply">请输入供应价格</string>
     <string name="hint_supply_address">请输入供应地址</string>
-
+    <string name="version_title">发现新版本</string>
+    <string name="version_update">立即升级</string>
+    <string name="version_cancel">下次再说</string>
     <string name="friends_new_notice">好友提醒</string>
+    <string name="help_ask">问</string>
+    <string name="help_answer">答</string>
 
     <string name="subscribe_message">订阅信息</string>
     <string name="model_list">列表模式</string>
@@ -426,13 +431,23 @@
     <string name="hour">时</string>
     <string name="minute">分</string>
 
+    <!--actionbar title -->
+    <string name="de_actionbar_myacc">"个人账号"</string>
+    <string name="de_actionbar_sub_group">"群组"</string>
+    <string name="de_actionbar_sub_private">"我的私人会话"</string>
+    <string name="de_actionbar_sub_discussion">"我的讨论组"</string>
+    <string name="de_actionbar_sub_system">"系统消息"</string>
+    <string name="de_actionbar_sub_defult">"聊天"</string>
+    <string name="de_actionbar_set_public">"公众号"</string>
+    <string name="de_actionbar_system">"系统消息"</string>
+
     <string-array name="classify">
         <item>工程信息</item>
         <item>招采信息</item>
         <item>基建物资</item>
         <item>品权中心</item>
-        <item>优质供应商</item>
         <item>我的收益</item>
+        <item>优质供应商</item>
         <item>发布信息</item>
         <item>发布需求</item>
     </string-array>
