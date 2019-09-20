@@ -117,7 +117,7 @@ public class MultiAreaActivity extends BaseActivity {
             case R.id.tv_bar_right:
                 List<Integer> cityResult = areaVm.getProvinceCityIds();
                 if (cityResult == null){
-                    ToastUtils.showShort("请选择业务地区");
+                    ToastUtils.showShort("地区选择不能是全部");
                     return;
                 }
                 String stringResult = areaVm.getStringResult();

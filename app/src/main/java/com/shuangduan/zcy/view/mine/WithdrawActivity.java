@@ -122,7 +122,7 @@ public class WithdrawActivity extends BaseActivity {
             @Override
             public void afterTextChanged(Editable editable) {
                 if (null != editable) {
-                    double money=Double.valueOf(editable.toString());
+                    double money=Double.valueOf("".equals(editable.toString())?"0.00":editable.toString());
                     if (money>coin){
                         tvWithdrawalAmount.setText(getString(R.string.format_withdraw_no));
                         tvWithdrawalAmount.setTextColor(ContextCompat.getColor(WithdrawActivity.this,R.color.color_EF583E));

@@ -86,8 +86,6 @@ public class RechargeResultActivity extends BaseActivity {
     void onClick(View view){
         switch (view.getId()){
             case R.id.iv_bar_back:
-                finish();
-                break;
             case R.id.tv_done:
                 finish();
                 break;

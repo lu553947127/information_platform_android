@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.king.app.updater.AppUpdater;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.model.bean.VersionUpgradesBean;
@@ -38,17 +39,10 @@ public class UpdateManager {
         this.versionBean=versionBean;
     }
 
-    /**
-     * 检测软件更新
-     */
-    public void checkUpdate() {
-        showNoticeDialog();
-    }
-
     // 显示软件更新对话框
-
     @SuppressLint({"CutPasteId", "InflateParams", "SetTextI18n"})
-    private void showNoticeDialog() {
+    public void showNoticeDialog() {
+        LogUtils.i(apk_url);
         dialog = new Dialog(mContext, R.style.custom_dialog);
         View view = LayoutInflater.from(mContext).inflate(R.layout.dialog_version_layout, null);
 //        dialog.setCancelable(false);

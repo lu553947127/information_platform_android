@@ -6,7 +6,9 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.widget.NestedScrollView;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,6 +25,9 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ClassifyAdapter;
 import com.shuangduan.zcy.adapter.HomeHeadlinesAdapter;
@@ -58,6 +63,7 @@ import com.shuangduan.zcy.view.release.ReleaseListActivity;
 import com.shuangduan.zcy.view.search.SearchActivity;
 import com.shuangduan.zcy.view.supplier.SupplierActivity;
 import com.shuangduan.zcy.vm.HomeVm;
+import com.shuangduan.zcy.weight.AdaptationScrollView;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 import com.shuangduan.zcy.weight.MarqueeListView;
 import com.youth.banner.Banner;
@@ -85,14 +91,16 @@ import io.rong.imlib.model.Conversation;
  */
 public class HomeFragment extends BaseFragment {
 
-    @BindView(R.id.fake_status_bar)
-    View fakeStatusBar;
+    @BindView(R.id.scroll)
+    AdaptationScrollView scrollView;
     @BindView(R.id.tv_bar_title)
     TextView tvBarTitle;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+    @BindView(R.id.rl_toolbar)
+    RelativeLayout toolbar;
     @BindView(R.id.rv_classify)
     RecyclerView rvClassify;
+    @BindView(R.id.refresh)
+    SmartRefreshLayout refresh;
 
     @BindView(R.id.rv_infrastructure_headlines)
     RecyclerView rvHeadlines;
@@ -106,6 +114,7 @@ public class HomeFragment extends BaseFragment {
     private RelativeLayout relativeLayout;
     private TextView number;
     private int count=0;
+    private HomeVm homeVm;
 
     public static HomeFragment newInstance() {
 
@@ -128,7 +137,28 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState, View v) {
-        BarUtils.setStatusBarColorRes(fakeStatusBar, getResources().getColor(R.color.colorPrimary));
+//        BarUtils.setStatusBarColorRes(fakeStatusBar, getResources().getColor(R.color.colorPrimary));
+
+        scrollView.setOnScrollChangeListener((AdaptationScrollView.OnScrollChangeListener) (v1, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+            if (scrollY > 10) {
+                toolbar.setVisibility(View.VISIBLE);
+                toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                toolbar.getBackground().setAlpha(250);
+            } else {
+                toolbar.setVisibility(View.GONE);
+                toolbar.setBackgroundColor(0);
+            }
+        });
+        refresh.setEnableLoadMore(false);
+        refresh.setEnableRefresh(false);
+        refresh.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);
+        refresh.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                homeVm.getInit();
+                refreshLayout.finishRefresh(1000);
+            }
+        });
 
         List<ClassifyBean> list = getClassify();
         rvClassify.setLayoutManager(new GridLayoutManager(mContext, 4));
@@ -163,7 +193,7 @@ public class HomeFragment extends BaseFragment {
             }
         });
 
-        HomeVm homeVm = ViewModelProviders.of(this).get(HomeVm.class);
+        homeVm = ViewModelProviders.of(this).get(HomeVm.class);
         homeVm.pushLiveData.observe(this, homePushBeans -> {
             List<String> marquee = new ArrayList<>();
             for (HomePushBean bean: homePushBeans) {
@@ -234,16 +264,18 @@ public class HomeFragment extends BaseFragment {
 
     }
 
-    @OnClick({R.id.tv_bar_title, R.id.tv_more, R.id.iv_subscribed})
+    @OnClick({R.id.tv_bar_title, R.id.tv_more, R.id.iv_subscribed,R.id.tv_bar_title_home,R.id.iv_subscribed_home})
     void onClick(View view){
         switch (view.getId()){
             case R.id.tv_bar_title:
+            case R.id.tv_bar_title_home:
                 ActivityUtils.startActivity(SearchActivity.class);
                 break;
             case R.id.tv_more:
                 ActivityUtils.startActivity(HeadlinesActivity.class);
                 break;
             case R.id.iv_subscribed:
+            case R.id.iv_subscribed_home:
                 ActivityUtils.startActivity(MineSubActivity.class);
                 break;
         }
@@ -385,7 +417,7 @@ public class HomeFragment extends BaseFragment {
                                 if (bean.getData().getStatus().equals("1")){
                                     //版本更新弹出框显示
                                     UpdateManager manager = new UpdateManager(getActivity(), bean);
-                                    manager.checkUpdate();
+                                    manager.showNoticeDialog();
                                 }
                             }
                         }catch (JsonSyntaxException | IllegalStateException ignored){

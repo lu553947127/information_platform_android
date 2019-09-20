@@ -81,3 +81,7 @@
 -dontnote com.xiaomi.**
 -dontnote com.google.android.gms.gcm.**
 -dontnote io.rong.**
+# banner 的混淆代码
+-keep class com.youth.banner.** {
+    *;
+ }

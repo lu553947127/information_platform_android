@@ -80,7 +80,8 @@ public class HelperActivity extends BaseActivity {
         adapter = new HelpAdapter(HelperActivity.this,R.layout.item_help, list);
         adapter.setEmptyView(R.layout.layout_loading, recyclerView);
         recyclerView.setAdapter(adapter);
-
+        refresh.setEnableLoadMore(false);
+        refresh.setEnableRefresh(false);
         getHelp();
     }
 

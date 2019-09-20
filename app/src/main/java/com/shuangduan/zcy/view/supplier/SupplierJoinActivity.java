@@ -26,6 +26,7 @@ import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.PhotoDialog;
+import com.shuangduan.zcy.dialog.ScaleDialog;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.ContactBean;
 import com.shuangduan.zcy.model.event.AddressEvent;
@@ -68,6 +69,7 @@ import butterknife.OnClick;
  * @class describe
  */
 public class SupplierJoinActivity extends BaseActivity implements BaseDialog.PhotoCallBack {
+
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
     @BindView(R.id.toolbar)
@@ -242,6 +244,7 @@ public class SupplierJoinActivity extends BaseActivity implements BaseDialog.Pho
         permissionVm.getPermissionAlbum(rxPermissions);
     }
 
+    @SuppressLint("SetTextI18n")
     @OnClick({R.id.iv_bar_back, R.id.tv_confirm, R.id.tv_scale, R.id.tv_service_area})
     void onClick(View v) {
         switch (v.getId()) {
@@ -272,9 +275,12 @@ public class SupplierJoinActivity extends BaseActivity implements BaseDialog.Pho
                 supplierVm.join(edtName.getText().toString(), edtContactInfo.getText().toString(), edtCompany.getText().toString(), edtAddressDetail.getText().toString(), edtProduction.getText().toString());
                 break;
             case R.id.tv_scale:
-                Bundle bundle = new Bundle();
-                bundle.putInt(CustomConfig.PROJECT_ADDRESS, 0);
-                ActivityUtils.startActivity(bundle, ReleaseAreaSelectActivity.class);
+//                Bundle bundle = new Bundle();
+//                bundle.putInt(CustomConfig.PROJECT_ADDRESS, 0);
+//                ActivityUtils.startActivity(bundle, ReleaseAreaSelectActivity.class);
+                new ScaleDialog(this).setSelected(0).setSingleCallBack((item, position) -> {
+                    tvScale.setText(item+"人");
+                }).showDialog();
                 break;
             case R.id.tv_service_area:
                 ActivityUtils.startActivity(MultiAreaActivity.class);
