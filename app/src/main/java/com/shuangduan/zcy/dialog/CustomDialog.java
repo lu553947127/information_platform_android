@@ -24,11 +24,14 @@ import butterknife.OnClick;
  * @class describe
  */
 public class CustomDialog extends BaseDialog {
+
+    @BindView(R.id.tv_positive)
+    TextView tvOk;
     @BindView(R.id.tv_tip)
     TextView tvTip;
     @BindView(R.id.iv_icon)
     ImageView ivIcon;
-
+    String ok = "";
     String tip = "";
     int iconRes = 0;
 
@@ -47,6 +50,7 @@ public class CustomDialog extends BaseDialog {
         setCancelOutside(false);
         DialogUtils.enterCustomAnim(this);
         tvTip.setText(tip);
+        tvOk.setText(ok);
         if (iconRes != 0){
             ivIcon.setImageResource(iconRes);
             ivIcon.setVisibility(View.VISIBLE);
@@ -60,6 +64,11 @@ public class CustomDialog extends BaseDialog {
 
     public CustomDialog setTip(String tip){
         this.tip = tip;
+        return this;
+    }
+
+    public CustomDialog setOk(String ok){
+        this.ok = ok;
         return this;
     }
 

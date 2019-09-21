@@ -34,107 +34,6 @@
                 android:layout_height="10dp" />
 
             <FrameLayout
-                android:id="@+id/fl_name"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/selector_bg_custom"
-                android:paddingLeft="14dp"
-                android:paddingRight="14dp">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:textColor="@color/colorTv"
-                    android:textSize="14sp"
-                    android:text="@string/name"/>
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:layout_marginLeft="87dp"
-                    android:singleLine="true"
-                    android:textColor="@color/color_666666"
-                    android:textSize="14sp"/>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_gravity="bottom"
-                    android:background="@color/colorDivider"/>
-
-            </FrameLayout>
-
-            <FrameLayout
-                android:id="@+id/fl_sex"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/selector_bg_custom"
-                android:paddingLeft="14dp"
-                android:paddingRight="14dp">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:textColor="@color/colorTv"
-                    android:textSize="14sp"
-                    android:text="@string/sex"/>
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_sex"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:layout_marginLeft="87dp"
-                    android:textColor="@color/color_666666"
-                    android:textSize="14sp"/>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_gravity="bottom"
-                    android:background="@color/colorDivider"/>
-
-            </FrameLayout>
-
-            <FrameLayout
-                android:id="@+id/fl_mobile"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/selector_bg_custom"
-                android:paddingLeft="14dp"
-                android:paddingRight="14dp">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:textColor="@color/colorTv"
-                    android:textSize="14sp"
-                    android:text="@string/phone"/>
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_mobile"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:layout_marginLeft="87dp"
-                    android:singleLine="true"
-                    android:textColor="@color/color_666666"
-                    android:textSize="14sp"/>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_gravity="bottom"
-                    android:background="@color/colorDivider"/>
-
-            </FrameLayout>
-
-            <FrameLayout
                 android:id="@+id/fl_company"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -172,8 +71,6 @@
             </FrameLayout>
 
             <FrameLayout
-                android:id="@+id/fl_office"
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/selector_bg_custom"
@@ -186,10 +83,42 @@
                     android:layout_gravity="center_vertical"
                     android:textColor="@color/colorTv"
                     android:textSize="14sp"
-                    android:text="@string/office"/>
+                    android:text="@string/address_detail"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_office"
+                    android:id="@+id/tv_address_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="87dp"
+                    android:textColor="@color/color_666666"
+                    android:textSize="14sp"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_gravity="bottom"
+                    android:background="@color/colorDivider"/>
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/selector_bg_custom"
+                android:paddingLeft="14dp"
+                android:paddingRight="14dp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/colorTv"
+                    android:textSize="14sp"
+                    android:text="@string/scale_select"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_scale"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
@@ -206,6 +135,103 @@
                     android:background="@color/colorDivider"/>
 
             </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/selector_bg_custom"
+                android:paddingLeft="14dp"
+                android:paddingRight="14dp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/colorTv"
+                    android:textSize="14sp"
+                    android:text="@string/company_website"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_company_website"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="87dp"
+                    android:background="@null"
+                    android:textColor="@color/color_666666"
+                    android:textSize="14sp"/>
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/fl_name"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/selector_bg_custom"
+                android:paddingLeft="14dp"
+                android:paddingRight="14dp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/colorTv"
+                    android:textSize="14sp"
+                    android:text="@string/name"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="87dp"
+                    android:singleLine="true"
+                    android:textColor="@color/color_666666"
+                    android:textSize="14sp"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_gravity="bottom"
+                    android:background="@color/colorDivider"/>
+
+            </FrameLayout>
+
+
+            <FrameLayout
+                android:id="@+id/fl_mobile"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/selector_bg_custom"
+                android:paddingLeft="14dp"
+                android:paddingRight="14dp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/colorTv"
+                    android:textSize="14sp"
+                    android:text="@string/phone"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_mobile"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="87dp"
+                    android:singleLine="true"
+                    android:textColor="@color/color_666666"
+                    android:textSize="14sp"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_gravity="bottom"
+                    android:background="@color/colorDivider"/>
+
+            </FrameLayout>
+
 
             <FrameLayout
                 android:id="@+id/fl_business_area"
@@ -244,39 +270,6 @@
 
             </FrameLayout>
 
-            <FrameLayout
-                android:id="@+id/fl_business_exp"
-                android:visibility="gone"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/selector_bg_custom"
-                android:paddingLeft="14dp"
-                android:paddingRight="14dp">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:textColor="@color/colorTv"
-                    android:textSize="14sp"
-                    android:text="@string/business_exp"/>
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_business_exp"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:layout_marginLeft="87dp"
-                    android:background="@null"
-                    android:textColor="@color/color_666666"
-                    android:textSize="14sp"/>
-
-            </FrameLayout>
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="10dp"/>
-
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_production_tip"
                 android:layout_width="match_parent"
@@ -304,7 +297,88 @@
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="20dp" />
+                android:layout_height="10dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorFFF"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="14dp"
+                    android:gravity="center_vertical"
+                    android:background="@color/colorFFF"
+                    android:textColor="@color/colorTv"
+                    android:textSize="14sp"
+                    android:text="营业执照"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="15dp">
+                    <ImageView
+                        android:id="@+id/iv_pic_first"
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="7dp"
+                        android:scaleType="centerCrop"
+                        android:visibility="gone"/>
+                    <ImageView
+                        android:id="@+id/iv_pic_two"
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="7dp"
+                        android:scaleType="centerCrop"
+                        android:visibility="gone"/>
+                    <ImageView
+                        android:id="@+id/iv_pic_three"
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="7dp"
+                        android:scaleType="centerCrop"
+                        android:visibility="gone"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_gravity="bottom"
+                android:background="@color/colorDivider"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorFFF"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="14dp"
+                android:gravity="center_vertical"
+                android:background="@color/colorFFF"
+                android:textColor="@color/colorTv"
+                android:textSize="14sp"
+                android:text="授权申请"/>
+
+            <ImageView
+                android:id="@+id/iv_authorization"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="7dp"
+                android:scaleType="centerCrop"
+                android:layout_marginBottom="20dp"/>
+        </LinearLayout>
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="50dp" />
 
         </LinearLayout>
 

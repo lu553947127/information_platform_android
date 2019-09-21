@@ -89,8 +89,6 @@ public class ProjectReadFragment extends BaseLazyFragment {
                     showPic(listBean, 1, view);
                     break;
                 case R.id.iv_pic_third:
-                    showPic(listBean, 2, view);
-                    break;
                 case R.id.tv_more:
                     showPic(listBean, 2, view);
                     break;

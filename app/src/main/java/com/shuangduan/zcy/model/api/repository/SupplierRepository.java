@@ -25,7 +25,7 @@ public class SupplierRepository extends BaseRepository {
         request(apiService.supplierDetail(userId, id)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
-    public void getSupplierJoin(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int userId, String name, String tel, String company, String address, String product, int province, int city,SupplierJoinImageBean joinImageBean){
-        request(apiService.supplierJoin(userId, name, tel, company, address, product, province, city, joinImageBean)).setData(liveData).setPageState(pageStateLiveData).send();
+    public void getSupplierJoin(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int userId,String company, String address,int scale,String company_website,String name, String tel,String product,String authorization,String logo, SupplierJoinImageBean joinImageBean){
+        request(apiService.supplierJoin(userId ,company,address, scale,company_website, name, tel,product ,authorization, logo,joinImageBean )).setData(liveData).setPageState(pageStateLiveData).send();
     }
 }

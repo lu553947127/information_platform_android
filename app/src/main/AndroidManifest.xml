@@ -31,9 +31,9 @@
     <application
         android:name="com.shuangduan.zcy.app.MyApplication"
         android:allowBackup="true"
-        android:icon="@drawable/logo_about"
+        android:icon="@drawable/app_logo"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/logo_about"
+        android:roundIcon="@drawable/app_logo"
         android:supportsRtl="true"
         android:theme="@style/BaseAppTheme"
         android:networkSecurityConfig="@xml/network_config"
@@ -184,6 +184,7 @@
         <activity android:name="com.shuangduan.zcy.rongyun.view.IMGroupMoreActivity" />
         <activity android:name="com.shuangduan.zcy.rongyun.view.IMGroupDetailsActivity" />
         <activity android:name="com.shuangduan.zcy.rongyun.view.IMGroupMembersActivity" />
+        <activity android:name="com.shuangduan.zcy.view.photo.CameraActivity" />
         <!-- 微信分享-->
         <activity
             android:name=".wxapi.WXEntryActivity"

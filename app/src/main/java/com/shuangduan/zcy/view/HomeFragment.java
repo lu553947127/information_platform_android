@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -47,6 +48,7 @@ import com.shuangduan.zcy.model.bean.HomePushBean;
 import com.shuangduan.zcy.model.bean.IMFriendApplyCountBean;
 import com.shuangduan.zcy.utils.AuthenticationUtils;
 import com.shuangduan.zcy.utils.BarUtils;
+import com.shuangduan.zcy.utils.DensityUtil;
 import com.shuangduan.zcy.utils.LoginUtils;
 import com.shuangduan.zcy.utils.VersionUtils;
 import com.shuangduan.zcy.utils.image.GlideImageLoader;
@@ -139,14 +141,33 @@ public class HomeFragment extends BaseFragment {
     protected void initDataAndEvent(Bundle savedInstanceState, View v) {
 //        BarUtils.setStatusBarColorRes(fakeStatusBar, getResources().getColor(R.color.colorPrimary));
 
-        scrollView.setOnScrollChangeListener((AdaptationScrollView.OnScrollChangeListener) (v1, scrollX, scrollY, oldScrollX, oldScrollY) -> {
-            if (scrollY > 10) {
-                toolbar.setVisibility(View.VISIBLE);
-                toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                toolbar.getBackground().setAlpha(250);
-            } else {
-                toolbar.setVisibility(View.GONE);
-                toolbar.setBackgroundColor(0);
+//        scrollView.setOnScrollChangeListener((AdaptationScrollView.OnScrollChangeListener) (v1, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+//            if (scrollY > 10) {
+//                toolbar.setVisibility(View.VISIBLE);
+//                toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+//                toolbar.getBackground().setAlpha(250);
+//            } else {
+//                toolbar.setVisibility(View.GONE);
+//                toolbar.setBackgroundColor(0);
+//            }
+//        });
+        //滑动布局滑动监听
+        scrollView.setOnScrollChangeListener(new AdaptationScrollView.OnScrollChangeListener() {
+            private int mScrollY_2 = 0;
+            private int lastScrollY = 0;
+            private int h = DensityUtil.dp2px(70);
+            //设置折叠标题背景颜色
+            private int color = ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.colorPrimary)&0x00ffffff;
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if (lastScrollY < h) {
+                    toolbar.setVisibility(View.VISIBLE);
+                    scrollY = Math.min(h, scrollY);
+                    mScrollY_2 = scrollY > h ? h : scrollY;
+                    toolbar.setAlpha(1f * mScrollY_2 / h);
+                    toolbar.setBackgroundColor(((255 * mScrollY_2 / h) << 24) | color);
+                }
+                lastScrollY = scrollY;
             }
         });
         refresh.setEnableLoadMore(false);
@@ -183,12 +204,12 @@ public class HomeFragment extends BaseFragment {
                 case ClassifyBean.YZGYS:
                     ActivityUtils.startActivity(SupplierActivity.class);
                     break;
+                case ClassifyBean.FBXQ:
+                    ActivityUtils.startActivity(DemandActivity.class);
+                    break;
                 case ClassifyBean.FBXX:
                     if (!AuthenticationUtils.Authentication()) return;
                     ActivityUtils.startActivity(ReleaseListActivity.class);
-                    break;
-                case ClassifyBean.FBXQ:
-                    ActivityUtils.startActivity(DemandActivity.class);
                     break;
             }
         });
@@ -233,7 +254,7 @@ public class HomeFragment extends BaseFragment {
         homeVm.pageStateLiveData.observe(this, s -> {
             switch (s){
                 case PageState.PAGE_LOADING:
-                    showLoading();
+//                    showLoading();
                     break;
                 default:
                     hideLoading();
@@ -302,8 +323,9 @@ public class HomeFragment extends BaseFragment {
 //        list.add(new ClassifyBean(R.drawable.classify_pqzx, classifys[3], 4));
         list.add(new ClassifyBean(R.drawable.classify_wdsy, classifys[4], 5));
         list.add(new ClassifyBean(R.drawable.classify_gys, classifys[5], 6));
-        list.add(new ClassifyBean(R.drawable.classify_fbxx, classifys[6], 7));
-        list.add(new ClassifyBean(R.drawable.classify_fbxq, classifys[7], 8));
+        list.add(new ClassifyBean(R.drawable.classify_fbxq, classifys[6], 7));
+        list.add(new ClassifyBean(R.drawable.classify_fbxx, classifys[7], 8));
+
         return list;
     }
 

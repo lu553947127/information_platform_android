@@ -174,4 +174,7 @@ dependencies {
     //小米厂商通道
     //noinspection GradlePath
     implementation files('libs\\MiPush_SDK_Client_3_6_19.jar')
+
+    //仿微信小视频拍照
+    implementation 'cjt.library.wheel:camera:1.1.9'
 }

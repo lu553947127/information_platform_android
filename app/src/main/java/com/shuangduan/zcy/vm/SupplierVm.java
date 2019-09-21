@@ -2,6 +2,7 @@ package com.shuangduan.zcy.vm;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.app.SpConfig;
@@ -28,6 +29,7 @@ import java.util.List;
  * @class describe
  */
 public class SupplierVm extends BaseViewModel {
+
     public MutableLiveData<SupplierBean> supplierLiveData;
     public MutableLiveData<SupplierDetailBean> detailLiveData;
     public MutableLiveData joinLiveData;
@@ -83,16 +85,17 @@ public class SupplierVm extends BaseViewModel {
         }
     }
 
-    public void join(String name, String tel, String company, String address, String product){
+    public void join(String name, String tel, String company, String address, String product,int scale,String company_website
+            ,String authorization,String logo){
         MultiAreaEvent areaValue = serviceArea.getValue();
         if (areaValue == null || areaValue.getCityResult() == null || areaValue.getCityResult().size() == 0){
             ToastUtils.showShort("请选择服务地区");
             return;
         }
-        if (cityId == 0){
-            ToastUtils.showShort("请选择公司所在地");
-            return;
-        }
+//        if (cityId == 0){
+//            ToastUtils.showShort("请选择公司所在地");
+//            return;
+//        }
         if (imageIds == null || imageIds.size() == 0){
             ToastUtils.showShort("请上传营业执照以及相关文件资料");
             return;
@@ -100,6 +103,6 @@ public class SupplierVm extends BaseViewModel {
         SupplierJoinImageBean supplierJoinImageBean = new SupplierJoinImageBean();
         supplierJoinImageBean.setImages(imageIds);
         supplierJoinImageBean.setServe_address(areaValue.getCityResult());
-        new SupplierRepository().getSupplierJoin(joinLiveData, pageStateLiveData, userId, name, tel, company, address, product, provinceId, cityId, supplierJoinImageBean);
+        new SupplierRepository().getSupplierJoin(joinLiveData, pageStateLiveData, userId,company, address,scale,company_website, name, tel,product,authorization,logo,supplierJoinImageBean);
     }
 }

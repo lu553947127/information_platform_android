@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
-import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.google.android.material.tabs.TabLayout;
 import com.shuangduan.zcy.R;
@@ -19,10 +18,7 @@ import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.SubscriptionTypeDialog;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.MyPhasesBean;
-import com.shuangduan.zcy.view.MainActivity;
 import com.shuangduan.zcy.vm.MineSubVm;
-
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -38,6 +34,7 @@ import butterknife.OnClick;
  * @class describe
  */
 public class MineSubActivity extends BaseActivity {
+
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
     @BindView(R.id.tv_bar_right)
@@ -74,6 +71,26 @@ public class MineSubActivity extends BaseActivity {
         tabLayout.addTab(tabLayout.newTab());
         vp.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), fragments, getResources().getStringArray(R.array.mine_sub)));
         tabLayout.setupWithViewPager(vp);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if (tab.getText().equals("工程信息")){
+                    tvBarRight.setVisibility(View.VISIBLE);
+                }else if (tab.getText().equals("招采信息")){
+                    tvBarRight.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
 
         mineSubVm = ViewModelProviders.of(this).get(MineSubVm.class);
         mineSubVm.phasesLiveData.observe(this, myPhasesBean -> {

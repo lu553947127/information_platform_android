@@ -345,17 +345,31 @@
                     android:textSize="14sp"
                     android:text="授权申请"/>
 
-                <com.shuangduan.zcy.weight.PicContentView
+                <LinearLayout
 
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:overScrollMode="never"
-                    app:maxSize="3"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="37dp"
-                    android:visibility="gone">
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="17dp"
+                    android:layout_marginTop="25dp">
 
-                </com.shuangduan.zcy.weight.PicContentView>
+                    <ImageView
+                        android:id="@+id/iv_authorization"
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:layout_marginTop="16dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/default_pic"/>
+
+                    <TextView
+                        android:id="@+id/tv_authorization"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_gravity="center_vertical"
+                        android:textSize="14sp"
+                        android:textColor="@color/colorTvHint" />
+                </LinearLayout>
 
             </FrameLayout>
 
@@ -378,17 +392,31 @@
                     android:textSize="14sp"
                     android:text="公司logo"/>
 
-                <com.shuangduan.zcy.weight.PicContentView
+                <LinearLayout
 
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:overScrollMode="never"
-                    app:maxSize="3"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="37dp"
-                    android:visibility="gone">
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="17dp"
+                    android:layout_marginTop="25dp">
 
-                </com.shuangduan.zcy.weight.PicContentView>
+                    <ImageView
+                        android:id="@+id/iv_logo"
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:scaleType="fitXY"
+                        android:layout_marginTop="16dp"
+                        android:src="@drawable/default_pic"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_gravity="center_vertical"
+                        android:textSize="14sp"
+                        android:textColor="@color/colorTvHint"
+                        android:text="请上传公司logo"/>
+                </LinearLayout>
 
             </FrameLayout>
 

@@ -706,15 +706,17 @@ public interface ApiService {
     @POST("api/supplier/supplierApply")
     Flowable<BaseResponse> supplierJoin(
             @Query("user_id") int user_id,
-            @Query("name") String name,
-            @Query("tel") String tel,
             @Query("company") String company,
             @Query("address") String address,
+            @Query("scale") int scale,
+            @Query("company_website") String company_website,
+            @Query("name") String name,
+            @Query("tel") String tel,
             @Query("product") String product,
-            @Query("province") int province,
-            @Query("city") int city,
+            @Query("authorization") String authorization,
+            @Query("headimg") String headimg,
             @Body SupplierJoinImageBean joinImageBean
-            );
+    );
 
     @FormUrlEncoded
     @POST("api/Order/projectOrder")

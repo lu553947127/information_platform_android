@@ -40,4 +40,6 @@ public class Common {
 
     //个人中心 帮助
     public static final String USER_INFO_HELP="/api/Userinfo/help";
+    //上传附件
+    public static final String UPLOAD_IMAGE="/api/Upload/uploadImage";
 }

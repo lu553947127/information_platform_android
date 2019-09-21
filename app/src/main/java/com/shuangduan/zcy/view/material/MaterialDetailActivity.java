@@ -111,12 +111,12 @@ public class MaterialDetailActivity extends BaseActivity {
         materialDetailVm.suitNumLiveData.observe(this, integer -> {
             MaterialDetailBean value = materialDetailVm.detailLiveData.getValue();
             if (value == null) return;
-            int agent_id = value.getAgent_id();
+            int tonne = value.getTonne();
             double price = Double.parseDouble(value.getPrice());
             tvSuitNum.setText(String.valueOf(integer));
-            tvSuitT.setText(String.valueOf(integer * agent_id));
+            tvSuitT.setText(String.valueOf(integer * tonne));
             tvNum.setText(String.valueOf(integer));
-            tvTotalPrice.setText(String.valueOf(price * integer * agent_id));
+            tvTotalPrice.setText(String.valueOf(price * integer * tonne));
         });
         materialDetailVm.orderLiveData.observe(this, o -> {
             LogUtils.i("成功");

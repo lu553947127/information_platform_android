@@ -132,7 +132,7 @@ public class CircleFragment extends BaseFragment {
         userInfoVm.pageStateLiveData.observe(this, s -> {
             switch (s){
                 case PageState.PAGE_LOADING:
-                    showLoading();
+//                    showLoading();
                     break;
                 default:
                     hideLoading();

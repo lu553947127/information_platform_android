@@ -55,6 +55,7 @@ import butterknife.OnClick;
  * @class describe
  */
 public class MineFragment extends BaseFragment {
+
     @BindView(R.id.fake_status_bar)
     View fakeStatusBar;
     @BindView(R.id.iv_user)
@@ -103,7 +104,7 @@ public class MineFragment extends BaseFragment {
         userInfoVm.pageStateLiveData.observe(this, s -> {
             switch (s){
                 case PageState.PAGE_LOADING:
-                    showLoading();
+//                    showLoading();
                     break;
                 default:
                     hideLoading();
