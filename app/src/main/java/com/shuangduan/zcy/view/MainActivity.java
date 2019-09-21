@@ -206,7 +206,6 @@ public class MainActivity extends BaseActivity {
         registerReceiver(new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-
                 // 将该app注册到微信
                 api.registerApp(APP_ID);
             }

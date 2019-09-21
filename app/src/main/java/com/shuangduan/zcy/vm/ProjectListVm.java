@@ -39,14 +39,14 @@ public class ProjectListVm extends BaseViewModel {
     /**
      * 初始化数据
      */
-    public void init(){
+    public void init() {
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
         projectLiveData = new MutableLiveData<>();
         pageStateLiveData = new MutableLiveData<>();
         projectList();
     }
 
-    public void projectList(){
+    public void projectList() {
         page = 1;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
         ProjectFilterBean projectFilterBean = new ProjectFilterBean();
@@ -54,10 +54,11 @@ public class ProjectListVm extends BaseViewModel {
         projectFilterBean.setCity(city);
         projectFilterBean.setType(type);
         projectFilterBean.setPhases(phases);
+
         new ProjectRepository().projectList(projectLiveData, pageStateLiveData, userId, projectFilterBean, stime, etime, warrant_status, page);
     }
 
-    public void moreProjectList(){
+    public void moreProjectList() {
         page++;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
         ProjectFilterBean projectFilterBean = new ProjectFilterBean();

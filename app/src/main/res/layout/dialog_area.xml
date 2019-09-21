@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -10,155 +11,155 @@
 
         <LinearLayout
             android:id="@+id/ll_area"
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="250dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_province"
                 android:layout_width="125dp"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_city"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent" />
 
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/ll_stage"
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="250dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_stage"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent" />
 
 
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/ll_type"
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="250dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_type_first"
                 android:layout_width="125dp"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_type_second"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent" />
 
         </LinearLayout>
 
         <RelativeLayout
             android:id="@+id/rl_time"
-            android:visibility="visible"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="40dp">
+            android:layout_marginBottom="40dp"
+            android:visibility="visible">
 
             <TextView
                 android:id="@+id/tv_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
                 android:layout_marginLeft="30dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginRight="30dp"
+                android:text="@string/starting_time_period"
                 android:textColor="@color/color_666666"
-                android:textSize="14sp"
-                android:text="@string/starting_time_period"/>
+                android:textSize="14sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="74dp"
                 android:layout_centerHorizontal="true"
+                android:layout_marginTop="74dp"
+                android:text="至"
                 android:textColor="@color/color_666666"
-                android:textSize="13sp"
-                android:text="至"/>
+                android:textSize="13sp" />
 
             <TextView
                 android:id="@+id/tv_time_start"
                 android:layout_width="150dp"
                 android:layout_height="32dp"
-                android:gravity="center"
                 android:layout_marginLeft="25dp"
-                android:background="@drawable/shape_f4f2f7_16"
                 android:layout_marginTop="64dp"
-                android:textColorHint="@color/colorTvHint"
+                android:background="@drawable/shape_f4f2f7_16"
+                android:gravity="center"
+                android:text="@string/time_start"
                 android:textColor="@color/color_666666"
-                android:textSize="14sp"
-                android:text="@string/time_start"/>
+                android:textColorHint="@color/colorTvHint"
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/tv_time_end"
                 android:layout_width="150dp"
                 android:layout_height="32dp"
-                android:gravity="center"
                 android:layout_alignParentEnd="true"
+                android:layout_marginTop="64dp"
                 android:layout_marginRight="25dp"
                 android:background="@drawable/shape_f4f2f7_16"
-                android:layout_marginTop="64dp"
-                android:textColorHint="@color/colorTvHint"
+                android:gravity="center"
+                android:text="@string/time_end"
                 android:textColor="@color/color_666666"
-                android:textSize="14sp"
-                android:text="@string/time_end"/>
+                android:textColorHint="@color/colorTvHint"
+                android:textSize="14sp" />
 
         </RelativeLayout>
 
         <FrameLayout
             android:id="@+id/fl_subscription"
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="50dp">
+            android:layout_marginBottom="50dp"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
                 android:layout_marginLeft="30dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginRight="30dp"
+                android:text="@string/please_select"
                 android:textColor="@color/color_666666"
-                android:textSize="14sp"
-                android:text="@string/please_select"/>
+                android:textSize="14sp" />
 
             <CheckBox
                 android:id="@+id/cb_unsubscribe"
                 android:layout_width="66dp"
                 android:layout_height="22dp"
-                android:button="@null"
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="64dp"
-                android:gravity="center"
                 android:background="@drawable/selector_bg_flex_box"
+                android:button="@null"
+                android:gravity="center"
+                android:text="@string/unsubscribe"
                 android:textColor="@color/selector_flex_box"
-                android:textSize="12sp"
-                android:text="@string/unsubscribe"/>
+                android:textSize="12sp" />
 
             <CheckBox
                 android:id="@+id/cb_subscribe"
                 android:layout_width="66dp"
                 android:layout_height="22dp"
-                android:button="@null"
                 android:layout_marginLeft="106dp"
                 android:layout_marginTop="64dp"
-                android:gravity="center"
                 android:background="@drawable/selector_bg_flex_box"
+                android:button="@null"
+                android:gravity="center"
+                android:text="@string/subscribe"
                 android:textColor="@color/selector_flex_box"
-                android:textSize="12sp"
-                android:text="@string/subscribe"/>
+                android:textSize="12sp" />
 
         </FrameLayout>
 
@@ -171,24 +172,24 @@
         <TextView
             android:id="@+id/tv_negative"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:background="#E0E0E5"
             android:gravity="center"
+            android:text="@string/negative"
             android:textColor="@color/color_666666"
-            android:textSize="16sp"
-            android:text="@string/negative"/>
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tv_positive"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:background="@color/colorPrimary"
             android:gravity="center"
+            android:text="@string/positive"
             android:textColor="@color/colorFFF"
-            android:textSize="16sp"
-            android:text="@string/positive"/>
+            android:textSize="16sp" />
 
     </LinearLayout>
 

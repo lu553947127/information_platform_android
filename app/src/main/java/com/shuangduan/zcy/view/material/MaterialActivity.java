@@ -84,13 +84,16 @@ public class MaterialActivity extends BaseActivity {
             initPop();
         });
         materialVm.categoryLiveData.observe(this, materialCategoryBean -> {
+            //设置默认的二级子类ID
+            materialCategoryBean.get(0).isSelect = 1;
+            materialVm.categoryId = materialCategoryBean.get(0).getId();
             flProduct.removeAllViews();
             for (int i = 0; i < materialCategoryBean.size(); i++) {
                 addItemCategory(materialCategoryBean, i);
             }
         });
         materialVm.pageStateLiveData.observe(this, s -> {
-            switch (s){
+            switch (s) {
                 case PageState.PAGE_LOADING:
                     showLoading();
                     break;
@@ -102,20 +105,20 @@ public class MaterialActivity extends BaseActivity {
     }
 
     @OnClick({R.id.iv_bar_back, R.id.tv_bar_right, R.id.over})
-    void onClick(View v){
-        switch (v.getId()){
+    void onClick(View v) {
+        switch (v.getId()) {
             case R.id.iv_bar_back:
                 finish();
                 break;
             case R.id.tv_bar_right:
-                if (materialVm.categoryFirstLiveData.getValue() == null){
+                if (materialVm.categoryFirstLiveData.getValue() == null) {
                     materialVm.getCategoryFirst();
-                }else {
+                } else {
                     initPop();
                 }
                 break;
             case R.id.over:
-                if (popupWindowCategory != null){
+                if (popupWindowCategory != null) {
                     over.setVisibility(View.GONE);
                     popupWindowCategory.dismiss();
                 }
@@ -126,8 +129,9 @@ public class MaterialActivity extends BaseActivity {
     private CommonPopupWindow popupWindowCategory;
     private FlexboxLayout flMaterial;
     private FlexboxLayout flProduct;
-    private void initPop(){
-        if (popupWindowCategory == null){
+
+    private void initPop() {
+        if (popupWindowCategory == null) {
             popupWindowCategory = new CommonPopupWindow.Builder(this)
                     .setView(R.layout.dialog_material_filter)
                     .setOutsideTouchable(false)
@@ -149,19 +153,19 @@ public class MaterialActivity extends BaseActivity {
                     })
                     .create();
         }
-        if (!popupWindowCategory.isShowing()){
+        if (!popupWindowCategory.isShowing()) {
             List<MaterialCategoryBean> categoryFirst = materialVm.categoryFirstLiveData.getValue();
             flMaterial.removeAllViews();
             for (int i = 0; i < categoryFirst.size(); i++) {
                 addItemFirst(categoryFirst, i);
             }
 
-            popupWindowCategory.showAsDropDown(toolbar,0,0);
+            popupWindowCategory.showAsDropDown(toolbar, 0, 0);
             over.setVisibility(View.VISIBLE);
         }
     }
 
-    private void addItemFirst(List<MaterialCategoryBean> categoryList, int i){
+    private void addItemFirst(List<MaterialCategoryBean> categoryList, int i) {
         final TextView tv = (TextView) LayoutInflater.from(this).inflate(R.layout.item_box, flMaterial, false);
         MaterialCategoryBean bean = categoryList.get(i);
         tv.setText(bean.getCatname());
@@ -170,19 +174,22 @@ public class MaterialActivity extends BaseActivity {
             if (tv.isSelected()) {
                 //如果本身就是选中状态，则变为未选中并移除二级分类的所有子控件
                 flProduct.removeAllViews();
+                //一级分类ID
                 materialVm.categoryFirstId = 0;
+                //二级分类ID
+                materialVm.categoryId = 0;
             } else {
                 //开启二级分类
                 materialVm.categoryFirstId = bean.getId();
                 materialVm.getCategory();
             }
-            bean.setIsSelect(tv.isSelected()?0:1);
+            bean.setIsSelect(tv.isSelected() ? 0 : 1);
             tv.setSelected(!tv.isSelected());
             for (int j = 0; j < categoryList.size(); j++) {
-                if (j != i){
+                if (j != i) {
                     categoryList.get(j).setIsSelect(0);
                     View child = flMaterial.getChildAt(j);
-                    if (child instanceof TextView){
+                    if (child instanceof TextView) {
                         ((TextView) child).setSelected(false);
                     }
                 }
@@ -191,7 +198,7 @@ public class MaterialActivity extends BaseActivity {
         flMaterial.addView(tv);
     }
 
-    private void addItemCategory(List<MaterialCategoryBean> categoryList, int i){
+    private void addItemCategory(List<MaterialCategoryBean> categoryList, int i) {
         final TextView tv = (TextView) LayoutInflater.from(this).inflate(R.layout.item_box, flProduct, false);
         MaterialCategoryBean bean = categoryList.get(i);
         tv.setText(bean.getCatname());
@@ -202,13 +209,13 @@ public class MaterialActivity extends BaseActivity {
             } else {
                 materialVm.categoryId = bean.getId();
             }
-            bean.setIsSelect(tv.isSelected()?0:1);
+            bean.setIsSelect(tv.isSelected() ? 0 : 1);
             tv.setSelected(!tv.isSelected());
             for (int j = 0; j < categoryList.size(); j++) {
-                if (j != i){
+                if (j != i) {
                     categoryList.get(j).setIsSelect(0);
                     View child = flProduct.getChildAt(j);
-                    if (child instanceof TextView){
+                    if (child instanceof TextView) {
                         ((TextView) child).setSelected(false);
                     }
                 }

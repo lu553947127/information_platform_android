@@ -18,7 +18,6 @@ import com.shuangduan.zcy.app.MyApplication;
 import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.LoadDialog;
 import com.shuangduan.zcy.model.api.PageState;
-import com.shuangduan.zcy.model.event.BaseEvent;
 import com.shuangduan.zcy.swipeback.SwipeBackActivityBase;
 import com.shuangduan.zcy.swipeback.SwipeBackActivityHelper;
 import com.shuangduan.zcy.swipeback.SwipeBackLayout;
@@ -26,7 +25,6 @@ import com.shuangduan.zcy.swipeback.SwipeBackUtils;
 import com.shuangduan.zcy.utils.AutoUtils;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;

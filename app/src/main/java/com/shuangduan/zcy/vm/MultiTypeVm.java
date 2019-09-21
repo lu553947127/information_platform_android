@@ -7,6 +7,7 @@ import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseViewModel;
 import com.shuangduan.zcy.model.api.repository.ProjectRepository;
+import com.shuangduan.zcy.model.bean.CityBean;
 import com.shuangduan.zcy.model.bean.TypeBean;
 
 import java.util.ArrayList;
@@ -41,23 +42,23 @@ public class MultiTypeVm extends BaseViewModel {
         id = 0;
     }
 
-    public void getTypesFirst(){
+    public void getTypesFirst() {
         new ProjectRepository().projectTypes(typeFirstLiveData, pageStateLiveData, userId, id);
     }
 
-    public void getTypesSecond(){
+    public void getTypesSecond() {
         new ProjectRepository().projectTypes(typeSecondLiveData, pageStateLiveData, userId, id);
     }
 
     /**
      * 设置一级默认数据
      */
-    public void setTypeFirstInit(){
-        if (!firstInited){
+    public void setTypeFirstInit() {
+        if (!firstInited) {
             firstInited = true;
             List<TypeBean> list = typeFirstLiveData.getValue();
             if (list == null) return;
-            for (TypeBean bean: list) {
+            for (TypeBean bean : list) {
                 //默认全选
                 bean.setIsSelect(1);
             }
@@ -84,20 +85,20 @@ public class MultiTypeVm extends BaseViewModel {
     /**
      * 设置默认的城市状态
      */
-    public void setTypeSecondInit(){
+    public void setTypeSecondInit() {
         List<TypeBean> secondList = typeSecondLiveData.getValue();
-        if (secondList != null && secondList.size() > 0){
+        if (secondList != null && secondList.size() > 0) {
             //没有添加全部选项的添加
-            if (!secondList.get(0).getCatname().equals("全部")){
-                for (TypeBean bean: secondList) {
+            if (!secondList.get(0).getCatname().equals("全部")) {
+                for (TypeBean bean : secondList) {
                     //默认全选
-                    bean.setIsSelect(selectAll?1:0);
+                    bean.setIsSelect(selectAll ? 1 : 0);
                 }
 
                 TypeBean typeBean = new TypeBean();
                 typeBean.setCatname("全部");
                 typeBean.setId(0);
-                typeBean.setIsSelect(selectAll?1:0);
+                typeBean.setIsSelect(selectAll ? 1 : 0);
                 secondList.add(0, typeBean);
                 typeSecondLiveData.postValue(secondList);
             }
@@ -109,7 +110,7 @@ public class MultiTypeVm extends BaseViewModel {
     /**
      * 点击一级分类
      */
-    public void clickFirst(int position){
+    public void clickFirst(int position) {
         List<TypeBean> firstList = typeFirstLiveData.getValue();
         if (firstList == null) return;
         if (firstList.get(position).isCheck == 1) return;
@@ -120,16 +121,16 @@ public class MultiTypeVm extends BaseViewModel {
         //改变上一个选中效果，字体颜色
         List<TypeBean> childList = firstList.get(prePosition).getChildList();
         if (childList == null) return;
-        if (childList.get(0).getIsSelect() != 1){
+        if (childList.get(0).getIsSelect() != 1) {
             //非全选,遍历子类，判断是否修改字体效果
-            for (TypeBean bean: childList) {
-                if (bean.getIsSelect() == 1){
+            for (TypeBean bean : childList) {
+                if (bean.getIsSelect() == 1) {
                     //有一个选中就改变选中效果
                     firstList.get(prePosition).setIsSelect(1);
                     break;
                 }
             }
-        }else {
+        } else {
             //全选，直接改变选中效果
             firstList.get(prePosition).setIsSelect(1);
         }
@@ -139,10 +140,10 @@ public class MultiTypeVm extends BaseViewModel {
         typeFirstLiveData.postValue(firstList);
         //更新选中id, 更新二级列表
         id = firstList.get(position).getId();
-        if (firstList.get(position).getChildList() == null){
+        if (firstList.get(position).getChildList() == null) {
             //如果不存在存储的子类
             getTypesSecond();
-        }else {
+        } else {
             //存在子类
             typeSecondLiveData.postValue(firstList.get(position).getChildList());
         }
@@ -152,34 +153,34 @@ public class MultiTypeVm extends BaseViewModel {
     /**
      * 点击二级分类
      */
-    public void clickSecond(int i){
+    public void clickSecond(int i) {
         List<TypeBean> data = typeSecondLiveData.getValue();
         if (i == 0) {
             LogUtils.i("***********", prePosition, data.get(0).getIsSelect());
-            if (prePosition == 0){//一级全部的全部
+            if (prePosition == 0) {//一级全部的全部
                 List<TypeBean> firstList = typeFirstLiveData.getValue();
-                if (data.get(0).getIsSelect() == 1){//更改为所有全部非选中
+                if (data.get(0).getIsSelect() == 1) {//更改为所有全部非选中
                     selectAll = false;
-                    if (firstList != null){
+                    if (firstList != null) {
                         for (int j = 0; j < firstList.size(); j++) {
                             TypeBean firstData = firstList.get(j);
-                            firstData.setIsSelect(j == 0?1:0);
+                            firstData.setIsSelect(j == 0 ? 1 : 0);
                             List<TypeBean> childList = firstData.getChildList();
-                            if (childList != null){
+                            if (childList != null) {
                                 for (int k = 0; k < childList.size(); k++) {
                                     childList.get(k).setIsSelect(0);
                                 }
                             }
                         }
                     }
-                }else {//更改为所有全部选中
+                } else {//更改为所有全部选中
                     selectAll = true;
-                    if (firstList != null){
+                    if (firstList != null) {
                         for (int j = 0; j < firstList.size(); j++) {
                             TypeBean firstData = firstList.get(j);
                             List<TypeBean> childList = firstData.getChildList();
                             firstData.setIsSelect(1);
-                            if (childList != null){
+                            if (childList != null) {
                                 for (int k = 0; k < childList.size(); k++) {
                                     childList.get(k).setIsSelect(1);
                                 }
@@ -189,14 +190,14 @@ public class MultiTypeVm extends BaseViewModel {
                 }
                 typeSecondLiveData.postValue(firstList.get(0).getChildList());
                 typeFirstLiveData.postValue(firstList);
-            }else {//一级非全部的全部
+            } else {//一级非全部的全部
                 //选全部
-                if (data.get(0).getIsSelect() == 1){
+                if (data.get(0).getIsSelect() == 1) {
                     //全部选中，修改全部为非选中状态
                     for (int j = 0; j < data.size(); j++) {
                         data.get(j).setIsSelect(0);
                     }
-                }else {
+                } else {
                     //非全部选中，修改全部为选中状态
                     for (int j = 0; j < data.size(); j++) {
                         data.get(j).setIsSelect(1);
@@ -205,21 +206,21 @@ public class MultiTypeVm extends BaseViewModel {
                 typeSecondLiveData.postValue(data);
                 changeFirstState();
             }
-        }else {
+        } else {
             //单一选项
-            data.get(i).setIsSelect(data.get(i).getIsSelect() == 1?0:1);
-            if (data.get(i).getIsSelect() != 1){
+            data.get(i).setIsSelect(data.get(i).getIsSelect() == 1 ? 0 : 1);
+            if (data.get(i).getIsSelect() != 1) {
                 //未选中状态，之前就是选中状态，需判断是否为全部选中，是则修改全部为非选中状态
-                if (data.get(0).getIsSelect() == 1){
+                if (data.get(0).getIsSelect() == 1) {
                     //只有“全部”选项是选中状态才更新状态
                     data.get(0).setIsSelect(0);
                 }
-            }else {
+            } else {
                 //选中状态，之前就是未选中状态，需判断是否为全部选中，是则修改全部为选中状态
                 //初始把“全部”更新为选中
                 data.get(0).setIsSelect(1);
                 for (int j = 0; j < data.size(); j++) {
-                    if (data.get(j).getIsSelect() != 1){
+                    if (data.get(j).getIsSelect() != 1) {
                         //循环查询，出现未选中就更新第一个选项“全部”的状态
                         data.get(0).setIsSelect(0);
                         break;
@@ -231,23 +232,23 @@ public class MultiTypeVm extends BaseViewModel {
         }
     }
 
-    private void changeFirstState(){
+    private void changeFirstState() {
         List<TypeBean> firstData = typeFirstLiveData.getValue();
 
         //默认全选
         firstData.get(0).setIsSelect(1);
         firstData.get(0).getChildList().get(0).setIsSelect(1);
-        for (int i = 0; i <firstData.size(); i++) {
+        for (int i = 0; i < firstData.size(); i++) {
             //如果有省份没有被选中，则为非全选
-            if (firstData.get(i).isSelect != 1){
+            if (firstData.get(i).isSelect != 1) {
                 firstData.get(0).setIsSelect(0);
                 firstData.get(0).getChildList().get(0).setIsSelect(0);
                 break;
             }
             //如果省份中的城市有没有被选中，则为非全选
             List<TypeBean> childList = firstData.get(i).getChildList();
-            if (childList != null){
-                if (childList.get(0).getIsSelect() != 1){
+            if (childList != null) {
+                if (childList.get(0).getIsSelect() != 1) {
                     firstData.get(0).setIsSelect(0);
                     firstData.get(0).getChildList().get(0).setIsSelect(0);
                     break;
@@ -257,7 +258,7 @@ public class MultiTypeVm extends BaseViewModel {
 
         if (firstData.get(0).getChildList().get(0).getIsSelect() == 1) {
             selectAll = true;//只在全部选中的时候改变为true
-        }else {
+        } else {
             selectAll = false;
         }
 
@@ -265,26 +266,27 @@ public class MultiTypeVm extends BaseViewModel {
     }
 
     private StringBuilder stringBuilder;
-    public List<Integer> getFirstSecondIds(){
+
+    public List<Integer> getFirstSecondIds() {
         List<TypeBean> firstList = typeFirstLiveData.getValue();
         stringBuilder = new StringBuilder();
         List<Integer> result = new ArrayList<>();
-        if (firstList != null){
+        if (firstList != null) {
             for (int i = 0; i < firstList.size(); i++) {
-                if (i == 0 && firstList.get(i).getChildList().get(0).getIsSelect() == 1){
+                if (i == 0 && firstList.get(i).getChildList().get(0).getIsSelect() == 1) {
                     //全选，返回null
                     return null;
-                }else if (firstList.get(i).isSelect == 1){
+                } else if (firstList.get(i).isSelect == 1) {
                     result.add(firstList.get(i).getId());
-                    if (stringBuilder.length() == 0){
+                    if (stringBuilder.length() == 0) {
                         stringBuilder.append(firstList.get(i).getCatname());
-                    }else {
+                    } else {
                         stringBuilder.append(",").append(firstList.get(i).getCatname());
                     }
                     List<TypeBean> secondList = firstList.get(i).getChildList();
-                    if (secondList != null){
+                    if (secondList != null) {
                         for (int j = 0; j < secondList.size(); j++) {
-                            if (secondList.get(j).isSelect == 1){
+                            if (secondList.get(j).isSelect == 1) {
                                 result.add(secondList.get(j).getId());
                                 stringBuilder.append(",").append(secondList.get(j).getCatname());
                             }
@@ -297,37 +299,56 @@ public class MultiTypeVm extends BaseViewModel {
         return null;
     }
 
-    public List<Integer> getSecondIds(){
+    public List<Integer> getSecondIds() {
         List<TypeBean> firstList = typeFirstLiveData.getValue();
         stringBuilder = new StringBuilder();
         List<Integer> result = new ArrayList<>();
-        if (firstList != null){
-            for (int i = 0; i < firstList.size(); i++) {
-                if (i == 0 && firstList.get(i).getChildList().get(0).getIsSelect() == 1){
-                    //全选，返回null
-                    return null;
-                }else if (firstList.get(i).isSelect == 1){
-                    List<TypeBean> secondList = firstList.get(i).getChildList();
-                    if (secondList != null){
-                        for (int j = 0; j < secondList.size(); j++) {
-                            if (secondList.get(j).isSelect == 1){
-                                result.add(secondList.get(j).getId());
-                                if (stringBuilder.length() == 0){
-                                    stringBuilder.append(secondList.get(j).getCatname());
-                                }else {
-                                    stringBuilder.append(",").append(secondList.get(j).getCatname());
-                                }
-                            }
-                        }
-                    }
+
+        if (prePosition == 0) { //默认选中全部类型
+            //全选，返回null
+            return null;
+        }
+
+        //获取当前一级类型下所有子类型
+        List<TypeBean> subTypeList = firstList.get(prePosition).getChildList();
+        if (subTypeList != null) {
+            for (TypeBean item : subTypeList) {
+                if (item.isSelect == 1) {
+                    //去掉id为0的类型
+                    if (item.getId() == 0) continue;
+                    result.add(item.getId());
                 }
             }
-            return result;
         }
-        return null;
+        return result;
+
+//        if (firstList != null){
+//            for (int i = 0; i < firstList.size(); i++) {
+//                if (i == 0 && firstList.get(i).getChildList().get(0).getIsSelect() == 1){
+//                    //全选，返回null
+//                    return null;
+//                }else if (firstList.get(i).isSelect == 1){
+//                    List<TypeBean> secondList = firstList.get(i).getChildList();
+//                    if (secondList != null){
+//                        for (int j = 0; j < secondList.size(); j++) {
+//                            if (secondList.get(j).isSelect == 1){
+//                                result.add(secondList.get(j).getId());
+//                                if (stringBuilder.length() == 0){
+//                                    stringBuilder.append(secondList.get(j).getCatname());
+//                                }else {
+//                                    stringBuilder.append(",").append(secondList.get(j).getCatname());
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//            return result;
+//        }
+//        return null;
     }
 
-    public String getStringResult(){
-        return stringBuilder != null? stringBuilder.toString():"";
+    public String getStringResult() {
+        return stringBuilder != null ? stringBuilder.toString() : "";
     }
 }

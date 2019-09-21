@@ -159,36 +159,36 @@ public class ProjectInfoListActivity extends BaseActivity {
             if (projectInfoBeans.getPage() == 1) {
                 projectInfoAdapter.setNewData(projectInfoBeans.getList());
                 projectInfoAdapter.setEmptyView(R.layout.layout_empty, rv);
-            }else {
+            } else {
                 projectInfoAdapter.addData(projectInfoBeans.getList());
             }
             setNoMore(projectInfoBeans.getPage(), projectInfoBeans.getCount());
         });
     }
 
-    private void setNoMore(int page, int count){
-        if (page == 1){
-            if (page * 10 >= count){
-                if (refresh.getState() == RefreshState.None){
+    private void setNoMore(int page, int count) {
+        if (page == 1) {
+            if (page * 10 >= count) {
+                if (refresh.getState() == RefreshState.None) {
                     refresh.setNoMoreData(true);
-                }else {
+                } else {
                     refresh.finishRefreshWithNoMoreData();
                 }
-            }else {
+            } else {
                 refresh.finishRefresh();
             }
-        }else {
-            if (page * 10 >= count){
+        } else {
+            if (page * 10 >= count) {
                 refresh.finishLoadMoreWithNoMoreData();
-            }else {
+            } else {
                 refresh.finishLoadMore();
             }
         }
     }
 
     @OnClick({R.id.iv_bar_back, R.id.iv_bar_right, R.id.ll_area, R.id.ll_stage, R.id.ll_type, R.id.ll_time, R.id.ll_subscribe, R.id.over})
-    void onClick(View view){
-        switch (view.getId()){
+    void onClick(View view) {
+        switch (view.getId()) {
             case R.id.iv_bar_back:
                 finish();
                 break;
@@ -238,8 +238,9 @@ public class ProjectInfoListActivity extends BaseActivity {
     private SelectorFirstAdapter stageFirstAdapter;
     private SelectorFirstAdapter typeFirstAdapter;
     private SelectorSecondAdapter typeSecondAdapter;
-    private void showPopArea(final List<ProvinceBean> dataArea, final List<StageBean> dataStage, final List<TypeBean> dataType){
-        if (popupWindowArea == null){
+
+    private void showPopArea(final List<ProvinceBean> dataArea, final List<StageBean> dataStage, final List<TypeBean> dataType) {
+        if (popupWindowArea == null) {
             popupWindowArea = new CommonPopupWindow.Builder(this)
                     .setView(R.layout.dialog_area)
                     .setOutsideTouchable(false)
@@ -255,7 +256,7 @@ public class ProjectInfoListActivity extends BaseActivity {
                         tvTimeEnd = view.findViewById(R.id.tv_time_end);
                         cbUnsubscribe = view.findViewById(R.id.cb_unsubscribe);
                         cbSubscribe = view.findViewById(R.id.cb_subscribe);
-                        switch (projectListVm.currentSelect){
+                        switch (projectListVm.currentSelect) {
                             case 1:
                                 llArea.setVisibility(View.VISIBLE);
                                 llStage.setVisibility(View.GONE);
@@ -386,13 +387,13 @@ public class ProjectInfoListActivity extends BaseActivity {
                             popDismiss();
                         });
                         view.findViewById(R.id.tv_positive).setOnClickListener(v -> {
-                            switch (projectListVm.currentSelect){
+                            switch (projectListVm.currentSelect) {
                                 case 1:
                                     ProjectFilterBean projectFilterArea = areaVm.getProjectFilterArea();
-                                    if (projectFilterArea != null){
+                                    if (projectFilterArea != null) {
                                         projectListVm.province = projectFilterArea.getProvince();
                                         projectListVm.city = projectFilterArea.getCity();
-                                    }else {
+                                    } else {
                                         projectListVm.province = null;
                                         projectListVm.city = null;
                                     }
@@ -403,19 +404,23 @@ public class ProjectInfoListActivity extends BaseActivity {
                                 case 3:
                                     projectListVm.type = typeVm.getSecondIds();
                                     LogUtils.i(typeVm.getStringResult());
+                                    //如果二级类型为null 不进行请求列表数据
+                                    if (projectListVm.type == null || projectListVm.type.size() <= 0) {
+                                        return;
+                                    }
                                     break;
                                 case 4:
                                     projectListVm.stime = tvTimeStart.getText().toString();
                                     projectListVm.etime = tvTimeEnd.getText().toString();
                                     break;
                                 case 5:
-                                    if (cbSubscribe.isChecked() && cbUnsubscribe.isChecked()){
+                                    if (cbSubscribe.isChecked() && cbUnsubscribe.isChecked()) {
                                         projectListVm.warrant_status = null;
-                                    }else if (cbSubscribe.isChecked()){
+                                    } else if (cbSubscribe.isChecked()) {
                                         projectListVm.warrant_status = "1";
-                                    }else if (cbUnsubscribe.isChecked()){
+                                    } else if (cbUnsubscribe.isChecked()) {
                                         projectListVm.warrant_status = "0";
-                                    }else {
+                                    } else {
                                         projectListVm.warrant_status = null;
                                     }
                                     break;
@@ -426,7 +431,7 @@ public class ProjectInfoListActivity extends BaseActivity {
                     })
                     .create();
         }
-        switch (projectListVm.currentSelect){
+        switch (projectListVm.currentSelect) {
             case 1:
                 provinceAdapter.setNewData(dataArea);
                 llArea.setVisibility(View.VISIBLE);
@@ -516,8 +521,8 @@ public class ProjectInfoListActivity extends BaseActivity {
                 ivSubscribe.setImageResource(R.drawable.icon_bottom_blue);
                 break;
         }
-        if (!popupWindowArea.isShowing()){
-            popupWindowArea.showAsDropDown(line,0,0);
+        if (!popupWindowArea.isShowing()) {
+            popupWindowArea.showAsDropDown(line, 0, 0);
             over.setVisibility(View.VISIBLE);
         }
     }
@@ -538,18 +543,18 @@ public class ProjectInfoListActivity extends BaseActivity {
             popupWindowArea.dismiss();
     }
 
-    private void initStage(){
+    private void initStage() {
         stageVm.stageLiveData.observe(this, stageBeans -> {
-            if (!stageVm.inited){
+            if (!stageVm.inited) {
                 stageVm.setStageInit();
-            }else {
+            } else {
                 projectListVm.currentSelect = 2;
                 showPopArea(null, stageBeans, null);
             }
         });
 
         stageVm.pageStateLiveData.observe(this, s -> {
-            switch (s){
+            switch (s) {
                 case PageState.PAGE_LOADING:
                     showLoading();
                     break;
@@ -563,10 +568,10 @@ public class ProjectInfoListActivity extends BaseActivity {
     /**
      * 初始化阶段
      */
-    private void getStageData(){
-        if (stageVm.stageLiveData.getValue() == null){
+    private void getStageData() {
+        if (stageVm.stageLiveData.getValue() == null) {
             stageVm.getStage();
-        }else {
+        } else {
             projectListVm.currentSelect = 2;
             showPopArea(null, stageVm.stageLiveData.getValue(), null);
         }
@@ -575,25 +580,25 @@ public class ProjectInfoListActivity extends BaseActivity {
     /**
      * 初始化地区
      */
-    private void initArea(){
+    private void initArea() {
         areaVm.provinceLiveData.observe(this, provinceBeans -> {
             if (!areaVm.provinceInited) {
                 //首次加载，未添加全部，
                 areaVm.setProvinceInit();
-            }else {
+            } else {
                 projectListVm.currentSelect = 1;
                 showPopArea(provinceBeans, null, null);
             }
         });
         areaVm.cityLiveData.observe(this, cityBeans -> {
             areaVm.setCityInit();
-            if (cityBeans != null && cityBeans.size() > 0 && cityBeans.get(0).getName().equals("全部")){
+            if (cityBeans != null && cityBeans.size() > 0 && cityBeans.get(0).getName().equals("全部")) {
                 //刷新市区
                 cityAdapter.setNewData(cityBeans);
             }
         });
         areaVm.pageStateLiveData.observe(this, s -> {
-            switch (s){
+            switch (s) {
                 case PageState.PAGE_LOADING:
                     showLoading();
                     break;
@@ -604,10 +609,10 @@ public class ProjectInfoListActivity extends BaseActivity {
         });
     }
 
-    private void getAreaData(){
-        if (areaVm.provinceLiveData.getValue() == null){
+    private void getAreaData() {
+        if (areaVm.provinceLiveData.getValue() == null) {
             areaVm.getProvince();
-        }else {
+        } else {
             projectListVm.currentSelect = 1;
             showPopArea(areaVm.provinceLiveData.getValue(), null, null);
         }
@@ -616,26 +621,26 @@ public class ProjectInfoListActivity extends BaseActivity {
     /**
      * 初始化分类
      */
-    private void initTypes(){
+    private void initTypes() {
         typeVm.typeFirstLiveData.observe(this, typeBeans -> {
             if (!typeVm.firstInited) {
                 //首次加载，未添加全部，
                 typeVm.setTypeFirstInit();
-            }else {
+            } else {
                 projectListVm.currentSelect = 3;
                 showPopArea(null, null, typeBeans);
             }
         });
         typeVm.typeSecondLiveData.observe(this, typeBeans1 -> {
             typeVm.setTypeSecondInit();
-            if (typeBeans1 != null && typeBeans1.size() > 0 && typeBeans1.get(0).getCatname().equals("全部")){
+            if (typeBeans1 != null && typeBeans1.size() > 0 && typeBeans1.get(0).getCatname().equals("全部")) {
                 //刷新二级列表
                 typeSecondAdapter.setNewData(typeBeans1);
             }
         });
 
         typeVm.pageStateLiveData.observe(this, s -> {
-            switch (s){
+            switch (s) {
                 case PageState.PAGE_LOADING:
                     showLoading();
                     break;
@@ -646,10 +651,10 @@ public class ProjectInfoListActivity extends BaseActivity {
         });
     }
 
-    private void getTypesData(){
-        if (typeVm.typeFirstLiveData.getValue() == null){
+    private void getTypesData() {
+        if (typeVm.typeFirstLiveData.getValue() == null) {
             typeVm.getTypesFirst();
-        }else {
+        } else {
             projectListVm.currentSelect = 3;
             showPopArea(null, null, typeVm.typeFirstLiveData.getValue());
         }
@@ -658,7 +663,7 @@ public class ProjectInfoListActivity extends BaseActivity {
     /**
      * 时间选择器
      */
-    private void showTimeDialog(TextView tv){
+    private void showTimeDialog(TextView tv) {
         CustomDatePicker customDatePicker = new CustomDatePicker(this, time -> {
             tv.setText(time);
         }, "yyyy-MM-dd HH:mm", "2010-01-01 00:00", "2040-12-31 00:00");

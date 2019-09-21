@@ -12,6 +12,7 @@ package com.shuangduan.zcy.model.bean;
  */
 public class BaseSelectorBean {
 
+    //0 未选中 1 选中
     public int isSelect;//选中状态
     public int isCheck;//点击状态
 
