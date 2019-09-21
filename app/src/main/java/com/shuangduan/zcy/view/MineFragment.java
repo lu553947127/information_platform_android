@@ -209,6 +209,6 @@ public class MineFragment extends BaseFragment {
 
     @Subscribe
     public void onEventCoin(CoinEvent event){
-        tvBalance.setText(event.coin);
+        tvBalance.setText(String.format(getString(R.string.format_balance), event.coin));
     }
 }

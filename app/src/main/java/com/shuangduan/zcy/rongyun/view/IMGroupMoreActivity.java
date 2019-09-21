@@ -68,7 +68,7 @@ public class IMGroupMoreActivity extends BaseActivity {
     List<IMGroupListBean.DataBean.ListBean> listGroup=new ArrayList<>();
     IMGroupListBean imGroupListBean;
     String name;
-    int pageSize=10;
+    int pageSize=20;
     int count;
 
     @Override
@@ -98,7 +98,7 @@ public class IMGroupMoreActivity extends BaseActivity {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 if (pageSize<count){
-                    pageSize+=10;
+                    pageSize+=20;
                     if (name!=null){
                         getGroupList("1",pageSize);
                     }else {

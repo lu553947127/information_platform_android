@@ -161,11 +161,12 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
                 if (lastScrollY < h) {
-                    toolbar.setVisibility(View.VISIBLE);
                     scrollY = Math.min(h, scrollY);
                     mScrollY_2 = scrollY > h ? h : scrollY;
                     toolbar.setAlpha(1f * mScrollY_2 / h);
                     toolbar.setBackgroundColor(((255 * mScrollY_2 / h) << 24) | color);
+                }else {
+                    toolbar.setVisibility(View.VISIBLE);
                 }
                 lastScrollY = scrollY;
             }

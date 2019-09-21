@@ -2,7 +2,7 @@
     <string name="app_name">易基建</string>
     <string name="official_name">双端数字科技有限公司版权所有</string>
     <string name="official_email">邮箱：shuangduan@boyuan.com</string>
-    <string name="official_phone">客服电话：0543-7097099</string>
+    <string name="official_phone">客服电话：4009-987-789</string>
 
     <string name="home">首页</string>
     <string name="people">人脉</string>
@@ -122,7 +122,7 @@
     <string name="dark_model">夜间模式</string>
     <string name="update_pwd">修改密码</string>
     <string name="forget_pwd_title">忘记密码</string>
-    <string name="about_ours">关于我们</string>
+    <string name="about_ours">关于</string>
     <string name="exit">退出登录</string>
     <string name="hint_old_pwd">请输入原密码</string>
     <string name="set_new_pwd">请设置新的密码</string>

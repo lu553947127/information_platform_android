@@ -66,7 +66,7 @@ public class IMFriendMoreActivity extends BaseActivity {
     List<IMFriendListBean.DataBean.ListBean> listFriend=new ArrayList<>();
     IMFriendListBean imFriendListBean;
     String name;
-    int pageSize=10;
+    int pageSize=20;
     int count;
 
     @Override
@@ -95,7 +95,7 @@ public class IMFriendMoreActivity extends BaseActivity {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 if (pageSize<count){
-                    pageSize+=10;
+                    pageSize+=20;
                     if (name!=null){
                         getFriendList("1",pageSize);
                     }else {
