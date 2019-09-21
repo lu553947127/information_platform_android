@@ -28,14 +28,14 @@ public class ProjectDetailRepository extends BaseRepository {
     }
 
     /**
-     * 工程轨迹列表
+     * 工程动态列表
      */
     public void getTrack(MutableLiveData<TrackBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, int id, int page, int type){
         request(apiService.getTrack(user_id, id, page, type)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
     /**
-     * 已查看轨迹
+     * 已查看动态
      */
     public void getViewTrack(MutableLiveData<TrackBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, int id, int page){
         request(apiService.getViewTrack(user_id, id, page)).setData(liveData).setPageState(pageStateLiveData).send();

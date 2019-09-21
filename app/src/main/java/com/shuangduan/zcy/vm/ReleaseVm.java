@@ -45,7 +45,7 @@ public class ReleaseVm extends BaseViewModel {
     public MutableLiveData<List<ContactTypeBean>> contactTypeLiveData;
     public MutableLiveData releaseProjectLiveData;
     public MutableLiveData releaseLocusLiveData;
-    public int type = 1;//项目类型，1工程2轨迹
+    public int type = 1;//项目类型，1工程2动态
     public int editContactTypePos = 0;
     public int editContactAddressPos = 0;
     public String longitude, latitude, start_time, end_time;

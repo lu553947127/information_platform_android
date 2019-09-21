@@ -117,7 +117,7 @@ public class ProjectDetailVm extends BaseViewModel {
     }
 
     /**
-     * 切换轨迹列表，我的和全部
+     * 切换动态列表，我的和全部
      */
     public void switchLocusList(){
         type = type == TYPE_ALL?TYPE_MINE:TYPE_ALL;

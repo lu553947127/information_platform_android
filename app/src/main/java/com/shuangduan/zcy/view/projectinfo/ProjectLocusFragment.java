@@ -54,7 +54,7 @@ import butterknife.OnClick;
  * @author 宁文强 QQ:858777523
  * @name information_platform_android
  * @class name：com.shuangduan.zcy.view.projectinfo
- * @class describe  轨迹
+ * @class describe  动态
  * @time 2019/7/15 15:32
  * @change
  * @chang time

@@ -23,7 +23,7 @@ import butterknife.BindView;
  * @author 宁文强 QQ:858777523
  * @name information_platform_android
  * @class name：com.shuangduan.zcy.view.mine
- * @class describe  轨迹订单
+ * @class describe  动态订单
  * @time 2019/8/12 16:49
  * @change
  * @chang time

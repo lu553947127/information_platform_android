@@ -60,7 +60,7 @@ public class CustomConfig {
     public static final String FIND_RELATIONSHIP_ID = "find_relationship_id";
     public static final String IS_MY = "is_my";
     public static final String ORDER = "order";
-    public static final String RELEASE_TYPE = "release_type";//0发布项目1发布轨迹
+    public static final String RELEASE_TYPE = "release_type";//0发布项目1发布动态
     public static final String FRIEND_DATA = "friend_data";
 
     public static final String PROJECT_TYPE = "project_type";//搜索区分工程信息还是招采信息

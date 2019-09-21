@@ -60,7 +60,7 @@ public class OrderVm extends BaseViewModel {
     }
 
     /**
-     * 轨迹订单
+     * 动态订单
      */
     public void getLocusOrder(){
         locusPage = 1;

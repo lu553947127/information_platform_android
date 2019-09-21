@@ -48,7 +48,7 @@ public class IncomeRepository extends BaseRepository {
     }
 
     /**
-     * 发布轨迹收益
+     * 发布动态收益
      */
     public void incomeLocus(MutableLiveData<IncomeLocusBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, int page){
         request(apiService.incomeLocus(user_id, page)).setData(liveData).setPageState(pageStateLiveData).send();

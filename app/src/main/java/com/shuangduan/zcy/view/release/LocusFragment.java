@@ -30,7 +30,7 @@ import butterknife.BindView;
  * @author 宁文强 QQ:858777523
  * @name information_platform_android
  * @class name：com.shuangduan.zcy.view.release
- * @class describe  我发布的轨迹信息
+ * @class describe  我发布的动态信息
  * @time 2019/7/16 20:24
  * @change
  * @chang time

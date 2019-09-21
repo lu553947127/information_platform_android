@@ -32,7 +32,7 @@ import io.rong.imkit.RongIM;
  * @author 宁文强 QQ:858777523
  * @name information_platform_android
  * @class name：com.shuangduan.zcy.view.projectinfo
- * @class describe  轨迹信息头像查看详情
+ * @class describe  动态信息头像查看详情
  * @time 2019/8/23 10:09
  * @change
  * @chang time

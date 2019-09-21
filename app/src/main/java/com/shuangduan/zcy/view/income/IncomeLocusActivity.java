@@ -27,7 +27,7 @@ import butterknife.OnClick;
  * @author 宁文强 QQ:858777523
  * @name information_platform_android
  * @class name：com.shuangduan.zcy.view.income
- * @class describe  发布轨迹收益
+ * @class describe  发布动态收益
  * @time 2019/8/9 14:37
  * @change
  * @chang time

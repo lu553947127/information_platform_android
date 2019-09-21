@@ -32,7 +32,7 @@ public class PayRepository extends BaseRepository {
     }
 
     /**
-     * 紫金币支付轨迹
+     * 紫金币支付动态
      */
     public void payLocus(MutableLiveData<CoinPayResultBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int id, String coin_password){
         request(apiService.payLocus(userId, id, coin_password)).setData(liveData).setPageState(pageStateLiveData).send();

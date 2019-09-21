@@ -405,7 +405,8 @@ public class ProjectInfoListActivity extends BaseActivity {
                                     projectListVm.type = typeVm.getSecondIds();
                                     LogUtils.i(typeVm.getStringResult());
                                     //如果二级类型为null 不进行请求列表数据
-                                    if (projectListVm.type == null || projectListVm.type.size() <= 0) {
+                                    if (projectListVm.type != null && projectListVm.type.size() <= 0) {
+                                        popDismiss();
                                         return;
                                     }
                                     break;
