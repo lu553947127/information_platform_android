@@ -520,4 +520,7 @@
         <item>500–1000</item>
         <item>1000+</item>
     </string-array>
+
+    <string name="stock">库存：</string>
+    <string name="spec">规格：</string>
 </resources>

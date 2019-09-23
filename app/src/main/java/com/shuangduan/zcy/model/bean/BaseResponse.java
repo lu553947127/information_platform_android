@@ -19,6 +19,7 @@ public class BaseResponse<T> {
     private int time;
     private T data;
 
+
     public int getCode() {
         return code;
     }

@@ -169,9 +169,9 @@ public class AppConfig {
 
 
         //初始化OPPO推送 ，此功能需要在初始化融云之前
-        PushConfig.Builder builder = new PushConfig.Builder();
-        builder.enableOppoPush("6bbb2e614c374489b2aca7016c4cbceb", "7e187275fb0645aea6fd3a3e85aedcb5");
-        RongPushClient.setPushConfig(builder.build());
+//        PushConfig.Builder builder = new PushConfig.Builder();
+//        builder.enableOppoPush("6bbb2e614c374489b2aca7016c4cbceb", "7e187275fb0645aea6fd3a3e85aedcb5");
+//        RongPushClient.setPushConfig(builder.build());
 
         //融云初始化
         RongIM.init(context, "pwe86ga5p43i6");
@@ -182,6 +182,7 @@ public class AppConfig {
                 .enableMiPush("2882303761517473625", "5451747338625")
                 .enableMeiZuPush("112988", "2fa951a802ac4bd5843d694517307896")
                 .enableVivoPush(true)
+                .enableOppoPush("6bbb2e614c374489b2aca7016c4cbceb", "7e187275fb0645aea6fd3a3e85aedcb5")
                 .enableFCM(true)
                 .build();
         RongPushClient.setPushConfig(config);
@@ -225,6 +226,7 @@ public class AppConfig {
     }
 
 
+    //判断类型
     private static boolean shouldInit(Context context) {
         ActivityManager am = ((ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE));
         List<ActivityManager.RunningAppProcessInfo> processInfos = am.getRunningAppProcesses();

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="96dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
     android:padding="15dp">
 
     <ImageView
@@ -12,75 +13,124 @@
         android:layout_height="66dp"
         android:scaleType="centerCrop"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintLeft_toRightOf="@+id/iv_icon"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="4dp"
         android:layout_marginLeft="10dp"
+        android:text="ssss"
         android:textColor="@color/colorTv"
-        android:textSize="14sp"/>
+        android:textSize="14sp"
+        app:layout_constraintLeft_toRightOf="@+id/iv_icon"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_stock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:text="@string/stock"
+        android:textColor="@color/color_666666"
+        android:textSize="12sp"
+        app:layout_constraintLeft_toLeftOf="@+id/tv_title"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title"
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/tv_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/color_666666"
+        android:textSize="12sp"
+        app:layout_constraintLeft_toRightOf="@id/tv_stock"
+        app:layout_constraintTop_toTopOf="@id/tv_stock" />
+
+    <TextView
+        android:id="@+id/tv_spec"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:text="@string/spec"
+        android:textColor="@color/color_666666"
+        android:textSize="12sp"
+        app:layout_constraintLeft_toLeftOf="@id/tv_title"
+        app:layout_constraintTop_toBottomOf="@id/tv_stock"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/tv_supplier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:text="@string/stock"
+        android:textColor="@color/color_666666"
+        android:textSize="12sp"
         app:layout_constraintLeft_toLeftOf="@+id/tv_title"
         app:layout_constraintTop_toBottomOf="@+id/tv_title"
-        app:layout_constraintBottom_toTopOf="@+id/tv_owner"
-        android:textColor="@color/color_666666"
-        android:textSize="12sp"/>
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/tv_owner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="@+id/tv_title"
-        app:layout_constraintBottom_toBottomOf="@+id/iv_icon"
-        android:layout_marginBottom="4dp"
+        android:layout_marginTop="3dp"
         android:textColor="@color/color_666666"
-        android:textSize="12sp"/>
+        android:textSize="12sp"
+        app:layout_constraintLeft_toLeftOf="@+id/tv_title"
+        app:layout_constraintTop_toBottomOf="@id/tv_spec" />
+
+    <TextView
+        android:id="@+id/tv_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:textColor="@color/color_666666"
+        android:textSize="12sp"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="@+id/tv_title"
+        app:layout_constraintTop_toBottomOf="@id/tv_owner" />
 
     <TextView
         android:id="@+id/tv_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintRight_toLeftOf="@+id/tv_price_unit"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_title"
+        android:text="5000"
         android:textColor="@color/color_EF583E"
-        android:textSize="14sp"/>
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_title"
+        app:layout_constraintRight_toLeftOf="@+id/tv_price_unit" />
 
     <TextView
         android:id="@+id/tv_price_unit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_title"
+        android:text="元/吨"
         android:textColor="@color/color_666666"
         android:textSize="14sp"
-        android:text="元/吨"/>
+        app:layout_constraintBottom_toBottomOf="@+id/tv_title"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <TextView
         android:id="@+id/tv_sold_num"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_content"
         android:textColor="@color/color_666666"
-        android:textSize="12sp"/>
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_content"
+        app:layout_constraintRight_toRightOf="parent" />
+
 
     <TextView
         android:id="@+id/tv_bought"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_owner"
+        android:text="买过的产品"
         android:textColor="@color/color_EF583E"
         android:textSize="12sp"
-        android:text="买过的产品"/>
+        app:layout_constraintTop_toBottomOf="@id/iv_icon"
+        app:layout_constraintLeft_toLeftOf="@id/iv_icon"
+        android:layout_marginTop="3dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

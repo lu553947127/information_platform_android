@@ -7,6 +7,7 @@ import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseViewModel;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.api.repository.SearchRepository;
+import com.shuangduan.zcy.model.bean.PostBean;
 import com.shuangduan.zcy.model.bean.ProjectInfoBean;
 import com.shuangduan.zcy.model.bean.RecruitBean;
 
@@ -32,12 +33,15 @@ public class SearchVm extends BaseViewModel {
     public MutableLiveData<List<String>> companyLiveData;
     public MutableLiveData<String> pageStateLiveData;
     public MutableLiveData<List<String>> historyLiveData;
+    //岗位
+    public MutableLiveData<List<PostBean>> postLiveData;
+
     private int userId;
     private int projectPage = 1;
     private int recruitPage = 1;
     public String keyword = "";
 
-    public SearchVm(){
+    public SearchVm() {
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
         hotLiveData = new MutableLiveData<>();
         searchProjectLiveData = new MutableLiveData<>();
@@ -45,9 +49,10 @@ public class SearchVm extends BaseViewModel {
         companyLiveData = new MutableLiveData<>();
         pageStateLiveData = new MutableLiveData<>();
         historyLiveData = new MutableLiveData<>();
+        postLiveData = new MutableLiveData<>();
     }
 
-    public void search(){
+    public void search() {
         projectPage = 1;
         recruitPage = 1;
         new SearchRepository().searchProject(searchProjectLiveData, pageStateLiveData, userId, keyword, projectPage);
@@ -58,20 +63,20 @@ public class SearchVm extends BaseViewModel {
         List<String> historyList = new ArrayList<>();
         Collections.addAll(historyList, split);
         for (int i = 0; i < historyList.size(); i++) {
-            if (keyword.equals(historyList.get(i))){
+            if (keyword.equals(historyList.get(i))) {
                 historyList.remove(i);
                 isRemove = true;
             }
         }
-        if (!isRemove && historyList.size() >= 20){
+        if (!isRemove && historyList.size() >= 20) {
             historyList.remove(historyList.size() - 1);
         }
         historyList.add(0, keyword);
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < historyList.size(); i++) {
-            if (i == 0){
+            if (i == 0) {
                 builder.append(historyList.get(i));
-            }else {
+            } else {
                 builder.append(",").append(historyList.get(i));
             }
         }
@@ -79,11 +84,11 @@ public class SearchVm extends BaseViewModel {
         historyLiveData.postValue(historyList);
     }
 
-    public void getHot(){
+    public void getHot() {
         new SearchRepository().searchHot(hotLiveData, userId);
     }
 
-    public void getHistory(){
+    public void getHistory() {
         String history = SPUtils.getInstance().getString(SpConfig.SEARCH_HISTORY);
         String[] split = history.split(",");
         List<String> historyList = new ArrayList<>();
@@ -91,37 +96,41 @@ public class SearchVm extends BaseViewModel {
         historyLiveData.postValue(historyList);
     }
 
-    public void delHistory(){
+    public void delHistory() {
         SPUtils.getInstance().put(SpConfig.SEARCH_HISTORY, "");
         historyLiveData.postValue(null);
     }
 
-    public void searchCompany(String keyword){
+    public void searchCompany(String keyword) {
         new SearchRepository().searchCompany(companyLiveData, pageStateLiveData, userId, keyword);
     }
 
-    public void searchProject(){
+    public void searchProject() {
         projectPage = 1;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
         new SearchRepository().searchProject(searchProjectLiveData, pageStateLiveData, userId, keyword, projectPage);
     }
 
-    public void searchMoreProject(){
-        projectPage ++;
+    public void searchMoreProject() {
+        projectPage++;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
         new SearchRepository().searchProject(searchProjectLiveData, pageStateLiveData, userId, keyword, projectPage);
     }
 
-    public void searchRecruit(){
+    public void searchRecruit() {
         recruitPage = 1;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
         new SearchRepository().searchRecruit(searchRecruitLiveData, pageStateLiveData, userId, keyword, recruitPage);
     }
 
-    public void searchMoreRecruit(){
-        recruitPage ++;
+    public void searchMoreRecruit() {
+        recruitPage++;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
         new SearchRepository().searchRecruit(searchRecruitLiveData, pageStateLiveData, userId, keyword, recruitPage);
     }
 
+    public void searchPost() {
+        pageStateLiveData.postValue(PageState.PAGE_REFRESH);
+        new SearchRepository().searchPost(postLiveData,pageStateLiveData,userId);
+    }
 }
