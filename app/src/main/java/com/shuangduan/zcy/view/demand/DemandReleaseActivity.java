@@ -387,7 +387,7 @@ public class DemandReleaseActivity extends BaseActivity {
             }
         }, "yyyy-MM-dd", f.format(tomorrow) , "2100-12-31");
         customDatePicker.showSpecificTime(false);
-        customDatePicker.show(TimeUtils.getNowString());
+        customDatePicker.show(f.format(c.getTime()));
     }
 
     //底部弹出框

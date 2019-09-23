@@ -1,6 +1,7 @@
 package com.shuangduan.zcy.app;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
@@ -16,6 +17,7 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.CrashUtils;
 import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
 import com.kingja.loadsir.callback.SuccessCallback;
@@ -33,6 +35,7 @@ import com.shuangduan.zcy.callback.EmptyCallback;
 import com.shuangduan.zcy.callback.ErrorCallback;
 import com.shuangduan.zcy.callback.LoadingCallback;
 import com.shuangduan.zcy.callback.TimeOutCallback;
+import com.shuangduan.zcy.view.login.WelcomeActivity;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
@@ -40,6 +43,7 @@ import java.io.File;
 
 import cn.jpush.android.api.JPushInterface;
 import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
 import io.rong.push.RongPushClient;
 import io.rong.push.pushconfig.PushConfig;
 
@@ -79,7 +83,7 @@ public class AppConfig {
 
 //        initBugly(context);
 
-        if (BuildConfig.IS_DEBUG){
+        if (BuildConfig.IS_DEBUG) {
             initCrash(context);
         }
 
@@ -90,6 +94,7 @@ public class AppConfig {
 
     /**
      * 初始化Utils工具
+     *
      * @param context
      */
     private static void initUtils(Application context) {
@@ -121,6 +126,7 @@ public class AppConfig {
      */
     public static final String APP_ID = "wx2e2f0d4ccdf3e52f";
     public static IWXAPI iwxapi;
+
     private static void initWX(Context context) {
         iwxapi = WXAPIFactory.createWXAPI(context, APP_ID, true);
         iwxapi.registerApp(APP_ID);
@@ -133,6 +139,7 @@ public class AppConfig {
 
     /**
      * 测试版本收集崩溃日志
+     *
      * @param context
      */
     private static void initCrash(final Context context) {
@@ -145,12 +152,12 @@ public class AppConfig {
     /**
      * 极光推送初始化配置
      */
-    private static void initJPush(Context context){
+    private static void initJPush(Context context) {
         JPushInterface.setDebugMode(BuildConfig.IS_DEBUG);
         JPushInterface.init(context);
     }
 
-    private static void initRongYun(Context context){
+    private static void initRongYun(Context context) {
         //融云初始化
         RongIM.init(context, "pwe86ga5p43i6");
         //融云推送初始化
@@ -163,6 +170,18 @@ public class AppConfig {
                 .enableFCM(true)
                 .build();
         RongPushClient.setPushConfig(config);
+
+        //设置融云全局链接状态监听
+        RongIMClient.setConnectionStatusListener(connectionStatus -> {
+            switch (connectionStatus) {
+                case KICKED_OFFLINE_BY_OTHER_CLIENT:
+                    SPUtils.getInstance().clear();
+                    SPUtils.getInstance().put(SpConfig.FIRST_APP, 1);
+                    ActivityUtils.startActivity(WelcomeActivity.class);
+                    ActivityUtils.finishAllActivitiesExceptNewest();
+                    break;
+            }
+        });
     }
 
     /**

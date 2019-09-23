@@ -1,5 +1,6 @@
 package com.shuangduan.zcy.utils;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Rect;
 import android.util.AttributeSet;
@@ -46,6 +47,7 @@ public class ElasticScrollView extends ScrollView {
         super(context, attrs);
     }
 
+    @SuppressLint("MissingSuperCall")
     @Override
     protected void onFinishInflate() {
         if (getChildCount() > 0) {
