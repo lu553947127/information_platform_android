@@ -1,376 +1,400 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:scrollbars="none"
     android:background="@color/colorBgDark">
 
-    <LinearLayout
+    <com.shuangduan.zcy.weight.AdaptationScrollView
+        android:id="@+id/scroll"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" >
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:id="@+id/fake_status_bar"/>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="130dp"
-            android:background="@drawable/shape_bg_mine">
-
-            <com.shuangduan.zcy.weight.CircleImageView
-                android:id="@+id/iv_user"
-                android:layout_width="73dp"
-                android:layout_height="73dp"
-                android:layout_marginTop="31dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="16dp"/>
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_username"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/iv_user"
-                android:layout_marginTop="39dp"
-                android:textColor="@color/colorFFF"
-                android:textSize="16sp"/>
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_member"
-                android:visibility="gone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/icon_member"
-                android:drawablePadding="6dp"
-                android:layout_alignLeft="@+id/tv_username"
-                android:layout_marginTop="64dp"
-                android:textColor="@color/colorFFF"
-                android:textSize="12sp"/>
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_num_of_people"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/tv_username"
-                android:layout_marginTop="74dp"
-                android:textColor="@color/colorFFF"
-                android:textSize="12sp"/>
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_balance"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginTop="40dp"
-                android:layout_marginRight="14dp"
-                android:textColor="@color/colorFFF"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/tv_recharge"
-                android:layout_width="60dp"
-                android:layout_height="21dp"
-                android:gravity="center"
-                android:background="@drawable/shape_bg_recharge"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="15dp"
-                android:layout_below="@+id/tv_balance"
-                android:layout_alignParentEnd="true"
-                android:textColor="@color/colorFFF"
-                android:textSize="12sp"
-                android:text="@string/recharge"/>
-
-        </RelativeLayout>
-
+        android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
-            <FrameLayout
-                android:id="@+id/fl_order"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:background="@drawable/selector_bg_custom">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:id="@+id/fake_status_bar"/>
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="34dp"
-                    android:layout_height="34dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="14dp"
-                    android:src="@drawable/icon_order"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:background="@drawable/shape_bg_mine">
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="52dp"
-                    android:layout_gravity="center_horizontal"
-                    android:textColor="@color/color_666666"
-                    android:textSize="13sp"
-                    android:text="@string/my_order"/>
-
-            </FrameLayout>
-
-            <FrameLayout
-                android:id="@+id/fl_income"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:background="@drawable/selector_bg_custom">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="34dp"
-                    android:layout_height="34dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="16dp"
-                    android:src="@drawable/icon_income"/>
+                <com.shuangduan.zcy.weight.CircleImageView
+                    android:id="@+id/iv_user"
+                    android:layout_width="73dp"
+                    android:layout_height="73dp"
+                    android:layout_marginTop="31dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="16dp"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="52dp"
-                    android:textColor="@color/color_666666"
-                    android:textSize="13sp"
-                    android:text="@string/my_income" />
+                    android:layout_toRightOf="@+id/iv_user"
+                    android:layout_marginTop="39dp"
+                    android:textColor="@color/colorFFF"
+                    android:textSize="16sp"/>
 
-            </FrameLayout>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_member"
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/icon_member"
+                    android:drawablePadding="6dp"
+                    android:layout_alignLeft="@+id/tv_username"
+                    android:layout_marginTop="64dp"
+                    android:textColor="@color/colorFFF"
+                    android:textSize="12sp"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_num_of_people"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/tv_username"
+                    android:layout_marginTop="74dp"
+                    android:textColor="@color/colorFFF"
+                    android:textSize="12sp"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_balance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginRight="14dp"
+                    android:textColor="@color/colorFFF"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tv_recharge"
+                    android:layout_width="60dp"
+                    android:layout_height="21dp"
+                    android:gravity="center"
+                    android:background="@drawable/shape_bg_recharge"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_below="@+id/tv_balance"
+                    android:layout_alignParentEnd="true"
+                    android:textColor="@color/colorFFF"
+                    android:textSize="12sp"
+                    android:text="@string/recharge"/>
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:orientation="horizontal">
+
+                <FrameLayout
+                    android:id="@+id/fl_order"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/selector_bg_custom">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="34dp"
+                        android:layout_height="34dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="14dp"
+                        android:src="@drawable/icon_order"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="52dp"
+                        android:layout_gravity="center_horizontal"
+                        android:textColor="@color/color_666666"
+                        android:textSize="13sp"
+                        android:text="@string/my_order"/>
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/fl_income"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/selector_bg_custom">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="34dp"
+                        android:layout_height="34dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="16dp"
+                        android:src="@drawable/icon_income"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="52dp"
+                        android:textColor="@color/color_666666"
+                        android:textSize="13sp"
+                        android:text="@string/my_income" />
+
+                </FrameLayout>
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_my_subscription"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/selector_bg_custom"
+                android:drawableLeft="@drawable/icon_subscription"
+                android:drawablePadding="11dp"
+                android:drawableRight="@drawable/icon_next"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/color_666666"
+                android:textSize="16sp"
+                android:text="@string/my_subscription"/>
+
+            <include layout="@layout/divider_15"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_my_demand"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/selector_bg_custom"
+                android:drawableLeft="@drawable/icon_mine_demand"
+                android:drawablePadding="11dp"
+                android:drawableRight="@drawable/icon_next"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/color_666666"
+                android:textSize="16sp"
+                android:text="@string/my_demand"/>
+
+            <include layout="@layout/divider_15"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_mine_subscription"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/selector_bg_custom"
+                android:drawableLeft="@drawable/icon_mine_subscription"
+                android:drawablePadding="11dp"
+                android:drawableRight="@drawable/icon_next"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/color_666666"
+                android:textSize="16sp"
+                android:text="@string/mine_subscription"/>
+
+            <include layout="@layout/divider_15"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_my_material"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/selector_bg_custom"
+                android:drawableLeft="@drawable/icon_my_material"
+                android:drawablePadding="11dp"
+                android:drawableRight="@drawable/icon_next"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/color_666666"
+                android:textSize="16sp"
+                android:text="@string/my_material"/>
+
+            <include layout="@layout/divider_15"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_transaction_record"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/selector_bg_custom"
+                android:drawableLeft="@drawable/icon_record_transaction"
+                android:drawablePadding="11dp"
+                android:drawableRight="@drawable/icon_next"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/color_666666"
+                android:textSize="16sp"
+                android:text="@string/transaction_record"/>
+
+            <include layout="@layout/divider_15"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_agreement_manage"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/selector_bg_custom"
+                android:drawableLeft="@drawable/icon_agreement_manage"
+                android:drawablePadding="11dp"
+                android:drawableRight="@drawable/icon_next"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/color_666666"
+                android:textSize="16sp"
+                android:text="@string/agreement_manage"/>
+
+            <include android:visibility="gone" layout="@layout/divider_15"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_pwd_pay"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/selector_bg_custom"
+                android:drawableLeft="@drawable/icon_pwd_pay"
+                android:drawablePadding="11dp"
+                android:drawableRight="@drawable/icon_next"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/color_666666"
+                android:textSize="16sp"
+                android:text="@string/pwd_pay"/>
+
+            <include layout="@layout/divider_15"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_read_history"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/selector_bg_custom"
+                android:drawableLeft="@drawable/icon_history"
+                android:drawablePadding="11dp"
+                android:drawableRight="@drawable/icon_next"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/color_666666"
+                android:textSize="16sp"
+                android:text="@string/read_history"/>
+
+            <include layout="@layout/divider_15"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_feedback"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/selector_bg_custom"
+                android:drawableLeft="@drawable/icon_message"
+                android:drawablePadding="11dp"
+                android:drawableRight="@drawable/icon_next"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/color_666666"
+                android:textSize="16sp"
+                android:text="@string/feedback"/>
+
+            <include layout="@layout/divider_15"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_recommend_friends"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/selector_bg_custom"
+                android:drawableLeft="@drawable/icon_invite_friend"
+                android:drawablePadding="11dp"
+                android:drawableRight="@drawable/icon_next"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/color_666666"
+                android:textSize="16sp"
+                android:text="@string/recommend_friends"/>
+
+            <include layout="@layout/divider_15"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_my_collection"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/selector_bg_custom"
+                android:drawableLeft="@drawable/icon_collect"
+                android:drawablePadding="11dp"
+                android:drawableRight="@drawable/icon_next"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/color_666666"
+                android:textSize="16sp"
+                android:text="@string/my_collection"/>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_set"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/selector_bg_custom"
+                android:drawableLeft="@drawable/icon_set"
+                android:drawablePadding="11dp"
+                android:drawableRight="@drawable/icon_next"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/color_666666"
+                android:textSize="16sp"
+                android:text="@string/set"/>
+
+            <include layout="@layout/divider_15"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_helper"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/selector_bg_custom"
+                android:drawableLeft="@drawable/icon_help"
+                android:drawablePadding="11dp"
+                android:drawableRight="@drawable/icon_next"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/color_666666"
+                android:textSize="16sp"
+                android:text="@string/helper"/>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="60dp" />
 
         </LinearLayout>
+    </com.shuangduan.zcy.weight.AdaptationScrollView>
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="10dp" />
+    <RelativeLayout
+        android:id="@+id/rl_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:alpha="0"
+        android:visibility="gone">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_my_subscription"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/selector_bg_custom"
-            android:drawableLeft="@drawable/icon_subscription"
-            android:drawablePadding="11dp"
-            android:drawableRight="@drawable/icon_next"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:gravity="center_vertical"
-            android:textColor="@color/color_666666"
-            android:textSize="16sp"
-            android:text="@string/my_subscription"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:textColor="@color/colorFFF"
+            android:textSize="18sp"
+            android:text="@string/mine" />
 
-        <include layout="@layout/divider_15"/>
+    </RelativeLayout>
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_my_demand"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/selector_bg_custom"
-            android:drawableLeft="@drawable/icon_mine_demand"
-            android:drawablePadding="11dp"
-            android:drawableRight="@drawable/icon_next"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:gravity="center_vertical"
-            android:textColor="@color/color_666666"
-            android:textSize="16sp"
-            android:text="@string/my_demand"/>
-
-        <include layout="@layout/divider_15"/>
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_mine_subscription"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/selector_bg_custom"
-            android:drawableLeft="@drawable/icon_mine_subscription"
-            android:drawablePadding="11dp"
-            android:drawableRight="@drawable/icon_next"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:gravity="center_vertical"
-            android:textColor="@color/color_666666"
-            android:textSize="16sp"
-            android:text="@string/mine_subscription"/>
-
-        <include layout="@layout/divider_15"/>
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_my_material"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/selector_bg_custom"
-            android:drawableLeft="@drawable/icon_my_material"
-            android:drawablePadding="11dp"
-            android:drawableRight="@drawable/icon_next"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:gravity="center_vertical"
-            android:textColor="@color/color_666666"
-            android:textSize="16sp"
-            android:text="@string/my_material"/>
-
-        <include layout="@layout/divider_15"/>
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_transaction_record"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/selector_bg_custom"
-            android:drawableLeft="@drawable/icon_record_transaction"
-            android:drawablePadding="11dp"
-            android:drawableRight="@drawable/icon_next"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:gravity="center_vertical"
-            android:textColor="@color/color_666666"
-            android:textSize="16sp"
-            android:text="@string/transaction_record"/>
-
-        <include layout="@layout/divider_15"/>
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_agreement_manage"
-            android:visibility="gone"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/selector_bg_custom"
-            android:drawableLeft="@drawable/icon_agreement_manage"
-            android:drawablePadding="11dp"
-            android:drawableRight="@drawable/icon_next"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:gravity="center_vertical"
-            android:textColor="@color/color_666666"
-            android:textSize="16sp"
-            android:text="@string/agreement_manage"/>
-
-        <include android:visibility="gone" layout="@layout/divider_15"/>
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_pwd_pay"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/selector_bg_custom"
-            android:drawableLeft="@drawable/icon_pwd_pay"
-            android:drawablePadding="11dp"
-            android:drawableRight="@drawable/icon_next"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:gravity="center_vertical"
-            android:textColor="@color/color_666666"
-            android:textSize="16sp"
-            android:text="@string/pwd_pay"/>
-
-        <include layout="@layout/divider_15"/>
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_read_history"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/selector_bg_custom"
-            android:drawableLeft="@drawable/icon_history"
-            android:drawablePadding="11dp"
-            android:drawableRight="@drawable/icon_next"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:gravity="center_vertical"
-            android:textColor="@color/color_666666"
-            android:textSize="16sp"
-            android:text="@string/read_history"/>
-
-        <include layout="@layout/divider_15"/>
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_feedback"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/selector_bg_custom"
-            android:drawableLeft="@drawable/icon_message"
-            android:drawablePadding="11dp"
-            android:drawableRight="@drawable/icon_next"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:gravity="center_vertical"
-            android:textColor="@color/color_666666"
-            android:textSize="16sp"
-            android:text="@string/feedback"/>
-
-        <include layout="@layout/divider_15"/>
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_recommend_friends"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/selector_bg_custom"
-            android:drawableLeft="@drawable/icon_invite_friend"
-            android:drawablePadding="11dp"
-            android:drawableRight="@drawable/icon_next"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:gravity="center_vertical"
-            android:textColor="@color/color_666666"
-            android:textSize="16sp"
-            android:text="@string/recommend_friends"/>
-
-        <include layout="@layout/divider_15"/>
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_my_collection"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/selector_bg_custom"
-            android:drawableLeft="@drawable/icon_collect"
-            android:drawablePadding="11dp"
-            android:drawableRight="@drawable/icon_next"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:gravity="center_vertical"
-            android:textColor="@color/color_666666"
-            android:textSize="16sp"
-            android:text="@string/my_collection"/>
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="10dp" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_set"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/selector_bg_custom"
-            android:drawableLeft="@drawable/icon_set"
-            android:drawablePadding="11dp"
-            android:drawableRight="@drawable/icon_next"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:gravity="center_vertical"
-            android:textColor="@color/color_666666"
-            android:textSize="16sp"
-            android:text="@string/set"/>
-
-        <include layout="@layout/divider_15"/>
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_helper"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/selector_bg_custom"
-            android:drawableLeft="@drawable/icon_help"
-            android:drawablePadding="11dp"
-            android:drawableRight="@drawable/icon_next"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:gravity="center_vertical"
-            android:textColor="@color/color_666666"
-            android:textSize="16sp"
-            android:text="@string/helper"/>
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="60dp" />
-
-    </LinearLayout>
-
-</ScrollView>
+</RelativeLayout>

@@ -79,19 +79,13 @@ public class AppConfig {
 
     public static void init(Application context) {
         initUtils(context);
-
         initLoadSir();
-
         initWX(context);
-
 //        initBugly(context);
-
         if (BuildConfig.IS_DEBUG) {
             initCrash(context);
         }
-
         initJPush(context);
-
         initRongYun(context);
     }
 
@@ -102,9 +96,7 @@ public class AppConfig {
      */
     private static void initUtils(Application context) {
         Utils.init(context);
-
         LogUtils.getConfig().setGlobalTag(context.getString(R.string.app_name)).setLogSwitch(BuildConfig.IS_SHOW_LOG);
-
         ToastUtils.setGravity(Gravity.BOTTOM, 0, ConvertUtils.dp2px(40));
         ToastUtils.setMsgTextSize(13);
         ToastUtils.setMsgColor(Color.parseColor("#ffffff"));

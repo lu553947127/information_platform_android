@@ -2,9 +2,6 @@ package com.shuangduan.zcy.view.demand;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.text.InputFilter;
-import android.text.InputType;
-import android.text.Spanned;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,14 +16,15 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
-import com.blankj.utilcode.util.TimeUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BottomSheetDialogs;
+import com.shuangduan.zcy.dialog.UnitDialog;
 import com.shuangduan.zcy.dialog.pop.CommonPopupWindow;
 import com.shuangduan.zcy.model.api.PageState;
+import com.shuangduan.zcy.utils.KeyboardUtil;
 import com.shuangduan.zcy.vm.DemandReleaseVm;
 import com.shuangduan.zcy.weight.datepicker.CustomDatePicker;
 import java.text.DateFormat;
@@ -123,6 +121,8 @@ public class DemandReleaseActivity extends BaseActivity {
     FrameLayout flDes;
     private DemandReleaseVm demandReleaseVm;
     private BottomSheetDialogs btn_dialog;
+    int demand_num=0;
+    int supply_num=0;
 
     @Override
     protected int initLayoutRes() {
@@ -163,26 +163,13 @@ public class DemandReleaseActivity extends BaseActivity {
                     break;
             }
         });
-        //设置输入框 只能输入数字和小数点
-        edtCommission.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-        //设置字符过滤（设置小数点只能输入到后两位）
-        edtCommission.setFilters(new InputFilter[]{(source, start, end, dest, dstart, dend) -> {
-            if(source.equals(".") && dest.toString().length() == 0){
-                return "0.";
-            }
-            if(dest.toString().contains(".")){
-                int index = dest.toString().indexOf(".");
-                int length = dest.toString().substring(index).length();
-                if(length == 3){
-                    return "";
-                }
-            }
-            return null;
-        }});
+        KeyboardUtil.RemoveDecimalPoints(edtCommission);
+        KeyboardUtil.RemoveDecimalPoints(edtPriceAccept);
+        KeyboardUtil.RemoveDecimalPoints(edtSupplyPrice);
     }
 
     private CommonPopupWindow popupWindow;
-    @OnClick({R.id.iv_bar_back, R.id.tv_release_type, R.id.cb_lease, R.id.cb_sell, R.id.tv_time_end, R.id.tv_release})
+    @OnClick({R.id.iv_bar_back, R.id.tv_release_type, R.id.cb_lease, R.id.cb_sell, R.id.tv_time_end, R.id.tv_release,R.id.tv_demand_num,R.id.tv_supply_num})
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_bar_back:
@@ -302,6 +289,10 @@ public class DemandReleaseActivity extends BaseActivity {
                             ToastUtils.showShort(getString(R.string.hint_demand_num));
                             return;
                         }
+                        if (demand_num==0){
+                            ToastUtils.showShort(getString(R.string.no_unit));
+                            return;
+                        }
                         if (TextUtils.isEmpty(edtDemandProject.getText())){
                             ToastUtils.showShort(getString(R.string.hint_demand_project));
                             return;
@@ -323,7 +314,7 @@ public class DemandReleaseActivity extends BaseActivity {
                             return;
                         }
                         demandReleaseVm.releaseSubstance(edtMaterialName.getText().toString(), edtDemandNum.getText().toString(), edtDemandProject.getText().toString(),
-                                edtProjectAddress.getText().toString(), edtPriceAccept.getText().toString(), edtContactsInfo.getText().toString(), edtOwner.getText().toString());
+                                edtProjectAddress.getText().toString(), edtPriceAccept.getText().toString(), edtContactsInfo.getText().toString(), edtOwner.getText().toString(),demand_num);
                         break;
                     case DemandReleaseVm.RELEASE_TYPE_BUYER:
                         if (TextUtils.isEmpty(edtMaterialName.getText())){
@@ -332,6 +323,10 @@ public class DemandReleaseActivity extends BaseActivity {
                         }
                         if (TextUtils.isEmpty(edtSupplyNum.getText())){
                             ToastUtils.showShort(getString(R.string.hint_supply_num));
+                            return;
+                        }
+                        if (supply_num==0){
+                            ToastUtils.showShort(getString(R.string.no_unit));
                             return;
                         }
                         if (TextUtils.isEmpty(edtSupplyAddress.getText())){
@@ -351,9 +346,21 @@ public class DemandReleaseActivity extends BaseActivity {
                             return;
                         }
                         demandReleaseVm.releaseBuyer(edtMaterialName.getText().toString(), edtSupplyNum.getText().toString(), edtSupplyAddress.getText().toString(),
-                                edtSupplyPrice.getText().toString(), edtContactsInfo.getText().toString(), edtOwner.getText().toString());
+                                edtSupplyPrice.getText().toString(), edtContactsInfo.getText().toString(), edtOwner.getText().toString(),supply_num);
                         break;
                 }
+                break;
+            case R.id.tv_demand_num:
+                new UnitDialog(this).setSelected(0).setSingleCallBack((item, position) -> {
+                    demand_num=position+1;
+                    tvDemandNum.setText(item);
+                }).showDialog();
+                break;
+            case R.id.tv_supply_num:
+                new UnitDialog(this).setSelected(0).setSingleCallBack((item, position) -> {
+                    supply_num=position+1;
+                    tvSupplyNum.setText(item);
+                }).showDialog();
                 break;
         }
     }

@@ -53,6 +53,7 @@ public class RecommendFriendsActivity extends BaseActivity {
     TextView tvUrl;
     private Tencent mTencent;
     private BaseUiListener qqListener;
+    ShareBean bean;
 
     @Override
     protected int initLayoutRes() {
@@ -71,6 +72,7 @@ public class RecommendFriendsActivity extends BaseActivity {
         // 其中APP_ID是分配给第三方应用的appid，类型为String。
         mTencent = Tencent.createInstance(ShareUtils.app_id_qq, getApplicationContext());
         qqListener = new BaseUiListener();
+        getShare();
     }
 
     //分享
@@ -92,38 +94,9 @@ public class RecommendFriendsActivity extends BaseActivity {
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
                         LogUtils.json(response.body());
                         try {
-                            ShareBean bean=new Gson().fromJson(response.body(), ShareBean.class);
+                            bean=new Gson().fromJson(response.body(), ShareBean.class);
                             if (bean.getCode().equals("200")){
                                 tvUrl.setText(bean.getData().getUrl());
-                                Bitmap bitmap = BitmapFactory.decodeFile(bean.getData().getImage());
-//                                Bitmap bitmap = ShareUtils.getBitMBitmap(bean.getData().getImage());
-                                addDialog(new ShareDialog(RecommendFriendsActivity.this)
-                                        .setOnShareListener(new ShareDialog.OnShareListener() {
-                                            @Override
-                                            public void qq() {
-                                                ShareUtils.shareQQ(RecommendFriendsActivity.this, mTencent, qqListener
-                                                        , bean.getData().getUrl(), bean.getData().getTitle(), bean.getData().getDes(), bean.getData().getImage());
-                                            }
-
-                                            @Override
-                                            public void qqStone() {
-                                                ShareUtils.shareQQStone(RecommendFriendsActivity.this, mTencent, qqListener
-                                                        , bean.getData().getUrl(), bean.getData().getTitle(), bean.getData().getDes(), bean.getData().getImage());
-                                            }
-
-                                            @Override
-                                            public void weChat() {
-                                                ShareUtils.shareWeChat(RecommendFriendsActivity.this, ShareUtils.FRIEND
-                                                        , bean.getData().getUrl(), bean.getData().getTitle(), bean.getData().getDes(), bitmap);
-                                            }
-
-                                            @Override
-                                            public void friendCircle() {
-                                                ShareUtils.shareWeChat(RecommendFriendsActivity.this, ShareUtils.FRIEND_CIRCLE
-                                                        , bean.getData().getUrl(), bean.getData().getTitle(), bean.getData().getDes(), bitmap);
-                                            }
-                                        })
-                                        .showDialog());
                             }else if (bean.getCode().equals("-1")){
                                 ToastUtils.showShort(bean.getMsg());
                                 LoginUtils.getExitLogin(RecommendFriendsActivity.this);
@@ -150,7 +123,35 @@ public class RecommendFriendsActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_share:
-                getShare();
+                Bitmap bitmap = BitmapFactory.decodeFile(bean.getData().getImage());
+//                                Bitmap bitmap = ShareUtils.getBitMBitmap(bean.getData().getImage());
+                addDialog(new ShareDialog(RecommendFriendsActivity.this)
+                        .setOnShareListener(new ShareDialog.OnShareListener() {
+                            @Override
+                            public void qq() {
+                                ShareUtils.shareQQ(RecommendFriendsActivity.this, mTencent, qqListener
+                                        , bean.getData().getUrl(), bean.getData().getTitle(), bean.getData().getDes(), bean.getData().getImage());
+                            }
+
+                            @Override
+                            public void qqStone() {
+                                ShareUtils.shareQQStone(RecommendFriendsActivity.this, mTencent, qqListener
+                                        , bean.getData().getUrl(), bean.getData().getTitle(), bean.getData().getDes(), bean.getData().getImage());
+                            }
+
+                            @Override
+                            public void weChat() {
+                                ShareUtils.shareWeChat(RecommendFriendsActivity.this, ShareUtils.FRIEND
+                                        , bean.getData().getUrl(), bean.getData().getTitle(), bean.getData().getDes(), bitmap);
+                            }
+
+                            @Override
+                            public void friendCircle() {
+                                ShareUtils.shareWeChat(RecommendFriendsActivity.this, ShareUtils.FRIEND_CIRCLE
+                                        , bean.getData().getUrl(), bean.getData().getTitle(), bean.getData().getDes(), bitmap);
+                            }
+                        })
+                        .showDialog());
                 break;
         }
     }

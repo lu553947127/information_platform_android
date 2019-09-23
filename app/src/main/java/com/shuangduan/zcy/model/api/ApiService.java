@@ -989,7 +989,8 @@ public interface ApiService {
             @Field("tel") String tel,
             @Field("real_name") String real_name,
             @Field("start_time") String start_time,
-            @Field("end_time") String end_time
+            @Field("end_time") String end_time,
+            @Field("unit") int demand_num
     );
 
     @FormUrlEncoded
@@ -1004,7 +1005,8 @@ public interface ApiService {
             @Field("real_name") String real_name,
             @Field("way") int way,
             @Field("start_time") String start_time,
-            @Field("end_time") String end_time
+            @Field("end_time") String end_time,
+            @Field("unit") int supply_num
     );
 
     @FormUrlEncoded

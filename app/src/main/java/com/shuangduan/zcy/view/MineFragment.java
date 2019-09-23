@@ -2,8 +2,11 @@ package com.shuangduan.zcy.view;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.RelativeLayout;
 
 import androidx.appcompat.widget.AppCompatTextView;
+import androidx.core.content.ContextCompat;
+import androidx.core.widget.NestedScrollView;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.ActivityUtils;
@@ -18,6 +21,7 @@ import com.shuangduan.zcy.model.event.CoinEvent;
 import com.shuangduan.zcy.model.event.RechargeSuccessEvent;
 import com.shuangduan.zcy.model.event.UserNameEvent;
 import com.shuangduan.zcy.utils.BarUtils;
+import com.shuangduan.zcy.utils.DensityUtil;
 import com.shuangduan.zcy.utils.image.ImageConfig;
 import com.shuangduan.zcy.utils.image.ImageLoader;
 import com.shuangduan.zcy.view.mine.BalanceActivity;
@@ -37,10 +41,13 @@ import com.shuangduan.zcy.view.mine.TransRecordActivity;
 import com.shuangduan.zcy.view.mine.UserInfoActivity;
 import com.shuangduan.zcy.view.recharge.RechargeActivity;
 import com.shuangduan.zcy.vm.UserInfoVm;
+import com.shuangduan.zcy.weight.AdaptationScrollView;
 import com.shuangduan.zcy.weight.CircleImageView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -69,12 +76,15 @@ public class MineFragment extends BaseFragment {
     AppCompatTextView tvNumOfPeople;
     @BindView(R.id.tv_balance)
     AppCompatTextView tvBalance;
+    @BindView(R.id.scroll)
+    AdaptationScrollView scrollView;
+    @BindView(R.id.rl_toolbar)
+    RelativeLayout toolbar;
     private UserInfoVm userInfoVm;
 
     public static MineFragment newInstance() {
 
         Bundle args = new Bundle();
-
         MineFragment fragment = new MineFragment();
         fragment.setArguments(args);
         return fragment;
@@ -110,6 +120,26 @@ public class MineFragment extends BaseFragment {
                 default:
                     hideLoading();
                     break;
+            }
+        });
+        //滑动布局滑动监听
+        scrollView.setOnScrollChangeListener(new AdaptationScrollView.OnScrollChangeListener() {
+            private int mScrollY_2 = 0;
+            private int lastScrollY = 0;
+            private int h = DensityUtil.dp2px(70);
+            //设置折叠标题背景颜色
+            private int color = ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.colorPrimary)&0x00ffffff;
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if (lastScrollY < h) {
+                    scrollY = Math.min(h, scrollY);
+                    mScrollY_2 = scrollY > h ? h : scrollY;
+                    toolbar.setAlpha(1f * mScrollY_2 / h);
+                    toolbar.setBackgroundColor(((255 * mScrollY_2 / h) << 24) | color);
+                }else {
+                    toolbar.setVisibility(View.VISIBLE);
+                }
+                lastScrollY = scrollY;
             }
         });
     }

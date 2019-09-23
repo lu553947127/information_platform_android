@@ -111,6 +111,7 @@
     <string name="company_website">公司网址</string>
     <string name="hind_company_website">请输入公司网址</string>
     <string name="scale_select">人员规模</string>
+    <string name="unit_select">单位</string>
     <string name="upload_business_card">上传名片</string>
     <string name="bank_card_message">银行卡信息</string>
     <string name="account_name">账户名</string>
@@ -185,6 +186,7 @@
     <string name="supply_price">供应价格</string>
     <string name="lease">租赁</string>
     <string name="sell">售卖</string>
+    <string name="no_unit">请选择单位</string>
     <string name="hint_title">请输入标题</string>
     <string name="hint_commission">请输入佣金</string>
     <string name="select_time">请选择有效时间</string>
@@ -193,7 +195,7 @@
     <string name="hint_supply_num">请输入供应数量</string>
     <string name="hint_demand_num">请输入需求数量</string>
     <string name="hint_demand_project">请输入需求项目</string>
-    <string name="hint_project_address">请输入需求项目</string>
+    <string name="hint_project_address">请输入项目地址</string>
     <string name="hint_price_accept">请输入接受价格</string>
     <string name="hint_price_supply">请输入供应价格</string>
     <string name="hint_supply_address">请输入供应地址</string>
@@ -519,6 +521,19 @@
         <item>100–500</item>
         <item>500–1000</item>
         <item>1000+</item>
+    </string-array>
+
+    <string-array name="unit_list">
+        <item>吨</item>
+        <item>个</item>
+        <item>根</item>
+        <item>件</item>
+        <item>米</item>
+        <item>片</item>
+        <item>平方</item>
+        <item>台</item>
+        <item>套</item>
+        <item>条</item>
     </string-array>
 
     <string name="stock">库存：</string>
