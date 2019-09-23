@@ -127,7 +127,7 @@ public class MaterialActivity extends BaseActivity {
     }
 
     private CommonPopupWindow popupWindowCategory;
-    private FlexboxLayout flMaterial;
+//    private FlexboxLayout flMaterial;
     private FlexboxLayout flProduct;
 
     private void initPop() {
@@ -138,7 +138,7 @@ public class MaterialActivity extends BaseActivity {
                     .setBackGroundLevel(1f)
                     .setWidthAndHeight(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
                     .setViewOnclickListener((view, layoutResId) -> {
-                        flMaterial = view.findViewById(R.id.fl_material);
+//                        flMaterial = view.findViewById(R.id.fl_material);
                         flProduct = view.findViewById(R.id.fl_product);
                         view.findViewById(R.id.tv_negative).setOnClickListener(item -> {
                             popupWindowCategory.dismiss();
@@ -155,48 +155,48 @@ public class MaterialActivity extends BaseActivity {
         }
         if (!popupWindowCategory.isShowing()) {
             List<MaterialCategoryBean> categoryFirst = materialVm.categoryFirstLiveData.getValue();
-            flMaterial.removeAllViews();
-            for (int i = 0; i < categoryFirst.size(); i++) {
-                addItemFirst(categoryFirst, i);
-            }
+//            flMaterial.removeAllViews();
+//            for (int i = 0; i < categoryFirst.size(); i++) {
+//                addItemFirst(categoryFirst, i);
+//            }
 
             popupWindowCategory.showAsDropDown(toolbar, 0, 0);
             over.setVisibility(View.VISIBLE);
         }
     }
 
-    private void addItemFirst(List<MaterialCategoryBean> categoryList, int i) {
-        final TextView tv = (TextView) LayoutInflater.from(this).inflate(R.layout.item_box, flMaterial, false);
-        MaterialCategoryBean bean = categoryList.get(i);
-        tv.setText(bean.getCatname());
-        tv.setSelected(bean.getIsSelect() == 1);
-        tv.setOnClickListener(v -> {
-            if (tv.isSelected()) {
-                //如果本身就是选中状态，则变为未选中并移除二级分类的所有子控件
-                flProduct.removeAllViews();
-                //一级分类ID
-                materialVm.categoryFirstId = 0;
-                //二级分类ID
-                materialVm.categoryId = 0;
-            } else {
-                //开启二级分类
-                materialVm.categoryFirstId = bean.getId();
-                materialVm.getCategory();
-            }
-            bean.setIsSelect(tv.isSelected() ? 0 : 1);
-            tv.setSelected(!tv.isSelected());
-            for (int j = 0; j < categoryList.size(); j++) {
-                if (j != i) {
-                    categoryList.get(j).setIsSelect(0);
-                    View child = flMaterial.getChildAt(j);
-                    if (child instanceof TextView) {
-                        ((TextView) child).setSelected(false);
-                    }
-                }
-            }
-        });
-        flMaterial.addView(tv);
-    }
+//    private void addItemFirst(List<MaterialCategoryBean> categoryList, int i) {
+//        final TextView tv = (TextView) LayoutInflater.from(this).inflate(R.layout.item_box, flMaterial, false);
+//        MaterialCategoryBean bean = categoryList.get(i);
+//        tv.setText(bean.getCatname());
+//        tv.setSelected(bean.getIsSelect() == 1);
+//        tv.setOnClickListener(v -> {
+//            if (tv.isSelected()) {
+//                //如果本身就是选中状态，则变为未选中并移除二级分类的所有子控件
+//                flProduct.removeAllViews();
+//                //一级分类ID
+//                materialVm.categoryFirstId = 0;
+//                //二级分类ID
+//                materialVm.categoryId = 0;
+//            } else {
+//                //开启二级分类
+//                materialVm.categoryFirstId = bean.getId();
+//                materialVm.getCategory();
+//            }
+//            bean.setIsSelect(tv.isSelected() ? 0 : 1);
+//            tv.setSelected(!tv.isSelected());
+//            for (int j = 0; j < categoryList.size(); j++) {
+//                if (j != i) {
+//                    categoryList.get(j).setIsSelect(0);
+//                    View child = flMaterial.getChildAt(j);
+//                    if (child instanceof TextView) {
+//                        ((TextView) child).setSelected(false);
+//                    }
+//                }
+//            }
+//        });
+//        flMaterial.addView(tv);
+//    }
 
     private void addItemCategory(List<MaterialCategoryBean> categoryList, int i) {
         final TextView tv = (TextView) LayoutInflater.from(this).inflate(R.layout.item_box, flProduct, false);

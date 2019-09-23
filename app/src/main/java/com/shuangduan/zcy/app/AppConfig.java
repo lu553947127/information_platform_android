@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Environment;
+import android.os.Process;
 import android.view.Gravity;
 
 import androidx.annotation.NonNull;
@@ -38,8 +39,10 @@ import com.shuangduan.zcy.callback.TimeOutCallback;
 import com.shuangduan.zcy.view.login.WelcomeActivity;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+import com.xiaomi.mipush.sdk.MiPushClient;
 
 import java.io.File;
+import java.util.List;
 
 import cn.jpush.android.api.JPushInterface;
 import io.rong.imkit.RongIM;
@@ -158,6 +161,18 @@ public class AppConfig {
     }
 
     private static void initRongYun(Context context) {
+
+        //初始化小米push推送服务
+//        if (shouldInit(context)) {
+//            MiPushClient.registerPush(context, "2882303761517473625", "5451747338625");
+//        }
+
+
+        //初始化OPPO推送 ，此功能需要在初始化融云之前
+        PushConfig.Builder builder = new PushConfig.Builder();
+        builder.enableOppoPush("6bbb2e614c374489b2aca7016c4cbceb", "7e187275fb0645aea6fd3a3e85aedcb5");
+        RongPushClient.setPushConfig(builder.build());
+
         //融云初始化
         RongIM.init(context, "pwe86ga5p43i6");
         //融云推送初始化
@@ -174,6 +189,7 @@ public class AppConfig {
         //设置融云全局链接状态监听
         RongIMClient.setConnectionStatusListener(connectionStatus -> {
             switch (connectionStatus) {
+                //融云账号在其他设备上进行登录
                 case KICKED_OFFLINE_BY_OTHER_CLIENT:
                     SPUtils.getInstance().clear();
                     SPUtils.getInstance().put(SpConfig.FIRST_APP, 1);
@@ -183,6 +199,7 @@ public class AppConfig {
             }
         });
     }
+
 
     /**
      * 获得当前进程的名字
@@ -207,4 +224,17 @@ public class AppConfig {
         return null;
     }
 
+
+    private static boolean shouldInit(Context context) {
+        ActivityManager am = ((ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE));
+        List<ActivityManager.RunningAppProcessInfo> processInfos = am.getRunningAppProcesses();
+        String mainProcessName = context.getPackageName();
+        int myPid = Process.myPid();
+        for (ActivityManager.RunningAppProcessInfo info : processInfos) {
+            if (info.pid == myPid && mainProcessName.equals(info.processName)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

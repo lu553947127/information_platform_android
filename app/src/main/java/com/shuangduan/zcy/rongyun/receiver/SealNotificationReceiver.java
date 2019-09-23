@@ -1,23 +1,13 @@
 package com.shuangduan.zcy.rongyun.receiver;
 
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.Context;
-import android.graphics.BitmapFactory;
 import android.os.Build;
-import android.widget.RemoteViews;
 
 import androidx.annotation.RequiresApi;
-
-import com.blankj.utilcode.util.LogUtils;
-import com.shuangduan.zcy.R;
 
 import io.rong.push.PushType;
 import io.rong.push.notification.PushMessageReceiver;
 import io.rong.push.notification.PushNotificationMessage;
-
-import static android.content.Context.NOTIFICATION_SERVICE;
 
 public class SealNotificationReceiver extends PushMessageReceiver {
 

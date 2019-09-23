@@ -3,8 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.shuangduan.zcy">
 
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+    <!-- 华为推送PUSH 如果是安卓8.0，应用编译配置的targetSdkVersion>=26，请务必添加以下权限 -->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <!-- OPPO推送权限 -->
+    <uses-permission android:name="com.coloros.mcs.permission.RECIEVE_MCS_MESSAGE" />
+
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <!--允许程序打开网络套接字-->
     <uses-permission android:name="android.permission.INTERNET" />
     <!--允许程序设置内置sd卡的写权限-->
@@ -19,42 +26,62 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <!-- Required -->
-    <permission android:name="com.shuangduan.zcy.permission.JPUSH_MESSAGE" android:protectionLevel="signature" />
+    <permission
+        android:name="com.shuangduan.zcy.permission.JPUSH_MESSAGE"
+        android:protectionLevel="signature" />
     <!-- Required -->
     <uses-permission android:name="com.shuangduan.zcy.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" tools:ignore="ProtectedPermissions" />
+    <uses-permission
+        android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+        tools:ignore="ProtectedPermissions" />
     <!-- 小米 配置开始 < -->
-    <permission android:name="com.shuangduan.zcy.permission.MIPUSH_RECEIVE" android:protectionLevel="signature" tools:ignore="WrongManifestParent" />
-    <uses-permission android:name="com.shuangduan.zcy.permission.MIPUSH_RECEIVE" tools:ignore="WrongManifestParent" />
+    <permission
+        android:name="com.shuangduan.zcy.permission.MIPUSH_RECEIVE"
+        android:protectionLevel="signature"
+        tools:ignore="WrongManifestParent" />
+    <uses-permission
+        android:name="com.shuangduan.zcy.permission.MIPUSH_RECEIVE"
+        tools:ignore="WrongManifestParent" />
     <!-- 小米 配置结束 < -->
     <application
         android:name="com.shuangduan.zcy.app.MyApplication"
         android:allowBackup="true"
         android:icon="@drawable/app_logo"
         android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_config"
         android:roundIcon="@drawable/app_logo"
         android:supportsRtl="true"
         android:theme="@style/BaseAppTheme"
-        android:networkSecurityConfig="@xml/network_config"
         tools:ignore="GoogleAppIndexingWarning,UnusedAttribute">
         <!-- 欢迎页-->
-        <activity android:name="com.shuangduan.zcy.view.login.WelcomeActivity" android:theme="@style/SplashTheme">
+        <activity
+            android:name="com.shuangduan.zcy.view.login.WelcomeActivity"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <!-- 引导页-->
-        <activity android:name="com.shuangduan.zcy.view.login.FirstStartActivity"/>
+        <activity android:name="com.shuangduan.zcy.view.login.FirstStartActivity" />
         <!-- 登录页-->
-        <activity android:name="com.shuangduan.zcy.view.login.LoginActivity" android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name="com.shuangduan.zcy.view.login.LoginActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
         <!-- 注册页-->
-        <activity android:name="com.shuangduan.zcy.view.login.RegisterActivity" android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name="com.shuangduan.zcy.view.login.RegisterActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
         <!-- 首次登陆需要录入信息页-->
-        <activity android:name="com.shuangduan.zcy.view.login.UserInfoInputActivity" android:windowSoftInputMode="stateHidden|adjustResize"  android:launchMode="singleTop" />
+        <activity
+            android:name="com.shuangduan.zcy.view.login.UserInfoInputActivity"
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <!-- 首页-->
-        <activity android:name="com.shuangduan.zcy.view.MainActivity"  android:launchMode="singleTask" >
+        <activity
+            android:name="com.shuangduan.zcy.view.MainActivity"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -65,83 +92,136 @@
             </intent-filter>
         </activity>
         <!-- 手机邮箱验证页-->
-        <activity android:name="com.shuangduan.zcy.view.login.MobileVerificationActivity" android:theme="@style/AppThemeBgGray"/>
-        <activity android:name="com.shuangduan.zcy.view.mine.UserInfoActivity"  android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity android:name="com.shuangduan.zcy.view.mine.WithdrawActivity" android:windowSoftInputMode="stateHidden|adjustResize" android:theme="@style/AppThemeBgGray" />
-        <activity android:name="com.shuangduan.zcy.view.mine.UpdateNameActivity" android:theme="@style/AppThemeBgGray"/>
-        <activity android:name="com.shuangduan.zcy.view.mine.UpdateMobileActivity" android:theme="@style/AppThemeBgGray"/>
-        <activity android:name="com.shuangduan.zcy.view.mine.ForgetPwdActivity" android:theme="@style/AppThemeBgGray" android:windowSoftInputMode="stateHidden|adjustResize"/>
-        <activity android:name="com.shuangduan.zcy.view.mine.UpdateResultActivity" android:theme="@style/AppThemeBgGray"/>
-        <activity android:name="com.shuangduan.zcy.view.mine.UpdateEmailActivity" android:theme="@style/AppThemeBgGray"/>
+        <activity
+            android:name="com.shuangduan.zcy.view.login.MobileVerificationActivity"
+            android:theme="@style/AppThemeBgGray" />
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.UserInfoActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.WithdrawActivity"
+            android:theme="@style/AppThemeBgGray"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.UpdateNameActivity"
+            android:theme="@style/AppThemeBgGray" />
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.UpdateMobileActivity"
+            android:theme="@style/AppThemeBgGray" />
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.ForgetPwdActivity"
+            android:theme="@style/AppThemeBgGray"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.UpdateResultActivity"
+            android:theme="@style/AppThemeBgGray" />
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.UpdateEmailActivity"
+            android:theme="@style/AppThemeBgGray" />
         <activity android:name="com.shuangduan.zcy.view.mine.UpdatePwdActivity" />
         <activity android:name="com.shuangduan.zcy.view.mine.AuthenticationActivity" />
         <activity android:name="com.shuangduan.zcy.view.mine.BindBankCardActivity" />
         <activity android:name="com.shuangduan.zcy.view.mine.CompanySearchActivity" />
         <activity android:name="com.shuangduan.zcy.view.mine.BusinessAreaActivity" />
         <activity android:name="com.shuangduan.zcy.view.mine.HelperActivity" />
-        <activity android:name="com.shuangduan.zcy.view.mine.SetActivity"  android:theme="@style/AppThemeBgGray"/>
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.SetActivity"
+            android:theme="@style/AppThemeBgGray" />
         <activity android:name="com.shuangduan.zcy.view.mine.AboutOursActivity" />
         <activity android:name="com.shuangduan.zcy.view.mine.RecommendFriendsActivity" />
         <activity android:name="com.shuangduan.zcy.view.mine.FeedbackActivity" />
         <activity android:name="com.shuangduan.zcy.view.mine.ReadHistoryActivity" />
         <activity android:name="com.shuangduan.zcy.view.mine.MineSubActivity" />
         <activity android:name="com.shuangduan.zcy.view.mine.MineCollectionActivity" />
-        <activity android:name="com.shuangduan.zcy.view.mine.BalanceActivity"  android:theme="@style/AppThemeBgGray"/>
-        <activity android:name="com.shuangduan.zcy.view.mine.BankCardListActivity"  android:theme="@style/AppThemeBgGray"/>
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.BalanceActivity"
+            android:theme="@style/AppThemeBgGray" />
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.BankCardListActivity"
+            android:theme="@style/AppThemeBgGray" />
         <activity android:name="com.shuangduan.zcy.view.mine.WithdrawRecordActivity" />
-        <activity android:name="com.shuangduan.zcy.view.mine.WithdrawDetailActivity"  android:theme="@style/AppThemeBgGray"/>
-        <activity android:name="com.shuangduan.zcy.view.mine.UnbindBankCardActivity"  />
-        <activity android:name="com.shuangduan.zcy.view.mine.UpdateProductionActivity"  />
-        <activity android:name="com.shuangduan.zcy.view.mine.MineOrderActivity"  />
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.WithdrawDetailActivity"
+            android:theme="@style/AppThemeBgGray" />
+        <activity android:name="com.shuangduan.zcy.view.mine.UnbindBankCardActivity" />
+        <activity android:name="com.shuangduan.zcy.view.mine.UpdateProductionActivity" />
+        <activity android:name="com.shuangduan.zcy.view.mine.MineOrderActivity" />
         <activity android:name="com.shuangduan.zcy.view.mine.OrderSubActivity" />
-        <activity android:name="com.shuangduan.zcy.view.mine.PwdPayActivity"  android:theme="@style/AppThemeBgGray"/>
-        <activity android:name="com.shuangduan.zcy.view.mine.UpdatePwdPayActivity"  android:theme="@style/AppThemeBgGray"/>
-        <activity android:name="com.shuangduan.zcy.view.mine.ForgetPwdPayActivity"  android:theme="@style/AppThemeBgGray"/>
-        <activity android:name="com.shuangduan.zcy.view.mine.SetPwdPayActivity"  android:theme="@style/AppThemeBgGray"/>
-        <activity android:name="com.shuangduan.zcy.view.mine.ExplainDetailActivity"  />
-        <activity android:name="com.shuangduan.zcy.view.mine.TransRecordActivity"  />
-        <activity android:name="com.shuangduan.zcy.view.mine.TransRecordDetailActivity"  android:theme="@style/AppThemeBgGray"/>
-        <activity android:name="com.shuangduan.zcy.view.mine.MineDemandActivity"  />
-        <activity android:name="com.shuangduan.zcy.view.recharge.RechargeActivity"  />
-        <activity android:name="com.shuangduan.zcy.view.recharge.RechargeRecordActivity"  />
-        <activity android:name="com.shuangduan.zcy.view.recharge.RechargeResultActivity"  />
-        <activity android:name="com.shuangduan.zcy.view.recharge.RechargeRecordDetailActivity"  android:theme="@style/AppThemeBgGray" />
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.PwdPayActivity"
+            android:theme="@style/AppThemeBgGray" />
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.UpdatePwdPayActivity"
+            android:theme="@style/AppThemeBgGray" />
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.ForgetPwdPayActivity"
+            android:theme="@style/AppThemeBgGray" />
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.SetPwdPayActivity"
+            android:theme="@style/AppThemeBgGray" />
+        <activity android:name="com.shuangduan.zcy.view.mine.ExplainDetailActivity" />
+        <activity android:name="com.shuangduan.zcy.view.mine.TransRecordActivity" />
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.TransRecordDetailActivity"
+            android:theme="@style/AppThemeBgGray" />
+        <activity android:name="com.shuangduan.zcy.view.mine.MineDemandActivity" />
+        <activity android:name="com.shuangduan.zcy.view.recharge.RechargeActivity" />
+        <activity android:name="com.shuangduan.zcy.view.recharge.RechargeRecordActivity" />
+        <activity android:name="com.shuangduan.zcy.view.recharge.RechargeResultActivity" />
+        <activity
+            android:name="com.shuangduan.zcy.view.recharge.RechargeRecordDetailActivity"
+            android:theme="@style/AppThemeBgGray" />
         <activity android:name="com.shuangduan.zcy.view.income.MineIncomeActivity" />
-        <activity android:name="com.shuangduan.zcy.view.income.IncomeClassifyActivity"  />
+        <activity android:name="com.shuangduan.zcy.view.income.IncomeClassifyActivity" />
         <activity android:name="com.shuangduan.zcy.view.income.IncomeReleaseActivity" />
-        <activity android:name="com.shuangduan.zcy.view.income.IncomeProductRightsActivity"  />
-        <activity android:name="com.shuangduan.zcy.view.income.IncomePeopleActivity"  />
-        <activity android:name="com.shuangduan.zcy.view.income.IncomeLocusActivity"  />
-        <activity android:name="com.shuangduan.zcy.view.income.IncomeMsgActivity"  />
-        <activity android:name="com.shuangduan.zcy.view.people.PeopleInfoActivity"  android:theme="@style/AppThemeBgGray"/>
-        <activity android:name="com.shuangduan.zcy.view.people.IncomeRecordActivity"  />
+        <activity android:name="com.shuangduan.zcy.view.income.IncomeProductRightsActivity" />
+        <activity android:name="com.shuangduan.zcy.view.income.IncomePeopleActivity" />
+        <activity android:name="com.shuangduan.zcy.view.income.IncomeLocusActivity" />
+        <activity android:name="com.shuangduan.zcy.view.income.IncomeMsgActivity" />
+        <activity
+            android:name="com.shuangduan.zcy.view.people.PeopleInfoActivity"
+            android:theme="@style/AppThemeBgGray" />
+        <activity android:name="com.shuangduan.zcy.view.people.IncomeRecordActivity" />
         <activity android:name="com.shuangduan.zcy.view.projectinfo.ProjectInfoActivity" />
         <activity android:name="com.shuangduan.zcy.view.projectinfo.ProjectInfoListActivity" />
-        <activity android:name="com.shuangduan.zcy.view.projectinfo.ProjectDetailActivity"  android:theme="@style/AppThemeBgGray"/>
+        <activity
+            android:name="com.shuangduan.zcy.view.projectinfo.ProjectDetailActivity"
+            android:theme="@style/AppThemeBgGray" />
         <activity android:name="com.shuangduan.zcy.view.projectinfo.GoToSubActivity" />
         <activity android:name="com.shuangduan.zcy.view.projectinfo.SubOrderActivity" />
         <activity android:name="com.shuangduan.zcy.view.projectinfo.SubInfoActivity" />
         <activity android:name="com.shuangduan.zcy.view.projectinfo.ProjectErrorActivity" />
-        <activity android:name="com.shuangduan.zcy.view.projectinfo.LocusOwnerDetailActivity"/>
+        <activity android:name="com.shuangduan.zcy.view.projectinfo.LocusOwnerDetailActivity" />
         <activity android:name="com.shuangduan.zcy.view.recruit.RecruitActivity" />
         <activity android:name="com.shuangduan.zcy.view.recruit.RecruitDetailActivity" />
         <activity android:name="com.shuangduan.zcy.view.material.MaterialActivity" />
         <activity android:name="com.shuangduan.zcy.view.material.MaterialOrderSuccessActivity" />
-        <activity android:name="com.shuangduan.zcy.view.material.MaterialDetailActivity"  android:theme="@style/AppThemeBgGray"/>
+        <activity
+            android:name="com.shuangduan.zcy.view.material.MaterialDetailActivity"
+            android:theme="@style/AppThemeBgGray" />
         <activity android:name="com.shuangduan.zcy.view.supplier.SupplierActivity" />
-        <activity android:name="com.shuangduan.zcy.view.supplier.SupplierDetailActivity"  android:theme="@style/AppThemeBgGray"/>
-        <activity android:name="com.shuangduan.zcy.view.supplier.SupplierJoinActivity"  android:theme="@style/AppThemeBgGray"/>
+        <activity
+            android:name="com.shuangduan.zcy.view.supplier.SupplierDetailActivity"
+            android:theme="@style/AppThemeBgGray" />
+        <activity
+            android:name="com.shuangduan.zcy.view.supplier.SupplierJoinActivity"
+            android:theme="@style/AppThemeBgGray" />
         <activity android:name="com.shuangduan.zcy.view.release.ReleaseListActivity" />
-        <activity android:name="com.shuangduan.zcy.view.release.ReleaseProjectActivity"  android:theme="@style/AppThemeBgGray" android:windowSoftInputMode="stateHidden|adjustResize"/>
+        <activity
+            android:name="com.shuangduan.zcy.view.release.ReleaseProjectActivity"
+            android:theme="@style/AppThemeBgGray"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity android:name="com.shuangduan.zcy.view.release.ReleaseTypeSelectActivity" />
         <activity android:name="com.shuangduan.zcy.view.release.ReleaseAreaSelectActivity" />
         <activity android:name="com.shuangduan.zcy.view.release.LocationMapActivity" />
         <activity android:name="com.shuangduan.zcy.view.release.ContactTypeActivity" />
-        <activity android:name="com.shuangduan.zcy.view.release.ProjectSearchActivity"/>
-        <activity android:name="com.shuangduan.zcy.view.release.ReleaseStageSelectActivity" android:theme="@style/AppThemeBgGray"/>
-        <activity android:name="com.shuangduan.zcy.view.search.SearchActivity"/>
+        <activity android:name="com.shuangduan.zcy.view.release.ProjectSearchActivity" />
+        <activity
+            android:name="com.shuangduan.zcy.view.release.ReleaseStageSelectActivity"
+            android:theme="@style/AppThemeBgGray" />
+        <activity android:name="com.shuangduan.zcy.view.search.SearchActivity" />
         <activity android:name="com.shuangduan.zcy.view.search.SearchResultActivity" />
-        <activity android:name="com.shuangduan.zcy.view.headlines.HeadlinesActivity"/>
+        <activity android:name="com.shuangduan.zcy.view.headlines.HeadlinesActivity" />
         <activity android:name="com.shuangduan.zcy.view.headlines.HeadlinesDetailActivity" />
         <activity android:name="com.shuangduan.zcy.view.demand.DemandActivity" />
         <activity android:name="com.shuangduan.zcy.view.demand.DemandReleaseActivity" />
@@ -151,12 +231,19 @@
         <activity android:name="com.shuangduan.zcy.view.demand.FindBuyerDetailActivity" />
         <activity android:name="com.shuangduan.zcy.view.demand.FindRelationshipAcceptDetailActivity" />
         <activity android:name="com.shuangduan.zcy.view.demand.FindRelationshipReleaseDetailActivity" />
-        <activity android:name="com.shuangduan.zcy.view.PhotoViewActivity"  android:theme="@style/PhotoViewTheme"/>
-        <activity android:name="com.shuangduan.zcy.view.MultiAreaActivity"  android:theme="@style/AppThemeBgGray"/>
+        <activity
+            android:name="com.shuangduan.zcy.view.PhotoViewActivity"
+            android:theme="@style/PhotoViewTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.MultiAreaActivity"
+            android:theme="@style/AppThemeBgGray" />
         <activity android:name="com.shuangduan.zcy.view.PayActivity" />
         <activity android:name="com.shuangduan.zcy.rongyun.view.IMSearchActivity" />
         <activity android:name="com.shuangduan.zcy.rongyun.view.IMAddFriendActivity" />
-        <activity android:name="com.shuangduan.zcy.rongyun.view.IMPrivateChatActivity" android:configChanges="orientation|screenSize"  android:windowSoftInputMode="stateHidden|adjustResize">
+        <activity
+            android:name="com.shuangduan.zcy.rongyun.view.IMPrivateChatActivity"
+            android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -167,7 +254,10 @@
             </intent-filter>
         </activity>
         <!--融云聚合消息页面-->
-        <activity android:name="com.shuangduan.zcy.rongyun.view.IMSubConversationListActivity" android:configChanges="orientation|screenSize"  android:windowSoftInputMode="stateHidden|adjustResize">
+        <activity
+            android:name="com.shuangduan.zcy.rongyun.view.IMSubConversationListActivity"
+            android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -178,7 +268,10 @@
             </intent-filter>
         </activity>
         <activity android:name="com.shuangduan.zcy.rongyun.view.NewFriendsActivity" />
-        <activity android:name="com.shuangduan.zcy.wxapi.WXPayEntryActivity"  android:launchMode="singleTop" android:exported="true"/>
+        <activity
+            android:name="com.shuangduan.zcy.wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop" />
         <activity android:name="com.shuangduan.zcy.rongyun.view.IMContactsActivity" />
         <activity android:name="com.shuangduan.zcy.rongyun.view.IMFriendMoreActivity" />
         <activity android:name="com.shuangduan.zcy.rongyun.view.IMGroupMoreActivity" />
@@ -188,22 +281,22 @@
         <!-- 微信分享-->
         <activity
             android:name=".wxapi.WXEntryActivity"
-            android:label="@string/app_name"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:exported="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
             android:taskAffinity="net.sourceforge.simcpux"
-            android:launchMode="singleTask">
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <data android:scheme="wx2e2f0d4ccdf3e52f"/>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="wx2e2f0d4ccdf3e52f" />
             </intent-filter>
         </activity>
 
         <!--高德地图appKey-->
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="0c36af45d9d91702919613d75a2f53a2"/>
+            android:value="0c36af45d9d91702919613d75a2f53a2" />
         <!--融云临时访问权限-->
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -212,30 +305,30 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/rc_file_path">
-            </meta-data>
+                android:resource="@xml/rc_file_path"></meta-data>
         </provider>
 
         <provider
             android:name=".model.api.CustomFileProvider"
-            tools:replace="android:authorities"
             android:authorities="com.shuangduan.zcy.fileprovider"
             android:exported="false"
-            android:grantUriPermissions="true">
+            android:grantUriPermissions="true"
+            tools:replace="android:authorities">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths_private">
-            </meta-data>
+                android:resource="@xml/file_paths_private"></meta-data>
         </provider>
         <!--QQ分享 start-->
         <activity
             android:name="com.tencent.tauth.AuthActivity"
-            android:noHistory="true"
-            android:launchMode="singleTask" >
+            android:launchMode="singleTask"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data android:scheme="tencent101795774" />
             </intent-filter>
         </activity>
@@ -250,7 +343,8 @@
         <!-- Since JCore2.0.0 Required SDK核心功能-->
         <!-- 可配置android:process参数将Service放在其他进程中；android:enabled属性不能是false -->
         <!-- 这个是自定义Service，要继承极光JCommonService，可以在更多手机平台上使得推送通道保持的更稳定 -->
-        <service android:name=".service.JpushService"
+        <service
+            android:name=".service.JpushService"
             android:enabled="true"
             android:exported="false"
             android:process=":pushcore">
@@ -266,7 +360,7 @@
         <receiver
             android:name=".service.MessageReceiver"
             android:enabled="true"
-            android:exported="false" >
+            android:exported="false">
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.RECEIVE_MESSAGE" />
                 <category android:name="com.shuangduan.zcy" />
@@ -285,7 +379,7 @@
                 <action android:name="io.rong.push.intent.THIRD_PARTY_PUSH_STATE" />
             </intent-filter>
         </receiver>
-        <!-- 小米 配置开始 < -->
+        <!-- 小米推送 配置开始 < -->
         <service
             android:name="com.xiaomi.push.service.XMPushService"
             android:enabled="true" />
@@ -309,7 +403,8 @@
             android:name="com.xiaomi.push.service.receivers.NetworkStatusReceiver"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"
+                <action
+                    android:name="android.net.conn.CONNECTIVITY_CHANGE"
                     tools:ignore="BatteryLife" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -335,8 +430,76 @@
                 <action android:name="com.xiaomi.mipush.ERROR" />
             </intent-filter>
         </receiver>
-        <!-- 小米 配置结束< -->
+        <!-- 小米推送 配置结束< -->
 
+
+        <!-- 华为推送 配置开始 -->
+        <meta-data
+            android:name="com.huawei.hms.client.appid"
+            android:value="com.shuangduan.zcy" />
+        <!-- BridgeActivity定义了HMS-SDK中一些跳转所需要的透明页面-->
+        <activity
+            android:name="com.huawei.hms.activity.BridgeActivity"
+            android:configChanges="orientation|locale|screenSize|layoutDirection|fontScale"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:theme="@android:style/Theme.Translucent">
+            <meta-data
+                android:name="hwc-theme"
+                android:value="androidhwext:style/Theme.Emui.Translucent" />
+        </activity>
+
+        <!-- 解决华为移动服务升级问题的透明界面（必须声明）  -->
+        <activity
+            android:name="com.huawei.android.hms.agent.common.HMSAgentActivity"
+            android:configChanges="orientation|locale|screenSize|layoutDirection|fontScale"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:theme="@android:style/Theme.Translucent">
+            <meta-data
+                android:name="hwc-theme"
+                android:value="androidhwext:style/Theme.Emui.Translucent" />
+        </activity>
+
+
+        <provider
+            android:name="com.huawei.hms.update.provider.UpdateProvider"
+            android:authorities="xxx.xxx.xxx.hms.update.provider"
+            android:exported="false"
+            android:grantUriPermissions="true"></provider>
+        <!-- 第三方相关 :接收Push消息（注册、Push消息、Push连接状态）广播 -->
+        <receiver android:name="io.rong.push.platform.hms.HMSReceiver">
+            <intent-filter>
+                <!-- 必须,用于接收token -->
+                <action android:name="com.huawei.android.push.intent.REGISTRATION" />
+                <!-- 必须，用于接收消息 -->
+                <action android:name="com.huawei.android.push.intent.RECEIVE" />
+                <!-- 可选，用于点击通知栏或通知栏上的按钮后触发onEvent回调 -->
+                <action android:name="com.huawei.android.push.intent.CLICK" />
+                <!-- 可选，查看push通道是否连接，不查看则不需要 -->
+                <action android:name="com.huawei.intent.action.PUSH_STATE" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="com.huawei.hms.support.api.push.PushEventReceiver">
+            <intent-filter>
+                <!-- 接收通道发来的通知栏消息，兼容老版本Push -->
+                <action android:name="com.huawei.intent.action.PUSH" />
+            </intent-filter>
+        </receiver>
+
+        <!-- 华为推送配置结束 -->
+
+        <!-- OPPO消息推送开始 -->
+        <service
+            android:name="com.coloros.mcssdk.PushService"
+            android:permission="com.coloros.mcs.permission.SEND_MCS_MESSAGE">
+            <intent-filter>
+                <action android:name="com.coloros.mcs.action.RECEIVE_MCS_MESSAGE" />
+            </intent-filter>
+        </service>
+        <!-- OPPO消息推送结束 -->
     </application>
 
 </manifest>
