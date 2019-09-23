@@ -1,5 +1,7 @@
 package com.shuangduan.zcy.adapter;
 
+import android.text.TextUtils;
+
 import androidx.annotation.Nullable;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -25,6 +27,7 @@ public class SearchHistoryAdapter extends BaseQuickAdapter<String, BaseViewHolde
 
     @Override
     protected void convert(BaseViewHolder helper, String item) {
-        helper.setText(R.id.tv_title, item);
+        helper.setText(R.id.tv_title, item)
+                .setVisible(R.id.tv_title, !TextUtils.isEmpty(item));
     }
 }

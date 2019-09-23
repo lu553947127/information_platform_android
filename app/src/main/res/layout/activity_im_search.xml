@@ -56,7 +56,8 @@
             android:drawableRight="@drawable/icon_next"
             android:textColor="@color/color_666666"
             android:textSize="14sp"
-            android:text="@string/im_search_friend_more"/>
+            android:text="@string/im_search_friend_more"
+            android:visibility="gone"/>
     </LinearLayout>
 
     <LinearLayout
@@ -91,7 +92,8 @@
             android:drawableRight="@drawable/icon_next"
             android:textColor="@color/color_666666"
             android:textSize="14sp"
-            android:text="@string/im_search_group_more"/>
+            android:text="@string/im_search_group_more"
+            android:visibility="gone"/>
     </LinearLayout>
 
 

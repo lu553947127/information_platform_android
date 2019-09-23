@@ -1,6 +1,7 @@
 package com.shuangduan.zcy.view.income;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
@@ -9,14 +10,19 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.IncomeMsgAdapter;
+import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
+import com.shuangduan.zcy.model.bean.IncomeMsgBean;
+import com.shuangduan.zcy.view.mine.TransRecordDetailActivity;
 import com.shuangduan.zcy.vm.IncomeMsgVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
@@ -63,16 +69,22 @@ public class IncomeMsgActivity extends BaseActivity {
 
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
-        IncomeMsgAdapter adapter = new IncomeMsgAdapter(R.layout.item_income_release, null);
-        adapter.setEmptyView(R.layout.layout_loading, rv);
-        rv.setAdapter(adapter);
+        IncomeMsgAdapter incomeMsgAdapter = new IncomeMsgAdapter(R.layout.item_income_release, null);
+        incomeMsgAdapter.setEmptyView(R.layout.layout_loading, rv);
+        rv.setAdapter(incomeMsgAdapter);
+        incomeMsgAdapter.setOnItemClickListener((adapter, view, position) -> {
+            IncomeMsgBean.ListBean dataBean = incomeMsgAdapter.getData().get(position);
+            Bundle bundle = new Bundle();
+            bundle.putInt(CustomConfig.TRANS_RECORD_ID, dataBean.getId());
+            ActivityUtils.startActivity(bundle, TransRecordDetailActivity.class);
+        });
 
         incomeReleaseVm.liveData.observe(this, incomeMsgBean -> {
             if (incomeMsgBean.getPage() == 1) {
-                adapter.setNewData(incomeMsgBean.getList());
-                adapter.setEmptyView(R.layout.layout_empty, rv);
+                incomeMsgAdapter.setNewData(incomeMsgBean.getList());
+                incomeMsgAdapter.setEmptyView(R.layout.layout_empty, rv);
             }else {
-                adapter.addData(incomeMsgBean.getList());
+                incomeMsgAdapter.addData(incomeMsgBean.getList());
             }
             setNoMore(incomeMsgBean.getPage(), incomeMsgBean.getCount());
         });

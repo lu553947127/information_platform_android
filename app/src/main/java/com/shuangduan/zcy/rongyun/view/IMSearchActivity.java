@@ -175,9 +175,11 @@ public class IMSearchActivity extends BaseActivity {
                                 imSearchAdapter.setKeyword(edtKeyword.getText().toString());
                                 if(list!=null&&list.size()!=0){
                                     rv.setVisibility(View.VISIBLE);
+                                    tvFriend.setVisibility(View.VISIBLE);
                                     imSearchAdapter.notifyDataSetChanged();
                                 }else {
                                     rv.setVisibility(View.GONE);
+                                    tvFriend.setVisibility(View.GONE);
                                 }
 
                                 list_group.clear();
@@ -185,14 +187,18 @@ public class IMSearchActivity extends BaseActivity {
                                 imSearchGroupAdapter.setKeyword(edtKeyword.getText().toString());
                                 if(list_group!=null&&list_group.size()!=0){
                                     rv2.setVisibility(View.VISIBLE);
+                                    tvGroup.setVisibility(View.VISIBLE);
                                     imSearchGroupAdapter.notifyDataSetChanged();
                                 }else {
                                     rv2.setVisibility(View.GONE);
+                                    tvGroup.setVisibility(View.GONE);
                                 }
                             }else if (imFriendSearchBean.getCode().equals("-1")){
                                 ToastUtils.showShort(imFriendSearchBean.getMsg());
                                 LoginUtils.getExitLogin(IMSearchActivity.this);
                             }else {
+                                tvFriend.setVisibility(View.GONE);
+                                tvGroup.setVisibility(View.GONE);
                                 rv.setVisibility(View.GONE);
                                 rv2.setVisibility(View.GONE);
                                 list.clear();

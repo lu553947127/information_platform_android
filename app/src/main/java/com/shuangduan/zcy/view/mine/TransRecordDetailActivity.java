@@ -66,21 +66,23 @@ public class TransRecordDetailActivity extends BaseActivity {
 
         transRecordVm = ViewModelProviders.of(this).get(TransRecordVm.class);
         transRecordVm.detailLiveData.observe(this, transRecordDetailBean -> {
-            if (transRecordDetailBean.getType() == 1){
-                //收入
-                tvAmount.setTextColor(getResources().getColor(R.color.color_EF583E));
-                tvAmount.setText(String.format("+%1$s紫金币", transRecordDetailBean.getPrice()));
-                tvInOut.setText("收入");
-            }else if (transRecordDetailBean.getType() == 2){
-                tvAmount.setTextColor(getResources().getColor(R.color.colorTv));
-                tvAmount.setText(String.format("-%1$s紫金币", transRecordDetailBean.getPrice()));
-                tvInOut.setText("支出");
+            if (transRecordDetailBean!=null){
+                if (transRecordDetailBean.getType() == 1){
+                    //收入
+                    tvAmount.setTextColor(getResources().getColor(R.color.color_EF583E));
+                    tvAmount.setText(String.format("+%1$s紫金币", transRecordDetailBean.getPrice()));
+                    tvInOut.setText("收入");
+                }else if (transRecordDetailBean.getType() == 2){
+                    tvAmount.setTextColor(getResources().getColor(R.color.colorTv));
+                    tvAmount.setText(String.format("-%1$s紫金币", transRecordDetailBean.getPrice()));
+                    tvInOut.setText("支出");
+                }
+                tvTitle.setText(transRecordDetailBean.getTitle());
+                tvType.setText(transRecordDetailBean.getType_arr());
+                tvSource.setText(transRecordDetailBean.getFlow_types());
+                tvTransOrderNumber.setText(transRecordDetailBean.getOrder_sn());
+                tvExtra.setText(transRecordDetailBean.getRemark());
             }
-            tvTitle.setText(transRecordDetailBean.getTitle());
-            tvType.setText(transRecordDetailBean.getType_arr());
-            tvSource.setText(transRecordDetailBean.getFlow_types());
-            tvTransOrderNumber.setText(transRecordDetailBean.getOrder_sn());
-            tvExtra.setText(transRecordDetailBean.getRemark());
         });
         transRecordVm.pageStateLiveData.observe(this, s -> {
             switch (s){

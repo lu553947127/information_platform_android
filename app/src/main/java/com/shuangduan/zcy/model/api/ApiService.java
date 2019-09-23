@@ -73,6 +73,7 @@ import com.shuangduan.zcy.model.bean.RegisterBean;
 import com.shuangduan.zcy.model.bean.DemandReleaseBean;
 import com.shuangduan.zcy.model.bean.RelationshipDetailBean;
 import com.shuangduan.zcy.model.bean.RelationshipOrderBean;
+import com.shuangduan.zcy.model.bean.ShareBean;
 import com.shuangduan.zcy.model.bean.StageBean;
 import com.shuangduan.zcy.model.bean.SubBean;
 import com.shuangduan.zcy.model.bean.SubstanceDetailBean;
@@ -1160,5 +1161,11 @@ public interface ApiService {
             @Field("id") int id,
             @Field("status") int status,
             @Field("msg") String msg
+    );
+
+    @FormUrlEncoded
+    @POST("api/Userinfo/share")
+    Flowable<BaseResponse<ShareBean>> getUserInfoShare(
+            @Field("user_id")int user_id
     );
 }

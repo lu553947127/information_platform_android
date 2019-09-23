@@ -15,6 +15,7 @@ import android.widget.TextView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -99,7 +100,7 @@ public class SearchActivity extends BaseActivity {
             }
         });
 
-        rv.setLayoutManager(new LinearLayoutManager(this));
+        rv.setLayoutManager(new GridLayoutManager(this, 4));
         searchAdapter = new SearchHistoryAdapter(R.layout.item_search_history, null);
         rv.setAdapter(searchAdapter);
         searchAdapter.setOnItemClickListener((adapter, view, position) -> {

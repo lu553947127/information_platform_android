@@ -1,5 +1,6 @@
 package com.shuangduan.zcy.view.demand;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -84,6 +85,7 @@ public class FindSubstanceDetailActivity extends BaseActivity {
         return false;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
@@ -110,7 +112,7 @@ public class FindSubstanceDetailActivity extends BaseActivity {
             tvDemandNum.setText(info.getCount());
             tvDemandProject.setText(info.getProject_name());
             tvProjectAddress.setText(info.getAddress());
-            tvPriceAccept.setText(info.getAcceptance_price());
+            tvPriceAccept.setText(info.getAcceptance_price()+"万元");
             tvOwner.setText(info.getReal_name());
             tvContact.setText(info.getTel());
             tvReadDetail.setVisibility(info.getIs_pay() != 1? View.VISIBLE: View.INVISIBLE);

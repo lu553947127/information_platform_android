@@ -1,20 +1,12 @@
 package com.shuangduan.zcy.vm;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-
 import androidx.lifecycle.MutableLiveData;
 
-import com.shuangduan.zcy.R;
+import com.blankj.utilcode.util.SPUtils;
+import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseViewModel;
+import com.shuangduan.zcy.model.api.repository.ShareRepository;
 import com.shuangduan.zcy.model.bean.ShareBean;
-import com.shuangduan.zcy.utils.ShareUtils;
-
-import io.reactivex.Flowable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * @author 宁文强 QQ:858777523
@@ -27,24 +19,18 @@ import io.reactivex.schedulers.Schedulers;
  * @class describe
  */
 public class ShareVm extends BaseViewModel {
+
+    private int userId;
     public MutableLiveData<ShareBean> shareLiveData;
+    public MutableLiveData<String> pageStateLiveData;
 
     public ShareVm() {
+        userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
         shareLiveData = new MutableLiveData<>();
+        pageStateLiveData = new MutableLiveData<>();
     }
 
-    public void getBitmap(String url, Bitmap defaultBitmap){
-        addDisposable(Flowable.just(url)
-                .subscribeOn(Schedulers.io())
-                .map(s -> {
-                    Bitmap bitMBitmap = ShareUtils.getBitMBitmap(s);
-                    return bitMBitmap != null? bitMBitmap: defaultBitmap;
-                })
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(bitmap -> {
-                    ShareBean shareBean = new ShareBean();
-                    shareBean.setBitmap(bitmap);
-                    shareLiveData.postValue(shareBean);
-                }));
+    public void userInfoShare(){
+        new ShareRepository().getUserInfoShare(shareLiveData, pageStateLiveData, userId);
     }
 }

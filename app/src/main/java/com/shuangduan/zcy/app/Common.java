@@ -40,6 +40,13 @@ public class Common {
 
     //个人中心 帮助
     public static final String USER_INFO_HELP="/api/Userinfo/help";
+    //个人中心 推荐好友分享
+    public static final String USER_INFO_SHARE="/api/Userinfo/share";
     //上传附件
     public static final String UPLOAD_IMAGE="/api/Upload/uploadImage";
+
+    //工程信息 分享
+    public static final String PROJECT_SHARE="/api/Project/share";
+    //招采信息 分享
+    public static final String TENDERER_SHARE="/api/Tenderer/share";
 }

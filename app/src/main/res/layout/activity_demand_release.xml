@@ -156,12 +156,12 @@
 
     <FrameLayout
         android:id="@+id/fl_demand_num"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/colorFFF"
         android:paddingLeft="14dp"
-        android:paddingRight="14dp">
+        android:paddingRight="14dp"
+        android:visibility="gone">
 
         <TextView
             android:layout_width="wrap_content"
@@ -173,7 +173,7 @@
 
         <EditText
             android:id="@+id/edt_demand_num"
-            android:layout_width="match_parent"
+            android:layout_width="180dp"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:layout_marginLeft="101dp"
@@ -186,12 +186,17 @@
             android:hint="@string/please_hint"/>
 
         <TextView
+            android:id="@+id/tv_demand_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|end"
-            android:textColor="@color/color_666666"
+            android:background="@drawable/shape_bg_history_item"
+            android:drawableRight="@drawable/icon_bottom"
+            android:drawablePadding="5dp"
+            android:padding="10dp"
+            android:textColor="@color/colorTvHint"
             android:textSize="14sp"
-            android:text="吨"/>
+            android:text="选择单位"/>
 
         <View
             android:layout_width="match_parent"
@@ -314,7 +319,7 @@
             android:layout_gravity="center_vertical|end"
             android:textColor="@color/color_666666"
             android:textSize="14sp"
-            android:text="元"/>
+            android:text="万元"/>
 
         <View
             android:layout_width="match_parent"
@@ -343,7 +348,7 @@
 
         <EditText
             android:id="@+id/edt_supply_num"
-            android:layout_width="match_parent"
+            android:layout_width="180dp"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:layout_marginLeft="101dp"
@@ -356,12 +361,17 @@
             android:hint="@string/please_hint"/>
 
         <TextView
+            android:id="@+id/tv_supply_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|end"
-            android:textColor="@color/color_666666"
+            android:background="@drawable/shape_bg_history_item"
+            android:drawableRight="@drawable/icon_bottom"
+            android:drawablePadding="5dp"
+            android:padding="10dp"
+            android:textColor="@color/colorTvHint"
             android:textSize="14sp"
-            android:text="吨"/>
+            android:text="选择单位"/>
 
         <View
             android:layout_width="match_parent"
@@ -495,7 +505,7 @@
             android:layout_gravity="center_vertical|end"
             android:textColor="@color/color_666666"
             android:textSize="14sp"
-            android:text="元"/>
+            android:text="万元"/>
 
         <View
             android:layout_width="match_parent"

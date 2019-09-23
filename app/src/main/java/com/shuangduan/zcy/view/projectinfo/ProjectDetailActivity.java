@@ -1,6 +1,7 @@
 package com.shuangduan.zcy.view.projectinfo;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -51,6 +52,7 @@ import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
 import com.shuangduan.zcy.model.bean.IMFriendApplyCountBean;
 import com.shuangduan.zcy.model.bean.ProjectMembersStatusBean;
+import com.shuangduan.zcy.model.bean.ShareBean;
 import com.shuangduan.zcy.model.event.LocusRefreshEvent;
 import com.shuangduan.zcy.model.event.RefreshViewLocusEvent;
 import com.shuangduan.zcy.model.event.WarrantSuccessEvent;
@@ -59,6 +61,7 @@ import com.shuangduan.zcy.rongyun.view.NewFriendsActivity;
 import com.shuangduan.zcy.utils.AuthenticationUtils;
 import com.shuangduan.zcy.utils.LoginUtils;
 import com.shuangduan.zcy.utils.ShareUtils;
+import com.shuangduan.zcy.view.recruit.RecruitDetailActivity;
 import com.shuangduan.zcy.view.release.ReleaseProjectActivity;
 import com.shuangduan.zcy.vm.CoinPayVm;
 import com.shuangduan.zcy.vm.PermissionVm;
@@ -223,48 +226,72 @@ public class ProjectDetailActivity extends BaseActivity {
             vp.setCurrentItem(position);
             tabLayout.getTabAt(position).select();
         }
-
-        initShare();
-    }
-
-    /**
-     * 分享
-     */
-    private void initShare(){
         // 其中APP_ID是分配给第三方应用的appid，类型为String。
         mTencent = Tencent.createInstance(ShareUtils.app_id_qq, getApplicationContext());
+        qqListener = new BaseUiListener();
+    }
 
-        shareVm = ViewModelProviders.of(this).get(ShareVm.class);
-        shareVm.shareLiveData.observe(this, shareBean -> {
-            final String url = getString(R.string.share_url);
-            final String title = "紫菜云分享";
-            final String des = "租赁共享高端平台";
+    //分享
+    private void getShare() {
 
-            qqListener = new BaseUiListener();
-            addDialog(new ShareDialog(this)
-                    .setOnShareListener(new ShareDialog.OnShareListener() {
-                        @Override
-                        public void qq() {
-                            ShareUtils.shareQQ(ProjectDetailActivity.this, mTencent, qqListener, url, title, des, "http://information-api.oss-cn-qingdao.aliyuncs.com/5adb0e33d685223bfe79a51fee17431f.png");
+        OkGo.<String>post(RetrofitHelper.BASE_TEST_URL+ Common.PROJECT_SHARE)
+                .tag(this)
+                .headers("token", SPUtils.getInstance().getString(SpConfig.TOKEN))//请求头
+                .params("user_id", SPUtils.getInstance().getInt(SpConfig.USER_ID))//用户编号
+                .params("id",getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0))
+                .execute(new com.lzy.okgo.callback.StringCallback() {//返回值
+
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+                        LogUtils.json(response.body());
+                    }
+
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        LogUtils.json(response.body());
+                        try {
+                            ShareBean bean=new Gson().fromJson(response.body(), ShareBean.class);
+                            if (bean.getCode().equals("200")){
+                                Bitmap bitmap = BitmapFactory.decodeFile(bean.getData().getImage());
+                                addDialog(new ShareDialog(ProjectDetailActivity.this)
+                                        .setOnShareListener(new ShareDialog.OnShareListener() {
+                                            @Override
+                                            public void qq() {
+                                                ShareUtils.shareQQ(ProjectDetailActivity.this, mTencent, qqListener
+                                                        , bean.getData().getUrl(), bean.getData().getTitle(), bean.getData().getDes(), bean.getData().getImage());
+                                            }
+
+                                            @Override
+                                            public void qqStone() {
+                                                ShareUtils.shareQQStone(ProjectDetailActivity.this, mTencent, qqListener
+                                                        , bean.getData().getUrl(), bean.getData().getTitle(), bean.getData().getDes(), bean.getData().getImage());
+                                            }
+
+                                            @Override
+                                            public void weChat() {
+                                                ShareUtils.shareWeChat(ProjectDetailActivity.this, ShareUtils.FRIEND
+                                                        , bean.getData().getUrl(), bean.getData().getTitle(), bean.getData().getDes(), bitmap);
+                                            }
+
+                                            @Override
+                                            public void friendCircle() {
+                                                ShareUtils.shareWeChat(ProjectDetailActivity.this, ShareUtils.FRIEND_CIRCLE
+                                                        , bean.getData().getUrl(), bean.getData().getTitle(), bean.getData().getDes(), bitmap);
+                                            }
+                                        })
+                                        .showDialog());
+                            }else if (bean.getCode().equals("-1")){
+                                ToastUtils.showShort(bean.getMsg());
+                                LoginUtils.getExitLogin(ProjectDetailActivity.this);
+                            }else {
+                                ToastUtils.showShort(bean.getMsg());
+                            }
+                        }catch (JsonSyntaxException | IllegalStateException ignored){
+                            ToastUtils.showShort(getString(R.string.request_error));
                         }
-
-                        @Override
-                        public void qqStone() {
-                            ShareUtils.shareQQStone(ProjectDetailActivity.this, mTencent, qqListener, url, title, des, "http://information-api.oss-cn-qingdao.aliyuncs.com/5adb0e33d685223bfe79a51fee17431f.png");
-                        }
-
-                        @Override
-                        public void weChat() {
-                            ShareUtils.shareWeChat(ProjectDetailActivity.this, ShareUtils.FRIEND, url, title, des, shareBean.getBitmap());
-                        }
-
-                        @Override
-                        public void friendCircle() {
-                            ShareUtils.shareWeChat(ProjectDetailActivity.this, ShareUtils.FRIEND_CIRCLE, url, title, des, shareBean.getBitmap());
-                        }
-                    })
-                    .showDialog());
-        });
+                    }
+                });
     }
 
     @Override
@@ -294,7 +321,7 @@ public class ProjectDetailActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.iv_bar_right:
-                shareVm.getBitmap("http:\\/\\/information-api.oss-cn-qingdao.aliyuncs.com\\/5adb0e33d685223bfe79a51fee17431f.png", BitmapFactory.decodeResource(getResources(), R.drawable.default_pic));
+                getShare();
                 break;
             case R.id.fl_collect:
                 projectDetailVm.collect();
@@ -408,12 +435,7 @@ public class ProjectDetailActivity extends BaseActivity {
                 }
             });
 
-            aMap.setOnMapLoadedListener(new AMap.OnMapLoadedListener() {
-                @Override
-                public void onMapLoaded() {
-                    addMarkerInScreenCenter(null);
-                }
-            });
+            aMap.setOnMapLoadedListener(() -> addMarkerInScreenCenter(null));
         }
     }
 
@@ -454,15 +476,12 @@ public class ProjectDetailActivity extends BaseActivity {
                     .fromScreenLocation(point);
             //使用TranslateAnimation,填写一个需要移动的目标点
             Animation animation = new TranslateAnimation(target);
-            animation.setInterpolator(new Interpolator() {
-                @Override
-                public float getInterpolation(float input) {
-                    // 模拟重加速度的interpolator
-                    if(input <= 0.5) {
-                        return (float) (0.5f - 2 * (0.5 - input) * (0.5 - input));
-                    } else {
-                        return (float) (0.5f - Math.sqrt((input - 0.5f)*(1.5f - input)));
-                    }
+            animation.setInterpolator(input -> {
+                // 模拟重加速度的interpolator
+                if(input <= 0.5) {
+                    return (float) (0.5f - 2 * (0.5 - input) * (0.5 - input));
+                } else {
+                    return (float) (0.5f - Math.sqrt((input - 0.5f)*(1.5f - input)));
                 }
             });
             //整个移动所需要的时间

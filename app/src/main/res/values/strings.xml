@@ -358,7 +358,7 @@
     <string name="format_version_name">当前版本号：v%1$s</string>
     <string name="format_get_verification_code_again">重新获取 (%1$ds)</string>
     <string name="format_balance">余额:%1$s元</string>
-    <string name="format_amount">%1$s元</string>
+    <string name="format_amount">%1$s万元</string>
     <string name="format_amount_bi">%1$s紫金币</string>
     <string name="format_amount_rmb">￥%1$s元</string>
     <string name="format_num_of_people">人脉数量: %1$d人</string>
@@ -397,7 +397,7 @@
     <string name="format_pay_amount">支付金额: %1$s元</string>
     <string name="format_amount_sub">认购金额: %1$s元</string>
     <string name="format_amount_return">已返金额: %1$s元</string>
-    <string name="format_price">价格: %1$s元</string>
+    <string name="format_price">价格: %1$s万元</string>
     <string name="format_price_accept">接受价格: %1$s元</string>
     <string name="format_pay">请支付: %1$s紫金币！</string>
     <string name="format_income_degree">%1$d°人脉收益</string>

@@ -71,6 +71,8 @@ public class DemandReleaseActivity extends BaseActivity {
     EditText edtDemandNum;
     @BindView(R.id.fl_demand_num)
     FrameLayout flDemandNum;
+    @BindView(R.id.tv_demand_num)
+    TextView tvDemandNum;
     @BindView(R.id.edt_demand_project)
     EditText edtDemandProject;
     @BindView(R.id.fl_demand_project)
@@ -87,6 +89,8 @@ public class DemandReleaseActivity extends BaseActivity {
     EditText edtSupplyNum;
     @BindView(R.id.fl_supply_num)
     FrameLayout flSupplyNum;
+    @BindView(R.id.tv_supply_num)
+    TextView tvSupplyNum;
     @BindView(R.id.cb_lease)
     CheckBox cbLease;
     @BindView(R.id.cb_sell)
