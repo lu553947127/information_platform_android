@@ -42,7 +42,7 @@ public class ShareUtils {
     public static int FRIEND = SendMessageToWX.Req.WXSceneSession;
     public static int FRIEND_CIRCLE = SendMessageToWX.Req.WXSceneTimeline;
 
-    public static final String app_id_qq = "1107824707";
+    public static final String app_id_qq = "101795774";
 
     public static void shareWeChat(Context context, int shareTo, String url, String title, String description, Bitmap bitmap){
         WXWebpageObject webPage = new WXWebpageObject();

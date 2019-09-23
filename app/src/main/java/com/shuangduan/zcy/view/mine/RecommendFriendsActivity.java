@@ -10,6 +10,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.ShareDialog;

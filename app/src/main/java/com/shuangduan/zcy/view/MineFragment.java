@@ -28,6 +28,7 @@ import com.shuangduan.zcy.view.income.MineIncomeActivity;
 import com.shuangduan.zcy.view.mine.MineDemandActivity;
 import com.shuangduan.zcy.view.mine.MineOrderActivity;
 import com.shuangduan.zcy.view.mine.MineSubActivity;
+import com.shuangduan.zcy.view.mine.OrderSubActivity;
 import com.shuangduan.zcy.view.mine.PwdPayActivity;
 import com.shuangduan.zcy.view.mine.ReadHistoryActivity;
 import com.shuangduan.zcy.view.mine.RecommendFriendsActivity;
@@ -123,8 +124,9 @@ public class MineFragment extends BaseFragment {
         return true;
     }
 
-    @OnClick({R.id.tv_username, R.id.iv_user, R.id.tv_my_subscription, R.id.fl_order, R.id.fl_income, R.id.tv_balance, R.id.tv_my_demand, R.id.tv_transaction_record,
-            R.id.tv_agreement_manage, R.id.tv_pwd_pay, R.id.tv_recharge,
+    @OnClick({R.id.tv_username, R.id.iv_user, R.id.tv_my_subscription, R.id.fl_order, R.id.fl_income, R.id.tv_balance,
+            R.id.tv_my_demand,R.id.tv_mine_subscription,R.id.tv_my_material,
+            R.id.tv_transaction_record, R.id.tv_agreement_manage, R.id.tv_pwd_pay, R.id.tv_recharge,
             R.id.tv_read_history, R.id.tv_feedback, R.id.tv_recommend_friends, R.id.tv_my_collection, R.id.tv_set, R.id.tv_helper})
     void onClick(View view){
         switch (view.getId()) {
@@ -142,6 +144,11 @@ public class MineFragment extends BaseFragment {
                 break;
             case R.id.tv_my_demand:
                 ActivityUtils.startActivity(MineDemandActivity.class);
+                break;
+            case R.id.tv_mine_subscription:
+                ActivityUtils.startActivity(OrderSubActivity.class);
+                break;
+            case R.id.tv_my_material:
                 break;
             case R.id.tv_transaction_record:
                 ActivityUtils.startActivity(TransRecordActivity.class);

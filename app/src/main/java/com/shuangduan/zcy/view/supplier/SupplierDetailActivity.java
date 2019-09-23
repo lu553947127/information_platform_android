@@ -2,6 +2,7 @@ package com.shuangduan.zcy.view.supplier;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,6 +22,7 @@ import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.SupplierDetailBean;
 import com.shuangduan.zcy.utils.image.ImageConfig;
 import com.shuangduan.zcy.utils.image.ImageLoader;
+import com.shuangduan.zcy.utils.image.PictureEnlargeUtils;
 import com.shuangduan.zcy.view.PhotoViewActivity;
 import com.shuangduan.zcy.vm.SupplierVm;
 import com.shuangduan.zcy.weight.CircleImageView;
@@ -73,6 +75,7 @@ public class SupplierDetailActivity extends BaseActivity {
     @BindView(R.id.iv_authorization)
     ImageView ivAuthorization;
     SupplierDetailBean listBean;
+    private String authorization;
 
     @Override
     protected int initLayoutRes() {
@@ -100,6 +103,7 @@ public class SupplierDetailActivity extends BaseActivity {
             tvMobile.setText(supplierDetailBean.getTel());
             tvBusinessArea.setText(supplierDetailBean.getServe_address());
             tvProduction.setText(supplierDetailBean.getProduct());
+            authorization=supplierDetailBean.getAuthorization();
             ImageLoader.load(this, new ImageConfig.Builder()
                     .url(supplierDetailBean.getHeadimg())
                     .placeholder(R.drawable.default_head)
@@ -169,9 +173,10 @@ public class SupplierDetailActivity extends BaseActivity {
                 showPic(listBean,2,ivThree);
                 break;
             case R.id.iv_authorization:
-
+                if (!TextUtils.isEmpty(authorization)){
+                    PictureEnlargeUtils.getPictureEnlarge(this,authorization);
+                }
                 break;
-
         }
     }
 }

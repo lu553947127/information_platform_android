@@ -177,4 +177,6 @@ dependencies {
 
     //仿微信小视频拍照
     implementation 'cjt.library.wheel:camera:1.1.9'
+    //支持手势放大、下拉关闭 查看图片框架
+    implementation 'com.github.SherlockGougou:BigImageViewPager:v4_4.0.2'
 }

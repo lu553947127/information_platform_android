@@ -62,6 +62,8 @@
     <string name="my_income_explain">收益说明</string>
     <string name="my_subscription">我的订阅</string>
     <string name="my_demand">我的需求</string>
+    <string name="mine_subscription">我的认购</string>
+    <string name="my_material">物资预定</string>
     <string name="transaction_record">交易记录</string>
     <string name="agreement_manage">合同管理</string>
     <string name="pwd_pay">支付密码</string>
@@ -129,7 +131,7 @@
     <string name="hint_new_pwd">请输入新的密码</string>
     <string name="hint_opinion">请在此输入您的意见</string>
     <string name="hint_opinion_error">请输入您的意见</string>
-    <string name="share_url">zicai365.com</string>
+    <string name="share_url">https://zicai365.com</string>
     <string name="share">分享</string>
     <string name="mobile">电话</string>
     <string name="exit_confirm">确认退出登录吗</string>
@@ -214,7 +216,7 @@
     <string name="stage">阶段</string>
     <string name="time">时间</string>
     <string name="unsubscribe">未认购</string>
-    <string name="subscribe">已认购</string>
+    <string name="subscribe">我的认购</string>
     <string name="subscribe_push">认购推送</string>
     <string name="error_correction">纠错</string>
     <string name="discuss_group">讨论组</string>

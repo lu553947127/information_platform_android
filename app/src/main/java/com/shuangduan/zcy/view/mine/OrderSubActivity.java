@@ -34,6 +34,7 @@ import butterknife.OnClick;
  * @class describe
  */
 public class OrderSubActivity extends BaseActivity {
+
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
     @BindView(R.id.toolbar)

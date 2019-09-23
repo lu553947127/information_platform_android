@@ -180,6 +180,40 @@
         <include layout="@layout/divider_15"/>
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_mine_subscription"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/selector_bg_custom"
+            android:drawableLeft="@drawable/icon_mine_subscription"
+            android:drawablePadding="11dp"
+            android:drawableRight="@drawable/icon_next"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/color_666666"
+            android:textSize="16sp"
+            android:text="@string/mine_subscription"/>
+
+        <include layout="@layout/divider_15"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_my_material"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/selector_bg_custom"
+            android:drawableLeft="@drawable/icon_my_material"
+            android:drawablePadding="11dp"
+            android:drawableRight="@drawable/icon_next"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/color_666666"
+            android:textSize="16sp"
+            android:text="@string/my_material"/>
+
+        <include layout="@layout/divider_15"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_transaction_record"
             android:layout_width="match_parent"
             android:layout_height="50dp"

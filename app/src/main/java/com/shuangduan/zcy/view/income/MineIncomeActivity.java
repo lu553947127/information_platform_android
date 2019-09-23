@@ -1,5 +1,6 @@
 package com.shuangduan.zcy.view.income;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -71,6 +72,7 @@ public class MineIncomeActivity extends BaseActivity {
         return false;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
@@ -81,8 +83,8 @@ public class MineIncomeActivity extends BaseActivity {
         mineIncomeVm = ViewModelProviders.of(this).get(MineIncomeVm.class);
         mineIncomeVm.incomeLiveData.observe(this, mineIncomeBean -> {
             MineIncomeBean.ProceedsBean proceeds = mineIncomeBean.getProceeds();
-            tvExpectedReturn.setText(proceeds.getAll_funds());
-            tvWithdrawIncome.setText(proceeds.getCoin());
+            tvExpectedReturn.setText(proceeds.getAll_funds()+"元");
+            tvWithdrawIncome.setText(proceeds.getCoin()+"元");
             List<MineIncomeBean.ListBean> list = mineIncomeBean.getList();
 
             values.clear();
