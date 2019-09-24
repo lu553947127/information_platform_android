@@ -157,7 +157,7 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
             tvCompany.setText(userInfoBean.getCompany());
             tvOffice.setText(userInfoBean.getPosition());
             tvBusinessArea.setText(userInfoBean.getBusiness_city());
-            if (userInfoBean.getExperience() >= 1 && userInfoBean.getExperience() <= 4)
+            if (userInfoBean.getExperience() >= 1 && userInfoBean.getExperience() <= 5)
                 tvBusinessExp.setText(getResources().getStringArray(R.array.experience_list)[userInfoBean.getExperience() - 1] + "年");
             tvProduction.setText(userInfoBean.getManaging_products());
             if (userInfoBean.getApply_status()!=null && userInfoBean.getApply_status().equals("1")){
@@ -217,7 +217,7 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
         });
         userInfoVm.expLiveData.observe(this, o -> {
             ToastUtils.showShort(getString(R.string.edit_success));
-            if (userInfoVm.experience.getValue() >= 1 && userInfoVm.experience.getValue() <= 4)
+            if (userInfoVm.experience.getValue() >= 1 && userInfoVm.experience.getValue() <= 5)
                 tvBusinessExp.setText(getResources().getStringArray(R.array.experience_list)[userInfoVm.experience.getValue() - 1] + "年");
         });
 

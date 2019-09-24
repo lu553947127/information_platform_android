@@ -11,6 +11,7 @@ import com.blankj.utilcode.util.BarUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.base.BaseActivity;
+import com.shuangduan.zcy.utils.WebViewUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -34,10 +35,10 @@ public class DepositingPlaceActivity extends BaseActivity {
     AppCompatTextView tvBarTitle;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.rv)
-    RecyclerView recyclerView;
-    @BindView(R.id.refresh)
-    SmartRefreshLayout refresh;
+    @BindView(R.id.web)
+    WebViewUtils recyclerView;
+//    @BindView(R.id.refresh)
+//    SmartRefreshLayout refresh;
 
     @Override
     protected int initLayoutRes() {
@@ -53,6 +54,7 @@ public class DepositingPlaceActivity extends BaseActivity {
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.material_depositing_place));
+        recyclerView.loadUrl("http://acy.yijijian.com/pc/index.html#/materialsDetails/3");
     }
 
     @OnClick({R.id.iv_bar_back})

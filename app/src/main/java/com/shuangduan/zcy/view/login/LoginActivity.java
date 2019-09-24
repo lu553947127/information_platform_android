@@ -173,6 +173,7 @@ public class LoginActivity extends BaseActivity {
             SPUtils.getInstance().put(SpConfig.MOBILE, loginBean.getTel());
             SPUtils.getInstance().put(SpConfig.INFO_STATUS, loginBean.getInfo_status());
             shareUtils.addShared("info_status", String.valueOf(loginBean.getInfo_status()), "login");
+            LogUtils.i(loginBean.getInfo_status());
             if (loginBean.getInfo_status() == 1){
                 imConnectVm.userId = loginBean.getUser_id();
                 imConnectVm.getToken();

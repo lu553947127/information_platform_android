@@ -118,7 +118,7 @@ public class MaterialDetailActivity extends BaseActivity {
             }
             initBanner(pics, titles);
             tvMaterialCategory.setText(materialDetailBean.getMaterial_category());
-            String str="<font color=\"#EF583E\">"+materialDetailBean.getUnit_price()+"</font>元/吨";
+            String str="<font color=\"#EF583E\">"+materialDetailBean.getGuidance_price()+"</font>元/吨";
             tvUnitPrice.setText(Html.fromHtml(str));
             tvStock.setText(String.format(getString(R.string.format_stock), materialDetailBean.getStock()));
             tvSalesVolume.setText(String.format(getString(R.string.format_sales_volume), materialDetailBean.getSales_volume()));

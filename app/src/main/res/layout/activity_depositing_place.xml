@@ -5,6 +5,11 @@
 
     <include layout="@layout/toolbar"/>
 
-    <include layout="@layout/layout_refresh_rv"/>
+<!--    <include layout="@layout/layout_refresh_rv"/>-->
+
+    <com.shuangduan.zcy.utils.WebViewUtils
+        android:id="@+id/web"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </LinearLayout>
