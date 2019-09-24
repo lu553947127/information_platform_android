@@ -83,9 +83,7 @@ public class MaterialSearchActivity extends BaseActivity {
                 rvMaterial.setLayoutManager(new LinearLayoutManager(this));
                 rvMaterial.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
                 searchAdapter = new SearchMaterialAdapter(R.layout.item_project_search, list);
-                View emptyView = LayoutInflater.from(this).inflate(R.layout.layout_empty_top, null);
-                TextView tip = emptyView.findViewById(R.id.tv_tip);
-                tip.setText(getString(R.string.no_jjwz));
+                View emptyView = LayoutInflater.from(this).inflate(R.layout.layout_empty, null);
                 searchAdapter.setEmptyView(emptyView);
                 searchAdapter.setKeyword(edtKeyword.getText().toString());
                 rvMaterial.setAdapter(searchAdapter);
