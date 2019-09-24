@@ -1,6 +1,7 @@
 package com.shuangduan.zcy.view.income;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
@@ -20,12 +22,14 @@ import com.shuangduan.zcy.adapter.IncomePeopleAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.bean.IncomePeopleBean;
+import com.shuangduan.zcy.rongyun.view.IMAddFriendActivity;
 import com.shuangduan.zcy.view.people.PeopleInfoActivity;
 import com.shuangduan.zcy.vm.IncomePeopleVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.rong.imkit.RongIM;
 
 /**
  * @author 宁文强 QQ:858777523
@@ -37,7 +41,7 @@ import butterknife.OnClick;
  * @chang time
  * @class describe
  */
-public class IncomePeopleActivity extends BaseActivity {
+public class IncomePeopleActivity extends BaseActivity implements BaseQuickAdapter.OnItemChildClickListener {
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
     @BindView(R.id.toolbar)
@@ -47,6 +51,7 @@ public class IncomePeopleActivity extends BaseActivity {
     @BindView(R.id.refresh)
     SmartRefreshLayout refresh;
     private IncomePeopleVm incomeReleaseVm;
+    private IncomePeopleAdapter incomePeopleAdapter;
 
     @Override
     protected int initLayoutRes() {
@@ -62,9 +67,9 @@ public class IncomePeopleActivity extends BaseActivity {
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         int degree = getIntent().getIntExtra(CustomConfig.PEOPLE_DEGREE, CustomConfig.FIRST_DEGREE);
-        if (degree == 7){
+        if (degree == 7) {
             tvBarTitle.setText(String.format(getString(R.string.format_income_degree), 3));
-        }else {
+        } else {
             tvBarTitle.setText(String.format(getString(R.string.format_income_degree), degree));
         }
 
@@ -73,24 +78,26 @@ public class IncomePeopleActivity extends BaseActivity {
 
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
-        IncomePeopleAdapter adapter = new IncomePeopleAdapter(R.layout.item_income_people, null, degree);
-        adapter.setEmptyView(R.layout.layout_loading, rv);
-        rv.setAdapter(adapter);
-        if (degree == 1){//只有一度人脉可以查看
-            adapter.setOnItemClickListener((helper, view, position) -> {
-                IncomePeopleBean.ListBean listBean = adapter.getData().get(position);
-                Bundle bundle = new Bundle();
-                bundle.putInt(CustomConfig.UID, listBean.getUser_id());
-                ActivityUtils.startActivity(bundle, PeopleInfoActivity.class);
-            });
-        }
+        incomePeopleAdapter = new IncomePeopleAdapter(R.layout.item_income_people, null, degree);
+        incomePeopleAdapter.setEmptyView(R.layout.layout_loading, rv);
+        rv.setAdapter(incomePeopleAdapter);
+
+        incomePeopleAdapter.setOnItemChildClickListener(this);
+        // if (degree == 1){ 只有一度人脉可以查看
+        incomePeopleAdapter.setOnItemClickListener((helper, view, position) -> {
+            IncomePeopleBean.ListBean listBean = incomePeopleAdapter.getData().get(position);
+            Bundle bundle = new Bundle();
+            bundle.putInt(CustomConfig.UID, listBean.getUser_id());
+            ActivityUtils.startActivity(bundle, PeopleInfoActivity.class);
+        });
+//        }
 
         incomeReleaseVm.liveData.observe(this, incomePeopleBean -> {
             if (incomePeopleBean.getPage() == 1) {
-                adapter.setNewData(incomePeopleBean.getList());
-                adapter.setEmptyView(R.layout.layout_empty, rv);
-            }else {
-                adapter.addData(incomePeopleBean.getList());
+                incomePeopleAdapter.setNewData(incomePeopleBean.getList());
+                incomePeopleAdapter.setEmptyView(R.layout.layout_empty, rv);
+            } else {
+                incomePeopleAdapter.addData(incomePeopleBean.getList());
             }
             setNoMore(incomePeopleBean.getPage(), incomePeopleBean.getCount());
         });
@@ -110,28 +117,37 @@ public class IncomePeopleActivity extends BaseActivity {
         incomeReleaseVm.getData();
     }
 
-    private void setNoMore(int page, int count){
-        if (page == 1){
-            if (page * 10 >= count){
-                if (refresh.getState() == RefreshState.None){
+    private void setNoMore(int page, int count) {
+        if (page == 1) {
+            if (page * 10 >= count) {
+                if (refresh.getState() == RefreshState.None) {
                     refresh.setNoMoreData(true);
-                }else {
+                } else {
                     refresh.finishRefreshWithNoMoreData();
                 }
-            }else {
+            } else {
                 refresh.finishRefresh();
             }
-        }else {
-            if (page * 10 >= count){
+        } else {
+            if (page * 10 >= count) {
                 refresh.finishLoadMoreWithNoMoreData();
-            }else {
+            } else {
                 refresh.finishLoadMore();
             }
         }
     }
 
     @OnClick({R.id.iv_bar_back})
-    void onClick(){
+    void onClick() {
         finish();
+    }
+
+    @Override
+    public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+
+        IncomePeopleBean.ListBean listBean = incomePeopleAdapter.getData().get(position);
+        Bundle bundle = new Bundle();
+        bundle.putInt(CustomConfig.UID, listBean.getUser_id());
+        ActivityUtils.startActivity(bundle, PeopleInfoActivity.class);
     }
 }

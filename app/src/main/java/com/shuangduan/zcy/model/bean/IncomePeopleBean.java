@@ -1,5 +1,7 @@
 package com.shuangduan.zcy.model.bean;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 /**
@@ -47,12 +49,16 @@ public class IncomePeopleBean {
         this.list = list;
     }
 
-    public static class ListBean{
+    public static class ListBean {
         private int user_id;
         private String price;
         private String username;
         private String image;
         private String create_time;
+        @SerializedName("apply_status")
+        private int applyStatus;
+
+
 
         public int getUser_id() {
             return user_id;
@@ -93,5 +99,14 @@ public class IncomePeopleBean {
         public void setCreate_time(String create_time) {
             this.create_time = create_time;
         }
+
+        public int getApplyStatus() {
+            return applyStatus;
+        }
+
+        public void setApplyStatus(int applyStatus) {
+            this.applyStatus = applyStatus;
+        }
+
     }
 }

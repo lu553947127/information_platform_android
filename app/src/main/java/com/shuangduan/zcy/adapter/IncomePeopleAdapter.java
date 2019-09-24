@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.shuangduan.zcy.R;
+import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.model.bean.IncomePeopleBean;
 import com.shuangduan.zcy.utils.image.ImageConfig;
 import com.shuangduan.zcy.utils.image.ImageLoader;
@@ -35,9 +36,20 @@ public class IncomePeopleAdapter extends BaseQuickAdapter<IncomePeopleBean.ListB
     protected void convert(BaseViewHolder helper, IncomePeopleBean.ListBean item) {
         helper.setText(R.id.tv_name, item.getUsername())
                 .setText(R.id.tv_time, item.getCreate_time())
-                .setText(R.id.tv_price, item.getPrice() + "元")
+                .setText(R.id.tv_price, item.getPrice() + "元");
 //                .setVisible(R.id.tv_add_friends, type != 1 && type != 7);
-                .setVisible(R.id.tv_add_friends, false);
+
+
+        if (type == CustomConfig.FIRST_DEGREE) {
+            helper.setVisible(R.id.cb_add, false);
+        } else {
+            helper.setChecked(R.id.cb_add, item.getApplyStatus() == 1 ? true : false);
+            helper.setText(R.id.cb_add, item.getApplyStatus() == 1 ? "加好友" : "已添加");
+            helper.addOnClickListener(R.id.cb_add);
+
+            helper.setEnabled(R.id.cb_add, item.getApplyStatus() == 1 ? true : false);
+        }
+
         ImageView ivHead = helper.getView(R.id.iv_header);
         ImageLoader.load(mContext, new ImageConfig.Builder()
                 .url(item.getImage())
