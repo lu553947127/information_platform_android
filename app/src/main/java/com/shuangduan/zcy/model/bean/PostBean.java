@@ -11,19 +11,15 @@ package com.shuangduan.zcy.model.bean;
  */
 public class PostBean {
     public String name;
+    // 0 ： 未选中 1：选中
+    public int isSelector;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     @Override
     public String toString() {
         return "PostBean{" +
                 "name='" + name + '\'' +
+                ", isSelector=" + isSelector +
                 '}';
     }
 }

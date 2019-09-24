@@ -78,7 +78,7 @@ public class LeaseFragment extends BaseLazyFragment {
             if (materialBean.getPage() == 1) {
                 adapter.setNewData(materialBean.getList());
                 adapter.setEmptyView(R.layout.layout_empty, rv);
-            }else {
+            } else {
                 adapter.addData(materialBean.getList());
             }
             setNoMore(materialBean.getPage(), materialBean.getCount());
@@ -87,36 +87,36 @@ public class LeaseFragment extends BaseLazyFragment {
         refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                materialVm.moreLeaseList();
+                materialVm.moreLeaseList(materialVm.materialId, materialVm.specification, materialVm.supplierId);
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                materialVm.leaseList();
+                materialVm.leaseList(materialVm.materialId, materialVm.specification, materialVm.supplierId);
             }
         });
     }
 
     @Override
     protected void initDataFromService() {
-        materialVm.leaseList();
+        materialVm.leaseList(materialVm.materialId, materialVm.specification, materialVm.supplierId);
     }
 
-    private void setNoMore(int page, int count){
-        if (page == 1){
-            if (page * 10 >= count){
-                if (refresh.getState() == RefreshState.None){
+    private void setNoMore(int page, int count) {
+        if (page == 1) {
+            if (page * 10 >= count) {
+                if (refresh.getState() == RefreshState.None) {
                     refresh.setNoMoreData(true);
-                }else {
+                } else {
                     refresh.finishRefreshWithNoMoreData();
                 }
-            }else {
+            } else {
                 refresh.finishRefresh();
             }
-        }else {
-            if (page * 10 >= count){
+        } else {
+            if (page * 10 >= count) {
                 refresh.finishLoadMoreWithNoMoreData();
-            }else {
+            } else {
                 refresh.finishLoadMore();
             }
         }

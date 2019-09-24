@@ -156,6 +156,9 @@ dependencies {
     api 'com.huawei.android.hms:base:2.6.1.301'
     api 'com.huawei.android.hms:push:2.6.1.301'
 
+    //RecyclerView 流式布局
+    implementation 'com.github.1002326270xc:LayoutManager-FlowLayout:v1.7'
+
     /** 本地架包**/
     //qq和空间分享
     //noinspection GradlePath

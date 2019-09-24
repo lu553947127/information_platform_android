@@ -139,6 +139,8 @@
     <string name="pwd_no_same">两次输入的密码不一致</string>
     <string name="pwd_reset_success">密码重置成功</string>
     <string name="no_company">没有相关公司</string>
+    <string name="no_post">没有相关职位</string>
+    <string name="no_jjwz">没有相关基建物资</string>
     <string name="hint_company">请输入公司名称</string>
     <string name="edit_success">信息编辑成功</string>
     <string name="hint_production">请输入产品信息</string>
@@ -538,4 +540,10 @@
 
     <string name="stock">库存：</string>
     <string name="spec">规格：</string>
+
+    <string name="selector_product">请选择商品名称</string>
+    <string name="input_specification">请输入规格</string>
+    <string name="selector_supplier">请选择供应商</string>
+
+    <string name="reset">重置</string>
 </resources>

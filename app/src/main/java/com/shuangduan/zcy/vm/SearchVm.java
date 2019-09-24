@@ -10,6 +10,7 @@ import com.shuangduan.zcy.model.api.repository.SearchRepository;
 import com.shuangduan.zcy.model.bean.PostBean;
 import com.shuangduan.zcy.model.bean.ProjectInfoBean;
 import com.shuangduan.zcy.model.bean.RecruitBean;
+import com.shuangduan.zcy.model.bean.SearchMaterialBean;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,7 +35,10 @@ public class SearchVm extends BaseViewModel {
     public MutableLiveData<String> pageStateLiveData;
     public MutableLiveData<List<String>> historyLiveData;
     //岗位
-    public MutableLiveData<List<PostBean>> postLiveData;
+    public MutableLiveData<List<List<PostBean>>> postLiveData;
+
+    //基建物资
+    public MutableLiveData<List<SearchMaterialBean>> materialLiveData;
 
     private int userId;
     private int projectPage = 1;
@@ -50,6 +54,7 @@ public class SearchVm extends BaseViewModel {
         pageStateLiveData = new MutableLiveData<>();
         historyLiveData = new MutableLiveData<>();
         postLiveData = new MutableLiveData<>();
+        materialLiveData = new MutableLiveData<>();
     }
 
     public void search() {
@@ -131,6 +136,11 @@ public class SearchVm extends BaseViewModel {
 
     public void searchPost() {
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
-        new SearchRepository().searchPost(postLiveData,pageStateLiveData,userId);
+        new SearchRepository().searchPost(postLiveData, pageStateLiveData, userId);
+    }
+
+    public void searchMaterial(int type, String name) {
+        pageStateLiveData.postValue(PageState.PAGE_REFRESH);
+        new SearchRepository().searchMaterial(materialLiveData, pageStateLiveData, userId, type, name);
     }
 }

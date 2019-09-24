@@ -34,6 +34,12 @@ public class MaterialVm extends BaseViewModel {
     private int sellPage;
     private int leasePage;
 
+    public int materialId;
+
+    public int supplierId;
+
+    public String specification;
+
     public MaterialVm() {
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
         sellLiveData = new MutableLiveData<>();
@@ -43,43 +49,51 @@ public class MaterialVm extends BaseViewModel {
         categoryLiveData = new MutableLiveData<>();
         categoryFirstId = 0;
         categoryId = 0;
+
+
+        materialId = 0;
+        supplierId = 0;
+        specification = "";
     }
 
-    public void sellList(){
+    public void sellList(int materialId, String spec, int supplierId) {
         sellPage = 1;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
-        new MaterialRepository().materialList(sellLiveData, pageStateLiveData, userId, categoryId, 1, sellPage);
+        new MaterialRepository().materialList(sellLiveData, pageStateLiveData, userId, 1, materialId, spec, supplierId, sellPage);
     }
 
-    public void moreSellList(){
-        sellPage ++;
+    public void moreSellList(int materialId, String spec, int supplierId) {
+        sellPage++;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
-        new MaterialRepository().materialList(sellLiveData, pageStateLiveData, userId, categoryId, 1, sellPage);
+        new MaterialRepository().materialList(sellLiveData, pageStateLiveData, userId, 1, materialId, spec, supplierId, sellPage);
     }
 
-    public void leaseList(){
+    public void leaseList(int materialId, String spec, int supplierId) {
         leasePage = 1;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
-        new MaterialRepository().materialList(leaseLiveData, pageStateLiveData, userId, categoryId, 2, leasePage);
+        new MaterialRepository().materialList(leaseLiveData, pageStateLiveData, userId, 2, materialId, spec, supplierId, leasePage);
     }
 
-    public void moreLeaseList(){
-        leasePage ++;
+    public void moreLeaseList(int materialId, String spec, int supplierId) {
+        leasePage++;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
-        new MaterialRepository().materialList(leaseLiveData, pageStateLiveData, userId, categoryId, 2, leasePage);
+        new MaterialRepository().materialList(leaseLiveData, pageStateLiveData, userId, 2, materialId, spec, supplierId, leasePage);
     }
+
+
 
     /**
      * 获取一级分类
      */
-    public void getCategoryFirst(){
+    public void getCategoryFirst() {
         new MaterialRepository().getCategory(categoryFirstLiveData, pageStateLiveData, userId, 0);
     }
 
     /**
      * 获取二级分类
      */
-    public void getCategory(){
+    public void getCategory() {
         new MaterialRepository().getCategory(categoryLiveData, pageStateLiveData, userId, categoryFirstId);
     }
+
 }

@@ -1,5 +1,7 @@
 package com.shuangduan.zcy.model.bean;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 /**
@@ -70,16 +72,160 @@ public class MaterialBean {
         private String name;
         private String oss_path;
         private String price;
+        //库存
         private int stock;
         private Object sell_stock;
         private int tonne;
         private int agent_id;
-        private int category_id;
+        //分类ID
+        private int category;
+        //是够购买过
         private int is_order;
         private String image;
         private int amount;
         private int sell_amount;
         private String agent_name;
+
+        //缩略图
+        private List<Images> images;
+
+        //物质名称
+        @SerializedName("material_name")
+        private String materialName;
+        //价格
+        @SerializedName("guidance_price")
+        private String guidancePrice;
+
+        //规格
+        private String spec;
+
+        //地址
+        private String address;
+        //供应商
+        @SerializedName("material_supplie")
+        private String materialSupplie;
+        //供应商ID
+        @SerializedName("supplier_id")
+        private int supplierId;
+
+        //省份ID
+        private long province;
+        //市ID
+        private long city;
+
+        //销量
+        @SerializedName("sales_volume")
+        private int salesVolume;
+
+        public int getSalesVolume() {
+            return salesVolume;
+        }
+
+        public void setSalesVolume(int salesVolume) {
+            this.salesVolume = salesVolume;
+        }
+
+        @Override
+        public String toString() {
+            return "ListBean{" +
+                    "id=" + id +
+                    ", name='" + name + '\'' +
+                    ", oss_path='" + oss_path + '\'' +
+                    ", price='" + price + '\'' +
+                    ", stock=" + stock +
+                    ", sell_stock=" + sell_stock +
+                    ", tonne=" + tonne +
+                    ", agent_id=" + agent_id +
+                    ", category=" + category +
+                    ", is_order=" + is_order +
+                    ", image='" + image + '\'' +
+                    ", amount=" + amount +
+                    ", sell_amount=" + sell_amount +
+                    ", agent_name='" + agent_name + '\'' +
+                    ", images=" + images +
+                    ", materialName='" + materialName + '\'' +
+                    ", guidancePrice='" + guidancePrice + '\'' +
+                    ", spec='" + spec + '\'' +
+                    ", address='" + address + '\'' +
+                    ", materialSupplie='" + materialSupplie + '\'' +
+                    ", supplierId=" + supplierId +
+                    ", province=" + province +
+                    ", city=" + city +
+                    ", salesVolume=" + salesVolume +
+                    '}';
+        }
+
+        public List<Images> getImages() {
+            return images;
+        }
+
+        public void setImages(List<Images> images) {
+            this.images = images;
+        }
+
+        public String getMaterialName() {
+            return materialName;
+        }
+
+        public void setMaterialName(String materialName) {
+            this.materialName = materialName;
+        }
+
+        public String getGuidancePrice() {
+            return guidancePrice;
+        }
+
+        public void setGuidancePrice(String guidancePrice) {
+            this.guidancePrice = guidancePrice;
+        }
+
+        public String getSpec() {
+            return spec;
+        }
+
+        public void setSpec(String spec) {
+            this.spec = spec;
+        }
+
+        public String getAddress() {
+            return address;
+        }
+
+        public void setAddress(String address) {
+            this.address = address;
+        }
+
+        public String getMaterialSupplie() {
+            return materialSupplie;
+        }
+
+        public void setMaterialSupplie(String materialSupplie) {
+            this.materialSupplie = materialSupplie;
+        }
+
+        public int getSupplierId() {
+            return supplierId;
+        }
+
+        public void setSupplierId(int supplierId) {
+            this.supplierId = supplierId;
+        }
+
+        public long getProvince() {
+            return province;
+        }
+
+        public void setProvince(long province) {
+            this.province = province;
+        }
+
+        public long getCity() {
+            return city;
+        }
+
+        public void setCity(long city) {
+            this.city = city;
+        }
 
         public int getId() {
             return id;
@@ -145,12 +291,12 @@ public class MaterialBean {
             this.agent_id = agent_id;
         }
 
-        public int getCategory_id() {
-            return category_id;
+        public int getCategory() {
+            return category;
         }
 
-        public void setCategory_id(int category_id) {
-            this.category_id = category_id;
+        public void setCategory(int category_id) {
+            this.category = category_id;
         }
 
         public int getIs_order() {
@@ -191,6 +337,21 @@ public class MaterialBean {
 
         public void setAgent_name(String agent_name) {
             this.agent_name = agent_name;
+        }
+
+    }
+
+    public class Images{
+        public String url;
+        @SerializedName("heade_url")
+        public String headeUrl;
+
+        @Override
+        public String toString() {
+            return "Images{" +
+                    "url='" + url + '\'' +
+                    ", headeUrl='" + headeUrl + '\'' +
+                    '}';
         }
     }
 }

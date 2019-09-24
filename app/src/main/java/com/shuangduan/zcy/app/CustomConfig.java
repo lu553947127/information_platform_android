@@ -16,13 +16,16 @@ public class CustomConfig {
     public static final String UPDATE_TYPE = "update_type";
     /*搜索类型：公司，职位*/
     public static final String SEARCH_TYPE = "search_type";
+
+    /*基建搜索类型：商品名称，规格，供应商*/
+    public static final String SEARCH_MATERIAL_TYPE = "search_material_type";
     /*上传类型：身份证，名片*/
     public static final String UPLOAD_TYPE = "upload_type";
     /*验证码*/
     public static final String VERIFICATION_CODE = "verification_code";
 
     /**
-     *  传递预览图片的url
+     * 传递预览图片的url
      */
     public static final String PHOTO_VIEW_URL_LIST = "photo_view_url_list";
 
@@ -64,6 +67,13 @@ public class CustomConfig {
     public static final String FRIEND_DATA = "friend_data";
 
     public static final String PROJECT_TYPE = "project_type";//搜索区分工程信息还是招采信息
+
+
+    //------------------------------------基建物资搜索类型----------------------------------------------------
+    public static final int MATERIAL_TYPE = 1;                                             //     //
+    public static final int SUPPLIER_TYPE = 2;                                               //
+    //-------------------------------------------------------------------------------------------------------
+
 
     public static final String MORE = "更多";
 

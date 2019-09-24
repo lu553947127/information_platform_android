@@ -4,6 +4,7 @@ import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 
+import com.blankj.utilcode.util.StringUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.shuangduan.zcy.R;
@@ -30,18 +31,30 @@ public class SellAdapter extends BaseQuickAdapter<MaterialBean.ListBean, BaseVie
 
     @Override
     protected void convert(BaseViewHolder helper, MaterialBean.ListBean item) {
-        helper.setText(R.id.tv_title, item.getName())
-                .setText(R.id.tv_content, item.getAmount() + "吨")
-                .setText(R.id.tv_owner, "供应商:" + item.getAgent_name())
-                .setText(R.id.tv_price, item.getPrice())
-                .setText(R.id.tv_sold_num, "销量：" + item.getSell_amount() + "吨")
+        helper.setText(R.id.tv_title, item.getMaterialName())
+                .setText(R.id.tv_stock, "库存: " + item.getStock() + "吨")
+                .setText(R.id.tv_spec, "规格: " + item.getSpec())
+                .setText(R.id.tv_owner, "供应商: " + item.getMaterialSupplie())
+                .setText(R.id.tv_price, item.getGuidancePrice())
+                .setText(R.id.tv_sold_num, "销量: " + item.getSalesVolume() + "吨")
+                .setText(R.id.tv_address, "存放地: " + item.getAddress())
                 .setGone(R.id.tv_bought, item.getIs_order() == 1);
-        ImageView ivIcon = helper.getView(R.id.iv_icon);
-        ImageLoader.load(mContext, new ImageConfig.Builder()
-                .url(item.getImage())
-                .imageView(ivIcon)
-                .placeholder(R.drawable.default_pic)
-                .errorPic(R.drawable.default_pic)
-                .build());
+
+        try {
+            String thumb = item.getImages().get(0).headeUrl;
+
+            ImageView ivIcon = helper.getView(R.id.iv_icon);
+            ImageLoader.load(mContext, new ImageConfig.Builder()
+                    .url(thumb)
+                    .imageView(ivIcon)
+                    .placeholder(R.drawable.default_pic)
+                    .errorPic(R.drawable.default_pic)
+                    .build());
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 }

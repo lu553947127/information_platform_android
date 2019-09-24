@@ -74,6 +74,7 @@ import com.shuangduan.zcy.model.bean.RegisterBean;
 import com.shuangduan.zcy.model.bean.DemandReleaseBean;
 import com.shuangduan.zcy.model.bean.RelationshipDetailBean;
 import com.shuangduan.zcy.model.bean.RelationshipOrderBean;
+import com.shuangduan.zcy.model.bean.SearchMaterialBean;
 import com.shuangduan.zcy.model.bean.ShareBean;
 import com.shuangduan.zcy.model.bean.StageBean;
 import com.shuangduan.zcy.model.bean.SubBean;
@@ -660,12 +661,15 @@ public interface ApiService {
             @Field("id") int id
     );
 
+    //基建物质列表
     @FormUrlEncoded
     @POST("api/Material/dateList")
     Flowable<BaseResponse<MaterialBean>> materialList(
             @Field("user_id") int user_id,
-            @Field("category_id") int category_id,
             @Field("type") int type,
+            @Field("material_id") int materialId,
+            @Field("spec") String spec,
+            @Field("supplier_id") int supplierId,
             @Field("page") int page
     );
 
@@ -1176,6 +1180,15 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("api/Userinfo/commonPositions")
     Flowable<BaseResponse<List<List<PostBean>>>> searchPost(
-            @Field("user_id") int user_id
+            @Field("user_id") int userId
+    );
+
+    //基建物资搜索
+    @FormUrlEncoded
+    @POST("api/Material/search")
+    Flowable<BaseResponse<List<SearchMaterialBean>>> searchMaterial(
+            @Field("user_id") int userId,
+            @Field("type") int type,
+            @Field("name") String name
     );
 }

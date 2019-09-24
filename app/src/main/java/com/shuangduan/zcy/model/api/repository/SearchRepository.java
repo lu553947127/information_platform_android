@@ -6,6 +6,7 @@ import com.shuangduan.zcy.model.bean.PostBean;
 import com.shuangduan.zcy.model.bean.ProjectInfoBean;
 import com.shuangduan.zcy.model.bean.ProjectSearchBean;
 import com.shuangduan.zcy.model.bean.RecruitBean;
+import com.shuangduan.zcy.model.bean.SearchMaterialBean;
 
 import java.util.List;
 
@@ -42,7 +43,12 @@ public class SearchRepository extends BaseRepository {
     }
 
     //职位搜索
-    public void searchPost(MutableLiveData<List<PostBean>> liveData, MutableLiveData<String> pageStateLiveData, int user_id) {
+    public void searchPost(MutableLiveData<List<List<PostBean>>> liveData, MutableLiveData<String> pageStateLiveData, int user_id) {
         request(apiService.searchPost(user_id)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    //物资搜索
+    public void searchMaterial(MutableLiveData<List<SearchMaterialBean>> liveData, MutableLiveData<String> pageStateLiveData, int user_id, int type, String name) {
+        request(apiService.searchMaterial(user_id, type, name)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 }

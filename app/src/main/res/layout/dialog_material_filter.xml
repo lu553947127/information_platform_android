@@ -7,10 +7,10 @@
     android:background="@color/colorFFF">
 
     <TextView
-        android:id="@+id/tv_type_product"
+        android:id="@+id/tv_material"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
+        android:layout_marginLeft="29dp"
         android:layout_marginTop="30dp"
         android:text="商品名称"
         android:textColor="@color/color_666666"
@@ -18,65 +18,47 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.flexbox.FlexboxLayout
-        android:id="@+id/fl_product"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        app:dividerDrawable="@drawable/divider_12_15"
-        app:flexWrap="wrap"
-        app:layout_constraintLeft_toLeftOf="@+id/tv_type_product"
-        app:layout_constraintTop_toBottomOf="@+id/tv_type_product"
-        app:showDivider="middle">
+    <TextView
+        android:id="@+id/tv_material_value"
+        android:layout_width="133dp"
+        android:layout_height="33dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/shape_f4f2f7_17"
+        android:gravity="center_vertical"
+        android:paddingLeft="13dp"
+        android:hint="@string/selector_product"
+        android:textColorHint="@color/text2"
+        android:textColor="@color/text2"
+        android:textSize="14sp"
+        app:layout_constraintLeft_toLeftOf="@id/tv_material"
+        app:layout_constraintTop_toBottomOf="@id/tv_material"
+        tools:ignore="MissingConstraints" />
 
-    </com.google.android.flexbox.FlexboxLayout>
-
-    <!--    <TextView-->
-    <!--        android:id="@+id/tv_type_product"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginLeft="30dp"-->
-    <!--        android:layout_marginTop="30dp"-->
-    <!--        android:text="商品名称"-->
-    <!--        android:textColor="@color/color_666666"-->
-    <!--        android:textSize="14sp"-->
-    <!--        app:layout_constraintLeft_toLeftOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="parent" />-->
-
-    <!--    <com.google.android.flexbox.FlexboxLayout-->
-    <!--        android:id="@+id/fl_product"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginTop="15dp"-->
-    <!--        app:dividerDrawable="@drawable/divider_12_15"-->
-    <!--        app:flexWrap="wrap"-->
-    <!--        app:layout_constraintLeft_toLeftOf="@+id/tv_type_product"-->
-    <!--        app:layout_constraintTop_toBottomOf="@+id/tv_type_product"-->
-    <!--        app:showDivider="middle">-->
-
-    <!--    </com.google.android.flexbox.FlexboxLayout>-->
 
     <TextView
         android:id="@+id/tv_specification"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="28dp"
         android:text="规格"
         android:textColor="@color/color_666666"
         android:textSize="14sp"
-        app:layout_constraintLeft_toLeftOf="@id/tv_type_product"
-        app:layout_constraintTop_toBottomOf="@id/tv_type_product" />
+        app:layout_constraintLeft_toLeftOf="@id/tv_material"
+        app:layout_constraintTop_toBottomOf="@id/tv_material_value" />
 
     <EditText
         android:id="@+id/et_specification"
-        android:layout_width="96dp"
-        android:layout_height="32dp"
+        android:layout_width="133dp"
+        android:layout_height="33dp"
         android:layout_marginTop="15dp"
         android:background="@drawable/shape_f4f2f7_17"
-        android:gravity="center"
+        android:gravity="center_vertical"
+        android:paddingLeft="13dp"
+        android:hint="@string/input_specification"
         android:textColor="@color/text2"
+        android:textColorHint="@color/text2"
         android:textSize="14sp"
-        app:layout_constraintLeft_toLeftOf="@id/tv_type_product"
+        app:layout_constraintLeft_toLeftOf="@id/tv_specification"
         app:layout_constraintTop_toBottomOf="@id/tv_specification"
         tools:ignore="MissingConstraints" />
 
@@ -88,19 +70,23 @@
         android:text="供应商"
         android:textColor="@color/color_666666"
         android:textSize="14sp"
-        app:layout_constraintLeft_toLeftOf="@id/tv_type_product"
+        app:layout_constraintLeft_toLeftOf="@id/et_specification"
         app:layout_constraintTop_toBottomOf="@id/et_specification" />
 
-    <EditText
-        android:id="@+id/et_supplier"
+
+    <TextView
+        android:id="@+id/tv_supplier_value"
         android:layout_width="133dp"
-        android:layout_height="32dp"
+        android:layout_height="33dp"
         android:layout_marginTop="15dp"
         android:background="@drawable/shape_f4f2f7_17"
-        android:gravity="center"
+        android:gravity="center_vertical"
+        android:paddingLeft="13dp"
+        android:hint="@string/selector_supplier"
+        android:textColorHint="@color/text2"
         android:textColor="@color/text2"
         android:textSize="14sp"
-        app:layout_constraintLeft_toLeftOf="@id/tv_type_product"
+        app:layout_constraintLeft_toLeftOf="@id/tv_supplier"
         app:layout_constraintTop_toBottomOf="@id/tv_supplier"
         tools:ignore="MissingConstraints" />
 
@@ -108,15 +94,15 @@
         android:id="@+id/tv_negative"
         android:layout_width="0dp"
         android:layout_height="42dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="61dp"
         android:background="#E0E0E5"
         android:gravity="center"
-        android:text="@string/negative"
+        android:text="@string/reset"
         android:textColor="@color/color_666666"
         android:textSize="16sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/tv_positive"
-        app:layout_constraintTop_toBottomOf="@+id/et_supplier" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_supplier_value" />
 
     <TextView
         android:id="@+id/tv_positive"

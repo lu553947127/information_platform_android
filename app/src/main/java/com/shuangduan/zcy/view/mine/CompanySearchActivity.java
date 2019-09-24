@@ -16,24 +16,32 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.android.flexbox.FlexboxLayoutManager;
 import com.google.android.material.internal.FlowLayout;
+import com.library.flowlayout.FlowLayoutManager;
+import com.library.flowlayout.SpaceItemDecoration;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.CompanySearchAdapter;
 import com.shuangduan.zcy.adapter.PostAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.PageState;
+import com.shuangduan.zcy.model.bean.PostBean;
 import com.shuangduan.zcy.model.event.CompanyEvent;
 import com.shuangduan.zcy.model.event.OfficeEvent;
+import com.shuangduan.zcy.utils.DensityUtil;
 import com.shuangduan.zcy.vm.SearchVm;
 import com.shuangduan.zcy.vm.UserInfoVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -60,6 +68,9 @@ public class CompanySearchActivity extends BaseActivity {
     @BindView(R.id.tv_bar_right)
     AppCompatTextView tvBarRight;
 
+    @BindView(R.id.tv_post)
+    TextView tvPostView;
+
     private String type;
     //公司列表Adapter
     private CompanySearchAdapter companySearchAdapter;
@@ -68,6 +79,9 @@ public class CompanySearchActivity extends BaseActivity {
     private PostAdapter postAdapter;
 
     private UserInfoVm userInfoVm;
+
+    //记录上一次选择职位的位置
+    private int oldPosition = -1;
 
     @Override
     protected int initLayoutRes() {
@@ -130,26 +144,49 @@ public class CompanySearchActivity extends BaseActivity {
             case CustomConfig.searchTypeOffice:
                 tvBarTitle.setText(getString(R.string.office));
 //                tvBarRight.setText(getString(R.string.upload_business_card));
-
+                tvPostView.setVisibility(View.VISIBLE);
                 searchVm.searchPost();
 
                 searchVm.postLiveData.observe(this, list -> {
+
+                    if (list != null && list.size() > 1) {  //合并数据
+                        for (int i = 0; i < list.size(); i++) {
+                            if (i == 0) continue;
+                            list.get(0).addAll(list.get(i));
+                        }
+                    }
+
+                    List<PostBean> adapterData = list.get(0);
+
                     if (postAdapter == null) {
-                        FlexboxLayoutManager flowLayoutManager = new FlexboxLayoutManager(this);
+                        FlowLayoutManager flowLayoutManager = new FlowLayoutManager();
+                        //设置每一个item间距
+                        rvCompany.setPaddingRelative(DensityUtil.dp2px(15), 0, 0, 0);
+                        rvCompany.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL_LIST, R.drawable.divider_10_10));
+                        rvCompany.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_10_10));
 
                         rvCompany.setLayoutManager(flowLayoutManager);
-                        postAdapter = new PostAdapter(R.layout.item_post, list);
+                        postAdapter = new PostAdapter(R.layout.item_post, adapterData);
                         View emptyView = LayoutInflater.from(this).inflate(R.layout.layout_empty_top, null);
                         TextView tip = emptyView.findViewById(R.id.tv_tip);
-                        tip.setText(getString(R.string.no_company));
+                        tip.setText(getString(R.string.no_post));
                         postAdapter.setEmptyView(emptyView);
                         rvCompany.setAdapter(postAdapter);
-                        companySearchAdapter.setOnItemClickListener((adapter, view, position) -> {
-                            String s = companySearchAdapter.getData().get(position);
-                            userInfoVm.company.postValue(s);
+                        postAdapter.setOnItemClickListener((adapter, view, position) -> {
+                            //设置CheckBox 单选
+                            if (position == oldPosition) {
+                                return;
+                            }
+                            if (oldPosition != -1)
+                                adapterData.get(oldPosition).isSelector = 0;
+                            adapterData.get(position).isSelector = 1;
+                            oldPosition = position;
+                            postAdapter.notifyDataSetChanged();
+                            //赋值数据
+                            edtKeyword.setText(adapterData.get(position).name);
                         });
                     } else {
-                        postAdapter.setNewData(list);
+                        postAdapter.setNewData(adapterData);
                     }
                 });
 

@@ -19,19 +19,20 @@ import java.util.List;
  * @class describe
  */
 public class MaterialRepository extends BaseRepository {
-    public void materialList(MutableLiveData<MaterialBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int category_id, int type, int page){
-        request(apiService.materialList(userId, category_id, type, page)).setData(liveData).setPageState(pageStateLiveData).send();
+    public void materialList(MutableLiveData<MaterialBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int type,
+                             int materialId, String spec, int supplierId, int page) {
+        request(apiService.materialList(userId, type, materialId, spec, supplierId, page)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
-    public void materialDetail(MutableLiveData<MaterialDetailBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int id){
+    public void materialDetail(MutableLiveData<MaterialDetailBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int id) {
         request(apiService.materialDetail(userId, id)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
-    public void getCategory(MutableLiveData<List<MaterialCategoryBean>> liveData, MutableLiveData<String> pageStateLiveData, int userId, int category_id){
+    public void getCategory(MutableLiveData<List<MaterialCategoryBean>> liveData, MutableLiveData<String> pageStateLiveData, int userId, int category_id) {
         request(apiService.getCategory(userId, category_id)).setDataList(liveData).setPageState(pageStateLiveData).send();
     }
 
-    public void materialOrder(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int userId, int id, int buy_stock){
+    public void materialOrder(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int userId, int id, int buy_stock) {
         request(apiService.materialOrder(userId, id, buy_stock)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 }

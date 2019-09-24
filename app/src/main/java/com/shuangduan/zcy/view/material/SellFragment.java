@@ -87,19 +87,19 @@ public class SellFragment extends BaseLazyFragment {
         refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                materialVm.moreSellList();
+                materialVm.moreSellList(materialVm.materialId,materialVm.specification,materialVm.supplierId);
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                materialVm.sellList();
+                materialVm.sellList(materialVm.materialId,materialVm.specification,materialVm.supplierId);
             }
         });
     }
 
     @Override
     protected void initDataFromService() {
-        materialVm.sellList();
+        materialVm.sellList(materialVm.materialId,materialVm.specification,materialVm.supplierId);
     }
 
     private void setNoMore(int page, int count){

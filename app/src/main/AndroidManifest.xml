@@ -231,6 +231,10 @@
         <activity android:name="com.shuangduan.zcy.view.demand.FindBuyerDetailActivity" />
         <activity android:name="com.shuangduan.zcy.view.demand.FindRelationshipAcceptDetailActivity" />
         <activity android:name="com.shuangduan.zcy.view.demand.FindRelationshipReleaseDetailActivity" />
+
+        <!-- 物资列表搜索页面 -->
+        <activity android:name=".view.material.MaterialSearchActivity" />
+
         <activity
             android:name="com.shuangduan.zcy.view.PhotoViewActivity"
             android:theme="@style/PhotoViewTheme" />
