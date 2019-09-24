@@ -207,6 +207,8 @@
     <string name="friends_new_notice">好友提醒</string>
     <string name="help_ask">问</string>
     <string name="help_answer">答</string>
+    <string name="no_tel">联系方式为空</string>
+    <string name="enclosure_notice">请到电脑端查看图纸</string>
 
     <string name="subscribe_message">订阅信息</string>
     <string name="model_list">列表模式</string>
@@ -358,6 +360,9 @@
     <string name="hint_owner">请输入联系人</string>
     <string name="hint_relationship_remarks">为了您的信息能尽快通过审核，请按照需求详细填写</string>
     <string name="explain">收益说明书</string>
+    <string name="register_privacy">隐私协议</string>
+    <string name="register_register">用户注册协议</string>
+    <string name="material_depositing_place">选择存放地</string>
 
     <string name="format_version_name">当前版本号：v%1$s</string>
     <string name="format_get_verification_code_again">重新获取 (%1$ds)</string>
@@ -391,13 +396,22 @@
     <string name="format_locus_num">动态信息：%1$d条</string>
     <string name="format_pay_price_release">发布此消息请支付%1$s紫金币</string>
     <string name="format_pay_price">查看此消息请支付%1$s紫金币</string>
-    <string name="format_provide">供应：%1$d吨</string>
-    <string name="format_sold">已售：%1$d吨</string>
+    <string name="format_stock">库存：%1$d吨</string>
+    <string name="format_enclosure">查看物资图纸</string>
     <string name="format_order_num">%1$d单</string>
-    <string name="format_supplier">供应商：%1$s</string>
+    <string name="format_spec">规格：%1$s</string>
+    <string name="format_tel">联系商家</string>
+    <string name="format_product">经营范围：</string>
+    <string name="format_serve_address">服务区域：</string>
+    <string name="format_company_website">公司网址：</string>
+    <string name="format_supplie_address">公司地址：</string>
+    <string name="format_company_name">公司名称：</string>
+    <string name="format_company_info">公司详情介绍</string>
+    <string name="format_address_list">存放地：</string>
+    <string name="format_reserve">立即预定</string>
     <string name="format_supplier_product">经营产品：%1$s</string>
     <string name="format_supplier_service_area">服务地区：%1$s</string>
-    <string name="format_bought">已购标的号%1$s</string>
+    <string name="format_sales_volume">已成交：%1$s单</string>
     <string name="format_pay_amount">支付金额: %1$s元</string>
     <string name="format_amount_sub">认购金额: %1$s元</string>
     <string name="format_amount_return">已返金额: %1$s元</string>

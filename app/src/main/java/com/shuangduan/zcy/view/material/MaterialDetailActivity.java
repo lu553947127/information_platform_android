@@ -1,6 +1,11 @@
 package com.shuangduan.zcy.view.material;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,21 +16,23 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
-import com.blankj.utilcode.util.LogUtils;
-import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
-import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
-import com.shuangduan.zcy.dialog.MaterialOrderDialog;
+import com.shuangduan.zcy.dialog.BaseDialog;
+import com.shuangduan.zcy.dialog.CustomDialog;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.MaterialDetailBean;
-import com.shuangduan.zcy.utils.image.ImageConfig;
-import com.shuangduan.zcy.utils.image.ImageLoader;
-import com.shuangduan.zcy.view.mine.AuthenticationActivity;
-import com.shuangduan.zcy.vm.AuthenticationVm;
+import com.shuangduan.zcy.utils.image.GlideImageLoader;
+import com.shuangduan.zcy.utils.image.PictureEnlargeUtils;
 import com.shuangduan.zcy.vm.MaterialDetailVm;
+import com.youth.banner.Banner;
+import com.youth.banner.BannerConfig;
+import com.youth.banner.Transformer;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -45,34 +52,43 @@ public class MaterialDetailActivity extends BaseActivity {
     AppCompatTextView tvBarTitle;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.iv_icon)
-    ImageView ivIcon;
-    @BindView(R.id.tv_title)
-    TextView tvTitle;
-    @BindView(R.id.tv_content)
-    TextView tvContent;
-    @BindView(R.id.tv_bought)
-    TextView tvBought;
-    @BindView(R.id.tv_owner)
-    TextView tvOwner;
-    @BindView(R.id.tv_price)
-    TextView tvPrice;
-    @BindView(R.id.tv_sold_num)
-    TextView tvSoldNum;
-    @BindView(R.id.tv_suit_num)
-    TextView tvSuitNum;
-    @BindView(R.id.tv_suit_t)
-    TextView tvSuitT;
-    @BindView(R.id.tv_order_num)
-    TextView tvOrderNum;
-    @BindView(R.id.tv_num)
-    TextView tvNum;
-    @BindView(R.id.tv_total_price)
-    TextView tvTotalPrice;
-    @BindView(R.id.tv_intro)
-    TextView tvIntro;
+    @BindView(R.id.banner)
+    Banner banner;
+    @BindView(R.id.tv_material_category)
+    TextView tvMaterialCategory;
+    @BindView(R.id.tv_enclosure)
+    TextView tvEnclosure;
+    @BindView(R.id.tv_unit_price)
+    TextView tvUnitPrice;
+    @BindView(R.id.tv_stock)
+    TextView tvStock;
+    @BindView(R.id.tv_sales_volume)
+    TextView tvSalesVolume;
+    @BindView(R.id.tv_spec)
+    TextView tvSpec;
+    @BindView(R.id.tv_company)
+    TextView tvCompany;
+    @BindView(R.id.tv_tel)
+    AppCompatTextView tvTel;
+    @BindView(R.id.tv_address_list)
+    AppCompatTextView tvAddressList;
+    @BindView(R.id.tv_company_name)
+    TextView tvCompanyName;
+    @BindView(R.id.tv_supplie_address)
+    TextView tvSupplieAddress;
+    @BindView(R.id.tv_company_website)
+    TextView tvCompanyWebsite;
+    @BindView(R.id.tv_serve_address)
+    TextView tvServeAddress;
+    @BindView(R.id.tv_product)
+    TextView tvProduct;
+    @BindView(R.id.iv_collect)
+    ImageView ivCollection;
+    @BindView(R.id.tv_reserve)
+    TextView tvReserve;
     private MaterialDetailVm materialDetailVm;
-    private AuthenticationVm authenticationVm;
+    private String phone,is_collect;
+    private List<String> pics;
 
     @Override
     protected int initLayoutRes() {
@@ -84,6 +100,7 @@ public class MaterialDetailActivity extends BaseActivity {
         return false;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
@@ -93,34 +110,43 @@ public class MaterialDetailActivity extends BaseActivity {
         materialDetailVm.id = getIntent().getIntExtra(CustomConfig.MATERIAL_ID, 0);
         materialDetailVm.detailLiveData.observe(this, materialDetailBean -> {
             if (materialDetailBean == null) return;
-            ImageLoader.load(this, new ImageConfig.Builder()
-                    .url(materialDetailBean.getImage())
-                    .imageView(ivIcon)
-                    .placeholder(R.drawable.default_pic)
-                    .errorPic(R.drawable.default_pic)
-                    .build());
-            tvTitle.setText(materialDetailBean.getName());
-            tvContent.setText(String.format(getString(R.string.format_provide), materialDetailBean.getAmount()));
-            tvBought.setText(String.format(getString(R.string.format_bought), materialDetailBean.getName()));
-            tvOwner.setText(String.format(getString(R.string.format_supplier), materialDetailBean.getAgent_name()));
-            tvPrice.setText(materialDetailBean.getPrice());
-            tvSoldNum.setText(String.format(getString(R.string.format_sold), materialDetailBean.getSell_amount()));
-            tvOrderNum.setText(String.format(getString(R.string.format_order_num), materialDetailBean.getOrder_count()));
-            tvIntro.setText(materialDetailBean.getIntro());
+            pics = new ArrayList<>();
+            ArrayList<String> titles = new ArrayList<>();
+            for (MaterialDetailBean.ImagesBean bean : materialDetailBean.getImages()) {
+                pics.add(bean.getUrl());
+                titles.add("");
+            }
+            initBanner(pics, titles);
+            tvMaterialCategory.setText(materialDetailBean.getMaterial_category());
+            String str="<font color=\"#EF583E\">"+materialDetailBean.getUnit_price()+"</font>元/吨";
+            tvUnitPrice.setText(Html.fromHtml(str));
+            tvStock.setText(String.format(getString(R.string.format_stock), materialDetailBean.getStock()));
+            tvSalesVolume.setText(String.format(getString(R.string.format_sales_volume), materialDetailBean.getSales_volume()));
+            tvSpec.setText(String.format(getString(R.string.format_spec), materialDetailBean.getSpec()));
+            tvCompany.setText("供应商："+materialDetailBean.getCompany());
+            tvAddressList.setText(materialDetailBean.getAddress());
+            tvCompanyName.setText(materialDetailBean.getCompany());
+            tvSupplieAddress.setText(materialDetailBean.getSupplie_address());
+            tvCompanyWebsite.setText(materialDetailBean.getCompany_website());
+            tvServeAddress.setText(materialDetailBean.getServe_address());
+            tvProduct.setText(materialDetailBean.getProduct());
+            phone=materialDetailBean.getTel();
+            if (materialDetailBean.getIs_collection().equals("1")){
+                is_collect=materialDetailBean.getIs_collection();
+                ivCollection.setBackgroundResource(R.drawable.icon_new_collectioned);
+            }else {
+                is_collect=materialDetailBean.getIs_collection();
+                ivCollection.setBackgroundResource(R.drawable.icon_new_collection);
+            }
         });
-        materialDetailVm.suitNumLiveData.observe(this, integer -> {
-            MaterialDetailBean value = materialDetailVm.detailLiveData.getValue();
-            if (value == null) return;
-            int tonne = value.getTonne();
-            double price = Double.parseDouble(value.getPrice());
-            tvSuitNum.setText(String.valueOf(integer));
-            tvSuitT.setText(String.valueOf(integer * tonne));
-            tvNum.setText(String.valueOf(integer));
-            tvTotalPrice.setText(String.valueOf(price * integer * tonne));
+
+        materialDetailVm.collectedLiveData.observe(this, o -> {
+            is_collect="1";
+            ivCollection.setBackgroundResource(R.drawable.icon_new_collectioned);
         });
-        materialDetailVm.orderLiveData.observe(this, o -> {
-            LogUtils.i("成功");
-            ActivityUtils.startActivity(MaterialOrderSuccessActivity.class);
+        materialDetailVm.collectLiveData.observe(this, o -> {
+            is_collect="0";
+            ivCollection.setBackgroundResource(R.drawable.icon_new_collection);
         });
         materialDetailVm.pageStateLiveData.observe(this, s -> {
             switch (s){
@@ -132,81 +158,98 @@ public class MaterialDetailActivity extends BaseActivity {
                     break;
             }
         });
-
-        authenticationVm = ViewModelProviders.of(this).get(AuthenticationVm.class);
-        authenticationVm.authenticationStatusLiveData.observe(this, authenBean -> {
-            switch (authenBean.getCard_status()){
-                case 1:
-                    ToastUtils.showShort("审核中，请等待审核成功后进入");
-                    break;
-                case 2:
-                    SPUtils.getInstance().put(SpConfig.IS_VERIFIED, authenBean.getCard_status());
-                    new MaterialOrderDialog(this)
-                            .setName(tvTitle.getText().toString())
-                            .setSuitNum(tvSuitNum.getText().toString())
-                            .setSuitT(tvSuitT.getText().toString())
-                            .setAmount(tvTotalPrice.getText().toString())
-                            .setSingleCallBack((item, position) -> {
-                                materialDetailVm.pre();
-                            }).showDialog();
-                    break;
-                default:
-                    //去认证
-                    Bundle bundle = new Bundle();
-                    bundle.putString(CustomConfig.UPLOAD_TYPE, CustomConfig.uploadTypeIdCard);
-                    ActivityUtils.startActivity(bundle, AuthenticationActivity.class);
-                    finish();
-                    break;
-            }
-        });
-        authenticationVm.pageStateLiveData.observe(this, s -> {
-            switch (s){
-                case PageState.PAGE_LOADING:
-                    showLoading();
-                    break;
-                default:
-                    hideLoading();
-                    break;
-            }
-        });
-
         materialDetailVm.getDetail();
     }
 
-    @OnClick({R.id.iv_bar_back, R.id.iv_add, R.id.iv_less, R.id.tv_pre})
+    @OnClick({R.id.iv_bar_back,R.id.tv_enclosure, R.id.tv_tel, R.id.tv_address_list, R.id.ll_collect,R.id.tv_reserve})
     void onClick(View v){
+        Bundle bundle = new Bundle();
         switch (v.getId()){
             case R.id.iv_bar_back:
                 finish();
                 break;
-            case R.id.iv_add:
-                materialDetailVm.add();
+            case R.id.tv_enclosure:
+                new CustomDialog(this)
+                        .setTip(getString(R.string.enclosure_notice))
+                        .showDialog();
                 break;
-            case R.id.iv_less:
-                materialDetailVm.less();
-                break;
-            case R.id.tv_pre:
-                Integer suitNum = materialDetailVm.suitNumLiveData.getValue();
-                if (suitNum == null || suitNum == 0){
-                    ToastUtils.showShort(getString(R.string.select_suit_num));
+            case R.id.tv_tel:
+                if (TextUtils.isEmpty(phone)){
+                    ToastUtils.showShort(getString(R.string.no_tel));
                     return;
                 }
+                new CustomDialog(this)
+                        .setTip(phone)
+                        .setOk("打电话")
+                        .setCallBack(new BaseDialog.CallBack() {
+                            @Override
+                            public void cancel() {
 
-                int isVerified = SPUtils.getInstance().getInt(SpConfig.IS_VERIFIED);
-                if (isVerified == 2){
-                    //认证成功
-                    new MaterialOrderDialog(this)
-                            .setName(tvTitle.getText().toString())
-                            .setSuitNum(String.valueOf(suitNum))
-                            .setSuitT(tvSuitT.getText().toString())
-                            .setAmount(tvTotalPrice.getText().toString())
-                            .setSingleCallBack((item, position) -> {
-                                materialDetailVm.pre();
-                            }).showDialog();
+                            }
+
+                            @Override
+                            public void ok(String s) {
+                                getCallPhone();
+                            }
+                        }).showDialog();
+                break;
+            case R.id.tv_address_list:
+                bundle.putInt(CustomConfig.MATERIAL_ID, getIntent().getIntExtra(CustomConfig.MATERIAL_ID, 0));
+                ActivityUtils.startActivity(bundle, DepositingPlaceActivity.class);
+                break;
+            case R.id.ll_collect:
+                if (is_collect!=null&&is_collect.equals("1")){
+                    materialDetailVm.getCollect();//取消收藏
                 }else {
-                    authenticationVm.authentication();
+                    materialDetailVm.getCollected();//收藏
                 }
                 break;
+            case R.id.tv_reserve:
+
+                break;
         }
+    }
+
+    //拨打电话方法
+    private void getCallPhone() {
+        Intent intent = new Intent();
+        intent.setAction("android.intent.action.DIAL");
+        intent.setData(Uri.parse("tel:" + phone));
+        startActivity(intent);
+    }
+
+    private void initBanner(List<String> list, ArrayList<String> titles){
+        //设置banner样式
+        banner.setBannerStyle(BannerConfig.NUM_INDICATOR);
+        //设置图片加载器
+        banner.setImageLoader(new GlideImageLoader());
+        //设置图片集合
+        banner.setImages(list);
+        //设置banner动画效果
+        banner.setBannerAnimation(Transformer.Default);
+        //设置标题集合（当banner样式有显示title时）
+        banner.setBannerTitles(titles);
+        //设置自动轮播，默认为true
+        banner.isAutoPlay(true);
+        //设置轮播时间
+        banner.setDelayTime(2500);
+        //设置指示器位置（当banner模式中有指示器时）
+        banner.setIndicatorGravity(BannerConfig.CENTER);
+        //轮播图查看
+        banner.setOnBannerListener(position -> PictureEnlargeUtils.getPictureEnlargeList(this,list,position));
+        //banner设置方法全部调用完毕时最后调用
+        banner.start();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        banner.startAutoPlay();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        banner.stopAutoPlay();
     }
 }

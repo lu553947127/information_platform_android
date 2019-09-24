@@ -32,7 +32,12 @@ public class MaterialRepository extends BaseRepository {
         request(apiService.getCategory(userId, category_id)).setDataList(liveData).setPageState(pageStateLiveData).send();
     }
 
-    public void materialOrder(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int userId, int id, int buy_stock) {
-        request(apiService.materialOrder(userId, id, buy_stock)).setData(liveData).setPageState(pageStateLiveData).send();
+    public void collected(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int userId, int id){
+        request(apiService.collected(userId, id)).setData(liveData).setPageState(pageStateLiveData).send();
     }
+
+    public void collect(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int userId, int id) {
+        request(apiService.collectNew(userId, id)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
 }

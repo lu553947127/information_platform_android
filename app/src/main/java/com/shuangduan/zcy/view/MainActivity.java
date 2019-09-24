@@ -1,15 +1,18 @@
 package com.shuangduan.zcy.view;
 
+import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
@@ -173,19 +176,45 @@ public class MainActivity extends BaseActivity {
 
     private boolean mIsExit = false;
 
-    /**
-     * 双击返回键退出
-     */
-    @Override
+//    /**
+//     * 双击返回键退出
+//     */
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        if (keyCode == KeyEvent.KEYCODE_BACK) {
+//            if (mIsExit) {
+////                AppConfig.mLocationClient.onDestroy();//销毁定位客户端，同时销毁本地定位服务。
+//                ActivityUtils.finishAllActivities();
+//            } else {
+//                ToastUtils.showShort("再按一次退出");
+//                mIsExit = true;
+//                new Handler().postDelayed(() -> mIsExit = false, 2000);
+//            }
+//            return true;
+//        }
+//        return super.onKeyDown(keyCode, event);
+//    }
+
+    //重写返回键
     public boolean onKeyDown(int keyCode, KeyEvent event) {
+        //实现只在冷启动时显示启动页，类似微信效果
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (mIsExit) {
-//                AppConfig.mLocationClient.onDestroy();//销毁定位客户端，同时销毁本地定位服务。
-                ActivityUtils.finishAllActivities();
-            } else {
-                ToastUtils.showShort("再按一次退出");
-                mIsExit = true;
-                new Handler().postDelayed(() -> mIsExit = false, 2000);
+            //判断当前app是否开启权限 开启则正常退出app
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager
+                    .PERMISSION_GRANTED &&
+                    ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) == PackageManager
+                            .PERMISSION_GRANTED &&
+                    ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager
+                            .PERMISSION_GRANTED &&
+                    ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager
+                            .PERMISSION_GRANTED &&
+                    ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager
+                            .PERMISSION_GRANTED) {
+                //实现只在冷启动时显示启动页，即点击返回键与点击HOME键退出效果一致
+                Intent intent = new Intent(Intent.ACTION_MAIN);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.addCategory(Intent.CATEGORY_HOME);
+                startActivity(intent);
             }
             return true;
         }

@@ -3,10 +3,8 @@ package com.shuangduan.zcy.view.login;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatTextView;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.ActivityUtils;
@@ -18,9 +16,8 @@ import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.PageState;
-import com.shuangduan.zcy.model.bean.RegisterBean;
-import com.shuangduan.zcy.utils.AndroidBug5497Workaround;
 import com.shuangduan.zcy.view.MainActivity;
+import com.shuangduan.zcy.view.WebViewActivity;
 import com.shuangduan.zcy.vm.IMConnectVm;
 import com.shuangduan.zcy.vm.LoginVm;
 
@@ -51,7 +48,6 @@ public class RegisterActivity extends BaseActivity {
     AppCompatEditText edtPwd;
     @BindView(R.id.edt_mobile_invite)
     AppCompatEditText edtMobileInvite;
-
     private LoginVm loginVm;
     private IMConnectVm imConnectVm;
 
@@ -91,14 +87,23 @@ public class RegisterActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.tv_send_verification_code, R.id.tv_register})
+    @OnClick({R.id.tv_send_verification_code, R.id.tv_register,R.id.tv_privacy_text,R.id.tv_register_text})
     void onClick(View view){
+        Bundle bundle = new Bundle();
         switch (view.getId()){
             case R.id.tv_send_verification_code:
                 smsCode();
                 break;
             case R.id.tv_register:
                 register();
+                break;
+            case R.id.tv_privacy_text:
+                bundle.putString("register", "privacy");
+                ActivityUtils.startActivity(bundle,WebViewActivity.class);
+                break;
+            case R.id.tv_register_text:
+                bundle.putString("register", "register");
+                ActivityUtils.startActivity(bundle,WebViewActivity.class);
                 break;
         }
     }

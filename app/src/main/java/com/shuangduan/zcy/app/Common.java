@@ -49,4 +49,9 @@ public class Common {
     public static final String PROJECT_SHARE="/api/Project/share";
     //招采信息 分享
     public static final String TENDERER_SHARE="/api/Tenderer/share";
+
+    //注册 隐私协议
+    public static final String AGREEMENT_PRIVACY="/home/Agreement/privacy";
+    //注册 注册协议
+    public static final String AGREEMENT_REGISTER="/home/Agreement/register";
 }

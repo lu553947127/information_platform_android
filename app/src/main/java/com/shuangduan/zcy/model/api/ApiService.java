@@ -1191,4 +1191,18 @@ public interface ApiService {
             @Field("type") int type,
             @Field("name") String name
     );
+
+    @FormUrlEncoded
+    @POST("api/Material/setCollection")
+    Flowable<BaseResponse> collected(
+            @Field("user_id") int user_id,
+            @Field("id") int id
+    );
+
+    @FormUrlEncoded
+    @POST("api/Material/cancelCollection")
+    Flowable<BaseResponse> collectNew(
+            @Field("user_id") int user_id,
+            @Field("id") int id
+    );
 }

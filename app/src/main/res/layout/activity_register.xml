@@ -91,6 +91,42 @@
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="45dp"
+        android:layout_marginRight="40dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="11sp"
+            android:textColor="@color/color_666666"
+            android:text="注册即表示同意"/>
+        <TextView
+            android:id="@+id/tv_privacy_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="11sp"
+            android:textColor="@color/colorTvStates"
+            android:text="《隐私协议》"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="11sp"
+            android:textColor="@color/color_666666"
+            android:text="和"/>
+        <TextView
+            android:id="@+id/tv_register_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="11sp"
+            android:textColor="@color/colorTvStates"
+            android:text="《用户注册协议》"/>
+    </LinearLayout>
+
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_register"
         style="@style/BtnConfirm"

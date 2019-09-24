@@ -20,7 +20,6 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.IMGroupInfoAdapter;
@@ -64,7 +63,8 @@ public class IMGroupMembersActivity extends BaseActivity {
     IMGroupInfoBean imGroupInfoBean;
     IMGroupInfoAdapter imGroupInfoAdapter;
     List<IMGroupInfoBean.DataBean.ListBean> list=new ArrayList<>();
-    int page=1;
+    int pageSize=80;
+    int count;
 
     @Override
     protected int initLayoutRes() {
@@ -97,48 +97,33 @@ public class IMGroupMembersActivity extends BaseActivity {
         refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                page++;
-                getGroupInfo(page);
+                if (pageSize<count){
+                    pageSize+=20;
+                    getGroupInfo(pageSize);
+                    refreshLayout.finishLoadMore(2000);
+                }else {
+                    refresh.finishLoadMoreWithNoMoreData();
+                }
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                page=1;
-                getGroupInfo(page);
+                getGroupInfo(pageSize);
+                refresh.finishRefresh(2000);
             }
         });
-        getGroupInfo(page);
-    }
-
-    private void setNoMore(int page, int count){
-        if (page == 1){
-            if (page * 10 >= count){
-                if (refresh.getState() == RefreshState.None){
-                    refresh.setNoMoreData(true);
-                }else {
-                    refresh.finishRefreshWithNoMoreData();
-                }
-            }else {
-                refresh.finishRefresh();
-            }
-        }else {
-            if (page * 10 >= count){
-                refresh.finishLoadMoreWithNoMoreData();
-            }else {
-                refresh.finishLoadMore();
-            }
-        }
+        getGroupInfo(pageSize);
     }
 
     //群聊详情
-    private void getGroupInfo(int page) {
+    private void getGroupInfo(int pageSize) {
 
         OkGo.<String>post(RetrofitHelper.BASE_TEST_URL+ Common.WECHAT_GROUP)
                 .tag(this)
                 .headers("token", SPUtils.getInstance().getString(SpConfig.TOKEN))//请求头
                 .params("user_id", SPUtils.getInstance().getInt(SpConfig.USER_ID))//用户编号
                 .params("group_id",group_id)
-                .params("page",page)
+                .params("pageSize",pageSize)
                 .execute(new com.lzy.okgo.callback.StringCallback() {//返回值
 
                     @Override
@@ -156,7 +141,7 @@ public class IMGroupMembersActivity extends BaseActivity {
                             if (imGroupInfoBean.getCode().equals("200")){
                                 list.clear();
                                 list.addAll(imGroupInfoBean.getData().getList());
-                                setNoMore(imGroupInfoBean.getData().getPage(),imGroupInfoBean.getData().getCount());
+                                count=imGroupInfoBean.getData().getCount();
                                 if (list!=null&&list.size()!=0){
                                     imGroupInfoAdapter.notifyDataSetChanged();
                                 }else {

@@ -2,12 +2,12 @@ package com.shuangduan.zcy.view.login;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.ActivityUtils;
-import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.SpConfig;
@@ -18,6 +18,7 @@ import com.shuangduan.zcy.view.MainActivity;
 import com.shuangduan.zcy.vm.IMConnectVm;
 
 
+import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
@@ -32,7 +33,10 @@ import butterknife.OnClick;
  */
 public class WelcomeActivity extends BaseActivity {
 
+    @BindView(R.id.ll_welcome)
+    LinearLayout linearLayout;
     private SharesUtils shareUtils;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         isTranslationBar = true;
@@ -64,6 +68,7 @@ public class WelcomeActivity extends BaseActivity {
     private void getIntoActivity() {
         if (shareUtils.getShared("info_status","login").equals("1")){
             if (LoginUtils.isLogin()){
+                linearLayout.setVisibility(View.INVISIBLE);
                 ActivityUtils.startActivity(MainActivity.class);
                 //这里连一遍融云
                 if (SPUtils.getInstance().getInt(SpConfig.INFO_STATUS) == 1){
@@ -71,6 +76,8 @@ public class WelcomeActivity extends BaseActivity {
                     IMConnectVm imConnectVm = ViewModelProviders.of(this).get(IMConnectVm.class);
                     imConnectVm.connect(SPUtils.getInstance().getString(SpConfig.IM_TOKEN));
                 }
+            }else {
+                linearLayout.setVisibility(View.VISIBLE);
             }
         }
         SPUtils.getInstance().put(SpConfig.FIRST_APP, 1);

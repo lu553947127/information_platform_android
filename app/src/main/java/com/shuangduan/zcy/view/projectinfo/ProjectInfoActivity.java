@@ -172,25 +172,6 @@ public class ProjectInfoActivity extends BaseActivity {
                 setMarker();
             });
         });
-
-        //监测地图画面的移动
-        aMap.setOnCameraChangeListener(new AMap.OnCameraChangeListener() {
-            @Override
-            public void onCameraChangeFinish(CameraPosition cameraPosition) {
-                LogUtils.i(cameraPosition.target.latitude, cameraPosition.target.longitude);
-                projectInfoVm.mapList(cameraPosition.target.latitude, cameraPosition.target.longitude);
-                projectInfoVm.mapLiveData.observe(ProjectInfoActivity.this, mapBeans -> {
-                    //marker经纬度数据
-                    throughPointList = mapBeans != null ? mapBeans : new ArrayList<>();
-                    setMarker();
-                });
-            }
-
-            @Override
-            public void onCameraChange(CameraPosition cameraPosition) {
-
-            }
-        });
         setupLocationStyle();
     }
 

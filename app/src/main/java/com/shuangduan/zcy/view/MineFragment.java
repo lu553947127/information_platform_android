@@ -3,6 +3,7 @@ package com.shuangduan.zcy.view;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.content.ContextCompat;
@@ -70,6 +71,8 @@ public class MineFragment extends BaseFragment {
     CircleImageView ivUser;
     @BindView(R.id.tv_username)
     AppCompatTextView tvUsername;
+    @BindView(R.id.tv_username_top)
+    TextView tvUsernameTop;
     @BindView(R.id.tv_member)
     AppCompatTextView tvMember;
     @BindView(R.id.tv_num_of_people)
@@ -102,6 +105,7 @@ public class MineFragment extends BaseFragment {
         userInfoVm.getInfoLiveData.observe(this, userInfoBean -> {
             SPUtils.getInstance().put(SpConfig.USERNAME, userInfoBean.getUsername());
             tvUsername.setText(userInfoBean.getUsername());
+            tvUsernameTop.setText(userInfoBean.getUsername());
             tvNumOfPeople.setText(String.format(getString(R.string.format_num_of_people), userInfoBean.getCount()));
             tvBalance.setText(String.format(getString(R.string.format_balance), userInfoBean.getCoin()));
             EventBus.getDefault().post(new CoinEvent( userInfoBean.getCoin()));
@@ -227,6 +231,7 @@ public class MineFragment extends BaseFragment {
     @Subscribe
     public void onEventUpdateUserName(UserNameEvent event){
         tvUsername.setText(event.username);
+        tvUsernameTop.setText(event.username);
     }
 
     @Subscribe

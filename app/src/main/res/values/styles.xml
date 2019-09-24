@@ -25,10 +25,17 @@
         <item name="android:windowBackground">@color/colorBgDark</item>
     </style>
 
-    <!--主页用theme-->
-    <style name="SplashTheme" parent="BaseAppTheme">
-        <item name="colorPrimary">@color/colorFFF</item>
-        <item name="colorPrimaryDark">@color/colorFFF</item>
+    <!--启动页theme-->
+    <style name="SplashTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <!-- Customize your theme here. -->
+<!--        <item name="colorPrimary">@color/colorFFF</item>-->
+<!--        <item name="colorPrimaryDark">@color/colorFFF</item>-->
+<!--        <item name="colorAccent">@color/colorFFF</item>-->
+        <!-- enable window content transitions -->
+        <item name="android:windowActivityTransitions" tools:targetApi="lollipop">true</item>
+        <item name="android:windowBackground">@drawable/icon_login</item>
     </style>
 
     <!--图片查看用theme-->

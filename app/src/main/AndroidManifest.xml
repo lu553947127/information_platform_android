@@ -199,6 +199,8 @@
         <activity
             android:name="com.shuangduan.zcy.view.material.MaterialDetailActivity"
             android:theme="@style/AppThemeBgGray" />
+        <!-- 存放地选择列表-->
+        <activity android:name="com.shuangduan.zcy.view.material.DepositingPlaceActivity" />
         <activity android:name="com.shuangduan.zcy.view.supplier.SupplierActivity" />
         <activity
             android:name="com.shuangduan.zcy.view.supplier.SupplierDetailActivity"
@@ -282,6 +284,8 @@
         <activity android:name="com.shuangduan.zcy.rongyun.view.IMGroupDetailsActivity" />
         <activity android:name="com.shuangduan.zcy.rongyun.view.IMGroupMembersActivity" />
         <activity android:name="com.shuangduan.zcy.view.photo.CameraActivity" />
+        <!-- h5加载页-->
+        <activity android:name="com.shuangduan.zcy.view.WebViewActivity" />
         <!-- 微信分享-->
         <activity
             android:name=".wxapi.WXEntryActivity"
@@ -309,7 +313,9 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/rc_file_path"></meta-data>
+                android:resource="@xml/rc_file_path">
+
+            </meta-data>
         </provider>
 
         <provider
@@ -320,7 +326,9 @@
             tools:replace="android:authorities">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths_private"></meta-data>
+                android:resource="@xml/file_paths_private">
+
+            </meta-data>
         </provider>
         <!--QQ分享 start-->
         <activity
@@ -472,7 +480,9 @@
             android:name="com.huawei.hms.update.provider.UpdateProvider"
             android:authorities="xxx.xxx.xxx.hms.update.provider"
             android:exported="false"
-            android:grantUriPermissions="true"></provider>
+            android:grantUriPermissions="true">
+
+        </provider>
         <!-- 第三方相关 :接收Push消息（注册、Push消息、Push连接状态）广播 -->
         <receiver android:name="io.rong.push.platform.hms.HMSReceiver">
             <intent-filter>
