@@ -54,11 +54,11 @@ public abstract class BaseActivity extends AppCompatActivity implements IView, S
         AutoUtils.setCustomDensity(this, MyApplication.getInstance());
         setContentView(initLayoutRes());
         unBinder = ButterKnife.bind(this);
-        if (isUseEventBus()){
+        if (isUseEventBus()) {
             EventBus.getDefault().register(this);
         }
 
-        if (!isTranslationBar){
+        if (!isTranslationBar) {
             //主题色状态栏
             BarUtils.setStatusBarColor(this, ContextCompat.getColor(Utils.getApp(), R.color.colorStatusBar), false);
         } else {
@@ -75,7 +75,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IView, S
 
     @Override
     public void showLoading() {
-        if (loadDialog == null){
+        if (loadDialog == null) {
             loadDialog = new LoadDialog(this);
         }
         loadDialog.showDialog();
@@ -83,7 +83,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IView, S
 
     @Override
     public void hideLoading() {
-        if (loadDialog != null){
+        if (loadDialog != null) {
             loadDialog.hideDialog();
         }
     }
@@ -91,8 +91,8 @@ public abstract class BaseActivity extends AppCompatActivity implements IView, S
     /**
      * 加载状态处理
      */
-    public void showPageState(String s){
-        switch (s){
+    public void showPageState(String s) {
+        switch (s) {
             case PageState.PAGE_LOADING:
                 showLoading();
                 break;
@@ -106,7 +106,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IView, S
     public boolean dispatchTouchEvent(MotionEvent ev) {
         //获取当前焦点控件，如果是EditText,则失去焦点并隐藏软键盘
         View view = getCurrentFocus();
-        if (view != null && view instanceof EditText && isShouldHideInput(view, ev)){
+        if (view != null && view instanceof EditText && isShouldHideInput(view, ev)) {
             view.clearFocus();
             KeyboardUtils.hideSoftInput(view);
         }
@@ -116,22 +116,22 @@ public abstract class BaseActivity extends AppCompatActivity implements IView, S
     /**
      * 保险起见的dialog关闭，防止内存泄漏
      */
-    public void addDialog(BaseDialog dialog){
+    public void addDialog(BaseDialog dialog) {
         dialogArray.put(dialogArray.size(), dialog);
     }
 
     @Override
     protected void onDestroy() {
         unBinder.unbind();
-        if (isUseEventBus() && EventBus.getDefault().isRegistered(this)){
+        if (isUseEventBus() && EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this);
         }
-        if (loadDialog != null){
+        if (loadDialog != null) {
             loadDialog.dismiss();
             loadDialog = null;
         }
         for (int i = 0; i < dialogArray.size(); i++) {
-            if (dialogArray.get(i) != null){
+            if (dialogArray.get(i) != null) {
                 dialogArray.get(i).dismiss();
             }
         }
@@ -185,7 +185,10 @@ public abstract class BaseActivity extends AppCompatActivity implements IView, S
 
     @Override
     public SwipeBackLayout getSwipeBackLayout() {
-        return mHelper.getSwipeBackLayout();
+        if (mHelper != null) {
+            return mHelper.getSwipeBackLayout();
+        }
+        return null;
     }
 
     @Override

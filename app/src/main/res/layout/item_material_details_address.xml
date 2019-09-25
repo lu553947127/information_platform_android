@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="15dp"
+    android:paddingTop="20dp"
+    android:paddingRight="15dp"
+    android:paddingBottom="25dp">
+
+    <TextView
+        android:id="@+id/tv_reserve"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/reserve_num"
+        android:textColor="@color/color_666666"
+        android:textSize="@dimen/dimenTvStates"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/tv_reserve_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="7dp"
+        android:textColor="@color/color_EF583E"
+        android:textSize="@dimen/dimenTvStates"
+        app:layout_constraintLeft_toRightOf="@id/tv_reserve"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/tv_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:lineSpacingExtra="3dp"
+        android:textColor="@color/color_666666"
+        android:textSize="@dimen/dimenTvStates"
+        app:layout_constraintTop_toBottomOf="@id/tv_reserve"
+        tools:ignore="MissingConstraints" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -43,6 +43,7 @@ import com.shuangduan.zcy.model.bean.MaterialCategoryBean;
 import com.shuangduan.zcy.model.bean.MaterialCollectBean;
 import com.shuangduan.zcy.model.bean.MaterialDepositingPlaceBean;
 import com.shuangduan.zcy.model.bean.MaterialDetailBean;
+import com.shuangduan.zcy.model.bean.MaterialOrderBean;
 import com.shuangduan.zcy.model.bean.MineIncomeBean;
 import com.shuangduan.zcy.model.bean.MyPhasesBean;
 import com.shuangduan.zcy.model.bean.OrderListBean;
@@ -689,13 +690,13 @@ public interface ApiService {
             @Field("category_id") int category_id
     );
 
-    @FormUrlEncoded
-    @POST("api/Material/order")
-    Flowable<BaseResponse> materialOrder(
-            @Field("user_id") int user_id,
-            @Field("id") int id,
-            @Field("buy_stock") int buy_stock
-    );
+//    @FormUrlEncoded
+//    @POST("api/Material/order")
+//    Flowable<BaseResponse> materialOrder(
+//            @Field("user_id") int user_id,
+//            @Field("id") int id,
+//            @Field("buy_stock") int buy_stock
+//    );
 
     @FormUrlEncoded
     @POST("api/supplier/supplierList")
@@ -1224,5 +1225,21 @@ public interface ApiService {
     Flowable<BaseResponse<MaterialCollectBean>> materialCollection(
             @Field("user_id") int userId,
             @Field("page") int page
+    );
+
+    //基建物资预定列表
+    @FormUrlEncoded
+    @POST("api/Material/myMaterial")
+    Flowable<BaseResponse<MaterialOrderBean>> materialOrder(
+            @Field("user_id") int userId,
+            @Field("page") int page
+    );
+
+    //基建物质预定详情
+    @FormUrlEncoded
+    @POST("api/Material/myMaterialDetail")
+    Flowable<BaseResponse> materialOrderDetail(
+            @Field("user_id") int userId,
+            @Field("order_id") int orderId
     );
 }

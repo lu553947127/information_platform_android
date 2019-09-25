@@ -564,4 +564,16 @@
     <string name="selector_supplier">请选择供应商</string>
 
     <string name="reset">重置</string>
+
+    <string name="goods_info">商品信息</string>
+    <string name="order_info">订单信息</string>
+    <string name="buyer">下单人</string>
+    <string name="contacts_phone">联系电话</string>
+    <string name="order_number">订单单号</string>
+    <string name="order_date">下单时间</string>
+    <string name="order_address">使用地点</string>
+    <string name="introduce">采购要求</string>
+    <string name="replication">复制</string>
+    <string name="submit_order">提交订单</string>
+    <string name="reserve_num">预定数量:</string>
 </resources>

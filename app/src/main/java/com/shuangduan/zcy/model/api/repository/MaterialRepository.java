@@ -6,6 +6,7 @@ import com.shuangduan.zcy.model.bean.MaterialBean;
 import com.shuangduan.zcy.model.bean.MaterialCategoryBean;
 import com.shuangduan.zcy.model.bean.MaterialDepositingPlaceBean;
 import com.shuangduan.zcy.model.bean.MaterialDetailBean;
+import com.shuangduan.zcy.model.bean.MaterialOrderBean;
 
 import java.util.List;
 
@@ -43,5 +44,15 @@ public class MaterialRepository extends BaseRepository {
 
     public void getAddress(MutableLiveData<List<MaterialDepositingPlaceBean>> liveData, MutableLiveData<String> pageStateLiveData, int userId, int id) {
         request(apiService.addressList(userId, id)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    //基建物质预定订单列表
+    public void materialOrderList(MutableLiveData<MaterialOrderBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int page){
+        request(apiService.materialOrder(userId,page)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    //基建物质预定订单详情
+    public void materialOrderDetail(MutableLiveData<MaterialOrderBean.ListBean> liveData, MutableLiveData<String> pageStateLiveData, int userId,int orderId){
+        request(apiService.materialOrderDetail(userId,orderId)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 }

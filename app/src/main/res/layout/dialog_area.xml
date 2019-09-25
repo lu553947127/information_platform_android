@@ -52,15 +52,29 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_type_first"
-                android:layout_width="125dp"
-                android:layout_height="match_parent" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_type_second"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
         </LinearLayout>
+
+<!--        <LinearLayout-->
+<!--            android:id="@+id/ll_type"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="250dp"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:visibility="gone">-->
+
+<!--            <androidx.recyclerview.widget.RecyclerView-->
+<!--                android:id="@+id/rv_type_first"-->
+<!--                android:layout_width="125dp"-->
+<!--                android:layout_height="match_parent" />-->
+
+<!--            <androidx.recyclerview.widget.RecyclerView-->
+<!--                android:id="@+id/rv_type_second"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent" />-->
+
+<!--        </LinearLayout>-->
 
         <RelativeLayout
             android:id="@+id/rl_time"

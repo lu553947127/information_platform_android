@@ -65,7 +65,9 @@ public class MainActivity extends BaseActivity {
     @Override
     public void onAttachFragment(@NonNull Fragment fragment) {
         super.onAttachFragment(fragment);
-        getSwipeBackLayout().setEnableGesture(false);
+        if (getSwipeBackLayout() != null) {
+            getSwipeBackLayout().setEnableGesture(false);
+        }
     }
 
     @Override
@@ -82,7 +84,7 @@ public class MainActivity extends BaseActivity {
         authenticationVm.pageStateLiveData.observe(this, this::showPageState);
         authenticationVm.authentication();
 
-        if (SPUtils.getInstance().getInt(SpConfig.INFO_STATUS) == 1){
+        if (SPUtils.getInstance().getInt(SpConfig.INFO_STATUS) == 1) {
             //初始化，融云链接服务器
             IMConnectVm imConnectVm = ViewModelProviders.of(this).get(IMConnectVm.class);
             imConnectVm.connect(SPUtils.getInstance().getString(SpConfig.IM_TOKEN));
@@ -97,7 +99,7 @@ public class MainActivity extends BaseActivity {
         mFragments.add(PeopleFragment.newInstance());
         mFragments.add(CircleFragment.newInstance());
         mFragments.add(MineFragment.newInstance());
-        fragmentAdapter=new FragmentAdapter(getSupportFragmentManager(),this,mFragments);
+        fragmentAdapter = new FragmentAdapter(getSupportFragmentManager(), this, mFragments);
         viewPager.setAdapter(fragmentAdapter);
         //设置默认首页为第一个fragment
         viewPager.setCurrentItem(0);
@@ -168,8 +170,8 @@ public class MainActivity extends BaseActivity {
     /**
      * 检测信息是否录入过
      */
-    private void checkInfoState(){
-        if (SPUtils.getInstance().getInt(SpConfig.INFO_STATUS) != 1){
+    private void checkInfoState() {
+        if (SPUtils.getInstance().getInt(SpConfig.INFO_STATUS) != 1) {
             ActivityUtils.startActivity(UserInfoInputActivity.class);
         }
     }
@@ -245,10 +247,10 @@ public class MainActivity extends BaseActivity {
     /**
      * 极光别名
      */
-    private void setAlias(){
+    private void setAlias() {
         int userId = SPUtils.getInstance().getInt(SpConfig.USER_ID, 0);
         int aliasStatus = SPUtils.getInstance().getInt(SpConfig.ALIAS_STATUS, 0);
-        if (userId != 0 && aliasStatus != 1){
+        if (userId != 0 && aliasStatus != 1) {
             LogUtils.i("别名设置", userId);
             JPushInterface.setAlias(this, userId, String.valueOf(userId));
         }

@@ -223,7 +223,7 @@ public class ProjectInfoListActivity extends BaseActivity {
     private RecyclerView rvCity;
     private RecyclerView rvStage;
     private RecyclerView rvTypeFirst;
-    private RecyclerView rvTypeSecond;
+
     private LinearLayout llArea;
     private LinearLayout llStage;
     private LinearLayout llType;
@@ -237,7 +237,7 @@ public class ProjectInfoListActivity extends BaseActivity {
     private SelectorSecondAdapter cityAdapter;
     private SelectorFirstAdapter stageFirstAdapter;
     private SelectorFirstAdapter typeFirstAdapter;
-    private SelectorSecondAdapter typeSecondAdapter;
+//    private SelectorSecondAdapter typeSecondAdapter;
 
     private void showPopArea(final List<ProvinceBean> dataArea, final List<StageBean> dataStage, final List<TypeBean> dataType) {
         if (popupWindowArea == null) {
@@ -348,22 +348,22 @@ public class ProjectInfoListActivity extends BaseActivity {
                         rvCity = view.findViewById(R.id.rv_city);
                         rvStage = view.findViewById(R.id.rv_stage);
                         rvTypeFirst = view.findViewById(R.id.rv_type_first);
-                        rvTypeSecond = view.findViewById(R.id.rv_type_second);
+
                         rvProvince.setLayoutManager(new LinearLayoutManager(this));
                         rvCity.setLayoutManager(new LinearLayoutManager(this));
                         rvStage.setLayoutManager(new LinearLayoutManager(this));
                         rvTypeFirst.setLayoutManager(new LinearLayoutManager(this));
-                        rvTypeSecond.setLayoutManager(new LinearLayoutManager(this));
+
                         provinceAdapter = new SelectorFirstAdapter(R.layout.item_province, null);
                         cityAdapter = new SelectorSecondAdapter(R.layout.item_city, null);
                         stageFirstAdapter = new SelectorFirstAdapter(R.layout.item_province, null);
                         typeFirstAdapter = new SelectorFirstAdapter(R.layout.item_province, null);
-                        typeSecondAdapter = new SelectorSecondAdapter(R.layout.item_city, null);
+
                         rvProvince.setAdapter(provinceAdapter);
                         rvCity.setAdapter(cityAdapter);
                         rvStage.setAdapter(stageFirstAdapter);
                         rvTypeFirst.setAdapter(typeFirstAdapter);
-                        rvTypeSecond.setAdapter(typeSecondAdapter);
+
 
                         //地区点击事件
                         provinceAdapter.setOnItemClickListener((adapter, view1, position) -> areaVm.clickFirst(position));
@@ -374,7 +374,6 @@ public class ProjectInfoListActivity extends BaseActivity {
 
                         //类型点击事件
                         typeFirstAdapter.setOnItemClickListener((adapter, view1, position) -> typeVm.clickFirst(position));
-                        typeSecondAdapter.setOnItemClickListener((adapter, view12, position) -> typeVm.clickSecond(position));
 
                         tvTimeStart.setOnClickListener(v -> {
                             showTimeDialog(tvTimeStart);
@@ -403,12 +402,6 @@ public class ProjectInfoListActivity extends BaseActivity {
                                     break;
                                 case 3:
                                     projectListVm.type = typeVm.getSecondIds();
-                                    LogUtils.i(typeVm.getStringResult());
-                                    //如果二级类型为null 不进行请求列表数据
-                                    if (projectListVm.type != null && projectListVm.type.size() <= 0) {
-                                        popDismiss();
-                                        return;
-                                    }
                                     break;
                                 case 4:
                                     projectListVm.stime = tvTimeStart.getText().toString();
@@ -623,6 +616,8 @@ public class ProjectInfoListActivity extends BaseActivity {
      * 初始化分类
      */
     private void initTypes() {
+
+
         typeVm.typeFirstLiveData.observe(this, typeBeans -> {
             if (!typeVm.firstInited) {
                 //首次加载，未添加全部，
@@ -632,13 +627,7 @@ public class ProjectInfoListActivity extends BaseActivity {
                 showPopArea(null, null, typeBeans);
             }
         });
-        typeVm.typeSecondLiveData.observe(this, typeBeans1 -> {
-            typeVm.setTypeSecondInit();
-            if (typeBeans1 != null && typeBeans1.size() > 0 && typeBeans1.get(0).getCatname().equals("全部")) {
-                //刷新二级列表
-                typeSecondAdapter.setNewData(typeBeans1);
-            }
-        });
+
 
         typeVm.pageStateLiveData.observe(this, s -> {
             switch (s) {

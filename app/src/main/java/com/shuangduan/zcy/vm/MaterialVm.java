@@ -9,6 +9,7 @@ import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.api.repository.MaterialRepository;
 import com.shuangduan.zcy.model.bean.MaterialBean;
 import com.shuangduan.zcy.model.bean.MaterialCategoryBean;
+import com.shuangduan.zcy.model.bean.MaterialOrderBean;
 
 import java.util.List;
 
@@ -29,10 +30,16 @@ public class MaterialVm extends BaseViewModel {
     public MutableLiveData<String> pageStateLiveData;
     public MutableLiveData<List<MaterialCategoryBean>> categoryFirstLiveData;
     public MutableLiveData<List<MaterialCategoryBean>> categoryLiveData;
+    //物资预定列表数据
+    public MutableLiveData<MaterialOrderBean> orderLiveData;
+    //物资预定订单详情
+    public MutableLiveData<MaterialOrderBean.ListBean> orderDetailLiveData;
+
     public int categoryFirstId;//一级分类id， 用于二级数据
     public int categoryId;//二级分类id， 用于列表加载
     private int sellPage;
     private int leasePage;
+    private int orderPage;
 
     public int materialId;
 
@@ -47,6 +54,9 @@ public class MaterialVm extends BaseViewModel {
         pageStateLiveData = new MutableLiveData<>();
         categoryFirstLiveData = new MutableLiveData<>();
         categoryLiveData = new MutableLiveData<>();
+        orderLiveData = new MutableLiveData<>();
+        orderDetailLiveData = new MutableLiveData<>();
+
         categoryFirstId = 0;
         categoryId = 0;
 
@@ -80,7 +90,24 @@ public class MaterialVm extends BaseViewModel {
         new MaterialRepository().materialList(leaseLiveData, pageStateLiveData, userId, 2, materialId, spec, supplierId, leasePage);
     }
 
+    //物质预定列表
+    public void orderList() {
+        orderPage = 1;
+        pageStateLiveData.postValue(PageState.PAGE_REFRESH);
+        new MaterialRepository().materialOrderList(orderLiveData, pageStateLiveData, userId, orderPage);
+    }
 
+    public void moreOrderList() {
+        orderPage++;
+        pageStateLiveData.postValue(PageState.PAGE_REFRESH);
+        new MaterialRepository().materialOrderList(orderLiveData, pageStateLiveData, userId, orderPage);
+    }
+
+    //物资预定详情
+    public void materialOrderDetail(int orderId) {
+        pageStateLiveData.postValue(PageState.PAGE_REFRESH);
+        new MaterialRepository().materialOrderDetail(orderDetailLiveData, pageStateLiveData, userId, orderId);
+    }
 
     /**
      * 获取一级分类

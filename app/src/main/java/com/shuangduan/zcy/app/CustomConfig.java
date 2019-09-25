@@ -53,6 +53,7 @@ public class CustomConfig {
     public static final String SUPPLIER_ID = "supplier_id";
     public static final String RECHARGE_AMOUNT = "recharge_amount";
     public static final String ORDER_SN = "order_sn";
+    public static final String ORDER_ID = "order_id";
     public static final String PAY_STYLE = "pay_style";
     public static final String RECHARGE_ID = "recharge_id";
     public static final String UID = "uid";

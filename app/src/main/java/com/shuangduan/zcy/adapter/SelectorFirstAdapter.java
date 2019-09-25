@@ -46,8 +46,7 @@ public class SelectorFirstAdapter<T  extends BaseSelectorBean> extends BaseQuick
         }else if (item instanceof TypeBean){
             helper.setText(R.id.tv_province, ((TypeBean) item).getCatname())
                     .setVisible(R.id.mark, item.getIsSelect() == 1)
-                    .setVisible(R.id.iv_more, item.getIsCheck() == 1)
-                    .setBackgroundColor(R.id.tv_province, mContext.getResources().getColor(item.getIsCheck() == 1? R.color.colorFFF:R.color.color_ECEAEF));
+                    .setVisible(R.id.iv_more, false);
 
             helper.getView(R.id.tv_province).setSelected(item.getIsSelect() == 1);
         }

@@ -39,21 +39,19 @@ public class SellAdapter extends BaseQuickAdapter<MaterialBean.ListBean, BaseVie
                 .setText(R.id.tv_sold_num, "销量: " + item.getSalesVolume() + "吨")
                 .setText(R.id.tv_address, "存放地: " + item.getAddress())
                 .setGone(R.id.tv_bought, item.getIs_order() == 1);
-
+        ImageView ivIcon = helper.getView(R.id.iv_icon);
         try {
             String thumb = item.getImages().get(0).headeUrl;
 
-            ImageView ivIcon = helper.getView(R.id.iv_icon);
             ImageLoader.load(mContext, new ImageConfig.Builder()
                     .url(thumb)
                     .imageView(ivIcon)
-                    .placeholder(R.drawable.default_pic)
-                    .errorPic(R.drawable.default_pic)
+                    .placeholder(R.drawable.wuzhi_default)
+                    .errorPic(R.drawable.wuzhi_default)
                     .build());
-
-
         } catch (Exception e) {
             e.printStackTrace();
+            ivIcon.setImageResource(R.drawable.wuzhi_default);
         }
 
     }

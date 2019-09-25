@@ -37,19 +37,19 @@ public class MaterialCollectAdapter extends BaseQuickAdapter<MaterialCollectBean
                 .setText(R.id.tv_owner, "供应商: " + item.company)
                 .setText(R.id.tv_price, item.guidance_price)
                 .setText(R.id.tv_sold_num, "库存: " + item.stock + item.unit);
+        ImageView ivIcon = helper.getView(R.id.iv_icon);
         try {
             String thumb = item.images;
-
-            ImageView ivIcon = helper.getView(R.id.iv_icon);
             ImageLoader.load(mContext, new ImageConfig.Builder()
                     .url(thumb)
                     .imageView(ivIcon)
-                    .placeholder(R.drawable.default_pic)
-                    .errorPic(R.drawable.default_pic)
+                    .placeholder(R.drawable.wuzhi_default)
+                    .errorPic(R.drawable.wuzhi_default)
                     .build());
 
         } catch (Exception e) {
             e.printStackTrace();
+            ivIcon.setImageResource(R.drawable.wuzhi_default);
         }
     }
 }
