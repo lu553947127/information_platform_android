@@ -263,6 +263,8 @@
         <activity android:name="com.shuangduan.zcy.rongyun.view.IMSearchActivity" />
         <!-- 加好友页-->
         <activity android:name="com.shuangduan.zcy.rongyun.view.IMAddFriendActivity" />
+        <!--        物资预定列表-->
+        <activity android:name=".view.mine.MaterialOrderActivity" />
         <!-- 融云单聊页-->
         <activity
             android:name="com.shuangduan.zcy.rongyun.view.IMPrivateChatActivity"

@@ -7,6 +7,7 @@ import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseViewModel;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.api.repository.UserRepository;
+import com.shuangduan.zcy.model.bean.MaterialCollectBean;
 import com.shuangduan.zcy.model.bean.ProjectCollectBean;
 import com.shuangduan.zcy.model.bean.RecruitBean;
 
@@ -24,38 +25,57 @@ public class MineCollectionVm extends BaseViewModel {
     public MutableLiveData<ProjectCollectBean> projectCollectLiveData;
     public MutableLiveData<RecruitBean> recruitCollectLiveData;
     public MutableLiveData<String> pageStateLiveData;
+
+    //基建物资收藏
+    public MutableLiveData<MaterialCollectBean> materialCollectLiveData;
+
     private int userId;
     public int projectPage;
     public int recruitPage;
+    public int materialPage;
 
     public MineCollectionVm() {
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
         projectCollectLiveData = new MutableLiveData<>();
         recruitCollectLiveData = new MutableLiveData<>();
+        materialCollectLiveData = new MutableLiveData<>();
         pageStateLiveData = new MutableLiveData<>();
     }
 
-    public void projectCollection(){
+    public void projectCollection() {
         projectPage = 1;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
         new UserRepository().projectCollection(projectCollectLiveData, pageStateLiveData, userId, projectPage);
     }
 
-    public void moreProjectCollection(){
-        projectPage ++;
+    public void moreProjectCollection() {
+        projectPage++;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
         new UserRepository().projectCollection(projectCollectLiveData, pageStateLiveData, userId, projectPage);
     }
 
-    public void recruitCollection(){
+    public void recruitCollection() {
         recruitPage = 1;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
         new UserRepository().recruitCollection(recruitCollectLiveData, pageStateLiveData, userId, recruitPage);
     }
 
-    public void moreRecruitCollection(){
-        recruitPage ++;
+    public void moreRecruitCollection() {
+        recruitPage++;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
         new UserRepository().recruitCollection(recruitCollectLiveData, pageStateLiveData, userId, recruitPage);
+    }
+
+
+    public void materialCollection() {
+        materialPage = 1;
+        pageStateLiveData.postValue(PageState.PAGE_REFRESH);
+        new UserRepository().materialCollection(materialCollectLiveData, pageStateLiveData, userId, materialPage);
+    }
+
+    public void moreMaterialCollection() {
+        materialPage++;
+        pageStateLiveData.postValue(PageState.PAGE_REFRESH);
+        new UserRepository().materialCollection(materialCollectLiveData, pageStateLiveData, userId, materialPage);
     }
 }

@@ -56,7 +56,7 @@ public abstract class BaseFragment extends Fragment implements IView {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(initLayout(), container, false);
         unBinder = ButterKnife.bind(this, view);
-        if (isUseEventBus()){
+        if (isUseEventBus()) {
             EventBus.getDefault().register(this);
         }
         return view;
@@ -65,7 +65,7 @@ public abstract class BaseFragment extends Fragment implements IView {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initDataAndEvent(savedInstanceState,view);
+        initDataAndEvent(savedInstanceState, view);
         load();
     }
 
@@ -75,7 +75,7 @@ public abstract class BaseFragment extends Fragment implements IView {
 
     @Override
     public void showLoading() {
-        if (loadDialog == null){
+        if (loadDialog == null) {
             loadDialog = new LoadDialog(mActivity);
         }
         loadDialog.showDialog();
@@ -83,7 +83,7 @@ public abstract class BaseFragment extends Fragment implements IView {
 
     @Override
     public void hideLoading() {
-        if (loadDialog != null){
+        if (loadDialog != null) {
             loadDialog.hideDialog();
         }
     }
@@ -91,31 +91,35 @@ public abstract class BaseFragment extends Fragment implements IView {
     /**
      * 保险起见的dialog关闭，防止内存泄漏
      */
-    public void addDialog(BaseDialog dialog){
+    public void addDialog(BaseDialog dialog) {
         dialogArray.put(dialogArray.size(), dialog);
     }
 
     @Override
     public void onDestroyView() {
         unBinder.unbind();
-        if (isUseEventBus() && EventBus.getDefault().isRegistered(this)){
+        if (isUseEventBus() && EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this);
         }
-        if (loadDialog != null){
+        if (loadDialog != null) {
             loadDialog.dismiss();
             loadDialog = null;
         }
-        for (int i = 0; i < dialogArray.size(); i++) {
-            if (dialogArray.get(i) != null){
-                dialogArray.get(i).dismiss();
+        if (dialogArray != null) {
+            for (int i = 0; i < dialogArray.size(); i++) {
+                if (dialogArray.get(i) != null) {
+                    dialogArray.get(i).dismiss();
+                }
             }
         }
+
         dialogArray = null;
         super.onDestroyView();
     }
 
     /**
      * 初始化布局
+     *
      * @return 布局
      */
     protected abstract int initLayout();
@@ -127,9 +131,10 @@ public abstract class BaseFragment extends Fragment implements IView {
 
     /**
      * 初始化数据
+     *
      * @param savedInstanceState 数据状态
      */
-    protected abstract void initDataAndEvent(Bundle savedInstanceState,View view);
+    protected abstract void initDataAndEvent(Bundle savedInstanceState, View view);
 
     /**
      * 从服务器获取数据

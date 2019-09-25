@@ -492,6 +492,7 @@
     <string-array name="mine_sub">
         <item>工程信息</item>
         <item>招采信息</item>
+        <item>物资信息</item>
     </string-array>
 
     <string-array name="project_order">

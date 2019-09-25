@@ -6,6 +6,7 @@ import com.shuangduan.zcy.model.bean.AuthenBean;
 import com.shuangduan.zcy.model.bean.BankCardBean;
 import com.shuangduan.zcy.model.bean.BankCardDisBean;
 import com.shuangduan.zcy.model.bean.BusinessAreaBean;
+import com.shuangduan.zcy.model.bean.MaterialCollectBean;
 import com.shuangduan.zcy.model.bean.MyPhasesBean;
 import com.shuangduan.zcy.model.bean.ProjectCollectBean;
 import com.shuangduan.zcy.model.bean.PwdPayStateBean;
@@ -180,6 +181,14 @@ public class UserRepository extends BaseRepository {
      */
     public void recruitCollection(MutableLiveData<RecruitBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, int page){
         request(apiService.recruitCollection(user_id, page)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+
+    /**
+     * 我的收藏-物资信息
+     */
+    public void materialCollection(MutableLiveData<MaterialCollectBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, int page){
+        request(apiService.materialCollection(user_id, page)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
     /**

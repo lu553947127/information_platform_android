@@ -28,6 +28,7 @@ import com.shuangduan.zcy.utils.image.ImageLoader;
 import com.shuangduan.zcy.view.mine.BalanceActivity;
 import com.shuangduan.zcy.view.mine.FeedbackActivity;
 import com.shuangduan.zcy.view.mine.HelperActivity;
+import com.shuangduan.zcy.view.mine.MaterialOrderActivity;
 import com.shuangduan.zcy.view.mine.MineCollectionActivity;
 import com.shuangduan.zcy.view.income.MineIncomeActivity;
 import com.shuangduan.zcy.view.mine.MineDemandActivity;
@@ -108,7 +109,7 @@ public class MineFragment extends BaseFragment {
             tvUsernameTop.setText(userInfoBean.getUsername());
             tvNumOfPeople.setText(String.format(getString(R.string.format_num_of_people), userInfoBean.getCount()));
             tvBalance.setText(String.format(getString(R.string.format_balance), userInfoBean.getCoin()));
-            EventBus.getDefault().post(new CoinEvent( userInfoBean.getCoin()));
+            EventBus.getDefault().post(new CoinEvent(userInfoBean.getCoin()));
             ImageLoader.load(mContext, new ImageConfig.Builder()
                     .url(userInfoBean.getImage_thumbnail())
                     .placeholder(R.drawable.default_head)
@@ -117,7 +118,7 @@ public class MineFragment extends BaseFragment {
                     .build());
         });
         userInfoVm.pageStateLiveData.observe(this, s -> {
-            switch (s){
+            switch (s) {
                 case PageState.PAGE_LOADING:
 //                    showLoading();
                     break;
@@ -132,7 +133,8 @@ public class MineFragment extends BaseFragment {
             private int lastScrollY = 0;
             private int h = DensityUtil.dp2px(70);
             //设置折叠标题背景颜色
-            private int color = ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.colorPrimary)&0x00ffffff;
+            private int color = ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.colorPrimary) & 0x00ffffff;
+
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
                 if (lastScrollY < h) {
@@ -140,7 +142,7 @@ public class MineFragment extends BaseFragment {
                     mScrollY_2 = scrollY > h ? h : scrollY;
                     toolbar.setAlpha(1f * mScrollY_2 / h);
                     toolbar.setBackgroundColor(((255 * mScrollY_2 / h) << 24) | color);
-                }else {
+                } else {
                     toolbar.setVisibility(View.VISIBLE);
                 }
                 lastScrollY = scrollY;
@@ -159,10 +161,10 @@ public class MineFragment extends BaseFragment {
     }
 
     @OnClick({R.id.tv_username, R.id.iv_user, R.id.tv_my_subscription, R.id.fl_order, R.id.fl_income, R.id.tv_balance,
-            R.id.tv_my_demand,R.id.tv_mine_subscription,R.id.tv_my_material,
+            R.id.tv_my_demand, R.id.tv_mine_subscription, R.id.tv_my_material,
             R.id.tv_transaction_record, R.id.tv_agreement_manage, R.id.tv_pwd_pay, R.id.tv_recharge,
             R.id.tv_read_history, R.id.tv_feedback, R.id.tv_recommend_friends, R.id.tv_my_collection, R.id.tv_set, R.id.tv_helper})
-    void onClick(View view){
+    void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_username:
             case R.id.iv_user:
@@ -182,7 +184,8 @@ public class MineFragment extends BaseFragment {
             case R.id.tv_mine_subscription:
                 ActivityUtils.startActivity(OrderSubActivity.class);
                 break;
-            case R.id.tv_my_material:
+            case R.id.tv_my_material: //我的预定
+                ActivityUtils.startActivity(MaterialOrderActivity.class);
                 break;
             case R.id.tv_transaction_record:
                 ActivityUtils.startActivity(TransRecordActivity.class);
@@ -229,13 +232,13 @@ public class MineFragment extends BaseFragment {
     }
 
     @Subscribe
-    public void onEventUpdateUserName(UserNameEvent event){
+    public void onEventUpdateUserName(UserNameEvent event) {
         tvUsername.setText(event.username);
         tvUsernameTop.setText(event.username);
     }
 
     @Subscribe
-    public void onEventUpdateAvatar(AvatarEvent event){
+    public void onEventUpdateAvatar(AvatarEvent event) {
         ImageLoader.load(mContext, new ImageConfig.Builder()
                 .url(event.getAvatar())
                 .placeholder(R.drawable.default_head)
@@ -245,12 +248,12 @@ public class MineFragment extends BaseFragment {
     }
 
     @Subscribe
-    public void onEventRechargeSuccess(RechargeSuccessEvent event){
+    public void onEventRechargeSuccess(RechargeSuccessEvent event) {
         userInfoVm.userInfo();
     }
 
     @Subscribe
-    public void onEventCoin(CoinEvent event){
+    public void onEventCoin(CoinEvent event) {
         tvBalance.setText(String.format(getString(R.string.format_balance), event.coin));
     }
 }

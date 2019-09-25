@@ -120,11 +120,15 @@ public abstract class BaseLazyFragment extends Fragment implements IView {
             loadDialog.dismiss();
             loadDialog = null;
         }
-        for (int i = 0; i < dialogArray.size(); i++) {
-            if (dialogArray.get(i) != null){
-                dialogArray.get(i).dismiss();
+
+        if(dialogArray!=null){
+            for (int i = 0; i < dialogArray.size(); i++) {
+                if (dialogArray.get(i) != null){
+                    dialogArray.get(i).dismiss();
+                }
             }
         }
+
         dialogArray = null;
         super.onDestroyView();
     }

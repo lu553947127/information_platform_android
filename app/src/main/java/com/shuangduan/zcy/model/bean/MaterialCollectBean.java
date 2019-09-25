@@ -1,0 +1,68 @@
+package com.shuangduan.zcy.model.bean;
+
+import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
+
+/**
+ * @author xuyu
+ * @Package com.shuangduan.zcy.model.bean$
+ * @class MaterialCollectBean$
+ * @class describe
+ * @time 2019/9/25 9:15
+ * @change
+ * @class describe
+ */
+public class MaterialCollectBean {
+    public int page;
+    public int count;
+    public List<ListBean> list;
+
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public List<ListBean> getList() {
+        return list;
+    }
+
+    public void setList(List<ListBean> list) {
+        this.list = list;
+    }
+
+
+    public class ListBean {
+        public int id;
+        //图片
+        public String images;
+        //产品名称
+        public String catname;
+        //分类名称
+        public String category;
+        //名称规格型号
+        public String spec;
+        //供应商公司
+        public String company;
+        //        方式 1 出租 2 售卖
+        public int method;
+        //        单价
+        @SerializedName("unit_price")
+        public String guidance_price;
+        //单位
+        public String unit;
+        //库存
+        public int stock;
+    }
+}
