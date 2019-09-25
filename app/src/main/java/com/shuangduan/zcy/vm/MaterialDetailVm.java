@@ -6,6 +6,7 @@ import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseViewModel;
 import com.shuangduan.zcy.model.api.repository.MaterialRepository;
+import com.shuangduan.zcy.model.bean.MaterialAddBean;
 import com.shuangduan.zcy.model.bean.MaterialDepositingPlaceBean;
 import com.shuangduan.zcy.model.bean.MaterialDetailBean;
 
@@ -27,6 +28,8 @@ public class MaterialDetailVm extends BaseViewModel {
     public MutableLiveData collectedLiveData;
     public MutableLiveData collectLiveData;
     public MutableLiveData<List<MaterialDepositingPlaceBean>>depositingPlaceBeanMutableLiveData;
+    public MutableLiveData<MaterialAddBean> mutableLiveData;
+    public MutableLiveData<MaterialAddBean> mutableLiveDataDel;
     public MutableLiveData<String> pageStateLiveData;
     public int id;
 
@@ -37,6 +40,8 @@ public class MaterialDetailVm extends BaseViewModel {
         collectedLiveData = new MutableLiveData();
         collectLiveData = new MutableLiveData();
         depositingPlaceBeanMutableLiveData = new MutableLiveData<>();
+        mutableLiveData = new MutableLiveData<>();
+        mutableLiveDataDel = new MutableLiveData<>();
     }
 
     public void getDetail(int id){
@@ -53,5 +58,13 @@ public class MaterialDetailVm extends BaseViewModel {
 
     public void getAddressList(){
         new MaterialRepository().getAddress(depositingPlaceBeanMutableLiveData, pageStateLiveData, userId, id);
+    }
+
+    public void getAddMaterial(int material_id,int num){
+        new MaterialRepository().getAddMaterial(mutableLiveData, pageStateLiveData, userId, material_id,num);
+    }
+
+    public void getDelMaterial(int material_id){
+        new MaterialRepository().getDelMaterial(mutableLiveDataDel, pageStateLiveData, userId, material_id);
     }
 }

@@ -4,4 +4,6 @@
     <dimen name="dimenTvStates">13sp</dimen>
 
     <dimen name="dp_55">55dp</dimen>
+
+    <dimen name="dp_110">150dp</dimen>
 </resources>

@@ -38,6 +38,7 @@ import com.shuangduan.zcy.model.bean.IncomeReleaseBean;
 import com.shuangduan.zcy.model.bean.LocusMineBean;
 import com.shuangduan.zcy.model.bean.LoginBean;
 import com.shuangduan.zcy.model.bean.MapBean;
+import com.shuangduan.zcy.model.bean.MaterialAddBean;
 import com.shuangduan.zcy.model.bean.MaterialBean;
 import com.shuangduan.zcy.model.bean.MaterialCategoryBean;
 import com.shuangduan.zcy.model.bean.MaterialCollectBean;
@@ -1241,5 +1242,22 @@ public interface ApiService {
     Flowable<BaseResponse> materialOrderDetail(
             @Field("user_id") int userId,
             @Field("order_id") int orderId
+    );
+
+    //基建物资提交预订单 添加存放地
+    @FormUrlEncoded
+    @POST("api/Material/addMaterial")
+    Flowable<BaseResponse<MaterialAddBean>> getAddMaterial(
+            @Field("user_id") int userId,
+            @Field("material_id") int material_id,
+            @Field("num") int num
+    );
+
+    //基建物资提交预订单 删除存放地
+    @FormUrlEncoded
+    @POST("api/Material/del")
+    Flowable<BaseResponse<MaterialAddBean>> getDelMaterial(
+            @Field("user_id") int userId,
+            @Field("id") int id
     );
 }

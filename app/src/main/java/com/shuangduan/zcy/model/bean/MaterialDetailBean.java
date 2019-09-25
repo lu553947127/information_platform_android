@@ -44,7 +44,7 @@ public class MaterialDetailBean {
     private int stock;
     private String sales_volume;
     private String spec;
-    private int unit;
+    private String unit;
     private String material_category;
     private String company;
     private String address;
@@ -162,11 +162,11 @@ public class MaterialDetailBean {
         this.spec = spec;
     }
 
-    public int getUnit() {
+    public String getUnit() {
         return unit;
     }
 
-    public void setUnit(int unit) {
+    public void setUnit(String unit) {
         this.unit = unit;
     }
 

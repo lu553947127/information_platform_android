@@ -14,9 +14,11 @@ package com.shuangduan.zcy.model.event;
  */
 public class MaterialDetailEvent {
 
-    public String material_id;
+    public int material_id;
+    public String material_name;
 
-    public MaterialDetailEvent(String material_id) {
+    public MaterialDetailEvent(int material_id,String material_name) {
         this.material_id = material_id;
+        this.material_name = material_name;
     }
 }

@@ -210,6 +210,8 @@
     <string name="no_tel">暂无联系方式</string>
     <string name="no_enclosure">找不到当前图纸</string>
     <string name="replication_success">复制成功</string>
+    <string name="no_mun">数量输入不能为空</string>
+    <string name="no_materialId">存放地选择不能为空</string>
 
     <string name="subscribe_message">订阅信息</string>
     <string name="model_list">列表模式</string>
@@ -239,7 +241,7 @@
     <string name="search_group">群聊搜索</string>
     <string name="all">全部</string>
     <string name="release_by_me">我发布的</string>
-    <string name="release_footprint">发布足迹</string>
+    <string name="release_footprint">发布动态</string>
     <string name="project_name">项目名称:</string>
     <string name="subscription_num">认购编号:</string>
     <string name="subscription_price">认购价格:</string>

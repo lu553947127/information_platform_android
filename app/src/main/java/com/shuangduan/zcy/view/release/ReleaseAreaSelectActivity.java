@@ -142,6 +142,7 @@ public class ReleaseAreaSelectActivity extends BaseActivity {
                                 cityId = citys.get(i).getId();
                                 switch (getIntent().getIntExtra(CustomConfig.PROJECT_ADDRESS, 0)){
                                     case 0:
+                                    case 2:
                                         EventBus.getDefault().post(new AddressEvent(province, city, provinceId, cityId));
                                         finish();
                                         break;

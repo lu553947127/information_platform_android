@@ -123,10 +123,18 @@
         <attr name="mi_indicatorPadding" format="dimension|reference" /><!--间距-->
         <attr name="mi_indicatorColor" format="color|reference" /><!--颜色-->
     </declare-styleable>
+
     <!--设置导航页滑动小球属性-->
     <style name="MaterialIndicator">
         <item name="mi_indicatorColor">@color/colorPrimary</item><!--小球颜色-->
         <item name="mi_indicatorPadding">17dp</item> <!--指示点间距-->
         <item name="mi_indicatorRadius">4dp</item><!--半径-->
+    </style>
+
+    <!--解决键盘遮挡问题-->
+    <style name="BottomSheetStyle" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
+        <item name="android:statusBarColor" tools:ignore="NewApi">@android:color/transparent</item>
     </style>
 </resources>

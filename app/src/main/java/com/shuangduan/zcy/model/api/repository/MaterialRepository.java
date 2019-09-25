@@ -2,6 +2,7 @@ package com.shuangduan.zcy.model.api.repository;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.shuangduan.zcy.model.bean.MaterialAddBean;
 import com.shuangduan.zcy.model.bean.MaterialBean;
 import com.shuangduan.zcy.model.bean.MaterialCategoryBean;
 import com.shuangduan.zcy.model.bean.MaterialDepositingPlaceBean;
@@ -44,6 +45,14 @@ public class MaterialRepository extends BaseRepository {
 
     public void getAddress(MutableLiveData<List<MaterialDepositingPlaceBean>> liveData, MutableLiveData<String> pageStateLiveData, int userId, int id) {
         request(apiService.addressList(userId, id)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    public void getAddMaterial(MutableLiveData<MaterialAddBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int material_id,int num) {
+        request(apiService.getAddMaterial(userId, material_id,num)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    public void getDelMaterial(MutableLiveData<MaterialAddBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int material_id) {
+        request(apiService.getDelMaterial(userId, material_id)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
     //基建物质预定订单列表

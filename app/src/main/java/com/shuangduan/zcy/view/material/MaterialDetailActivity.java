@@ -11,6 +11,7 @@ import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
@@ -29,7 +30,6 @@ import com.shuangduan.zcy.dialog.CustomDialog;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.MaterialDetailBean;
 import com.shuangduan.zcy.model.event.MaterialDetailEvent;
-import com.shuangduan.zcy.model.event.OfficeEvent;
 import com.shuangduan.zcy.utils.image.GlideImageLoader;
 import com.shuangduan.zcy.utils.image.PictureEnlargeUtils;
 import com.shuangduan.zcy.vm.MaterialDetailVm;
@@ -93,11 +93,14 @@ public class MaterialDetailActivity extends BaseActivity {
     TextView tvProduct;
     @BindView(R.id.iv_collect)
     ImageView ivCollection;
+    @BindView(R.id.ll_collect)
+    LinearLayout llCollection;
     @BindView(R.id.tv_reserve)
     TextView tvReserve;
     private MaterialDetailVm materialDetailVm;
     private String phone,is_collect,enclosure;
     private List<String> pics;
+    int material_id;
 
     @Override
     protected int initLayoutRes() {
@@ -139,6 +142,7 @@ public class MaterialDetailActivity extends BaseActivity {
             tvCompanyWebsite.setText(materialDetailBean.getCompany_website());
             tvServeAddress.setText(materialDetailBean.getServe_address());
             tvProduct.setText(materialDetailBean.getProduct());
+            material_id=materialDetailBean.getMaterial_id();
             phone=materialDetailBean.getTel();
             enclosure=materialDetailBean.getEnclosure();
             if (materialDetailBean.getIs_collection().equals("1")){
@@ -151,10 +155,12 @@ public class MaterialDetailActivity extends BaseActivity {
         });
 
         materialDetailVm.collectedLiveData.observe(this, o -> {
+            llCollection.setClickable(true);
             is_collect="1";
             ivCollection.setBackgroundResource(R.drawable.icon_new_collectioned);
         });
         materialDetailVm.collectLiveData.observe(this, o -> {
+            llCollection.setClickable(true);
             is_collect="0";
             ivCollection.setBackgroundResource(R.drawable.icon_new_collection);
         });
@@ -226,10 +232,11 @@ public class MaterialDetailActivity extends BaseActivity {
                         }).showDialog();
                 break;
             case R.id.tv_address_list:
-                bundle.putInt(CustomConfig.MATERIAL_ID, getIntent().getIntExtra(CustomConfig.MATERIAL_ID, 0));
+                bundle.putInt(CustomConfig.MATERIAL_ID, material_id);
                 ActivityUtils.startActivity(bundle, DepositingPlaceActivity.class);
                 break;
             case R.id.ll_collect:
+                llCollection.setClickable(false);
                 if (is_collect!=null&&is_collect.equals("1")){
                     materialDetailVm.getCollect();//取消收藏
                 }else {
@@ -237,6 +244,7 @@ public class MaterialDetailActivity extends BaseActivity {
                 }
                 break;
             case R.id.tv_reserve:
+                bundle.putInt(CustomConfig.MATERIAL_ID, getIntent().getIntExtra(CustomConfig.MATERIAL_ID, 0));
                 ActivityUtils.startActivity(bundle, MaterialPlaceOrderActivity.class);
                 break;
         }
@@ -245,7 +253,7 @@ public class MaterialDetailActivity extends BaseActivity {
     @Subscribe
     public void onEventUpdateMaterialDetail(MaterialDetailEvent event) {
         LogUtils.i(event.material_id);
-        materialDetailVm.getDetail(Integer.parseInt(event.material_id));
+        materialDetailVm.getDetail(event.material_id);
     }
 
     //拨打电话方法
