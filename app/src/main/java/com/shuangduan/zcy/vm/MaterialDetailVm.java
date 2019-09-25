@@ -9,6 +9,8 @@ import com.shuangduan.zcy.model.api.repository.MaterialRepository;
 import com.shuangduan.zcy.model.bean.MaterialDepositingPlaceBean;
 import com.shuangduan.zcy.model.bean.MaterialDetailBean;
 
+import java.util.List;
+
 /**
  * @author 宁文强 QQ:858777523
  * @name information_platform_android
@@ -24,7 +26,7 @@ public class MaterialDetailVm extends BaseViewModel {
     public MutableLiveData<MaterialDetailBean> detailLiveData;
     public MutableLiveData collectedLiveData;
     public MutableLiveData collectLiveData;
-    public MutableLiveData<MaterialDepositingPlaceBean> depositingPlaceBeanMutableLiveData;
+    public MutableLiveData<List<MaterialDepositingPlaceBean>>depositingPlaceBeanMutableLiveData;
     public MutableLiveData<String> pageStateLiveData;
     public int id;
 
@@ -37,7 +39,7 @@ public class MaterialDetailVm extends BaseViewModel {
         depositingPlaceBeanMutableLiveData = new MutableLiveData<>();
     }
 
-    public void getDetail(){
+    public void getDetail(int id){
         new MaterialRepository().materialDetail(detailLiveData, pageStateLiveData, userId, id);
     }
 

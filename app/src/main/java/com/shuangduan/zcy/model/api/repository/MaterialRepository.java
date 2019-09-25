@@ -41,7 +41,7 @@ public class MaterialRepository extends BaseRepository {
         request(apiService.collectNew(userId, id)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
-    public void getAddress(MutableLiveData<MaterialDepositingPlaceBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int id) {
+    public void getAddress(MutableLiveData<List<MaterialDepositingPlaceBean>> liveData, MutableLiveData<String> pageStateLiveData, int userId, int id) {
         request(apiService.addressList(userId, id)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 }

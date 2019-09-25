@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBgDark">
+
+    <include layout="@layout/toolbar"/>
+
+    <com.shuangduan.zcy.utils.ElasticScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+    </com.shuangduan.zcy.utils.ElasticScrollView>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="51dp"
+        android:background="@color/colorFFF">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="14dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorTv"
+                android:textSize="13sp"
+                android:text="共采购2套，共计"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_EF583E"
+                android:textSize="17sp"
+                android:text="8000"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorTv"
+                android:textSize="13sp"
+                android:text="元"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_reserve"
+            android:layout_width="89dp"
+            android:layout_height="29dp"
+            style="@style/BtnConfirm"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="14dp"
+            android:textSize="14sp"
+            android:text="提交预订单"/>
+    </RelativeLayout>
+
+</LinearLayout>

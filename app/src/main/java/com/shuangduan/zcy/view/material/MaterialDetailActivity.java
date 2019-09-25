@@ -19,6 +19,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
@@ -27,12 +28,16 @@ import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.CustomDialog;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.MaterialDetailBean;
+import com.shuangduan.zcy.model.event.MaterialDetailEvent;
+import com.shuangduan.zcy.model.event.OfficeEvent;
 import com.shuangduan.zcy.utils.image.GlideImageLoader;
 import com.shuangduan.zcy.utils.image.PictureEnlargeUtils;
 import com.shuangduan.zcy.vm.MaterialDetailVm;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,7 +106,7 @@ public class MaterialDetailActivity extends BaseActivity {
 
     @Override
     public boolean isUseEventBus() {
-        return false;
+        return true;
     }
 
     @SuppressLint("SetTextI18n")
@@ -163,7 +168,7 @@ public class MaterialDetailActivity extends BaseActivity {
                     break;
             }
         });
-        materialDetailVm.getDetail();
+        materialDetailVm.getDetail(getIntent().getIntExtra(CustomConfig.MATERIAL_ID, 0));
     }
 
     @OnClick({R.id.iv_bar_back,R.id.tv_enclosure, R.id.tv_tel, R.id.tv_address_list, R.id.ll_collect,R.id.tv_reserve})
@@ -232,9 +237,15 @@ public class MaterialDetailActivity extends BaseActivity {
                 }
                 break;
             case R.id.tv_reserve:
-
+                ActivityUtils.startActivity(bundle, MaterialPlaceOrderActivity.class);
                 break;
         }
+    }
+
+    @Subscribe
+    public void onEventUpdateMaterialDetail(MaterialDetailEvent event) {
+        LogUtils.i(event.material_id);
+        materialDetailVm.getDetail(Integer.parseInt(event.material_id));
     }
 
     //拨打电话方法

@@ -10,18 +10,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.MaterialDepositingPlaceAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
-import com.shuangduan.zcy.model.bean.MaterialDepositingPlaceBean;
+import com.shuangduan.zcy.model.api.PageState;
+import com.shuangduan.zcy.model.event.MaterialDetailEvent;
 import com.shuangduan.zcy.vm.MaterialDetailVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
-
-import java.util.List;
-
+import org.greenrobot.eventbus.EventBus;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -72,8 +71,29 @@ public class DepositingPlaceActivity extends BaseActivity {
         MaterialDepositingPlaceAdapter materialDepositingPlaceAdapter = new MaterialDepositingPlaceAdapter(R.layout.adapter_material_depositing_place, null);
         materialDepositingPlaceAdapter.setEmptyView(R.layout.layout_loading, recyclerView);
         recyclerView.setAdapter(materialDepositingPlaceAdapter);
+
         materialDetailVm.depositingPlaceBeanMutableLiveData.observe(this,materialDepositingPlaceBean -> {
-            materialDepositingPlaceAdapter.setNewData((List<MaterialDepositingPlaceBean>) materialDepositingPlaceBean);
+                    if (materialDepositingPlaceBean!=null&&materialDepositingPlaceBean.size()!=0){
+                        materialDepositingPlaceAdapter.setNewData(materialDepositingPlaceBean);
+                    }else {
+                        materialDepositingPlaceAdapter.setEmptyView(R.layout.layout_empty, recyclerView);
+                    }
+                    materialDepositingPlaceAdapter.setOnItemClickListener((adapter, view, position) -> {
+                        LogUtils.i(materialDepositingPlaceBean.get(position).getId());
+                        EventBus.getDefault().post(new MaterialDetailEvent(String.valueOf(materialDepositingPlaceBean.get(position).getId())));
+                        finish();
+                    });
+                }
+        );
+        materialDetailVm.pageStateLiveData.observe(this, s -> {
+            switch (s){
+                case PageState.PAGE_LOADING:
+                    showLoading();
+                    break;
+                default:
+                    hideLoading();
+                    break;
+            }
         });
         materialDetailVm.getAddressList();
     }

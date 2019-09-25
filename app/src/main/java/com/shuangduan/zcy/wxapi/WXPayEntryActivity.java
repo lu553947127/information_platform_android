@@ -3,20 +3,14 @@ package com.shuangduan.zcy.wxapi;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-
 import androidx.annotation.Nullable;
-
-import com.alipay.sdk.app.PayResultActivity;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.AppConfig;
 import com.shuangduan.zcy.app.CustomConfig;
-import com.shuangduan.zcy.utils.pay.PayResult;
 import com.shuangduan.zcy.view.PayActivity;
-import com.shuangduan.zcy.view.projectinfo.GoToSubActivity;
-import com.shuangduan.zcy.view.projectinfo.SubOrderActivity;
 import com.shuangduan.zcy.view.recharge.RechargeResultActivity;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
@@ -27,14 +21,12 @@ import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
-import java.util.Objects;
-
 /**
  * <pre>
  *     author : 宁文强
  *     e-mail : ningwenqiang@lanhuiplay.com
  *     time   : 2018/07/04
- *     desc   :
+ *     desc   : 微信支付返回结果页
  *     version: 1.0
  * </pre>
  */
@@ -46,7 +38,6 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         api = WXAPIFactory.createWXAPI(this, AppConfig.APP_ID);
         api.registerApp(AppConfig.APP_ID);
         api.handleIntent(getIntent(), this);
@@ -60,7 +51,6 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
         api.handleIntent(intent, this);
     }
 
-
     @Override
     public void onReq(BaseReq baseReq) {
         String extData = ((PayReq) baseReq).extData;
@@ -71,7 +61,6 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
     @Override
     public void onResp(BaseResp baseResp) {
         LogUtils.i("onPayFinish, errCode = " + baseResp.errCode);
-
         LogUtils.i(baseResp.getType());
         LogUtils.i(baseResp.errStr);
         if (baseResp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
@@ -91,11 +80,8 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
             }else if (baseResp.errCode == -2){
                 ToastUtils.showShort("支付取消");
             }
-
         }
-
         finish();
-
     }
 
 }

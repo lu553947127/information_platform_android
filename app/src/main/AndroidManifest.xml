@@ -3,12 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.shuangduan.zcy">
 
-
     <!-- 华为推送PUSH 如果是安卓8.0，应用编译配置的targetSdkVersion>=26，请务必添加以下权限 -->
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <!-- OPPO推送权限 -->
     <uses-permission android:name="com.coloros.mcs.permission.RECIEVE_MCS_MESSAGE" />
-
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -95,19 +93,24 @@
         <activity
             android:name="com.shuangduan.zcy.view.login.MobileVerificationActivity"
             android:theme="@style/AppThemeBgGray" />
+        <!-- 用户详情页-->
         <activity
             android:name="com.shuangduan.zcy.view.mine.UserInfoActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />
+        <!-- 提现页-->
         <activity
             android:name="com.shuangduan.zcy.view.mine.WithdrawActivity"
             android:theme="@style/AppThemeBgGray"
             android:windowSoftInputMode="stateHidden|adjustResize" />
+        <!-- 编辑用户名页-->
         <activity
             android:name="com.shuangduan.zcy.view.mine.UpdateNameActivity"
             android:theme="@style/AppThemeBgGray" />
+        <!-- 编辑手机号页-->
         <activity
             android:name="com.shuangduan.zcy.view.mine.UpdateMobileActivity"
             android:theme="@style/AppThemeBgGray" />
+        <!-- 修改密码页-->
         <activity
             android:name="com.shuangduan.zcy.view.mine.ForgetPwdActivity"
             android:theme="@style/AppThemeBgGray"
@@ -119,8 +122,11 @@
             android:name="com.shuangduan.zcy.view.mine.UpdateEmailActivity"
             android:theme="@style/AppThemeBgGray" />
         <activity android:name="com.shuangduan.zcy.view.mine.UpdatePwdActivity" />
+        <!-- 身份证上传页-->
         <activity android:name="com.shuangduan.zcy.view.mine.AuthenticationActivity" />
+        <!-- 绑定银行卡页-->
         <activity android:name="com.shuangduan.zcy.view.mine.BindBankCardActivity" />
+        <!-- 公司搜索页-->
         <activity android:name="com.shuangduan.zcy.view.mine.CompanySearchActivity" />
         <activity android:name="com.shuangduan.zcy.view.mine.BusinessAreaActivity" />
         <activity android:name="com.shuangduan.zcy.view.mine.HelperActivity" />
@@ -133,6 +139,7 @@
         <activity android:name="com.shuangduan.zcy.view.mine.ReadHistoryActivity" />
         <activity android:name="com.shuangduan.zcy.view.mine.MineSubActivity" />
         <activity android:name="com.shuangduan.zcy.view.mine.MineCollectionActivity" />
+        <!-- 余额页面-->
         <activity
             android:name="com.shuangduan.zcy.view.mine.BalanceActivity"
             android:theme="@style/AppThemeBgGray" />
@@ -147,6 +154,7 @@
         <activity android:name="com.shuangduan.zcy.view.mine.UpdateProductionActivity" />
         <activity android:name="com.shuangduan.zcy.view.mine.MineOrderActivity" />
         <activity android:name="com.shuangduan.zcy.view.mine.OrderSubActivity" />
+        <!-- 支付密码页-->
         <activity
             android:name="com.shuangduan.zcy.view.mine.PwdPayActivity"
             android:theme="@style/AppThemeBgGray" />
@@ -194,13 +202,20 @@
         <activity android:name="com.shuangduan.zcy.view.projectinfo.LocusOwnerDetailActivity" />
         <activity android:name="com.shuangduan.zcy.view.recruit.RecruitActivity" />
         <activity android:name="com.shuangduan.zcy.view.recruit.RecruitDetailActivity" />
+        <!-- 基建物资页-->
         <activity android:name="com.shuangduan.zcy.view.material.MaterialActivity" />
+        <!-- 基建物资预定成功页-->
         <activity android:name="com.shuangduan.zcy.view.material.MaterialOrderSuccessActivity" />
+        <!-- 物资提交预定页面-->
+        <activity android:name="com.shuangduan.zcy.view.material.MaterialPlaceOrderActivity" />
+        <!-- 基建物资详情页-->
         <activity
             android:name="com.shuangduan.zcy.view.material.MaterialDetailActivity"
             android:theme="@style/AppThemeBgGray" />
         <!-- 存放地选择列表-->
         <activity android:name="com.shuangduan.zcy.view.material.DepositingPlaceActivity" />
+        <!-- 物资列表搜索页面 -->
+        <activity android:name=".view.material.MaterialSearchActivity" />
         <activity android:name="com.shuangduan.zcy.view.supplier.SupplierActivity" />
         <activity
             android:name="com.shuangduan.zcy.view.supplier.SupplierDetailActivity"
@@ -232,20 +247,23 @@
         <activity android:name="com.shuangduan.zcy.view.demand.ReleaseRelationshipOrderActivity" />
         <activity android:name="com.shuangduan.zcy.view.demand.FindBuyerDetailActivity" />
         <activity android:name="com.shuangduan.zcy.view.demand.FindRelationshipAcceptDetailActivity" />
+        <!-- 我的需求 我发布详情-->
         <activity android:name="com.shuangduan.zcy.view.demand.FindRelationshipReleaseDetailActivity" />
-
-        <!-- 物资列表搜索页面 -->
-        <activity android:name=".view.material.MaterialSearchActivity" />
-
+        <!-- 图片放大查看页-->
         <activity
             android:name="com.shuangduan.zcy.view.PhotoViewActivity"
             android:theme="@style/PhotoViewTheme" />
+        <!-- 地区选择页-->
         <activity
             android:name="com.shuangduan.zcy.view.MultiAreaActivity"
             android:theme="@style/AppThemeBgGray" />
+        <!-- 支付页-->
         <activity android:name="com.shuangduan.zcy.view.PayActivity" />
+        <!-- 好友群聊搜索页-->
         <activity android:name="com.shuangduan.zcy.rongyun.view.IMSearchActivity" />
+        <!-- 加好友页-->
         <activity android:name="com.shuangduan.zcy.rongyun.view.IMAddFriendActivity" />
+        <!-- 融云单聊页-->
         <activity
             android:name="com.shuangduan.zcy.rongyun.view.IMPrivateChatActivity"
             android:configChanges="orientation|screenSize"
@@ -273,19 +291,27 @@
                     android:scheme="rong" />
             </intent-filter>
         </activity>
+        <!-- 新的好友列表页-->
         <activity android:name="com.shuangduan.zcy.rongyun.view.NewFriendsActivity" />
+        <!-- 通讯录页-->
+        <activity android:name="com.shuangduan.zcy.rongyun.view.IMContactsActivity" />
+        <!-- 搜索好友更多页-->
+        <activity android:name="com.shuangduan.zcy.rongyun.view.IMFriendMoreActivity" />
+        <!-- 搜索群聊更多页-->
+        <activity android:name="com.shuangduan.zcy.rongyun.view.IMGroupMoreActivity" />
+        <!-- 群聊详情页-->
+        <activity android:name="com.shuangduan.zcy.rongyun.view.IMGroupDetailsActivity" />
+        <!-- 群聊详情人员列表-->
+        <activity android:name="com.shuangduan.zcy.rongyun.view.IMGroupMembersActivity" />
+        <!-- 相机拍照页-->
+        <activity android:name="com.shuangduan.zcy.view.photo.CameraActivity" />
+        <!-- h5加载页-->
+        <activity android:name="com.shuangduan.zcy.view.WebViewActivity" />
+        <!-- 微信支付 返回结果页-->
         <activity
             android:name="com.shuangduan.zcy.wxapi.WXPayEntryActivity"
             android:exported="true"
             android:launchMode="singleTop" />
-        <activity android:name="com.shuangduan.zcy.rongyun.view.IMContactsActivity" />
-        <activity android:name="com.shuangduan.zcy.rongyun.view.IMFriendMoreActivity" />
-        <activity android:name="com.shuangduan.zcy.rongyun.view.IMGroupMoreActivity" />
-        <activity android:name="com.shuangduan.zcy.rongyun.view.IMGroupDetailsActivity" />
-        <activity android:name="com.shuangduan.zcy.rongyun.view.IMGroupMembersActivity" />
-        <activity android:name="com.shuangduan.zcy.view.photo.CameraActivity" />
-        <!-- h5加载页-->
-        <activity android:name="com.shuangduan.zcy.view.WebViewActivity" />
         <!-- 微信分享-->
         <activity
             android:name=".wxapi.WXEntryActivity"
@@ -305,6 +331,7 @@
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="0c36af45d9d91702919613d75a2f53a2" />
+
         <!--融云临时访问权限-->
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -318,6 +345,7 @@
             </meta-data>
         </provider>
 
+        <!-- 图片上传 相册临时访问权限-->
         <provider
             android:name=".model.api.CustomFileProvider"
             android:authorities="com.shuangduan.zcy.fileprovider"
@@ -330,6 +358,7 @@
 
             </meta-data>
         </provider>
+
         <!--QQ分享 start-->
         <activity
             android:name="com.tencent.tauth.AuthActivity"
@@ -378,9 +407,9 @@
                 <category android:name="com.shuangduan.zcy" />
             </intent-filter>
         </receiver>
-
         <!--极光推送 end-->
 
+        <!-- 融云推送 通知接受自定义服务-->
         <!-- push start-->
         <receiver
             android:name=".rongyun.receiver.SealNotificationReceiver"
@@ -391,6 +420,7 @@
                 <action android:name="io.rong.push.intent.THIRD_PARTY_PUSH_STATE" />
             </intent-filter>
         </receiver>
+
         <!-- 小米推送 配置开始 < -->
         <service
             android:name="com.xiaomi.push.service.XMPushService"
@@ -444,7 +474,6 @@
         </receiver>
         <!-- 小米推送 配置结束< -->
 
-
         <!-- 华为推送 配置开始 -->
         <meta-data
             android:name="com.huawei.hms.client.appid"
@@ -475,7 +504,6 @@
                 android:value="androidhwext:style/Theme.Emui.Translucent" />
         </activity>
 
-
         <provider
             android:name="com.huawei.hms.update.provider.UpdateProvider"
             android:authorities="xxx.xxx.xxx.hms.update.provider"
@@ -502,7 +530,6 @@
                 <action android:name="com.huawei.intent.action.PUSH" />
             </intent-filter>
         </receiver>
-
         <!-- 华为推送配置结束 -->
 
         <!-- OPPO消息推送开始 -->
