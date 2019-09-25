@@ -1,5 +1,6 @@
 package com.shuangduan.zcy.view;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -385,6 +386,7 @@ public class HomeFragment extends BaseFragment {
                         LogUtils.json(response.body());
                     }
 
+                    @SuppressLint("SetTextI18n")
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
                         LogUtils.json(response.body());

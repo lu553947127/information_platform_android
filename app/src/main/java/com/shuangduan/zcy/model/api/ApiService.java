@@ -40,6 +40,7 @@ import com.shuangduan.zcy.model.bean.LoginBean;
 import com.shuangduan.zcy.model.bean.MapBean;
 import com.shuangduan.zcy.model.bean.MaterialBean;
 import com.shuangduan.zcy.model.bean.MaterialCategoryBean;
+import com.shuangduan.zcy.model.bean.MaterialDepositingPlaceBean;
 import com.shuangduan.zcy.model.bean.MaterialDetailBean;
 import com.shuangduan.zcy.model.bean.MineIncomeBean;
 import com.shuangduan.zcy.model.bean.MyPhasesBean;
@@ -1192,6 +1193,7 @@ public interface ApiService {
             @Field("name") String name
     );
 
+    //基建物资收藏
     @FormUrlEncoded
     @POST("api/Material/setCollection")
     Flowable<BaseResponse> collected(
@@ -1199,10 +1201,19 @@ public interface ApiService {
             @Field("id") int id
     );
 
+    //基建物资取消收藏
     @FormUrlEncoded
     @POST("api/Material/cancelCollection")
     Flowable<BaseResponse> collectNew(
             @Field("user_id") int user_id,
             @Field("id") int id
+    );
+
+    //基建物资存放地列表
+    @FormUrlEncoded
+    @POST("api/Material/addressList")
+    Flowable<BaseResponse<List<MaterialDepositingPlaceBean>>> addressList(
+            @Field("user_id") int user_id,
+            @Field("material_id") int material_id
     );
 }

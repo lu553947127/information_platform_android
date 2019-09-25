@@ -1,6 +1,7 @@
 package com.shuangduan.zcy.dialog;
 
 import android.app.Activity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -33,9 +34,12 @@ public class CustomDialog extends BaseDialog {
     TextView tvTip;
     @BindView(R.id.iv_icon)
     ImageView ivIcon;
-    String ok = "";
-    String tip = "";
-    int iconRes = 0;
+    @BindView(R.id.tv_enclosure_title)
+    TextView tvEnclosureTitle;
+    private String ok = "";
+    private String tip = "";
+    private String title ="";
+    private int iconRes = 0;
 
     public CustomDialog(@NonNull Activity activity) {
         super(activity);
@@ -62,11 +66,21 @@ public class CustomDialog extends BaseDialog {
             ivIcon.setImageResource(iconRes);
             ivIcon.setVisibility(View.VISIBLE);
         }
+
+        if (!TextUtils.isEmpty(title)){
+            tvEnclosureTitle.setText(title);
+            tvEnclosureTitle.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
     void initEvent() {
 
+    }
+
+    public CustomDialog setTitle(String title){
+        this.title = title;
+        return this;
     }
 
     public CustomDialog setTip(String tip){

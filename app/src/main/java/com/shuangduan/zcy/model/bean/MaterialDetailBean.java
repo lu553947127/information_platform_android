@@ -54,9 +54,17 @@ public class MaterialDetailBean {
     private String product;
     private String supplie_address;
     private String is_collection;
+    private String enclosure;
     private List<ImagesBean> images;
-    private List<EnclosureBean> enclosure;
     private List<AddressListBean> address_list;
+
+    public String getEnclosure() {
+        return enclosure;
+    }
+
+    public void setEnclosure(String enclosure) {
+        this.enclosure = enclosure;
+    }
 
     public String getIs_collection() {
         return is_collection;
@@ -218,14 +226,6 @@ public class MaterialDetailBean {
         this.images = images;
     }
 
-    public List<EnclosureBean> getEnclosure() {
-        return enclosure;
-    }
-
-    public void setEnclosure(List<EnclosureBean> enclosure) {
-        this.enclosure = enclosure;
-    }
-
     public List<AddressListBean> getAddress_list() {
         return address_list;
     }
@@ -238,32 +238,6 @@ public class MaterialDetailBean {
         /**
          * url : http://zicaiyun-pc.oss-cn-qingdao.aliyuncs.com/40518db810c3d99b8efb5b0e678a3d38.jpg
          * heade_url : http://zicaiyun-pc.oss-cn-qingdao.aliyuncs.com/40518db810c3d99b8efb5b0e678a3d38.jpg
-         */
-
-        private String url;
-        private String heade_url;
-
-        public String getUrl() {
-            return url;
-        }
-
-        public void setUrl(String url) {
-            this.url = url;
-        }
-
-        public String getHeade_url() {
-            return heade_url;
-        }
-
-        public void setHeade_url(String heade_url) {
-            this.heade_url = heade_url;
-        }
-    }
-
-    public static class EnclosureBean {
-        /**
-         * url : http://zicaiyun-pc.oss-cn-qingdao.aliyuncs.com/0e09a504a37ec0785cd9679152d8fc03.jpg
-         * heade_url : http://zicaiyun-pc.oss-cn-qingdao.aliyuncs.com/0e09a504a37ec0785cd9679152d8fc03.jpg
          */
 
         private String url;

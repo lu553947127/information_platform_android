@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.shuangduan.zcy.model.bean.MaterialBean;
 import com.shuangduan.zcy.model.bean.MaterialCategoryBean;
+import com.shuangduan.zcy.model.bean.MaterialDepositingPlaceBean;
 import com.shuangduan.zcy.model.bean.MaterialDetailBean;
 
 import java.util.List;
@@ -40,4 +41,7 @@ public class MaterialRepository extends BaseRepository {
         request(apiService.collectNew(userId, id)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
+    public void getAddress(MutableLiveData<MaterialDepositingPlaceBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int id) {
+        request(apiService.addressList(userId, id)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
 }

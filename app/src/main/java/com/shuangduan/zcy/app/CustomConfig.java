@@ -23,7 +23,8 @@ public class CustomConfig {
     public static final String UPLOAD_TYPE = "upload_type";
     /*验证码*/
     public static final String VERIFICATION_CODE = "verification_code";
-
+    /*供应商授权委托书*/
+    public static final String SUPPLIER_AUTHORIZATION = "http://information-api.oss-cn-qingdao.aliyuncs.com/doc/供应商授权委托书.docx";
     /**
      * 传递预览图片的url
      */

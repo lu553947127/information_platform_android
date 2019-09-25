@@ -34,7 +34,7 @@ public class MaterialDetailVm extends BaseViewModel {
         pageStateLiveData = new MutableLiveData<>();
         collectedLiveData = new MutableLiveData();
         collectLiveData = new MutableLiveData();
-        depositingPlaceBeanMutableLiveData = new MutableLiveData();
+        depositingPlaceBeanMutableLiveData = new MutableLiveData<>();
     }
 
     public void getDetail(){
@@ -47,5 +47,9 @@ public class MaterialDetailVm extends BaseViewModel {
 
     public void getCollect(){
         new MaterialRepository().collect(collectLiveData, pageStateLiveData, userId, id);
+    }
+
+    public void getAddressList(){
+        new MaterialRepository().getAddress(depositingPlaceBeanMutableLiveData, pageStateLiveData, userId, id);
     }
 }

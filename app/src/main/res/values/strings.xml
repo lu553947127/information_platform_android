@@ -207,8 +207,9 @@
     <string name="friends_new_notice">好友提醒</string>
     <string name="help_ask">问</string>
     <string name="help_answer">答</string>
-    <string name="no_tel">联系方式为空</string>
-    <string name="enclosure_notice">请到电脑端查看图纸</string>
+    <string name="no_tel">暂无联系方式</string>
+    <string name="no_enclosure">找不到当前图纸</string>
+    <string name="replication_success">复制成功</string>
 
     <string name="subscribe_message">订阅信息</string>
     <string name="model_list">列表模式</string>

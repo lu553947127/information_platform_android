@@ -382,7 +382,7 @@ public class SupplierJoinActivity extends BaseActivity implements BaseDialog.Pho
                 break;
             case R.id.tv_authorization:
                 new CustomDialog(this)
-                        .setTip("http://information-api.oss-cn-qingdao.aliyuncs.com/doc/供应商授权委托书.docx")
+                        .setTip(CustomConfig.SUPPLIER_AUTHORIZATION)
                         .setOk("跳转")
                         .setCallBack(new BaseDialog.CallBack() {
                             @Override
@@ -395,15 +395,9 @@ public class SupplierJoinActivity extends BaseActivity implements BaseDialog.Pho
                                 Intent intent = new Intent();
                                 //Intent intent = new Intent(Intent.ACTION_VIEW,uri);
                                 intent.setAction("android.intent.action.VIEW");
-                                Uri content_url = Uri.parse("http://information-api.oss-cn-qingdao.aliyuncs.com/doc/供应商授权委托书.docx");
+                                Uri content_url = Uri.parse(CustomConfig.SUPPLIER_AUTHORIZATION);
                                 intent.setData(content_url);
                                 startActivity(intent);
-//                                //获取剪贴板管理器：
-//                                ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-//                                //创建普通字符型ClipData
-//                                ClipData mClipData = ClipData.newPlainText("Label", "http://information-api.oss-cn-qingdao.aliyuncs.com/doc/供应商授权委托书.docx");
-//                                //将ClipData内容放到系统剪贴板里。
-//                                Objects.requireNonNull(cm).setPrimaryClip(mClipData);
                             }
                         }).showDialog();
                 break;

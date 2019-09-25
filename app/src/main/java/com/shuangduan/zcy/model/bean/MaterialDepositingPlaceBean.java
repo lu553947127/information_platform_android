@@ -13,10 +13,9 @@ package com.shuangduan.zcy.model.bean;
  * @Version: 1.0
  */
 public class MaterialDepositingPlaceBean {
-
     /**
-     * id : 5
-     * address : 北京市昌平区回龙观东大街
+     * id : 2
+     * address : 山东省济南市三庆齐盛广场
      */
 
     private int id;

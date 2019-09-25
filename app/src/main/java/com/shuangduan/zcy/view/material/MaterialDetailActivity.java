@@ -1,6 +1,9 @@
 package com.shuangduan.zcy.view.material;
 
 import android.annotation.SuppressLint;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -33,6 +36,7 @@ import com.youth.banner.Transformer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -87,7 +91,7 @@ public class MaterialDetailActivity extends BaseActivity {
     @BindView(R.id.tv_reserve)
     TextView tvReserve;
     private MaterialDetailVm materialDetailVm;
-    private String phone,is_collect;
+    private String phone,is_collect,enclosure;
     private List<String> pics;
 
     @Override
@@ -131,6 +135,7 @@ public class MaterialDetailActivity extends BaseActivity {
             tvServeAddress.setText(materialDetailBean.getServe_address());
             tvProduct.setText(materialDetailBean.getProduct());
             phone=materialDetailBean.getTel();
+            enclosure=materialDetailBean.getEnclosure();
             if (materialDetailBean.getIs_collection().equals("1")){
                 is_collect=materialDetailBean.getIs_collection();
                 ivCollection.setBackgroundResource(R.drawable.icon_new_collectioned);
@@ -169,9 +174,31 @@ public class MaterialDetailActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_enclosure:
+                if (TextUtils.isEmpty(enclosure)){
+                    ToastUtils.showShort(getString(R.string.no_enclosure));
+                    return;
+                }
                 new CustomDialog(this)
-                        .setTip(getString(R.string.enclosure_notice))
-                        .showDialog();
+                        .setTip(enclosure)
+                        .setOk("复制")
+                        .setTitle("建议复制到电脑端打开")
+                        .setCallBack(new BaseDialog.CallBack() {
+                            @Override
+                            public void cancel() {
+
+                            }
+
+                            @Override
+                            public void ok(String s) {
+                                //获取剪贴板管理器：
+                                ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                                //创建普通字符型ClipData
+                                ClipData mClipData = ClipData.newPlainText("Label", enclosure);
+                                //将ClipData内容放到系统剪贴板里。
+                                Objects.requireNonNull(cm).setPrimaryClip(mClipData);
+                                ToastUtils.showShort(getString(R.string.replication_success));
+                            }
+                        }).showDialog();
                 break;
             case R.id.tv_tel:
                 if (TextUtils.isEmpty(phone)){
