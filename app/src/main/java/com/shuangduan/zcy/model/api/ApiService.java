@@ -1239,7 +1239,7 @@ public interface ApiService {
     //基建物质预定详情
     @FormUrlEncoded
     @POST("api/Material/myMaterialDetail")
-    Flowable<BaseResponse> materialOrderDetail(
+    Flowable<BaseResponse<MaterialOrderBean.ListBean>> materialOrderDetail(
             @Field("user_id") int userId,
             @Field("order_id") int orderId
     );
@@ -1260,4 +1260,12 @@ public interface ApiService {
             @Field("user_id") int userId,
             @Field("id") int id
     );
+
+    //基建物质预定订单删除
+//    @FormUrlEncoded
+//    @POST("api/Material/del")
+//    Flowable<BaseResponse> cancleMaterialOrder(
+//            @Field("user_id") int userId,
+//            @Field("id") int id
+//    );
 }

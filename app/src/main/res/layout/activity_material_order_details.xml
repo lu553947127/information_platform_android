@@ -343,7 +343,7 @@
                 android:layout_marginBottom="30dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:text="@string/format_reserve"/>
+                android:text="@string/cancel_order"/>
         </LinearLayout>
     </com.shuangduan.zcy.utils.ElasticScrollView>
 

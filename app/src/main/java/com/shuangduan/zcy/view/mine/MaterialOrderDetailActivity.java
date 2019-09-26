@@ -1,9 +1,13 @@
 package com.shuangduan.zcy.view.mine;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.text.ClipboardManager;
 import android.text.Html;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
@@ -13,6 +17,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.ToastUtils;
+import com.chad.library.adapter.base.BaseViewHolder;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shuangduan.zcy.R;
@@ -26,6 +32,7 @@ import com.shuangduan.zcy.vm.MaterialVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * @author xuyu
@@ -116,10 +123,11 @@ public class MaterialOrderDetailActivity extends BaseActivity {
             }
 
             tvTitle.setText(item.category);
-            tvPrice.setText(Html.fromHtml("<b>商品单价:<font color=#EF583E>" + item.price + "<font/>/ " + item.unit + "</b>"));
-            tvSpec.setText("规格: " + item.spec);
-            tvSupplier.setText("供应商: " + item.supplier);
-            tvUnit.setText("单位: " + item.unit);
+            tvPrice.setText(Html.fromHtml("商品单价：<font color=#EF583E>" + item.price + "<font/>/ " + item.unit));
+            tvSpec.setText("规格：" + item.spec);
+            tvSupplier.setText("供应商：" + item.supplier);
+            tvUnit.setText("单位：" + item.unit);
+            adapter.setUnit(item.unit);
             adapter.setNewData(item.addressList);
             tvBuyerValue.setText(item.user);
             tvContactValue.setText(item.realName);
@@ -129,9 +137,62 @@ public class MaterialOrderDetailActivity extends BaseActivity {
             tvCompanyNameValue.setText(item.company);
             tvOrderAddressValue.setText(item.address);
             tvIntroduceValue.setText(item.remark);
+
+            setStateInfo(item.status);
+
         });
 
-
         materialVm.materialOrderDetail(orderId);
+    }
+
+    private void setStateInfo(int status) {
+        switch (status) {
+            case 1:
+                tvState.setText("状态：提交订单");
+                break;
+            case 2:
+                tvState.setText("状态：客户经理");
+                break;
+            case 3:
+                tvState.setText("状态：沟通确认");
+                break;
+            case 4:
+                tvState.setText("状态：投标报价");
+                break;
+            case 5:
+                tvState.setText("状态：签订合同");
+                break;
+            case 6:
+                tvState.setText("状态：执行合同");
+                break;
+            case 7:
+                tvState.setText("状态：结束");
+                break;
+            case 8:
+                tvState.setText("状态：取消订单");
+                break;
+            case 9:
+                tvState.setText("状态：驳回订单");
+                break;
+            default:
+                tvState.setText("");
+        }
+    }
+
+    @OnClick({R.id.iv_bar_back, R.id.tv_replication, R.id.tv_cancel})
+    void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.iv_bar_back:
+                finish();
+                break;
+            case R.id.tv_replication:
+                ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                cm.setText(tvOrderNumberValue.getText());
+                ToastUtils.showShort(tvOrderNumberValue.getText());
+                break;
+            case R.id.tv_cancel:
+
+                break;
+        }
     }
 }
