@@ -32,6 +32,7 @@ public class MaterialDetailVm extends BaseViewModel {
     public MutableLiveData<List<MaterialDepositingPlaceBean>> depositingPlaceBeanMutableLiveData;
     public MutableLiveData<MaterialAddBean> mutableLiveData;
     public MutableLiveData<MaterialAddBean> mutableLiveDataDel;
+    public MutableLiveData<MaterialAddBean> mutableLiveAddOrder;
     public MutableLiveData<String> pageStateLiveData;
 
     //物资预定订单详情
@@ -49,6 +50,7 @@ public class MaterialDetailVm extends BaseViewModel {
         depositingPlaceBeanMutableLiveData = new MutableLiveData<>();
         mutableLiveData = new MutableLiveData<>();
         mutableLiveDataDel = new MutableLiveData<>();
+        mutableLiveAddOrder= new MutableLiveData<>();
         orderDetailLiveData = new MutableLiveData<>();
         mutableLiveDataCancel = new MutableLiveData();
     }
@@ -75,6 +77,11 @@ public class MaterialDetailVm extends BaseViewModel {
 
     public void getDelMaterial(int material_id) {
         new MaterialRepository().getDelMaterial(mutableLiveDataDel, pageStateLiveData, userId, material_id);
+    }
+
+    public void  getAddMaterialOrder(int material_id,String real_name,String tel,String company,int province,int city
+            ,String address,String remark,String science_num_id){
+        new MaterialRepository().getAddMaterialOrder(mutableLiveAddOrder, pageStateLiveData, userId, material_id,real_name,tel,company,province,city,address,remark,science_num_id);
     }
 
     //物资预定详情

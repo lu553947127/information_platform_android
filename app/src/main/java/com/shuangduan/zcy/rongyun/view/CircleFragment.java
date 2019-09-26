@@ -218,7 +218,7 @@ public class CircleFragment extends BaseFragment {
                                         ,Uri.parse(bean.getData().getPortraitUri())));
 //                            }else if (bean.getCode().equals("-1")){
 //                                ToastUtils.showShort(bean.getMsg());
-//                                LoginUtils.getExitLogin(getActivity());
+//                                LoginUtils.getExitLogin();
                             }else {
                                 ToastUtils.showShort(bean.getMsg());
                             }
@@ -258,7 +258,7 @@ public class CircleFragment extends BaseFragment {
                                 RongIM.getInstance().refreshGroupInfoCache(groupInfo);
 //                            }else if (bean.getCode().equals("-1")){
 //                                ToastUtils.showShort(bean.getMsg());
-//                                LoginUtils.getExitLogin(getActivity());
+//                                LoginUtils.getExitLogin();
                             }else {
                                 ToastUtils.showShort(bean.getMsg());
                             }
@@ -314,7 +314,7 @@ public class CircleFragment extends BaseFragment {
                                 }
 //                            }else if (bean.getCode().equals("-1")){
 //                                ToastUtils.showShort(bean.getMsg());
-//                                LoginUtils.getExitLogin(getActivity());
+//                                LoginUtils.getExitLogin();
                             }else {
                                 tvNumber.setVisibility(View.INVISIBLE);
                             }

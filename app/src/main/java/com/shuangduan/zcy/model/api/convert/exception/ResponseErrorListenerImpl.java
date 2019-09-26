@@ -9,6 +9,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonParseException;
 import com.shuangduan.zcy.app.SpConfig;
+import com.shuangduan.zcy.utils.LoginUtils;
 import com.shuangduan.zcy.view.login.WelcomeActivity;
 
 import org.json.JSONException;
@@ -23,7 +24,7 @@ import retrofit2.HttpException;
  *     author : 宁文强
  *     e-mail : ningwenqiang@lanhuiplay.com
  *     time   : 2018/07/31
- *     desc   :
+ *     desc   : 网络请求错误信息
  *     version: 1.0
  * </pre>
  */
@@ -66,11 +67,7 @@ public class ResponseErrorListenerImpl implements ResponseErrorListener {
             msg = "请求被重定向到其他页面";
         } else if (exception.getErrorCode() == -1){
             msg = "账户失效，请重新登录";
-            SPUtils.getInstance().clear();
-            SPUtils.getInstance().put(SpConfig.FIRST_APP, 1);
-            ActivityUtils.startActivity(WelcomeActivity.class);
-            ActivityUtils.finishAllActivitiesExceptNewest();
-
+            LoginUtils.getExitLogin();
         }else {
             msg = exception.getMsg();
         }

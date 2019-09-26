@@ -41,6 +41,7 @@ import com.shuangduan.zcy.callback.EmptyCallback;
 import com.shuangduan.zcy.callback.ErrorCallback;
 import com.shuangduan.zcy.callback.LoadingCallback;
 import com.shuangduan.zcy.callback.TimeOutCallback;
+import com.shuangduan.zcy.utils.LoginUtils;
 import com.shuangduan.zcy.view.login.WelcomeActivity;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -196,10 +197,7 @@ public class AppConfig {
             switch (connectionStatus) {
                 //融云账号在其他设备上进行登录
                 case KICKED_OFFLINE_BY_OTHER_CLIENT:
-                    SPUtils.getInstance().clear();
-                    SPUtils.getInstance().put(SpConfig.FIRST_APP, 1);
-                    ActivityUtils.startActivity(WelcomeActivity.class);
-                    ActivityUtils.finishAllActivitiesExceptNewest();
+                    LoginUtils.getExitLogin();
                     break;
             }
         });

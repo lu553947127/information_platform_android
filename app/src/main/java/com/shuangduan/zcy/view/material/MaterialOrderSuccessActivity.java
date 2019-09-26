@@ -6,12 +6,16 @@ import android.view.View;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.shuangduan.zcy.R;
+import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
+import com.shuangduan.zcy.view.mine.MaterialOrderDetailActivity;
+
+import java.util.Objects;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -25,6 +29,7 @@ import butterknife.OnClick;
  * @class describe
  */
 public class MaterialOrderSuccessActivity extends BaseActivity {
+
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
     @BindView(R.id.toolbar)
@@ -43,14 +48,20 @@ public class MaterialOrderSuccessActivity extends BaseActivity {
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
-        tvBarTitle.setText("完成订单");
+        tvBarTitle.setText("确认预订单");
     }
 
-    @OnClick({R.id.iv_bar_back, R.id.tv_done})
+    @OnClick({R.id.iv_bar_back,R.id.tv_back, R.id.tv_done})
     void onClick(View view){
         switch (view.getId()){
             case R.id.iv_bar_back:
+            case R.id.tv_back:
+                finish();
+                break;
             case R.id.tv_done:
+                Bundle bundle = new Bundle();
+                bundle.putInt(CustomConfig.ORDER_ID, Integer.valueOf(Objects.requireNonNull(getIntent().getStringExtra("order_id"))));
+                ActivityUtils.startActivity(bundle, MaterialOrderDetailActivity.class);
                 finish();
                 break;
         }

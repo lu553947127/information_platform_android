@@ -16,12 +16,22 @@ public class MaterialPlaceOrderBean {
 
     private int num;
     private int id;
+    private int materialId;
     private String material_name;
 
-    public MaterialPlaceOrderBean(int num, int id, String material_name) {
+    public MaterialPlaceOrderBean(int num, int id,int materialId, String material_name) {
         this.num = num;
         this.id = id;
+        this.materialId = materialId;
         this.material_name = material_name;
+    }
+
+    public int getMaterialId() {
+        return materialId;
+    }
+
+    public void setMaterialId(int materialId) {
+        this.materialId = materialId;
     }
 
     public int getNum() {

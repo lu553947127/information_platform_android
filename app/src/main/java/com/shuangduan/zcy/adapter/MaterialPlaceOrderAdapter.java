@@ -60,9 +60,9 @@ public class MaterialPlaceOrderAdapter extends RecyclerView.Adapter<MaterialPlac
     }
 
     // 添加数据
-    public void addData(int position,int num, int id, String material_name) {
+    public void addData(int position,int num, int id,int materialId, String material_name) {
         //在list中添加数据，并通知条目加入一条
-        list.add(position, new MaterialPlaceOrderBean(num,id,material_name));
+        list.add(position, new MaterialPlaceOrderBean(num,id,materialId,material_name));
         //添加动画
         notifyItemInserted(position);
     }

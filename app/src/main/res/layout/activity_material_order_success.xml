@@ -10,24 +10,46 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="80dp"
-        android:src="@drawable/order_success"/>
+        android:src="@drawable/icon_order_success"/>
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
         android:layout_marginTop="13dp"
         android:layout_gravity="center_horizontal"
         android:gravity="center_horizontal"
         android:textColor="@color/colorPrimary"
         android:textSize="13sp"
-        android:text="您的订单已预订成功\n请耐心等待对接人员与您联系"/>
+        android:text="预定单提交成功"/>
 
-    <TextView
-        android:id="@+id/tv_done"
-        android:layout_width="335dp"
-        style="@style/BtnConfirm"
-        android:layout_marginBottom="15dp"
-        android:text="@string/done"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:layout_marginTop="70dp">
+
+        <TextView
+            android:id="@+id/tv_back"
+            android:layout_width="105dp"
+            android:layout_height="31dp"
+            android:background="@drawable/selector_btn_first_half"
+            android:textColor="@color/colorPrimary"
+            android:textSize="14sp"
+            style="@style/BtnConfirm"
+            android:text="返回"/>
+
+        <TextView
+            android:id="@+id/tv_done"
+            android:layout_width="105dp"
+            android:layout_height="31dp"
+            android:layout_marginLeft="50dp"
+            android:background="@drawable/selector_btn_first_half"
+            android:textColor="@color/colorPrimary"
+            android:textSize="14sp"
+            style="@style/BtnConfirm"
+            android:text="查看预订单"/>
+    </LinearLayout>
+
 
 </LinearLayout>

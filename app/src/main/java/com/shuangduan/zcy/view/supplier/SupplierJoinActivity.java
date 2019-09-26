@@ -510,7 +510,7 @@ public class SupplierJoinActivity extends BaseActivity implements BaseDialog.Pho
                                 }
                             }else if (bean.getCode().equals("-1")){
                                 ToastUtils.showShort(bean.getMsg());
-                                LoginUtils.getExitLogin(SupplierJoinActivity.this);
+                                LoginUtils.getExitLogin();
                             }else {
                                 ToastUtils.showShort(bean.getMsg());
                             }

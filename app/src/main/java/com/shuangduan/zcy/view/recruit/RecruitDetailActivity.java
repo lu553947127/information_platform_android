@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -31,7 +30,6 @@ import com.google.gson.JsonSyntaxException;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.shuangduan.zcy.R;
-import com.shuangduan.zcy.adapter.ViewPagerAdapter;
 import com.shuangduan.zcy.app.Common;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
@@ -46,7 +44,6 @@ import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
 import com.shuangduan.zcy.model.bean.ShareBean;
 import com.shuangduan.zcy.utils.LoginUtils;
 import com.shuangduan.zcy.utils.ShareUtils;
-import com.shuangduan.zcy.view.mine.RecommendFriendsActivity;
 import com.shuangduan.zcy.view.mine.SetPwdPayActivity;
 import com.shuangduan.zcy.view.projectinfo.ProjectDetailActivity;
 import com.shuangduan.zcy.view.recharge.RechargeActivity;
@@ -64,9 +61,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import retrofit2.http.Body;
 
 /**
  * @author 宁文强 QQ:858777523
@@ -346,8 +341,8 @@ public class RecruitDetailActivity extends BaseActivity {
 
                             } else if (bean.getCode().equals("-1")) {
                                 ToastUtils.showShort(bean.getMsg());
-                                LoginUtils.getExitLogin(RecruitDetailActivity.this);
-                            } else {
+                                LoginUtils.getExitLogin();
+                            }else {
                                 ToastUtils.showShort(bean.getMsg());
                             }
                         } catch (JsonSyntaxException | IllegalStateException ignored) {

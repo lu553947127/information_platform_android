@@ -17,6 +17,7 @@ import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.CustomDialog;
 import com.shuangduan.zcy.model.api.PageState;
+import com.shuangduan.zcy.utils.LoginUtils;
 import com.shuangduan.zcy.view.login.WelcomeActivity;
 import com.shuangduan.zcy.vm.ExitVm;
 
@@ -103,10 +104,7 @@ public class SetActivity extends BaseActivity {
 
                                 @Override
                                 public void ok(String s) {
-                                    SPUtils.getInstance().clear();
-                                    SPUtils.getInstance().put(SpConfig.FIRST_APP, 1);
-                                    ActivityUtils.startActivity(WelcomeActivity.class);
-                                    ActivityUtils.finishAllActivitiesExceptNewest();
+                                    LoginUtils.getExitLogin();
                                     finish();
                                 }
                             }).showDialog();

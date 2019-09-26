@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -80,6 +81,10 @@ public class IMContactsActivity extends BaseActivity {
     TextView tvGroup;
     @BindView(R.id.tv_more_friend)
     TextView tvFriend;
+    @BindView(R.id.ll_group)
+    LinearLayout llGroup;
+    @BindView(R.id.ll_friend)
+    LinearLayout llFriend;
     IMGroupListAdapter imGroupListAdapter;
     List<IMGroupListBean.DataBean.ListBean> listGroup=new ArrayList<>();
     IMGroupListBean imGroupListBean;
@@ -100,8 +105,8 @@ public class IMContactsActivity extends BaseActivity {
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
-        setBackgroundData(rvGroup,ivGroup,tvGroup);
-        setBackgroundData(rvFriend,ivFriend,tvFriend);
+        setBackgroundData(rvGroup,ivGroup,llGroup);
+        setBackgroundData(rvFriend,ivFriend,llFriend);
 
         rvGroup.setLayoutManager(new LinearLayoutManager(this));
         rvGroup.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
@@ -149,13 +154,18 @@ public class IMContactsActivity extends BaseActivity {
                                 listGroup.clear();
                                 listGroup.addAll(imGroupListBean.getData().getList());
                                 if(listGroup!=null&&listGroup.size()!=0){
+                                    if (listGroup.size()>3){
+                                        tvGroup.setVisibility(View.VISIBLE);
+                                    }else {
+                                        tvGroup.setVisibility(View.GONE);
+                                    }
                                     imGroupListAdapter.notifyDataSetChanged();
                                 }else {
                                     imGroupListAdapter.setEmptyView(R.layout.layout_empty, rvGroup);
                                 }
                             }else if (imGroupListBean.getCode().equals("-1")){
                                 ToastUtils.showShort(imGroupListBean.getMsg());
-                                LoginUtils.getExitLogin(IMContactsActivity.this);
+                                LoginUtils.getExitLogin();
                             }else {
                                 imGroupListAdapter.setEmptyView(R.layout.layout_empty, rvGroup);
                                 listGroup.clear();
@@ -192,12 +202,14 @@ public class IMContactsActivity extends BaseActivity {
                                 listFriend.addAll(imFriendListBean.getData().getList());
                                 if(listFriend!=null&&listFriend.size()!=0){
                                     imFriendListAdapter.notifyDataSetChanged();
+                                    if (listFriend.size()>3){
+                                        tvFriend.setVisibility(View.VISIBLE);
+                                    }else {
+                                        tvFriend.setVisibility(View.GONE);
+                                    }
                                 }else {
                                     imFriendListAdapter.setEmptyView(R.layout.layout_empty, rvFriend);
                                 }
-//                            }else if (imFriendListBean.getCode().equals("-1")){
-//                                ToastUtils.showShort(imFriendListBean.getMsg());
-//                                LoginUtils.getExitLogin(IMContactsActivity.this);
                             }else {
                                 imFriendListAdapter.setEmptyView(R.layout.layout_empty, rvFriend);
                                 listFriend.clear();
@@ -236,9 +248,6 @@ public class IMContactsActivity extends BaseActivity {
                                 }else {
                                     tvNumber.setVisibility(View.GONE);
                                 }
-//                            }else if (bean.getCode().equals("-1")){
-//                                ToastUtils.showShort(bean.getMsg());
-//                                LoginUtils.getExitLogin(IMContactsActivity.this);
                             }else {
                                 tvNumber.setVisibility(View.GONE);
                             }
@@ -263,10 +272,10 @@ public class IMContactsActivity extends BaseActivity {
                 ActivityUtils.startActivity(NewFriendsActivity.class);
                 break;
             case R.id.rl_my_group:
-                setBackgroundData(rvGroup,ivGroup,tvGroup);
+                setBackgroundData(rvGroup,ivGroup,llGroup);
                 break;
             case R.id.rl_my_friend:
-                setBackgroundData(rvFriend,ivFriend,tvFriend);
+                setBackgroundData(rvFriend,ivFriend,llFriend);
                 break;
             case R.id.tv_more_group:
                 ActivityUtils.startActivity(bundle,IMGroupMoreActivity.class);
@@ -279,15 +288,15 @@ public class IMContactsActivity extends BaseActivity {
 
     //切换按钮状态
     @SuppressLint("NewApi")
-    private void setBackgroundData(RecyclerView recyclerView,ImageView imageView,TextView textView) {
+    private void setBackgroundData(RecyclerView recyclerView, ImageView imageView, LinearLayout linearLayout) {
         if (recyclerView.getVisibility() == View.GONE) {
             imageView.setBackgroundResource(R.drawable.icon_up);
             recyclerView.setVisibility(View.VISIBLE);
-            textView.setVisibility(View.VISIBLE);
+            linearLayout.setVisibility(View.VISIBLE);
         } else {
             imageView.setBackgroundResource(R.drawable.icon_bottom);
             recyclerView.setVisibility(View.GONE);
-            textView.setVisibility(View.GONE);
+            linearLayout.setVisibility(View.GONE);
         }
     }
 

@@ -239,7 +239,7 @@ public class SubOrderActivity extends BaseActivity {
                                 finish();
                             }else if (bean.getCode().equals("-1")){
                                 ToastUtils.showShort(bean.getMsg());
-                                LoginUtils.getExitLogin(SubOrderActivity.this);
+                                LoginUtils.getExitLogin();
                             }else {
                                 ToastUtils.showShort(bean.getMsg());
                             }

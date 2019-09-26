@@ -124,7 +124,7 @@ public class IMAddFriendActivity extends BaseActivity {
                                 finish();
                             }else if (bean.getCode().equals("-1")){
                                 ToastUtils.showShort(bean.getMsg());
-                                LoginUtils.getExitLogin(IMAddFriendActivity.this);
+                                LoginUtils.getExitLogin();
                             }else {
                                 ToastUtils.showShort(bean.getMsg());
                             }
@@ -163,7 +163,7 @@ public class IMAddFriendActivity extends BaseActivity {
                                 finish();
                             }else if (bean.getCode().equals("-1")){
                                 ToastUtils.showShort(bean.getMsg());
-                                LoginUtils.getExitLogin(IMAddFriendActivity.this);
+                                LoginUtils.getExitLogin();
                             }else {
                                 ToastUtils.showShort(bean.getMsg());
                             }

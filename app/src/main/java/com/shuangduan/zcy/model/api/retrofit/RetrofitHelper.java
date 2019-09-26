@@ -27,6 +27,7 @@ public class RetrofitHelper {
 
     private static String BASE_URL = "";
     public static String BASE_TEST_URL = "http://xx.yijijian.com";
+//    public static String BASE_TEST_URL = "http://app.zicai365.com";
     private static ApiService apiService;
 
     private static void init(){

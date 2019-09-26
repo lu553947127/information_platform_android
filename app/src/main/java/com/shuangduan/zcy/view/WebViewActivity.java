@@ -56,9 +56,12 @@ public class WebViewActivity extends BaseActivity {
         if (Objects.requireNonNull(getIntent().getStringExtra("register")).equals("privacy")){
             tvBarTitle.setText(getString(R.string.register_privacy));
             webViewUtils.loadUrl(RetrofitHelper.BASE_TEST_URL+ Common.AGREEMENT_PRIVACY);
-        }else {
+        }else if (Objects.requireNonNull(getIntent().getStringExtra("register")).equals("register")){
             tvBarTitle.setText(getString(R.string.register_register));
             webViewUtils.loadUrl(RetrofitHelper.BASE_TEST_URL+ Common.AGREEMENT_REGISTER);
+        }else {
+            tvBarTitle.setText("认购协议");
+
         }
     }
 

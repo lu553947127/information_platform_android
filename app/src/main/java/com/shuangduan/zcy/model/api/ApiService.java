@@ -1261,6 +1261,22 @@ public interface ApiService {
             @Field("id") int id
     );
 
+    //基建物资提交预订单 添加预订单
+    @FormUrlEncoded
+    @POST("api/Material/order")
+    Flowable<BaseResponse<MaterialAddBean>> getAddMaterialOrder(
+            @Field("user_id") int userId,
+            @Field("id") int id,
+            @Field("real_name") String real_name,
+            @Field("tel") String tel,
+            @Field("company") String company,
+            @Field("province") int province,
+            @Field("city") int city,
+            @Field("address") String address,
+            @Field("remark") String remark,
+            @Field("science_num_id") String science_num_id
+    );
+
     //基建物质预定订单删除
     @FormUrlEncoded
     @POST("api/Material/close")

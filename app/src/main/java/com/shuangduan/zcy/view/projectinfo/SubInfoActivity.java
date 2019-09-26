@@ -4,10 +4,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -22,6 +24,7 @@ import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.bean.MineIncomeBean;
 import com.shuangduan.zcy.model.bean.ProjectSubViewBean;
+import com.shuangduan.zcy.view.WebViewActivity;
 import com.shuangduan.zcy.vm.GoToSubVm;
 
 import java.util.ArrayList;
@@ -45,6 +48,10 @@ public class SubInfoActivity extends BaseActivity {
     AppCompatTextView tvBarTitle;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.iv_bar_right)
+    AppCompatImageView ivBarRight;
+    @BindView(R.id.tv_bar_right)
+    AppCompatTextView tvBarRight;
     @BindView(R.id.tv_sub_person)
     TextView tvSubPerson;
     @BindView(R.id.tv_sub_time)
@@ -76,7 +83,8 @@ public class SubInfoActivity extends BaseActivity {
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.subscription_msg));
-
+        tvBarRight.setVisibility(View.GONE);
+        ivBarRight.setImageResource(R.drawable.icon_help_white);
         initChart();
 
         GoToSubVm goToSubVm = ViewModelProviders.of(this).get(GoToSubVm.class);
@@ -115,11 +123,16 @@ public class SubInfoActivity extends BaseActivity {
         goToSubVm.viewWarrant();
     }
 
-    @OnClick({R.id.iv_bar_back})
+    @OnClick({R.id.iv_bar_back, R.id.iv_bar_right})
     void onClick(View view){
+        Bundle bundle = new Bundle();
         switch (view.getId()){
             case R.id.iv_bar_back:
                 finish();
+                break;
+            case R.id.iv_bar_right:
+                bundle.putString("register", "");
+                ActivityUtils.startActivity(bundle, WebViewActivity.class);
                 break;
         }
     }

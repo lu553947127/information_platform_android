@@ -118,7 +118,7 @@ public class HelperActivity extends BaseActivity {
                                 textView.setText(Html.fromHtml(str));
                             }else if (bean.getCode().equals("-1")){
                                 ToastUtils.showShort(bean.getMsg());
-                                LoginUtils.getExitLogin(HelperActivity.this);
+                                LoginUtils.getExitLogin();
                             }else {
                                 adapter.setEmptyView(R.layout.layout_empty, recyclerView);
                                 list.clear();

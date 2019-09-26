@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.MaterialPlaceOrderAdapter;
@@ -26,6 +27,7 @@ import com.shuangduan.zcy.dialog.BottomSheetDialogs;
 import com.shuangduan.zcy.model.bean.MaterialPlaceOrderBean;
 import com.shuangduan.zcy.model.event.AddressEvent;
 import com.shuangduan.zcy.model.event.MaterialDetailEvent;
+import com.shuangduan.zcy.utils.KeyboardUtil;
 import com.shuangduan.zcy.utils.image.ImageConfig;
 import com.shuangduan.zcy.utils.image.ImageLoader;
 import com.shuangduan.zcy.view.release.ReleaseAreaSelectActivity;
@@ -44,7 +46,9 @@ import org.greenrobot.eventbus.Subscribe;
 
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -105,9 +109,10 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
     TextView tvSubmission;
     private MaterialDetailVm materialDetailVm;
     private BottomSheetDialogs btn_dialog;
-    int province,city,material_id,materialId,guidance_price;
-    String material_name,unit;
+    int province,city,material_id,materialId,guidance_price,position;
+    String material_name,unit,science_num_id;
     List<MaterialPlaceOrderBean> list=new ArrayList<>();
+    private List<String> list_address=new ArrayList<>();
     MaterialPlaceOrderAdapter materialDepositingPlaceAdapter;
     private long num,price;
 
@@ -154,12 +159,33 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
             price=price+Integer.valueOf(et_num.getText().toString())*guidance_price;
             tvNumber.setText("共采购"+num+"套，共计");
             tvPrice.setText(String.valueOf(price));
-            materialDepositingPlaceAdapter.addData(list.size(),Integer.valueOf(et_num.getText().toString()),materialId,material_name);
+            materialDepositingPlaceAdapter.addData(list.size(),Integer.valueOf(et_num.getText().toString()),Integer.valueOf(materialAddBean.getId()),materialId,material_name);
+
+            for (int i=0;i<list.size();i++){
+                list_address.add(String.valueOf(list.get(i).getId()));
+            }
+            removeDuplicate(list_address);
+            science_num_id=KeyboardUtil.getListForString(list_address);
             btn_dialog.dismiss();
         });
 
         materialDetailVm.mutableLiveDataDel.observe(this,materialAddBean -> {
-            ToastUtils.showShort("删除成功");
+            num=num-list.get(position).getNum();
+            price=price-list.get(position).getNum()*guidance_price;
+            tvNumber.setText("共采购"+num+"套，共计");
+            tvPrice.setText(String.valueOf(price));
+            materialDepositingPlaceAdapter.removeData(position);
+
+            list_address.remove(position);
+            list_address=removeDuplicate(list_address);
+            science_num_id= KeyboardUtil.getListForString(list_address);
+        });
+
+        materialDetailVm.mutableLiveAddOrder.observe(this,materialAddBean -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("order_id",materialAddBean.getOrder_id());
+            ActivityUtils.startActivity(bundle, MaterialOrderSuccessActivity.class);
+            finish();
         });
 
         recyclerView.setSwipeMenuCreator(this);
@@ -173,19 +199,51 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
         materialDetailVm.getDetail(getIntent().getIntExtra(CustomConfig.MATERIAL_ID, 0));
     }
 
-    @OnClick({R.id.iv_bar_back, R.id.tv_province,R.id.tv_add})
+    public static List<String> removeDuplicate(List<String> list) {
+        Set set = new LinkedHashSet<String>();
+        set.addAll(list);
+        list.clear();
+        list.addAll(set);
+        return list;
+    }
+
+    @OnClick({R.id.iv_bar_back, R.id.tv_province,R.id.tv_add,R.id.tv_submission})
     void onClick(View view) {
         Bundle bundle = new Bundle();
         switch (view.getId()) {
             case R.id.iv_bar_back:
                 finish();
                 break;
-            case R.id.tv_province:
+            case R.id.tv_province://选择地区
                 bundle.putInt(CustomConfig.PROJECT_ADDRESS, 2);
                 ActivityUtils.startActivity(bundle, ReleaseAreaSelectActivity.class);
                 break;
-            case R.id.tv_add:
+            case R.id.tv_add://添加存放地
                 getAddDialog();
+                break;
+            case R.id.tv_submission://提交预订单
+                if (TextUtils.isEmpty(etRealName.getText().toString())){
+                    ToastUtils.showShort("联系人不能为空");
+                    return;
+                }
+                if (TextUtils.isEmpty(etTel.getText().toString())){
+                    ToastUtils.showShort("电话不能为空");
+                    return;
+                }
+                if (city==0){
+                    ToastUtils.showShort("收货省市不能为空");
+                    return;
+                }
+                if (TextUtils.isEmpty(etAddress.getText().toString())){
+                    ToastUtils.showShort("详细地址不能为空");
+                    return;
+                }
+                if (TextUtils.isEmpty(science_num_id)){
+                    ToastUtils.showShort("存放地不能为空");
+                    return;
+                }
+                materialDetailVm.getAddMaterialOrder(material_id,etRealName.getText().toString(),etTel.getText().toString()
+                        ,etCompany.getText().toString(),province,city,etAddress.getText().toString(), etRemark.getText(),science_num_id);
                 break;
         }
     }
@@ -226,12 +284,6 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
                 ToastUtils.showShort(getString(R.string.no_materialId));
                 return;
             }
-//            num=num+Integer.valueOf(et_num.getText().toString());
-//            price=price+Integer.valueOf(et_num.getText().toString())*guidance_price;
-//            tvNumber.setText("共采购"+num+"套，共计");
-//            tvPrice.setText(String.valueOf(price));
-//            materialDepositingPlaceAdapter.addData(list.size(),Integer.valueOf(et_num.getText().toString()),materialId,material_name);
-//            btn_dialog.dismiss();
             materialDetailVm.getAddMaterial(materialId,Integer.valueOf(et_num.getText().toString()));
         });
         btn_dialog.show();
@@ -285,11 +337,7 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
             //若menuPosition为删除按钮时
             if (menuPosition==0){
                 materialDetailVm.getDelMaterial(list.get(adapterPosition).getId());
-                num=num-list.get(adapterPosition).getNum();
-                price=price-list.get(adapterPosition).getNum()*guidance_price;
-                tvNumber.setText("共采购"+num+"套，共计");
-                tvPrice.setText(String.valueOf(price));
-                materialDepositingPlaceAdapter.removeData(adapterPosition);
+                position=adapterPosition;
             }
         }
     }

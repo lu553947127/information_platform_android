@@ -13,24 +13,18 @@ import com.blankj.utilcode.util.BarUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.SelectorFirstAdapter;
 import com.shuangduan.zcy.base.BaseActivity;
-import com.shuangduan.zcy.model.bean.BaseSelectorBean;
 import com.shuangduan.zcy.model.event.StageEvent;
 import com.shuangduan.zcy.vm.StageVm;
-
 import org.greenrobot.eventbus.EventBus;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
  * @author 宁文强 QQ:858777523
  * @name information_platform_android
  * @class name：com.shuangduan.zcy.view.release
- * @class describe
+ * @class 项目阶段选择
  * @time 2019/7/30 11:48
  * @change
  * @chang time
@@ -61,7 +55,7 @@ public class ReleaseStageSelectActivity extends BaseActivity {
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
-        tvBarTitle.setText(getString(R.string.project_stage));
+        tvBarTitle.setText(getString(R.string.project_type));
         tvBarRight.setText(getString(R.string.save));
 
         rvStage.setLayoutManager(new LinearLayoutManager(this));

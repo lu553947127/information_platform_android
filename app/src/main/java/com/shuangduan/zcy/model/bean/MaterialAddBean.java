@@ -1,5 +1,7 @@
 package com.shuangduan.zcy.model.bean;
 
+import java.util.Set;
+
 /**
  * @ProjectName: information_platform_android
  * @Package: com.shuangduan.zcy.model.bean
@@ -15,6 +17,15 @@ package com.shuangduan.zcy.model.bean;
 public class MaterialAddBean {
 
     String id;
+    String order_id;
+
+    public String getOrder_id() {
+        return order_id;
+    }
+
+    public void setOrder_id(String order_id) {
+        this.order_id = order_id;
+    }
 
     public String getId() {
         return id;

@@ -112,31 +112,40 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="15dp"/>
             </RelativeLayout>
-            <RelativeLayout
+
+            <LinearLayout
+                android:id="@+id/ll_group"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_group"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:overScrollMode="never"
-                    android:nestedScrollingEnabled="false"
-                    android:visibility="gone"
-                    tools:ignore="UnusedAttribute" />
-            </RelativeLayout>
-            <TextView
-                android:id="@+id/tv_more_group"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="10dp"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:gravity="center_vertical"
-                android:drawableRight="@drawable/icon_next"
-                android:textColor="@color/color_40000000"
-                android:textSize="14sp"
-                android:text="@string/im_group_more"
-                android:visibility="gone"/>
+                    android:layout_height="wrap_content">
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_group"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:overScrollMode="never"
+                        android:nestedScrollingEnabled="false"
+                        android:visibility="gone"
+                        tools:ignore="UnusedAttribute" />
+                </RelativeLayout>
+                <TextView
+                    android:id="@+id/tv_more_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:gravity="center_vertical"
+                    android:drawableRight="@drawable/icon_next"
+                    android:textColor="@color/color_40000000"
+                    android:textSize="14sp"
+                    android:text="@string/im_group_more"
+                    android:visibility="gone"/>
+            </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -163,31 +172,40 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="15dp"/>
             </RelativeLayout>
-            <RelativeLayout
+
+            <LinearLayout
+                android:id="@+id/ll_friend"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_friend"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:overScrollMode="never"
-                    android:nestedScrollingEnabled="false"
-                    android:visibility="gone"
-                    tools:ignore="UnusedAttribute" />
-            </RelativeLayout>
-            <TextView
-                android:id="@+id/tv_more_friend"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="10dp"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:gravity="center_vertical"
-                android:drawableRight="@drawable/icon_next"
-                android:textColor="@color/color_40000000"
-                android:textSize="14sp"
-                android:text="@string/im_friend_more"
-                android:visibility="gone"/>
+                    android:layout_height="wrap_content">
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_friend"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:overScrollMode="never"
+                        android:nestedScrollingEnabled="false"
+                        android:visibility="gone"
+                        tools:ignore="UnusedAttribute" />
+                </RelativeLayout>
+                <TextView
+                    android:id="@+id/tv_more_friend"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:gravity="center_vertical"
+                    android:drawableRight="@drawable/icon_next"
+                    android:textColor="@color/color_40000000"
+                    android:textSize="14sp"
+                    android:text="@string/im_friend_more"
+                    android:visibility="gone"/>
+            </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"

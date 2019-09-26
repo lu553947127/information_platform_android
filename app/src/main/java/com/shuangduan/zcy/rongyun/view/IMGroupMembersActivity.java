@@ -149,7 +149,7 @@ public class IMGroupMembersActivity extends BaseActivity {
                                 }
                             }else if (imGroupInfoBean.getCode().equals("-1")){
                                 ToastUtils.showShort(imGroupInfoBean.getMsg());
-                                LoginUtils.getExitLogin(IMGroupMembersActivity.this);
+                                LoginUtils.getExitLogin();
                             }else {
                                 imGroupInfoAdapter.setEmptyView(R.layout.layout_empty, recyclerView);
                                 list.clear();

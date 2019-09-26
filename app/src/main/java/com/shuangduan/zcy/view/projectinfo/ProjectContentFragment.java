@@ -279,8 +279,8 @@ public class ProjectContentFragment extends BaseFragment {
                                 projectDetailVm.getDetail();
                             } else if (bean.getCode().equals("-1")) {
                                 ToastUtils.showShort(bean.getMsg());
-                                LoginUtils.getExitLogin(getActivity());
-                            } else {
+                                LoginUtils.getExitLogin();
+                            }else {
                                 ToastUtils.showShort(bean.getMsg());
                             }
                         } catch (JsonSyntaxException | IllegalStateException ignored) {

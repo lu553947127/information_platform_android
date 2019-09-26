@@ -407,7 +407,7 @@ public class HomeFragment extends BaseFragment {
                                 }
                             }else if (bean.getCode().equals("-1")) {
                                 ToastUtils.showShort(bean.getMsg());
-                                LoginUtils.getExitLogin(getActivity());
+                                LoginUtils.getExitLogin();
                             }
                         }catch (JsonSyntaxException | IllegalStateException ignored){
                             ToastUtils.showShort(getString(R.string.request_error));

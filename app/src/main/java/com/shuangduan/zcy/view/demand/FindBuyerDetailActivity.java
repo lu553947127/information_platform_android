@@ -40,7 +40,7 @@ import butterknife.OnClick;
  * @author 宁文强 QQ:858777523
  * @name information_platform_android
  * @class name：com.shuangduan.zcy.view.demand
- * @class describe  找卖家详情
+ * @class describe  找买家详情
  * @time 2019/8/21 17:17
  * @change
  * @chang time

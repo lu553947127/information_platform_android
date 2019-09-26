@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
-import android.view.animation.Interpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -19,7 +18,6 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
@@ -53,30 +51,21 @@ import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.ShareDialog;
 import com.shuangduan.zcy.listener.BaseUiListener;
-import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
-import com.shuangduan.zcy.model.bean.IMFriendApplyCountBean;
 import com.shuangduan.zcy.model.bean.ProjectMembersStatusBean;
 import com.shuangduan.zcy.model.bean.ShareBean;
 import com.shuangduan.zcy.model.event.LocusRefreshEvent;
-import com.shuangduan.zcy.model.event.RefreshViewLocusEvent;
 import com.shuangduan.zcy.model.event.WarrantSuccessEvent;
-import com.shuangduan.zcy.rongyun.view.IMSearchActivity;
-import com.shuangduan.zcy.rongyun.view.NewFriendsActivity;
 import com.shuangduan.zcy.utils.AuthenticationUtils;
 import com.shuangduan.zcy.utils.LoginUtils;
 import com.shuangduan.zcy.utils.ShareUtils;
-import com.shuangduan.zcy.view.recruit.RecruitDetailActivity;
 import com.shuangduan.zcy.view.release.ReleaseProjectActivity;
-import com.shuangduan.zcy.vm.CoinPayVm;
 import com.shuangduan.zcy.vm.PermissionVm;
 import com.shuangduan.zcy.vm.ProjectDetailVm;
 import com.shuangduan.zcy.vm.ShareVm;
-import com.shuangduan.zcy.vm.UpdatePwdPayVm;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.tencent.tauth.Tencent;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
@@ -319,7 +308,7 @@ public class ProjectDetailActivity extends BaseActivity {
 
                             } else if (bean.getCode().equals("-1")) {
                                 ToastUtils.showShort(bean.getMsg());
-                                LoginUtils.getExitLogin(ProjectDetailActivity.this);
+                                LoginUtils.getExitLogin();
                             } else {
                                 ToastUtils.showShort(bean.getMsg());
                             }
@@ -467,7 +456,7 @@ public class ProjectDetailActivity extends BaseActivity {
                                         , bean.getData().getGroupName());
                             } else if (bean.getCode().equals("-1")) {
                                 ToastUtils.showShort(bean.getMsg());
-                                LoginUtils.getExitLogin(ProjectDetailActivity.this);
+                                LoginUtils.getExitLogin();
                             } else {
                                 ToastUtils.showShort(bean.getMsg());
                             }

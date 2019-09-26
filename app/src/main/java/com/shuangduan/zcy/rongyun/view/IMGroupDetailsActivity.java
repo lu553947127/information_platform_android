@@ -198,7 +198,7 @@ public class IMGroupDetailsActivity extends BaseActivity implements SwitchView.O
                                 }
                             }else if (imGroupInfoBean.getCode().equals("-1")){
                                 ToastUtils.showShort(imGroupInfoBean.getMsg());
-                                LoginUtils.getExitLogin(IMGroupDetailsActivity.this);
+                                LoginUtils.getExitLogin();
                             }else {
                                 imGroupInfoAdapter.setEmptyView(R.layout.layout_empty, recyclerView);
                                 list.clear();
@@ -248,7 +248,7 @@ public class IMGroupDetailsActivity extends BaseActivity implements SwitchView.O
                                 });
                             }else if (bean.getCode().equals("-1")){
                                 ToastUtils.showShort(bean.getMsg());
-                                LoginUtils.getExitLogin(IMGroupDetailsActivity.this);
+                                LoginUtils.getExitLogin();
                             }else {
                                 ToastUtils.showShort(bean.getMsg());
                             }

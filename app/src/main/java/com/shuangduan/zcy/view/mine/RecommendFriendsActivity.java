@@ -157,7 +157,7 @@ public class RecommendFriendsActivity extends BaseActivity {
                                 tvUrl.setText(bean.getData().getUrl());
                             }else if (bean.getCode().equals("-1")){
                                 ToastUtils.showShort(bean.getMsg());
-                                LoginUtils.getExitLogin(RecommendFriendsActivity.this);
+                                LoginUtils.getExitLogin();
                             }else {
                                 ToastUtils.showShort(bean.getMsg());
                             }

@@ -175,7 +175,7 @@ public class IMGroupMoreActivity extends BaseActivity {
                     }
                 }else if (imGroupListBean.getCode().equals("-1")){
                     ToastUtils.showShort(imGroupListBean.getMsg());
-                    LoginUtils.getExitLogin(IMGroupMoreActivity.this);
+                    LoginUtils.getExitLogin();
                 }else {
                     imGroupListAdapter.setEmptyView(R.layout.layout_empty, rvGroup);
                     listGroup.clear();

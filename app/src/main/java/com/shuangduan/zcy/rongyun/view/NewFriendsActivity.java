@@ -155,7 +155,7 @@ public class NewFriendsActivity extends BaseActivity {
                                 }
                             }else if (imFriendApplyListBean.getCode().equals("-1")){
                                 ToastUtils.showShort(imFriendApplyListBean.getMsg());
-                                LoginUtils.getExitLogin(NewFriendsActivity.this);
+                                LoginUtils.getExitLogin();
                             }else {
                                 newFriendAdapter.setEmptyView(R.layout.layout_empty, rv);
                                 list.clear();
@@ -194,7 +194,7 @@ public class NewFriendsActivity extends BaseActivity {
                                 getNewFriendList();
                             }else if (bean.getCode().equals("-1")){
                                 ToastUtils.showShort(bean.getMsg());
-                                LoginUtils.getExitLogin(NewFriendsActivity.this);
+                                LoginUtils.getExitLogin();
                             }else {
                                 ToastUtils.showShort(bean.getMsg());
                             }

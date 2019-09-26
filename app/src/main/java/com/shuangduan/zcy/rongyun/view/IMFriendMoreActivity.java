@@ -172,7 +172,7 @@ public class IMFriendMoreActivity extends BaseActivity {
                     }
                 }else if (imFriendListBean.getCode().equals("-1")){
                     ToastUtils.showShort(imFriendListBean.getMsg());
-                    LoginUtils.getExitLogin(IMFriendMoreActivity.this);
+                    LoginUtils.getExitLogin();
                 }else {
                     imFriendListAdapter.setEmptyView(R.layout.layout_empty, rvFriend);
                     listFriend.clear();

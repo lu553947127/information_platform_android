@@ -77,14 +77,13 @@ public class DepositingPlaceActivity extends BaseActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
         MaterialDepositingPlaceAdapter materialDepositingPlaceAdapter = new MaterialDepositingPlaceAdapter(R.layout.adapter_material_depositing_place, null);
-        materialDepositingPlaceAdapter.setEmptyView(R.layout.layout_loading, recyclerView);
         recyclerView.setAdapter(materialDepositingPlaceAdapter);
 
         materialDetailVm.depositingPlaceBeanMutableLiveData.observe(this,materialDepositingPlaceBean -> {
                     if (materialDepositingPlaceBean!=null&&materialDepositingPlaceBean.size()>0){
                         if (list!=null){
                             for (int i = 0; i < list.size(); i++) {
-                                String type_no = String.valueOf(list.get(i).getId());
+                                String type_no = String.valueOf(list.get(i).getMaterialId());
                                 for (int j = 0; j < materialDepositingPlaceBean.size(); j++) {
                                     if (String.valueOf(materialDepositingPlaceBean.get(j).getId()).equals(type_no)) {
                                         materialDepositingPlaceBean.remove(j);
@@ -103,16 +102,6 @@ public class DepositingPlaceActivity extends BaseActivity {
                     });
                 }
         );
-        materialDetailVm.pageStateLiveData.observe(this, s -> {
-            switch (s){
-                case PageState.PAGE_LOADING:
-                    showLoading();
-                    break;
-                default:
-                    hideLoading();
-                    break;
-            }
-        });
         materialDetailVm.getAddressList();
     }
 

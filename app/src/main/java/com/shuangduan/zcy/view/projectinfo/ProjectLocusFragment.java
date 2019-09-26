@@ -332,7 +332,7 @@ public class ProjectLocusFragment extends BaseLazyFragment {
                                 EventBus.getDefault().post(new RefreshViewLocusEvent());
                             }else if (bean.getCode().equals("-1")){
                                 ToastUtils.showShort(bean.getMsg());
-                                LoginUtils.getExitLogin(getActivity());
+                                LoginUtils.getExitLogin();
                             }else {
                                 ToastUtils.showShort(bean.getMsg());
                             }

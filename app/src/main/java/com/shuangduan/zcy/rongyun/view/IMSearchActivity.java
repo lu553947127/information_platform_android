@@ -175,7 +175,11 @@ public class IMSearchActivity extends BaseActivity {
                                 imSearchAdapter.setKeyword(edtKeyword.getText().toString());
                                 if(list!=null&&list.size()!=0){
                                     rv.setVisibility(View.VISIBLE);
-                                    tvFriend.setVisibility(View.VISIBLE);
+                                    if (list.size()>2){
+                                        tvFriend.setVisibility(View.VISIBLE);
+                                    }else {
+                                        tvFriend.setVisibility(View.GONE);
+                                    }
                                     imSearchAdapter.notifyDataSetChanged();
                                 }else {
                                     rv.setVisibility(View.GONE);
@@ -187,7 +191,11 @@ public class IMSearchActivity extends BaseActivity {
                                 imSearchGroupAdapter.setKeyword(edtKeyword.getText().toString());
                                 if(list_group!=null&&list_group.size()!=0){
                                     rv2.setVisibility(View.VISIBLE);
-                                    tvGroup.setVisibility(View.VISIBLE);
+                                    if (list_group.size()>2){
+                                        tvGroup.setVisibility(View.VISIBLE);
+                                    }else {
+                                        tvGroup.setVisibility(View.GONE);
+                                    }
                                     imSearchGroupAdapter.notifyDataSetChanged();
                                 }else {
                                     rv2.setVisibility(View.GONE);
@@ -195,7 +203,7 @@ public class IMSearchActivity extends BaseActivity {
                                 }
                             }else if (imFriendSearchBean.getCode().equals("-1")){
                                 ToastUtils.showShort(imFriendSearchBean.getMsg());
-                                LoginUtils.getExitLogin(IMSearchActivity.this);
+                                LoginUtils.getExitLogin();
                             }else {
                                 tvFriend.setVisibility(View.GONE);
                                 tvGroup.setVisibility(View.GONE);

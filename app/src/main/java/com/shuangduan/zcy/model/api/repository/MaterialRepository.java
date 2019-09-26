@@ -55,6 +55,12 @@ public class MaterialRepository extends BaseRepository {
         request(apiService.getDelMaterial(userId, material_id)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
+    public void getAddMaterialOrder(MutableLiveData<MaterialAddBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int material_id,String real_name,String tel,String company,int province,int city
+            ,String address,String remark,String science_num_id) {
+        request(apiService.getAddMaterialOrder(userId, material_id,real_name,tel,company,province,city,address,remark,science_num_id)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    //基建物质预定订单列表
     //基建物资预定订单列表
     public void materialOrderList(MutableLiveData<MaterialOrderBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int page) {
         request(apiService.materialOrder(userId, page)).setData(liveData).setPageState(pageStateLiveData).send();

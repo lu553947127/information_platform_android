@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import java.util.List;
+
 import static android.content.Context.INPUT_METHOD_SERVICE;
 
 public class KeyboardUtil {
@@ -63,5 +65,22 @@ public class KeyboardUtil {
             }
             return null;
         }});
+    }
+
+    /**
+     * list转字符串
+     *
+     * @param list
+     */
+    public static String getListForString(List list) {
+        StringBuilder stringBuffer=new StringBuilder();
+        for(int i = 0; i < list.size(); i++){
+            if (i==list.size()-1){
+                stringBuffer.append(list.get(i));
+            }else {
+                stringBuffer.append(list.get(i)).append(",");
+            }
+        }
+        return stringBuffer.toString();
     }
 }

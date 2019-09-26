@@ -18,6 +18,7 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.bean.ProjectSubFirstBean;
+import com.shuangduan.zcy.view.WebViewActivity;
 import com.shuangduan.zcy.vm.GoToSubVm;
 
 import java.util.List;
@@ -139,11 +140,14 @@ public class GoToSubActivity extends BaseActivity {
 
     @OnClick({R.id.iv_bar_back, R.id.iv_bar_right, R.id.tv_confirm})
     void onClick(View view) {
+        Bundle bundle = new Bundle();
         switch (view.getId()) {
             case R.id.iv_bar_back:
                 finish();
                 break;
             case R.id.iv_bar_right:
+                bundle.putString("register", "");
+                ActivityUtils.startActivity(bundle, WebViewActivity.class);
                 break;
             case R.id.tv_confirm:
                 goToSubVm.confirmWarrant();
