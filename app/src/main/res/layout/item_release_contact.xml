@@ -17,7 +17,7 @@
             android:layout_gravity="center_vertical"
             android:textColor="@color/colorTv"
             android:textSize="14sp"
-            android:text="@string/type"/>
+            android:text="@string/contacts_type"/>
 
         <TextView
             android:id="@+id/tv_type"

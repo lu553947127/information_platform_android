@@ -291,6 +291,7 @@
     <string name="project_types">项目类别</string>
     <string name="project_cycle">项目周期</string>
     <string name="project_acreage">项目面积(m²)</string>
+
     <string name="project_price">项目估价</string>
     <string name="project_detail">项目详情</string>
     <string name="project_material">项目用材</string>
@@ -386,6 +387,7 @@
     <string name="format_read_num">%1$s 浏览</string>
     <string name="format_update_time">更新时间：%1$s</string>
     <string name="format_release_time">发布时间：%1$s</string>
+    <string name="format_contacts_type">身份类型：%1$s</string>
     <string name="format_unit">单位：%1$s</string>
     <string name="format_principal">负责人：%1$s</string>
     <string name="format_phone">手机号：%1$s</string>
@@ -395,6 +397,7 @@
     <string name="format_type">类别：%1$s</string>
     <string name="format_cycle">周期：%1$s</string>
     <string name="format_acreage">面积：%1$s㎡</string>
+    <string name="format_no_acreage">面积：%1$s</string>
     <string name="format_valuation">估价：%1$s</string>
     <string name="format_consumption">消费次数：%1$d次</string>
     <string name="format_locus_num">动态信息：%1$d条</string>
@@ -579,4 +582,7 @@
     <string name="submit_order">提交订单</string>
     <string name="reserve_num">预定数量:</string>
     <string name="cancel_order">取消订单</string>
+    <string name="canceled">已取消</string>
+
+    <string name="contacts_type">身份类型</string>
 </resources>

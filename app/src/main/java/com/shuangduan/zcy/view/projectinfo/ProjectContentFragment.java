@@ -3,6 +3,7 @@ package com.shuangduan.zcy.view.projectinfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.lifecycle.ViewModelProviders;
@@ -13,6 +14,7 @@ import com.amap.api.maps.model.LatLng;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -79,6 +81,8 @@ public class ProjectContentFragment extends BaseFragment {
     RecyclerView rvContact;
     @BindView(R.id.tv_read_detail)
     TextView tvReadDetail;
+    @BindView(R.id.ll_material)
+    LinearLayout llMaterial;
     private ProjectDetailVm projectDetailVm;
     private ContactAdapter contactAdapter;
     private UpdatePwdPayVm updatePwdPayVm;
@@ -88,7 +92,7 @@ public class ProjectContentFragment extends BaseFragment {
     public static ProjectContentFragment newInstance(int id) {
         Bundle args = new Bundle();
         args.putInt("id", id);
-        project_id=id;
+        project_id = id;
         ProjectContentFragment fragment = new ProjectContentFragment();
         fragment.setArguments(args);
         return fragment;
@@ -129,18 +133,24 @@ public class ProjectContentFragment extends BaseFragment {
             tvStage.setText(String.format(getString(R.string.format_stage), detail.getPhases()));
             tvType.setText(String.format(getString(R.string.format_type), detail.getType()));
             tvCycle.setText(String.format(getString(R.string.format_cycle), detail.getCycle()));
-            tvAcreage.setText(String.format(getString(R.string.format_acreage), detail.getAcreage()));
+
+            tvAcreage.setText(detail.getAcreage().equals("未确定") ?   String.format(getString(R.string.format_no_acreage), detail.getAcreage()) :
+                    String.format(getString(R.string.format_acreage), detail.getAcreage()));
+
             tvPrice.setText(String.format(getString(R.string.format_valuation), detail.getValuation()));
             tvDetail.setGlide(Glide.with(this));
             tvDetail.setHtml(detail.getIntro());
+
+            llMaterial.setVisibility(StringUtils.isTrimEmpty(detail.getMaterials()) ? View.GONE : View.VISIBLE);
             tvMaterial.setText(detail.getMaterials());
-            tvReadDetail.setVisibility(detail.getIs_pay() == 1? View.GONE: View.VISIBLE);
+
+            tvReadDetail.setVisibility(detail.getIs_pay() == 1 ? View.GONE : View.VISIBLE);
 
             setEmpty();
             contactAdapter.setNewData(projectDetailBean.getContact());
         });
 
-       initPay();
+        initPay();
     }
 
     @Override
@@ -170,9 +180,9 @@ public class ProjectContentFragment extends BaseFragment {
                             @Override
                             public void ok(String s) {
                                 int status = SPUtils.getInstance().getInt(SpConfig.PWD_PAY_STATUS, 0);
-                                if (status == 1){
+                                if (status == 1) {
                                     goToPay();
-                                }else {
+                                } else {
                                     //查询是否设置支付密码
                                     updatePwdPayVm.payPwdState();
                                 }
@@ -183,20 +193,20 @@ public class ProjectContentFragment extends BaseFragment {
         }
     }
 
-    private void initPay(){
+    private void initPay() {
         //支付密码状态查询
         updatePwdPayVm = ViewModelProviders.of(this).get(UpdatePwdPayVm.class);
         updatePwdPayVm.stateLiveData.observe(this, pwdPayStateBean -> {
             int status = pwdPayStateBean.getStatus();
             SPUtils.getInstance().put(SpConfig.PWD_PAY_STATUS, status);
-            if (status == 1){
+            if (status == 1) {
                 goToPay();
-            }else {
+            } else {
                 ActivityUtils.startActivity(SetPwdPayActivity.class);
             }
         });
         updatePwdPayVm.pageStateLiveData.observe(this, s -> {
-            switch (s){
+            switch (s) {
                 case PageState.PAGE_LOADING:
                     showLoading();
                     break;
@@ -209,10 +219,10 @@ public class ProjectContentFragment extends BaseFragment {
         coinPayVm = ViewModelProviders.of(mActivity).get(CoinPayVm.class);
         coinPayVm.projectId = mActivity.getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0);
         coinPayVm.contentPayLiveData.observe(this, coinPayResultBean -> {
-            if (coinPayResultBean.getPay_status() == 1){
+            if (coinPayResultBean.getPay_status() == 1) {
                 //加入工程圈讨论组（群聊）
                 getJoinGroup();
-            }else {
+            } else {
                 //余额不足
                 addDialog(new CustomDialog(mActivity)
                         .setIcon(R.drawable.icon_error)
@@ -232,7 +242,7 @@ public class ProjectContentFragment extends BaseFragment {
             }
         });
         coinPayVm.pageStateLiveData.observe(this, s -> {
-            switch (s){
+            switch (s) {
                 case PageState.PAGE_LOADING:
                     showLoading();
                     break;
@@ -246,11 +256,11 @@ public class ProjectContentFragment extends BaseFragment {
     //加入讨论组
     private void getJoinGroup() {
 
-        OkGo.<String>post(RetrofitHelper.BASE_TEST_URL+ Common.WECHAT_JOIN_GROUP)
+        OkGo.<String>post(RetrofitHelper.BASE_TEST_URL + Common.WECHAT_JOIN_GROUP)
                 .tag(this)
                 .headers("token", SPUtils.getInstance().getString(SpConfig.TOKEN))//请求头
                 .params("user_id", SPUtils.getInstance().getInt(SpConfig.USER_ID))//用户编号
-                .params("id",project_id)
+                .params("id", project_id)
                 .execute(new com.lzy.okgo.callback.StringCallback() {//返回值
 
                     @Override
@@ -263,17 +273,17 @@ public class ProjectContentFragment extends BaseFragment {
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
                         LogUtils.json(response.body());
                         try {
-                            IMFriendApplyCountBean bean=new Gson().fromJson(response.body(), IMFriendApplyCountBean.class);
-                            if (bean.getCode().equals("200")){
+                            IMFriendApplyCountBean bean = new Gson().fromJson(response.body(), IMFriendApplyCountBean.class);
+                            if (bean.getCode().equals("200")) {
                                 ToastUtils.showShort(getString(R.string.buy_success));
                                 projectDetailVm.getDetail();
-                            }else if (bean.getCode().equals("-1")){
+                            } else if (bean.getCode().equals("-1")) {
                                 ToastUtils.showShort(bean.getMsg());
                                 LoginUtils.getExitLogin(getActivity());
-                            }else {
+                            } else {
                                 ToastUtils.showShort(bean.getMsg());
                             }
-                        }catch (JsonSyntaxException | IllegalStateException ignored){
+                        } catch (JsonSyntaxException | IllegalStateException ignored) {
                             ToastUtils.showShort(getString(R.string.request_error));
                         }
                     }
@@ -283,7 +293,7 @@ public class ProjectContentFragment extends BaseFragment {
     /**
      * 去支付
      */
-    private void goToPay(){
+    private void goToPay() {
         addDialog(new PayDialog(mActivity)
                 .setSingleCallBack((item, position) -> {
                     coinPayVm.payProject(item);

@@ -5,10 +5,12 @@ import androidx.lifecycle.MutableLiveData;
 import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseViewModel;
+import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.api.repository.MaterialRepository;
 import com.shuangduan.zcy.model.bean.MaterialAddBean;
 import com.shuangduan.zcy.model.bean.MaterialDepositingPlaceBean;
 import com.shuangduan.zcy.model.bean.MaterialDetailBean;
+import com.shuangduan.zcy.model.bean.MaterialOrderBean;
 
 import java.util.List;
 
@@ -27,10 +29,15 @@ public class MaterialDetailVm extends BaseViewModel {
     public MutableLiveData<MaterialDetailBean> detailLiveData;
     public MutableLiveData collectedLiveData;
     public MutableLiveData collectLiveData;
-    public MutableLiveData<List<MaterialDepositingPlaceBean>>depositingPlaceBeanMutableLiveData;
+    public MutableLiveData<List<MaterialDepositingPlaceBean>> depositingPlaceBeanMutableLiveData;
     public MutableLiveData<MaterialAddBean> mutableLiveData;
     public MutableLiveData<MaterialAddBean> mutableLiveDataDel;
     public MutableLiveData<String> pageStateLiveData;
+
+    //物资预定订单详情
+    public MutableLiveData<MaterialOrderBean.ListBean> orderDetailLiveData;
+    //取消预定订单
+    public MutableLiveData mutableLiveDataCancel;
     public int id;
 
     public MaterialDetailVm() {
@@ -42,29 +49,43 @@ public class MaterialDetailVm extends BaseViewModel {
         depositingPlaceBeanMutableLiveData = new MutableLiveData<>();
         mutableLiveData = new MutableLiveData<>();
         mutableLiveDataDel = new MutableLiveData<>();
+        orderDetailLiveData = new MutableLiveData<>();
+        mutableLiveDataCancel = new MutableLiveData();
     }
 
-    public void getDetail(int id){
+    public void getDetail(int id) {
         new MaterialRepository().materialDetail(detailLiveData, pageStateLiveData, userId, id);
     }
 
-    public void getCollected(){
+    public void getCollected() {
         new MaterialRepository().collected(collectedLiveData, pageStateLiveData, userId, id);
     }
 
-    public void getCollect(){
+    public void getCollect() {
         new MaterialRepository().collect(collectLiveData, pageStateLiveData, userId, id);
     }
 
-    public void getAddressList(){
+    public void getAddressList() {
         new MaterialRepository().getAddress(depositingPlaceBeanMutableLiveData, pageStateLiveData, userId, id);
     }
 
-    public void getAddMaterial(int material_id,int num){
-        new MaterialRepository().getAddMaterial(mutableLiveData, pageStateLiveData, userId, material_id,num);
+    public void getAddMaterial(int material_id, int num) {
+        new MaterialRepository().getAddMaterial(mutableLiveData, pageStateLiveData, userId, material_id, num);
     }
 
-    public void getDelMaterial(int material_id){
+    public void getDelMaterial(int material_id) {
         new MaterialRepository().getDelMaterial(mutableLiveDataDel, pageStateLiveData, userId, material_id);
+    }
+
+    //物资预定详情
+    public void materialOrderDetail(int orderId) {
+        pageStateLiveData.postValue(PageState.PAGE_REFRESH);
+        new MaterialRepository().materialOrderDetail(orderDetailLiveData, pageStateLiveData, userId, orderId);
+    }
+
+    //取消物资预定
+    public void materialOrderCancel(int orderId) {
+        pageStateLiveData.postValue(PageState.PAGE_REFRESH);
+        new MaterialRepository().materialOrderCancel(mutableLiveDataCancel, pageStateLiveData, userId, orderId);
     }
 }

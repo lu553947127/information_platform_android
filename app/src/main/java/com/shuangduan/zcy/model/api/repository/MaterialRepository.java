@@ -35,7 +35,7 @@ public class MaterialRepository extends BaseRepository {
         request(apiService.getCategory(userId, category_id)).setDataList(liveData).setPageState(pageStateLiveData).send();
     }
 
-    public void collected(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int userId, int id){
+    public void collected(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int userId, int id) {
         request(apiService.collected(userId, id)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
@@ -47,8 +47,8 @@ public class MaterialRepository extends BaseRepository {
         request(apiService.addressList(userId, id)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
-    public void getAddMaterial(MutableLiveData<MaterialAddBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int material_id,int num) {
-        request(apiService.getAddMaterial(userId, material_id,num)).setData(liveData).setPageState(pageStateLiveData).send();
+    public void getAddMaterial(MutableLiveData<MaterialAddBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int material_id, int num) {
+        request(apiService.getAddMaterial(userId, material_id, num)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
     public void getDelMaterial(MutableLiveData<MaterialAddBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int material_id) {
@@ -56,16 +56,17 @@ public class MaterialRepository extends BaseRepository {
     }
 
     //基建物资预定订单列表
-    public void materialOrderList(MutableLiveData<MaterialOrderBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int page){
-        request(apiService.materialOrder(userId,page)).setData(liveData).setPageState(pageStateLiveData).send();
+    public void materialOrderList(MutableLiveData<MaterialOrderBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int page) {
+        request(apiService.materialOrder(userId, page)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
     //基建物资预定订单详情
-    public void materialOrderDetail(MutableLiveData<MaterialOrderBean.ListBean> liveData, MutableLiveData<String> pageStateLiveData, int userId,int orderId){
-        request(apiService.materialOrderDetail(userId,orderId)).setData(liveData).setPageState(pageStateLiveData).send();
+    public void materialOrderDetail(MutableLiveData<MaterialOrderBean.ListBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int orderId) {
+        request(apiService.materialOrderDetail(userId, orderId)).setData(liveData).setPageState(pageStateLiveData).send();
     }
+
     //取消物资预定
-//    public void cancleMaterialOrder(int userId,int orderId){
-//        request(apiService.cancleMaterialOrder())
-//    }
+    public void materialOrderCancel(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int userId, int orderId) {
+        request(apiService.cancelMaterialOrder(userId, orderId)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
 }

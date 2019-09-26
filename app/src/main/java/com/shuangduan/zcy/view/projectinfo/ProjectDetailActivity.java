@@ -1,16 +1,20 @@
 package com.shuangduan.zcy.view.projectinfo;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.view.animation.Interpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
@@ -33,6 +37,7 @@ import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.tabs.TabLayout;
@@ -73,6 +78,12 @@ import com.tencent.tauth.Tencent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -132,6 +143,47 @@ public class ProjectDetailActivity extends BaseActivity {
     private BaseUiListener qqListener;
     private ShareVm shareVm;
 
+
+    @SuppressLint("HandlerLeak")
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+            Bitmap bitmap = (Bitmap) msg.obj;
+
+            dialog = new ShareDialog(ProjectDetailActivity.this)
+                    .setOnShareListener(new ShareDialog.OnShareListener() {
+                        @Override
+                        public void qq() {
+                            ShareUtils.shareQQ(ProjectDetailActivity.this, mTencent, qqListener
+                                    , bean.getData().getUrl(), bean.getData().getTitle(), bean.getData().getDes(), bean.getData().getImage());
+                        }
+
+                        @Override
+                        public void qqStone() {
+                            ShareUtils.shareQQStone(ProjectDetailActivity.this, mTencent, qqListener
+                                    , bean.getData().getUrl(), bean.getData().getTitle(), bean.getData().getDes(), bean.getData().getImage());
+                        }
+
+                        @Override
+                        public void weChat() {
+                            ShareUtils.shareWeChat(ProjectDetailActivity.this, ShareUtils.FRIEND
+                                    , bean.getData().getUrl(), bean.getData().getTitle(), bean.getData().getDes(), bitmap);
+                        }
+
+                        @Override
+                        public void friendCircle() {
+                            ShareUtils.shareWeChat(ProjectDetailActivity.this, ShareUtils.FRIEND_CIRCLE
+                                    , bean.getData().getUrl(), bean.getData().getTitle(), bean.getData().getDes(), bitmap);
+                        }
+                    });
+
+            addDialog(dialog);
+        }
+    };
+    private ShareBean bean;
+    private ShareDialog dialog;
+
     @Override
     protected int initLayoutRes() {
         return R.layout.activity_project_detail;
@@ -155,12 +207,12 @@ public class ProjectDetailActivity extends BaseActivity {
         projectDetailVm.titleLiveData.observe(this, s -> tvTitle.setText(s));
         projectDetailVm.locationLiveData.observe(this, s -> tvLocation.setText(s));
         projectDetailVm.collectionLiveData.observe(this, i -> {
-            tvCollect.setText(getString(i == 1? R.string.collected: R.string.collection));
-            ivCollect.setImageResource(i == 1? R.drawable.icon_collected: R.drawable.icon_collect);
+            tvCollect.setText(getString(i == 1 ? R.string.collected : R.string.collection));
+            ivCollect.setImageResource(i == 1 ? R.drawable.icon_collected : R.drawable.icon_collect);
         });
         projectDetailVm.subscribeLiveData.observe(this, i -> {
-            tvSubscribe.setText(getString(i == 1? R.string.subscribe: R.string.unsubscribe));
-            ivSubscribe.setImageResource(i == 1? R.drawable.icon_shopping_cart_select: R.drawable.icon_shopping_cart);
+            tvSubscribe.setText(getString(i == 1 ? R.string.subscribe : R.string.unsubscribe));
+            ivSubscribe.setImageResource(i == 1 ? R.drawable.icon_shopping_cart_select : R.drawable.icon_shopping_cart);
         });
         projectDetailVm.latitudeLiveData.observe(this, s -> {
             aMap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(s.latitude, s.longitude)));
@@ -183,7 +235,7 @@ public class ProjectDetailActivity extends BaseActivity {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                switch (tab.getPosition()){
+                switch (tab.getPosition()) {
                     case 0:
                         llOperate.setVisibility(View.VISIBLE);
                         flSubscribe.setVisibility(View.VISIBLE);
@@ -215,13 +267,13 @@ public class ProjectDetailActivity extends BaseActivity {
 
         permissionVm = ViewModelProviders.of(this).get(PermissionVm.class);
         permissionVm.getLiveData().observe(this, integer -> {
-            if (integer == PermissionVm.PERMISSION_LOCATION){
+            if (integer == PermissionVm.PERMISSION_LOCATION) {
                 init();
             }
         });
         permissionVm.getPermissionLocation(new RxPermissions(this));
 
-        if (getIntent().getIntExtra(CustomConfig.LOCATION, 0) != 0){
+        if (getIntent().getIntExtra(CustomConfig.LOCATION, 0) != 0) {
             int position = getIntent().getIntExtra(CustomConfig.LOCATION, 0);
             vp.setCurrentItem(position);
             tabLayout.getTabAt(position).select();
@@ -229,16 +281,18 @@ public class ProjectDetailActivity extends BaseActivity {
         // 其中APP_ID是分配给第三方应用的appid，类型为String。
         mTencent = Tencent.createInstance(ShareUtils.app_id_qq, getApplicationContext());
         qqListener = new BaseUiListener();
+
+        getShare();
     }
 
     //分享
     private void getShare() {
 
-        OkGo.<String>post(RetrofitHelper.BASE_TEST_URL+ Common.PROJECT_SHARE)
+        OkGo.<String>post(RetrofitHelper.BASE_TEST_URL + Common.PROJECT_SHARE)
                 .tag(this)
                 .headers("token", SPUtils.getInstance().getString(SpConfig.TOKEN))//请求头
                 .params("user_id", SPUtils.getInstance().getInt(SpConfig.USER_ID))//用户编号
-                .params("id",getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0))
+                .params("id", getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0))
                 .execute(new com.lzy.okgo.callback.StringCallback() {//返回值
 
                     @Override
@@ -251,47 +305,66 @@ public class ProjectDetailActivity extends BaseActivity {
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
                         LogUtils.json(response.body());
                         try {
-                            ShareBean bean=new Gson().fromJson(response.body(), ShareBean.class);
-                            if (bean.getCode().equals("200")){
-                                Bitmap bitmap = BitmapFactory.decodeFile(bean.getData().getImage());
-                                addDialog(new ShareDialog(ProjectDetailActivity.this)
-                                        .setOnShareListener(new ShareDialog.OnShareListener() {
-                                            @Override
-                                            public void qq() {
-                                                ShareUtils.shareQQ(ProjectDetailActivity.this, mTencent, qqListener
-                                                        , bean.getData().getUrl(), bean.getData().getTitle(), bean.getData().getDes(), bean.getData().getImage());
-                                            }
+                            bean = new Gson().fromJson(response.body(), ShareBean.class);
+                            if (bean.getCode().equals("200")) {
+//                                Bitmap bitmap = BitmapFactory.decodeFile(bean.getData().getImage());
 
-                                            @Override
-                                            public void qqStone() {
-                                                ShareUtils.shareQQStone(ProjectDetailActivity.this, mTencent, qqListener
-                                                        , bean.getData().getUrl(), bean.getData().getTitle(), bean.getData().getDes(), bean.getData().getImage());
-                                            }
+                                new Thread(() -> {
+                                    Bitmap bitmap = returnBitmap(bean.getData().getImage());
+                                    Message msg = new Message();
+                                    msg.obj = bitmap;
+                                    handler.sendMessage(msg);
+                                }).start();
 
-                                            @Override
-                                            public void weChat() {
-                                                ShareUtils.shareWeChat(ProjectDetailActivity.this, ShareUtils.FRIEND
-                                                        , bean.getData().getUrl(), bean.getData().getTitle(), bean.getData().getDes(), bitmap);
-                                            }
 
-                                            @Override
-                                            public void friendCircle() {
-                                                ShareUtils.shareWeChat(ProjectDetailActivity.this, ShareUtils.FRIEND_CIRCLE
-                                                        , bean.getData().getUrl(), bean.getData().getTitle(), bean.getData().getDes(), bitmap);
-                                            }
-                                        })
-                                        .showDialog());
-                            }else if (bean.getCode().equals("-1")){
+                            } else if (bean.getCode().equals("-1")) {
                                 ToastUtils.showShort(bean.getMsg());
                                 LoginUtils.getExitLogin(ProjectDetailActivity.this);
-                            }else {
+                            } else {
                                 ToastUtils.showShort(bean.getMsg());
                             }
-                        }catch (JsonSyntaxException | IllegalStateException ignored){
+                        } catch (JsonSyntaxException | IllegalStateException ignored) {
                             ToastUtils.showShort(getString(R.string.request_error));
                         }
                     }
                 });
+    }
+
+
+    /**
+     * 根据图片的url路径获得Bitmap对象
+     *
+     * @param url
+     * @return
+     */
+    public Bitmap returnBitmap(String url) {
+
+        if (!StringUtils.isEmpty(url)) {
+
+            URL fileUrl = null;
+            Bitmap bitmap = null;
+            try {
+                fileUrl = new URL(url);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            try {
+                HttpURLConnection conn = (HttpURLConnection) fileUrl
+                        .openConnection();
+                conn.setDoInput(true);
+                conn.connect();
+                InputStream is = conn.getInputStream();
+                bitmap = BitmapFactory.decodeStream(is);
+                is.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return bitmap;
+        }
+
+        return null;
+
     }
 
     @Override
@@ -301,36 +374,38 @@ public class ProjectDetailActivity extends BaseActivity {
     }
 
     @Subscribe
-    public void onEventWarrantSuccess(WarrantSuccessEvent event){
+    public void onEventWarrantSuccess(WarrantSuccessEvent event) {
         projectDetailVm.getDetail();
         projectDetailVm.getTrack();
         projectDetailVm.getViewTrack();
     }
 
     @Subscribe
-    public void onEventReleaseSuccess(LocusRefreshEvent event){
+    public void onEventReleaseSuccess(LocusRefreshEvent event) {
         projectDetailVm.getTrack();
         projectDetailVm.getViewTrack();
     }
 
     @OnClick({R.id.iv_bar_back, R.id.iv_bar_right, R.id.fl_collect, R.id.fl_error, R.id.fl_subscription, R.id.ll_chat, R.id.fl_release})
-    void onClick(View view){
+    void onClick(View view) {
         Bundle bundle = new Bundle();
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.iv_bar_back:
                 finish();
                 break;
             case R.id.iv_bar_right:
-                getShare();
+                if (dialog != null) {
+                    dialog.showDialog();
+                }
                 break;
             case R.id.fl_collect:
                 projectDetailVm.collect();
-                if (projectDetailVm.collectLiveData != null){
+                if (projectDetailVm.collectLiveData != null) {
                     projectDetailVm.collectLiveData.observe(this, o -> {
                         projectDetailVm.collectionLiveData.postValue(1);
                     });
                 }
-                if (projectDetailVm.cancelCollectLiveData != null){
+                if (projectDetailVm.cancelCollectLiveData != null) {
                     projectDetailVm.cancelCollectLiveData.observe(this, o -> {
                         projectDetailVm.collectionLiveData.postValue(0);
                     });
@@ -344,7 +419,7 @@ public class ProjectDetailActivity extends BaseActivity {
                 getMembersStatus();
                 break;
             case R.id.fl_subscription:
-                switch (projectDetailVm.subscribeLiveData.getValue()){
+                switch (projectDetailVm.subscribeLiveData.getValue()) {
                     case 1:
                         bundle.putInt(CustomConfig.PROJECT_ID, getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0));
                         ActivityUtils.startActivity(bundle, SubInfoActivity.class);
@@ -368,11 +443,11 @@ public class ProjectDetailActivity extends BaseActivity {
     //查询当前登陆人在选择工程是否有讨论组
     private void getMembersStatus() {
 
-        OkGo.<String>post(RetrofitHelper.BASE_TEST_URL+ Common.WECHAT_MEMBERS_STATUS)
+        OkGo.<String>post(RetrofitHelper.BASE_TEST_URL + Common.WECHAT_MEMBERS_STATUS)
                 .tag(this)
                 .headers("token", SPUtils.getInstance().getString(SpConfig.TOKEN))//请求头
                 .params("user_id", SPUtils.getInstance().getInt(SpConfig.USER_ID))//用户编号
-                .params("project_id",getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0))
+                .params("project_id", getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0))
                 .execute(new com.lzy.okgo.callback.StringCallback() {//返回值
 
                     @Override
@@ -385,18 +460,18 @@ public class ProjectDetailActivity extends BaseActivity {
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
                         LogUtils.json(response.body());
                         try {
-                            ProjectMembersStatusBean bean=new Gson().fromJson(response.body(), ProjectMembersStatusBean.class);
-                            if (bean.getCode().equals("200")){
+                            ProjectMembersStatusBean bean = new Gson().fromJson(response.body(), ProjectMembersStatusBean.class);
+                            if (bean.getCode().equals("200")) {
                                 RongIM.getInstance().startGroupChat(ProjectDetailActivity.this
                                         , bean.getData().getGroupId()
                                         , bean.getData().getGroupName());
-                            }else if (bean.getCode().equals("-1")){
+                            } else if (bean.getCode().equals("-1")) {
                                 ToastUtils.showShort(bean.getMsg());
                                 LoginUtils.getExitLogin(ProjectDetailActivity.this);
-                            }else {
+                            } else {
                                 ToastUtils.showShort(bean.getMsg());
                             }
-                        }catch (JsonSyntaxException | IllegalStateException ignored){
+                        } catch (JsonSyntaxException | IllegalStateException ignored) {
                             ToastUtils.showShort(getString(R.string.request_error));
                         }
                     }
@@ -452,13 +527,14 @@ public class ProjectDetailActivity extends BaseActivity {
     }
 
     private Marker locationMarker;
+
     private void addMarkerInScreenCenter(LatLng locationLatLng) {
         LatLng latLng = aMap.getCameraPosition().target;
         Point screenPosition = aMap.getProjection().toScreenLocation(latLng);
         locationMarker = aMap.addMarker(new MarkerOptions()
-                .anchor(0.5f,0.5f));
+                .anchor(0.5f, 0.5f));
         //设置Marker在屏幕上,不跟随地图移动
-        locationMarker.setPositionByPixels(screenPosition.x,screenPosition.y);
+        locationMarker.setPositionByPixels(screenPosition.x, screenPosition.y);
         locationMarker.setZIndex(1);
     }
 
@@ -467,10 +543,10 @@ public class ProjectDetailActivity extends BaseActivity {
      */
     public void startJumpAnimation() {
 
-        if (locationMarker != null ) {
+        if (locationMarker != null) {
             //根据屏幕距离计算需要移动的目标点
             final LatLng latLng = locationMarker.getPosition();
-            Point point =  aMap.getProjection().toScreenLocation(latLng);
+            Point point = aMap.getProjection().toScreenLocation(latLng);
             point.y -= ConvertUtils.dp2px(50);
             LatLng target = aMap.getProjection()
                     .fromScreenLocation(point);
@@ -478,10 +554,10 @@ public class ProjectDetailActivity extends BaseActivity {
             Animation animation = new TranslateAnimation(target);
             animation.setInterpolator(input -> {
                 // 模拟重加速度的interpolator
-                if(input <= 0.5) {
+                if (input <= 0.5) {
                     return (float) (0.5f - 2 * (0.5 - input) * (0.5 - input));
                 } else {
-                    return (float) (0.5f - Math.sqrt((input - 0.5f)*(1.5f - input)));
+                    return (float) (0.5f - Math.sqrt((input - 0.5f) * (1.5f - input)));
                 }
             });
             //整个移动所需要的时间
@@ -492,7 +568,7 @@ public class ProjectDetailActivity extends BaseActivity {
             locationMarker.startAnimation();
 
         } else {
-            LogUtils.i("ama","screenMarker is null");
+            LogUtils.i("ama", "screenMarker is null");
         }
     }
 

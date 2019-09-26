@@ -183,7 +183,7 @@ public class AppConfig {
         PushConfig config = new PushConfig
                 .Builder()
                 .enableHWPush(true)
-                .enableMiPush("2882303761517473625", "5451747338625")
+                .enableMiPush("2882303761518171760", "5861817164760")
                 .enableMeiZuPush("112988", "2fa951a802ac4bd5843d694517307896")
                 .enableVivoPush(true)
                 .enableOppoPush("6bbb2e614c374489b2aca7016c4cbceb", "7e187275fb0645aea6fd3a3e85aedcb5")

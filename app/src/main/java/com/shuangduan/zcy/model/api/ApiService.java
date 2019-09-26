@@ -1262,10 +1262,10 @@ public interface ApiService {
     );
 
     //基建物质预定订单删除
-//    @FormUrlEncoded
-//    @POST("api/Material/del")
-//    Flowable<BaseResponse> cancleMaterialOrder(
-//            @Field("user_id") int userId,
-//            @Field("id") int id
-//    );
+    @FormUrlEncoded
+    @POST("api/Material/close")
+    Flowable<BaseResponse> cancelMaterialOrder(
+            @Field("user_id") int userId,
+            @Field("order_id") int orderId
+    );
 }

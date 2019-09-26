@@ -1,15 +1,19 @@
 package com.shuangduan.zcy.view.recruit;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
@@ -19,6 +23,7 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -43,6 +48,7 @@ import com.shuangduan.zcy.utils.LoginUtils;
 import com.shuangduan.zcy.utils.ShareUtils;
 import com.shuangduan.zcy.view.mine.RecommendFriendsActivity;
 import com.shuangduan.zcy.view.mine.SetPwdPayActivity;
+import com.shuangduan.zcy.view.projectinfo.ProjectDetailActivity;
 import com.shuangduan.zcy.view.recharge.RechargeActivity;
 import com.shuangduan.zcy.vm.CoinPayVm;
 import com.shuangduan.zcy.vm.RecruitDetailVm;
@@ -50,6 +56,12 @@ import com.shuangduan.zcy.vm.ShareVm;
 import com.shuangduan.zcy.vm.UpdatePwdPayVm;
 import com.shuangduan.zcy.weight.RichText;
 import com.tencent.tauth.Tencent;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -99,6 +111,47 @@ public class RecruitDetailActivity extends BaseActivity {
     private BaseUiListener qqListener;
     private ShareVm shareVm;
 
+
+    @SuppressLint("HandlerLeak")
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+            Bitmap bitmap = (Bitmap) msg.obj;
+
+            dialog = new ShareDialog(RecruitDetailActivity.this)
+                    .setOnShareListener(new ShareDialog.OnShareListener() {
+                        @Override
+                        public void qq() {
+                            ShareUtils.shareQQ(RecruitDetailActivity.this, mTencent, qqListener
+                                    , bean.getData().getUrl(), bean.getData().getTitle(), bean.getData().getDes(), bean.getData().getImage());
+                        }
+
+                        @Override
+                        public void qqStone() {
+                            ShareUtils.shareQQStone(RecruitDetailActivity.this, mTencent, qqListener
+                                    , bean.getData().getUrl(), bean.getData().getTitle(), bean.getData().getDes(), bean.getData().getImage());
+                        }
+
+                        @Override
+                        public void weChat() {
+                            ShareUtils.shareWeChat(RecruitDetailActivity.this, ShareUtils.FRIEND
+                                    , bean.getData().getUrl(), bean.getData().getTitle(), bean.getData().getDes(), bitmap);
+                        }
+
+                        @Override
+                        public void friendCircle() {
+                            ShareUtils.shareWeChat(RecruitDetailActivity.this, ShareUtils.FRIEND_CIRCLE
+                                    , bean.getData().getUrl(), bean.getData().getTitle(), bean.getData().getDes(), bitmap);
+                        }
+                    });
+
+            addDialog(dialog);
+        }
+    };
+    private ShareBean bean;
+    private ShareDialog dialog;
+
     @Override
     protected int initLayoutRes() {
         return R.layout.activity_recruit_detail;
@@ -127,16 +180,16 @@ public class RecruitDetailActivity extends BaseActivity {
             tvIntroContent.setGlide(Glide.with(this));
             tvIntroContent.setHtml(recruitDetailBean.getContent());
             recruitDetailVm.collectionLiveData.postValue(recruitDetailBean.getCollection());
-            llReadDetail.setVisibility(recruitDetailBean.getIs_pay() == 1?View.GONE:View.VISIBLE);
+            llReadDetail.setVisibility(recruitDetailBean.getIs_pay() == 1 ? View.GONE : View.VISIBLE);
         });
         recruitDetailVm.collectionLiveData.observe(this, i -> {
-            tvCollect.setText(getString(i == 1? R.string.collected: R.string.collection));
-            ivCollect.setImageResource(i == 1? R.drawable.icon_collected: R.drawable.icon_collect);
+            tvCollect.setText(getString(i == 1 ? R.string.collected : R.string.collection));
+            ivCollect.setImageResource(i == 1 ? R.drawable.icon_collected : R.drawable.icon_collect);
         });
         recruitDetailVm.collectLiveData.observe(this, o -> recruitDetailVm.collectionLiveData.postValue(1));
         recruitDetailVm.collectCancelLiveData.observe(this, o -> recruitDetailVm.collectionLiveData.postValue(0));
         recruitDetailVm.pageStateLiveData.observe(this, s -> {
-            switch (s){
+            switch (s) {
                 case PageState.PAGE_LOADING:
                     showLoading();
                     break;
@@ -152,14 +205,14 @@ public class RecruitDetailActivity extends BaseActivity {
         updatePwdPayVm.stateLiveData.observe(this, pwdPayStateBean -> {
             int status = pwdPayStateBean.getStatus();
             SPUtils.getInstance().put(SpConfig.PWD_PAY_STATUS, status);
-            if (status == 1){
+            if (status == 1) {
                 goToPay();
-            }else {
+            } else {
                 ActivityUtils.startActivity(SetPwdPayActivity.class);
             }
         });
         updatePwdPayVm.pageStateLiveData.observe(this, s -> {
-            switch (s){
+            switch (s) {
                 case PageState.PAGE_LOADING:
                     showLoading();
                     break;
@@ -173,10 +226,10 @@ public class RecruitDetailActivity extends BaseActivity {
         coinPayVm = ViewModelProviders.of(this).get(CoinPayVm.class);
         coinPayVm.recruitId = id;
         coinPayVm.recruitPayLiveData.observe(this, coinPayResultBean -> {
-            if (coinPayResultBean.getPay_status() == 1){
+            if (coinPayResultBean.getPay_status() == 1) {
                 ToastUtils.showShort(getString(R.string.buy_success));
                 recruitDetailVm.getDetail();
-            }else {
+            } else {
                 //余额不足
                 addDialog(new CustomDialog(this)
                         .setIcon(R.drawable.icon_error)
@@ -196,7 +249,7 @@ public class RecruitDetailActivity extends BaseActivity {
             }
         });
         coinPayVm.pageStateLiveData.observe(this, s -> {
-            switch (s){
+            switch (s) {
                 case PageState.PAGE_LOADING:
                     showLoading();
                     break;
@@ -208,6 +261,9 @@ public class RecruitDetailActivity extends BaseActivity {
         // 其中APP_ID是分配给第三方应用的appid，类型为String。
         mTencent = Tencent.createInstance(ShareUtils.app_id_qq, getApplicationContext());
         qqListener = new BaseUiListener();
+
+
+        getShare();
     }
 
     @OnClick({R.id.iv_bar_back, R.id.iv_bar_right, R.id.ll_collect, R.id.ll_read_detail})
@@ -217,7 +273,7 @@ public class RecruitDetailActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.iv_bar_right:
-                getShare();
+                dialog.showDialog();
                 break;
             case R.id.ll_collect:
                 recruitDetailVm.collect();
@@ -234,9 +290,9 @@ public class RecruitDetailActivity extends BaseActivity {
                             @Override
                             public void ok(String s) {
                                 int status = SPUtils.getInstance().getInt(SpConfig.PWD_PAY_STATUS, 0);
-                                if (status == 1){
+                                if (status == 1) {
                                     goToPay();
-                                }else {
+                                } else {
                                     //查询是否设置支付密码
                                     updatePwdPayVm.payPwdState();
                                 }
@@ -250,7 +306,7 @@ public class RecruitDetailActivity extends BaseActivity {
     /**
      * 去支付
      */
-    private void goToPay(){
+    private void goToPay() {
         addDialog(new PayDialog(this)
                 .setSingleCallBack((item, position) -> {
                     coinPayVm.payRecruit(item);
@@ -261,11 +317,11 @@ public class RecruitDetailActivity extends BaseActivity {
     //分享
     private void getShare() {
 
-        OkGo.<String>post(RetrofitHelper.BASE_TEST_URL+ Common.TENDERER_SHARE)
+        OkGo.<String>post(RetrofitHelper.BASE_TEST_URL + Common.TENDERER_SHARE)
                 .tag(this)
                 .headers("token", SPUtils.getInstance().getString(SpConfig.TOKEN))//请求头
                 .params("user_id", SPUtils.getInstance().getInt(SpConfig.USER_ID))//用户编号
-                .params("id",id)
+                .params("id", id)
                 .execute(new com.lzy.okgo.callback.StringCallback() {//返回值
 
                     @Override
@@ -278,43 +334,23 @@ public class RecruitDetailActivity extends BaseActivity {
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
                         LogUtils.json(response.body());
                         try {
-                            ShareBean bean=new Gson().fromJson(response.body(), ShareBean.class);
-                            if (bean.getCode().equals("200")){
-                                Bitmap bitmap = BitmapFactory.decodeFile(bean.getData().getImage());
-                                addDialog(new ShareDialog(RecruitDetailActivity.this)
-                                        .setOnShareListener(new ShareDialog.OnShareListener() {
-                                            @Override
-                                            public void qq() {
-                                                ShareUtils.shareQQ(RecruitDetailActivity.this, mTencent, qqListener
-                                                        , bean.getData().getUrl(), bean.getData().getTitle(), bean.getData().getDes(), bean.getData().getImage());
-                                            }
+                            bean = new Gson().fromJson(response.body(), ShareBean.class);
+                            if (bean.getCode().equals("200")) {
 
-                                            @Override
-                                            public void qqStone() {
-                                                ShareUtils.shareQQStone(RecruitDetailActivity.this, mTencent, qqListener
-                                                        , bean.getData().getUrl(), bean.getData().getTitle(), bean.getData().getDes(), bean.getData().getImage());
-                                            }
+                                new Thread(() -> {
+                                    Bitmap bitmap = returnBitmap(bean.getData().getImage());
+                                    Message msg = new Message();
+                                    msg.obj = bitmap;
+                                    handler.sendMessage(msg);
+                                }).start();
 
-                                            @Override
-                                            public void weChat() {
-                                                ShareUtils.shareWeChat(RecruitDetailActivity.this, ShareUtils.FRIEND
-                                                        , bean.getData().getUrl(), bean.getData().getTitle(), bean.getData().getDes(), bitmap);
-                                            }
-
-                                            @Override
-                                            public void friendCircle() {
-                                                ShareUtils.shareWeChat(RecruitDetailActivity.this, ShareUtils.FRIEND_CIRCLE
-                                                        , bean.getData().getUrl(), bean.getData().getTitle(), bean.getData().getDes(), bitmap);
-                                            }
-                                        })
-                                        .showDialog());
-                            }else if (bean.getCode().equals("-1")){
+                            } else if (bean.getCode().equals("-1")) {
                                 ToastUtils.showShort(bean.getMsg());
                                 LoginUtils.getExitLogin(RecruitDetailActivity.this);
-                            }else {
+                            } else {
                                 ToastUtils.showShort(bean.getMsg());
                             }
-                        }catch (JsonSyntaxException | IllegalStateException ignored){
+                        } catch (JsonSyntaxException | IllegalStateException ignored) {
                             ToastUtils.showShort(getString(R.string.request_error));
                         }
                     }
@@ -327,4 +363,39 @@ public class RecruitDetailActivity extends BaseActivity {
         Tencent.onActivityResultData(requestCode, resultCode, data, qqListener);
     }
 
+    /**
+     * 根据图片的url路径获得Bitmap对象
+     *
+     * @param url
+     * @return
+     */
+    public Bitmap returnBitmap(String url) {
+
+        if (!StringUtils.isEmpty(url)) {
+
+            URL fileUrl = null;
+            Bitmap bitmap = null;
+            try {
+                fileUrl = new URL(url);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            try {
+                HttpURLConnection conn = (HttpURLConnection) fileUrl
+                        .openConnection();
+                conn.setDoInput(true);
+                conn.connect();
+                InputStream is = conn.getInputStream();
+                bitmap = BitmapFactory.decodeStream(is);
+                is.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return bitmap;
+        }
+
+        return null;
+
+    }
 }

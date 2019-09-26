@@ -32,8 +32,7 @@ public class MaterialVm extends BaseViewModel {
     public MutableLiveData<List<MaterialCategoryBean>> categoryLiveData;
     //物资预定列表数据
     public MutableLiveData<MaterialOrderBean> orderLiveData;
-    //物资预定订单详情
-    public MutableLiveData<MaterialOrderBean.ListBean> orderDetailLiveData;
+
 
     public int categoryFirstId;//一级分类id， 用于二级数据
     public int categoryId;//二级分类id， 用于列表加载
@@ -55,7 +54,7 @@ public class MaterialVm extends BaseViewModel {
         categoryFirstLiveData = new MutableLiveData<>();
         categoryLiveData = new MutableLiveData<>();
         orderLiveData = new MutableLiveData<>();
-        orderDetailLiveData = new MutableLiveData<>();
+
 
         categoryFirstId = 0;
         categoryId = 0;
@@ -103,11 +102,6 @@ public class MaterialVm extends BaseViewModel {
         new MaterialRepository().materialOrderList(orderLiveData, pageStateLiveData, userId, orderPage);
     }
 
-    //物资预定详情
-    public void materialOrderDetail(int orderId) {
-        pageStateLiveData.postValue(PageState.PAGE_REFRESH);
-        new MaterialRepository().materialOrderDetail(orderDetailLiveData, pageStateLiveData, userId, orderId);
-    }
 
     /**
      * 获取一级分类

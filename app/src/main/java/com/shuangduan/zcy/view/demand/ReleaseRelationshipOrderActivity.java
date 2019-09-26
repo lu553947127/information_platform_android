@@ -82,7 +82,7 @@ public class ReleaseRelationshipOrderActivity extends BaseActivity {
             tvCommission.setText(String.format(getString(R.string.format_amount_bi), relationshipOrderBean.getPrice()));
             tvTime.setText(String.format(getString(R.string.format_validity_period_less), relationshipOrderBean.getStart_time(), relationshipOrderBean.getEnd_time()));
             tvDes.setText(relationshipOrderBean.getIntro());
-            String price = "<font>共计支付</font><font color = '#EF583E'>" + relationshipOrderBean.getPrice() +"</font><font>元</font>";
+            String price = "<font>共计支付</font><font color = '#EF583E'>" + relationshipOrderBean.getPrice() +"</font><font>紫金币</font>";
             tvPrice.setText(Html.fromHtml(price));
         });
         demandReleaseVm.pageStateLiveData.observe(this, s -> {
@@ -178,7 +178,6 @@ public class ReleaseRelationshipOrderActivity extends BaseActivity {
 
     private void payResult(CoinPayResultBean coinPayResultBean){
         if (coinPayResultBean.getPay_status() == 1){
-            ToastUtils.showShort(getString(R.string.release_success));
             finish();
         }else {
             //余额不足
