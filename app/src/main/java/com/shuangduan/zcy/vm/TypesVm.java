@@ -109,13 +109,13 @@ public class TypesVm extends BaseViewModel {
      * 点击一级分类
      */
     public void clickFirst(int position){
-        if (positionFirstNow == position) return;
+//        if (positionFirstNow == position) return;
         List<TypeBean> provinceList = typeFirstLiveData.getValue();
         //选中状态：未选中0，选中1
-        provinceList.get(positionFirstNow).setIsSelect(0);
+//        provinceList.get(positionFirstNow).setIsSelect(0);
         provinceList.get(position).setIsSelect(1);
         typeFirstLiveData.postValue(provinceList);
-        positionFirstNow = position;
+//        positionFirstNow = position;
     }
 
     /**

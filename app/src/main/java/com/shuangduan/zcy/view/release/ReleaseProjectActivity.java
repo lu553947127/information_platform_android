@@ -45,8 +45,10 @@ import com.shuangduan.zcy.model.event.LocationEvent;
 import com.shuangduan.zcy.model.event.LocusRefreshEvent;
 import com.shuangduan.zcy.model.event.ProjectNameEvent;
 import com.shuangduan.zcy.model.event.StageEvent;
+import com.shuangduan.zcy.model.event.TypesArrayEvent;
 import com.shuangduan.zcy.model.event.TypesEvent;
 import com.shuangduan.zcy.utils.AndroidBug5497Workaround;
+import com.shuangduan.zcy.utils.KeyboardUtil;
 import com.shuangduan.zcy.utils.matisse.Glide4Engine;
 import com.shuangduan.zcy.utils.matisse.MatisseCamera;
 import com.shuangduan.zcy.view.PhotoViewActivity;
@@ -278,6 +280,9 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
             releaseVm.projectId = getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0);
             tvProjectName.setClickable(false);
         }
+
+        KeyboardUtil.RemoveDecimalPoints(edtProjectAcreage);
+        KeyboardUtil.RemoveDecimalPoints(edtProjectPrice);
     }
 
     private void photoSet() {
@@ -540,10 +545,12 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
     }
 
     @Subscribe
-    public void onEventTypesEvent(TypesEvent event){
+    public void onEventTypesEvent(TypesArrayEvent event){
         releaseVm.types = event.getId();
         tvProjectTypes.setText(event.getName());
     }
+
+
 
     @Subscribe
     public void onEventContactEvent(ContactTypeEvent event){

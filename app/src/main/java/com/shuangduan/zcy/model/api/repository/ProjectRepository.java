@@ -69,7 +69,7 @@ public class ProjectRepository extends BaseRepository {
         request(apiService.getContactType(user_id)).setDataList(liveData).setPageState(pageStateLiveData).send();
     }
 
-    public void addProject(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int user_id, String title, String company, int province, int city, int phases, int type,
+    public void addProject(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int user_id, String title, String company, int province, int city, int phases, String[] type,
                            String start_time, String end_time, String acreage, String valuation, String intro, String materials, String longitude, String latitude, ContactListBean contact){
         request(apiService.addProject(user_id, title, company, province, city, phases, type, start_time, end_time, acreage, valuation, intro, materials, longitude, latitude, contact)).setData(liveData).setPageState(pageStateLiveData).send();
     }

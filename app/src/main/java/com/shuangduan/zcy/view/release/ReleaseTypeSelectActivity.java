@@ -20,6 +20,7 @@ import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.BaseSelectorBean;
 import com.shuangduan.zcy.model.bean.TypeBean;
+import com.shuangduan.zcy.model.event.TypesArrayEvent;
 import com.shuangduan.zcy.model.event.TypesEvent;
 import com.shuangduan.zcy.vm.TypesVm;
 
@@ -68,33 +69,30 @@ public class ReleaseTypeSelectActivity extends BaseActivity {
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
-        tvBarTitle.setText(getString(R.string.project_stage));
+        tvBarTitle.setText(getString(R.string.project_type));
         tvBarRight.setText(getString(R.string.save));
 
+        rvCity.setVisibility(View.GONE);
         typesVm = ViewModelProviders.of(this).get(TypesVm.class);
         rvProvince.setLayoutManager(new LinearLayoutManager(this));
         rvCity.setLayoutManager(new LinearLayoutManager(this));
         SelectorFirstAdapter typeFirstAdapter = new SelectorFirstAdapter(R.layout.item_province, null);
-        SelectorSecondAdapter typeSecondAdapter = new SelectorSecondAdapter(R.layout.item_city, null);
+
         rvProvince.setAdapter(typeFirstAdapter);
-        rvCity.setAdapter(typeSecondAdapter);
+
         //类型点击事件
         typeFirstAdapter.setOnItemClickListener((adapter, view1, position) -> typesVm.clickFirst(position));
-        typeSecondAdapter.setOnItemClickListener((adapter, view12, position) -> typesVm.clickSecondSingle(position));
+
 
         typesVm.init();
         typesVm.typeFirstLiveData.observe(this, typeBeans -> {
             LogUtils.i(typeBeans.get(0).getCatname());
             typeFirstAdapter.setNewData(typeBeans);
-            typesVm.setTypeFirstSingleInit();
-        });
-        typesVm.typeSecondLiveData.observe(this, typeBeans1 -> {
-            //刷新二级列表
-            typeSecondAdapter.setNewData(typeBeans1);
+//            typesVm.setTypeFirstSingleInit();
         });
 
         typesVm.pageStateLiveData.observe(this, s -> {
-            switch (s){
+            switch (s) {
                 case PageState.PAGE_LOADING:
                     showLoading();
                     break;
@@ -106,35 +104,33 @@ public class ReleaseTypeSelectActivity extends BaseActivity {
     }
 
     @OnClick({R.id.iv_bar_back, R.id.tv_bar_right})
-    void onClick(View view){
+    void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_bar_back:
                 finish();
                 break;
             case R.id.tv_bar_right:
                 String province = "";
-                String city = "";
-                int cityId = 0;
+
+                List<String> typeId = new ArrayList<>();
                 List<TypeBean> types = typesVm.typeFirstLiveData.getValue();
-                assert types != null;
-                for (TypeBean bean : types) {
-                    if (bean.isSelect == 1){
-                        province = bean.getCatname();
-                        List<TypeBean> citys = typesVm.typeSecondLiveData.getValue();
-                        assert citys != null;
-                        for (int i = 0; i < citys.size(); i++) {
-                            if (citys.get(i).getIsSelect() == 1) {
-                                city = citys.get(i).getCatname();
-                                cityId = citys.get(i).getId();
-                                EventBus.getDefault().post(new TypesEvent(province + city, cityId));
-                                finish();
-                                return;
-                            }
-                        }
-                        break;
+
+                if (types == null || types.size() <= 0) {
+                    ToastUtils.showShort(getString(R.string.select_types_correct));
+                    return;
+                }
+
+                for (int i = 0; i < types.size(); i++) {
+                    if (types.get(i).isSelect == 1) {
+                        province += types.get(i).getCatname()+" ";
+                        typeId.add(String.valueOf(types.get(i).getId()));
                     }
                 }
-                ToastUtils.showShort(getString(R.string.select_types_correct));
+
+                String[] array = new String[typeId.size()];
+                EventBus.getDefault().post(new TypesArrayEvent(province, typeId.toArray(array)));
+                finish();
+
                 break;
         }
     }

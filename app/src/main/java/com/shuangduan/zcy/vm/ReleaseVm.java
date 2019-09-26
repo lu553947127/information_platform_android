@@ -49,7 +49,8 @@ public class ReleaseVm extends BaseViewModel {
     public int editContactTypePos = 0;
     public int editContactAddressPos = 0;
     public String longitude, latitude, start_time, end_time;
-    public int province, city, phases, types;
+    public int province, city, phases;
+    public String[] types;
     public int projectId;
     private List<Integer> imageIds;
 
@@ -68,9 +69,9 @@ public class ReleaseVm extends BaseViewModel {
     /**
      * 添加联系人
      */
-    public void addContact(){
+    public void addContact() {
         List<ContactBean> list = contactLiveData.getValue();
-        if (list != null){
+        if (list != null) {
             list.add(new ContactBean());
             contactLiveData.postValue(list);
         }
@@ -79,19 +80,19 @@ public class ReleaseVm extends BaseViewModel {
     /**
      * 删除联系人
      */
-    public void delContact(int i){
+    public void delContact(int i) {
         List<ContactBean> list = contactLiveData.getValue();
-        if (list != null && list.size() > 1){
+        if (list != null && list.size() > 1) {
             list.remove(i);
             contactLiveData.postValue(list);
         }
     }
 
-    public void getContactType(){
+    public void getContactType() {
         new ProjectRepository().getContactType(contactTypeLiveData, pageStateLiveData, userId);
     }
 
-    public void clickContactType(int position){
+    public void clickContactType(int position) {
         List<ContactTypeBean> list = contactTypeLiveData.getValue();
         if (list != null) {
             for (ContactTypeBean bean : list) {
@@ -106,8 +107,8 @@ public class ReleaseVm extends BaseViewModel {
     /**
      * 添加图片
      */
-    public void addImage(int id){
-        if (imageIds == null){
+    public void addImage(int id) {
+        if (imageIds == null) {
             imageIds = new ArrayList<>();
         }
         imageIds.add(id);
@@ -116,44 +117,54 @@ public class ReleaseVm extends BaseViewModel {
     /**
      * 删除图片
      */
-    public void delImage(int position){
-        if (imageIds != null){
+    public void delImage(int position) {
+        if (imageIds != null) {
             imageIds.remove(position);
         }
     }
 
-    public void releaseProject(String title, String company, String acreage, String valuation, String intro, String materials){
-        if (StringUtils.isTrimEmpty(title)){
+    public void releaseProject(String title, String company, String acreage, String valuation, String intro, String materials) {
+        if (StringUtils.isTrimEmpty(title)) {
             ToastUtils.showShort("请输入项目名称");
             return;
-        } if (StringUtils.isTrimEmpty(company)){
+        }
+        if (StringUtils.isTrimEmpty(company)) {
             ToastUtils.showShort("请输入公司名称");
             return;
-        }if (province == 0 || city == 0){
+        }
+        if (province == 0 || city == 0) {
             ToastUtils.showShort("请选择项目地址");
             return;
-        }if (phases == 0){
+        }
+        if (phases == 0) {
             ToastUtils.showShort("请选择项目阶段 ");
             return;
-        }if (types == 0){
+        }
+        if (types.length == 0) {
             ToastUtils.showShort("请选择项目类别");
             return;
-        }if (StringUtils.isTrimEmpty(start_time)){
+        }
+        if (StringUtils.isTrimEmpty(start_time)) {
             ToastUtils.showShort("请选择项目起始时间");
             return;
-        }if (StringUtils.isTrimEmpty(end_time)){
+        }
+        if (StringUtils.isTrimEmpty(end_time)) {
             ToastUtils.showShort("请选择项目结束时间");
             return;
-        }if (StringUtils.isTrimEmpty(acreage)){
+        }
+        if (StringUtils.isTrimEmpty(acreage)) {
             ToastUtils.showShort("请输入项目面积");
             return;
-        }if (StringUtils.isTrimEmpty(valuation)){
+        }
+        if (StringUtils.isTrimEmpty(valuation)) {
             ToastUtils.showShort("请输入项目估价");
             return;
-        }if (StringUtils.isTrimEmpty(intro)){
+        }
+        if (StringUtils.isTrimEmpty(intro)) {
             ToastUtils.showShort("请输入项目详情");
             return;
-        }if (StringUtils.isTrimEmpty(materials)){
+        }
+        if (StringUtils.isTrimEmpty(materials)) {
             ToastUtils.showShort("请输入项目用材");
             return;
         }
@@ -161,7 +172,7 @@ public class ReleaseVm extends BaseViewModel {
         if (list == null) return;
         for (int i = 0; i < list.size(); i++) {
             ContactBean bean = list.get(i);
-            if (bean.getType() == null || bean.getProvince() == 0 || bean.getCity() == 0 || StringUtils.isTrimEmpty(bean.getName()) || StringUtils.isTrimEmpty(bean.getTel()) || StringUtils.isTrimEmpty(bean.getCompany())){
+            if (bean.getType() == null || bean.getProvince() == 0 || bean.getCity() == 0 || StringUtils.isTrimEmpty(bean.getName()) || StringUtils.isTrimEmpty(bean.getTel()) || StringUtils.isTrimEmpty(bean.getCompany())) {
                 ToastUtils.showShort("联系人信息不完整");
                 return;
             }
@@ -171,20 +182,24 @@ public class ReleaseVm extends BaseViewModel {
 
         LogUtils.i(list);
 
-        new ProjectRepository().addProject(releaseProjectLiveData, pageStateLiveData,userId, title, company, province, city, phases, types, start_time, end_time, acreage, valuation, intro, materials, longitude, latitude, contactListBean);
+
+        new ProjectRepository().addProject(releaseProjectLiveData, pageStateLiveData, userId, title, company, province, city, phases, types, start_time, end_time, acreage, valuation, intro, materials, longitude, latitude, contactListBean);
     }
 
-    public void releaseLocus(String remarks, String name, String tel){
-        if (projectId == 0){
+    public void releaseLocus(String remarks, String name, String tel) {
+        if (projectId == 0) {
             ToastUtils.showShort("请选择项目名称");
             return;
-        }if (StringUtils.isTrimEmpty(remarks)){
+        }
+        if (StringUtils.isTrimEmpty(remarks)) {
             ToastUtils.showShort("请输入项目进度");
             return;
-        }if (StringUtils.isTrimEmpty(name)){
+        }
+        if (StringUtils.isTrimEmpty(name)) {
             ToastUtils.showShort("请输入拜访人");
             return;
-        }if (StringUtils.isTrimEmpty(tel)){
+        }
+        if (StringUtils.isTrimEmpty(tel)) {
             ToastUtils.showShort("请输入电话");
             return;
         }

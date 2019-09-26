@@ -55,7 +55,7 @@ public class ReleaseStageSelectActivity extends BaseActivity {
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
-        tvBarTitle.setText(getString(R.string.project_type));
+        tvBarTitle.setText(getString(R.string.project_stage));
         tvBarRight.setText(getString(R.string.save));
 
         rvStage.setLayoutManager(new LinearLayoutManager(this));
