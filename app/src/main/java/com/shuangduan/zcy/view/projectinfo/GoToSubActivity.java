@@ -146,7 +146,7 @@ public class GoToSubActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.iv_bar_right:
-                bundle.putString("register", "");
+                bundle.putString("register", "warrant");
                 ActivityUtils.startActivity(bundle, WebViewActivity.class);
                 break;
             case R.id.tv_confirm:

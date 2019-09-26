@@ -3,6 +3,7 @@ package com.shuangduan.zcy.rongyun.view;
 import android.annotation.SuppressLint;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -216,9 +217,6 @@ public class CircleFragment extends BaseFragment {
                                 RongIM.getInstance().refreshUserInfoCache(new UserInfo(bean.getData().getUserId()
                                         ,bean.getData().getName()
                                         ,Uri.parse(bean.getData().getPortraitUri())));
-//                            }else if (bean.getCode().equals("-1")){
-//                                ToastUtils.showShort(bean.getMsg());
-//                                LoginUtils.getExitLogin();
                             }else {
                                 ToastUtils.showShort(bean.getMsg());
                             }
@@ -256,9 +254,6 @@ public class CircleFragment extends BaseFragment {
                                         , bean.getData().getGroupName()
                                         , Uri.parse(bean.getData().getGroupName()));
                                 RongIM.getInstance().refreshGroupInfoCache(groupInfo);
-//                            }else if (bean.getCode().equals("-1")){
-//                                ToastUtils.showShort(bean.getMsg());
-//                                LoginUtils.getExitLogin();
                             }else {
                                 ToastUtils.showShort(bean.getMsg());
                             }

@@ -131,7 +131,7 @@ public class SubInfoActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.iv_bar_right:
-                bundle.putString("register", "");
+                bundle.putString("register", "warrant");
                 ActivityUtils.startActivity(bundle, WebViewActivity.class);
                 break;
         }

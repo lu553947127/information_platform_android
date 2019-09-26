@@ -72,6 +72,8 @@ public class StartUpActivity extends BaseActivity {
             }else {
                 ActivityUtils.startActivity(WelcomeActivity.class);
             }
+        }else {
+            ActivityUtils.startActivity(WelcomeActivity.class);
         }
         SPUtils.getInstance().put(SpConfig.FIRST_APP, 1);
     }

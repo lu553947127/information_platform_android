@@ -64,6 +64,7 @@ public class IMConnectVm extends BaseViewModel {
             @Override
             public void onSuccess(String userid) {
                 LogUtils.i("融云连接成功"+userid);
+                LogUtils.i("融云--token--"+token);
             }
 
             /**
@@ -72,7 +73,8 @@ public class IMConnectVm extends BaseViewModel {
              */
             @Override
             public void onError(RongIMClient.ErrorCode errorCode) {
-
+                LogUtils.i("融云--token--"+token);
+                LogUtils.i("融云连接失败"+errorCode);
             }
         });
     }

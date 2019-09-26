@@ -54,4 +54,6 @@ public class Common {
     public static final String AGREEMENT_PRIVACY="/home/Agreement/privacy";
     //注册 注册协议
     public static final String AGREEMENT_REGISTER="/home/Agreement/register";
+    //工程信息 认购协议
+    public static final String AGREEMENT_WARRANT="/home/Agreement/warrant";
 }
