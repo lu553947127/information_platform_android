@@ -3,6 +3,7 @@ package com.shuangduan.zcy.view;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -144,7 +145,7 @@ public class PayActivity extends BaseActivity {
         @Override
         public void handleMessage(@NonNull Message msg) {
             PayResult result = new PayResult((Map<String, String>) msg.obj);
-            if (result.getResultStatus() != null){
+            if (!TextUtils.isEmpty(result.getResultStatus()) ){
                 switch (result.getResultStatus()){
                     case "9000":
                         ToastUtils.showShort(activity.get().getString(R.string.pay_success));

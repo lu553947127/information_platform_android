@@ -36,6 +36,40 @@
         android:layout_height="1dp"
         android:background="@drawable/divider_15"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="15dp"
+            android:textColor="@color/colorTv"
+            android:textSize="14sp"
+            android:text="充值额度"/>
+
+        <EditText
+            android:id="@+id/et_recharge"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:singleLine="true"
+            android:inputType="number"
+            android:layout_marginLeft="31dp"
+            android:textColorHint="@color/colorTvHint"
+            android:textColor="@color/colorTv"
+            android:textSize="14sp"
+            android:hint="自定义充值金额"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/divider_15"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

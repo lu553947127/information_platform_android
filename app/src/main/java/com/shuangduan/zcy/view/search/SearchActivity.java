@@ -145,32 +145,6 @@ public class SearchActivity extends BaseActivity {
             }
             return false;
         });
-//        //监听键盘开始搜索
-//        edtKeyword.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable editable) {
-//                if (null != editable) {
-//                    if (StringUtils.isTrimEmpty(editable.toString())){
-//                        ToastUtils.showShort(getString(R.string.hint_keyword));
-//                        return;
-//                    }
-//                    Bundle bundle = new Bundle();
-//                    bundle.putString(CustomConfig.KEYWORD, editable.toString());
-//                    bundle.putString(CustomConfig.PROJECT_TYPE, project_type);
-//                    ActivityUtils.startActivity(bundle, SearchResultActivity.class);
-//                }
-//            }
-//        });
     }
 
     @OnClick({R.id.iv_bar_back, R.id.tv_positive, R.id.iv_del})

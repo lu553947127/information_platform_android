@@ -1,7 +1,10 @@
 package com.shuangduan.zcy.view.recharge;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
@@ -22,6 +25,7 @@ import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.RechargeShowBean;
+import com.shuangduan.zcy.utils.KeyboardUtil;
 import com.shuangduan.zcy.view.PayActivity;
 import com.shuangduan.zcy.vm.RechargeVm;
 
@@ -50,6 +54,8 @@ public class RechargeActivity extends BaseActivity {
     Toolbar toolbar;
     @BindView(R.id.tv_mobile)
     TextView tvMobile;
+    @BindView(R.id.et_recharge)
+    EditText etRecharge;
     @BindView(R.id.rv)
     RecyclerView rv;
     private RechargeVm rechargeVm;
@@ -71,6 +77,8 @@ public class RechargeActivity extends BaseActivity {
         tvBarTitle.setText(getString(R.string.recharge_center));
         tvBarRight.setText(getString(R.string.recharge_record));
 
+        KeyboardUtil.RemoveDecimalPoints(etRecharge);
+
         rechargeVm = ViewModelProviders.of(this).get(RechargeVm.class);
         rechargeVm.showLiveData.observe(this, rechargeShowBean -> {
             tvMobile.setText(rechargeShowBean.getTel());
@@ -87,6 +95,8 @@ public class RechargeActivity extends BaseActivity {
                         rechargeShowAdapter.notifyItemChanged(rechargeVm.positionLiveData.getValue());
                     }
                     rechargeVm.positionLiveData.postValue(position);
+
+                    etRecharge.setText(rechargeShowAdapter.getData().get(position).getPrice());
                 });
             }else {
                 rechargeShowAdapter.setNewData(rechargeShowBean.getList());
@@ -110,6 +120,25 @@ public class RechargeActivity extends BaseActivity {
             }
         });
         rechargeVm.getShowData();
+
+        etRecharge.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (null != editable) {
+
+                }
+            }
+        });
     }
 
     @OnClick({R.id.iv_bar_back, R.id.tv_bar_right, R.id.tv_confirm})
@@ -122,15 +151,23 @@ public class RechargeActivity extends BaseActivity {
                 ActivityUtils.startActivity(RechargeRecordActivity.class);
                 break;
             case R.id.tv_confirm:
-                Integer position = rechargeVm.positionLiveData.getValue();
-                if (position < 0){
-                    ToastUtils.showShort(getString(R.string.select_recharge_amount));
+                if (etRecharge.getText().length()==0){
+                    ToastUtils.showShort("充值金额为空");
                     return;
                 }
-                String price = rechargeShowAdapter.getData().get(position).getPrice();
                 Bundle bundle = new Bundle();
-                bundle.putString(CustomConfig.RECHARGE_AMOUNT, price);
+                bundle.putString(CustomConfig.RECHARGE_AMOUNT, etRecharge.getText().toString());
                 ActivityUtils.startActivity(bundle, PayActivity.class);
+
+//                Integer position = rechargeVm.positionLiveData.getValue();
+//                if (position < 0){
+//                    ToastUtils.showShort(getString(R.string.select_recharge_amount));
+//                    return;
+//                }
+//                String price = rechargeShowAdapter.getData().get(position).getPrice();
+//                Bundle bundle = new Bundle();
+//                bundle.putString(CustomConfig.RECHARGE_AMOUNT, price);
+//                ActivityUtils.startActivity(bundle, PayActivity.class);
                 break;
         }
     }

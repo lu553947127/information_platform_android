@@ -19,7 +19,7 @@ import com.shuangduan.zcy.vm.IMConnectVm;
  * @ProjectName: information_platform_android
  * @Package: com.shuangduan.zcy.view.login
  * @ClassName: StartUpActivity
- * @Description: java类作用描述
+ * @Description: 启动页
  * @Author: 鹿鸿祥
  * @CreateDate: 2019/9/26 13:36
  * @UpdateUser: 鹿鸿祥
@@ -71,9 +71,11 @@ public class StartUpActivity extends BaseActivity {
                 }
             }else {
                 ActivityUtils.startActivity(WelcomeActivity.class);
+                finish();
             }
         }else {
             ActivityUtils.startActivity(WelcomeActivity.class);
+            finish();
         }
         SPUtils.getInstance().put(SpConfig.FIRST_APP, 1);
     }
