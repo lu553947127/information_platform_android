@@ -5,11 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.blankj.utilcode.util.LogUtils;
+import androidx.annotation.NonNull;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.model.bean.MaterialPlaceOrderBean;
+import com.yanzhenjie.recyclerview.SwipeRecyclerView;
 
 import java.util.List;
 
@@ -25,7 +24,7 @@ import java.util.List;
  * @UpdateRemark: 更新说明
  * @Version: 1.0
  */
-public class MaterialPlaceOrderAdapter extends RecyclerView.Adapter<MaterialPlaceOrderAdapter.ViewHolder> implements View.OnClickListener {
+public class MaterialPlaceOrderAdapter extends SwipeRecyclerView.Adapter<MaterialPlaceOrderAdapter.ViewHolder> implements View.OnClickListener {
 
     private Context context;
     private List<MaterialPlaceOrderBean> list;
@@ -36,6 +35,7 @@ public class MaterialPlaceOrderAdapter extends RecyclerView.Adapter<MaterialPlac
         this.list = list;
     }
 
+    @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_material_place_order,parent,false);
@@ -77,7 +77,7 @@ public class MaterialPlaceOrderAdapter extends RecyclerView.Adapter<MaterialPlac
         notifyDataSetChanged();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends SwipeRecyclerView.ViewHolder{
         private TextView tv_num,tv_name;
         ViewHolder(View itemView) {
             super(itemView);

@@ -30,6 +30,7 @@
                     android:layout_width="72dp"
                     android:layout_height="72dp"
                     android:layout_gravity="center_vertical"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/no_banner"
                     android:layout_marginLeft="14dp"/>
 
@@ -55,7 +56,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
-                            android:textColor="@color/color_EF583E"
+                            android:textColor="@color/color_5D5D5D"
                             android:textSize="13sp"
                             tools:ignore="RtlHardcoded" />
                     </RelativeLayout>
@@ -266,13 +267,17 @@
                     <fj.edittextcount.lib.FJEditTextCount
                         android:id="@+id/et_remark"
                         android:layout_width="match_parent"
-                        android:layout_height="88dp"
+                        android:layout_height="wrap_content"
                         android:background="@drawable/selector_btn_gray_half"
                         android:singleLine="true"
                         android:layout_marginLeft="22dp"
                         android:layout_marginRight="14dp"
                         android:layout_marginTop="11dp"
-                        app:etMaxLength="66"
+                        app:etMinHeight="88dp"
+                        app:etLineColor="@color/colorTransparent"
+                        app:etPromptTextColor="@color/color_999999"
+                        app:etPromptTextSize="11sp"
+                        app:etMaxLength="300"
                         app:etType="percentage"
                         app:etTextSize="14sp"
                         app:etTextColor="@color/colorTv"
@@ -293,7 +298,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-                    <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
+                    <com.yanzhenjie.recyclerview.SwipeRecyclerView
                         android:id="@+id/rv"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"/>

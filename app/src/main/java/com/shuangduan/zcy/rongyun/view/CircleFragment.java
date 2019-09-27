@@ -3,7 +3,6 @@ package com.shuangduan.zcy.rongyun.view;
 import android.annotation.SuppressLint;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -76,7 +75,7 @@ public class CircleFragment extends BaseFragment {
     @BindView(R.id.refresh)
     SmartRefreshLayout refresh;
 //    @BindView(R.id.tv_numbers)
-    TextView tvNumber;
+    private TextView tvNumber;
     private UserInfoVm userInfoVm;
     private NoScrollViewPager viewPager;
     private RelativeLayout relativeLayout;
@@ -153,7 +152,7 @@ public class CircleFragment extends BaseFragment {
                     // i 是未读数量
                     getFriendApplyCount(i);
                 }, Conversation.ConversationType.PRIVATE,Conversation.ConversationType.GROUP,Conversation.ConversationType.SYSTEM);
-                refreshLayout.finishRefresh(2000);
+                refreshLayout.finishRefresh(1000);
             }
         });
         getBadgeViewInitView(view);

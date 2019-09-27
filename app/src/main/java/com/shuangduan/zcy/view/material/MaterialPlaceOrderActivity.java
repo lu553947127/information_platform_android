@@ -34,16 +34,14 @@ import com.shuangduan.zcy.view.release.ReleaseAreaSelectActivity;
 import com.shuangduan.zcy.vm.MaterialDetailVm;
 import com.shuangduan.zcy.weight.DataHolder;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
-import com.yanzhenjie.recyclerview.swipe.SwipeItemClickListener;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenu;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenuBridge;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenuCreator;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenuItem;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenuItemClickListener;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
+import com.yanzhenjie.recyclerview.OnItemMenuClickListener;
+import com.yanzhenjie.recyclerview.SwipeMenu;
+import com.yanzhenjie.recyclerview.SwipeMenuBridge;
+import com.yanzhenjie.recyclerview.SwipeMenuCreator;
+import com.yanzhenjie.recyclerview.SwipeMenuItem;
+import com.yanzhenjie.recyclerview.SwipeRecyclerView;
 
 import org.greenrobot.eventbus.Subscribe;
-
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -67,7 +65,7 @@ import fj.edittextcount.lib.FJEditTextCount;
  * @Version: 1.0
  */
 @SuppressLint("SetTextI18n")
-public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMenuCreator, SwipeMenuItemClickListener, SwipeItemClickListener {
+public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMenuCreator {
 
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
@@ -98,7 +96,7 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
     @BindView(R.id.et_remark)
     FJEditTextCount etRemark;
     @BindView(R.id.rv)
-    SwipeMenuRecyclerView recyclerView;
+    SwipeRecyclerView recyclerView;
     @BindView(R.id.tv_add)
     TextView tvAdd;
     @BindView(R.id.tv_number)
@@ -109,7 +107,7 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
     TextView tvSubmission;
     private MaterialDetailVm materialDetailVm;
     private BottomSheetDialogs btn_dialog;
-    int province,city,material_id,materialId,guidance_price,position;
+    int province,city,material_id,materialId,guidance_price,adapterPosition;
     String material_name,unit,science_num_id;
     List<MaterialPlaceOrderBean> list=new ArrayList<>();
     private List<String> list_address=new ArrayList<>();
@@ -144,7 +142,7 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
                 }
             }
             tvMaterialCategory.setText(materialDetailBean.getMaterial_category());
-            String str="指导价：<font color=\"#EF583E\">"+"¥"+materialDetailBean.getGuidance_price()+"元/吨"+"</font>";
+            String str="指导价：<font color=\"#EF583E\">"+"¥"+materialDetailBean.getGuidance_price()+"元/"+materialDetailBean.getUnit()+"</font>";
             guidance_price=materialDetailBean.getGuidance_price();
             tvGuidancePrice.setText(Html.fromHtml(str));
             tvSpec.setText(String.format(getString(R.string.format_spec), materialDetailBean.getSpec()));
@@ -154,12 +152,14 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
             material_id=materialDetailBean.getMaterial_id();
         });
 
+        //数量、存放地保存成功返回结果
         materialDetailVm.mutableLiveData.observe(this,materialAddBean -> {
             num=num+Integer.valueOf(et_num.getText().toString());
             price=price+Integer.valueOf(et_num.getText().toString())*guidance_price;
             tvNumber.setText("共采购"+num+"套，共计");
             tvPrice.setText(String.valueOf(price));
             materialDepositingPlaceAdapter.addData(list.size(),Integer.valueOf(et_num.getText().toString()),Integer.valueOf(materialAddBean.getId()),materialId,material_name);
+//            materialDepositingPlaceAdapter.addData(list.size(),new MaterialPlaceOrderBean(Integer.valueOf(et_num.getText().toString()),Integer.valueOf(materialAddBean.getId()),materialId,material_name));
 
             for (int i=0;i<list.size();i++){
                 list_address.add(String.valueOf(list.get(i).getId()));
@@ -169,18 +169,22 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
             btn_dialog.dismiss();
         });
 
+        //数量、存放地删除成功返回结果
         materialDetailVm.mutableLiveDataDel.observe(this,materialAddBean -> {
-            num=num-list.get(position).getNum();
-            price=price-list.get(position).getNum()*guidance_price;
+            num=num-list.get(adapterPosition).getNum();
+            price=price-list.get(adapterPosition).getNum()*guidance_price;
             tvNumber.setText("共采购"+num+"套，共计");
             tvPrice.setText(String.valueOf(price));
-            materialDepositingPlaceAdapter.removeData(position);
 
-            list_address.remove(position);
+//            materialDepositingPlaceAdapter.remove(adapterPosition);
+            materialDepositingPlaceAdapter.removeData(adapterPosition);
+
+            list_address.remove(adapterPosition);
             list_address=removeDuplicate(list_address);
             science_num_id= KeyboardUtil.getListForString(list_address);
         });
 
+        //预定订单提交成功返回结果
         materialDetailVm.mutableLiveAddOrder.observe(this,materialAddBean -> {
             Bundle bundle = new Bundle();
             bundle.putString("order_id",materialAddBean.getOrder_id());
@@ -189,8 +193,7 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
         });
 
         recyclerView.setSwipeMenuCreator(this);
-        recyclerView.setSwipeMenuItemClickListener(this);
-        recyclerView.setSwipeItemClickListener(this);
+        recyclerView.setOnItemMenuClickListener(mItemMenuClickListener);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
         materialDepositingPlaceAdapter = new MaterialPlaceOrderAdapter(this,list);
@@ -199,6 +202,7 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
         materialDetailVm.getDetail(getIntent().getIntExtra(CustomConfig.MATERIAL_ID, 0));
     }
 
+    //list集合用set去重
     public static List<String> removeDuplicate(List<String> list) {
         Set set = new LinkedHashSet<String>();
         set.addAll(list);
@@ -239,7 +243,7 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
                     return;
                 }
                 if (TextUtils.isEmpty(science_num_id)){
-                    ToastUtils.showShort("存放地不能为空");
+                    ToastUtils.showShort("数量、存放地为必填项，不能为空");
                     return;
                 }
                 materialDetailVm.getAddMaterialOrder(material_id,etRealName.getText().toString(),etTel.getText().toString()
@@ -306,39 +310,33 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
         tv_material_id.setTextColor(ContextCompat.getColor(this,R.color.colorTv));
     }
 
-
-
-    @Override
-    public void onItemClick(View itemView, int position) {
-
-    }
-
-    @SuppressLint({"NewApi", "LocalSuppress"})
     @Override
     public void onCreateMenu(SwipeMenu swipeLeftMenu, SwipeMenu swipeRightMenu, int viewType) {
-        int width = getResources().getDimensionPixelSize(R.dimen.dp_55);
-        int height = getResources().getDimensionPixelSize(R.dimen.dp_110);
         SwipeMenuItem deleteItem = new SwipeMenuItem(this)
-                .setBackground(this.getDrawable(R.drawable.circular_background_red))
+                .setBackground(R.drawable.circular_background_red)
                 .setText("删除")
                 .setTextColor(Color.WHITE)
-                .setWidth(width)
-                .setHeight(height);
+                .setWidth(getResources().getDimensionPixelSize(R.dimen.dp_55))
+                .setHeight(getResources().getDimensionPixelSize(R.dimen.dp_110));
         swipeRightMenu.addMenuItem(deleteItem);
     }
 
-    @Override
-    public void onItemClick(SwipeMenuBridge menuBridge) {
-        menuBridge.closeMenu();
-        int direction = menuBridge.getDirection(); // 左侧还是右侧菜单。
-        final int adapterPosition = menuBridge.getAdapterPosition(); // RecyclerView的Item的position。
-        int menuPosition = menuBridge.getPosition(); // 菜单在RecyclerView的Item中的Position。
-        if (direction == SwipeMenuRecyclerView.RIGHT_DIRECTION) {
-            //若menuPosition为删除按钮时
-            if (menuPosition==0){
-                materialDetailVm.getDelMaterial(list.get(adapterPosition).getId());
-                position=adapterPosition;
+    OnItemMenuClickListener mItemMenuClickListener = new OnItemMenuClickListener() {
+        @Override
+        public void onItemClick(SwipeMenuBridge menuBridge, int position) {
+            // 任何操作必须先关闭菜单，否则可能出现Item菜单打开状态错乱。
+            menuBridge.closeMenu();
+            int direction = menuBridge.getDirection(); // 左侧还是右侧菜单。
+            int menuPosition = menuBridge.getPosition(); // 菜单在Item中的Position：
+            if (direction == SwipeRecyclerView.RIGHT_DIRECTION) {
+                //若menuPosition为删除按钮时
+                if (menuPosition==0){
+                    LogUtils.i(position);
+                    LogUtils.i(list.get(position).getId());
+                    materialDetailVm.getDelMaterial(list.get(position).getId());
+                    adapterPosition=position;
+                }
             }
         }
-    }
+    };
 }
