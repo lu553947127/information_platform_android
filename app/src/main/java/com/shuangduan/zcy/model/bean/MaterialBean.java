@@ -116,13 +116,16 @@ public class MaterialBean {
         //销量
         @SerializedName("sales_volume")
         private int salesVolume;
+        //单位
+        private String unit;
 
-        public int getSalesVolume() {
-            return salesVolume;
+
+        public String getUnit() {
+            return unit;
         }
 
-        public void setSalesVolume(int salesVolume) {
-            this.salesVolume = salesVolume;
+        public void setUnit(String unit) {
+            this.unit = unit;
         }
 
         @Override
@@ -152,7 +155,16 @@ public class MaterialBean {
                     ", province=" + province +
                     ", city=" + city +
                     ", salesVolume=" + salesVolume +
+                    ", unit='" + unit + '\'' +
                     '}';
+        }
+
+        public int getSalesVolume() {
+            return salesVolume;
+        }
+
+        public void setSalesVolume(int salesVolume) {
+            this.salesVolume = salesVolume;
         }
 
         public List<Images> getImages() {

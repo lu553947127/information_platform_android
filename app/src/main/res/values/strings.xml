@@ -403,7 +403,7 @@
     <string name="format_locus_num">动态信息：%1$d条</string>
     <string name="format_pay_price_release">发布此消息请支付%1$s紫金币</string>
     <string name="format_pay_price">查看此消息请支付%1$s紫金币</string>
-    <string name="format_stock">库存：%1$d吨</string>
+    <string name="format_stock">库存：%1$d%2$s</string>
     <string name="format_enclosure">查看物资图纸</string>
     <string name="format_order_num">%1$d单</string>
     <string name="format_spec">规格：%1$s</string>
@@ -431,6 +431,7 @@
     <string name="format_validity_period_less">%1$s至%2$s</string>
     <string name="format_demand_num">需求数量: %1$s</string>
     <string name="format_commission">佣金: %1$s紫金币</string>
+    <string name="format_price_unit">元/%1$s</string>
 
     <string name="im_no_friend">暂无更多联系人</string>
     <string name="im_no_group">暂无更多群聊</string>

@@ -442,7 +442,6 @@ public interface ApiService {
             @Query("province") int province,
             @Query("city") int city,
             @Query("phases") int phases,
-            @Query("type") String[] type,
             @Query("start_time") String start_time,
             @Query("end_time") String end_time,
             @Query("acreage") String acreage,

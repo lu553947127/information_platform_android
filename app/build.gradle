@@ -8,6 +8,12 @@ android {
             keyAlias = 'boyuan'
             keyPassword 'boyuan123456'
         }
+        debug {
+            storeFile file('D:\\Android\\work\\information_platform_android\\app\\zcy.jks')
+            storePassword 'boyuan123456'
+            keyAlias = 'boyuan'
+            keyPassword 'boyuan123456'
+        }
     }
     compileSdkVersion rootProject.ext.targetSdkVersion
     defaultConfig {

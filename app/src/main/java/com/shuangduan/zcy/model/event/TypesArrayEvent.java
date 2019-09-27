@@ -1,5 +1,7 @@
 package com.shuangduan.zcy.model.event;
 
+import java.util.List;
+
 /**
  * @author xuyu
  * @Package com.shuangduan.zcy.model.event$
@@ -12,9 +14,9 @@ package com.shuangduan.zcy.model.event;
 public class TypesArrayEvent {
 
     private String name;
-    private String id[];
+    private List<Integer> id;
 
-    public TypesArrayEvent(String name, String[] id) {
+    public TypesArrayEvent(String name,List<Integer>  id) {
         this.name = name;
         this.id = id;
     }
@@ -23,7 +25,7 @@ public class TypesArrayEvent {
         return name;
     }
 
-    public String[] getId() {
+    public List<Integer> getId() {
         return id;
     }
 }

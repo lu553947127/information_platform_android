@@ -202,6 +202,15 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
                 rvContact.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_10_10));
                 releaseContactAdapter = new ReleaseContactAdapter(R.layout.item_release_contact, contactBeans){
                     @Override
+                    public void typeChange(String text, int position) {
+                        List<ContactBean> list = releaseVm.contactLiveData.getValue();
+                        if (list != null){
+                            list.get(position).setPhone_type(text);
+                            releaseVm.contactLiveData.postValue(list);
+                        }
+                    }
+
+                    @Override
                     public void unitChange(String text, int position) {
                         List<ContactBean> list = releaseVm.contactLiveData.getValue();
                         if (list != null){
@@ -235,10 +244,10 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
                         case R.id.iv_del:
                             releaseVm.delContact(position);
                             break;
-                        case R.id.tv_type:
-                            releaseVm.editContactTypePos = position;
-                            ActivityUtils.startActivity(ContactTypeActivity.class);
-                            break;
+//                        case R.id.tv_type:
+//                            releaseVm.editContactTypePos = position;
+//                            ActivityUtils.startActivity(ContactTypeActivity.class);
+//                            break;
                         case R.id.tv_address:
                             releaseVm.editContactAddressPos = position;
                             Bundle bundle = new Bundle();

@@ -152,7 +152,7 @@ public class SubInfoActivity extends BaseActivity {
         //关闭简介
         chart.getDescription().setEnabled(false);
         //关闭手势
-        chart.setTouchEnabled(false);
+//        chart.setTouchEnabled(false);
         //关闭x轴数值显示
         chart.getXAxis().setEnabled(true);
         chart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);//设置x轴的显示位置

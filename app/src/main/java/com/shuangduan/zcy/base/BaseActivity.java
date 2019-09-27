@@ -201,4 +201,6 @@ public abstract class BaseActivity extends AppCompatActivity implements IView, S
         SwipeBackUtils.convertActivityToTranslucent(this);
         getSwipeBackLayout().scrollToFinishActivity();
     }
+
+
 }

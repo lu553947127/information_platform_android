@@ -112,7 +112,7 @@ public class MaterialDetailActivity extends BaseActivity {
         return true;
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n"})
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
@@ -130,9 +130,9 @@ public class MaterialDetailActivity extends BaseActivity {
             }
             initBanner(pics, titles);
             tvMaterialCategory.setText(materialDetailBean.getMaterial_category());
-            String str="<font color=\"#EF583E\">"+materialDetailBean.getGuidance_price()+"</font>元/吨";
+            String str="<font color=\"#EF583E\">"+materialDetailBean.getGuidance_price()+"</font>元/"+materialDetailBean.getUnit();
             tvUnitPrice.setText(Html.fromHtml(str));
-            tvStock.setText(String.format(getString(R.string.format_stock), materialDetailBean.getStock()));
+            tvStock.setText(String.format(getString(R.string.format_stock), materialDetailBean.getStock(),materialDetailBean.getUnit()));
             tvSalesVolume.setText(String.format(getString(R.string.format_sales_volume), materialDetailBean.getSales_volume()));
             tvSpec.setText(String.format(getString(R.string.format_spec), materialDetailBean.getSpec()));
             tvCompany.setText("供应商："+materialDetailBean.getCompany());

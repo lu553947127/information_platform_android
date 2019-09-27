@@ -112,7 +112,7 @@ public class ReleaseTypeSelectActivity extends BaseActivity {
             case R.id.tv_bar_right:
                 String province = "";
 
-                List<String> typeId = new ArrayList<>();
+                List<Integer> typeId = new ArrayList<>();
                 List<TypeBean> types = typesVm.typeFirstLiveData.getValue();
 
                 if (types == null || types.size() <= 0) {
@@ -122,13 +122,12 @@ public class ReleaseTypeSelectActivity extends BaseActivity {
 
                 for (int i = 0; i < types.size(); i++) {
                     if (types.get(i).isSelect == 1) {
-                        province += types.get(i).getCatname()+" ";
-                        typeId.add(String.valueOf(types.get(i).getId()));
+                        province += types.get(i).getCatname() + " ";
+                        typeId.add(types.get(i).getId());
                     }
                 }
 
-                String[] array = new String[typeId.size()];
-                EventBus.getDefault().post(new TypesArrayEvent(province, typeId.toArray(array)));
+                EventBus.getDefault().post(new TypesArrayEvent(province, typeId));
                 finish();
 
                 break;

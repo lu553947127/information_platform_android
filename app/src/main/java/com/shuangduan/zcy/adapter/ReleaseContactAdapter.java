@@ -30,12 +30,36 @@ public abstract class ReleaseContactAdapter extends BaseQuickAdapter<ContactBean
     @Override
     protected void convert(BaseViewHolder helper, ContactBean item) {
         helper.addOnClickListener(R.id.iv_del)
-                .addOnClickListener(R.id.tv_type)
+//                .addOnClickListener(R.id.tv_type)
                 .addOnClickListener(R.id.tv_address)
-                .setText(R.id.tv_type, item.getType() == null ? "" : item.getType().getType_name())
+//                .setText(R.id.tv_type, item.getType() == null ? "" : item.getType().getType_name())
                 .setText(R.id.tv_address, item.getAddress());
 
 
+
+
+        EditText edtType = helper.getView(R.id.edt_type);
+        edtType.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus){
+                typeChange(edtType.getText().toString(), helper.getLayoutPosition());
+            }
+        });
+        edtType.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                typeChange(edtType.getText().toString(), helper.getLayoutPosition());
+            }
+        });
 
         EditText edtUnit = helper.getView(R.id.edt_unit);
         edtUnit.setOnFocusChangeListener((v, hasFocus) -> {
@@ -105,7 +129,7 @@ public abstract class ReleaseContactAdapter extends BaseQuickAdapter<ContactBean
             }
         });
     }
-
+    public abstract void typeChange(String text, int position);
     public abstract void unitChange(String text, int position);
     public abstract void principleChange(String text, int position);
     public abstract void mobileChange(String text, int position);

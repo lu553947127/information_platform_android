@@ -208,23 +208,19 @@ public class MaterialOrderDetailActivity extends BaseActivity {
                 ToastUtils.showShort(R.string.replication_success);
                 break;
             case R.id.tv_cancel:
-                if (dialog == null) {
-                    dialog = new CustomDialog(this)
-                            .setTip("取消订单")
-                            .setOk("确认")
-                            .setCallBack(new BaseDialog.CallBack() {
-                                @Override
-                                public void cancel() {
-                                    dialog.dismiss();
-                                }
+                new CustomDialog(this)
+                        .setTip("是否取消预定订单")
+                        .setOk("确认")
+                        .setCallBack(new BaseDialog.CallBack() {
+                            @Override
+                            public void cancel() {
+                            }
 
-                                @Override
-                                public void ok(String s) {
-                                    cancelOrder();
-                                }
-                            });
-                }
-                dialog.show();
+                            @Override
+                            public void ok(String s) {
+                                cancelOrder();
+                            }
+                        }).showDialog();
                 break;
         }
     }

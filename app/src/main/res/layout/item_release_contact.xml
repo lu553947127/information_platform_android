@@ -19,8 +19,8 @@
             android:textSize="14sp"
             android:text="@string/contacts_type"/>
 
-        <TextView
-            android:id="@+id/tv_type"
+        <EditText
+            android:id="@+id/edt_type"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
@@ -30,7 +30,7 @@
             android:textColorHint="@color/colorTvHint"
             android:textColor="@color/colorTv"
             android:textSize="14sp"
-            android:hint="@string/please_select"/>
+            android:hint="@string/please_hint"/>
 
         <ImageView
             android:id="@+id/iv_del"

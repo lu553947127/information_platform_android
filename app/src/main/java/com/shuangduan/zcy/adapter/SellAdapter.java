@@ -32,12 +32,13 @@ public class SellAdapter extends BaseQuickAdapter<MaterialBean.ListBean, BaseVie
     @Override
     protected void convert(BaseViewHolder helper, MaterialBean.ListBean item) {
         helper.setText(R.id.tv_title, item.getMaterialName())
-                .setText(R.id.tv_stock, "库存: " + item.getStock() + "吨")
+                .setText(R.id.tv_stock, "库存: " + item.getStock() + item.getUnit())
                 .setText(R.id.tv_spec, "规格: " + item.getSpec())
                 .setText(R.id.tv_owner, "供应商: " + item.getMaterialSupplie())
                 .setText(R.id.tv_price, item.getGuidancePrice())
-                .setText(R.id.tv_sold_num, "销量: " + item.getSalesVolume() + "吨")
+                .setText(R.id.tv_sold_num, "销量: " + item.getSalesVolume() + item.getUnit())
                 .setText(R.id.tv_address, "存放地: " + item.getAddress())
+                .setText(R.id.tv_price_unit, String.format(mContext.getString(R.string.format_price_unit), item.getUnit()))
                 .setGone(R.id.tv_bought, item.getIs_order() == 1);
         ImageView ivIcon = helper.getView(R.id.iv_icon);
         try {
