@@ -79,6 +79,7 @@ import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.rong.imageloader.utils.L;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Conversation;
 
@@ -162,6 +163,7 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
                 if (lastScrollY < h) {
+                    LogUtils.i(lastScrollY);
                     scrollY = Math.min(h, scrollY);
                     mScrollY_2 = scrollY > h ? h : scrollY;
                     toolbar.setAlpha(1f * mScrollY_2 / h);

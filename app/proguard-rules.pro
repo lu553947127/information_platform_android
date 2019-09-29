@@ -48,6 +48,8 @@
 
 #保留实体类
 -keep class com.shuangduan.zcy.model.bean.** { *; }
+#支付宝支付
+-keep class com.shuangduan.zcy.utils.pay.** { *; }
 
 #微信
 -keep class com.tencent.mm.opensdk.** {*;}

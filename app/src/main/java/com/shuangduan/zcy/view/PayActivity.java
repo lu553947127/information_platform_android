@@ -139,7 +139,7 @@ public class PayActivity extends BaseActivity {
         private WeakReference<PayActivity> activity;
 
         public PayHandler(PayActivity activity) {
-            this.activity = new WeakReference<PayActivity>(activity);
+            this.activity = new WeakReference(activity);
         }
 
         @Override
