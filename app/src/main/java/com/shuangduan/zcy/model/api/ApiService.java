@@ -1211,7 +1211,8 @@ public interface ApiService {
     @POST("api/Material/addressList")
     Flowable<BaseResponse<List<MaterialDepositingPlaceBean>>> addressList(
             @Field("user_id") int user_id,
-            @Field("material_id") int material_id
+            @Field("material_id") int material_id,
+            @Field("supplier_id") int supplier_id
     );
 
     //基建物资收藏列表

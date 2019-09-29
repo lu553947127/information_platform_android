@@ -107,7 +107,7 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
     TextView tvSubmission;
     private MaterialDetailVm materialDetailVm;
     private BottomSheetDialogs btn_dialog;
-    int province,city,material_id,materialId,guidance_price,adapterPosition;
+    int province,city,material_id,materialId,guidance_price,adapterPosition,supplier_id;
     String material_name,unit,science_num_id;
     List<MaterialPlaceOrderBean> list=new ArrayList<>();
     private List<String> list_address=new ArrayList<>();
@@ -150,6 +150,7 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
             tvUnit.setText("单位："+materialDetailBean.getUnit());
             tvCompany.setText("供应商："+materialDetailBean.getCompany());
             material_id=materialDetailBean.getMaterial_id();
+            supplier_id=materialDetailBean.getSupplier_id();
         });
 
         //数量、存放地保存成功返回结果
@@ -276,6 +277,7 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
         tv_material_id.setOnClickListener(v -> {
             Bundle bundle = new Bundle();
             bundle.putInt(CustomConfig.MATERIAL_ID, material_id);
+            bundle.putInt(CustomConfig.SUPPLIER_ID, supplier_id);
             DataHolder.getInstance().setData("list",list);
             ActivityUtils.startActivity(bundle, DepositingPlaceActivity.class);
         });

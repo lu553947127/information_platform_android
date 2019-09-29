@@ -13,7 +13,7 @@
         android:layout_height="180dp"
         android:layout_marginTop="66dp"
         android:layout_gravity="center_horizontal"
-        android:scaleType="centerCrop"
+        android:scaleType="fitXY"
         roundiv:radius="7dp"
         android:src="@drawable/id_card_positive"/>
 
@@ -33,7 +33,7 @@
         android:layout_height="180dp"
         android:layout_marginTop="66dp"
         android:layout_gravity="center_horizontal"
-        android:scaleType="centerCrop"
+        android:scaleType="fitXY"
         roundiv:radius="7dp"
         android:src="@drawable/id_card_negative"/>
 

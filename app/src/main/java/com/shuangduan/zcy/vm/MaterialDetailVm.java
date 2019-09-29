@@ -39,7 +39,7 @@ public class MaterialDetailVm extends BaseViewModel {
     public MutableLiveData<MaterialOrderBean.ListBean> orderDetailLiveData;
     //取消预定订单
     public MutableLiveData mutableLiveDataCancel;
-    public int id;
+    public int id,supplier_id;
 
     public MaterialDetailVm() {
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
@@ -68,7 +68,7 @@ public class MaterialDetailVm extends BaseViewModel {
     }
 
     public void getAddressList() {
-        new MaterialRepository().getAddress(depositingPlaceBeanMutableLiveData, pageStateLiveData, userId, id);
+        new MaterialRepository().getAddress(depositingPlaceBeanMutableLiveData, pageStateLiveData, userId, id,supplier_id);
     }
 
     public void getAddMaterial(int material_id, int num) {

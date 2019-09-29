@@ -72,6 +72,7 @@ public class DepositingPlaceActivity extends BaseActivity {
         tvBarTitle.setText(getString(R.string.material_depositing_place));
         materialDetailVm = ViewModelProviders.of(this).get(MaterialDetailVm.class);
         materialDetailVm.id = getIntent().getIntExtra(CustomConfig.MATERIAL_ID, 0);
+        materialDetailVm.supplier_id = getIntent().getIntExtra(CustomConfig.SUPPLIER_ID, 0);
         this.list= (List<MaterialPlaceOrderBean>) DataHolder.getInstance().getData("list");
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

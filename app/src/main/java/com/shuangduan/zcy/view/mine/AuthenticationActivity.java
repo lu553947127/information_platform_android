@@ -177,7 +177,6 @@ public class AuthenticationActivity extends BaseActivity implements BaseDialog.P
 
         authenticationVm.authentication();
         authenticationVm.authenticationStatusLiveData.observe(this,authenBean -> {
-            tvBarRight.setVisibility(View.GONE);
             ImageLoader.load(this, new ImageConfig.Builder().url(authenBean.getIdentity_image_front()).errorPic(R.drawable.id_card_positive).imageView(ivIdCardPositive).build());
             ImageLoader.load(this, new ImageConfig.Builder().url(authenBean.getIdentity_image_reverse_site()).errorPic(R.drawable.id_card_negative).imageView(ivIdCardNegative).build());
         });

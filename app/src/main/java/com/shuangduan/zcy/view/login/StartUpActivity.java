@@ -36,10 +36,15 @@ public class StartUpActivity extends BaseActivity {
         isTranslationBar = true;
         super.onCreate(savedInstanceState);
         getSwipeBackLayout().setEnableGesture(false);
-        if (LoginUtils.isFirstApp()){
-            getIntoActivity();
+        if (shareUtils.getShared("info_status","login").equals("1")){
+            if (LoginUtils.isFirstApp()){
+                getIntoActivity();
+            }else {
+                ActivityUtils.startActivity(FirstStartActivity.class);
+                finish();
+            }
         }else {
-            ActivityUtils.startActivity(FirstStartActivity.class);
+            ActivityUtils.startActivity(WelcomeActivity.class);
             finish();
         }
     }
@@ -60,18 +65,13 @@ public class StartUpActivity extends BaseActivity {
     }
 
     private void getIntoActivity() {
-        if (shareUtils.getShared("info_status","login").equals("1")){
-            if (LoginUtils.isLogin()){
-                ActivityUtils.startActivity(MainActivity.class);
-                //这里连一遍融云
-                if (SPUtils.getInstance().getInt(SpConfig.INFO_STATUS) == 1){
-                    //初始化，融云链接服务器
-                    IMConnectVm imConnectVm = ViewModelProviders.of(this).get(IMConnectVm.class);
-                    imConnectVm.connect(SPUtils.getInstance().getString(SpConfig.IM_TOKEN));
-                }
-            }else {
-                ActivityUtils.startActivity(WelcomeActivity.class);
-                finish();
+        if (LoginUtils.isLogin()){
+            ActivityUtils.startActivity(MainActivity.class);
+            //这里连一遍融云
+            if (SPUtils.getInstance().getInt(SpConfig.INFO_STATUS) == 1){
+                //初始化，融云链接服务器
+                IMConnectVm imConnectVm = ViewModelProviders.of(this).get(IMConnectVm.class);
+                imConnectVm.connect(SPUtils.getInstance().getString(SpConfig.IM_TOKEN));
             }
         }else {
             ActivityUtils.startActivity(WelcomeActivity.class);

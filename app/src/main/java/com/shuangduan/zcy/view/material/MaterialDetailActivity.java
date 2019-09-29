@@ -100,7 +100,7 @@ public class MaterialDetailActivity extends BaseActivity {
     private MaterialDetailVm materialDetailVm;
     private String phone,is_collect,enclosure;
     private List<String> pics;
-    int material_id;
+    int material_id,supplier_id;
 
     @Override
     protected int initLayoutRes() {
@@ -145,6 +145,7 @@ public class MaterialDetailActivity extends BaseActivity {
             material_id=materialDetailBean.getMaterial_id();
             phone=materialDetailBean.getTel();
             enclosure=materialDetailBean.getEnclosure();
+            supplier_id=materialDetailBean.getSupplier_id();
             if (materialDetailBean.getIs_collection().equals("1")){
                 is_collect=materialDetailBean.getIs_collection();
                 ivCollection.setBackgroundResource(R.drawable.icon_new_collectioned);
@@ -233,6 +234,7 @@ public class MaterialDetailActivity extends BaseActivity {
                 break;
             case R.id.tv_address_list:
                 bundle.putInt(CustomConfig.MATERIAL_ID, material_id);
+                bundle.putInt(CustomConfig.SUPPLIER_ID, supplier_id);
                 ActivityUtils.startActivity(bundle, DepositingPlaceActivity.class);
                 break;
             case R.id.ll_collect:
