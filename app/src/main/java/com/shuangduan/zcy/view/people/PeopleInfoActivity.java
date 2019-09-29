@@ -93,7 +93,7 @@ public class PeopleInfoActivity extends BaseActivity {
             if (peopleDetailBean.getExperience() >= 1 && peopleDetailBean.getExperience() <= 4)
                 tvBusinessExp.setText(getResources().getStringArray(R.array.experience_list)[peopleDetailBean.getExperience() - 1] + "年");
             tvLocusNum.setText(peopleDetailBean.getCount() + "条");
-            tvIncomeAmount.setText(String.format(getString(R.string.format_amount), peopleDetailBean.getPrice()));
+            tvIncomeAmount.setText(String.format(getString(R.string.format_amount_people), peopleDetailBean.getPrice()));
 
             ImageLoader.load(this, new ImageConfig.Builder()
                     .url(peopleDetailBean.getImage())

@@ -389,6 +389,7 @@
     <string name="format_get_verification_code_again">重新获取 (%1$ds)</string>
     <string name="format_balance">余额:%1$s紫金币</string>
     <string name="format_amount">%1$s元</string>
+    <string name="format_amount_people">%1$s紫金币</string>
     <string name="format_amount_bi">%1$s紫金币</string>
     <string name="format_amount_rmb">￥%1$s元</string>
     <string name="format_num_of_people">人脉数量: %1$d人</string>
@@ -436,8 +437,8 @@
     <string name="format_supplier_service_area">服务地区：%1$s</string>
     <string name="format_sales_volume">已成交：%1$s单</string>
     <string name="format_pay_amount">支付金额: %1$s元</string>
-    <string name="format_amount_sub">认购金额: %1$s元</string>
-    <string name="format_amount_return">已返金额: %1$s元</string>
+    <string name="format_amount_sub">认购金额: %1$s紫金币</string>
+    <string name="format_amount_return">已返金额: %1$s紫金币</string>
     <string name="format_price">价格: %1$s元</string>
     <string name="format_price_accept">接受价格: %1$s元</string>
     <string name="format_pay">需支付: %1$s元！</string>
