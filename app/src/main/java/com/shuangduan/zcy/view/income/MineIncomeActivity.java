@@ -83,8 +83,8 @@ public class MineIncomeActivity extends BaseActivity {
         mineIncomeVm = ViewModelProviders.of(this).get(MineIncomeVm.class);
         mineIncomeVm.incomeLiveData.observe(this, mineIncomeBean -> {
             MineIncomeBean.ProceedsBean proceeds = mineIncomeBean.getProceeds();
-            tvExpectedReturn.setText(proceeds.getAll_funds()+"元");
-            tvWithdrawIncome.setText(proceeds.getCoin()+"元");
+            tvExpectedReturn.setText(proceeds.getAll_funds()+"紫金币");
+            tvWithdrawIncome.setText(proceeds.getCoin()+"紫金币");
             List<MineIncomeBean.ListBean> list = mineIncomeBean.getList();
 
             values.clear();
@@ -119,7 +119,7 @@ public class MineIncomeActivity extends BaseActivity {
 
     private void initChart() {
         values = new ArrayList<>();
-        LineDataSet set = new LineDataSet(values, "收益(元)");
+        LineDataSet set = new LineDataSet(values, "收益(紫金币)");
         chart.animateXY(1500, 1500);
         chart.setNoDataText("没有数据啊");
         //关闭背景颜色

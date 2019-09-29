@@ -139,7 +139,7 @@ public class SubInfoActivity extends BaseActivity {
 
     private void initChart() {
         values = new ArrayList<>();
-        LineDataSet set = new LineDataSet(values, "收益(元)");
+        LineDataSet set = new LineDataSet(values, "收益(紫金币)");
         chart.animateXY(1500, 1500);
         chart.setNoDataText("没有数据啊");
         //关闭背景颜色

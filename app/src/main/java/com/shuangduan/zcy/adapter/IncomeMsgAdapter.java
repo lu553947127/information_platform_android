@@ -29,6 +29,6 @@ public class IncomeMsgAdapter extends BaseQuickAdapter<IncomeMsgBean.ListBean, B
     protected void convert(BaseViewHolder helper, IncomeMsgBean.ListBean item) {
         helper.setText(R.id.tv_title, item.getTitle())
                 .setText(R.id.tv_time, item.getCreate_time())
-                .setText(R.id.tv_price, item.getPrice() + "元");
+                .setText(R.id.tv_price, item.getPrice() + "紫金币");
     }
 }

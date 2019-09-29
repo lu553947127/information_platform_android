@@ -387,7 +387,7 @@
 
     <string name="format_version_name">当前版本号：v%1$s</string>
     <string name="format_get_verification_code_again">重新获取 (%1$ds)</string>
-    <string name="format_balance">余额:%1$s元</string>
+    <string name="format_balance">余额:%1$s紫金币</string>
     <string name="format_amount">%1$s元</string>
     <string name="format_amount_bi">%1$s紫金币</string>
     <string name="format_amount_rmb">￥%1$s元</string>

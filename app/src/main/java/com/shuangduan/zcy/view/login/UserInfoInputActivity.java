@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -219,8 +220,12 @@ public class UserInfoInputActivity extends BaseActivity {
 
     @Subscribe
     public void onEventServiceCity(MultiAreaEvent event) {
-        userInfoVm.multiAreaLiveData.postValue(event);
-        tvBusinessArea.setText(event.getStringResult());
+        if (event.getCityResult().size()<=5){
+            userInfoVm.multiAreaLiveData.postValue(event);
+            tvBusinessArea.setText(event.getStringResult());
+        }else {
+            ToastUtils.showShort("业务地区最多只能选择5个");
+        }
     }
 
 //    /**

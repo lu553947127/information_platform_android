@@ -27,6 +27,6 @@ public class IncomeRecordAdapter extends BaseQuickAdapter<IncomeRecordBean.ListB
     @Override
     protected void convert(BaseViewHolder helper, IncomeRecordBean.ListBean item) {
         helper.setText(R.id.tv_time, item.getCreate_time())
-                .setText(R.id.tv_price, item.getPrice() + "元");
+                .setText(R.id.tv_price, item.getPrice() + "紫金币");
     }
 }
