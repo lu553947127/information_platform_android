@@ -416,12 +416,16 @@ public class ProjectInfoListActivity extends BaseActivity {
                                 case 5:
                                     if (cbSubscribe.isChecked() && cbUnsubscribe.isChecked()) {
                                         projectListVm.warrant_status = null;
+                                        tvSubscribe.setText(R.string.all);
                                     } else if (cbSubscribe.isChecked()) {
                                         projectListVm.warrant_status = "1";
+                                        tvSubscribe.setText(R.string.subscribed);
                                     } else if (cbUnsubscribe.isChecked()) {
                                         projectListVm.warrant_status = "0";
+                                        tvSubscribe.setText(R.string.unsubscribe);
                                     } else {
                                         projectListVm.warrant_status = null;
+                                        tvSubscribe.setText(R.string.all);
                                     }
                                     break;
                             }
