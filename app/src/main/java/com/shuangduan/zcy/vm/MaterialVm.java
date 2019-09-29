@@ -68,25 +68,25 @@ public class MaterialVm extends BaseViewModel {
     public void sellList(int materialId, String spec, int supplierId) {
         sellPage = 1;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
-        new MaterialRepository().materialList(sellLiveData, pageStateLiveData, userId, 1, materialId, spec, supplierId, sellPage);
+        new MaterialRepository().materialList(sellLiveData, pageStateLiveData, userId, 2, materialId, spec, supplierId, sellPage);
     }
 
     public void moreSellList(int materialId, String spec, int supplierId) {
         sellPage++;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
-        new MaterialRepository().materialList(sellLiveData, pageStateLiveData, userId, 1, materialId, spec, supplierId, sellPage);
+        new MaterialRepository().materialList(sellLiveData, pageStateLiveData, userId, 2, materialId, spec, supplierId, sellPage);
     }
 
     public void leaseList(int materialId, String spec, int supplierId) {
         leasePage = 1;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
-        new MaterialRepository().materialList(leaseLiveData, pageStateLiveData, userId, 2, materialId, spec, supplierId, leasePage);
+        new MaterialRepository().materialList(leaseLiveData, pageStateLiveData, userId, 1, materialId, spec, supplierId, leasePage);
     }
 
     public void moreLeaseList(int materialId, String spec, int supplierId) {
         leasePage++;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
-        new MaterialRepository().materialList(leaseLiveData, pageStateLiveData, userId, 2, materialId, spec, supplierId, leasePage);
+        new MaterialRepository().materialList(leaseLiveData, pageStateLiveData, userId, 1, materialId, spec, supplierId, leasePage);
     }
 
     //物质预定列表
