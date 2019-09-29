@@ -77,27 +77,27 @@ public class PayActivity extends BaseActivity {
         payVm = ViewModelProviders.of(this).get(PayVm.class);
         payVm.amount = getIntent().getStringExtra(CustomConfig.RECHARGE_AMOUNT);
         payVm.payInfoLiveData.observe(this, payInfoBean -> {
-            if (StringUtils.isTrimEmpty(payInfoBean.getAlipay())){
+            if (StringUtils.isTrimEmpty(payInfoBean.getAlipay())) {
                 PayReq request = new PayReq();
                 request.appId = payInfoBean.getAppid();
                 request.partnerId = payInfoBean.getPartnerid();
-                request.prepayId= payInfoBean.getPrepayid();
+                request.prepayId = payInfoBean.getPrepayid();
                 request.packageValue = "Sign=WXPay";
-                request.nonceStr= payInfoBean.getNoncestr();
-                request.timeStamp= String.valueOf(payInfoBean.getTimestamp());
-                request.sign= payInfoBean.getSign();
+                request.nonceStr = payInfoBean.getNoncestr();
+                request.timeStamp = String.valueOf(payInfoBean.getTimestamp());
+                request.sign = payInfoBean.getSign();
                 request.signType = payInfoBean.getSign_type();
                 request.extData = getIntent().getStringExtra(CustomConfig.RECHARGE_AMOUNT) + "," + payInfoBean.getOrder_sn();
                 AppConfig.iwxapi.sendReq(request);
-            }else {
+            } else {
                 aliPay(payInfoBean.getAlipay());
             }
         });
     }
 
     @OnClick({R.id.iv_bar_back, R.id.tv_ali, R.id.tv_wechat})
-    void onClick(View view){
-        switch (view.getId()){
+    void onClick(View view) {
+        switch (view.getId()) {
             case R.id.iv_bar_back:
                 finish();
                 break;
@@ -112,10 +112,10 @@ public class PayActivity extends BaseActivity {
         }
     }
 
-    public void aliPay(String orderInfo){
+    public void aliPay(String orderInfo) {
         Runnable payRunnable = () -> {
             PayTask alipay = new PayTask(PayActivity.this);
-            Map<String,String> result = alipay.payV2(orderInfo,true);
+            Map<String, String> result = alipay.payV2(orderInfo, true);
 
             Message msg = new Message();
             msg.what = ALIPAY_MSG;
@@ -135,7 +135,7 @@ public class PayActivity extends BaseActivity {
 
     private PayHandler mHandler = new PayHandler(this);
 
-    public static class PayHandler extends Handler{
+    public static class PayHandler extends Handler {
         private WeakReference<PayActivity> activity;
 
         public PayHandler(PayActivity activity) {
@@ -144,12 +144,17 @@ public class PayActivity extends BaseActivity {
 
         @Override
         public void handleMessage(@NonNull Message msg) {
-            PayResult result = new PayResult((Map<String, String>) msg.obj);
-            if (!TextUtils.isEmpty(result.getResultStatus()) ){
-                switch (result.getResultStatus()){
+            Map<String, String> mapStr = (Map<String, String>) msg.obj;
+
+            String resultStatus = mapStr.get("resultStatus");
+            String result = mapStr.get("result");
+
+            if (!TextUtils.isEmpty(result)) {
+                switch (resultStatus) {
                     case "9000":
                         ToastUtils.showShort(activity.get().getString(R.string.pay_success));
-                        PayResult.ResultBean resultBean = new Gson().fromJson(result.getResult(), PayResult.ResultBean.class);
+                        PayResult.ResultBean resultBean = new Gson().
+                                fromJson(result, PayResult.ResultBean.class);
                         Bundle bundle = new Bundle();
                         bundle.putInt(CustomConfig.PAY_STYLE, CustomConfig.PAY_STYLE_ALIPAY);
                         LogUtils.i(resultBean.getAlipay_trade_app_pay_response().getOut_trade_no(), resultBean.getAlipay_trade_app_pay_response().getTotal_amount());
