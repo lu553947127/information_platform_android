@@ -117,7 +117,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/colorTv"
                         android:textSize="14sp"
-                        android:text="联系人："/>
+                        android:text="@string/material_real_name"/>
                     <EditText
                         android:id="@+id/et_real_name"
                         android:layout_width="match_parent"
@@ -128,7 +128,7 @@
                         android:textColorHint="@color/colorTvHint"
                         android:textColor="@color/colorTv"
                         android:textSize="14sp"
-                        android:hint="请填写联系人姓名"/>
+                        android:hint="@string/material_et_real_name"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -148,7 +148,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/colorTv"
                         android:textSize="14sp"
-                        android:text="电话："/>
+                        android:text="@string/material_tel"/>
                     <EditText
                         android:id="@+id/et_tel"
                         android:layout_width="match_parent"
@@ -160,7 +160,7 @@
                         android:textColorHint="@color/colorTvHint"
                         android:textColor="@color/colorTv"
                         android:textSize="14sp"
-                        android:hint="请填写手机号"/>
+                        android:hint="@string/material_et_tel"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -174,7 +174,7 @@
                         android:layout_marginLeft="20dp"
                         android:textColor="@color/colorTv"
                         android:textSize="14sp"
-                        android:text="公司名称："/>
+                        android:text="@string/material_company"/>
                     <EditText
                         android:id="@+id/et_company"
                         android:layout_width="match_parent"
@@ -185,7 +185,7 @@
                         android:textColorHint="@color/colorTvHint"
                         android:textColor="@color/colorTv"
                         android:textSize="14sp"
-                        android:hint="请填写企业全程，提升信任度"/>
+                        android:hint="@string/material_et_company"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -205,7 +205,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/colorTv"
                         android:textSize="14sp"
-                        android:text="收货省市："/>
+                        android:text="@string/material_province"/>
                     <TextView
                         android:id="@+id/tv_province"
                         android:layout_width="match_parent"
@@ -215,7 +215,7 @@
                         android:paddingRight="15dp"
                         android:textColor="@color/colorTvHint"
                         android:textSize="14sp"
-                        android:text="请选择收货省市"
+                        android:text="@string/material_tv_province"
                         tools:ignore="RtlHardcoded" />
                 </LinearLayout>
 
@@ -236,7 +236,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/colorTv"
                         android:textSize="14sp"
-                        android:text="详细地址："/>
+                        android:text="@string/material_address"/>
                     <EditText
                         android:id="@+id/et_address"
                         android:layout_width="match_parent"
@@ -247,7 +247,7 @@
                         android:textColorHint="@color/colorTvHint"
                         android:textColor="@color/colorTv"
                         android:textSize="14sp"
-                        android:hint="请输入详细地址"/>
+                        android:hint="@string/material_et_address"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -262,7 +262,7 @@
                         android:layout_marginLeft="22dp"
                         android:textColor="@color/colorTv"
                         android:textSize="14sp"
-                        android:text="备注："/>
+                        android:text="@string/material_remark"/>
 
                     <fj.edittextcount.lib.FJEditTextCount
                         android:id="@+id/et_remark"
@@ -282,7 +282,7 @@
                         app:etTextSize="14sp"
                         app:etTextColor="@color/colorTv"
                         app:etHintColor="@color/colorTvHint"
-                        app:etHint="如：指定规格、型号、性能、用途、表面要求等"
+                        app:etHint="@string/material_et_remark"
                         tools:ignore="RtlHardcoded" />
                 </LinearLayout>
             </LinearLayout>
@@ -313,7 +313,7 @@
                     android:padding="5dp"
                     android:textSize="13sp"
                     android:textColor="@color/colorTvStates"
-                    android:text="+添加数量、存放地"/>
+                    android:text="@string/material_tv_add"/>
             </LinearLayout>
 
 
@@ -363,7 +363,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="14dp"
             android:textSize="14sp"
-            android:text="提交预订单"/>
+            android:text="@string/material_tv_submission"/>
     </RelativeLayout>
 
 </LinearLayout>

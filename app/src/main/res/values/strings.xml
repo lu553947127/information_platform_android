@@ -370,6 +370,20 @@
     <string name="register_register">用户注册协议</string>
     <string name="material_depositing_place">选择存放地</string>
     <string name="material_place_order">提交预定单</string>
+    <string name="material_real_name">联系人：</string>
+    <string name="material_et_real_name">请填写联系人姓名</string>
+    <string name="material_tel">电话：</string>
+    <string name="material_et_tel">请填写手机号</string>
+    <string name="material_company">公司名称：</string>
+    <string name="material_et_company">请填写企业全称，提升信任度</string>
+    <string name="material_province">收货省市：</string>
+    <string name="material_tv_province">请选择收货省市</string>
+    <string name="material_address">详细地址：</string>
+    <string name="material_et_address">请输入详细地址</string>
+    <string name="material_remark">备注：</string>
+    <string name="material_et_remark">如：指定规格、型号、性能、用途、表面要求等</string>
+    <string name="material_tv_add">+添加数量、存放地</string>
+    <string name="material_tv_submission">提交预订单</string>
 
     <string name="format_version_name">当前版本号：v%1$s</string>
     <string name="format_get_verification_code_again">重新获取 (%1$ds)</string>

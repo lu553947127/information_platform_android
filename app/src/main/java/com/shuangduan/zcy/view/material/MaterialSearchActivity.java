@@ -1,10 +1,13 @@
 package com.shuangduan.zcy.view.material;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,6 +17,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -26,10 +30,13 @@ import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.event.MaterialEvent;
 import com.shuangduan.zcy.model.event.OfficeEvent;
 import com.shuangduan.zcy.model.event.SupplierEvent;
+import com.shuangduan.zcy.view.search.SearchResultActivity;
 import com.shuangduan.zcy.vm.SearchVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -76,7 +83,7 @@ public class MaterialSearchActivity extends BaseActivity {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         SearchVm searchVm = ViewModelProviders.of(this).get(SearchVm.class);
         //初始化搜索框监听
-        keywordTextChangedListener(searchVm);
+//        keywordTextChangedListener(searchVm);
 
         searchVm.materialLiveData.observe(this, list -> {
             if (searchAdapter == null) {
@@ -102,8 +109,25 @@ public class MaterialSearchActivity extends BaseActivity {
             }
         });
 
-
         searchVm.pageStateLiveData.observe(this, s -> showHideLoad(s));
+
+        //重新键盘，改成搜索键盘，点击搜索键即可完成搜索
+        edtKeyword.setOnEditorActionListener((textView, i, keyEvent) -> {
+            if (i == EditorInfo.IME_ACTION_SEARCH) {
+                // 先隐藏键盘
+                ((InputMethodManager) Objects.requireNonNull(edtKeyword.getContext()
+                        .getSystemService(Context.INPUT_METHOD_SERVICE)))
+                        .hideSoftInputFromWindow(Objects.requireNonNull(this.getCurrentFocus()).getWindowToken(),
+                                InputMethodManager.HIDE_NOT_ALWAYS);
+                // 搜索，进行自己要的操作...
+                ivClear.setVisibility(edtKeyword.getText().length() > 0 ? View.VISIBLE : View.INVISIBLE);
+                if (edtKeyword.getText().length() > 0) {
+                    searchVm.searchMaterial(type, edtKeyword.getText().toString());
+                }
+                return true;
+            }
+            return false;
+        });
     }
 
     private void showHideLoad(String s) {
