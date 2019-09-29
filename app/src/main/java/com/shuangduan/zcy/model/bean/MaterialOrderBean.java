@@ -68,7 +68,7 @@ public class MaterialOrderBean {
         @SerializedName("order_number")
         public String orderNumber;
         //订单状态
-        public int status;
+        public String status;
         //缩略图
         public String images;
 
@@ -99,6 +99,10 @@ public class MaterialOrderBean {
         public String address;
         //采购要求
         public String remark;
+
+        //是否能够取消订单 0:不可以取消 1：可以取消
+        @SerializedName("is_close")
+        public int isClose;
 
         @Override
         public String toString() {

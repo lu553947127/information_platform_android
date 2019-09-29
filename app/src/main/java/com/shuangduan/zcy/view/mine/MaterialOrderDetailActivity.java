@@ -93,7 +93,8 @@ public class MaterialOrderDetailActivity extends BaseActivity {
     TextView tvCancel;
 
     private MaterialDetailVm materialVm;
-    private BaseDialog dialog;
+    private int orderId;
+
 
     @Override
     protected int initLayoutRes() {
@@ -108,7 +109,7 @@ public class MaterialOrderDetailActivity extends BaseActivity {
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         //订单Id
-        int orderId = getIntent().getIntExtra(CustomConfig.ORDER_ID, 0);
+        orderId = getIntent().getIntExtra(CustomConfig.ORDER_ID, 0);
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(R.string.my_material);
 
@@ -148,53 +149,20 @@ public class MaterialOrderDetailActivity extends BaseActivity {
             tvOrderAddressValue.setText(item.address);
             tvIntroduceValue.setText(item.remark);
 
-            setStateInfo(item.status);
+            tvState.setText("状态："+item.status);
 
-            if (item.status > 3) {
+
+            if (item.isClose ==0) {
                 tvCancel.setEnabled(false);
-//                tvCancel.setText("");
+            }else {
+                tvCancel.setEnabled(true);
             }
         });
 
         materialVm.materialOrderDetail(orderId);
     }
 
-    private void setStateInfo(int status) {
-        switch (status) {
-            case 1:
-                tvState.setText("状态：提交订单");
-                break;
-            case 2:
-                tvState.setText("状态：客户经理");
-                break;
-            case 3:
-                tvState.setText("状态：沟通确认");
-                break;
-            case 4:
-                tvState.setText("状态：投标报价");
-                break;
-            case 5:
-                tvState.setText("状态：签订合同");
-                break;
-            case 6:
-                tvState.setText("状态：执行合同");
-                break;
-            case 7:
-                tvState.setText("状态：结束");
-                tvCancel.setText("已结束");
-                break;
-            case 8:
-                tvState.setText("状态：取消订单");
-                tvCancel.setText(R.string.canceled);
-                break;
-            case 9:
-                tvState.setText("状态：驳回订单");
-                tvCancel.setText("已驳回");
-                break;
-            default:
-                tvState.setText("");
-        }
-    }
+
 
     @OnClick({R.id.iv_bar_back, R.id.tv_replication, R.id.tv_cancel})
     void onClick(View v) {
@@ -230,7 +198,7 @@ public class MaterialOrderDetailActivity extends BaseActivity {
         materialVm.materialOrderCancel(order.id);
         materialVm.detailLiveData.observe(this, item -> {
             ToastUtils.showShort("订单取消成功");
-            tvCancel.setText(R.string.canceled);
+            materialVm.materialOrderCancel(orderId);
             tvCancel.setEnabled(false);
         });
     }
