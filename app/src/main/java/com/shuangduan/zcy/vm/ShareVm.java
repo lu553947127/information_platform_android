@@ -21,16 +21,32 @@ import com.shuangduan.zcy.model.bean.ShareBean;
 public class ShareVm extends BaseViewModel {
 
     private int userId;
-    public MutableLiveData<ShareBean> shareLiveData;
+    public MutableLiveData<ShareBean.DataBean> shareLiveData;
     public MutableLiveData<String> pageStateLiveData;
+
+    //分享的URL 路径
+    public MutableLiveData<String> url;
 
     public ShareVm() {
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
         shareLiveData = new MutableLiveData<>();
         pageStateLiveData = new MutableLiveData<>();
+
+        url = new MutableLiveData<>();
     }
 
-    public void userInfoShare(){
+    //工程信息分享
+    public void projectShare(int id) {
+        new ShareRepository().getProjectShare(shareLiveData, pageStateLiveData, userId, id);
+    }
+
+    //个人用户信息分享
+    public void userInfoShare() {
         new ShareRepository().getUserInfoShare(shareLiveData, pageStateLiveData, userId);
+    }
+
+    //招采信息分享
+    public void tendererShare(int id) {
+        new ShareRepository().tendererShare(shareLiveData, pageStateLiveData, userId, id);
     }
 }

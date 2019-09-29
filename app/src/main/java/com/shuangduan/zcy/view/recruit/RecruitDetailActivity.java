@@ -39,6 +39,7 @@ import com.shuangduan.zcy.dialog.CustomDialog;
 import com.shuangduan.zcy.dialog.PayDialog;
 import com.shuangduan.zcy.dialog.ShareDialog;
 import com.shuangduan.zcy.listener.BaseUiListener;
+import com.shuangduan.zcy.manage.ShareManage;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
 import com.shuangduan.zcy.model.bean.ShareBean;
@@ -102,50 +103,8 @@ public class RecruitDetailActivity extends BaseActivity {
     private RecruitDetailVm recruitDetailVm;
     private UpdatePwdPayVm updatePwdPayVm;
     private CoinPayVm coinPayVm;
-    private Tencent mTencent;
-    private BaseUiListener qqListener;
-    private ShareVm shareVm;
+    private ShareManage shareManage;
 
-
-    @SuppressLint("HandlerLeak")
-    Handler handler = new Handler() {
-        @Override
-        public void handleMessage(@NonNull Message msg) {
-            super.handleMessage(msg);
-            Bitmap bitmap = (Bitmap) msg.obj;
-
-            dialog = new ShareDialog(RecruitDetailActivity.this)
-                    .setOnShareListener(new ShareDialog.OnShareListener() {
-                        @Override
-                        public void qq() {
-                            ShareUtils.shareQQ(RecruitDetailActivity.this, mTencent, qqListener
-                                    , bean.getData().getUrl(), bean.getData().getTitle(), bean.getData().getDes(), bean.getData().getImage());
-                        }
-
-                        @Override
-                        public void qqStone() {
-                            ShareUtils.shareQQStone(RecruitDetailActivity.this, mTencent, qqListener
-                                    , bean.getData().getUrl(), bean.getData().getTitle(), bean.getData().getDes(), bean.getData().getImage());
-                        }
-
-                        @Override
-                        public void weChat() {
-                            ShareUtils.shareWeChat(RecruitDetailActivity.this, ShareUtils.FRIEND
-                                    , bean.getData().getUrl(), bean.getData().getTitle(), bean.getData().getDes(), bitmap);
-                        }
-
-                        @Override
-                        public void friendCircle() {
-                            ShareUtils.shareWeChat(RecruitDetailActivity.this, ShareUtils.FRIEND_CIRCLE
-                                    , bean.getData().getUrl(), bean.getData().getTitle(), bean.getData().getDes(), bitmap);
-                        }
-                    });
-
-            addDialog(dialog);
-        }
-    };
-    private ShareBean bean;
-    private ShareDialog dialog;
 
     @Override
     protected int initLayoutRes() {
@@ -253,12 +212,11 @@ public class RecruitDetailActivity extends BaseActivity {
                     break;
             }
         });
-        // 其中APP_ID是分配给第三方应用的appid，类型为String。
-        mTencent = Tencent.createInstance(ShareUtils.app_id_qq, getApplicationContext());
-        qqListener = new BaseUiListener();
 
+        //初始化分享功能
+        shareManage = ShareManage.newInstance(getApplicationContext());
+        shareManage.init(this, ShareManage.SHARE_TENDERER_TYPE, id);
 
-        getShare();
     }
 
     @OnClick({R.id.iv_bar_back, R.id.iv_bar_right, R.id.ll_collect, R.id.ll_read_detail})
@@ -268,7 +226,7 @@ public class RecruitDetailActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.iv_bar_right:
-                dialog.showDialog();
+                shareManage.showDialog();
                 break;
             case R.id.ll_collect:
                 recruitDetailVm.collect();
@@ -309,88 +267,12 @@ public class RecruitDetailActivity extends BaseActivity {
                 .showDialog());
     }
 
-    //分享
-    private void getShare() {
-
-        OkGo.<String>post(RetrofitHelper.BASE_TEST_URL + Common.TENDERER_SHARE)
-                .tag(this)
-                .headers("token", SPUtils.getInstance().getString(SpConfig.TOKEN))//请求头
-                .params("user_id", SPUtils.getInstance().getInt(SpConfig.USER_ID))//用户编号
-                .params("id", id)
-                .execute(new com.lzy.okgo.callback.StringCallback() {//返回值
-
-                    @Override
-                    public void onError(Response<String> response) {
-                        super.onError(response);
-                        LogUtils.json(response.body());
-                    }
-
-                    @Override
-                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-                        LogUtils.json(response.body());
-                        try {
-                            bean = new Gson().fromJson(response.body(), ShareBean.class);
-                            if (bean.getCode().equals("200")) {
-
-                                new Thread(() -> {
-                                    Bitmap bitmap = returnBitmap(bean.getData().getImage());
-                                    Message msg = new Message();
-                                    msg.obj = bitmap;
-                                    handler.sendMessage(msg);
-                                }).start();
-
-                            } else if (bean.getCode().equals("-1")) {
-                                ToastUtils.showShort(bean.getMsg());
-                                LoginUtils.getExitLogin();
-                            }else {
-                                ToastUtils.showShort(bean.getMsg());
-                            }
-                        } catch (JsonSyntaxException | IllegalStateException ignored) {
-                            ToastUtils.showShort(getString(R.string.request_error));
-                        }
-                    }
-                });
-    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Tencent.onActivityResultData(requestCode, resultCode, data, qqListener);
+        Tencent.onActivityResultData(requestCode, resultCode, data, shareManage.getQQListener());
     }
 
-    /**
-     * 根据图片的url路径获得Bitmap对象
-     *
-     * @param url
-     * @return
-     */
-    public Bitmap returnBitmap(String url) {
 
-        if (!StringUtils.isEmpty(url)) {
-
-            URL fileUrl = null;
-            Bitmap bitmap = null;
-            try {
-                fileUrl = new URL(url);
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
-            try {
-                HttpURLConnection conn = (HttpURLConnection) fileUrl
-                        .openConnection();
-                conn.setDoInput(true);
-                conn.connect();
-                InputStream is = conn.getInputStream();
-                bitmap = BitmapFactory.decodeStream(is);
-                is.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            return bitmap;
-        }
-
-        return null;
-
-    }
 }

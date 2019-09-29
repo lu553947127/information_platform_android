@@ -171,7 +171,7 @@
                 android:background="@drawable/selector_bg_flex_box"
                 android:button="@null"
                 android:gravity="center"
-                android:text="@string/subscribe"
+                android:text="@string/subscribed"
                 android:textColor="@color/selector_flex_box"
                 android:textSize="12sp" />
 

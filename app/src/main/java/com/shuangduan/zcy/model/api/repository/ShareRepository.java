@@ -19,7 +19,17 @@ import com.shuangduan.zcy.model.bean.ShareBean;
 public class ShareRepository extends BaseRepository {
 
     //推荐好友分享信息
-    public void getUserInfoShare(MutableLiveData<ShareBean> liveData, MutableLiveData<String> pageState, int user_id){
-        request(apiService.getUserInfoShare(user_id)).setDataList(liveData).setPageState(pageState).send();
+    public void getUserInfoShare(MutableLiveData<ShareBean.DataBean> liveData, MutableLiveData<String> pageState, int user_id) {
+        request(apiService.getUserInfoShare(user_id)).setData(liveData).setPageState(pageState).send();
+    }
+
+    //工程信息分享
+    public void getProjectShare(MutableLiveData<ShareBean.DataBean> liveData, MutableLiveData<String> pageState, int userId, int id) {
+        request(apiService.projectShare(userId, id)).setData(liveData).setPageState(pageState).send();
+    }
+
+    //招采信息分享
+    public void tendererShare(MutableLiveData<ShareBean.DataBean> liveData, MutableLiveData<String> pageState, int userId, int id) {
+        request(apiService.tendererShare(userId, id)).setData(liveData).setPageState(pageState).send();
     }
 }

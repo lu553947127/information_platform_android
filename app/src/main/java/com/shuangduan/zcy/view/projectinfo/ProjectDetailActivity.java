@@ -1,19 +1,13 @@
 package com.shuangduan.zcy.view.projectinfo;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
@@ -35,7 +29,6 @@ import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
-import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.tabs.TabLayout;
@@ -49,8 +42,7 @@ import com.shuangduan.zcy.app.Common;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
-import com.shuangduan.zcy.dialog.ShareDialog;
-import com.shuangduan.zcy.listener.BaseUiListener;
+import com.shuangduan.zcy.manage.ShareManage;
 import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
 import com.shuangduan.zcy.model.bean.ProjectMembersStatusBean;
 import com.shuangduan.zcy.model.bean.ShareBean;
@@ -58,21 +50,13 @@ import com.shuangduan.zcy.model.event.LocusRefreshEvent;
 import com.shuangduan.zcy.model.event.WarrantSuccessEvent;
 import com.shuangduan.zcy.utils.AuthenticationUtils;
 import com.shuangduan.zcy.utils.LoginUtils;
-import com.shuangduan.zcy.utils.ShareUtils;
 import com.shuangduan.zcy.view.release.ReleaseProjectActivity;
 import com.shuangduan.zcy.vm.PermissionVm;
 import com.shuangduan.zcy.vm.ProjectDetailVm;
-import com.shuangduan.zcy.vm.ShareVm;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.tencent.tauth.Tencent;
 
 import org.greenrobot.eventbus.Subscribe;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -128,50 +112,11 @@ public class ProjectDetailActivity extends BaseActivity {
     AMap aMap = null;
     private PermissionVm permissionVm;
     private ProjectDetailVm projectDetailVm;
-    private Tencent mTencent;
-    private BaseUiListener qqListener;
-    private ShareVm shareVm;
 
 
-    @SuppressLint("HandlerLeak")
-    Handler handler = new Handler() {
-        @Override
-        public void handleMessage(@NonNull Message msg) {
-            super.handleMessage(msg);
-            Bitmap bitmap = (Bitmap) msg.obj;
-
-            dialog = new ShareDialog(ProjectDetailActivity.this)
-                    .setOnShareListener(new ShareDialog.OnShareListener() {
-                        @Override
-                        public void qq() {
-                            ShareUtils.shareQQ(ProjectDetailActivity.this, mTencent, qqListener
-                                    , bean.getData().getUrl(), bean.getData().getTitle(), bean.getData().getDes(), bean.getData().getImage());
-                        }
-
-                        @Override
-                        public void qqStone() {
-                            ShareUtils.shareQQStone(ProjectDetailActivity.this, mTencent, qqListener
-                                    , bean.getData().getUrl(), bean.getData().getTitle(), bean.getData().getDes(), bean.getData().getImage());
-                        }
-
-                        @Override
-                        public void weChat() {
-                            ShareUtils.shareWeChat(ProjectDetailActivity.this, ShareUtils.FRIEND
-                                    , bean.getData().getUrl(), bean.getData().getTitle(), bean.getData().getDes(), bitmap);
-                        }
-
-                        @Override
-                        public void friendCircle() {
-                            ShareUtils.shareWeChat(ProjectDetailActivity.this, ShareUtils.FRIEND_CIRCLE
-                                    , bean.getData().getUrl(), bean.getData().getTitle(), bean.getData().getDes(), bitmap);
-                        }
-                    });
-
-            addDialog(dialog);
-        }
-    };
     private ShareBean bean;
-    private ShareDialog dialog;
+    //分享管理
+    private ShareManage shareManage;
 
     @Override
     protected int initLayoutRes() {
@@ -267,99 +212,17 @@ public class ProjectDetailActivity extends BaseActivity {
             vp.setCurrentItem(position);
             tabLayout.getTabAt(position).select();
         }
-        // 其中APP_ID是分配给第三方应用的appid，类型为String。
-        mTencent = Tencent.createInstance(ShareUtils.app_id_qq, getApplicationContext());
-        qqListener = new BaseUiListener();
 
-        getShare();
+        //初始化分享功能
+        shareManage = ShareManage.newInstance(getApplicationContext());
+        shareManage.init(this, ShareManage.SHARE_PROJECT_TYPE, getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0));
     }
 
-    //分享
-    private void getShare() {
-
-        OkGo.<String>post(RetrofitHelper.BASE_TEST_URL + Common.PROJECT_SHARE)
-                .tag(this)
-                .headers("token", SPUtils.getInstance().getString(SpConfig.TOKEN))//请求头
-                .params("user_id", SPUtils.getInstance().getInt(SpConfig.USER_ID))//用户编号
-                .params("id", getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0))
-                .execute(new com.lzy.okgo.callback.StringCallback() {//返回值
-
-                    @Override
-                    public void onError(Response<String> response) {
-                        super.onError(response);
-                        LogUtils.json(response.body());
-                    }
-
-                    @Override
-                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-                        LogUtils.json(response.body());
-                        try {
-                            bean = new Gson().fromJson(response.body(), ShareBean.class);
-                            if (bean.getCode().equals("200")) {
-//                                Bitmap bitmap = BitmapFactory.decodeFile(bean.getData().getImage());
-
-                                new Thread(() -> {
-                                    Bitmap bitmap = returnBitmap(bean.getData().getImage());
-                                    Message msg = new Message();
-                                    msg.obj = bitmap;
-                                    handler.sendMessage(msg);
-                                }).start();
-
-
-                            } else if (bean.getCode().equals("-1")) {
-                                ToastUtils.showShort(bean.getMsg());
-                                LoginUtils.getExitLogin();
-                            } else {
-                                ToastUtils.showShort(bean.getMsg());
-                            }
-                        } catch (JsonSyntaxException | IllegalStateException ignored) {
-                            ToastUtils.showShort(getString(R.string.request_error));
-                        }
-                    }
-                });
-    }
-
-
-    /**
-     * 根据图片的url路径获得Bitmap对象
-     *
-     * @param url
-     * @return
-     */
-    public Bitmap returnBitmap(String url) {
-
-        if (!StringUtils.isEmpty(url)) {
-
-            URL fileUrl = null;
-            Bitmap bitmap = null;
-            try {
-                fileUrl = new URL(url);
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
-            try {
-                HttpURLConnection conn = (HttpURLConnection) fileUrl
-                        .openConnection();
-                conn.setDoInput(true);
-                conn.connect();
-                InputStream is = conn.getInputStream();
-                bitmap = BitmapFactory.decodeStream(is);
-                is.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            return bitmap;
-        }
-
-        return null;
-
-    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Tencent.onActivityResultData(requestCode, resultCode, data, qqListener);
+        Tencent.onActivityResultData(requestCode, resultCode, data, shareManage.getQQListener());
     }
 
     @Subscribe
@@ -383,9 +246,7 @@ public class ProjectDetailActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.iv_bar_right:
-                if (dialog != null) {
-                    dialog.showDialog();
-                }
+                shareManage.showDialog();
                 break;
             case R.id.fl_collect:
                 projectDetailVm.collect();

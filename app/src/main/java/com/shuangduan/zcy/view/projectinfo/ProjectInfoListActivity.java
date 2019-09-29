@@ -22,6 +22,7 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.TimeUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
@@ -367,7 +368,7 @@ public class ProjectInfoListActivity extends BaseActivity {
 
                         //地区点击事件
                         provinceAdapter.setOnItemClickListener((adapter, view1, position) -> areaVm.clickFirst(position));
-                        cityAdapter.setOnItemClickListener((adapter, view12, position) -> areaVm.clickSecond(position));
+                        cityAdapter.setOnItemClickListener((adapter, view12, position) -> areaVm.clickRadioSecond(position));
 
                         //阶段点击事件
                         stageFirstAdapter.setOnItemClickListener((adapter, view1, position) -> stageVm.clickFirst(position));
@@ -392,6 +393,11 @@ public class ProjectInfoListActivity extends BaseActivity {
                                     if (projectFilterArea != null) {
                                         projectListVm.province = projectFilterArea.getProvince();
                                         projectListVm.city = projectFilterArea.getCity();
+
+                                        if (projectListVm.city.size() == 0) {
+                                            ToastUtils.showShort("请选择城市");
+                                            return;
+                                        }
                                     } else {
                                         projectListVm.province = null;
                                         projectListVm.city = null;

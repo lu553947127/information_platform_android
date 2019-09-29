@@ -32,6 +32,7 @@ public class MultiAreaVm extends BaseViewModel {
     public int id;//分类id  0为一级
     private String cityResult = "";
     public boolean provinceInited = false;
+    public int currentPosition = 0;//上一个选中的位置
     public int prePosition = 0;//上一个选中的位置
     public boolean selectAll = true;
 
@@ -104,7 +105,7 @@ public class MultiAreaVm extends BaseViewModel {
                 cityLiveData.postValue(cityList);
             }
             //二级数据存储
-            provinceLiveData.getValue().get(prePosition).setCityList(cityList);
+            provinceLiveData.getValue().get(currentPosition).setCityList(cityList);
         }
     }
 
@@ -118,25 +119,25 @@ public class MultiAreaVm extends BaseViewModel {
         //当前点击的必选中
         provinceList.get(position).setIsSelect(1);
         //上一个默认未选中
-        provinceList.get(prePosition).setIsSelect(0);
+        provinceList.get(currentPosition).setIsSelect(0);
         //改变上一个选中效果，字体颜色
-        List<CityBean> cityList = provinceList.get(prePosition).getCityList();
+        List<CityBean> cityList = provinceList.get(currentPosition).getCityList();
         if (cityList == null) return;
         if (cityList.get(0).getIsSelect() != 1) {
             //非全选,遍历子类，判断是否修改字体效果
             for (CityBean bean : cityList) {
                 if (bean.getIsSelect() == 1) {
                     //有一个选中就改变选中效果
-                    provinceList.get(prePosition).setIsSelect(1);
+                    provinceList.get(currentPosition).setIsSelect(1);
                     break;
                 }
             }
         } else {
             //全选，直接改变选中效果
-            provinceList.get(prePosition).setIsSelect(1);
+            provinceList.get(currentPosition).setIsSelect(1);
         }
         //点击状态：未点击0，点击1
-        provinceList.get(prePosition).setIsCheck(0);
+        provinceList.get(currentPosition).setIsCheck(0);
         provinceList.get(position).setIsCheck(1);
         provinceLiveData.postValue(provinceList);
         //更新选中id, 更新二级列表
@@ -148,8 +149,126 @@ public class MultiAreaVm extends BaseViewModel {
             //存在子类
             cityLiveData.postValue(provinceList.get(position).getCityList());
         }
-        prePosition = position;
+
+        currentPosition = position;
+
     }
+
+
+    /**
+     * 点击二级分类
+     */
+    public void clickRadioSecond(int i) {
+
+
+        List<CityBean> data = cityLiveData.getValue();
+        List<ProvinceBean> provinceList = provinceLiveData.getValue();
+        if (i == 0) {
+            LogUtils.i("***********", currentPosition, data.get(0).getIsSelect());
+            if (currentPosition == 0) {//一级全部的全部
+                if (data.get(0).getIsSelect() == 1) {//更改为所有全部非选中
+                    selectAll = false;
+                    if (provinceList != null) {
+                        for (int j = 0; j < provinceList.size(); j++) {
+                            ProvinceBean provinceData = provinceList.get(j);
+                            provinceData.setIsSelect(0);
+                            List<CityBean> cityList = provinceData.getCityList();
+                            if (cityList != null) {
+                                for (int k = 0; k < cityList.size(); k++) {
+                                    cityList.get(k).setIsSelect(0);
+                                }
+                            }
+                        }
+                    }
+                } else {//更改为所有全部选中
+                    selectAll = true;
+                    if (provinceList != null) {
+                        for (int j = 0; j < provinceList.size(); j++) {
+                            ProvinceBean provinceData = provinceList.get(j);
+                            List<CityBean> cityList = provinceData.getCityList();
+                            provinceData.setIsSelect(1);
+                            if (cityList != null) {
+                                for (int k = 0; k < cityList.size(); k++) {
+                                    cityList.get(k).setIsSelect(1);
+                                }
+                            }
+                        }
+                    }
+                }
+                cityLiveData.postValue(provinceList.get(0).getCityList());
+                provinceLiveData.postValue(provinceList);
+            } else {//一级非全部的全部
+                //选全部
+                if (data.get(0).getIsSelect() == 1) {
+                    //全部选中，修改全部为非选中状态
+                    for (int j = 0; j < data.size(); j++) {
+                        data.get(j).setIsSelect(0);
+                    }
+                } else {
+                    //非全部选中，修改全部为选中状态
+                    for (int j = 0; j < data.size(); j++) {
+                        data.get(j).setIsSelect(1);
+                    }
+                }
+
+
+                //取消上一个省份的所有城市选择状态
+                if (currentPosition != prePosition) {
+                    provinceList.get(prePosition).isSelect = 0;
+                    for (int x = 0; x < provinceList.get(prePosition).getCityList().size(); x++) {
+                        provinceList.get(prePosition).getCityList().get(x).isSelect = 0;
+                    }
+                }
+
+
+                provinceLiveData.postValue(provinceList);
+                cityLiveData.postValue(data);
+                changeFirstState();
+            }
+        } else {
+
+            if (data.get(i).getIsSelect() != 1) {
+                //未选中状态，之前就是选中状态，需判断是否为全部选中，是则修改全部为非选中状态
+                if (data.get(0).getIsSelect() == 1) {
+                    //只有“全部”选项是选中状态才更新状态
+                    data.get(0).setIsSelect(0);
+                }
+            } else {
+                //选中状态，之前就是未选中状态，需判断是否为全部选中，是则修改全部为选中状态
+                //初始把“全部”更新为选中
+                data.get(0).setIsSelect(1);
+                for (int j = 0; j < data.size(); j++) {
+                    if (data.get(j).getIsSelect() != 1) {
+                        //循环查询，出现未选中就更新第一个选项“全部”的状态
+                        data.get(0).setIsSelect(0);
+                        break;
+                    }
+                }
+            }
+
+            //单一选项
+            data.get(i).setIsSelect(data.get(i).getIsSelect() == 1 ? 0 : 1);
+
+            //取消上一个省份的所有城市选择状态
+            if (currentPosition != prePosition) {
+                provinceList.get(prePosition).isSelect = 0;
+                for (int x = 0; x < provinceList.get(prePosition).getCityList().size(); x++) {
+                    provinceList.get(prePosition).getCityList().get(x).isSelect = 0;
+                }
+            }
+
+            cityLiveData.postValue(data);
+            provinceLiveData.postValue(provinceList);
+            changeFirstState();
+        }
+
+
+        //记录上一个选择的省份Position
+        if (currentPosition != prePosition) {
+            prePosition = currentPosition;
+        }
+    }
+
 
     /**
      * 点击二级分类
@@ -157,8 +276,8 @@ public class MultiAreaVm extends BaseViewModel {
     public void clickSecond(int i) {
         List<CityBean> data = cityLiveData.getValue();
         if (i == 0) {
-            LogUtils.i("***********", prePosition, data.get(0).getIsSelect());
-            if (prePosition == 0) {//一级全部的全部
+            LogUtils.i("***********", currentPosition, data.get(0).getIsSelect());
+            if (currentPosition == 0) {//一级全部的全部
                 List<ProvinceBean> provinceList = provinceLiveData.getValue();
                 if (data.get(0).getIsSelect() == 1) {//更改为所有全部非选中
                     selectAll = false;
@@ -270,19 +389,19 @@ public class MultiAreaVm extends BaseViewModel {
 
         List<Integer> provinceResult = new ArrayList<>();
 
-        if (prePosition == 0) { //默认选中全部省份
+        if (currentPosition == 0) { //默认选中全部省份
             //全选，返回null
             return null;
         }
         //当前选中的省ID
-        int provinceId = provinceList.get(prePosition).getId();
+        int provinceId = provinceList.get(currentPosition).getId();
         //添加查询的省ID
         provinceResult.add(provinceId);
 
         List<Integer> cityResult = new ArrayList<>();
 
         //获取当前省份下所有城市
-        List<CityBean> cityList = provinceList.get(prePosition).getCityList();
+        List<CityBean> cityList = provinceList.get(currentPosition).getCityList();
         if (cityList != null) {
             for (CityBean item : cityList) {
                 if (item.isSelect == 1) {
@@ -299,7 +418,7 @@ public class MultiAreaVm extends BaseViewModel {
 
 //        if (provinceList != null) {
 //            for (int i = 0; i < provinceList.size(); i++) {
-//                if (i == 0 && provinceList.get(prePosition).getCityList().get(0).getIsSelect() == 0) {
+//                if (i == 0 && provinceList.get(currentPosition).getCityList().get(0).getIsSelect() == 0) {
 //                    //全选，返回null
 //                    return null;
 //                } else if (provinceList.get(i).isSelect == 1) {

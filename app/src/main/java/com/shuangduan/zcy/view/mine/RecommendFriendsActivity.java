@@ -25,16 +25,22 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.Common;
+import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.ShareDialog;
 import com.shuangduan.zcy.listener.BaseUiListener;
+import com.shuangduan.zcy.manage.ShareManage;
 import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
 import com.shuangduan.zcy.model.bean.ShareBean;
+import com.shuangduan.zcy.model.event.CompanyEvent;
+import com.shuangduan.zcy.model.event.ShareEvent;
 import com.shuangduan.zcy.utils.LoginUtils;
 import com.shuangduan.zcy.utils.ShareUtils;
 import com.shuangduan.zcy.view.projectinfo.ProjectDetailActivity;
 import com.tencent.tauth.Tencent;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -63,46 +69,9 @@ public class RecommendFriendsActivity extends BaseActivity {
     Toolbar toolbar;
     @BindView(R.id.tv_url)
     TextView tvUrl;
-    private Tencent mTencent;
-    private BaseUiListener qqListener;
-    ShareBean bean;
 
-    private ShareDialog dialog;
-    @SuppressLint("HandlerLeak")
-    Handler handler = new Handler() {
-        @Override
-        public void handleMessage(@NonNull Message msg) {
-            super.handleMessage(msg);
-            Bitmap bitmap = (Bitmap) msg.obj;
-            dialog = new ShareDialog(RecommendFriendsActivity.this)
-                    .setOnShareListener(new ShareDialog.OnShareListener() {
-                        @Override
-                        public void qq() {
-                            ShareUtils.shareQQ(RecommendFriendsActivity.this, mTencent, qqListener
-                                    , bean.getData().getUrl(), bean.getData().getTitle(), bean.getData().getDes(), bean.getData().getImage());
-                        }
-
-                        @Override
-                        public void qqStone() {
-                            ShareUtils.shareQQStone(RecommendFriendsActivity.this, mTencent, qqListener
-                                    , bean.getData().getUrl(), bean.getData().getTitle(), bean.getData().getDes(), bean.getData().getImage());
-                        }
-
-                        @Override
-                        public void weChat() {
-                            ShareUtils.shareWeChat(RecommendFriendsActivity.this, ShareUtils.FRIEND
-                                    , bean.getData().getUrl(), bean.getData().getTitle(), bean.getData().getDes(), bitmap);
-                        }
-
-                        @Override
-                        public void friendCircle() {
-                            ShareUtils.shareWeChat(RecommendFriendsActivity.this, ShareUtils.FRIEND_CIRCLE
-                                    , bean.getData().getUrl(), bean.getData().getTitle(), bean.getData().getDes(), bitmap);
-                        }
-                    });
-            addDialog(dialog);
-        }
-    };
+    //分享控制器
+    private ShareManage shareManage;
 
 
     @Override
@@ -112,115 +81,42 @@ public class RecommendFriendsActivity extends BaseActivity {
 
     @Override
     public boolean isUseEventBus() {
-        return false;
+        return true;
     }
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.recommend_friends));
-        // 其中APP_ID是分配给第三方应用的appid，类型为String。
-        mTencent = Tencent.createInstance(ShareUtils.app_id_qq, getApplicationContext());
-        qqListener = new BaseUiListener();
-        getShare();
+
+
+        //初始化分享功能
+        shareManage = ShareManage.newInstance(getApplicationContext());
+        shareManage.init(this, ShareManage.SHARE_RECOMMEND_FRIENDS_TYPE, getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0));
     }
 
-    //分享
-    private void getShare() {
-
-        OkGo.<String>post(RetrofitHelper.BASE_TEST_URL+ Common.USER_INFO_SHARE)
-                .tag(this)
-                .headers("token", SPUtils.getInstance().getString(SpConfig.TOKEN))//请求头
-                .params("user_id", SPUtils.getInstance().getInt(SpConfig.USER_ID))//用户编号
-                .execute(new com.lzy.okgo.callback.StringCallback() {//返回值
-
-                    @Override
-                    public void onError(Response<String> response) {
-                        super.onError(response);
-                        LogUtils.json(response.body());
-                    }
-
-                    @Override
-                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-                        LogUtils.json(response.body());
-                        try {
-                            bean=new Gson().fromJson(response.body(), ShareBean.class);
-                            if (bean.getCode().equals("200")){
-                                new Thread(() -> {
-                                    Bitmap bitmap = returnBitmap(bean.getData().getImage());
-                                    Message msg = new Message();
-                                    msg.obj = bitmap;
-                                    handler.sendMessage(msg);
-                                }).start();
-
-
-                                tvUrl.setText(bean.getData().getUrl());
-                            }else if (bean.getCode().equals("-1")){
-                                ToastUtils.showShort(bean.getMsg());
-                                LoginUtils.getExitLogin();
-                            }else {
-                                ToastUtils.showShort(bean.getMsg());
-                            }
-                        }catch (JsonSyntaxException | IllegalStateException ignored){
-                            ToastUtils.showShort(getString(R.string.request_error));
-                        }
-                    }
-                });
-    }
-
-    /**
-     * 根据图片的url路径获得Bitmap对象
-     *
-     * @param url
-     * @return
-     */
-    public Bitmap returnBitmap(String url) {
-
-        if (!StringUtils.isEmpty(url)) {
-
-            URL fileUrl = null;
-            Bitmap bitmap = null;
-            try {
-                fileUrl = new URL(url);
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
-            try {
-                HttpURLConnection conn = (HttpURLConnection) fileUrl
-                        .openConnection();
-                conn.setDoInput(true);
-                conn.connect();
-                InputStream is = conn.getInputStream();
-                bitmap = BitmapFactory.decodeStream(is);
-                is.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            return bitmap;
-        }
-
-        return null;
-
-    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Tencent.onActivityResultData(requestCode, resultCode, data, qqListener);
+        Tencent.onActivityResultData(requestCode, resultCode, data, shareManage.getQQListener());
     }
 
     @OnClick({R.id.iv_bar_back, R.id.tv_share})
-    void onClick(View view){
+    void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_bar_back:
                 finish();
                 break;
             case R.id.tv_share:
-                if (dialog != null) {
-                    dialog.showDialog();
-                }
+                shareManage.showDialog();
                 break;
         }
     }
+
+    @Subscribe
+    public void onEventUpdateUrl(ShareEvent event) {
+        tvUrl.setText(event.url);
+    }
+
 }

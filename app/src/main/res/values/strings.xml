@@ -51,6 +51,7 @@
     <string name="company">公司</string>
     <string name="office">职位</string>
     <string name="business_area">业务地区</string>
+    <string name="receiving_area">收货地区</string>
     <string name="business_exp">业务经验</string>
     <string name="product">经营产品</string>
     <string name="please_hint">请输入</string>
@@ -225,6 +226,7 @@
     <string name="stage">阶段</string>
     <string name="time">时间</string>
     <string name="unsubscribe">未认购</string>
+    <string name="subscribed">已认购</string>
     <string name="subscribe">我的认购</string>
     <string name="subscribe_push">认购推送</string>
     <string name="error_correction">纠错</string>

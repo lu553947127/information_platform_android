@@ -70,11 +70,14 @@ public class CustomConfig {
 
     public static final String PROJECT_TYPE = "project_type";//搜索区分工程信息还是招采信息
 
+    //分享类型
+    public static final String SHARE_TYPE = "share_id";
 
     //------------------------------------基建物资搜索类型----------------------------------------------------
-    public static final int MATERIAL_TYPE = 1;                                             //     //
+    public static final int MATERIAL_TYPE = 1;                                             //
     public static final int SUPPLIER_TYPE = 2;                                               //
     //-------------------------------------------------------------------------------------------------------
+
 
 
     public static final String MORE = "更多";

@@ -70,8 +70,13 @@ public class ReleaseAreaSelectActivity extends BaseActivity {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
+        int projectType = getIntent().getIntExtra(CustomConfig.PROJECT_ADDRESS, 0);
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
-        tvBarTitle.setText(getString(R.string.business_area));
+        if (projectType == 2) {
+            tvBarTitle.setText(getString(R.string.receiving_area));
+        } else {
+            tvBarTitle.setText(getString(R.string.business_area));
+        }
         tvBarRight.setText(getString(R.string.save));
 
         LinearLayoutManager managerProvence = new LinearLayoutManager(this);
@@ -106,7 +111,7 @@ public class ReleaseAreaSelectActivity extends BaseActivity {
             });
         });
         areaVm.pageStateLiveData.observe(this, s -> {
-            switch (s){
+            switch (s) {
                 case PageState.PAGE_LOADING:
                     showLoading();
                     break;
@@ -118,8 +123,8 @@ public class ReleaseAreaSelectActivity extends BaseActivity {
     }
 
     @OnClick({R.id.iv_bar_back, R.id.tv_bar_right})
-    void onClick(View view){
-        switch (view.getId()){
+    void onClick(View view) {
+        switch (view.getId()) {
             case R.id.iv_bar_back:
                 finish();
                 break;
@@ -131,7 +136,7 @@ public class ReleaseAreaSelectActivity extends BaseActivity {
                 List<ProvinceBean> types = areaVm.provinceLiveData.getValue();
                 assert types != null;
                 for (ProvinceBean bean : types) {
-                    if (bean.isSelect == 1){
+                    if (bean.isSelect == 1) {
                         province = bean.getName();
                         provinceId = bean.getId();
                         List<CityBean> citys = areaVm.cityLiveData.getValue();
@@ -140,7 +145,7 @@ public class ReleaseAreaSelectActivity extends BaseActivity {
                             if (citys.get(i).getIsSelect() == 1) {
                                 city = citys.get(i).getName();
                                 cityId = citys.get(i).getId();
-                                switch (getIntent().getIntExtra(CustomConfig.PROJECT_ADDRESS, 0)){
+                                switch (getIntent().getIntExtra(CustomConfig.PROJECT_ADDRESS, 0)) {
                                     case 0:
                                     case 2:
                                         EventBus.getDefault().post(new AddressEvent(province, city, provinceId, cityId));

@@ -1173,11 +1173,6 @@ public interface ApiService {
             @Field("msg") String msg
     );
 
-    @FormUrlEncoded
-    @POST("api/Userinfo/share")
-    Flowable<BaseResponse<ShareBean>> getUserInfoShare(
-            @Field("user_id") int user_id
-    );
 
     //搜索职位
     @FormUrlEncoded
@@ -1282,5 +1277,28 @@ public interface ApiService {
     Flowable<BaseResponse> cancelMaterialOrder(
             @Field("user_id") int userId,
             @Field("order_id") int orderId
+    );
+
+    //工程信息分享
+    @FormUrlEncoded
+    @POST("api/Project/share")
+    Flowable<BaseResponse<ShareBean.DataBean>> projectShare(
+            @Field("user_id") int userId,
+            @Field("id") int id
+    );
+
+    //个人中心分享
+    @FormUrlEncoded
+    @POST("api/Userinfo/share")
+    Flowable<BaseResponse<ShareBean.DataBean>> getUserInfoShare(
+            @Field("user_id") int user_id
+    );
+
+    //招采信息分享
+    @FormUrlEncoded
+    @POST("api/Tenderer/share")
+    Flowable<BaseResponse<ShareBean.DataBean>> tendererShare(
+            @Field("user_id") int userId,
+            @Field("id") int id
     );
 }
