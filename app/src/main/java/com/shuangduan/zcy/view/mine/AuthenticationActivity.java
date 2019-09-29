@@ -174,6 +174,13 @@ public class AuthenticationActivity extends BaseActivity implements BaseDialog.P
                     break;
             }
         });
+
+        authenticationVm.authentication();
+        authenticationVm.authenticationStatusLiveData.observe(this,authenBean -> {
+            tvBarRight.setVisibility(View.GONE);
+            ImageLoader.load(this, new ImageConfig.Builder().url(authenBean.getIdentity_image_front()).errorPic(R.drawable.id_card_positive).imageView(ivIdCardPositive).build());
+            ImageLoader.load(this, new ImageConfig.Builder().url(authenBean.getIdentity_image_reverse_site()).errorPic(R.drawable.id_card_negative).imageView(ivIdCardNegative).build());
+        });
     }
 
     @OnClick({R.id.iv_bar_back, R.id.tv_bar_right, R.id.iv_id_card_positive, R.id.iv_id_card_negative})
@@ -183,13 +190,19 @@ public class AuthenticationActivity extends BaseActivity implements BaseDialog.P
                 finish();
                 break;
             case R.id.tv_bar_right:
-                switch (type){
-                    case CustomConfig.uploadTypeIdCard://身份认证
-                        authenticationVm.idCard();
-                        break;
-                    case CustomConfig.uploadTypeBusinessCard://上传名片
-                        break;
+                int isVerified = SPUtils.getInstance().getInt(SpConfig.IS_VERIFIED, 0);
+                if (isVerified != 2){
+                    switch (type){
+                        case CustomConfig.uploadTypeIdCard://身份认证
+                            authenticationVm.idCard();
+                            break;
+                        case CustomConfig.uploadTypeBusinessCard://上传名片
+                            break;
+                    }
+                }else {
+                    ToastUtils.showShort("已认证，请勿重复认证");
                 }
+
                 break;
             case R.id.iv_id_card_positive:
                 uploadPhotoVm.type = UploadPhotoVm.ID_CARD_POSITIVE;
