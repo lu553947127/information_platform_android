@@ -69,7 +69,7 @@ public class ReleaseTypeSelectActivity extends BaseActivity {
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
-        tvBarTitle.setText(getString(R.string.project_type));
+        tvBarTitle.setText(getString(R.string.project_types));
         tvBarRight.setText(getString(R.string.save));
 
         rvCity.setVisibility(View.GONE);
