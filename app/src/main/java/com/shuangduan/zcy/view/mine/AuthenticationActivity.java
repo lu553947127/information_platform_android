@@ -2,30 +2,16 @@ package com.shuangduan.zcy.view.mine;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
-
 import com.blankj.utilcode.util.BarUtils;
-import com.blankj.utilcode.util.ConvertUtils;
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.SizeReadyCallback;
-import com.bumptech.glide.request.target.Target;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
@@ -44,7 +30,6 @@ import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
-
 import java.util.List;
 
 import butterknife.BindView;
@@ -77,7 +62,7 @@ public class AuthenticationActivity extends BaseActivity implements BaseDialog.P
     @BindView(R.id.tv_id_card_negative)
     TextView tvIdCardNegative;
 
-    private String type;
+    private String type,toast_type;
     private PermissionVm permissionVm;
     private RxPermissions rxPermissions;
     private UploadPhotoVm uploadPhotoVm;
@@ -99,6 +84,8 @@ public class AuthenticationActivity extends BaseActivity implements BaseDialog.P
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarRight.setText(getString(R.string.save));
         type = getIntent().getStringExtra(CustomConfig.UPLOAD_TYPE);
+        toast_type = getIntent().getStringExtra(CustomConfig.AUTHENTICATION_TYPE);
+        //判断当前是否为身份证上传或为名片上传
         switch (type){
             case CustomConfig.uploadTypeIdCard://身份认证
                 tvBarTitle.setText(getString(R.string.authentication));
@@ -115,7 +102,35 @@ public class AuthenticationActivity extends BaseActivity implements BaseDialog.P
                 ivIdCardNegative.setImageResource(R.drawable.business_card);
                 break;
         }
-
+        //判断验证身份证显示的土司类型
+        switch (toast_type){
+            case CustomConfig.ID_USER_INFO://用户详情跳转编辑身份证
+                break;
+            case CustomConfig.PROJECT_INFO://工程信息查看详情
+            case CustomConfig.PROJECT_DYNAMIC://工程信息动态查看详情
+            case CustomConfig.SUPPLIER_INFO://优质供应商列表查看详情
+                ToastUtils.showShort("请实名认证后查看详情");
+                break;
+            case CustomConfig.PROJECT_SUBSCRIPTION://工程信息认购
+                ToastUtils.showShort("请实名认证后认购");
+                break;
+            case CustomConfig.NEED_RELATIONSHIP://需求广场  发布找关系
+                ToastUtils.showShort("请实名认证后发布找关系");
+                break;
+            case CustomConfig.RELEASE_MESSAGE://发布信息
+                ToastUtils.showShort("请实名认证后发布信息");
+                break;
+            case CustomConfig.BALANCE_CASH://余额 零钱提现
+                break;
+            case CustomConfig.BALANCE_BANK://余额 银行卡
+                break;
+            case CustomConfig.BALANCE_CASH_RECORD://余额 提现记录
+                break;
+            case CustomConfig.PAYMENT_PASSWORD://支付密码页
+                break;
+            case CustomConfig.SET_PAYMENT_PASSWORD://设置支付密码页
+                break;
+        }
         authenticationVm = ViewModelProviders.of(this).get(AuthenticationVm.class);
         uploadPhotoVm = ViewModelProviders.of(this).get(UploadPhotoVm.class);
         rxPermissions = new RxPermissions(this);

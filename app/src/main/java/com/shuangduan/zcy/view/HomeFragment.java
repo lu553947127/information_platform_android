@@ -207,7 +207,7 @@ public class HomeFragment extends BaseFragment {
                     ActivityUtils.startActivity(DemandActivity.class);
                     break;
                 case ClassifyBean.FBXX:
-                    if (!AuthenticationUtils.Authentication()) return;
+                    if (!AuthenticationUtils.Authentication(CustomConfig.RELEASE_MESSAGE)) return;
                     ActivityUtils.startActivity(ReleaseListActivity.class);
                     break;
             }

@@ -23,12 +23,13 @@ public class AuthenticationUtils {
      * 没有认证调认证界面，认证过的返回true
      * @return
      */
-    public static boolean Authentication(){
+    public static boolean Authentication(String type ){
         int authentication = SPUtils.getInstance().getInt(SpConfig.IS_VERIFIED);
         if (authentication != 2){
             //去认证
             Bundle bundle = new Bundle();
             bundle.putString(CustomConfig.UPLOAD_TYPE, CustomConfig.uploadTypeIdCard);
+            bundle.putString(CustomConfig.AUTHENTICATION_TYPE, type);
             ActivityUtils.startActivity(bundle, AuthenticationActivity.class);
         }else {
             return true;

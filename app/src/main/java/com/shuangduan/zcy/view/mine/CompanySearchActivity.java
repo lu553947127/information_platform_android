@@ -11,20 +11,12 @@ import android.widget.TextView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.blankj.utilcode.util.ActivityUtils;
-import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.BarUtils;
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.google.android.flexbox.FlexboxLayoutManager;
-import com.google.android.material.internal.FlowLayout;
 import com.library.flowlayout.FlowLayoutManager;
-import com.library.flowlayout.SpaceItemDecoration;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.CompanySearchAdapter;
 import com.shuangduan.zcy.adapter.PostAdapter;
@@ -65,8 +57,6 @@ public class CompanySearchActivity extends BaseActivity {
     EditText edtKeyword;
     @BindView(R.id.rv_company)
     RecyclerView rvCompany;
-    @BindView(R.id.tv_bar_right)
-    AppCompatTextView tvBarRight;
 
     @BindView(R.id.tv_post)
     TextView tvPostView;
@@ -220,16 +210,11 @@ public class CompanySearchActivity extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.iv_bar_back, R.id.tv_positive, R.id.tv_bar_right})
+    @OnClick({R.id.iv_bar_back, R.id.tv_positive})
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_bar_back:
                 finish();
-                break;
-            case R.id.tv_bar_right:
-                Bundle bundle = new Bundle();
-                bundle.putString(CustomConfig.UPLOAD_TYPE, CustomConfig.uploadTypeBusinessCard);
-                ActivityUtils.startActivity(bundle, AuthenticationActivity.class);
                 break;
             case R.id.tv_positive:
                 if (StringUtils.isTrimEmpty(edtKeyword.getText().toString())) {

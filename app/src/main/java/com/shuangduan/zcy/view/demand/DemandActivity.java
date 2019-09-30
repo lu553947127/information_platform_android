@@ -13,6 +13,7 @@ import com.blankj.utilcode.util.BarUtils;
 import com.google.android.material.tabs.TabLayout;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ViewPagerAdapter;
+import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.utils.AuthenticationUtils;
 
@@ -77,8 +78,10 @@ public class DemandActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_bar_right:
-                if (!AuthenticationUtils.Authentication()) return;
-                ActivityUtils.startActivity(DemandReleaseActivity.class);
+                if (vp.getCurrentItem()==0){
+                    if (!AuthenticationUtils.Authentication(CustomConfig.NEED_RELATIONSHIP)) return;
+                    ActivityUtils.startActivity(DemandReleaseActivity.class);
+                }
                 break;
         }
     }

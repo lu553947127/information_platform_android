@@ -70,8 +70,37 @@ public class CustomConfig {
 
     public static final String PROJECT_TYPE = "project_type";//搜索区分工程信息还是招采信息
 
-    //分享类型
-    public static final String SHARE_TYPE = "share_id";
+
+    //------------------------------------身份验证判断----------------------------------------------------
+    //身份认证提示类型
+    public static final String AUTHENTICATION_TYPE = "authentication_id";
+    //用户详情跳转编辑身份证
+    public static final String ID_USER_INFO = "id_user_info";
+    //工程信息查看详情
+    public static final String PROJECT_INFO = "project_info";
+    //工程信息动态查看详情
+    public static final String PROJECT_DYNAMIC = "project_dynamic";
+    //工程信息认购
+    public static final String PROJECT_SUBSCRIPTION = "project_subscription";
+    //优质供应商列表查看详情
+    public static final String SUPPLIER_INFO = "supplier_info";
+    //需求广场  发布找关系
+    public static final String NEED_RELATIONSHIP = "need_relationship";
+    //发布信息
+    public static final String RELEASE_MESSAGE = "release_message";
+    //余额 零钱提现
+    public static final String BALANCE_CASH = "balance_cash";
+    //余额 银行卡
+    public static final String BALANCE_BANK = "balance_bank";
+    //余额 提现记录
+    public static final String BALANCE_CASH_RECORD = "balance_cash_record";
+    //支付密码页
+    public static final String PAYMENT_PASSWORD = "payment_password";
+    //设置支付密码页
+    public static final String SET_PAYMENT_PASSWORD = "set_payment_password";
+    //-------------------------------------------------------------------------------------------------------
+
+
 
     //------------------------------------基建物资搜索类型----------------------------------------------------
     public static final int MATERIAL_TYPE = 1;                                             //

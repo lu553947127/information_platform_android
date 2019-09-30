@@ -281,7 +281,7 @@ public class ProjectDetailActivity extends BaseActivity {
                 }
                 break;
             case R.id.fl_release:
-                if (!AuthenticationUtils.Authentication()) return;
+                if (!AuthenticationUtils.Authentication(CustomConfig.RELEASE_MESSAGE)) return;
                 bundle.putInt(CustomConfig.RELEASE_TYPE, 1);
                 bundle.putInt(CustomConfig.PROJECT_ID, getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0));
                 bundle.putString(CustomConfig.PROJECT_NAME, tvTitle.getText().toString());
