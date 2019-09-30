@@ -68,7 +68,7 @@ public class IncomePeopleActivity extends BaseActivity implements BaseQuickAdapt
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         int degree = getIntent().getIntExtra(CustomConfig.PEOPLE_DEGREE, CustomConfig.FIRST_DEGREE);
         if (degree == 7) {
-            tvBarTitle.setText(String.format(getString(R.string.format_income_degree), 3));
+            tvBarTitle.setText(getString(R.string.income_people));
         } else {
             tvBarTitle.setText(String.format(getString(R.string.format_income_degree), degree));
         }

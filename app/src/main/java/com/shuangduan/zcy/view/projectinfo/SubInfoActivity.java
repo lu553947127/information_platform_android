@@ -148,13 +148,13 @@ public class SubInfoActivity extends BaseActivity {
 
     private void initChart() {
         values = new ArrayList<>();
-        LineDataSet set = new LineDataSet(values, "收益(紫金币)");
+        LineDataSet set = new LineDataSet(values, "");
         chart.animateXY(1500, 1500);
         chart.setNoDataText("没有数据啊");
         //关闭背景颜色
         chart.setDrawGridBackground(false);
         //线的颜色
-        set.setColor(getResources().getColor(R.color.colorPrimary));
+        set.setColor(getResources().getColor(R.color.colorFFF));
         //节点显示
         set.setDrawCircles(true);
         set.setDrawValues(true);
