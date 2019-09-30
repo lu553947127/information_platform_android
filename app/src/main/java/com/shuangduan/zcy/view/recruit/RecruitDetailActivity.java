@@ -1,18 +1,12 @@
 package com.shuangduan.zcy.view.recruit;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
@@ -20,46 +14,25 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
-import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
-import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
-import com.lzy.okgo.OkGo;
-import com.lzy.okgo.model.Response;
 import com.shuangduan.zcy.R;
-import com.shuangduan.zcy.app.Common;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.CustomDialog;
 import com.shuangduan.zcy.dialog.PayDialog;
-import com.shuangduan.zcy.dialog.ShareDialog;
-import com.shuangduan.zcy.listener.BaseUiListener;
 import com.shuangduan.zcy.manage.ShareManage;
 import com.shuangduan.zcy.model.api.PageState;
-import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
-import com.shuangduan.zcy.model.bean.ShareBean;
-import com.shuangduan.zcy.utils.LoginUtils;
-import com.shuangduan.zcy.utils.ShareUtils;
 import com.shuangduan.zcy.view.mine.SetPwdPayActivity;
-import com.shuangduan.zcy.view.projectinfo.ProjectDetailActivity;
 import com.shuangduan.zcy.view.recharge.RechargeActivity;
 import com.shuangduan.zcy.vm.CoinPayVm;
 import com.shuangduan.zcy.vm.RecruitDetailVm;
-import com.shuangduan.zcy.vm.ShareVm;
 import com.shuangduan.zcy.vm.UpdatePwdPayVm;
 import com.shuangduan.zcy.weight.RichText;
 import com.tencent.tauth.Tencent;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -118,6 +91,11 @@ public class RecruitDetailActivity extends BaseActivity {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
+
+        //初始化分享功能
+        shareManage = ShareManage.newInstance(getApplicationContext());
+        shareManage.init(this, ShareManage.SHARE_TENDERER_TYPE, id);
+
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.message_detail));
         tvBarRight.setVisibility(View.GONE);
@@ -213,9 +191,7 @@ public class RecruitDetailActivity extends BaseActivity {
             }
         });
 
-        //初始化分享功能
-        shareManage = ShareManage.newInstance(getApplicationContext());
-        shareManage.init(this, ShareManage.SHARE_TENDERER_TYPE, id);
+
 
     }
 

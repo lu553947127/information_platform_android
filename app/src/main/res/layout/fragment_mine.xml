@@ -21,7 +21,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="130dp"
+                android:layout_height="131dp"
                 android:background="@drawable/shape_bg_mine">
 
                 <com.shuangduan.zcy.weight.CircleImageView
@@ -37,9 +37,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/iv_user"
-                    android:layout_marginTop="39dp"
+                    android:layout_alignTop="@id/iv_user"
                     android:textColor="@color/colorFFF"
-                    android:textSize="16sp"/>
+                    android:textSize="14sp"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_balance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/tv_username"
+                    android:layout_below="@+id/tv_username"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/colorFFF"
+                    android:textSize="12sp" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_member"
@@ -58,19 +68,25 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignLeft="@+id/tv_username"
-                    android:layout_marginTop="74dp"
+                    android:layout_below="@+id/tv_balance"
+                    android:layout_marginTop="10dp"
                     android:textColor="@color/colorFFF"
                     android:textSize="12sp"/>
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_balance"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginTop="40dp"
-                    android:layout_marginRight="14dp"
+
+                <TextView
+                    android:id="@+id/tv_withdraw"
+                    android:layout_width="60dp"
+                    android:layout_height="21dp"
+                    android:gravity="center"
+                    android:background="@drawable/shape_bg_withdraw"
+                    android:layout_marginRight="15dp"
+                    android:layout_alignTop="@id/iv_user"
+                    android:layout_marginTop="10dp"
+                    android:layout_alignParentEnd="true"
                     android:textColor="@color/colorFFF"
-                    android:textSize="14sp" />
+                    android:textSize="12sp"
+                    android:text="@string/withdraw"/>
 
                 <TextView
                     android:id="@+id/tv_recharge"
@@ -78,9 +94,9 @@
                     android:layout_height="21dp"
                     android:gravity="center"
                     android:background="@drawable/shape_bg_recharge"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="14dp"
                     android:layout_marginRight="15dp"
-                    android:layout_below="@+id/tv_balance"
+                    android:layout_below="@+id/tv_withdraw"
                     android:layout_alignParentEnd="true"
                     android:textColor="@color/colorFFF"
                     android:textSize="12sp"

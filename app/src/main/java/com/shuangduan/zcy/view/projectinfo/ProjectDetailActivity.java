@@ -131,6 +131,11 @@ public class ProjectDetailActivity extends BaseActivity {
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         mapView.onCreate(savedInstanceState);// 此方法必须重写
+
+
+        //初始化分享功能
+        shareManage = ShareManage.newInstance(getApplicationContext());
+        shareManage.init(this, ShareManage.SHARE_PROJECT_TYPE, getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0));
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.message_detail));
         ivBarRight.setImageResource(R.drawable.icon_share);
@@ -145,7 +150,7 @@ public class ProjectDetailActivity extends BaseActivity {
             ivCollect.setImageResource(i == 1 ? R.drawable.icon_collected : R.drawable.icon_collect);
         });
         projectDetailVm.subscribeLiveData.observe(this, i -> {
-            tvSubscribe.setText(getString(i == 1 ? R.string.subscribe : R.string.unsubscribe));
+            tvSubscribe.setText(getString(i == 1 ? R.string.subscribed : R.string.unsubscribe));
             ivSubscribe.setImageResource(i == 1 ? R.drawable.icon_shopping_cart_select : R.drawable.icon_shopping_cart);
         });
         projectDetailVm.latitudeLiveData.observe(this, s -> {
@@ -213,9 +218,6 @@ public class ProjectDetailActivity extends BaseActivity {
             tabLayout.getTabAt(position).select();
         }
 
-        //初始化分享功能
-        shareManage = ShareManage.newInstance(getApplicationContext());
-        shareManage.init(this, ShareManage.SHARE_PROJECT_TYPE, getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0));
     }
 
 
@@ -269,16 +271,20 @@ public class ProjectDetailActivity extends BaseActivity {
                 getMembersStatus();
                 break;
             case R.id.fl_subscription:
-                switch (projectDetailVm.subscribeLiveData.getValue()) {
-                    case 1:
-                        bundle.putInt(CustomConfig.PROJECT_ID, getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0));
-                        ActivityUtils.startActivity(bundle, SubInfoActivity.class);
-                        break;
-                    case 0:
-                        bundle.putInt(CustomConfig.PROJECT_ID, getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0));
-                        ActivityUtils.startActivity(bundle, GoToSubActivity.class);
-                        break;
+                //验证身份信息
+                if (AuthenticationUtils.Authentication(CustomConfig.PROJECT_SUBSCRIPTION)) {
+                    switch (projectDetailVm.subscribeLiveData.getValue()) {
+                        case 1:
+                            bundle.putInt(CustomConfig.PROJECT_ID, getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0));
+                            ActivityUtils.startActivity(bundle, SubInfoActivity.class);
+                            break;
+                        case 0:
+                            bundle.putInt(CustomConfig.PROJECT_ID, getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0));
+                            ActivityUtils.startActivity(bundle, GoToSubActivity.class);
+                            break;
+                    }
                 }
+
                 break;
             case R.id.fl_release:
                 if (!AuthenticationUtils.Authentication(CustomConfig.RELEASE_MESSAGE)) return;

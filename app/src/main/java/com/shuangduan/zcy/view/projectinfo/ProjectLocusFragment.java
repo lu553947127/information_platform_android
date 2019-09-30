@@ -35,6 +35,7 @@ import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
 import com.shuangduan.zcy.model.bean.IMFriendApplyCountBean;
 import com.shuangduan.zcy.model.bean.TrackBean;
 import com.shuangduan.zcy.model.event.RefreshViewLocusEvent;
+import com.shuangduan.zcy.utils.AuthenticationUtils;
 import com.shuangduan.zcy.utils.LoginUtils;
 import com.shuangduan.zcy.view.PhotoViewActivity;
 import com.shuangduan.zcy.view.mine.SetPwdPayActivity;
@@ -100,28 +101,31 @@ public class ProjectLocusFragment extends BaseLazyFragment {
         locusAdapter = new LocusAdapter(R.layout.item_locus, null){
             @Override
             public void readDetail(int position, String price) {
-                TrackBean.ListBean listBean = locusAdapter.getData().get(position);
-                coinPayVm.locusId = listBean.getId();
-                new CustomDialog(mActivity)
-                        .setTip(String.format(getString(R.string.format_pay_price), price))
-                        .setCallBack(new BaseDialog.CallBack() {
-                            @Override
-                            public void cancel() {
+                //验证身份信息
+                if (AuthenticationUtils.Authentication(CustomConfig.PROJECT_DYNAMIC)) {
+                    TrackBean.ListBean listBean = locusAdapter.getData().get(position);
+                    coinPayVm.locusId = listBean.getId();
+                    new CustomDialog(mActivity)
+                            .setTip(String.format(getString(R.string.format_pay_price), price))
+                            .setCallBack(new BaseDialog.CallBack() {
+                                @Override
+                                public void cancel() {
 
-                            }
-
-                            @Override
-                            public void ok(String s) {
-                                int status = SPUtils.getInstance().getInt(SpConfig.PWD_PAY_STATUS, 0);
-                                if (status == 1){
-                                    goToPay();
-                                }else {
-                                    //查询是否设置支付密码
-                                    updatePwdPayVm.payPwdState();
                                 }
-                            }
-                        })
-                        .showDialog();
+
+                                @Override
+                                public void ok(String s) {
+                                    int status = SPUtils.getInstance().getInt(SpConfig.PWD_PAY_STATUS, 0);
+                                    if (status == 1){
+                                        goToPay();
+                                    }else {
+                                        //查询是否设置支付密码
+                                        updatePwdPayVm.payPwdState();
+                                    }
+                                }
+                            })
+                            .showDialog();
+                }
             }
         };
         locusAdapter.setEmptyView(R.layout.layout_loading_top, rvLocus);

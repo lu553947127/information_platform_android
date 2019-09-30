@@ -30,6 +30,7 @@ import com.shuangduan.zcy.dialog.CustomDialog;
 import com.shuangduan.zcy.dialog.PayDialog;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.SupplierBean;
+import com.shuangduan.zcy.utils.AuthenticationUtils;
 import com.shuangduan.zcy.view.mine.SetPwdPayActivity;
 import com.shuangduan.zcy.view.recharge.RechargeActivity;
 import com.shuangduan.zcy.vm.CoinPayVm;
@@ -91,29 +92,32 @@ public class SupplierActivity extends BaseActivity {
         rv.setAdapter(adapter);
         adapter.setOnItemChildClickListener((adapter1, view, position) -> {
             SupplierBean.ListBean listBean = adapter.getData().get(position);
-            switch (view.getId()){
+            switch (view.getId()) {
                 case R.id.tv_read:
-                    coinPayVm.supplierId = listBean.getId();
-                    addDialog(new CustomDialog(this)
-                            .setTip(String.format(getString(R.string.format_pay_price), listBean.getDetail_price()))
-                            .setCallBack(new BaseDialog.CallBack() {
-                                @Override
-                                public void cancel() {
+                    //验证身份信息
+                    if (AuthenticationUtils.Authentication(CustomConfig.SUPPLIER_INFO)) {
+                        coinPayVm.supplierId = listBean.getId();
+                        addDialog(new CustomDialog(this)
+                                .setTip(String.format(getString(R.string.format_pay_price), listBean.getDetail_price()))
+                                .setCallBack(new BaseDialog.CallBack() {
+                                    @Override
+                                    public void cancel() {
 
-                                }
-
-                                @Override
-                                public void ok(String s) {
-                                    int status = SPUtils.getInstance().getInt(SpConfig.PWD_PAY_STATUS, 0);
-                                    if (status == 1){
-                                        goToPay();
-                                    }else {
-                                        //查询是否设置支付密码
-                                        updatePwdPayVm.payPwdState();
                                     }
-                                }
-                            })
-                            .showDialog());
+
+                                    @Override
+                                    public void ok(String s) {
+                                        int status = SPUtils.getInstance().getInt(SpConfig.PWD_PAY_STATUS, 0);
+                                        if (status == 1) {
+                                            goToPay();
+                                        } else {
+                                            //查询是否设置支付密码
+                                            updatePwdPayVm.payPwdState();
+                                        }
+                                    }
+                                })
+                                .showDialog());
+                    }
                     break;
             }
         });
@@ -129,7 +133,7 @@ public class SupplierActivity extends BaseActivity {
             if (supplierBean.getPage() == 1) {
                 adapter.setNewData(supplierBean.getList());
                 adapter.setEmptyView(R.layout.layout_empty, rv);
-            }else {
+            } else {
                 adapter.addData(supplierBean.getList());
             }
             setNoMore(supplierBean.getPage(), supplierBean.getCount());
@@ -154,14 +158,14 @@ public class SupplierActivity extends BaseActivity {
         updatePwdPayVm.stateLiveData.observe(this, pwdPayStateBean -> {
             int status = pwdPayStateBean.getStatus();
             SPUtils.getInstance().put(SpConfig.PWD_PAY_STATUS, status);
-            if (status == 1){
+            if (status == 1) {
                 goToPay();
-            }else {
+            } else {
                 ActivityUtils.startActivity(SetPwdPayActivity.class);
             }
         });
         updatePwdPayVm.pageStateLiveData.observe(this, s -> {
-            switch (s){
+            switch (s) {
                 case PageState.PAGE_LOADING:
                     showLoading();
                     break;
@@ -173,10 +177,10 @@ public class SupplierActivity extends BaseActivity {
 
         coinPayVm = ViewModelProviders.of(this).get(CoinPayVm.class);
         coinPayVm.supplierPayLiveData.observe(this, coinPayResultBean -> {
-            if (coinPayResultBean.getPay_status() == 1){
+            if (coinPayResultBean.getPay_status() == 1) {
                 ToastUtils.showShort(getString(R.string.buy_success));
                 supplierVm.getSupplier();
-            }else {
+            } else {
                 //余额不足
                 addDialog(new CustomDialog(this)
                         .setIcon(R.drawable.icon_error)
@@ -196,7 +200,7 @@ public class SupplierActivity extends BaseActivity {
             }
         });
         coinPayVm.pageStateLiveData.observe(this, s -> {
-            switch (s){
+            switch (s) {
                 case PageState.PAGE_LOADING:
                     showLoading();
                     break;
@@ -207,21 +211,21 @@ public class SupplierActivity extends BaseActivity {
         });
     }
 
-    private void setNoMore(int page, int count){
-        if (page == 1){
-            if (page * 10 >= count){
-                if (refresh.getState() == RefreshState.None){
+    private void setNoMore(int page, int count) {
+        if (page == 1) {
+            if (page * 10 >= count) {
+                if (refresh.getState() == RefreshState.None) {
                     refresh.setNoMoreData(true);
-                }else {
+                } else {
                     refresh.finishRefreshWithNoMoreData();
                 }
-            }else {
+            } else {
                 refresh.finishRefresh();
             }
-        }else {
-            if (page * 10 >= count){
+        } else {
+            if (page * 10 >= count) {
                 refresh.finishLoadMoreWithNoMoreData();
-            }else {
+            } else {
                 refresh.finishLoadMore();
             }
         }
@@ -230,7 +234,7 @@ public class SupplierActivity extends BaseActivity {
     /**
      * 去支付
      */
-    private void goToPay(){
+    private void goToPay() {
         addDialog(new PayDialog(this)
                 .setSingleCallBack((item, position) -> {
                     coinPayVm.paySupplier(item);
@@ -239,8 +243,8 @@ public class SupplierActivity extends BaseActivity {
     }
 
     @OnClick({R.id.iv_bar_back, R.id.iv_bar_right})
-    void onClick(View v){
-        switch (v.getId()){
+    void onClick(View v) {
+        switch (v.getId()) {
             case R.id.iv_bar_back:
                 finish();
                 break;

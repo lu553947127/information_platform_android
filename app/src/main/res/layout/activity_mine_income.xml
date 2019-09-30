@@ -72,13 +72,22 @@
         android:textSize="14sp"
         android:text="@string/income_trend_s"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="30dp"
+        android:paddingLeft="30dp"
+        android:background="@color/colorFFF"
+        android:textSize="10sp"
+        android:textColor="#000"
+        android:text="(元)"/>
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="224dp"
         android:background="@color/colorFFF"
         android:paddingLeft="24dp"
         android:paddingRight="24dp"
-        android:paddingTop="30dp"
         android:paddingBottom="15dp">
 
         <com.github.mikephil.charting.charts.LineChart

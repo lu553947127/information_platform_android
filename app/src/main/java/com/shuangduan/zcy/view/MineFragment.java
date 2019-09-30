@@ -21,6 +21,7 @@ import com.shuangduan.zcy.model.event.AvatarEvent;
 import com.shuangduan.zcy.model.event.CoinEvent;
 import com.shuangduan.zcy.model.event.RechargeSuccessEvent;
 import com.shuangduan.zcy.model.event.UserNameEvent;
+import com.shuangduan.zcy.utils.AuthenticationUtils;
 import com.shuangduan.zcy.utils.BarUtils;
 import com.shuangduan.zcy.utils.DensityUtil;
 import com.shuangduan.zcy.utils.image.ImageConfig;
@@ -160,10 +161,10 @@ public class MineFragment extends BaseFragment {
         return true;
     }
 
-    @OnClick({R.id.tv_username, R.id.iv_user, R.id.tv_my_subscription, R.id.fl_order, R.id.fl_income, R.id.tv_balance,
+    @OnClick({R.id.tv_username, R.id.iv_user, R.id.tv_my_subscription, R.id.fl_order, R.id.fl_income,
             R.id.tv_my_demand, R.id.tv_mine_subscription, R.id.tv_my_material,
             R.id.tv_transaction_record, R.id.tv_agreement_manage, R.id.tv_pwd_pay, R.id.tv_recharge,
-            R.id.tv_read_history, R.id.tv_feedback, R.id.tv_recommend_friends, R.id.tv_my_collection, R.id.tv_set, R.id.tv_helper})
+            R.id.tv_read_history, R.id.tv_feedback, R.id.tv_recommend_friends, R.id.tv_my_collection, R.id.tv_set, R.id.tv_helper,R.id.tv_withdraw})
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_username:
@@ -172,7 +173,7 @@ public class MineFragment extends BaseFragment {
                 bundle.putInt(CustomConfig.UID, SPUtils.getInstance().getInt(SpConfig.USER_ID));
                 ActivityUtils.startActivity(bundle, UserInfoActivity.class);
                 break;
-            case R.id.tv_balance:
+            case R.id.tv_withdraw:
                 ActivityUtils.startActivity(BalanceActivity.class);
                 break;
             case R.id.tv_recharge:
@@ -193,7 +194,10 @@ public class MineFragment extends BaseFragment {
             case R.id.tv_agreement_manage:
                 break;
             case R.id.tv_pwd_pay:
-                ActivityUtils.startActivity(PwdPayActivity.class);
+                //验证身份信息
+                if (AuthenticationUtils.Authentication(CustomConfig.SET_PAYMENT_PASSWORD)) {
+                    ActivityUtils.startActivity(PwdPayActivity.class);
+                }
                 break;
             case R.id.fl_order:
                 ActivityUtils.startActivity(MineOrderActivity.class);

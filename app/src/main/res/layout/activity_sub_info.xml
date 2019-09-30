@@ -1,25 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
 
-    <include layout="@layout/toolbar"/>
+    <include layout="@layout/toolbar" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingLeft="15dp"
-        android:paddingRight="15dp"
         android:paddingTop="15dp"
+        android:paddingRight="15dp"
         android:paddingBottom="20dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/subscription_person"
             android:textColor="@color/colorTv"
-            android:textSize="14sp"
-            android:text="@string/subscription_person"/>
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/tv_sub_person"
@@ -27,30 +30,30 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="45dp"
             android:textColor="@color/color_666666"
-            android:textSize="14sp"/>
+            android:textSize="14sp" />
 
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@drawable/divider_15"/>
+        android:background="@drawable/divider_15" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingLeft="15dp"
-        android:paddingRight="15dp"
         android:paddingTop="15dp"
+        android:paddingRight="15dp"
         android:paddingBottom="20dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/subscription_time"
             android:textColor="@color/colorTv"
-            android:textSize="14sp"
-            android:text="@string/subscription_time"/>
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/tv_sub_time"
@@ -58,30 +61,30 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="31dp"
             android:textColor="@color/color_666666"
-            android:textSize="14sp"/>
+            android:textSize="14sp" />
 
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@drawable/divider_15"/>
+        android:background="@drawable/divider_15" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingLeft="15dp"
-        android:paddingRight="15dp"
         android:paddingTop="15dp"
+        android:paddingRight="15dp"
         android:paddingBottom="20dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/hold_time"
             android:textColor="@color/colorTv"
-            android:textSize="14sp"
-            android:text="@string/hold_time"/>
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/tv_hold_time"
@@ -89,30 +92,30 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="31dp"
             android:textColor="@color/color_666666"
-            android:textSize="14sp"/>
+            android:textSize="14sp" />
 
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@drawable/divider_15"/>
+        android:background="@drawable/divider_15" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingLeft="15dp"
-        android:paddingRight="15dp"
         android:paddingTop="15dp"
+        android:paddingRight="15dp"
         android:paddingBottom="20dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/read_people_num"
             android:textColor="@color/colorTv"
-            android:textSize="14sp"
-            android:text="@string/read_people_num"/>
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/tv_read_people_num"
@@ -120,30 +123,30 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="31dp"
             android:textColor="@color/color_666666"
-            android:textSize="14sp"/>
+            android:textSize="14sp" />
 
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@drawable/divider_15"/>
+        android:background="@drawable/divider_15" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingLeft="15dp"
-        android:paddingRight="15dp"
         android:paddingTop="15dp"
+        android:paddingRight="15dp"
         android:paddingBottom="20dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/expected_return"
             android:textColor="@color/colorTv"
-            android:textSize="14sp"
-            android:text="@string/expected_return"/>
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/tv_expected_return"
@@ -151,30 +154,30 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="31dp"
             android:textColor="@color/color_666666"
-            android:textSize="14sp"/>
+            android:textSize="14sp" />
 
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@drawable/divider_15"/>
+        android:background="@drawable/divider_15" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingLeft="15dp"
-        android:paddingRight="15dp"
         android:paddingTop="15dp"
+        android:paddingRight="15dp"
         android:paddingBottom="20dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/generate_revenue"
             android:textColor="@color/colorTv"
-            android:textSize="14sp"
-            android:text="@string/generate_revenue"/>
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/tv_generate_revenue"
@@ -182,32 +185,52 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="31dp"
             android:textColor="@color/color_666666"
-            android:textSize="14sp"/>
+            android:textSize="14sp" />
 
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@drawable/divider_15"/>
+        android:background="@drawable/divider_15" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingLeft="15dp"
-        android:paddingRight="15dp"
         android:paddingTop="15dp"
+        android:paddingRight="15dp"
         android:paddingBottom="20dp"
+        android:text="@string/income_trend"
         android:textColor="@color/colorTv"
-        android:textSize="14sp"
-        android:text="@string/income_trend"/>
+        android:textSize="14sp" />
 
-    <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/chart"
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="309dp"
         android:layout_height="160dp"
         android:layout_gravity="center_horizontal">
 
-    </com.github.mikephil.charting.charts.LineChart>
+        <TextView
+            android:id="@+id/tv_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorFFF"
+            android:textSize="10sp"
+            android:textColor="#000"
+            android:text="(元)"
+            tools:ignore="MissingConstraints" />
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/chart"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_money"
+            tools:ignore="MissingConstraints">
+
+        </com.github.mikephil.charting.charts.LineChart>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

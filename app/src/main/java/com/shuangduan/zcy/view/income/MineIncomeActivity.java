@@ -83,8 +83,8 @@ public class MineIncomeActivity extends BaseActivity {
         mineIncomeVm = ViewModelProviders.of(this).get(MineIncomeVm.class);
         mineIncomeVm.incomeLiveData.observe(this, mineIncomeBean -> {
             MineIncomeBean.ProceedsBean proceeds = mineIncomeBean.getProceeds();
-            tvExpectedReturn.setText(proceeds.getAll_funds()+"紫金币");
-            tvWithdrawIncome.setText(proceeds.getCoin()+"紫金币");
+            tvExpectedReturn.setText(proceeds.getAll_funds() + "紫金币");
+            tvWithdrawIncome.setText(proceeds.getCoin() + "紫金币");
             List<MineIncomeBean.ListBean> list = mineIncomeBean.getList();
 
             values.clear();
@@ -99,13 +99,23 @@ public class MineIncomeActivity extends BaseActivity {
             chart.getXAxis().setLabelCount(list.size());
             chart.getXAxis().setAxisMaximum(list.size());
             chart.getXAxis().setDrawLabels(true);//绘制标签  指x轴上的对应数值
+
+
+            chart.getXAxis().setValueFormatter(new IndexAxisValueFormatter() {
+                @Override
+                public String getFormattedValue(float value) {
+                    return (int)value + "月";
+                }
+            });
+
+
             LineDataSet lineDataSet = (LineDataSet) chart.getData().getDataSetByIndex(0);
             lineDataSet.setValues(values);
             chart.getData().notifyDataChanged();
             chart.notifyDataSetChanged();
         });
         mineIncomeVm.pageStateLiveData.observe(this, s -> {
-            switch (s){
+            switch (s) {
                 case PageState.PAGE_LOADING:
                     showLoading();
                     break;
@@ -119,20 +129,20 @@ public class MineIncomeActivity extends BaseActivity {
 
     private void initChart() {
         values = new ArrayList<>();
-        LineDataSet set = new LineDataSet(values, "收益(紫金币)");
+        LineDataSet set = new LineDataSet(values, "");
         chart.animateXY(1500, 1500);
         chart.setNoDataText("没有数据啊");
         //关闭背景颜色
         chart.setDrawGridBackground(false);
         //线的颜色
-        set.setColor(getResources().getColor(R.color.colorPrimary));
+        set.setColor(getResources().getColor(R.color.colorFFF));
         //节点显示
         set.setDrawCircles(true);
         set.setDrawValues(true);
         //关闭简介
         chart.getDescription().setEnabled(false);
         //关闭手势
-        chart.setTouchEnabled(false);
+        chart.setTouchEnabled(true);
         //关闭x轴数值显示
         chart.getXAxis().setEnabled(true);
         chart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);//设置x轴的显示位置
@@ -143,9 +153,9 @@ public class MineIncomeActivity extends BaseActivity {
         chart.setData(new LineData(set));
     }
 
-    @OnClick({R.id.iv_bar_back, R.id.tv_read_detail,R.id.tv_bar_right})
-    void onClick(View view){
-        switch (view.getId()){
+    @OnClick({R.id.iv_bar_back, R.id.tv_read_detail, R.id.tv_bar_right})
+    void onClick(View view) {
+        switch (view.getId()) {
             case R.id.iv_bar_back:
                 finish();
                 break;
@@ -155,7 +165,7 @@ public class MineIncomeActivity extends BaseActivity {
             case R.id.tv_bar_right:
                 Bundle bundle = new Bundle();
                 bundle.putString("income", "1");
-                ActivityUtils.startActivity(bundle,AboutOursActivity.class);
+                ActivityUtils.startActivity(bundle, AboutOursActivity.class);
                 break;
         }
     }

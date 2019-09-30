@@ -16,6 +16,7 @@ import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.PageState;
+import com.shuangduan.zcy.utils.AuthenticationUtils;
 import com.shuangduan.zcy.vm.AuthenticationVm;
 
 import butterknife.BindView;
@@ -55,7 +56,7 @@ public class BalanceActivity extends BaseActivity {
 
         authenticationVm = ViewModelProviders.of(this).get(AuthenticationVm.class);
         authenticationVm.authenticationStatusLiveData.observe(this, authenBean -> {
-            switch (authenBean.getCard_status()){
+            switch (authenBean.getCard_status()) {
                 case 1:
                     ToastUtils.showShort("审核中，请等待审核成功后进入");
                     break;
@@ -63,17 +64,17 @@ public class BalanceActivity extends BaseActivity {
                     SPUtils.getInstance().put(SpConfig.IS_VERIFIED, authenBean.getCard_status());
                     ActivityUtils.startActivity(WithdrawActivity.class);
                     break;
-                    default:
-                        //去认证
-                        Bundle bundle = new Bundle();
-                        bundle.putString(CustomConfig.UPLOAD_TYPE, CustomConfig.uploadTypeIdCard);
-                        ActivityUtils.startActivity(bundle, AuthenticationActivity.class);
-                        finish();
-                        break;
+                default:
+                    //去认证
+                    Bundle bundle = new Bundle();
+                    bundle.putString(CustomConfig.UPLOAD_TYPE, CustomConfig.uploadTypeIdCard);
+                    ActivityUtils.startActivity(bundle, AuthenticationActivity.class);
+                    finish();
+                    break;
             }
         });
         authenticationVm.pageStateLiveData.observe(this, s -> {
-            switch (s){
+            switch (s) {
                 case PageState.PAGE_LOADING:
                     showLoading();
                     break;
@@ -85,36 +86,28 @@ public class BalanceActivity extends BaseActivity {
     }
 
     @OnClick({R.id.iv_bar_back, R.id.tv_loose_change_withdraw, R.id.tv_bank_card, R.id.tv_withdraw_record})
-    void onClick(View view){
-        int isVerified = SPUtils.getInstance().getInt(SpConfig.IS_VERIFIED);
-        switch (view.getId()){
+    void onClick(View view) {
+        //验证身份信息
+        switch (view.getId()) {
             case R.id.iv_bar_back:
                 finish();
                 break;
             case R.id.tv_loose_change_withdraw:
-                if (isVerified == 2){
-                    //认证成功
+                if (AuthenticationUtils.Authentication(CustomConfig.BALANCE_CASH)) {
                     ActivityUtils.startActivity(WithdrawActivity.class);
-                }else {
-                    authenticationVm.authentication();
                 }
                 break;
             case R.id.tv_bank_card:
-                if (isVerified == 2){
-                    //认证成功
+                if (AuthenticationUtils.Authentication(CustomConfig.BALANCE_BANK)) {
                     ActivityUtils.startActivity(BankCardListActivity.class);
-                }else {
-                    authenticationVm.authentication();
                 }
                 break;
             case R.id.tv_withdraw_record:
-                if (isVerified == 2){
-                    //认证成功
+                if (AuthenticationUtils.Authentication(CustomConfig.BALANCE_CASH_RECORD)) {
                     ActivityUtils.startActivity(WithdrawRecordActivity.class);
-                }else {
-                    authenticationVm.authentication();
                 }
                 break;
         }
+
     }
 }

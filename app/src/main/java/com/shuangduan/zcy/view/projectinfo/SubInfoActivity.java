@@ -112,6 +112,15 @@ public class SubInfoActivity extends BaseActivity {
             chart.getXAxis().setAxisMaximum(list.size());
             chart.getAxisLeft().setAxisMinimum(0);
             chart.getXAxis().setDrawLabels(true);//绘制标签  指x轴上的对应数值
+
+            chart.getXAxis().setValueFormatter(new IndexAxisValueFormatter() {
+                @Override
+                public String getFormattedValue(float value) {
+                    return (int)value + "月";
+                }
+            });
+
+
             LineDataSet lineDataSet = (LineDataSet) chart.getData().getDataSetByIndex(0);
             lineDataSet.setValues(values);
             chart.getData().notifyDataChanged();

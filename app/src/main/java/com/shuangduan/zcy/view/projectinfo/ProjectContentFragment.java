@@ -35,7 +35,9 @@ import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
 import com.shuangduan.zcy.model.bean.IMFriendApplyCountBean;
 import com.shuangduan.zcy.model.bean.ProjectDetailBean;
 import com.shuangduan.zcy.model.event.RefreshViewLocusEvent;
+import com.shuangduan.zcy.utils.AuthenticationUtils;
 import com.shuangduan.zcy.utils.LoginUtils;
+import com.shuangduan.zcy.view.mine.AuthenticationActivity;
 import com.shuangduan.zcy.view.mine.SetPwdPayActivity;
 import com.shuangduan.zcy.view.recharge.RechargeActivity;
 import com.shuangduan.zcy.vm.CoinPayVm;
@@ -134,7 +136,7 @@ public class ProjectContentFragment extends BaseFragment {
             tvType.setText(String.format(getString(R.string.format_type), detail.getType()));
             tvCycle.setText(String.format(getString(R.string.format_cycle), detail.getCycle()));
 
-            tvAcreage.setText(detail.getAcreage().equals("未确定") ?   String.format(getString(R.string.format_no_acreage), detail.getAcreage()) :
+            tvAcreage.setText(detail.getAcreage().equals("未确定") ? String.format(getString(R.string.format_no_acreage), detail.getAcreage()) :
                     String.format(getString(R.string.format_acreage), detail.getAcreage()));
 
             tvPrice.setText(String.format(getString(R.string.format_valuation), detail.getValuation()));
@@ -169,26 +171,27 @@ public class ProjectContentFragment extends BaseFragment {
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_read_detail:
-                addDialog(new CustomDialog(mActivity)
-                        .setTip(String.format(getString(R.string.format_pay_price), projectDetailVm.detailLiveData.getValue().getDetail().getDetail_price()))
-                        .setCallBack(new BaseDialog.CallBack() {
-                            @Override
-                            public void cancel() {
-
-                            }
-
-                            @Override
-                            public void ok(String s) {
-                                int status = SPUtils.getInstance().getInt(SpConfig.PWD_PAY_STATUS, 0);
-                                if (status == 1) {
-                                    goToPay();
-                                } else {
-                                    //查询是否设置支付密码
-                                    updatePwdPayVm.payPwdState();
+                //验证身份信息
+                if (AuthenticationUtils.Authentication(CustomConfig.PROJECT_INFO)) {
+                    addDialog(new CustomDialog(mActivity)
+                            .setTip(String.format(getString(R.string.format_pay_price), projectDetailVm.detailLiveData.getValue().getDetail().getDetail_price()))
+                            .setCallBack(new BaseDialog.CallBack() {
+                                @Override
+                                public void cancel() {
                                 }
-                            }
-                        })
-                        .showDialog());
+                                @Override
+                                public void ok(String s) {
+                                    int status = SPUtils.getInstance().getInt(SpConfig.PWD_PAY_STATUS, 0);
+                                    if (status == 1) {
+                                        goToPay();
+                                    } else {
+                                        //查询是否设置支付密码
+                                        updatePwdPayVm.payPwdState();
+                                    }
+                                }
+                            })
+                            .showDialog());
+                }
                 break;
         }
     }
@@ -280,7 +283,7 @@ public class ProjectContentFragment extends BaseFragment {
                             } else if (bean.getCode().equals("-1")) {
                                 ToastUtils.showShort(bean.getMsg());
                                 LoginUtils.getExitLogin();
-                            }else {
+                            } else {
                                 ToastUtils.showShort(bean.getMsg());
                             }
                         } catch (JsonSyntaxException | IllegalStateException ignored) {
