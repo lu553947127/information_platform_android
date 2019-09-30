@@ -30,6 +30,6 @@ public class DemandBuyerAdapter extends BaseQuickAdapter<DemandBuyerBean.ListBea
         helper.setText(R.id.tv_title, item.getMaterial_name())
                 .setText(R.id.tv_time, String.format(mContext.getString(R.string.format_validity_period), item.getStart_time(), item.getEnd_time()))
                 .setText(R.id.tv_demand_num, String.format(mContext.getString(R.string.format_demand_num), item.getCount()))
-                .setText(R.id.tv_price, String.format(mContext.getString(R.string.format_price), item.getAcceptance_price()));
+                .setText(R.id.tv_price, String.format(mContext.getString(R.string.format_price_demand), item.getAcceptance_price()));
     }
 }

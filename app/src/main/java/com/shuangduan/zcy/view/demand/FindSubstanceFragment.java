@@ -26,7 +26,7 @@ import butterknife.BindView;
  * @author 宁文强 QQ:858777523
  * @name information_platform_android
  * @class name：com.shuangduan.zcy.view.mine
- * @class describe  我的需求，找物质
+ * @class describe  我的需求，找物资
  * @time 2019/8/13 10:42
  * @change
  * @chang time

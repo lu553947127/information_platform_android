@@ -1,20 +1,17 @@
 package com.shuangduan.zcy.view;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
-
 import com.blankj.utilcode.util.ActivityUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
-import com.shuangduan.zcy.base.BaseFragment;
 import com.shuangduan.zcy.base.BaseLazyFragment;
-import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.utils.BarUtils;
 import com.shuangduan.zcy.view.income.IncomePeopleActivity;
 import com.shuangduan.zcy.vm.IncomePeopleVm;
@@ -64,6 +61,7 @@ public class PeopleFragment extends BaseLazyFragment {
         return false;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.setStatusBarColorRes(fakeStatusBar, getResources().getColor(R.color.colorPrimary));
@@ -73,7 +71,7 @@ public class PeopleFragment extends BaseLazyFragment {
         incomePeopleVm = ViewModelProviders.of(this).get(IncomePeopleVm.class);
         incomePeopleVm.showLiveData.observe(this, peopleBean -> {
             isInited = true;
-            tvIncomeAmount.setText(peopleBean.getNetworking_funds());
+            tvIncomeAmount.setText(peopleBean.getNetworking_funds()+"元");
         });
     }
 

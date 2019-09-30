@@ -75,9 +75,13 @@ public class UpdateMobileActivity extends BaseActivity {
                 //重新获取
                 tvSendVerificationCode.setText(getString(R.string.send_again));
                 tvSendVerificationCode.setClickable(true);
+                tvSendVerificationCode.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                tvSendVerificationCode.setTextColor(getResources().getColor(R.color.colorFFF));
             }else {
                 tvSendVerificationCode.setText(String.format(getString(R.string.format_get_verification_code_again), aLong));
                 tvSendVerificationCode.setClickable(false);
+                tvSendVerificationCode.setBackgroundColor(getResources().getColor(R.color.color_DDDDDD));
+                tvSendVerificationCode.setTextColor(getResources().getColor(R.color.color_999999));
             }
         });
         loginVm.smsDataLiveData.observe(this, o -> loginVm.sendVerificationCode());

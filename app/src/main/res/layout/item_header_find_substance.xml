@@ -216,7 +216,7 @@
         app:layout_constraintLeft_toLeftOf="@+id/tv_content_tip"
         android:textColor="@color/colorTv"
         android:textSize="14sp"
-        android:text="推荐物质"/>
+        android:text="推荐物资"/>
     
     <View
         android:layout_width="54dp"

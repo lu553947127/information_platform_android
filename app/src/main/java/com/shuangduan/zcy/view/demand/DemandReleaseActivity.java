@@ -40,7 +40,7 @@ import butterknife.OnClick;
  * @author 宁文强 QQ:858777523
  * @name information_platform_android
  * @class name：com.shuangduan.zcy.view.demand
- * @class describe  发布需求
+ * @class describe  需求广场
  * @time 2019/8/19 9:01
  * @change
  * @chang time
@@ -134,6 +134,7 @@ public class DemandReleaseActivity extends BaseActivity {
         return false;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         tvBarTitle.setText(getString(R.string.release));

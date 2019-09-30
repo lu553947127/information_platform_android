@@ -288,15 +288,15 @@
         <activity android:name="com.shuangduan.zcy.view.headlines.HeadlinesActivity" />
         <!-- 基建头条详情-->
         <activity android:name="com.shuangduan.zcy.view.headlines.HeadlinesDetailActivity" />
-        <!-- 发布需求列表-->
+        <!-- 需求广场列表-->
         <activity android:name="com.shuangduan.zcy.view.demand.DemandActivity" />
-        <!-- 发布需求 添加-->
+        <!-- 需求广场 添加-->
         <activity android:name="com.shuangduan.zcy.view.demand.DemandReleaseActivity" />
         <!-- 找关系详情-->
         <activity android:name="com.shuangduan.zcy.view.demand.FindRelationshipDetailActivity" />
         <!-- 找物资详情-->
         <activity android:name="com.shuangduan.zcy.view.demand.FindSubstanceDetailActivity" />
-        <!-- 发布需求 找关系支付页面-->
+        <!-- 需求广场 找关系支付页面-->
         <activity android:name="com.shuangduan.zcy.view.demand.ReleaseRelationshipOrderActivity" />
         <!-- 找买家详情-->
         <activity android:name="com.shuangduan.zcy.view.demand.FindBuyerDetailActivity" />

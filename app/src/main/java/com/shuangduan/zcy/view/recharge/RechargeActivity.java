@@ -77,8 +77,6 @@ public class RechargeActivity extends BaseActivity {
         tvBarTitle.setText(getString(R.string.recharge_center));
         tvBarRight.setText(getString(R.string.recharge_record));
 
-        KeyboardUtil.RemoveDecimalPoints(etRecharge);
-
         rechargeVm = ViewModelProviders.of(this).get(RechargeVm.class);
         rechargeVm.showLiveData.observe(this, rechargeShowBean -> {
             tvMobile.setText(rechargeShowBean.getTel());

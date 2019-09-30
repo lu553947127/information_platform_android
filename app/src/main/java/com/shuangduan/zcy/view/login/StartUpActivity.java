@@ -36,15 +36,15 @@ public class StartUpActivity extends BaseActivity {
         isTranslationBar = true;
         super.onCreate(savedInstanceState);
         getSwipeBackLayout().setEnableGesture(false);
-        if (shareUtils.getShared("info_status","login").equals("1")){
-            if (LoginUtils.isFirstApp()){
+        if (LoginUtils.isFirstApp()){
+            if (shareUtils.getShared("info_status","login").equals("1")){
                 getIntoActivity();
             }else {
-                ActivityUtils.startActivity(FirstStartActivity.class);
+                ActivityUtils.startActivity(WelcomeActivity.class);
                 finish();
             }
         }else {
-            ActivityUtils.startActivity(WelcomeActivity.class);
+            ActivityUtils.startActivity(FirstStartActivity.class);
             finish();
         }
     }
