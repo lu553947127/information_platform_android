@@ -1,22 +1,14 @@
 package com.shuangduan.zcy.model.api.convert.exception;
 
 import android.net.ParseException;
-
-import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
-import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonParseException;
-import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.utils.LoginUtils;
-import com.shuangduan.zcy.view.login.WelcomeActivity;
-
 import org.json.JSONException;
-
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
-
 import retrofit2.HttpException;
 
 /**

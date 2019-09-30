@@ -154,6 +154,8 @@ public class IMContactsActivity extends BaseActivity {
                                 listGroup.clear();
                                 listGroup.addAll(imGroupListBean.getData().getList());
                                 if(listGroup!=null&&listGroup.size()!=0){
+                                    rlMyGroup.setClickable(true);
+                                    rvGroup.setVisibility(View.VISIBLE);
                                     if (listGroup.size()>3){
                                         tvGroup.setVisibility(View.VISIBLE);
                                     }else {
@@ -161,7 +163,8 @@ public class IMContactsActivity extends BaseActivity {
                                     }
                                     imGroupListAdapter.notifyDataSetChanged();
                                 }else {
-                                    imGroupListAdapter.setEmptyView(R.layout.layout_empty, rvGroup);
+                                    rlMyGroup.setClickable(false);
+                                    rvGroup.setVisibility(View.GONE);
                                 }
                             }else if (imGroupListBean.getCode().equals("-1")){
                                 ToastUtils.showShort(imGroupListBean.getMsg());
@@ -201,6 +204,8 @@ public class IMContactsActivity extends BaseActivity {
                                 listFriend.clear();
                                 listFriend.addAll(imFriendListBean.getData().getList());
                                 if(listFriend!=null&&listFriend.size()!=0){
+                                    rlMyFriend.setClickable(true);
+                                    rvFriend.setVisibility(View.VISIBLE);
                                     imFriendListAdapter.notifyDataSetChanged();
                                     if (listFriend.size()>3){
                                         tvFriend.setVisibility(View.VISIBLE);
@@ -208,7 +213,8 @@ public class IMContactsActivity extends BaseActivity {
                                         tvFriend.setVisibility(View.GONE);
                                     }
                                 }else {
-                                    imFriendListAdapter.setEmptyView(R.layout.layout_empty, rvFriend);
+                                    rlMyFriend.setClickable(false);
+                                    rvFriend.setVisibility(View.GONE);
                                 }
                             }else {
                                 imFriendListAdapter.setEmptyView(R.layout.layout_empty, rvFriend);

@@ -11,7 +11,7 @@
         <item name="android:windowBackground">@color/colorFFF</item>
         <!--（第一级页面不让Activity透明）解决右滑退出黑屏问题,但是并不适用所有系统-->
         <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowSoftInputMode">adjustPan</item>
+        <item name="android:windowSoftInputMode" tools:ignore="NewApi">adjustPan</item>
         <!--设置竖屏-->
         <item name="android:screenOrientation">portrait</item>
     </style>

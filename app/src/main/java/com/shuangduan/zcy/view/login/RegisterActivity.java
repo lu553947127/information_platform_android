@@ -160,6 +160,8 @@ public class RegisterActivity extends BaseActivity {
         loginVm.smsCode(edtMobile.getText().toString(), CustomConfig.SMS_REGISTER);
         loginVm.smsDataLiveData.observe(this, o -> {
             tvSendVerificationCode.setClickable(false);
+            tvSendVerificationCode.setBackgroundColor(getResources().getColor(R.color.color_DDDDDD));
+            tvSendVerificationCode.setTextColor(getResources().getColor(R.color.color_999999));
             loginVm.sendVerificationCode();
             ToastUtils.showShort(getString(R.string.send_verification_code_success));
         });

@@ -145,6 +145,7 @@
         </com.shuangduan.zcy.weight.AdaptationScrollView>
 
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
     <!--头部-->
     <RelativeLayout
         android:layout_width="match_parent"

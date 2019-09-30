@@ -6,4 +6,6 @@
     <dimen name="dp_55">55dp</dimen>
 
     <dimen name="dp_110">150dp</dimen>
+
+    <dimen name="app_bar_height">230dp</dimen>
 </resources>

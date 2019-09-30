@@ -5,8 +5,8 @@
     android:layout_marginTop="13sp"
     android:layout_gravity="end"
     android:gravity="center"
-    android:background="@color/color_DDDDDD"
-    android:textColor="@color/color_999999"
+    android:background="@color/colorPrimary"
+    android:textColor="@color/colorFFF"
     android:textSize="12sp"
     android:text="@string/send_verification_code"
     android:id="@+id/tv_send_verification_code">

@@ -8,7 +8,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.lifecycle.ViewModelProviders;
@@ -33,7 +32,6 @@ import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ClassifyAdapter;
 import com.shuangduan.zcy.adapter.HomeHeadlinesAdapter;
-import com.shuangduan.zcy.adapter.IncomeStatementAdapter;
 import com.shuangduan.zcy.app.Common;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
@@ -48,7 +46,6 @@ import com.shuangduan.zcy.model.bean.HomeListBean;
 import com.shuangduan.zcy.model.bean.HomePushBean;
 import com.shuangduan.zcy.model.bean.IMFriendApplyCountBean;
 import com.shuangduan.zcy.utils.AuthenticationUtils;
-import com.shuangduan.zcy.utils.BarUtils;
 import com.shuangduan.zcy.utils.DensityUtil;
 import com.shuangduan.zcy.utils.LoginUtils;
 import com.shuangduan.zcy.utils.VersionUtils;
@@ -58,7 +55,6 @@ import com.shuangduan.zcy.view.headlines.HeadlinesActivity;
 import com.shuangduan.zcy.view.headlines.HeadlinesDetailActivity;
 import com.shuangduan.zcy.view.material.MaterialActivity;
 import com.shuangduan.zcy.view.income.MineIncomeActivity;
-import com.shuangduan.zcy.view.mine.ExplainDetailActivity;
 import com.shuangduan.zcy.view.mine.MineSubActivity;
 import com.shuangduan.zcy.view.projectinfo.ProjectInfoActivity;
 import com.shuangduan.zcy.view.recruit.RecruitActivity;
@@ -79,7 +75,6 @@ import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import io.rong.imageloader.utils.L;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Conversation;
 
@@ -445,6 +440,7 @@ public class HomeFragment extends BaseFragment {
                                     //版本更新弹出框显示
                                     UpdateManager manager = new UpdateManager(getActivity(), bean);
                                     manager.showNoticeDialog();
+
                                 }
                             }
                         }catch (JsonSyntaxException | IllegalStateException ignored){

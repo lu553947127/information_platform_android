@@ -6,7 +6,6 @@ import androidx.annotation.Nullable;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.base.BaseActivity;
-import com.shuangduan.zcy.utils.SharesUtils;
 
 import butterknife.OnClick;
 
@@ -21,8 +20,6 @@ import butterknife.OnClick;
  * @class describe
  */
 public class WelcomeActivity extends BaseActivity {
-
-    private SharesUtils shareUtils;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,10 +40,6 @@ public class WelcomeActivity extends BaseActivity {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
-        shareUtils=new SharesUtils(this);
-        if (!shareUtils.getShared("info_status","login").equals("1")){
-            ActivityUtils.startActivity(UserInfoInputActivity.class);
-        }
     }
 
     @OnClick({R.id.tv_login, R.id.tv_register})
