@@ -28,13 +28,15 @@ public class MultiStageVm extends BaseViewModel {
     private int userId;
     public boolean inited = false;
 
+    private int prePosition;
+
     public MultiStageVm() {
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
         stageLiveData = new MutableLiveData<>();
         pageStateLiveData = new MutableLiveData<>();
     }
 
-    public void getStage(){
+    public void getStage() {
         new ProjectRepository().projectStage(stageLiveData, pageStateLiveData, userId);
     }
 
@@ -64,58 +66,56 @@ public class MultiStageVm extends BaseViewModel {
     /**
      * 点击一级分类
      */
-    public void clickFirst(int i){
+    public void clickFirst(int i) {
         List<StageBean> data = stageLiveData.getValue();
+
         if (i == 0) {
             //选全部
-            if (data.get(0).getIsSelect() == 1){
+            if (data.get(0).getIsSelect() == 1) {
                 //全部选中，修改全部为非选中状态
                 for (int j = 0; j < data.size(); j++) {
                     data.get(j).setIsSelect(0);
                 }
-            }else {
+            } else {
                 //非全部选中，修改全部为选中状态
                 for (int j = 0; j < data.size(); j++) {
                     data.get(j).setIsSelect(1);
                 }
             }
-        }else {
-            //单一选项
-            data.get(i).setIsSelect(data.get(i).getIsSelect() == 1?0:1);
-            if (data.get(i).getIsSelect() != 1){
-                //未选中状态，之前就是选中状态，需判断是否为全部选中，是则修改全部为非选中状态
-                if (data.get(0).getIsSelect() == 1){
-                    //只有“全部”选项是选中状态才更新状态
-                    data.get(0).setIsSelect(0);
-                }
-            }else {
-                //选中状态，之前就是未选中状态，需判断是否为全部选中，是则修改全部为选中状态
-                //初始把“全部”更新为选中
-                data.get(0).setIsSelect(1);
-                for (int j = 0; j < data.size(); j++) {
-                    if (data.get(j).getIsSelect() != 1){
-                        //循环查询，出现未选中就更新第一个选项“全部”的状态
-                        data.get(0).setIsSelect(0);
-                        break;
-                    }
-                }
+        } else {
+
+            if (prePosition != 0) {
+                data.get(prePosition).setIsSelect(0);
             }
+
+            //单一选项
+            for (int j = 0; j < data.size(); j++) {
+                if (i == j) {
+                    data.get(i).setIsSelect(1);
+                    continue;
+                }
+                data.get(j).setIsSelect(0);
+            }
+
+        }
+        if (i != 0) {
+            prePosition = i;
         }
 
         stageLiveData.postValue(data);
     }
 
-    public List<Integer> getStageId(){
+    public List<Integer> getStageId() {
         List<StageBean> value = stageLiveData.getValue();
-        if (value == null || value.size() == 0 || value.get(0).getIsSelect() == 1){
+        if (value == null || value.size() == 0 || value.get(0).getIsSelect() == 1) {
             return null;
         }
         List<Integer> stageId = new ArrayList<>();
         for (int i = 0; i < value.size(); i++) {
-            if (value.get(i).getIsSelect() == 1){
+            if (value.get(i).getIsSelect() == 1) {
                 stageId.add(value.get(i).getId());
             }
         }
-        return stageId.size() != 0? stageId : null;
+        return stageId.size() != 0 ? stageId : null;
     }
 }

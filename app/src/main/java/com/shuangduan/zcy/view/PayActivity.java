@@ -144,16 +144,14 @@ public class PayActivity extends BaseActivity {
 
         @Override
         public void handleMessage(@NonNull Message msg) {
-            Map<String, String> mapStr = (Map<String, String>) msg.obj;
 
-            String resultStatus = mapStr.get("resultStatus");
-            String result = mapStr.get("result");
+            PayResult result = new PayResult((Map<String, String>) msg.obj);
 
-            if (!TextUtils.isEmpty(result)) {
-                switch (resultStatus) {
+            if (!TextUtils.isEmpty(result.getResult())) {
+                switch (result.getResultStatus()) {
                     case "9000":
                         ToastUtils.showShort(activity.get().getString(R.string.pay_success));
-                        PayResult.ResultBean resultBean = new Gson().fromJson(result, PayResult.ResultBean.class);
+                        PayResult.ResultBean resultBean = new Gson().fromJson(result.getResult(), PayResult.ResultBean.class);
                         Bundle bundle = new Bundle();
                         bundle.putInt(CustomConfig.PAY_STYLE, CustomConfig.PAY_STYLE_ALIPAY);
                         LogUtils.i(resultBean.getAlipay_trade_app_pay_response().getOut_trade_no(), resultBean.getAlipay_trade_app_pay_response().getTotal_amount());
