@@ -91,7 +91,7 @@ public class RecruitDetailActivity extends BaseActivity {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
-
+        id = getIntent().getIntExtra(CustomConfig.RECRUIT_ID, 0);
         //初始化分享功能
         shareManage = ShareManage.newInstance(getApplicationContext());
         shareManage.init(this, ShareManage.SHARE_TENDERER_TYPE, id);
@@ -100,7 +100,7 @@ public class RecruitDetailActivity extends BaseActivity {
         tvBarTitle.setText(getString(R.string.message_detail));
         tvBarRight.setVisibility(View.GONE);
         ivBarRight.setImageResource(R.drawable.icon_share);
-        id = getIntent().getIntExtra(CustomConfig.RECRUIT_ID, 0);
+
 
         recruitDetailVm = ViewModelProviders.of(this).get(RecruitDetailVm.class);
         recruitDetailVm.id = id;
