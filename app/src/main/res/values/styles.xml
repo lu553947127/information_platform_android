@@ -35,7 +35,8 @@
 <!--        <item name="colorAccent">@color/colorFFF</item>-->
         <!-- enable window content transitions -->
         <item name="android:windowActivityTransitions" tools:targetApi="lollipop">true</item>
-        <item name="android:windowBackground">@drawable/icon_start</item>
+        <item name="android:windowBackground">@drawable/splash_start</item>
+        <item name="android:windowFullscreen">true</item>
     </style>
 
     <!--图片查看用theme-->

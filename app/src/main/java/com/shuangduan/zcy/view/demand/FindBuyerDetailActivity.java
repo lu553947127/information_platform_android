@@ -26,6 +26,7 @@ import com.shuangduan.zcy.dialog.PayDialog;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.BuyerDetailBean;
 import com.shuangduan.zcy.model.bean.CoinPayResultBean;
+import com.shuangduan.zcy.utils.AuthenticationUtils;
 import com.shuangduan.zcy.view.mine.SetPwdPayActivity;
 import com.shuangduan.zcy.view.recharge.RechargeActivity;
 import com.shuangduan.zcy.vm.CoinPayVm;
@@ -98,6 +99,7 @@ public class FindBuyerDetailActivity extends BaseActivity {
         buyerAdapter.setEmptyView(R.layout.layout_loading, rv);
         rv.setAdapter(buyerAdapter);
         buyerAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            if (!AuthenticationUtils.Authentication(CustomConfig.PROJECT_INFO)) return;
             BuyerDetailBean.ListBean listBean = buyerAdapter.getData().get(position);
             coinPayVm.findSubstanceId = listBean.getId();
             demandBuyerVm.currentPay = 1;
@@ -111,7 +113,11 @@ public class FindBuyerDetailActivity extends BaseActivity {
             tvMaterialName.setText(info.getMaterial_name());
             tvSupplyNum.setText(info.getCount());
             tvSupplyStyle.setText(info.getWay() == 1? getString(R.string.sell): getString(R.string.lease));
-            tvSupplyPrice.setText(info.getAcceptance_price()+"万元");
+            if (info.getAcceptance_price().equals("面议")){
+                tvSupplyPrice.setText(info.getAcceptance_price());
+            }else {
+                tvSupplyPrice.setText(info.getAcceptance_price()+"元");
+            }
             tvOwner.setText(info.getReal_name());
             tvContact.setText(info.getTel());
             tvReadDetail.setVisibility(info.getIs_pay() != 1? View.VISIBLE: View.INVISIBLE);
@@ -131,6 +137,7 @@ public class FindBuyerDetailActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_read_detail:
+                if (!AuthenticationUtils.Authentication(CustomConfig.PROJECT_INFO)) return;
                 coinPayVm.findBuyerId = getIntent().getIntExtra(CustomConfig.DEMAND_ID, 0);
                 demandBuyerVm.currentPay = 2;
                 showPayDialog(demandBuyerVm.detailLiveData.getValue().getInfo().getPrice());

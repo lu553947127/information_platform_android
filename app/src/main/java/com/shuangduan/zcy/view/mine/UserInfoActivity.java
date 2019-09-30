@@ -311,6 +311,7 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
                 break;
             case R.id.fl_id_card:
                 bundle.putString(CustomConfig.UPLOAD_TYPE, CustomConfig.uploadTypeIdCard);
+                bundle.putString(CustomConfig.AUTHENTICATION_TYPE, CustomConfig.ID_USER_INFO);
                 ActivityUtils.startActivity(bundle, AuthenticationActivity.class);
                 finish();
                 break;

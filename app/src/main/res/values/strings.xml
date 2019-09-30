@@ -327,7 +327,7 @@
 
     <string name="recruit_intro">招标简介</string>
     <string name="filter">筛选</string>
-    <string name="loose_change_withdraw">零钱提现</string>
+    <string name="loose_change_withdraw">紫金币提现</string>
     <string name="withdraw_record">提现记录</string>
     <string name="bank_card">银行卡</string>
     <string name="add_bank_card">添加银行卡</string>
@@ -345,7 +345,7 @@
     <string name="income_locus">发布信息动态收益</string>
     <string name="income_msg">认购信息收益</string>
     <string name="income_product_rights">认购品权收益</string>
-    <string name="income_people">3°人脉收益</string>
+    <string name="income_people">人脉收益</string>
     <string name="supplier">优质供应商</string>
     <string name="supplier_join">加入供应商</string>
     <string name="supplier_join_success">申请成功，请等待审核...</string>
@@ -388,12 +388,12 @@
     <string name="format_version_name">当前版本号：v%1$s</string>
     <string name="format_get_verification_code_again">重新获取 (%1$ds)</string>
     <string name="format_balance">余额:%1$s紫金币</string>
-    <string name="format_amount">%1$s万元</string>
+    <string name="format_amount">%1$s元</string>
     <string name="format_amount_people">%1$s紫金币</string>
     <string name="format_amount_bi">%1$s紫金币</string>
     <string name="format_amount_rmb">￥%1$s元</string>
     <string name="format_num_of_people">人脉数量: %1$d人</string>
-    <string name="format_num_of_readers">订阅人数: %1$d人</string>
+    <string name="format_num_of_readers">收藏人数: %1$d人</string>
     <string name="format_num_of_collector">收藏人数: %1$d人</string>
     <string name="format_withdraw_no">提现金额不能超过当前余额</string>
     <string name="format_withdraw_now">当前可提现金额为:%1$s元</string>
@@ -440,7 +440,7 @@
     <string name="format_amount_sub">认购金额: %1$s紫金币</string>
     <string name="format_amount_return">已返金额: %1$s紫金币</string>
     <string name="format_price">价格: %1$s元</string>
-    <string name="format_price_demand">价格: %1$s万元</string>
+    <string name="format_price_demand">价格: %1$s元</string>
     <string name="format_price_accept">接受价格: %1$s元</string>
     <string name="format_pay">需支付: %1$s元！</string>
     <string name="format_income_degree">%1$d°人脉收益</string>

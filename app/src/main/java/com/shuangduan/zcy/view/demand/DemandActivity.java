@@ -73,6 +73,7 @@ public class DemandActivity extends BaseActivity {
 
     @OnClick({R.id.iv_bar_back, R.id.tv_bar_right})
     void onClick(View v){
+        Bundle bundle = new Bundle();
         switch (v.getId()){
             case R.id.iv_bar_back:
                 finish();
@@ -80,7 +81,14 @@ public class DemandActivity extends BaseActivity {
             case R.id.tv_bar_right:
                 if (vp.getCurrentItem()==0){
                     if (!AuthenticationUtils.Authentication(CustomConfig.NEED_RELATIONSHIP)) return;
-                    ActivityUtils.startActivity(DemandReleaseActivity.class);
+                    bundle.putString("type", "0");
+                    ActivityUtils.startActivity(bundle,DemandReleaseActivity.class);
+                }else if (vp.getCurrentItem()==1){
+                    bundle.putString("type", "1");
+                    ActivityUtils.startActivity(bundle,DemandReleaseActivity.class);
+                }else {
+                    bundle.putString("type", "2");
+                    ActivityUtils.startActivity(bundle,DemandReleaseActivity.class);
                 }
                 break;
         }
