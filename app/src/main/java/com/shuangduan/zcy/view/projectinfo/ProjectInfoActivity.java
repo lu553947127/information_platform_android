@@ -158,19 +158,39 @@ public class ProjectInfoActivity extends BaseActivity {
      * 设置一些amap的属性
      */
     private void setUpMap() {
-        aMap.moveCamera(CameraUpdateFactory.zoomTo(16));
+        //地图缩放级别
+        float zoom = 17;
+        aMap.moveCamera(CameraUpdateFactory.zoomTo(zoom));
         aMap.setMyLocationEnabled(true);// 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
         aMap.getUiSettings().setMyLocationButtonEnabled(true);// 设置默认定位按钮是否显示
         aMap.getUiSettings().setRotateGesturesEnabled(false);//设置地图不能旋转
         aMap.getUiSettings().setMyLocationButtonEnabled(false);//设置默认定位按钮是否显示，非必需设置。
         aMap.setOnMyLocationChangeListener(location -> {
-            LogUtils.i(location.getLongitude(), location.getLatitude());
+//            LogUtils.i(location.getLongitude(), location.getLatitude());
             projectInfoVm.mapList(location.getLongitude(), location.getLatitude());
-            projectInfoVm.mapLiveData.observe(ProjectInfoActivity.this, mapBeans -> {
-                //marker经纬度数据
-                throughPointList = mapBeans != null ? mapBeans : new ArrayList<>();
-                setMarker();
-            });
+        });
+
+        //监测地图画面的移动
+        aMap.setOnCameraChangeListener(new AMap.OnCameraChangeListener() {
+            @Override
+            public void onCameraChangeFinish(CameraPosition cameraPosition) {
+//                LogUtils.i(cameraPosition.target.latitude, cameraPosition.target.longitude);
+//                clearAllMarker();
+                projectInfoVm.mapList(cameraPosition.target.longitude,cameraPosition.target.latitude);
+            }
+
+            @Override
+            public void onCameraChange(CameraPosition cameraPosition) {
+//                LogUtils.i(cameraPosition.target.latitude, cameraPosition.target.longitude);
+//                clearAllMarker();
+                projectInfoVm.mapList(cameraPosition.target.longitude,cameraPosition.target.latitude);
+            }
+        });
+
+        projectInfoVm.mapLiveData.observe(ProjectInfoActivity.this, mapBeans -> {
+            //marker经纬度数据
+            throughPointList = mapBeans != null ? mapBeans : new ArrayList<>();
+            setMarker();
         });
         setupLocationStyle();
     }
@@ -196,7 +216,9 @@ public class ProjectInfoActivity extends BaseActivity {
         aMap.setMyLocationStyle(myLocationStyle);
     }
 
+    ArrayList<Marker> markerArrayList;
     private void setMarker() {
+        clearAllMarker();
         //marker集合
         ArrayList<MarkerOptions> markers = new ArrayList<>();
         for (MapBean mapBean : throughPointList) {
@@ -210,7 +232,7 @@ public class ProjectInfoActivity extends BaseActivity {
         }
 
         //添加marker
-        ArrayList<Marker> markerArrayList = aMap.addMarkers(markers, false);
+        markerArrayList = aMap.addMarkers(markers, false);
         if (markerArrayList != null){
             for (int i = 0; i < markerArrayList.size(); i++) {
                 //遍历添加的marker,给marker添加额外数据
@@ -230,6 +252,18 @@ public class ProjectInfoActivity extends BaseActivity {
             showPopWindow(marker.getTitle(), (Integer) marker.getObject());
             return true;
         });
+    }
+
+    /**
+     * 清除所有Marker
+     */
+    private void clearAllMarker() {
+        if (markerArrayList != null){
+            for (Marker marker : markerArrayList) {
+                marker.remove();
+            }
+            markerArrayList.clear();
+        }
     }
 
     private void setMarkerAnim(Marker marker, float v, float v1, float v2, float v3) {
@@ -258,27 +292,28 @@ public class ProjectInfoActivity extends BaseActivity {
      */
     private void showPopWindow(String title, int position) {
         MapBean mapBean = throughPointList.get(position);
+        popupWindow = new CommonPopupWindow.Builder(this)
+                .setView(R.layout.dialog_project_info)
+                .setOutsideTouchable(false)
+                .setBackGroundLevel(1f)
+                .setWidthAndHeight(ConvertUtils.dp2px(320), ViewGroup.LayoutParams.WRAP_CONTENT)
+                .setAnimationStyle(R.style.DialogAnimBottom)
+                .setViewOnclickListener((view, layoutResId) -> {
+                    tvTitle = view.findViewById(R.id.tv_title);
+                    tvContent = view.findViewById(R.id.tv_content);
+                    tvType = view.findViewById(R.id.tv_type);
+                    tvReaders = view.findViewById(R.id.tv_readers);
+                    tvTime = view.findViewById(R.id.tv_time);
+                    view.setOnClickListener(v -> {
+                        Bundle bundle = new Bundle();
+                        bundle.putInt(CustomConfig.PROJECT_ID, mapBean.getId());
+                        bundle.putInt(CustomConfig.LOCATION, 0);
+                        ActivityUtils.startActivity(bundle, ProjectDetailActivity.class);
+                    });
+                })
+                .create();
         if (popupWindow == null) {
-            popupWindow = new CommonPopupWindow.Builder(this)
-                    .setView(R.layout.dialog_project_info)
-                    .setOutsideTouchable(false)
-                    .setBackGroundLevel(1f)
-                    .setWidthAndHeight(ConvertUtils.dp2px(320), ViewGroup.LayoutParams.WRAP_CONTENT)
-                    .setAnimationStyle(R.style.DialogAnimBottom)
-                    .setViewOnclickListener((view, layoutResId) -> {
-                        tvTitle = view.findViewById(R.id.tv_title);
-                        tvContent = view.findViewById(R.id.tv_content);
-                        tvType = view.findViewById(R.id.tv_type);
-                        tvReaders = view.findViewById(R.id.tv_readers);
-                        tvTime = view.findViewById(R.id.tv_time);
-                        view.setOnClickListener(v -> {
-                            Bundle bundle = new Bundle();
-                            bundle.putInt(CustomConfig.PROJECT_ID, mapBean.getId());
-                            bundle.putInt(CustomConfig.LOCATION, 0);
-                            ActivityUtils.startActivity(bundle, ProjectDetailActivity.class);
-                        });
-                    })
-                    .create();
+
         }
         tvTitle.setText(title);
         tvContent.setText(mapBean.getIntro());

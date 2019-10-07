@@ -137,6 +137,7 @@ dependencies {
     //高德地图
     //noinspection GradleDependency
     implementation 'com.amap.api:3dmap:latest.integration'
+    implementation 'com.amap.api:location:latest.integration'
     //noinspection GradleDependency
     implementation 'com.amap.api:search:latest.integration'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'

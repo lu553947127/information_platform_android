@@ -25,9 +25,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitHelper {
 
-    private static String BASE_URL = "http://app.zicai365.com";
-//    public static String BASE_TEST_URL = "http://xx.yijijian.com";//测试服
-    public static String BASE_TEST_URL = "http://app.zicai365.com";//正式服
+    public static String BASE_TEST_URL = "http://xx.yijijian.com";//测试服
+//    public static String BASE_TEST_URL = "http://app.zicai365.com";//正式服
     private static ApiService apiService;
 
     private static void init(){
@@ -37,11 +36,12 @@ public class RetrofitHelper {
                 .readTimeout(10000, TimeUnit.MILLISECONDS)
                 .writeTimeout(10000, TimeUnit.MILLISECONDS)
                 .retryOnConnectionFailure(true)
+                .sslSocketFactory(SSLSocketClient.getSSLSocketFactory())//配置
+                .hostnameVerifier((hostname, session) -> true)//配置
                 .addInterceptor(chain -> {
                     Request original = chain.request();
                     // Request customization: add request headers
-                    Request.Builder requestBuilder = original.newBuilder()
-                            .addHeader("token", SPUtils.getInstance().getString(SpConfig.TOKEN));
+                    Request.Builder requestBuilder = original.newBuilder().addHeader("token", SPUtils.getInstance().getString(SpConfig.TOKEN));
                     Request request = requestBuilder.build();
                     return chain.proceed(request);
                 });
@@ -50,11 +50,12 @@ public class RetrofitHelper {
             builder.addInterceptor(new LoggingIntercepter());
         }
 
+        String BASE_URL = "http://app.zicai365.com";
         Retrofit build = new Retrofit.Builder()
                 .client(builder.build())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(BuildConfig.IS_DEBUG ? BASE_TEST_URL :BASE_URL)
+                .baseUrl(BuildConfig.IS_DEBUG ? BASE_TEST_URL : BASE_URL)
                 .build();
 
         apiService = build.create(ApiService.class);
@@ -64,5 +65,4 @@ public class RetrofitHelper {
         init();
         return apiService;
     }
-
 }

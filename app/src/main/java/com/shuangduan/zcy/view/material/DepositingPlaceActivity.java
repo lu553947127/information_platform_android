@@ -88,9 +88,14 @@ public class DepositingPlaceActivity extends BaseActivity {
                                 for (int j = 0; j < materialDepositingPlaceBean.size(); j++) {
                                     if (String.valueOf(materialDepositingPlaceBean.get(j).getId()).equals(type_no)) {
                                         materialDepositingPlaceBean.remove(j);
+                                        if (materialDepositingPlaceBean.size()==0){
+                                            materialDepositingPlaceAdapter.setEmptyView(R.layout.layout_empty, recyclerView);
+                                        }
                                     }
                                 }
                             }
+                        }else {
+                            materialDepositingPlaceAdapter.setEmptyView(R.layout.layout_empty, recyclerView);
                         }
                         materialDepositingPlaceAdapter.setNewData(materialDepositingPlaceBean);
                     }else {
