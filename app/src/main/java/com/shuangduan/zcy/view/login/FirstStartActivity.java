@@ -76,7 +76,7 @@ public class FirstStartActivity extends BaseActivity implements View.OnClickList
         viewPager.addOnPageChangeListener(materialIndicator);
         materialIndicator.setAdapter(Objects.requireNonNull(viewPager.getAdapter()));
         viewPager.setOnPageChangeListener(this);
-        view1.findViewById(R.id.iv_next_one).setOnClickListener(this);
+        view1.findViewById(R.id.tv_next_two).setOnClickListener(this);
         view2.findViewById(R.id.tv_next_two).setOnClickListener(this);
         view3.findViewById(R.id.tv_next_three).setOnClickListener(this);
         view3.findViewById(R.id.rl_experience).setOnClickListener(this);
@@ -124,9 +124,6 @@ public class FirstStartActivity extends BaseActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.iv_next_one:
-                viewPager.setCurrentItem(1);
-                break;
             case R.id.tv_next_two:
             case R.id.rl_experience:
             case R.id.tv_next_three:

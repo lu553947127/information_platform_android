@@ -1,7 +1,6 @@
 package com.shuangduan.zcy.app;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
@@ -11,15 +10,11 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.Process;
 import android.view.Gravity;
-
-import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
-import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.CrashUtils;
 import com.blankj.utilcode.util.LogUtils;
-import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
 import com.kingja.loadsir.callback.SuccessCallback;
@@ -30,11 +25,6 @@ import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.interceptor.HttpLoggingInterceptor;
 import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreator;
-import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreator;
-import com.scwang.smartrefresh.layout.api.RefreshFooter;
-import com.scwang.smartrefresh.layout.api.RefreshHeader;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.callback.EmptyCallback;
@@ -42,10 +32,8 @@ import com.shuangduan.zcy.callback.ErrorCallback;
 import com.shuangduan.zcy.callback.LoadingCallback;
 import com.shuangduan.zcy.callback.TimeOutCallback;
 import com.shuangduan.zcy.utils.LoginUtils;
-import com.shuangduan.zcy.view.login.WelcomeActivity;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
-import com.xiaomi.mipush.sdk.MiPushClient;
 
 import java.io.File;
 import java.util.List;

@@ -10,15 +10,12 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
-import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.R;
-import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.CustomDialog;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.utils.LoginUtils;
-import com.shuangduan.zcy.view.login.WelcomeActivity;
 import com.shuangduan.zcy.vm.ExitVm;
 
 import butterknife.BindView;
@@ -81,6 +78,7 @@ public class SetActivity extends BaseActivity {
 
         exitVm.exitLiveData.observe(this, o -> {
             LoginUtils.getExitLogin();
+            finish();
         });
 
         exitVm.pageStateLiveData.observe(this, s -> {
@@ -122,8 +120,6 @@ public class SetActivity extends BaseActivity {
                                 exitVm.exit();
                             }
                         }).showDialog();
-
-
                 break;
         }
     }

@@ -19,7 +19,6 @@ import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.PageState;
-import com.shuangduan.zcy.utils.SharesUtils;
 import com.shuangduan.zcy.view.MainActivity;
 import com.shuangduan.zcy.view.mine.ForgetPwdActivity;
 import com.shuangduan.zcy.vm.IMConnectVm;
@@ -66,7 +65,6 @@ public class LoginActivity extends BaseActivity {
     /*默认账号登录*/
     private int loginStyle = LOGIN_ACCOUNT;
     private IMConnectVm imConnectVm;
-    private SharesUtils shareUtils;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,7 +85,6 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
-        shareUtils = new SharesUtils(this);
         loginVm = ViewModelProviders.of(this).get(LoginVm.class);
 
         loginVm.timeLiveDataLiveData.observe(this, aLong -> {
@@ -179,8 +176,6 @@ public class LoginActivity extends BaseActivity {
             SPUtils.getInstance().put(SpConfig.MOBILE, loginBean.getTel(), true);
             SPUtils.getInstance().put(SpConfig.INFO_STATUS, loginBean.getInfo_status(), true);
 
-
-            shareUtils.addShared("info_status", String.valueOf(loginBean.getInfo_status()), "login");
             LogUtils.i(loginBean.getInfo_status());
             if (loginBean.getInfo_status() == 1) {
                 imConnectVm.userId = loginBean.getUser_id();

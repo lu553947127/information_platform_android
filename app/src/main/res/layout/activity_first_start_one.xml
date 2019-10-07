@@ -15,14 +15,22 @@
             android:src="@drawable/icon_first_one"
             android:layout_centerInParent="true"/>
 
-        <ImageView
-            android:id="@+id/iv_next_one"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/icon_first_next"
+        <TextView
+            android:id="@+id/tv_next_two"
+            android:layout_width="56dp"
+            android:layout_height="26dp"
+            android:background="@drawable/selector_btn_first_half"
+            android:drawableRight="@drawable/icon_first_next"
+            android:drawablePadding="3dp"
+            android:paddingLeft="9dp"
+            android:paddingRight="9dp"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="41dp"
-            android:layout_marginRight="36dp" />
+            android:layout_marginTop="28dp"
+            android:layout_marginRight="26dp"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:textColor="#A3A1FF"
+            android:text="@string/first_app" />
 
     </RelativeLayout>
 

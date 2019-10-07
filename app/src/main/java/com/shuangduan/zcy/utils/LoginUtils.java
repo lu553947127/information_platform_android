@@ -47,7 +47,6 @@ public class LoginUtils {
         return true;
     }
 
-
     /**
      * 检测是否第一次打开app
      *

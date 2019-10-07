@@ -11,7 +11,6 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.utils.LoginUtils;
-import com.shuangduan.zcy.utils.SharesUtils;
 import com.shuangduan.zcy.view.MainActivity;
 import com.shuangduan.zcy.vm.IMConnectVm;
 
@@ -29,15 +28,13 @@ import com.shuangduan.zcy.vm.IMConnectVm;
  */
 public class StartUpActivity extends BaseActivity {
 
-    private SharesUtils shareUtils;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         isTranslationBar = true;
         super.onCreate(savedInstanceState);
         getSwipeBackLayout().setEnableGesture(false);
         if (LoginUtils.isFirstApp()){
-            if (shareUtils.getShared("info_status","login").equals("1")){
+            if (SPUtils.getInstance().getInt(SpConfig.INFO_STATUS) == 1){
                 getIntoActivity();
             }else {
                 ActivityUtils.startActivity(WelcomeActivity.class);
@@ -61,18 +58,16 @@ public class StartUpActivity extends BaseActivity {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
-        shareUtils=new SharesUtils(this);
+
     }
 
     private void getIntoActivity() {
         if (LoginUtils.isLogin()){
             ActivityUtils.startActivity(MainActivity.class);
             //这里连一遍融云
-            if (SPUtils.getInstance().getInt(SpConfig.INFO_STATUS) == 1){
-                //初始化，融云链接服务器
-                IMConnectVm imConnectVm = ViewModelProviders.of(this).get(IMConnectVm.class);
-                imConnectVm.connect(SPUtils.getInstance().getString(SpConfig.IM_TOKEN));
-            }
+            //初始化，融云链接服务器
+            IMConnectVm imConnectVm = ViewModelProviders.of(this).get(IMConnectVm.class);
+            imConnectVm.connect(SPUtils.getInstance().getString(SpConfig.IM_TOKEN));
         }else {
             ActivityUtils.startActivity(WelcomeActivity.class);
             finish();
