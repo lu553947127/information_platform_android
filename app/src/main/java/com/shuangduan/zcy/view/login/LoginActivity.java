@@ -87,7 +87,7 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
-        shareUtils=new SharesUtils(this);
+        shareUtils = new SharesUtils(this);
         loginVm = ViewModelProviders.of(this).get(LoginVm.class);
 
         loginVm.timeLiveDataLiveData.observe(this, aLong -> {
@@ -97,7 +97,7 @@ public class LoginActivity extends BaseActivity {
                 tvSendVerificationCode.setClickable(true);
                 tvSendVerificationCode.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 tvSendVerificationCode.setTextColor(getResources().getColor(R.color.colorFFF));
-            }else {
+            } else {
                 tvSendVerificationCode.setText(String.format(getString(R.string.format_get_verification_code_again), aLong));
                 tvSendVerificationCode.setClickable(false);
                 tvSendVerificationCode.setBackgroundColor(getResources().getColor(R.color.color_DDDDDD));
@@ -137,8 +137,8 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
-    private void smsCode(){
-        if (TextUtils.isEmpty(edtAccount.getText())){
+    private void smsCode() {
+        if (TextUtils.isEmpty(edtAccount.getText())) {
             ToastUtils.showShort(getString(R.string.mobile_error));
             return;
         }
@@ -153,19 +153,19 @@ public class LoginActivity extends BaseActivity {
 
     private void login() {
         if (TextUtils.isEmpty(edtAccount.getText())) {
-            ToastUtils.showShort(getString(loginStyle == LOGIN_ACCOUNT ? R.string.account_error:R.string.mobile_error));
+            ToastUtils.showShort(getString(loginStyle == LOGIN_ACCOUNT ? R.string.account_error : R.string.mobile_error));
             return;
         }
         String account = Objects.requireNonNull(edtAccount.getText()).toString();
         String pwd = Objects.requireNonNull(edtPwd.getText()).toString();
         String verificationCode = Objects.requireNonNull(edtVerificationCode.getText()).toString();
-        if (loginStyle == LOGIN_ACCOUNT){
+        if (loginStyle == LOGIN_ACCOUNT) {
             if (TextUtils.isEmpty(edtPwd.getText())) {
                 ToastUtils.showShort(R.string.pwd_empty);
                 return;
             }
             loginVm.accountLogin(account, pwd, DeviceUtils.getAndroidID());
-        }else {
+        } else {
             if (TextUtils.isEmpty(edtVerificationCode.getText())) {
                 ToastUtils.showShort(getString(R.string.sms_error));
                 return;
@@ -174,22 +174,24 @@ public class LoginActivity extends BaseActivity {
         }
         loginVm.accountLoginLiveData.observe(this, loginBean -> {
 
-            SPUtils.getInstance().put(SpConfig.USER_ID, loginBean.getUser_id());
-            SPUtils.getInstance().put(SpConfig.TOKEN, loginBean.getToken());
-            SPUtils.getInstance().put(SpConfig.MOBILE, loginBean.getTel());
-            SPUtils.getInstance().put(SpConfig.INFO_STATUS, loginBean.getInfo_status());
+            SPUtils.getInstance().put(SpConfig.USER_ID, loginBean.getUser_id(), true);
+            SPUtils.getInstance().put(SpConfig.TOKEN, loginBean.getToken(), true);
+            SPUtils.getInstance().put(SpConfig.MOBILE, loginBean.getTel(), true);
+            SPUtils.getInstance().put(SpConfig.INFO_STATUS, loginBean.getInfo_status(), true);
+
+
             shareUtils.addShared("info_status", String.valueOf(loginBean.getInfo_status()), "login");
             LogUtils.i(loginBean.getInfo_status());
-            if (loginBean.getInfo_status() == 1){
+            if (loginBean.getInfo_status() == 1) {
                 imConnectVm.userId = loginBean.getUser_id();
                 imConnectVm.getToken();
-            }else {
+            } else {
                 ActivityUtils.startActivity(UserInfoInputActivity.class);
             }
         });
         loginVm.pageStateLiveData.observe(this, s -> {
             LogUtils.i(s);
-            switch (s){
+            switch (s) {
                 case PageState.PAGE_LOADING:
                     showLoading();
                     break;
@@ -202,9 +204,10 @@ public class LoginActivity extends BaseActivity {
 
     /**
      * 切换登录方式
+     *
      * @param type
      */
-    private void changeLoginStyle(int type){
+    private void changeLoginStyle(int type) {
         if (loginStyle == type) return;
         switch (type) {
             case LOGIN_ACCOUNT:

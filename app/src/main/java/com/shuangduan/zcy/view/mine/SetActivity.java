@@ -64,23 +64,41 @@ public class SetActivity extends BaseActivity {
         exitVm.init();
 
         switchSound.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked){
+            if (isChecked) {
 
-            }else {
+            } else {
 
             }
         });
         switchModel.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked){
+            if (isChecked) {
 
-            }else {
+            } else {
 
+            }
+        });
+
+
+        exitVm.exitLiveData.observe(this, o -> {
+            LoginUtils.getExitLogin();
+        });
+
+        exitVm.pageStateLiveData.observe(this, s -> {
+            switch (s) {
+                case PageState.PAGE_ERROR:
+                case PageState.PAGE_SERVICE_ERROR:
+                case PageState.PAGE_LOAD_SUCCESS:
+                    hideLoading();
+                    break;
+                case PageState.PAGE_LOADING:
+                    showLoading();
+                    break;
             }
         });
     }
 
     @OnClick({R.id.iv_bar_back, R.id.tv_update_pwd, R.id.tv_about_ours, R.id.tv_exit})
-    void onClick(View view){
+    void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_bar_back:
                 finish();
@@ -92,35 +110,20 @@ public class SetActivity extends BaseActivity {
                 ActivityUtils.startActivity(AboutOursActivity.class);
                 break;
             case R.id.tv_exit:
-                exitVm.exit();
-                exitVm.exitLiveData.observe(this, o -> {
-                    new CustomDialog(SetActivity.this)
-                            .setTip(getString(R.string.exit_confirm))
-                            .setCallBack(new BaseDialog.CallBack() {
-                                @Override
-                                public void cancel() {
+                new CustomDialog(SetActivity.this)
+                        .setTip(getString(R.string.exit_confirm))
+                        .setCallBack(new BaseDialog.CallBack() {
+                            @Override
+                            public void cancel() {
+                            }
 
-                                }
+                            @Override
+                            public void ok(String s) {
+                                exitVm.exit();
+                            }
+                        }).showDialog();
 
-                                @Override
-                                public void ok(String s) {
-                                    LoginUtils.getExitLogin();
-                                    finish();
-                                }
-                            }).showDialog();
-                });
-                exitVm.pageStateLiveData.observe(this, s -> {
-                    switch (s){
-                        case PageState.PAGE_ERROR:
-                        case PageState.PAGE_SERVICE_ERROR:
-                        case PageState.PAGE_LOAD_SUCCESS:
-                            hideLoading();
-                            break;
-                        case PageState.PAGE_LOADING:
-                            showLoading();
-                            break;
-                    }
-                });
+
                 break;
         }
     }

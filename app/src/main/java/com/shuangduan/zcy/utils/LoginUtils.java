@@ -1,4 +1,5 @@
 package com.shuangduan.zcy.utils;
+
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
@@ -21,11 +22,12 @@ public class LoginUtils {
 
     /**
      * 检测登录，未登录则跳转登录界面
+     *
      * @return
      */
-    public static boolean checkLogin(){
+    public static boolean checkLogin() {
         String token = SPUtils.getInstance().getString(SpConfig.TOKEN);
-        if (StringUtils.isTrimEmpty(token)){
+        if (StringUtils.isTrimEmpty(token)) {
             ActivityUtils.startActivity(LoginActivity.class);
             return false;
         }
@@ -34,11 +36,12 @@ public class LoginUtils {
 
     /**
      * 是否登录
+     *
      * @return
      */
-    public static boolean isLogin(){
+    public static boolean isLogin() {
         String token = SPUtils.getInstance().getString(SpConfig.TOKEN);
-        if (StringUtils.isTrimEmpty(token)){
+        if (StringUtils.isTrimEmpty(token)) {
             return false;
         }
         return true;
@@ -47,12 +50,13 @@ public class LoginUtils {
 
     /**
      * 检测是否第一次打开app
+     *
      * @return
      */
-    public static boolean isFirstApp(){
+    public static boolean isFirstApp() {
         int first = SPUtils.getInstance().getInt(SpConfig.FIRST_APP);
         LogUtils.i(first);
-        if (first==-1){
+        if (first == -1) {
             return false;
         }
         return true;
@@ -60,13 +64,14 @@ public class LoginUtils {
 
     /**
      * token出错账号顶下线
+     *
      * @return
      */
-    public static void getExitLogin(){
-        SPUtils.getInstance().clear();
-        SPUtils.getInstance().remove(SpConfig.USER_ID);
+    public static void getExitLogin() {
+        SPUtils.getInstance().clear(true);
         SPUtils.getInstance().put(SpConfig.FIRST_APP, 1);
         ActivityUtils.startActivity(WelcomeActivity.class);
+        LogUtils.e(SPUtils.getInstance().getString(SpConfig.TOKEN));
         ActivityUtils.finishAllActivitiesExceptNewest();
     }
 }
