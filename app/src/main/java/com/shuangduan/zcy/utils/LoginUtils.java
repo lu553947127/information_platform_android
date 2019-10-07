@@ -70,7 +70,8 @@ public class LoginUtils {
         SPUtils.getInstance().clear(true);
         SPUtils.getInstance().put(SpConfig.FIRST_APP, 1);
         ActivityUtils.startActivity(WelcomeActivity.class);
-        LogUtils.e(SPUtils.getInstance().getString(SpConfig.TOKEN));
+//        LogUtils.e(SPUtils.getInstance().getString(SpConfig.TOKEN));
+//        LogUtils.e(SPUtils.getInstance().getInt(SpConfig.USER_ID));
         ActivityUtils.finishAllActivitiesExceptNewest();
     }
 }

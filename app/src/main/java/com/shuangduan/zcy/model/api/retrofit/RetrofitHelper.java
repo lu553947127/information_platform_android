@@ -25,7 +25,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitHelper {
 
-    private static String BASE_URL = "";
+    private static String BASE_URL = "http://app.zicai365.com";
 //    public static String BASE_TEST_URL = "http://xx.yijijian.com";//测试服
     public static String BASE_TEST_URL = "http://app.zicai365.com";//正式服
     private static ApiService apiService;

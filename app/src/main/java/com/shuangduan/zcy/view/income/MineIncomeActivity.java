@@ -95,6 +95,12 @@ public class MineIncomeActivity extends BaseActivity {
                 xShow[i] = bean.getListtime();
             }
             IndexAxisValueFormatter indexAxisValueFormatter = new IndexAxisValueFormatter(xShow);
+
+            //设置X轴上每个竖线是否显示
+            chart.getXAxis().setDrawGridLines(true);
+
+            //设置x轴间距
+            chart.getXAxis().setGranularity(1f);
             chart.getXAxis().setValueFormatter(indexAxisValueFormatter);
             chart.getXAxis().setLabelCount(list.size());
             chart.getXAxis().setAxisMaximum(list.size());

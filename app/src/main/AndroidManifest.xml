@@ -62,7 +62,7 @@
         <!-- 引导页-->
         <activity android:name="com.shuangduan.zcy.view.login.FirstStartActivity" />
         <!-- 欢迎页-->
-        <activity android:name="com.shuangduan.zcy.view.login.WelcomeActivity"/>
+        <activity android:name="com.shuangduan.zcy.view.login.WelcomeActivity" android:launchMode="singleTop"/>
         <!-- 登录页-->
         <activity android:name="com.shuangduan.zcy.view.login.LoginActivity"  android:windowSoftInputMode="stateHidden|adjustPan" />
         <!-- 注册页-->
