@@ -320,7 +320,7 @@
             android:layout_gravity="center_vertical|end"
             android:textColor="@color/color_666666"
             android:textSize="14sp"
-            android:text="万元"/>
+            android:text="元"/>
 
         <View
             android:layout_width="match_parent"
@@ -507,7 +507,7 @@
             android:layout_gravity="center_vertical|end"
             android:textColor="@color/color_666666"
             android:textSize="14sp"
-            android:text="万元"/>
+            android:text="元"/>
 
         <View
             android:layout_width="match_parent"

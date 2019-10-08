@@ -1,6 +1,7 @@
 package com.shuangduan.zcy.rongyun.view;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -28,6 +29,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.Common;
+import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.MyApplication;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseFragment;
@@ -40,6 +42,7 @@ import com.shuangduan.zcy.model.event.AvatarEvent;
 import com.shuangduan.zcy.utils.BarUtils;
 import com.shuangduan.zcy.utils.image.ImageConfig;
 import com.shuangduan.zcy.utils.image.ImageLoader;
+import com.shuangduan.zcy.view.mine.UserInfoActivity;
 import com.shuangduan.zcy.vm.UserInfoVm;
 import com.shuangduan.zcy.weight.CircleImageView;
 import com.shuangduan.zcy.weight.NoScrollViewPager;
@@ -52,6 +55,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationListFragment;
+import io.rong.imkit.model.UIConversation;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Group;
 import io.rong.imlib.model.UserInfo;
@@ -167,6 +171,43 @@ public class CircleFragment extends BaseFragment {
             // i 是未读数量
             getFriendApplyCount(i);
         }, Conversation.ConversationType.PRIVATE,Conversation.ConversationType.GROUP,Conversation.ConversationType.SYSTEM);
+        //设置会话列表监听
+        RongIM.setConversationListBehaviorListener(new RongIM.ConversationListBehaviorListener() {
+
+            //用户头像点击监听
+            @Override
+            public boolean onConversationPortraitClick(Context context, Conversation.ConversationType conversationType, String targetId) {
+                if (targetId != null) {
+                    if (conversationType == Conversation.ConversationType.PRIVATE){
+                        if (Integer.parseInt(targetId)!= SPUtils.getInstance().getInt(SpConfig.USER_ID)) {
+                            Bundle bundle = new Bundle();
+                            bundle.putInt(CustomConfig.UID, Integer.parseInt(targetId));
+                            ActivityUtils.startActivity(bundle, UserInfoActivity.class);
+                        }
+                    }else if (conversationType == Conversation.ConversationType.GROUP){
+                        Bundle bundle = new Bundle();
+                        bundle.putString("group_id", targetId);
+                        ActivityUtils.startActivity(bundle,IMGroupDetailsActivity.class);
+                    }
+                }
+                return true;
+            }
+
+            @Override
+            public boolean onConversationPortraitLongClick(Context context, Conversation.ConversationType conversationType, String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onConversationLongClick(Context context, View view, UIConversation uiConversation) {
+                return false;
+            }
+
+            @Override
+            public boolean onConversationClick(Context context, View view, UIConversation uiConversation) {
+                return false;
+            }
+        });
     }
 
     //设置底部消息提醒数字布局
