@@ -44,6 +44,16 @@ public class KeyboardUtil {
     }
 
     /**
+     * 打开键盘
+     *
+     * @param context
+     */
+    public static void showKeyBoard(Context context, View view) {
+        InputMethodManager manager = ((InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE));
+        if (manager != null) manager.showSoftInput(view, 0);
+    }
+
+    /**
      * 设置输入框 只能输入数字和小数点
      *
      * @param editText

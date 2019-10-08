@@ -10,27 +10,21 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
-import com.shuangduan.zcy.adapter.CompanySearchAdapter;
 import com.shuangduan.zcy.adapter.SearchMaterialAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.event.MaterialEvent;
-import com.shuangduan.zcy.model.event.OfficeEvent;
 import com.shuangduan.zcy.model.event.SupplierEvent;
-import com.shuangduan.zcy.view.search.SearchResultActivity;
 import com.shuangduan.zcy.vm.SearchVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
@@ -127,6 +121,33 @@ public class MaterialSearchActivity extends BaseActivity {
                 return true;
             }
             return false;
+        });
+
+        //监听键盘开始搜索
+        edtKeyword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (null != editable) {
+                    if (StringUtils.isTrimEmpty(editable.toString())){
+                        ToastUtils.showShort(getString(R.string.hint_keyword));
+                        return;
+                    }
+                    ivClear.setVisibility(edtKeyword.getText().length() > 0 ? View.VISIBLE : View.INVISIBLE);
+                    if (edtKeyword.getText().length() > 0) {
+                        searchVm.searchMaterial(type, edtKeyword.getText().toString());
+                    }
+                }
+            }
         });
     }
 

@@ -38,7 +38,6 @@ import com.shuangduan.zcy.dialog.pop.CommonPopupWindow;
 import com.shuangduan.zcy.model.bean.MapBean;
 import com.shuangduan.zcy.utils.GpsUtils;
 import com.shuangduan.zcy.view.search.SearchActivity;
-import com.shuangduan.zcy.view.search.SearchResultActivity;
 import com.shuangduan.zcy.vm.PermissionVm;
 import com.shuangduan.zcy.vm.ProjectInfoVm;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -159,31 +158,38 @@ public class ProjectInfoActivity extends BaseActivity {
      */
     private void setUpMap() {
         //地图缩放级别
-        float zoom = 17;
-        aMap.moveCamera(CameraUpdateFactory.zoomTo(zoom));
+        double zoom = 14.190743;
+        aMap.moveCamera(CameraUpdateFactory.zoomTo((float) zoom));
         aMap.setMyLocationEnabled(true);// 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
         aMap.getUiSettings().setMyLocationButtonEnabled(true);// 设置默认定位按钮是否显示
         aMap.getUiSettings().setRotateGesturesEnabled(false);//设置地图不能旋转
         aMap.getUiSettings().setMyLocationButtonEnabled(false);//设置默认定位按钮是否显示，非必需设置。
         aMap.setOnMyLocationChangeListener(location -> {
-//            LogUtils.i(location.getLongitude(), location.getLatitude());
+            LogUtils.i(location.getLongitude(), location.getLatitude());
             projectInfoVm.mapList(location.getLongitude(), location.getLatitude());
         });
 
         //监测地图画面的移动
         aMap.setOnCameraChangeListener(new AMap.OnCameraChangeListener() {
+
+            //用户对地图做出一系列改变地图可视区域的操作（如拖动、动画滑动、缩放）完成之后回调此方法。
             @Override
             public void onCameraChangeFinish(CameraPosition cameraPosition) {
-//                LogUtils.i(cameraPosition.target.latitude, cameraPosition.target.longitude);
-//                clearAllMarker();
+                LogUtils.i(cameraPosition.target.latitude, cameraPosition.target.longitude);
+                LogUtils.i(cameraPosition.zoom);
                 projectInfoVm.mapList(cameraPosition.target.longitude,cameraPosition.target.latitude);
+                if (popupWindow != null) {
+                    if (popupWindow.isShowing()) {
+                        popupWindow.dismiss();
+                    }
+                    popupWindow = null;
+                }
             }
 
+            //可视范围改变时回调此方法。
             @Override
             public void onCameraChange(CameraPosition cameraPosition) {
-//                LogUtils.i(cameraPosition.target.latitude, cameraPosition.target.longitude);
-//                clearAllMarker();
-                projectInfoVm.mapList(cameraPosition.target.longitude,cameraPosition.target.latitude);
+
             }
         });
 
@@ -292,28 +298,27 @@ public class ProjectInfoActivity extends BaseActivity {
      */
     private void showPopWindow(String title, int position) {
         MapBean mapBean = throughPointList.get(position);
-        popupWindow = new CommonPopupWindow.Builder(this)
-                .setView(R.layout.dialog_project_info)
-                .setOutsideTouchable(false)
-                .setBackGroundLevel(1f)
-                .setWidthAndHeight(ConvertUtils.dp2px(320), ViewGroup.LayoutParams.WRAP_CONTENT)
-                .setAnimationStyle(R.style.DialogAnimBottom)
-                .setViewOnclickListener((view, layoutResId) -> {
-                    tvTitle = view.findViewById(R.id.tv_title);
-                    tvContent = view.findViewById(R.id.tv_content);
-                    tvType = view.findViewById(R.id.tv_type);
-                    tvReaders = view.findViewById(R.id.tv_readers);
-                    tvTime = view.findViewById(R.id.tv_time);
-                    view.setOnClickListener(v -> {
-                        Bundle bundle = new Bundle();
-                        bundle.putInt(CustomConfig.PROJECT_ID, mapBean.getId());
-                        bundle.putInt(CustomConfig.LOCATION, 0);
-                        ActivityUtils.startActivity(bundle, ProjectDetailActivity.class);
-                    });
-                })
-                .create();
         if (popupWindow == null) {
-
+            popupWindow = new CommonPopupWindow.Builder(this)
+                    .setView(R.layout.dialog_project_info)
+                    .setOutsideTouchable(false)
+                    .setBackGroundLevel(1f)
+                    .setWidthAndHeight(ConvertUtils.dp2px(320), ViewGroup.LayoutParams.WRAP_CONTENT)
+                    .setAnimationStyle(R.style.DialogAnimBottom)
+                    .setViewOnclickListener((view, layoutResId) -> {
+                        tvTitle = view.findViewById(R.id.tv_title);
+                        tvContent = view.findViewById(R.id.tv_content);
+                        tvType = view.findViewById(R.id.tv_type);
+                        tvReaders = view.findViewById(R.id.tv_readers);
+                        tvTime = view.findViewById(R.id.tv_time);
+                        view.setOnClickListener(v -> {
+                            Bundle bundle = new Bundle();
+                            bundle.putInt(CustomConfig.PROJECT_ID, mapBean.getId());
+                            bundle.putInt(CustomConfig.LOCATION, 0);
+                            ActivityUtils.startActivity(bundle, ProjectDetailActivity.class);
+                        });
+                    })
+                    .create();
         }
         tvTitle.setText(title);
         tvContent.setText(mapBean.getIntro());
