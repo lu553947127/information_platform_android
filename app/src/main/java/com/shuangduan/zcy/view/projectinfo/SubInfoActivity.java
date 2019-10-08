@@ -173,13 +173,15 @@ public class SubInfoActivity extends BaseActivity {
         chart.setDrawGridBackground(false);
         //线的颜色
         set.setColor(getResources().getColor(R.color.color_6a5ff8));
+        //设置线宽
+        set.setLineWidth(1f);
         //节点显示
         set.setDrawCircles(true);
         set.setDrawValues(true);
         //关闭简介
         chart.getDescription().setEnabled(false);
         //关闭手势
-//        chart.setTouchEnabled(false);
+        chart.setTouchEnabled(true);
         //关闭x轴数值显示
         chart.getXAxis().setEnabled(true);
         chart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);//设置x轴的显示位置
