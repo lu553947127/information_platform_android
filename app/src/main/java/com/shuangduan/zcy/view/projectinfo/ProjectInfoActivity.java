@@ -15,6 +15,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.amap.api.maps.AMap;
+import com.amap.api.maps.AMapOptions;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
@@ -23,6 +24,7 @@ import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
+import com.amap.api.maps.model.Poi;
 import com.amap.api.maps.model.animation.Animation;
 import com.amap.api.maps.model.animation.ScaleAnimation;
 import com.blankj.utilcode.util.ActivityUtils;
@@ -161,13 +163,24 @@ public class ProjectInfoActivity extends BaseActivity {
         double zoom = 14.190743;
         aMap.moveCamera(CameraUpdateFactory.zoomTo((float) zoom));
         aMap.setMyLocationEnabled(true);// 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
-        aMap.getUiSettings().setMyLocationButtonEnabled(true);// 设置默认定位按钮是否显示
-        aMap.getUiSettings().setRotateGesturesEnabled(false);//设置地图不能旋转
-        aMap.getUiSettings().setMyLocationButtonEnabled(false);//设置默认定位按钮是否显示，非必需设置。
+        aMap.getUiSettings().setMyLocationButtonEnabled(false);// 设置默认定位按钮是否显示
+        aMap.getUiSettings().setRotateGesturesEnabled(false);//设置地图旋转手势
+        aMap.getUiSettings().setTiltGesturesEnabled(false);//设置地图倾斜手势
+        aMap.getUiSettings().setZoomPosition(AMapOptions.ZOOM_POSITION_RIGHT_BUTTOM);//设置放缩图标在右下
         aMap.setOnMyLocationChangeListener(location -> {
             LogUtils.i(location.getLongitude(), location.getLatitude());
             projectInfoVm.mapList(location.getLongitude(), location.getLatitude());
         });
+
+//        //地图点击事件监听接口。当用户点击地图时回调此方法，如果点击在某个覆盖物（如marker、polyline）上，且处理了该点击事件，则不会回调此方法。
+//        aMap.setOnMapClickListener(poi -> {
+//            if (popupWindow != null) {
+//                if (popupWindow.isShowing()) {
+//                    popupWindow.dismiss();
+//                }
+//                popupWindow = null;
+//            }
+//        });
 
         //监测地图画面的移动
         aMap.setOnCameraChangeListener(new AMap.OnCameraChangeListener() {
