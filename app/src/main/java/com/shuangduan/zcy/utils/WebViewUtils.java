@@ -57,7 +57,7 @@ public class WebViewUtils extends LinearLayout {
         init(context);
     }
 
-    @SuppressLint({"SetJavaScriptEnabled", "NewApi"})
+    @SuppressLint({"SetJavaScriptEnabled", "NewApi", "InflateParams"})
     private void init(Context context) {
         mContext = context;
         setOrientation(VERTICAL);

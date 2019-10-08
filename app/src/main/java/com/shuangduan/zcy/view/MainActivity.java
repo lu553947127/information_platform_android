@@ -186,16 +186,16 @@ public class MainActivity extends BaseActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-    // IWXAPI 是第三方app和微信通信的openApi接口
+    /**
+     * 微信支付
+     * IWXAPI 是第三方app和微信通信的openApi接口
+     */
     private IWXAPI api;
-
     private void regToWx() {
         // 通过WXAPIFactory工厂，获取IWXAPI的实例
         api = WXAPIFactory.createWXAPI(this, APP_ID, true);
-
         // 将应用的appId注册到微信
         api.registerApp(APP_ID);
-
         //建议动态监听微信启动广播进行注册到微信
         registerReceiver(new BroadcastReceiver() {
             @Override
@@ -204,11 +204,10 @@ public class MainActivity extends BaseActivity {
                 api.registerApp(APP_ID);
             }
         }, new IntentFilter(ConstantsAPI.ACTION_REFRESH_WXAPP));
-
     }
 
     /**
-     * 极光别名
+     * 极光推送别名设置
      */
     private void setAlias() {
         int userId = SPUtils.getInstance().getInt(SpConfig.USER_ID, 0);

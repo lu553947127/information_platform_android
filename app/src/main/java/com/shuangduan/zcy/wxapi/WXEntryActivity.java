@@ -27,7 +27,7 @@ import org.greenrobot.eventbus.EventBus;
  *     author : 宁文强
  *     e-mail : ningwenqiang@lanhuiplay.com
  *     time   : 2018/05/25
- *     desc   :
+ *     desc   : 微信分享
  *     version: 1.0
  * </pre>
  */

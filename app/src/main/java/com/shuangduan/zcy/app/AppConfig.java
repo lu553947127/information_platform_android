@@ -37,6 +37,7 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.io.File;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
@@ -52,7 +53,7 @@ import okhttp3.OkHttpClient;
  *     author : 宁文强
  *     e-mail : ningwenqiang@lanhuiplay.com
  *     time   : 2018/07/17
- *     desc   :
+ *     desc   : application初始化
  *     version: 1.0
  * </pre>
  */
@@ -92,7 +93,6 @@ public class AppConfig {
 
     /**
      * 初始化Utils工具
-     *
      * @param context
      */
     private static void initUtils(Application context) {
@@ -118,7 +118,7 @@ public class AppConfig {
     }
 
     /**
-     * 微信初始化配置
+     * 微信支付初始化配置
      */
     public static final String APP_ID = "wx2e2f0d4ccdf3e52f";
     public static IWXAPI iwxapi;
@@ -128,14 +128,13 @@ public class AppConfig {
         iwxapi.registerApp(APP_ID);
     }
 
-    /*private static void initBugly(Context context) {
-        Beta.upgradeDialogLayoutId = R.layout.upgrade_dialog;
-        Bugly.init(context, "52396056dc", BuildConfig.IS_DEBUG);
-    }*/
+//    private static void initBugly(Context context) {
+//        Beta.upgradeDialogLayoutId = R.layout.upgrade_dialog;
+//        Bugly.init(context, "52396056dc", BuildConfig.IS_DEBUG);
+//    }
 
     /**
      * 测试版本收集崩溃日志
-     *
      * @param context
      */
     private static void initCrash(final Context context) {
@@ -159,7 +158,6 @@ public class AppConfig {
 //        if (shouldInit(context)) {
 //            MiPushClient.registerPush(context, "2882303761517473625", "5451747338625");
 //        }
-
 
         //初始化OPPO推送 ，此功能需要在初始化融云之前
 //        PushConfig.Builder builder = new PushConfig.Builder();
@@ -195,20 +193,13 @@ public class AppConfig {
 
     /**
      * 获得当前进程的名字
-     *
      * @param context
      * @return 进程号
      */
     public static String getCurProcessName(Context context) {
-
         int pid = android.os.Process.myPid();
-
-        ActivityManager activityManager = (ActivityManager) context
-                .getSystemService(Context.ACTIVITY_SERVICE);
-
-        for (ActivityManager.RunningAppProcessInfo appProcess : activityManager
-                .getRunningAppProcesses()) {
-
+        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningAppProcessInfo appProcess : Objects.requireNonNull(activityManager).getRunningAppProcesses()) {
             if (appProcess.pid == pid) {
                 return appProcess.processName;
             }
@@ -231,7 +222,7 @@ public class AppConfig {
         return false;
     }
 
-    //配置网络框架
+    //配置okgo网络框架
     private static void initOkGo(Application context) {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor("OkGo");
