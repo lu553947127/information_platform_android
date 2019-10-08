@@ -12,17 +12,16 @@ import androidx.lifecycle.ViewModelProviders;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
-import com.shuangduan.zcy.model.bean.MineIncomeBean;
 import com.shuangduan.zcy.model.bean.ProjectSubViewBean;
 import com.shuangduan.zcy.view.WebViewActivity;
 import com.shuangduan.zcy.vm.GoToSubVm;
@@ -103,7 +102,7 @@ public class SubInfoActivity extends BaseActivity {
             xShow = new String[list.size()];
             for (int i = 0; i < list.size(); i++) {
                 ProjectSubViewBean.ListBean bean = list.get(i);
-                values.add(new Entry(i, bean.getValue()));
+                values.add(new Entry(i + 1, bean.getValue()));
                 xShow[i] = bean.getTime();
             }
             IndexAxisValueFormatter indexAxisValueFormatter = new IndexAxisValueFormatter(xShow);
@@ -122,7 +121,7 @@ public class SubInfoActivity extends BaseActivity {
             chart.getXAxis().setValueFormatter(new IndexAxisValueFormatter() {
                 @Override
                 public String getFormattedValue(float value) {
-                    return (int)value + "月";
+                    return (int) value + "月";
                 }
             });
 
@@ -131,6 +130,15 @@ public class SubInfoActivity extends BaseActivity {
             lineDataSet.setValues(values);
             chart.getData().notifyDataChanged();
             chart.notifyDataSetChanged();
+
+
+            lineDataSet.setValueFormatter(new ValueFormatter() {
+                @Override
+                public String getFormattedValue(float value) {
+                    return String.valueOf(value);
+                }
+            });
+
         });
         goToSubVm.pageStateLiveData.observe(this, s -> {
             showPageState(s);
@@ -139,9 +147,9 @@ public class SubInfoActivity extends BaseActivity {
     }
 
     @OnClick({R.id.iv_bar_back, R.id.iv_bar_right})
-    void onClick(View view){
+    void onClick(View view) {
         Bundle bundle = new Bundle();
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.iv_bar_back:
                 finish();
                 break;
@@ -155,6 +163,10 @@ public class SubInfoActivity extends BaseActivity {
     private void initChart() {
         values = new ArrayList<>();
         LineDataSet set = new LineDataSet(values, "");
+
+        Legend legend = chart.getLegend();
+        legend.setEnabled(false);
+
         chart.animateXY(1500, 1500);
         chart.setNoDataText("没有数据啊");
         //关闭背景颜色

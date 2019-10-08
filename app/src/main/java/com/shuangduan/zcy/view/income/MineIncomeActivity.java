@@ -13,11 +13,13 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IDataSet;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
@@ -91,7 +93,7 @@ public class MineIncomeActivity extends BaseActivity {
             xShow = new String[list.size()];
             for (int i = 0; i < list.size(); i++) {
                 MineIncomeBean.ListBean bean = list.get(i);
-                values.add(new Entry(i, bean.getPrice()));
+                values.add(new Entry(i + 1, bean.getPrice()));
                 xShow[i] = bean.getListtime();
             }
             IndexAxisValueFormatter indexAxisValueFormatter = new IndexAxisValueFormatter(xShow);
@@ -110,15 +112,24 @@ public class MineIncomeActivity extends BaseActivity {
             chart.getXAxis().setValueFormatter(new IndexAxisValueFormatter() {
                 @Override
                 public String getFormattedValue(float value) {
-                    return (int)value + "月";
+                    return (int) value + "月";
                 }
             });
 
 
             LineDataSet lineDataSet = (LineDataSet) chart.getData().getDataSetByIndex(0);
             lineDataSet.setValues(values);
+
             chart.getData().notifyDataChanged();
             chart.notifyDataSetChanged();
+
+            lineDataSet.setValueFormatter(new ValueFormatter() {
+                @Override
+                public String getFormattedValue(float value) {
+                    return String.valueOf(value);
+                }
+            });
+
         });
         mineIncomeVm.pageStateLiveData.observe(this, s -> {
             switch (s) {
@@ -136,15 +147,23 @@ public class MineIncomeActivity extends BaseActivity {
     private void initChart() {
         values = new ArrayList<>();
         LineDataSet set = new LineDataSet(values, "");
+
+        Legend legend = chart.getLegend();
+        legend .setEnabled(false);
+
+        //设置不显示折线图左下角的标签
         chart.animateXY(1500, 1500);
         chart.setNoDataText("没有数据啊");
         //关闭背景颜色
         chart.setDrawGridBackground(false);
         //线的颜色
-        set.setColor(getResources().getColor(R.color.colorFFF));
+        set.setColor(getResources().getColor(R.color.color_6a5ff8));
         //节点显示
         set.setDrawCircles(true);
         set.setDrawValues(true);
+        //设置线宽
+        set.setLineWidth(1f);
+
         //关闭简介
         chart.getDescription().setEnabled(false);
         //关闭手势
@@ -154,6 +173,7 @@ public class MineIncomeActivity extends BaseActivity {
         chart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);//设置x轴的显示位置
         chart.getXAxis().setDrawAxisLine(true);
         chart.getAxisLeft().setAxisMinimum(0);
+
         //关闭右侧Y轴
         chart.getAxisRight().setEnabled(false);
         chart.setData(new LineData(set));

@@ -280,9 +280,7 @@ public class HomeFragment extends BaseFragment {
     }
 
     @Override
-    protected void initDataFromService() {
-
-    }
+    protected void initDataFromService() {}
 
     @OnClick({R.id.tv_bar_title, R.id.tv_more, R.id.iv_subscribed,R.id.tv_bar_title_home,R.id.iv_subscribed_home})
     void onClick(View view){
