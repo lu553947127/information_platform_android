@@ -172,7 +172,7 @@ public class SubInfoActivity extends BaseActivity {
         //关闭背景颜色
         chart.setDrawGridBackground(false);
         //线的颜色
-        set.setColor(getResources().getColor(R.color.colorFFF));
+        set.setColor(getResources().getColor(R.color.color_6a5ff8));
         //节点显示
         set.setDrawCircles(true);
         set.setDrawValues(true);
