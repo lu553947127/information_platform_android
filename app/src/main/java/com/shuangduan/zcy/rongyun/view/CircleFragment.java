@@ -108,7 +108,7 @@ public class CircleFragment extends BaseFragment {
     @SuppressLint("CutPasteId")
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState,View view) {
-        ConversationListAdapter
+        ConversationListAdapter22222222
         BarUtils.setStatusBarColorRes(fakeStatusBar, getResources().getColor(R.color.colorPrimary));
         FragmentManager fragmentManage = getChildFragmentManager();
         ConversationListFragment fragement = (ConversationListFragment) fragmentManage.findFragmentById(R.id.conversationlist);
