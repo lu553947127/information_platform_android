@@ -168,7 +168,7 @@ public class HomeFragment extends BaseFragment {
             }
         });
         refresh.setEnableLoadMore(false);
-        refresh.setEnableRefresh(true);
+        refresh.setEnableRefresh(false);
         refresh.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);
         refresh.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
             @Override

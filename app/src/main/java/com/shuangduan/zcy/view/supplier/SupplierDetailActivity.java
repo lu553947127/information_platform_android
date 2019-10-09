@@ -90,7 +90,7 @@ public class SupplierDetailActivity extends BaseActivity {
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
-        tvBarTitle.setText(getString(R.string.base_info));
+        tvBarTitle.setText("供应商信息");
 
         SupplierVm supplierVm = ViewModelProviders.of(this).get(SupplierVm.class);
         supplierVm.detailLiveData.observe(this, supplierDetailBean -> {
@@ -106,8 +106,8 @@ public class SupplierDetailActivity extends BaseActivity {
             authorization=supplierDetailBean.getAuthorization();
             ImageLoader.load(this, new ImageConfig.Builder()
                     .url(supplierDetailBean.getHeadimg())
-                    .placeholder(R.drawable.default_head)
-                    .errorPic(R.drawable.default_head)
+                    .placeholder(R.drawable.no_supplier_logo)
+                    .errorPic(R.drawable.no_supplier_logo)
                     .imageView(ivUser)
                     .build());
             if (supplierDetailBean.getImages_json()!=null){

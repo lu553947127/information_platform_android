@@ -55,8 +55,8 @@ public class SupplierAdapter extends BaseQuickAdapter<SupplierBean.ListBean, Bas
         CircleImageView ivHead = helper.getView(R.id.iv_header);
         ImageLoader.load(mContext, new ImageConfig.Builder()
                 .url(item.getHeadimg())
-                .placeholder(R.drawable.default_head)
-                .errorPic(R.drawable.default_head)
+                .placeholder(R.drawable.no_supplier_logo)
+                .errorPic(R.drawable.no_supplier_logo)
                 .imageView(ivHead)
                 .build());
 

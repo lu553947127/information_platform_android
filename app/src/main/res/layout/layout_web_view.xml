@@ -22,7 +22,8 @@
     android:background="#FFF6F6F6"
     android:layout_height="wrap_content"
     android:paddingTop="10dp"
-    android:paddingBottom="10dp">
+    android:paddingBottom="10dp"
+    android:visibility="gone">
 
     <ImageButton
         android:layout_width="0dp"
