@@ -56,6 +56,7 @@ import butterknife.OnClick;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationListFragment;
 import io.rong.imkit.model.UIConversation;
+import io.rong.imkit.widget.adapter.ConversationListAdapter;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Group;
 import io.rong.imlib.model.UserInfo;
@@ -107,7 +108,7 @@ public class CircleFragment extends BaseFragment {
     @SuppressLint("CutPasteId")
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState,View view) {
-
+        ConversationListAdapter
         BarUtils.setStatusBarColorRes(fakeStatusBar, getResources().getColor(R.color.colorPrimary));
         FragmentManager fragmentManage = getChildFragmentManager();
         ConversationListFragment fragement = (ConversationListFragment) fragmentManage.findFragmentById(R.id.conversationlist);
