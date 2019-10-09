@@ -204,6 +204,11 @@ public class ReleaseVm extends BaseViewModel {
             ToastUtils.showShort("请输入电话");
             return;
         }
+        if (imageIds == null || imageIds.size() == 0) {
+            ToastUtils.showShort("请上传图片");
+            return;
+        }
+
         String updateTime = TimeUtils.getNowString(new SimpleDateFormat("yyyy-MM-dd"));
         new ProjectRepository().addTrack(releaseLocusLiveData, pageStateLiveData, userId, projectId, remarks, name, tel, updateTime, new AddTrackBean(imageIds));
     }

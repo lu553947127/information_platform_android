@@ -715,6 +715,7 @@
                     android:layout_marginLeft="60dp"
                     android:textColor="@color/colorTvHint"
                     android:textSize="14sp"
+                    android:visibility="gone"
                     android:text="@string/not_required"/>
 
             </RelativeLayout>

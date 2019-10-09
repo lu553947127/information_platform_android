@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.Process;
 import android.view.Gravity;
+
 import androidx.core.content.ContextCompat;
 
 import com.blankj.utilcode.util.ConvertUtils;
@@ -93,6 +94,7 @@ public class AppConfig {
 
     /**
      * 初始化Utils工具
+     *
      * @param context
      */
     private static void initUtils(Application context) {
@@ -135,6 +137,7 @@ public class AppConfig {
 
     /**
      * 测试版本收集崩溃日志
+     *
      * @param context
      */
     private static void initCrash(final Context context) {
@@ -193,6 +196,7 @@ public class AppConfig {
 
     /**
      * 获得当前进程的名字
+     *
      * @param context
      * @return 进程号
      */

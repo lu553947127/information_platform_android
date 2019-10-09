@@ -65,7 +65,7 @@ public class MultiAreaVm extends BaseViewModel {
                 bean.setIsSelect(selectAll ? 1 : 0);
             }
             ProvinceBean provinceBean = new ProvinceBean();
-            provinceBean.setName("全部");
+            provinceBean.setName("全国");
             provinceBean.setId(0);
             provinceBean.setIsSelect(1);
             provinceBean.setIsCheck(1);
@@ -74,7 +74,7 @@ public class MultiAreaVm extends BaseViewModel {
             CityBean childBean = new CityBean();
             childBean.setIsSelect(selectAll ? 1 : 0);
             childBean.setId(0);
-            childBean.setName("全部");
+            childBean.setName("全国");
             cityList.add(childBean);
             provinceBean.setCityList(cityList);
             provinceList.add(0, provinceBean);
@@ -90,7 +90,12 @@ public class MultiAreaVm extends BaseViewModel {
     public void setCityInit() {
         List<CityBean> cityList = cityLiveData.getValue();
         if (cityList != null && cityList.size() > 0) {
-            //没有添加全部选项的添加
+            //全国
+            if(cityList.get(0).getName().equals("全国")){
+                provinceLiveData.getValue().get(currentPosition).setCityList(cityList);
+                return;
+            }
+            //没有添加全部选项的添加  省
             if (!cityList.get(0).getName().equals("全部")) {
                 for (CityBean bean : cityList) {
                     //默认全选

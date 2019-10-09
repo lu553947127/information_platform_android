@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -33,7 +32,6 @@ import com.shuangduan.zcy.model.event.OfficeEvent;
 import com.shuangduan.zcy.model.event.ProductionEvent;
 import com.shuangduan.zcy.model.event.UserNameEvent;
 import com.shuangduan.zcy.rongyun.view.IMAddFriendActivity;
-import com.shuangduan.zcy.rongyun.view.IMSearchActivity;
 import com.shuangduan.zcy.utils.image.ImageConfig;
 import com.shuangduan.zcy.utils.image.ImageLoader;
 import com.shuangduan.zcy.utils.matisse.Glide4Engine;
