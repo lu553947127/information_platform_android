@@ -14,6 +14,7 @@ import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseLazyFragment;
 import com.shuangduan.zcy.utils.BarUtils;
 import com.shuangduan.zcy.view.income.IncomePeopleActivity;
+import com.shuangduan.zcy.view.mine.AboutOursActivity;
 import com.shuangduan.zcy.vm.IncomePeopleVm;
 
 import butterknife.BindView;
@@ -36,6 +37,10 @@ public class PeopleFragment extends BaseLazyFragment {
     AppCompatImageView ivBarBack;
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
+    @BindView(R.id.iv_bar_right)
+    AppCompatImageView ivBarRight;
+    @BindView(R.id.tv_bar_right)
+    AppCompatTextView tvBarRight;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.tv_income_amount)
@@ -67,6 +72,8 @@ public class PeopleFragment extends BaseLazyFragment {
         BarUtils.setStatusBarColorRes(fakeStatusBar, getResources().getColor(R.color.colorPrimary));
         ivBarBack.setVisibility(View.INVISIBLE);
         tvBarTitle.setText(getString(R.string.people));
+        tvBarRight.setVisibility(View.GONE);
+        ivBarRight.setImageResource(R.drawable.icon_help_white);
 
         incomePeopleVm = ViewModelProviders.of(this).get(IncomePeopleVm.class);
         incomePeopleVm.showLiveData.observe(this, peopleBean -> {
@@ -80,7 +87,7 @@ public class PeopleFragment extends BaseLazyFragment {
         incomePeopleVm.show();
     }
 
-    @OnClick({R.id.tv_first_degree, R.id.tv_second_degree, R.id.tv_three_degree, R.id.tv_four_degree, R.id.tv_five_degree, R.id.tv_six_degree, })
+    @OnClick({R.id.tv_first_degree, R.id.tv_second_degree, R.id.tv_three_degree, R.id.tv_four_degree, R.id.tv_five_degree, R.id.tv_six_degree,R.id.iv_bar_right })
     void onClick(View view){
         Bundle bundle = new Bundle();
         switch (view.getId()){
@@ -107,6 +114,10 @@ public class PeopleFragment extends BaseLazyFragment {
             case R.id.tv_six_degree:
                 bundle.putInt(CustomConfig.PEOPLE_DEGREE, CustomConfig.SIX_DEGREE);
                 ActivityUtils.startActivity(bundle, IncomePeopleActivity.class);
+                break;
+            case R.id.iv_bar_right:
+                bundle.putString("income", "1");
+                ActivityUtils.startActivity(bundle, AboutOursActivity.class);
                 break;
         }
     }

@@ -35,7 +35,7 @@ import io.reactivex.schedulers.Schedulers;
  * @author xuyu
  * @Package com.shuangduan.zcy.manage$
  * @class ShareManage$
- * @class describe
+ * @class 分享工具类
  * @time 2019/9/28 9:00
  * @change
  * @class describe

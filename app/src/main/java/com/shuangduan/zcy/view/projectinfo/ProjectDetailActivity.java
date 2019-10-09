@@ -45,7 +45,6 @@ import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.manage.ShareManage;
 import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
 import com.shuangduan.zcy.model.bean.ProjectMembersStatusBean;
-import com.shuangduan.zcy.model.bean.ShareBean;
 import com.shuangduan.zcy.model.event.LocusRefreshEvent;
 import com.shuangduan.zcy.model.event.WarrantSuccessEvent;
 import com.shuangduan.zcy.utils.AuthenticationUtils;
@@ -113,8 +112,6 @@ public class ProjectDetailActivity extends BaseActivity {
     private PermissionVm permissionVm;
     private ProjectDetailVm projectDetailVm;
 
-
-    private ShareBean bean;
     //分享管理
     private ShareManage shareManage;
 

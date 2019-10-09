@@ -24,7 +24,6 @@ import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
-import com.amap.api.maps.model.Poi;
 import com.amap.api.maps.model.animation.Animation;
 import com.amap.api.maps.model.animation.ScaleAnimation;
 import com.blankj.utilcode.util.ActivityUtils;
@@ -69,8 +68,6 @@ public class ProjectInfoActivity extends BaseActivity {
     AppCompatImageView ivBarRight;
     @BindView(R.id.tv_bar_right)
     AppCompatTextView tvBarRight;
-
-    private PermissionVm permissionVm;
     MapView mMapView = null;
     AMap aMap = null;
     private List<MapBean> throughPointList;
@@ -97,45 +94,11 @@ public class ProjectInfoActivity extends BaseActivity {
 
         mMapView = (MapView) findViewById(R.id.map);
         mMapView.onCreate(savedInstanceState);// 此方法必须重写
-
-        permissionVm = ViewModelProviders.of(this).get(PermissionVm.class);
-        permissionVm.getLiveData().observe(this, integer -> {
-            if (integer == PermissionVm.PERMISSION_LOCATION){
-                if (GpsUtils.isOPen(this)){
-                    init();
-                }else {
-                    new CustomDialog(this)
-                            .setTip("为了更好的为您服务，请您打开您的GPS!")
-                            .setCallBack(new BaseDialog.CallBack() {
-                                @Override
-                                public void cancel() {
-                                    finish();
-                                }
-
-                                @Override
-                                public void ok(String s) {
-                                    GpsUtils.openGPS(ProjectInfoActivity.this);
-                                }
-                            }).showDialog();
-                }
-            }
-        });
-        permissionVm.getPermissionLocation(new RxPermissions(this));
-
+        getLocationPermission();
         projectInfoVm = ViewModelProviders.of(this).get(ProjectInfoVm.class);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 0){
-            init();
-        }
-    }
-
-    /**
-     * 初始化
-     */
+    //地图初始化
     private void init() {
         if (aMap == null) {
             aMap = mMapView.getMap();
@@ -155,12 +118,12 @@ public class ProjectInfoActivity extends BaseActivity {
         }
     }
 
-    /**
-     * 设置一些amap的属性
-     */
+    //设置aMap的属性
     private void setUpMap() {
         //地图缩放级别
         double zoom = 14.190743;
+//        LatLng latLng = new LatLng(36.67648360228993,117.13573493840586);
+//        aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, (float) zoom));
         aMap.moveCamera(CameraUpdateFactory.zoomTo((float) zoom));
         aMap.setMyLocationEnabled(true);// 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
         aMap.getUiSettings().setMyLocationButtonEnabled(false);// 设置默认定位按钮是否显示
@@ -206,6 +169,7 @@ public class ProjectInfoActivity extends BaseActivity {
             }
         });
 
+        //获取地图马克点数据成功返回结果
         projectInfoVm.mapLiveData.observe(ProjectInfoActivity.this, mapBeans -> {
             //marker经纬度数据
             throughPointList = mapBeans != null ? mapBeans : new ArrayList<>();
@@ -214,9 +178,7 @@ public class ProjectInfoActivity extends BaseActivity {
         setupLocationStyle();
     }
 
-    /**
-     * 设置自定义定位蓝点
-     */
+    //设置自定义定位蓝点
     private void setupLocationStyle() {
         // 自定义系统定位蓝点
         MyLocationStyle myLocationStyle = new MyLocationStyle();
@@ -235,6 +197,7 @@ public class ProjectInfoActivity extends BaseActivity {
         aMap.setMyLocationStyle(myLocationStyle);
     }
 
+    //加载地图马克点
     ArrayList<Marker> markerArrayList;
     private void setMarker() {
         clearAllMarker();
@@ -259,6 +222,7 @@ public class ProjectInfoActivity extends BaseActivity {
             }
         }
 
+        //马克点点击监听
         aMap.setOnMarkerClickListener(marker -> {
             LogUtils.i(marker.getId());
             //点击的marker是定位的小蓝点，不走动画和弹窗
@@ -273,9 +237,7 @@ public class ProjectInfoActivity extends BaseActivity {
         });
     }
 
-    /**
-     * 清除所有Marker
-     */
+    //清除所有Marker
     private void clearAllMarker() {
         if (markerArrayList != null){
             for (Marker marker : markerArrayList) {
@@ -285,6 +247,7 @@ public class ProjectInfoActivity extends BaseActivity {
         }
     }
 
+    //点击地图马克点变大动画
     private void setMarkerAnim(Marker marker, float v, float v1, float v2, float v3) {
         Animation animation = new ScaleAnimation(v, v1, v2, v3);
         long duration = 300L;
@@ -297,18 +260,17 @@ public class ProjectInfoActivity extends BaseActivity {
         targetMarker = marker;
     }
 
+    /**
+     * 地图马克点显示信息弹窗
+     * @param title
+     * @param position
+     */
     private CommonPopupWindow popupWindow;
     TextView tvTitle;
     TextView tvContent;
     TextView tvType;
     TextView tvReaders;
     TextView tvTime;
-
-    /**
-     * 显示信息弹窗
-     * @param title
-     * @param position
-     */
     private void showPopWindow(String title, int position) {
         MapBean mapBean = throughPointList.get(position);
         if (popupWindow == null) {
@@ -385,6 +347,41 @@ public class ProjectInfoActivity extends BaseActivity {
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
 
+    }
+
+    //获取定位权限
+    private void getLocationPermission() {
+        PermissionVm permissionVm = ViewModelProviders.of(this).get(PermissionVm.class);
+        permissionVm.getLiveData().observe(this, integer -> {
+            if (integer == PermissionVm.PERMISSION_LOCATION){
+                if (GpsUtils.isOPen(this)){
+                    init();
+                }else {
+                    new CustomDialog(this)
+                            .setTip("为了更好的为您服务，请您打开您的GPS!")
+                            .setCallBack(new BaseDialog.CallBack() {
+                                @Override
+                                public void cancel() {
+                                    finish();
+                                }
+
+                                @Override
+                                public void ok(String s) {
+                                    GpsUtils.openGPS(ProjectInfoActivity.this);
+                                }
+                            }).showDialog();
+                }
+            }
+        });
+        permissionVm.getPermissionLocation(new RxPermissions(this));
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 0){
+            init();
+        }
     }
 
     @OnClick({R.id.iv_bar_back, R.id.iv_bar_right, R.id.fl_list})

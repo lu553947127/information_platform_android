@@ -116,9 +116,7 @@ public class HomeFragment extends BaseFragment {
     private HomeVm homeVm;
 
     public static HomeFragment newInstance() {
-
         Bundle args = new Bundle();
-
         HomeFragment fragment = new HomeFragment();
         fragment.setArguments(args);
         return fragment;
@@ -170,7 +168,7 @@ public class HomeFragment extends BaseFragment {
             }
         });
         refresh.setEnableLoadMore(false);
-        refresh.setEnableRefresh(false);
+        refresh.setEnableRefresh(true);
         refresh.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);
         refresh.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
             @Override
