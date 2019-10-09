@@ -76,7 +76,7 @@ public class ProjectContentFragment extends BaseFragment {
     @BindView(R.id.tv_price)
     TextView tvPrice;
     @BindView(R.id.tv_detail)
-    RichText tvDetail;
+    TextView tvDetail;
     @BindView(R.id.tv_material)
     TextView tvMaterial;
     @BindView(R.id.rv_contact)
@@ -140,8 +140,8 @@ public class ProjectContentFragment extends BaseFragment {
                     String.format(getString(R.string.format_acreage), detail.getAcreage()));
 
             tvPrice.setText(String.format(getString(R.string.format_valuation), detail.getValuation()));
-            tvDetail.setGlide(Glide.with(this));
-            tvDetail.setHtml(detail.getIntro());
+//            tvDetail.setGlide(Glide.with(this));
+            tvDetail.setText(detail.getIntro().replace("\\n","\n").trim());
 
             llMaterial.setVisibility(StringUtils.isTrimEmpty(detail.getMaterials()) ? View.GONE : View.VISIBLE);
             tvMaterial.setText(detail.getMaterials());
