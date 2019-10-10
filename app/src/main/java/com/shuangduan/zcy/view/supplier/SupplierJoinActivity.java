@@ -30,6 +30,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.ActivityUtils;
@@ -55,6 +56,7 @@ import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
 import com.shuangduan.zcy.model.bean.ContactBean;
 import com.shuangduan.zcy.model.bean.FileUploadBean;
+import com.shuangduan.zcy.model.bean.UploadBean;
 import com.shuangduan.zcy.model.event.AddressEvent;
 import com.shuangduan.zcy.model.event.CityEvent;
 import com.shuangduan.zcy.model.event.MultiAreaEvent;
@@ -130,15 +132,22 @@ public class SupplierJoinActivity extends BaseActivity implements BaseDialog.Pho
     @BindView(R.id.iv_logo)
     ImageView ivLogo;
 
+
+    @BindView(R.id.tv_pic_content)
+    TextView tvPicContent;
+    @BindView(R.id.tv_logo)
+    TextView tvLogo;
+
+
     private PermissionVm permissionVm;
     private UploadPhotoVm uploadPhotoVm;
     private RxPermissions rxPermissions;
     private SupplierVm supplierVm;
 
-    public static final int CAMERA=111;
-    public static final int PHOTO=222;
-    private int scale=0;
-    private String type,authorization,logo;
+    public static final int CAMERA = 111;
+    public static final int PHOTO = 222;
+    private int scale = 0;
+    private String type, authorization, logo;
     private BottomSheetDialogs btn_dialog;
 
     @Override
@@ -171,7 +180,7 @@ public class SupplierJoinActivity extends BaseActivity implements BaseDialog.Pho
                     break;
             }
         });
-        String str="请下载相关<font color=\"#6a5ff8\">授权申请文件</font>，填写加盖公章后拍照上传（非必填）";
+        String str = "请下载相关<font color=\"#6a5ff8\">授权申请文件</font>，填写加盖公章后拍照上传（非必填）";
         tvAuthorization.setText(Html.fromHtml(str));
         initPhoto();
         photoSet();
@@ -199,7 +208,12 @@ public class SupplierJoinActivity extends BaseActivity implements BaseDialog.Pho
             }
         });
         uploadPhotoVm = ViewModelProviders.of(this).get(UploadPhotoVm.class);
-        uploadPhotoVm.uploadLiveData.observe(this, uploadBean -> supplierVm.addImage(uploadBean.getImage_id()));
+
+        uploadPhotoVm.uploadLiveData.observe(this, uploadBean -> {
+            supplierVm.addImage(uploadBean.getImage_id());
+            tvPicContent.setVisibility(View.GONE);
+        });
+
         uploadPhotoVm.mPageStateLiveData.observe(this, s -> {
             switch (s) {
                 case PageState.PAGE_LOADING:
@@ -250,6 +264,10 @@ public class SupplierJoinActivity extends BaseActivity implements BaseDialog.Pho
             @Override
             public void delete(int pos) {
                 supplierVm.delImage(pos);
+                //显示提示语句
+                if (pos == 0) {
+                    tvPicContent.setVisibility(View.VISIBLE);
+                }
             }
         });
     }
@@ -281,9 +299,9 @@ public class SupplierJoinActivity extends BaseActivity implements BaseDialog.Pho
         // 从相机返回的数据
         if (resultCode == 101) {
             String path = data.getStringExtra("path");
-            if (type.equals("authorization")){
+            if (type.equals("authorization")) {
                 ivAuthorization.setImageBitmap(BitmapFactory.decodeFile(path));
-            }else {
+            } else {
                 ivLogo.setImageBitmap(BitmapFactory.decodeFile(path));
             }
             File file = new File(Objects.requireNonNull(path));
@@ -297,9 +315,9 @@ public class SupplierJoinActivity extends BaseActivity implements BaseDialog.Pho
         //从相册返回的数据
         if (requestCode == PHOTO && resultCode == RESULT_OK) {
             LogUtils.i(Matisse.obtainPathResult(data).get(0));
-            if (type.equals("authorization")){
+            if (type.equals("authorization")) {
                 ivAuthorization.setImageBitmap(BitmapFactory.decodeFile(Matisse.obtainPathResult(data).get(0)));
-            }else {
+            } else {
                 ivLogo.setImageBitmap(BitmapFactory.decodeFile(Matisse.obtainPathResult(data).get(0)));
             }
             File file = new File(Objects.requireNonNull(Matisse.obtainPathResult(data).get(0)));
@@ -318,66 +336,66 @@ public class SupplierJoinActivity extends BaseActivity implements BaseDialog.Pho
     }
 
     @SuppressLint("SetTextI18n")
-    @OnClick({R.id.iv_bar_back, R.id.tv_confirm, R.id.tv_scale, R.id.tv_service_area,R.id.iv_authorization,R.id.tv_authorization,R.id.iv_logo})
+    @OnClick({R.id.iv_bar_back, R.id.tv_confirm, R.id.tv_scale, R.id.tv_service_area, R.id.iv_authorization, R.id.tv_authorization, R.id.iv_logo})
     void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_bar_back:
                 finish();
                 break;
             case R.id.tv_confirm:
-                if (TextUtils.isEmpty(edtCompany.getText().toString())){
+                if (TextUtils.isEmpty(edtCompany.getText().toString())) {
                     ToastUtils.showShort(getString(R.string.hint_company));
                     return;
                 }
-                if (TextUtils.isEmpty(edtAddressDetail.getText().toString())){
+                if (TextUtils.isEmpty(edtAddressDetail.getText().toString())) {
                     ToastUtils.showShort(getString(R.string.hint_address_detail));
                     return;
                 }
-                if (scale==0){
+                if (scale == 0) {
                     ToastUtils.showShort(getString(R.string.hint_scale));
                     return;
                 }
-                if (TextUtils.isEmpty(edtCompanyWebsite.getText().toString())){
+                if (TextUtils.isEmpty(edtCompanyWebsite.getText().toString())) {
                     ToastUtils.showShort(getString(R.string.hind_company_website));
                     return;
                 }
-                if (TextUtils.isEmpty(edtName.getText().toString())){
+                if (TextUtils.isEmpty(edtName.getText().toString())) {
                     ToastUtils.showShort(getString(R.string.hint_name));
                     return;
                 }
-                if (TextUtils.isEmpty(edtContactInfo.getText().toString())){
+                if (TextUtils.isEmpty(edtContactInfo.getText().toString())) {
                     ToastUtils.showShort(getString(R.string.hint_mobile_code));
                     return;
                 }
-                if (TextUtils.isEmpty(edtProduction.getText())){
+                if (TextUtils.isEmpty(edtProduction.getText())) {
                     ToastUtils.showShort(getString(R.string.hint_production));
                     return;
                 }
-                if (TextUtils.isEmpty(logo)){
+                if (TextUtils.isEmpty(logo)) {
                     ToastUtils.showShort("请上传公司Logo");
                     return;
                 }
                 supplierVm.join(edtName.getText().toString(), edtContactInfo.getText().toString(), edtCompany.getText().toString(), edtAddressDetail.getText().toString(), edtProduction.getText().toString()
-                        ,scale,edtCompanyWebsite.getText().toString(),authorization,logo);
+                        , scale, edtCompanyWebsite.getText().toString(), authorization, logo);
                 break;
             case R.id.tv_scale:
 //                Bundle bundle = new Bundle();
 //                bundle.putInt(CustomConfig.PROJECT_ADDRESS, 0);
 //                ActivityUtils.startActivity(bundle, ReleaseAreaSelectActivity.class);
                 new ScaleDialog(this).setSelected(0).setSingleCallBack((item, position) -> {
-                    scale=position+1;
-                    tvScale.setText(item+"人");
+                    scale = position + 1;
+                    tvScale.setText(item + "人");
                 }).showDialog();
                 break;
             case R.id.tv_service_area:
                 ActivityUtils.startActivity(MultiAreaActivity.class);
                 break;
             case R.id.iv_authorization:
-                type="authorization";
+                type = "authorization";
                 getPermissions();
                 break;
             case R.id.iv_logo:
-                type="logo";
+                type = "logo";
                 getPermissions();
                 break;
             case R.id.tv_authorization:
@@ -406,7 +424,7 @@ public class SupplierJoinActivity extends BaseActivity implements BaseDialog.Pho
 
     @SuppressLint("SetTextI18n")
     @Subscribe
-    public void onEventAddressEvent(AddressEvent event){
+    public void onEventAddressEvent(AddressEvent event) {
         tvScale.setText(event.getProvince() + " " + event.getCity());
         supplierVm.cityId = event.getCityId();
         supplierVm.provinceId = event.getProvinceId();
@@ -459,7 +477,7 @@ public class SupplierJoinActivity extends BaseActivity implements BaseDialog.Pho
         } catch (Exception e) {
             e.printStackTrace();
         }
-        ((ViewGroup.MarginLayoutParams)dialog_view.findViewById(R.id.tv_cancel).getLayoutParams()).bottomMargin=60;
+        ((ViewGroup.MarginLayoutParams) dialog_view.findViewById(R.id.tv_cancel).getLayoutParams()).bottomMargin = 60;
         dialog_view.findViewById(R.id.tv_cancel).setOnClickListener(view -> btn_dialog.cancel());
         dialog_view.findViewById(R.id.tv_photo).setOnClickListener(view -> {
             startActivityForResult(new Intent(this, CameraActivity.class), 100);
@@ -484,37 +502,40 @@ public class SupplierJoinActivity extends BaseActivity implements BaseDialog.Pho
     //上传附件
     private void getFileUpload(File file) {
 
-        OkGo.<String>post(RetrofitHelper.BASE_TEST_URL+ Common.UPLOAD_IMAGE)
+        OkGo.<String>post(RetrofitHelper.BASE_TEST_URL + Common.UPLOAD_IMAGE)
                 .tag(this)
                 .headers("token", SPUtils.getInstance().getString(SpConfig.TOKEN))//请求头
                 .params("user_id", SPUtils.getInstance().getInt(SpConfig.USER_ID))//用户编号
-                .params("file",file)//文件流
+                .params("file", file)//文件流
                 .execute(new com.lzy.okgo.callback.StringCallback() {
 
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
                         LogUtils.json(response.body());
+                        ToastUtils.showShort("上传图片失败");
                     }
 
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
                         LogUtils.json(response.body());
                         try {
-                            FileUploadBean bean=new Gson().fromJson(response.body(), FileUploadBean.class);
-                            if (bean.getCode().equals("200")){
-                                if (type.equals("authorization")){
-                                    authorization=bean.getData().getSource();
-                                }else {
-                                    logo=bean.getData().getSource();
+                            FileUploadBean bean = new Gson().fromJson(response.body(), FileUploadBean.class);
+                            if (bean.getCode().equals("200")) {
+                                if (type.equals("authorization")) {
+                                    authorization = bean.getData().getSource();
+                                    tvAuthorization.setVisibility(View.INVISIBLE);
+                                } else {
+                                    logo = bean.getData().getSource();
+                                    tvLogo.setVisibility(View.INVISIBLE);
                                 }
-                            }else if (bean.getCode().equals("-1")){
+                            } else if (bean.getCode().equals("-1")) {
                                 ToastUtils.showShort(bean.getMsg());
                                 LoginUtils.getExitLogin();
-                            }else {
+                            } else {
                                 ToastUtils.showShort(bean.getMsg());
                             }
-                        }catch (JsonSyntaxException | IllegalStateException ignored){
+                        } catch (JsonSyntaxException | IllegalStateException ignored) {
                             ToastUtils.showShort(getString(R.string.request_error));
                         }
                     }

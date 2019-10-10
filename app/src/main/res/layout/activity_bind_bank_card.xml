@@ -91,42 +91,6 @@
             android:layout_gravity="center_vertical"
             android:textColor="@color/colorTv"
             android:textSize="14sp"
-            android:text="@string/bank_account"/>
-
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/edt_bank_account"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:layout_marginLeft="87dp"
-            android:background="@null"
-            android:singleLine="true"
-            android:textColorHint="@color/colorTvHint"
-            android:textColor="@color/colorTv"
-            android:textSize="14sp"
-            android:hint="@string/please_be_accurate_to_the_branch"/>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_gravity="bottom"
-            android:background="@color/colorDivider"/>
-
-    </FrameLayout>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/colorFFF"
-        android:paddingLeft="14dp"
-        android:paddingRight="14dp">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:textColor="@color/colorTv"
-            android:textSize="14sp"
             android:text="@string/bank_card_number"/>
 
         <androidx.appcompat.widget.AppCompatEditText
@@ -159,5 +123,43 @@
             android:background="@color/colorDivider"/>
 
     </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorFFF"
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/colorTv"
+            android:textSize="14sp"
+            android:text="@string/bank_account"/>
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edt_bank_account"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="87dp"
+            android:background="@null"
+            android:singleLine="true"
+            android:textColorHint="@color/colorTvHint"
+            android:textColor="@color/colorTv"
+            android:textSize="14sp"
+            android:hint="@string/please_be_accurate_to_the_branch"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="bottom"
+            android:background="@color/colorDivider"/>
+
+    </FrameLayout>
+
+
 
 </LinearLayout>

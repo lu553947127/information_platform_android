@@ -596,7 +596,7 @@ public class ProjectInfoListActivity extends BaseActivity {
         });
         areaVm.cityLiveData.observe(this, cityBeans -> {
             areaVm.setCityInit();
-            if (cityBeans != null && cityBeans.size() > 0 && cityBeans.get(0).getName().equals("全部")) {
+            if (cityBeans != null && cityBeans.size() > 0 && (cityBeans.get(0).getName().equals("全部") || cityBeans.get(0).getName().equals("全国"))) {
                 //刷新市区
                 cityAdapter.setNewData(cityBeans);
             }
