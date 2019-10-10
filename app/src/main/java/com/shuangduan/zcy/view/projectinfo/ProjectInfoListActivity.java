@@ -40,6 +40,7 @@ import com.shuangduan.zcy.model.bean.ProjectInfoBean;
 import com.shuangduan.zcy.model.bean.ProvinceBean;
 import com.shuangduan.zcy.model.bean.StageBean;
 import com.shuangduan.zcy.model.bean.TypeBean;
+import com.shuangduan.zcy.view.release.ReleaseProjectActivity;
 import com.shuangduan.zcy.view.search.SearchActivity;
 import com.shuangduan.zcy.vm.MultiAreaVm;
 import com.shuangduan.zcy.vm.MultiStageVm;
@@ -187,7 +188,7 @@ public class ProjectInfoListActivity extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.iv_bar_back, R.id.iv_bar_right, R.id.ll_area, R.id.ll_stage, R.id.ll_type, R.id.ll_time, R.id.ll_subscribe, R.id.over})
+    @OnClick({R.id.iv_bar_back, R.id.iv_bar_right, R.id.ll_area, R.id.ll_stage, R.id.ll_type, R.id.ll_time, R.id.ll_subscribe, R.id.over, R.id.iv_subscribed})
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_bar_back:
@@ -215,6 +216,9 @@ public class ProjectInfoListActivity extends BaseActivity {
                 break;
             case R.id.over:
                 popDismiss();
+                break;
+            case R.id.iv_subscribed:
+                ActivityUtils.startActivity(ReleaseProjectActivity.class);
                 break;
         }
     }

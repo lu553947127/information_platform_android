@@ -1,7 +1,6 @@
 package com.shuangduan.zcy.rongyun.view;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -53,6 +52,7 @@ import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.rong.imkit.RongContext;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationListFragment;
 import io.rong.imkit.model.UIConversation;
@@ -86,6 +86,7 @@ public class CircleFragment extends BaseFragment {
     private RelativeLayout relativeLayout;
     private TextView number;
     private int count=0;
+    private ConversationListAdapterEx adapterEx;
 
     public static CircleFragment newInstance() {
 
@@ -111,6 +112,8 @@ public class CircleFragment extends BaseFragment {
         BarUtils.setStatusBarColorRes(fakeStatusBar, getResources().getColor(R.color.colorPrimary));
         FragmentManager fragmentManage = getChildFragmentManager();
         ConversationListFragment fragement = (ConversationListFragment) fragmentManage.findFragmentById(R.id.conversationlist);
+        adapterEx=new ConversationListAdapterEx(RongContext.getInstance());
+        Objects.requireNonNull(fragement).setAdapter(adapterEx);
         Uri uri = Uri.parse("rong://" + MyApplication.getInstance().getApplicationInfo().packageName).buildUpon()
                 .appendPath("conversationlist")
                 .appendQueryParameter(Conversation.ConversationType.PRIVATE.getName(), "false")//设置私聊会话是否聚合显示
@@ -171,12 +174,12 @@ public class CircleFragment extends BaseFragment {
             // i 是未读数量
             getFriendApplyCount(i);
         }, Conversation.ConversationType.PRIVATE,Conversation.ConversationType.GROUP,Conversation.ConversationType.SYSTEM);
-        //设置会话列表监听
-        RongIM.setConversationListBehaviorListener(new RongIM.ConversationListBehaviorListener() {
-
-            //用户头像点击监听
+        //设置会话列表头像点击监听
+        adapterEx.setOnPortraitItemClick(new ConversationListAdapter.OnPortraitItemClick() {
             @Override
-            public boolean onConversationPortraitClick(Context context, Conversation.ConversationType conversationType, String targetId) {
+            public void onPortraitItemClick(View view, UIConversation uiConversation) {
+                String targetId=uiConversation.getConversationTargetId();
+                Conversation.ConversationType conversationType=uiConversation.getConversationType();
                 if (targetId != null) {
                     if (conversationType == Conversation.ConversationType.PRIVATE){
                         if (Integer.parseInt(targetId)!= SPUtils.getInstance().getInt(SpConfig.USER_ID)) {
@@ -190,21 +193,10 @@ public class CircleFragment extends BaseFragment {
                         ActivityUtils.startActivity(bundle,IMGroupDetailsActivity.class);
                     }
                 }
-                return true;
             }
 
             @Override
-            public boolean onConversationPortraitLongClick(Context context, Conversation.ConversationType conversationType, String s) {
-                return false;
-            }
-
-            @Override
-            public boolean onConversationLongClick(Context context, View view, UIConversation uiConversation) {
-                return false;
-            }
-
-            @Override
-            public boolean onConversationClick(Context context, View view, UIConversation uiConversation) {
+            public boolean onPortraitItemLongClick(View view, UIConversation uiConversation) {
                 return false;
             }
         });

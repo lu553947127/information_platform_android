@@ -88,7 +88,6 @@ public class MineFragment extends BaseFragment {
     private UserInfoVm userInfoVm;
 
     public static MineFragment newInstance() {
-
         Bundle args = new Bundle();
         MineFragment fragment = new MineFragment();
         fragment.setArguments(args);
@@ -168,62 +167,62 @@ public class MineFragment extends BaseFragment {
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_username:
-            case R.id.iv_user:
+            case R.id.iv_user://用户详情
                 Bundle bundle = new Bundle();
                 bundle.putInt(CustomConfig.UID, SPUtils.getInstance().getInt(SpConfig.USER_ID));
                 ActivityUtils.startActivity(bundle, UserInfoActivity.class);
                 break;
-            case R.id.tv_withdraw:
+            case R.id.tv_withdraw://提现
                 ActivityUtils.startActivity(BalanceActivity.class);
                 break;
-            case R.id.tv_recharge:
+            case R.id.tv_recharge://充值
                 ActivityUtils.startActivity(RechargeActivity.class);
                 break;
-            case R.id.tv_my_demand:
+            case R.id.fl_order://我的订单
+                ActivityUtils.startActivity(MineOrderActivity.class);
+                break;
+            case R.id.fl_income://我的收益
+                ActivityUtils.startActivity(MineIncomeActivity.class);
+                break;
+            case R.id.tv_my_subscription://我的订阅
+                ActivityUtils.startActivity(MineSubActivity.class);
+                break;
+            case R.id.tv_my_demand://我的需求
                 ActivityUtils.startActivity(MineDemandActivity.class);
                 break;
-            case R.id.tv_mine_subscription:
+            case R.id.tv_mine_subscription://我的认购
                 ActivityUtils.startActivity(OrderSubActivity.class);
                 break;
-            case R.id.tv_my_material: //我的预定
+            case R.id.tv_my_material: //物资预定
                 ActivityUtils.startActivity(MaterialOrderActivity.class);
                 break;
-            case R.id.tv_transaction_record:
+            case R.id.tv_transaction_record://交易记录
                 ActivityUtils.startActivity(TransRecordActivity.class);
                 break;
-            case R.id.tv_agreement_manage:
+            case R.id.tv_agreement_manage://合同管理
                 break;
-            case R.id.tv_pwd_pay:
+            case R.id.tv_pwd_pay://支付密码
                 //验证身份信息
                 if (AuthenticationUtils.Authentication(CustomConfig.SET_PAYMENT_PASSWORD)) {
                     ActivityUtils.startActivity(PwdPayActivity.class);
                 }
                 break;
-            case R.id.fl_order:
-                ActivityUtils.startActivity(MineOrderActivity.class);
-                break;
-            case R.id.fl_income:
-                ActivityUtils.startActivity(MineIncomeActivity.class);
-                break;
-            case R.id.tv_my_subscription:
-                ActivityUtils.startActivity(MineSubActivity.class);
-                break;
-            case R.id.tv_read_history:
+            case R.id.tv_read_history://浏览历史
                 ActivityUtils.startActivity(ReadHistoryActivity.class);
                 break;
-            case R.id.tv_feedback:
+            case R.id.tv_feedback://意见反馈
                 ActivityUtils.startActivity(FeedbackActivity.class);
                 break;
-            case R.id.tv_recommend_friends:
+            case R.id.tv_recommend_friends://推荐好友
                 ActivityUtils.startActivity(RecommendFriendsActivity.class);
                 break;
-            case R.id.tv_my_collection:
+            case R.id.tv_my_collection://我的收藏
                 ActivityUtils.startActivity(MineCollectionActivity.class);
                 break;
-            case R.id.tv_set:
+            case R.id.tv_set://设置
                 ActivityUtils.startActivity(SetActivity.class);
                 break;
-            case R.id.tv_helper:
+            case R.id.tv_helper://帮助
                 ActivityUtils.startActivity(HelperActivity.class);
                 break;
         }

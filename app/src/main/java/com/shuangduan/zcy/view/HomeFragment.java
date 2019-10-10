@@ -218,7 +218,7 @@ public class HomeFragment extends BaseFragment {
                 marquee.add(bean.getTitle());
             }
             marqueeView.setContent(marquee);
-            if (homePushBeans != null && homePushBeans.size() > 0){
+            if (homePushBeans.size() > 0){
                 tvSubscribeState.setText(homePushBeans.get(0).getWarrant_status() == 1?"已认购":"未认购");
             }
         });

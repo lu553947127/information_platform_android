@@ -27,7 +27,7 @@ import butterknife.OnClick;
  * @author 宁文强 QQ:858777523
  * @name information_platform_android
  * @class name：com.shuangduan.zcy.view.mine
- * @class describe  已认购订单
+ * @class describe  我的认购
  * @time 2019/8/13 13:24
  * @change
  * @chang time

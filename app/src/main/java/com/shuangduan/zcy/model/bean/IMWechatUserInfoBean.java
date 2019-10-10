@@ -55,6 +55,8 @@ public class IMWechatUserInfoBean {
         private String userId;
         private String portraitUri;
         private String name;
+        private String company;
+        private String position;
 
         public String getUserId() {
             return userId;
@@ -78,6 +80,22 @@ public class IMWechatUserInfoBean {
 
         public void setName(String name) {
             this.name = name;
+        }
+
+        public String getCompany() {
+            return company;
+        }
+
+        public void setCompany(String company) {
+            this.company = company;
+        }
+
+        public String getPosition() {
+            return position;
+        }
+
+        public void setPosition(String position) {
+            this.position = position;
         }
     }
 }

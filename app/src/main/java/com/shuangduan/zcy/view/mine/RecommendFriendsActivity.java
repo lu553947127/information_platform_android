@@ -1,52 +1,22 @@
 package com.shuangduan.zcy.view.mine;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.view.View;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 
 import com.blankj.utilcode.util.BarUtils;
-import com.blankj.utilcode.util.LogUtils;
-import com.blankj.utilcode.util.SPUtils;
-import com.blankj.utilcode.util.StringUtils;
-import com.blankj.utilcode.util.ToastUtils;
-import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
-import com.lzy.okgo.OkGo;
-import com.lzy.okgo.model.Response;
 import com.shuangduan.zcy.R;
-import com.shuangduan.zcy.app.Common;
 import com.shuangduan.zcy.app.CustomConfig;
-import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
-import com.shuangduan.zcy.dialog.ShareDialog;
-import com.shuangduan.zcy.listener.BaseUiListener;
 import com.shuangduan.zcy.manage.ShareManage;
-import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
-import com.shuangduan.zcy.model.bean.ShareBean;
-import com.shuangduan.zcy.model.event.CompanyEvent;
 import com.shuangduan.zcy.model.event.ShareEvent;
-import com.shuangduan.zcy.utils.LoginUtils;
-import com.shuangduan.zcy.utils.ShareUtils;
-import com.shuangduan.zcy.view.projectinfo.ProjectDetailActivity;
 import com.tencent.tauth.Tencent;
 
 import org.greenrobot.eventbus.Subscribe;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -69,10 +39,8 @@ public class RecommendFriendsActivity extends BaseActivity {
     Toolbar toolbar;
     @BindView(R.id.tv_url)
     TextView tvUrl;
-
     //分享控制器
     private ShareManage shareManage;
-
 
     @Override
     protected int initLayoutRes() {
@@ -88,13 +56,10 @@ public class RecommendFriendsActivity extends BaseActivity {
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.recommend_friends));
-
-
         //初始化分享功能
         shareManage = ShareManage.newInstance(getApplicationContext());
         shareManage.init(this, ShareManage.SHARE_RECOMMEND_FRIENDS_TYPE, getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0));
     }
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

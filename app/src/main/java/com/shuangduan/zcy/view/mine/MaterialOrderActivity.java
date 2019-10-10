@@ -31,7 +31,7 @@ import butterknife.OnClick;
  * @author xuyu
  * @Package com.shuangduan.zcy.view.mine$
  * @class MaterialOrderActivity$
- * @class 物资预定Activity
+ * @class 物资预定
  * @time 2019/9/25 13:41
  * @change
  * @class describe

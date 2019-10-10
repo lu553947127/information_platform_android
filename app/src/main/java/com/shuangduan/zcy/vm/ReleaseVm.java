@@ -1,5 +1,7 @@
 package com.shuangduan.zcy.vm;
 
+import android.annotation.SuppressLint;
+
 import androidx.lifecycle.MutableLiveData;
 
 import com.blankj.utilcode.util.LogUtils;
@@ -7,9 +9,6 @@ import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.TimeUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseViewModel;
 import com.shuangduan.zcy.model.api.repository.ProjectRepository;
@@ -20,12 +19,7 @@ import com.shuangduan.zcy.model.bean.ContactTypeBean;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 
 /**
  * @author 宁文强 QQ:858777523
@@ -209,7 +203,7 @@ public class ReleaseVm extends BaseViewModel {
             return;
         }
 
-        String updateTime = TimeUtils.getNowString(new SimpleDateFormat("yyyy-MM-dd"));
+        @SuppressLint("SimpleDateFormat") String updateTime = TimeUtils.getNowString(new SimpleDateFormat("yyyy-MM-dd"));
         new ProjectRepository().addTrack(releaseLocusLiveData, pageStateLiveData, userId, projectId, remarks, name, tel, updateTime, new AddTrackBean(imageIds));
     }
 }

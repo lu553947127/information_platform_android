@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
-import com.blankj.utilcode.util.LogUtils;
 import com.google.android.flexbox.FlexboxLayout;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -30,7 +29,6 @@ import com.shuangduan.zcy.dialog.pop.CommonPopupWindow;
 import com.shuangduan.zcy.model.bean.TransRecordBean;
 import com.shuangduan.zcy.model.bean.TransRecordFilterBean;
 import com.shuangduan.zcy.model.bean.TransactionFlowTypeBean;
-import com.shuangduan.zcy.view.search.SearchResultActivity;
 import com.shuangduan.zcy.vm.TransRecordVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 

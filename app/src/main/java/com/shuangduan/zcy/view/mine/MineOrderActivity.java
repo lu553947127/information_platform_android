@@ -66,7 +66,7 @@ public class MineOrderActivity extends BaseActivity {
     }
 
     private CommonPopupWindow popupWindow;
-    @OnClick({R.id.iv_bar_back, R.id.tv_bar_right, R.id.iv_subscribed})
+    @OnClick({R.id.iv_bar_back, R.id.tv_bar_right})
     void onClick(View v){
         switch (v.getId()){
             case R.id.iv_bar_back:
@@ -111,9 +111,6 @@ public class MineOrderActivity extends BaseActivity {
                 if (!popupWindow.isShowing()){
                     popupWindow.showAsDropDown(tvBarRight, ConvertUtils.dp2px(-40), ConvertUtils.dp2px(-10));
                 }
-                break;
-            case R.id.iv_subscribed:
-                ActivityUtils.startActivity(OrderSubActivity.class);
                 break;
         }
     }
