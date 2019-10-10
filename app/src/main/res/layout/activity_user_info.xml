@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/toolbar"/>
+    <include layout="@layout/toolbar" />
 
     <com.shuangduan.zcy.utils.ElasticScrollView
         android:layout_width="match_parent"
@@ -16,7 +18,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <FrameLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:background="@color/colorFFF">
@@ -25,9 +27,26 @@
                     android:id="@+id/iv_user"
                     android:layout_width="73dp"
                     android:layout_height="73dp"
-                    android:layout_gravity="center"/>
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="MissingConstraints"
+                    android:src="@drawable/default_pic"/>
 
-            </FrameLayout>
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_sgs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="64dp"
+                    android:layout_marginBottom="2dp"
+                    android:src="@drawable/icon_sgs"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_user"
+                    app:layout_constraintRight_toRightOf="@id/iv_user"
+                    tools:ignore="MissingConstraints" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <Space
                 android:layout_width="match_parent"
@@ -45,26 +64,26 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:text="@string/name"
                     android:textColor="@color/colorTv"
-                    android:textSize="14sp"
-                    android:text="@string/name"/>
+                    android:textSize="14sp" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_name"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginLeft="87dp"
                     android:drawableRight="@drawable/icon_next"
                     android:gravity="center_vertical"
-                    android:layout_marginLeft="87dp"
                     android:singleLine="true"
                     android:textColor="@color/color_666666"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_gravity="bottom"
-                    android:background="@color/colorDivider"/>
+                    android:background="@color/colorDivider" />
 
             </FrameLayout>
 
@@ -80,25 +99,25 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:text="@string/sex"
                     android:textColor="@color/colorTv"
-                    android:textSize="14sp"
-                    android:text="@string/sex"/>
+                    android:textSize="14sp" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_sex"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginLeft="87dp"
                     android:drawableRight="@drawable/icon_next"
                     android:gravity="center_vertical"
-                    android:layout_marginLeft="87dp"
                     android:textColor="@color/color_666666"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_gravity="bottom"
-                    android:background="@color/colorDivider"/>
+                    android:background="@color/colorDivider" />
 
             </FrameLayout>
 
@@ -114,26 +133,26 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:text="@string/phone"
                     android:textColor="@color/colorTv"
-                    android:textSize="14sp"
-                    android:text="@string/phone"/>
+                    android:textSize="14sp" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_mobile"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginLeft="87dp"
                     android:drawableRight="@drawable/icon_next"
                     android:gravity="center_vertical"
-                    android:layout_marginLeft="87dp"
                     android:singleLine="true"
                     android:textColor="@color/color_666666"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_gravity="bottom"
-                    android:background="@color/colorDivider"/>
+                    android:background="@color/colorDivider" />
 
             </FrameLayout>
 
@@ -149,63 +168,63 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:text="@string/idCard"
                     android:textColor="@color/colorTv"
-                    android:textSize="14sp"
-                    android:text="@string/idCard"/>
+                    android:textSize="14sp" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_id_card"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:drawableRight="@drawable/icon_next"
-                    android:gravity="center_vertical"
                     android:layout_marginLeft="87dp"
                     android:background="@null"
+                    android:drawableRight="@drawable/icon_next"
+                    android:gravity="center_vertical"
                     android:singleLine="true"
                     android:textColor="@color/color_666666"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_gravity="bottom"
-                    android:background="@color/colorDivider"/>
+                    android:background="@color/colorDivider" />
 
             </FrameLayout>
 
             <FrameLayout
                 android:id="@+id/fl_email"
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/selector_bg_custom"
                 android:paddingLeft="14dp"
-                android:paddingRight="14dp">
+                android:paddingRight="14dp"
+                android:visibility="gone">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:text="@string/email"
                     android:textColor="@color/colorTv"
-                    android:textSize="14sp"
-                    android:text="@string/email"/>
+                    android:textSize="14sp" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_email"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginLeft="87dp"
                     android:drawableRight="@drawable/icon_next"
                     android:gravity="center_vertical"
-                    android:layout_marginLeft="87dp"
                     android:singleLine="true"
                     android:textColor="@color/color_666666"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_gravity="bottom"
-                    android:background="@color/colorDivider"/>
+                    android:background="@color/colorDivider" />
 
             </FrameLayout>
 
@@ -221,29 +240,29 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:text="@string/company"
                     android:textColor="@color/colorTv"
-                    android:textSize="14sp"
-                    android:text="@string/company"/>
+                    android:textSize="14sp" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_company"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:drawableRight="@drawable/icon_next"
-                    android:drawablePadding="32dp"
-                    android:gravity="center_vertical"
                     android:layout_marginLeft="87dp"
                     android:background="@null"
-                    android:singleLine="true"
+                    android:drawableRight="@drawable/icon_next"
+                    android:drawablePadding="32dp"
                     android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:singleLine="true"
                     android:textColor="@color/color_666666"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_gravity="bottom"
-                    android:background="@color/colorDivider"/>
+                    android:background="@color/colorDivider" />
 
             </FrameLayout>
 
@@ -259,27 +278,27 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:text="@string/office"
                     android:textColor="@color/colorTv"
-                    android:textSize="14sp"
-                    android:text="@string/office"/>
+                    android:textSize="14sp" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_office"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:drawableRight="@drawable/icon_next"
-                    android:gravity="center_vertical"
                     android:layout_marginLeft="87dp"
                     android:background="@null"
+                    android:drawableRight="@drawable/icon_next"
+                    android:gravity="center_vertical"
                     android:singleLine="true"
                     android:textColor="@color/color_666666"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_gravity="bottom"
-                    android:background="@color/colorDivider"/>
+                    android:background="@color/colorDivider" />
 
             </FrameLayout>
 
@@ -295,29 +314,29 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:text="@string/business_area"
                     android:textColor="@color/colorTv"
-                    android:textSize="14sp"
-                    android:text="@string/business_area"/>
+                    android:textSize="14sp" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_business_area"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:drawableRight="@drawable/icon_next"
-                    android:drawablePadding="32dp"
-                    android:gravity="center_vertical"
                     android:layout_marginLeft="87dp"
                     android:background="@null"
-                    android:singleLine="true"
+                    android:drawableRight="@drawable/icon_next"
+                    android:drawablePadding="32dp"
                     android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:singleLine="true"
                     android:textColor="@color/color_666666"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_gravity="bottom"
-                    android:background="@color/colorDivider"/>
+                    android:background="@color/colorDivider" />
 
             </FrameLayout>
 
@@ -333,57 +352,57 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:text="@string/business_exp"
                     android:textColor="@color/colorTv"
-                    android:textSize="14sp"
-                    android:text="@string/business_exp"/>
+                    android:textSize="14sp" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_business_exp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:drawableRight="@drawable/icon_next"
-                    android:gravity="center_vertical"
                     android:layout_marginLeft="87dp"
                     android:background="@null"
+                    android:drawableRight="@drawable/icon_next"
+                    android:gravity="center_vertical"
                     android:textColor="@color/color_666666"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp" />
 
             </FrameLayout>
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="10dp"/>
+                android:layout_height="10dp" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_production_tip"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableRight="@drawable/icon_next"
-                android:padding="14dp"
-                android:gravity="center_vertical"
                 android:background="@color/colorFFF"
+                android:drawableRight="@drawable/icon_next"
+                android:gravity="center_vertical"
+                android:padding="14dp"
+                android:text="@string/product"
                 android:textColor="@color/colorTv"
-                android:textSize="14sp"
-                android:text="@string/product"/>
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/tv_production"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorFFF"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
                 android:gravity="top"
-                android:textColorHint="@color/colorTvHint"
+                android:paddingLeft="15dp"
+                android:paddingTop="10dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="10dp"
                 android:textColor="@color/colorTv"
-                android:textSize="14sp"/>
+                android:textColorHint="@color/colorTvHint"
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/tv_add_friend"
-                android:layout_width="335dp"
                 style="@style/BtnConfirm"
+                android:layout_width="335dp"
                 android:layout_marginTop="35dp"
                 android:text="@string/im_add_friend" />
 

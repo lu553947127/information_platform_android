@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:scrollbars="none"
     android:background="@color/colorBgDark">
 
@@ -19,7 +21,7 @@
                 android:layout_height="0dp"
                 android:id="@+id/fake_status_bar"/>
 
-            <RelativeLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="131dp"
                 android:background="@drawable/shape_bg_mine">
@@ -30,16 +32,20 @@
                     android:layout_height="73dp"
                     android:layout_marginTop="31dp"
                     android:layout_marginLeft="15dp"
-                    android:layout_marginRight="16dp"/>
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    tools:ignore="MissingConstraints" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/iv_user"
-                    android:layout_alignTop="@id/iv_user"
                     android:textColor="@color/colorFFF"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp"
+                    app:layout_constraintLeft_toLeftOf="@id/tv_balance"
+                    app:layout_constraintTop_toTopOf="@id/iv_user"
+                    android:layout_marginTop="6dp"
+                    tools:ignore="MissingConstraints" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_balance"
@@ -49,7 +55,12 @@
                     android:layout_below="@+id/tv_username"
                     android:layout_marginTop="10dp"
                     android:textColor="@color/colorFFF"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    app:layout_constraintTop_toTopOf="@id/iv_user"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_user"
+                    app:layout_constraintLeft_toRightOf="@id/iv_user"
+                    android:layout_marginLeft="16dp"
+                    tools:ignore="MissingConstraints" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/iv_sgs"
@@ -57,11 +68,11 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/icon_sgs"
                     android:layout_marginTop="64dp"
-                    android:layout_alignBottom="@id/iv_user"
-                    android:layout_toRightOf="@id/iv_user"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_user"
+                    app:layout_constraintRight_toRightOf="@id/iv_user"
                     android:layout_marginBottom="2dp"
-                    android:layout_marginLeft="-35dp"
-                    android:visibility="gone"/>
+                    tools:ignore="MissingConstraints"
+                    android:visibility="invisible"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_num_of_people"
@@ -71,7 +82,10 @@
                     android:layout_below="@+id/tv_balance"
                     android:layout_marginTop="10dp"
                     android:textColor="@color/colorFFF"
-                    android:textSize="12sp"/>
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_user"
+                    app:layout_constraintLeft_toLeftOf="@id/tv_balance"
+                    tools:ignore="MissingConstraints" />
 
 
                 <TextView
@@ -81,12 +95,13 @@
                     android:gravity="center"
                     android:background="@drawable/shape_bg_withdraw"
                     android:layout_marginRight="15dp"
-                    android:layout_alignTop="@id/iv_user"
                     android:layout_marginTop="10dp"
-                    android:layout_alignParentEnd="true"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tv_username"
                     android:textColor="@color/colorFFF"
                     android:textSize="12sp"
-                    android:text="@string/withdraw"/>
+                    android:text="@string/withdraw"
+                    tools:ignore="MissingConstraints" />
 
                 <TextView
                     android:id="@+id/tv_recharge"
@@ -94,15 +109,16 @@
                     android:layout_height="21dp"
                     android:gravity="center"
                     android:background="@drawable/shape_bg_recharge"
-                    android:layout_marginTop="14dp"
                     android:layout_marginRight="15dp"
-                    android:layout_below="@+id/tv_withdraw"
-                    android:layout_alignParentEnd="true"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_num_of_people"
+                    android:layout_marginBottom="2dp"
+                    app:layout_constraintRight_toRightOf="parent"
                     android:textColor="@color/colorFFF"
                     android:textSize="12sp"
-                    android:text="@string/recharge"/>
+                    android:text="@string/recharge"
+                    tools:ignore="MissingConstraints" />
 
-            </RelativeLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
