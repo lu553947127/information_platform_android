@@ -84,19 +84,19 @@ public class MultiAreaActivity extends BaseActivity {
             if (!areaVm.provinceInited) {
                 //首次加载，未添加全部，
                 areaVm.setProvinceInit();
-            }else {
+            } else {
                 provinceAdapter.setNewData(provinceBeans);
             }
         });
         areaVm.cityLiveData.observe(this, cityBeans -> {
             areaVm.setCityInit();
-            if (cityBeans != null && cityBeans.size() > 0 && (cityBeans.get(0).getName().equals("全部")||cityBeans.get(0).getName().equals("全国"))){
+            if (cityBeans != null && cityBeans.size() > 0 && (cityBeans.get(0).getName().equals("全部") || cityBeans.get(0).getName().equals("全国"))) {
                 //刷新市区
                 cityAdapter.setNewData(cityBeans);
             }
         });
         areaVm.pageStateLiveData.observe(this, s -> {
-            switch (s){
+            switch (s) {
                 case PageState.PAGE_LOADING:
                     showLoading();
                     break;
@@ -109,23 +109,19 @@ public class MultiAreaActivity extends BaseActivity {
     }
 
     @OnClick({R.id.iv_bar_back, R.id.tv_bar_right})
-    void onClick(View view){
-        switch (view.getId()){
+    void onClick(View view) {
+        switch (view.getId()) {
             case R.id.iv_bar_back:
                 finish();
                 break;
             case R.id.tv_bar_right:
                 List<Integer> cityResult = areaVm.getProvinceCityIds();
-                if (cityResult == null){
-                    ToastUtils.showShort("地区选择不能是全部");
-                    return;
-                }
                 String stringResult = areaVm.getStringResult();
                 EventBus.getDefault().post(new MultiAreaEvent(cityResult, stringResult));
                 finish();
                 break;
-                default:
-                    break;
+            default:
+                break;
         }
     }
 }

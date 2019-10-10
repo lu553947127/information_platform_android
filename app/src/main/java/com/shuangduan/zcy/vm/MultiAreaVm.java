@@ -91,7 +91,7 @@ public class MultiAreaVm extends BaseViewModel {
         List<CityBean> cityList = cityLiveData.getValue();
         if (cityList != null && cityList.size() > 0) {
             //全国
-            if(cityList.get(0).getName().equals("全国")){
+            if (cityList.get(0).getName().equals("全国")) {
                 provinceLiveData.getValue().get(currentPosition).setCityList(cityList);
                 return;
             }
@@ -463,7 +463,9 @@ public class MultiAreaVm extends BaseViewModel {
             for (int i = 0; i < provinceList.size(); i++) {
                 if (i == 0 && provinceList.get(i).getCityList().get(0).getIsSelect() == 1) {
                     //全选，返回null
-                    return null;
+                    result.add(100000);
+                    stringBuilder.append("全国");
+                    return result;
                 } else if (provinceList.get(i).isSelect == 1) {
                     List<CityBean> cityList = provinceList.get(i).getCityList();
                     if (cityList != null) {

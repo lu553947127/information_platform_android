@@ -1,9 +1,12 @@
 package com.shuangduan.zcy.view.headlines;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityOptionsCompat;
@@ -15,10 +18,12 @@ import com.bumptech.glide.Glide;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
+import com.shuangduan.zcy.manage.ShareManage;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.view.PhotoViewActivity;
 import com.shuangduan.zcy.vm.HeadlinesVm;
 import com.shuangduan.zcy.weight.RichText;
+import com.tencent.tauth.Tencent;
 
 import java.util.ArrayList;
 
@@ -46,7 +51,15 @@ public class HeadlinesDetailActivity extends BaseActivity {
     TextView tvTime;
     @BindView(R.id.tv_content)
     RichText tvContent;
+    @BindView(R.id.tv_bar_right)
+    TextView tvBarRight;
+    @BindView(R.id.iv_bar_right)
+    AppCompatImageView ivBarRight;
     private HeadlinesVm headlinesVm;
+
+
+    //分享管理
+    private ShareManage shareManage;
 
     @Override
     protected int initLayoutRes() {
@@ -61,8 +74,14 @@ public class HeadlinesDetailActivity extends BaseActivity {
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
-        tvBarTitle.setText(getString(R.string.head_detail));
         int id = getIntent().getIntExtra(CustomConfig.HEADLINES_ID, 0);
+        //初始化分享功能
+        shareManage = ShareManage.newInstance(getApplicationContext());
+        shareManage.init(this, ShareManage.SHARE_HEADLINES_TYPE, id);
+
+        tvBarTitle.setText(getString(R.string.head_detail));
+        ivBarRight.setImageResource(R.drawable.icon_share);
+        tvBarRight.setVisibility(View.GONE);
 
         headlinesVm = ViewModelProviders.of(this).get(HeadlinesVm.class);
         headlinesVm.id = id;
@@ -73,7 +92,7 @@ public class HeadlinesDetailActivity extends BaseActivity {
             tvContent.setHtml(headlinesDetailBean.getContent());
         });
         headlinesVm.pageStateLiveData.observe(this, s -> {
-            switch (s){
+            switch (s) {
                 case PageState.PAGE_LOADING:
                     showLoading();
                     break;
@@ -85,7 +104,7 @@ public class HeadlinesDetailActivity extends BaseActivity {
         headlinesVm.getDetail();
     }
 
-    private void startPhotoActivity(String url){
+    private void startPhotoActivity(String url) {
         ArrayList<String> list = new ArrayList<>();
         Bundle bundle = new Bundle();
         bundle.putInt("position", 0);
@@ -99,6 +118,22 @@ public class HeadlinesDetailActivity extends BaseActivity {
         }
     }
 
-    @OnClick(R.id.iv_bar_back)
-    void onClick(){finish();}
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Tencent.onActivityResultData(requestCode, resultCode, data, shareManage.getQQListener());
+    }
+
+    @OnClick({R.id.iv_bar_back,R.id.iv_bar_right})
+    void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.iv_bar_back:
+                finish();
+                break;
+            case R.id.iv_bar_right:
+                shareManage.showDialog();
+                break;
+        }
+
+    }
 }

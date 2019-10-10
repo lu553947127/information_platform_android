@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -315,7 +316,7 @@
                     android:textSize="14sp" />
 
 
-                <RelativeLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -325,20 +326,25 @@
                         android:id="@+id/pic_content"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="37dp"
                         android:overScrollMode="never"
-                        app:maxSize="3" />
+                        app:maxSize="3"
+                        tools:ignore="MissingConstraints" />
 
                     <TextView
                         android:id="@+id/tv_pic_content"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
+                        app:layout_constraintTop_toTopOf="@id/pic_content"
+                        android:layout_marginTop="16dp"
+                        app:layout_constraintLeft_toLeftOf="parent"
                         android:layout_marginLeft="77dp"
                         android:text="请点击上传营业执照等资质照片（大小不能超过1M，上传不能超过3张）"
                         android:textColor="@color/colorTvHint"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        tools:ignore="MissingConstraints" />
 
-                </RelativeLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
 
             </FrameLayout>
@@ -381,7 +387,7 @@
                         android:id="@+id/tv_authorization"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
+                        android:layout_marginTop="24dp"
                         android:layout_marginLeft="15dp"
                         android:textColor="@color/colorTvHint"
                         android:textSize="14sp" />
@@ -427,7 +433,7 @@
                         android:id="@+id/tv_logo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
+                        android:layout_marginTop="24dp"
                         android:layout_marginLeft="15dp"
                         android:text="请上传公司logo"
                         android:textColor="@color/colorTvHint"

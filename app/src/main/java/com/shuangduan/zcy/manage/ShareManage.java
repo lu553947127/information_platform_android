@@ -46,6 +46,7 @@ public class ShareManage {
     public static final int SHARE_PROJECT_TYPE = 1;                                         //      基建详情
     public static final int SHARE_RECOMMEND_FRIENDS_TYPE = 3;                               //      推荐好友
     public static final int SHARE_TENDERER_TYPE = 2;                                        //      招采信息
+    public static final int SHARE_HEADLINES_TYPE = 4;                                        //     基建头条
     //-------------------------------------------------------------------------------------------------------
 
 
@@ -95,8 +96,10 @@ public class ShareManage {
             case SHARE_TENDERER_TYPE:
                 shareVm.tendererShare(id);
                 break;
+            case SHARE_HEADLINES_TYPE:
+                initDialog(activity, "https://www.baidu.com", "基建头条分享", "基建头条分享", "", null);
+                break;
         }
-
 
         shareVm.shareLiveData.observe(activity, item -> {
             EventBus.getDefault().post(new ShareEvent(item.getUrl()));
@@ -163,12 +166,12 @@ public class ShareManage {
 
                     @Override
                     public void weChat() {
-                        ShareUtils.shareWeChat( ShareUtils.FRIEND, url, title, des, bitmap);
+                        ShareUtils.shareWeChat(ShareUtils.FRIEND, url, title, des, bitmap);
                     }
 
                     @Override
                     public void friendCircle() {
-                        ShareUtils.shareWeChat( ShareUtils.FRIEND_CIRCLE, url, title, des, bitmap);
+                        ShareUtils.shareWeChat(ShareUtils.FRIEND_CIRCLE, url, title, des, bitmap);
                     }
                 });
 

@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
@@ -75,8 +76,8 @@ public class MineFragment extends BaseFragment {
     AppCompatTextView tvUsername;
     @BindView(R.id.tv_username_top)
     TextView tvUsernameTop;
-    @BindView(R.id.tv_member)
-    AppCompatTextView tvMember;
+    @BindView(R.id.iv_sgs)
+    AppCompatImageView ivSgs;
     @BindView(R.id.tv_num_of_people)
     AppCompatTextView tvNumOfPeople;
     @BindView(R.id.tv_balance)
