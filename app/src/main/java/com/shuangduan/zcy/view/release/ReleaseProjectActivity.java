@@ -6,6 +6,7 @@ import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -167,6 +168,8 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
     EditText edtProjectCompany;
     @BindView(R.id.scrollView)
     NestedScrollView scrollView;
+    @BindView(R.id.marquee)
+    TextView tvMarquee;
     private PermissionVm permissionVm;
     private RxPermissions rxPermissions;
     private ReleaseVm releaseVm;
@@ -292,6 +295,10 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
 
         KeyboardUtil.RemoveDecimalPoints(edtProjectAcreage);
         KeyboardUtil.RemoveDecimalPoints(edtProjectPrice);
+        String str="已通过实名认证发布信息审核时间为<font color=\"#6a5ff8\">"+"2小时内"+"</font>，" +
+                "未实名认证审核时间则为<font color=\"#6a5ff8\">"+"24小时内"+"</font>，建议您先实名认证再发布，审核会更快哦~";
+        tvMarquee.setText(Html.fromHtml(str));
+        tvMarquee.setSelected(true);
     }
 
     private void photoSet() {

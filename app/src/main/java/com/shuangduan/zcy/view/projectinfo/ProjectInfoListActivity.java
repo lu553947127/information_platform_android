@@ -1,7 +1,9 @@
 package com.shuangduan.zcy.view.projectinfo;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.FrameLayout;
@@ -20,7 +22,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.TimeUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -40,6 +41,7 @@ import com.shuangduan.zcy.model.bean.ProjectInfoBean;
 import com.shuangduan.zcy.model.bean.ProvinceBean;
 import com.shuangduan.zcy.model.bean.StageBean;
 import com.shuangduan.zcy.model.bean.TypeBean;
+import com.shuangduan.zcy.utils.AnimationUtils;
 import com.shuangduan.zcy.view.release.ReleaseProjectActivity;
 import com.shuangduan.zcy.view.search.SearchActivity;
 import com.shuangduan.zcy.vm.MultiAreaVm;
@@ -101,6 +103,8 @@ public class ProjectInfoListActivity extends BaseActivity {
     View over;
     @BindView(R.id.line)
     View line;
+    @BindView(R.id.iv_subscribed)
+    ImageView ivSubscribed;
 
     private ProjectListVm projectListVm;
     private MultiStageVm stageVm;
@@ -118,6 +122,7 @@ public class ProjectInfoListActivity extends BaseActivity {
         return false;
     }
 
+    @SuppressLint("NewApi")
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
@@ -165,6 +170,27 @@ public class ProjectInfoListActivity extends BaseActivity {
                 projectInfoAdapter.addData(projectInfoBeans.getList());
             }
             setNoMore(projectInfoBeans.getPage(), projectInfoBeans.getCount());
+        });
+
+        //列表滑动动画
+        rv.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            int distance;
+            boolean visible = true;
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if(distance < -ViewConfiguration.getTouchSlop() && !visible){
+                    AnimationUtils.showFABAnimation(ivSubscribed);
+                    distance = 0;
+                    visible = true;
+                }else if(distance > ViewConfiguration.getTouchSlop() && visible){
+                    AnimationUtils.hideFABAnimation(ivSubscribed);
+                    distance = 0;
+                    visible = false;
+                }
+                if ((dy > 0 && visible) || (dy < 0 && !visible))//向下滑并且可见  或者  向上滑并且不可见
+                    distance += dy;
+            }
         });
     }
 
