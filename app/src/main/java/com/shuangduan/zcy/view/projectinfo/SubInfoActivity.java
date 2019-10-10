@@ -1,5 +1,6 @@
 package com.shuangduan.zcy.view.projectinfo;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -78,6 +79,7 @@ public class SubInfoActivity extends BaseActivity {
         return false;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
@@ -94,8 +96,8 @@ public class SubInfoActivity extends BaseActivity {
             tvSubTime.setText(info.getCreate_time());
             tvHoldTime.setText(String.format(getString(R.string.format_validity_period_less), info.getStart_time(), info.getEnd_time()));
             tvReadPeopleNum.setText(String.valueOf(info.getCount()));
-            tvExpectedReturn.setText(info.getExpect_price());
-            tvGenerateRevenue.setText(info.getIncome_price());
+            tvExpectedReturn.setText(info.getExpect_price()+"紫金币");
+            tvGenerateRevenue.setText(info.getIncome_price()+"紫金币");
 
             List<ProjectSubViewBean.ListBean> list = projectSubViewBean.getList();
             values.clear();

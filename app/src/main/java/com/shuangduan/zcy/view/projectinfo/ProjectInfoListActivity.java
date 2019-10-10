@@ -416,7 +416,7 @@ public class ProjectInfoListActivity extends BaseActivity {
                                 case 5:
                                     if (cbSubscribe.isChecked() && cbUnsubscribe.isChecked()) {
                                         projectListVm.warrant_status = null;
-                                        tvSubscribe.setText(R.string.all);
+                                        tvSubscribe.setText("认购");
                                     } else if (cbSubscribe.isChecked()) {
                                         projectListVm.warrant_status = "1";
                                         tvSubscribe.setText(R.string.subscribed);
@@ -425,7 +425,7 @@ public class ProjectInfoListActivity extends BaseActivity {
                                         tvSubscribe.setText(R.string.unsubscribe);
                                     } else {
                                         projectListVm.warrant_status = null;
-                                        tvSubscribe.setText(R.string.all);
+                                        tvSubscribe.setText("认购");
                                     }
                                     break;
                             }
@@ -638,7 +638,6 @@ public class ProjectInfoListActivity extends BaseActivity {
             }
         });
 
-
         typeVm.pageStateLiveData.observe(this, s -> {
             switch (s) {
                 case PageState.PAGE_LOADING:
@@ -664,9 +663,7 @@ public class ProjectInfoListActivity extends BaseActivity {
      * 时间选择器
      */
     private void showTimeDialog(TextView tv) {
-        CustomDatePicker customDatePicker = new CustomDatePicker(this, time -> {
-            tv.setText(time);
-        }, "yyyy-MM-dd HH:mm", "2010-01-01 00:00", "2040-12-31 00:00");
+        CustomDatePicker customDatePicker = new CustomDatePicker(this, tv::setText, "yyyy-MM-dd", "2010-01-01", "2040-12-31");
         customDatePicker.showSpecificTime(false);
         customDatePicker.show(TimeUtils.getNowString());
     }

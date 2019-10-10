@@ -212,7 +212,7 @@
                     android:layout_gravity="center_vertical"
                     android:textColor="@color/colorTv"
                     android:textSize="14sp"
-                    android:text="@string/phone"/>
+                    android:text="联系方式"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_mobile"
@@ -247,7 +247,7 @@
                     android:layout_gravity="center_vertical"
                     android:textColor="@color/colorTv"
                     android:textSize="14sp"
-                    android:text="@string/business_area"/>
+                    android:text="服务地区"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_business_area"

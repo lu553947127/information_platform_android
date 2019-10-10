@@ -12,7 +12,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.blankj.utilcode.util.ActivityUtils;
-import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -89,13 +88,13 @@ public class IMPrivateChatActivity extends BaseActivity implements RongIM.Conver
             ivBarRight.setImageResource(R.drawable.icon_more);
         }else if (mConversationType.getName().equals("private")){
             ivBarRight.setVisibility(View.GONE);
+            //刷新好友头像
+            getFriendData(user_id);
+            //刷新自己头像
+            getFriendData(String.valueOf(SPUtils.getInstance().getInt(SpConfig.USER_ID)));
         }
         //设置会话页面操作监听
         RongIM.setConversationClickListener(this);
-        //刷新好友头像
-        getFriendData(user_id);
-        //刷新自己头像
-        getFriendData(String.valueOf(SPUtils.getInstance().getInt(SpConfig.USER_ID)));
     }
 
     //加载会话页面
