@@ -13,6 +13,16 @@
         android:layout_marginLeft="15dp"
         android:layout_marginTop="15dp"/>
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_sgs"
+        android:layout_width="12dp"
+        android:layout_height="13dp"
+        android:src="@drawable/icon_mini_sgs"
+        app:layout_constraintBottom_toBottomOf="@id/civ_header"
+        app:layout_constraintRight_toRightOf="@id/civ_header"
+        android:layout_marginBottom="1dp"
+        android:visibility="invisible"/>
+
     <TextView
         android:id="@+id/tv_name"
         android:layout_width="wrap_content"

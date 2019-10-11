@@ -51,7 +51,7 @@ public class ReleaseListActivity extends BaseActivity {
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
-        tvBarTitle.setText(getString(R.string.release_msg));
+        tvBarTitle.setText(getString(R.string.my_project));
 
         Fragment[] fragments = {
             ProjectInfoFragment.newInstance(),

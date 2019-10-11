@@ -6,6 +6,7 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.SpConfig;
@@ -13,6 +14,9 @@ import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.utils.LoginUtils;
 import com.shuangduan.zcy.view.MainActivity;
 import com.shuangduan.zcy.vm.IMConnectVm;
+
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
 
 /**
  * @ProjectName: information_platform_android
@@ -63,11 +67,25 @@ public class StartUpActivity extends BaseActivity {
 
     private void getIntoActivity() {
         if (LoginUtils.isLogin()){
-            ActivityUtils.startActivity(MainActivity.class);
-            //这里连一遍融云
             //初始化，融云链接服务器
-            IMConnectVm imConnectVm = ViewModelProviders.of(this).get(IMConnectVm.class);
-            imConnectVm.connect(SPUtils.getInstance().getString(SpConfig.IM_TOKEN));
+            String token = SPUtils.getInstance().getString(SpConfig.IM_TOKEN);
+            RongIM.connect(token, new RongIMClient.ConnectCallback() {
+                @Override
+                public void onTokenIncorrect() {
+                }
+                @Override
+                public void onSuccess(String userid) {
+                    LogUtils.i("融云连接成功" + userid);
+                    LogUtils.i("融云--token--" + token);
+                    ActivityUtils.startActivity(MainActivity.class);
+                    StartUpActivity.this.finish();
+                }
+                @Override
+                public void onError(RongIMClient.ErrorCode errorCode) {
+                    LogUtils.i("融云--token--" + token);
+                    LogUtils.i("融云连接失败" + errorCode);
+                }
+            });
         }else {
             ActivityUtils.startActivity(WelcomeActivity.class);
             finish();

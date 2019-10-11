@@ -181,22 +181,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="10dp" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_my_subscription"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/selector_bg_custom"
-                android:drawableLeft="@drawable/icon_subscription"
-                android:drawablePadding="11dp"
-                android:drawableRight="@drawable/icon_next"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:gravity="center_vertical"
-                android:textColor="@color/color_666666"
-                android:textSize="16sp"
-                android:text="@string/my_subscription"/>
 
-            <include layout="@layout/divider_15"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_my_demand"
@@ -214,6 +199,24 @@
                 android:text="@string/my_demand"/>
 
             <include layout="@layout/divider_15"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_my_project"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/selector_bg_custom"
+                android:drawableLeft="@drawable/icon_my_project"
+                android:drawablePadding="11dp"
+                android:drawableRight="@drawable/icon_next"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/color_666666"
+                android:textSize="16sp"
+                android:text="@string/my_project"/>
+
+            <include layout="@layout/divider_15"/>
+
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_mine_subscription"
@@ -284,22 +287,6 @@
 
             <include android:visibility="gone" layout="@layout/divider_15"/>
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_pwd_pay"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/selector_bg_custom"
-                android:drawableLeft="@drawable/icon_pwd_pay"
-                android:drawablePadding="11dp"
-                android:drawableRight="@drawable/icon_next"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:gravity="center_vertical"
-                android:textColor="@color/color_666666"
-                android:textSize="16sp"
-                android:text="@string/pwd_pay"/>
-
-            <include layout="@layout/divider_15"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_read_history"

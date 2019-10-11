@@ -62,6 +62,7 @@
     <string name="my_income">我的收益</string>
     <string name="my_income_explain">收益说明</string>
     <string name="my_subscription">我的订阅</string>
+    <string name="my_project">我的工程</string>
     <string name="my_demand">我的需求</string>
     <string name="mine_subscription">我的认购</string>
     <string name="my_material">物资预定</string>
@@ -125,6 +126,7 @@
     <string name="sounds_set">声音设置</string>
     <string name="dark_model">夜间模式</string>
     <string name="update_pwd">修改密码</string>
+    <string name="update_login_pwd">修改登录密码</string>
     <string name="forget_pwd_title">忘记密码</string>
     <string name="about_ours">关于</string>
     <string name="exit">退出登录</string>

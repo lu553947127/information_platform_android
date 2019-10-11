@@ -1,5 +1,7 @@
 package com.shuangduan.zcy.model.bean;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 /**
@@ -48,6 +50,18 @@ public class UserInfoBean {
     private String coin;
     private int count;
     private String apply_status;
+
+    //身份认证状态 0未认证 1审核中 2已认证
+    @SerializedName("card_status")
+    private int cardStatus;
+
+    public int getCardStatus() {
+        return cardStatus;
+    }
+
+    public void setCardStatus(int cardStatus) {
+        this.cardStatus = cardStatus;
+    }
 
     public String getApply_status() {
         return apply_status;

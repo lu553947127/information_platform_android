@@ -43,6 +43,7 @@ import com.shuangduan.zcy.view.mine.SetActivity;
 import com.shuangduan.zcy.view.mine.TransRecordActivity;
 import com.shuangduan.zcy.view.mine.UserInfoActivity;
 import com.shuangduan.zcy.view.recharge.RechargeActivity;
+import com.shuangduan.zcy.view.release.ReleaseListActivity;
 import com.shuangduan.zcy.vm.UserInfoVm;
 import com.shuangduan.zcy.weight.AdaptationScrollView;
 import com.shuangduan.zcy.weight.CircleImageView;
@@ -160,10 +161,10 @@ public class MineFragment extends BaseFragment {
         return true;
     }
 
-    @OnClick({R.id.tv_username, R.id.iv_user, R.id.tv_my_subscription, R.id.fl_order, R.id.fl_income,
+    @OnClick({R.id.tv_username, R.id.iv_user, R.id.tv_my_project, R.id.fl_order, R.id.fl_income,
             R.id.tv_my_demand, R.id.tv_mine_subscription, R.id.tv_my_material,
-            R.id.tv_transaction_record, R.id.tv_agreement_manage, R.id.tv_pwd_pay, R.id.tv_recharge,
-            R.id.tv_read_history, R.id.tv_feedback, R.id.tv_recommend_friends, R.id.tv_my_collection, R.id.tv_set, R.id.tv_helper,R.id.tv_withdraw})
+            R.id.tv_transaction_record, R.id.tv_agreement_manage, R.id.tv_recharge,
+            R.id.tv_read_history, R.id.tv_feedback, R.id.tv_recommend_friends, R.id.tv_my_collection, R.id.tv_set, R.id.tv_helper, R.id.tv_withdraw})
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_username:
@@ -184,8 +185,8 @@ public class MineFragment extends BaseFragment {
             case R.id.fl_income://我的收益
                 ActivityUtils.startActivity(MineIncomeActivity.class);
                 break;
-            case R.id.tv_my_subscription://我的订阅
-                ActivityUtils.startActivity(MineSubActivity.class);
+            case R.id.tv_my_project://我的工程
+                ActivityUtils.startActivity(ReleaseListActivity.class);
                 break;
             case R.id.tv_my_demand://我的需求
                 ActivityUtils.startActivity(MineDemandActivity.class);
@@ -200,9 +201,6 @@ public class MineFragment extends BaseFragment {
                 ActivityUtils.startActivity(TransRecordActivity.class);
                 break;
             case R.id.tv_agreement_manage://合同管理
-                break;
-            case R.id.tv_pwd_pay://支付密码
-                ActivityUtils.startActivity(PwdPayActivity.class);
                 break;
             case R.id.tv_read_history://浏览历史
                 ActivityUtils.startActivity(ReadHistoryActivity.class);

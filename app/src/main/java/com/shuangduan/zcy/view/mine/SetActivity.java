@@ -95,7 +95,7 @@ public class SetActivity extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.iv_bar_back, R.id.tv_update_pwd, R.id.tv_about_ours, R.id.tv_exit})
+    @OnClick({R.id.iv_bar_back, R.id.tv_update_pwd, R.id.tv_about_ours, R.id.tv_exit,R.id.tv_pwd_pay})
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_bar_back:
@@ -103,6 +103,9 @@ public class SetActivity extends BaseActivity {
                 break;
             case R.id.tv_update_pwd:
                 ActivityUtils.startActivity(UpdatePwdActivity.class);
+                break;
+            case R.id.tv_pwd_pay://支付密码
+                ActivityUtils.startActivity(PwdPayActivity.class);
                 break;
             case R.id.tv_about_ours:
                 ActivityUtils.startActivity(AboutOursActivity.class);

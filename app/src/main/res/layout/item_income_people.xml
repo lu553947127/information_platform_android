@@ -14,6 +14,17 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"/>
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_sgs"
+        android:layout_width="12dp"
+        android:layout_height="13dp"
+        android:src="@drawable/icon_mini_sgs"
+        app:layout_constraintBottom_toBottomOf="@id/iv_header"
+        app:layout_constraintRight_toRightOf="@id/iv_header"
+        android:layout_marginBottom="1dp"
+        android:visibility="invisible"
+        tools:ignore="NotSibling" />
+
     <TextView
         android:id="@+id/tv_name"
         android:layout_width="wrap_content"

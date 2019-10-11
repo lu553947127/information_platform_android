@@ -46,6 +46,7 @@ public class MainActivity extends BaseActivity {
     NoScrollViewPager viewPager;
     List<Fragment> mFragments;
     FragmentAdapter fragmentAdapter;
+    private BroadcastReceiver receiver;
 
     @Override
     protected int initLayoutRes() {
@@ -191,19 +192,21 @@ public class MainActivity extends BaseActivity {
      * IWXAPI 是第三方app和微信通信的openApi接口
      */
     private IWXAPI api;
+
     private void regToWx() {
         // 通过WXAPIFactory工厂，获取IWXAPI的实例
         api = WXAPIFactory.createWXAPI(this, APP_ID, true);
         // 将应用的appId注册到微信
         api.registerApp(APP_ID);
         //建议动态监听微信启动广播进行注册到微信
-        registerReceiver(new BroadcastReceiver() {
+        receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 // 将该app注册到微信
                 api.registerApp(APP_ID);
             }
-        }, new IntentFilter(ConstantsAPI.ACTION_REFRESH_WXAPP));
+        };
+        registerReceiver(receiver, new IntentFilter(ConstantsAPI.ACTION_REFRESH_WXAPP));
     }
 
     /**
@@ -216,5 +219,12 @@ public class MainActivity extends BaseActivity {
             LogUtils.i("别名设置", userId);
             JPushInterface.setAlias(this, userId, String.valueOf(userId));
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //销毁广播接受者
+        unregisterReceiver(receiver);
     }
 }
