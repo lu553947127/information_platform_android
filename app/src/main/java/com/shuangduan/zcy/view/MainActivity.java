@@ -38,6 +38,19 @@ import cn.jpush.android.api.JPushInterface;
 
 import static com.shuangduan.zcy.app.AppConfig.APP_ID;
 
+/**
+ * @ProjectName: information_platform_android
+ * @Package: com.shuangduan.zcy.utils
+ * @ClassName: MainActivity
+ * @Description: 首页
+ * @Author: 鹿鸿祥
+ * @CreateDate: 2019/9/24 17:50
+ * @UpdateUser: 鹿鸿祥
+ * @UpdateDate: 2019/9/24 17:50
+ * @UpdateRemark: 更新说明
+ * @Version: 1.0
+ */
+
 public class MainActivity extends BaseActivity {
 
     @BindView(R.id.navigation)

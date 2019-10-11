@@ -1,6 +1,9 @@
 package com.shuangduan.zcy.view.search;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProviders;
@@ -38,6 +41,10 @@ public class ProjectSearchFragment extends BaseLazyFragment {
     RecyclerView rv;
     @BindView(R.id.refresh)
     SmartRefreshLayout refresh;
+    @BindView(R.id.ll_recommend)
+    LinearLayout llRecommend;
+    @BindView(R.id.tv_recommend)
+    TextView tvRecommend;
     private SearchVm searchVm;
 
     public static ProjectSearchFragment newInstance() {
@@ -81,6 +88,12 @@ public class ProjectSearchFragment extends BaseLazyFragment {
                 projectInfoAdapter.addData(searchProjectBean.getList());
             }
             setNoMore(searchProjectBean.getPage(), searchProjectBean.getCount());
+            if (searchProjectBean.getRec()==1){
+                llRecommend.setVisibility(View.VISIBLE);
+                tvRecommend.setText("抱歉，没有找到相关的工程信息，已为您推荐以下信息");
+            }else {
+                llRecommend.setVisibility(View.GONE);
+            }
         });
         refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override

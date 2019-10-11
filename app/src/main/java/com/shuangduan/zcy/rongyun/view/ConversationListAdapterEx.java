@@ -78,14 +78,14 @@ public class ConversationListAdapterEx extends ConversationListAdapter {
 
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-                        LogUtils.json(response.body());
                         try {
                             IMWechatUserInfoBean bean=new Gson().fromJson(response.body(),IMWechatUserInfoBean.class);
                             if (bean.getCode().equals("200")){
+                                LogUtils.json(response.body());
+                                LogUtils.i(bean);
                                 LogUtils.i(bean.getData().getCompany());
                                 company=bean.getData().getCompany();
                                 post=bean.getData().getPosition();
-
                                 if (data.getConversationType().equals(Conversation.ConversationType.PRIVATE)){
                                     (v.findViewById(R.id.tv_company)).setVisibility(View.VISIBLE);
                                     (v.findViewById(R.id.tv_post)).setVisibility(View.VISIBLE);

@@ -34,9 +34,7 @@ import com.shuangduan.zcy.view.mine.MineCollectionActivity;
 import com.shuangduan.zcy.view.income.MineIncomeActivity;
 import com.shuangduan.zcy.view.mine.MineDemandActivity;
 import com.shuangduan.zcy.view.mine.MineOrderActivity;
-import com.shuangduan.zcy.view.mine.MineSubActivity;
 import com.shuangduan.zcy.view.mine.OrderSubActivity;
-import com.shuangduan.zcy.view.mine.PwdPayActivity;
 import com.shuangduan.zcy.view.mine.ReadHistoryActivity;
 import com.shuangduan.zcy.view.mine.RecommendFriendsActivity;
 import com.shuangduan.zcy.view.mine.SetActivity;
@@ -60,7 +58,7 @@ import butterknife.OnClick;
  * @author 宁文强 QQ:858777523
  * @name ZICAICloudPlatform
  * @class name：com.example.zicaicloudplatform.view.fragment
- * @class describe
+ * @class 我的
  * @time 2019/7/5 13:29
  * @change
  * @chang time

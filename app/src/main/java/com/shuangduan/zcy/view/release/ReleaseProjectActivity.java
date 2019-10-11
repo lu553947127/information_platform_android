@@ -282,7 +282,12 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
             }
         });
 
-        if (getIntent().getIntExtra(CustomConfig.RELEASE_TYPE, 0) == 1) {
+        //判断显示工程信息或动态信息
+        if (getIntent().getIntExtra(CustomConfig.RELEASE_TYPE, 0) == 0) {
+            projectLocus();
+        }else if (getIntent().getIntExtra(CustomConfig.RELEASE_TYPE, 0) == 1){
+            clickLocus();
+        }else if (getIntent().getIntExtra(CustomConfig.RELEASE_TYPE, 0) == 2){
             clickLocus();
             tvProjectType.setClickable(false);
             tvProjectName.setText(getIntent().getStringExtra(CustomConfig.PROJECT_NAME));
@@ -292,11 +297,6 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
 
         KeyboardUtil.RemoveDecimalPoints(edtProjectAcreage);
         KeyboardUtil.RemoveDecimalPoints(edtProjectPrice);
-        if (Objects.requireNonNull(getIntent().getStringExtra("type")).equals("0")){
-            projectLocus();
-        }else if (Objects.requireNonNull(getIntent().getStringExtra("type")).equals("1")){
-            clickLocus();
-        }
     }
 
     private void photoSet() {

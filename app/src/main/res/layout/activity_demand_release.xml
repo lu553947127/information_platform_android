@@ -110,6 +110,17 @@
             android:textSize="14sp"
             android:hint="@string/please_hint"/>
 
+        <TextView
+            android:id="@+id/tv_commission"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="181dp"
+            android:textColor="@color/color_EF583E"
+            android:textSize="12sp"
+            android:text="佣金不能低于10紫金币"
+            android:visibility="gone"/>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"

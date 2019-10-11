@@ -8,10 +8,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.blankj.utilcode.util.BarUtils;
-import com.blankj.utilcode.util.LogUtils;
-import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.SelectorFirstAdapter;
 import com.shuangduan.zcy.adapter.SelectorSecondAdapter;
@@ -19,13 +16,10 @@ import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.event.MultiAreaEvent;
 import com.shuangduan.zcy.vm.MultiAreaVm;
-
 import org.greenrobot.eventbus.EventBus;
-
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**

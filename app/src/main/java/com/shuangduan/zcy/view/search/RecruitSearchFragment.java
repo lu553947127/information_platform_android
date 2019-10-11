@@ -1,6 +1,9 @@
 package com.shuangduan.zcy.view.search;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProviders;
@@ -38,6 +41,10 @@ public class RecruitSearchFragment extends BaseLazyFragment {
     RecyclerView rv;
     @BindView(R.id.refresh)
     SmartRefreshLayout refresh;
+    @BindView(R.id.ll_recommend)
+    LinearLayout llRecommend;
+    @BindView(R.id.tv_recommend)
+    TextView tvRecommend;
     private SearchVm searchVm;
 
     public static RecruitSearchFragment newInstance() {
@@ -83,6 +90,12 @@ public class RecruitSearchFragment extends BaseLazyFragment {
                 recruitAdapter.addData(recruitBean.getList());
             }
             setNoMore(recruitBean.getPage(), recruitBean.getCount());
+            if (recruitBean.getRec()==1){
+                llRecommend.setVisibility(View.VISIBLE);
+                tvRecommend.setText("抱歉，没有找到相关的招采信息，已为您推荐以下信息");
+            }else {
+                llRecommend.setVisibility(View.GONE);
+            }
         });
 
         refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {

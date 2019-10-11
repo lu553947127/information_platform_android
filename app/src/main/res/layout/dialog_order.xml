@@ -36,7 +36,8 @@
         app:layout_constraintBottom_toTopOf="@+id/line2"
         android:textColor="@color/color_666666"
         android:textSize="12sp"
-        android:text="@string/recruit_msg"/>
+        android:text="@string/recruit_msg"
+        android:visibility="gone"/>
 
     <View
         android:id="@+id/line2"

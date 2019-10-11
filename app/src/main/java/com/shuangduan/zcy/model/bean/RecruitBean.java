@@ -22,6 +22,7 @@ public class RecruitBean {
 
     private int page;
     private int count;
+    private int rec;
     private List<ListBean> list;
 
     public int getPage() {
@@ -38,6 +39,14 @@ public class RecruitBean {
 
     public void setCount(int count) {
         this.count = count;
+    }
+
+    public int getRec() {
+        return rec;
+    }
+
+    public void setRec(int rec) {
+        this.rec = rec;
     }
 
     public List<ListBean> getList() {

@@ -9,7 +9,7 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_top"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="199dp"
         android:scaleType="centerCrop"
         app:layout_constraintTop_toTopOf="parent"
         android:src="@drawable/top_img"/>
@@ -142,5 +142,9 @@
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="28dp"
         android:text="@string/login"/>
+
+<!--    <androidx.appcompat.widget.AppCompatImageView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"/>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -294,7 +294,7 @@
     <string name="project_stage">项目阶段</string>
     <string name="project_types">项目类别</string>
     <string name="project_cycle">项目周期</string>
-    <string name="project_acreage">项目面积(m²)</string>
+    <string name="project_acreage">项目面积</string>
 
     <string name="project_price">项目估价</string>
     <string name="project_detail">项目详情</string>
@@ -415,7 +415,7 @@
     <string name="format_stage">阶段：%1$s</string>
     <string name="format_type">类别：%1$s</string>
     <string name="format_cycle">周期：%1$s</string>
-    <string name="format_acreage">面积：%1$s㎡</string>
+    <string name="format_acreage">面积：%1$s平方米</string>
     <string name="format_no_acreage">面积：%1$s</string>
     <string name="format_valuation">估价：%1$s</string>
     <string name="format_consumption">消费次数：%1$d次</string>
@@ -438,7 +438,7 @@
     <string name="format_supplier_product">经营产品：%1$s</string>
     <string name="format_supplier_service_area">服务地区：%1$s</string>
     <string name="format_sales_volume">已成交：%1$s单</string>
-    <string name="format_pay_amount">支付金额: %1$s元</string>
+    <string name="format_pay_amount">支付金额: %1$s紫金币</string>
     <string name="format_amount_sub">认购金额: %1$s紫金币</string>
     <string name="format_amount_return">已返金额: %1$s紫金币</string>
     <string name="format_price">价格: %1$s元</string>
@@ -606,7 +606,6 @@
     <string name="canceled">已取消</string>
 
     <string name="contacts_type">身份类型</string>
-
 
     <string name="real_name">已实名</string>
     <string name="un_real_name">未实名</string>

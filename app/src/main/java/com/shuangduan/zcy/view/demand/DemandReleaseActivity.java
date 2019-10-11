@@ -2,8 +2,10 @@ package com.shuangduan.zcy.view.demand;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.Html;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
@@ -26,7 +28,6 @@ import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BottomSheetDialogs;
 import com.shuangduan.zcy.dialog.UnitDialog;
-import com.shuangduan.zcy.dialog.pop.CommonPopupWindow;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.utils.KeyboardUtil;
 import com.shuangduan.zcy.view.mine.AuthenticationActivity;
@@ -65,6 +66,8 @@ public class DemandReleaseActivity extends BaseActivity {
     FrameLayout flTitle;
     @BindView(R.id.edt_commission)
     EditText edtCommission;
+    @BindView(R.id.tv_commission)
+    TextView tvCommission;
     @BindView(R.id.fl_commission)
     FrameLayout flCommission;
     @BindView(R.id.edt_material_name)
@@ -213,6 +216,32 @@ public class DemandReleaseActivity extends BaseActivity {
             flSupplyAddress.setVisibility(View.VISIBLE);
             flSupplyPrice.setVisibility(View.VISIBLE);
         }
+
+        //监听键盘
+        edtCommission.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @SuppressLint("StringFormatMatches")
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (null != editable) {
+                    double money=Double.valueOf("".equals(editable.toString())?"0.00":editable.toString());
+                    if (money<10){
+                        tvCommission.setVisibility(View.VISIBLE);
+                    }else {
+                        tvCommission.setVisibility(View.GONE);
+                    }
+                }
+            }
+        });
     }
 
     @OnClick({R.id.iv_bar_back, R.id.tv_release_type, R.id.cb_lease, R.id.cb_sell, R.id.tv_time_end, R.id.tv_release,R.id.tv_demand_num,R.id.tv_supply_num,R.id.tv_authentication})

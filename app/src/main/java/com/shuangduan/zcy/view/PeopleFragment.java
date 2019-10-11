@@ -24,7 +24,7 @@ import butterknife.OnClick;
  * @author 宁文强 QQ:858777523
  * @name ZICAICloudPlatform
  * @class name：com.example.zicaicloudplatform.view.fragment
- * @class describe
+ * @class 人脉
  * @time 2019/7/5 13:29
  * @change
  * @chang time
@@ -78,7 +78,7 @@ public class PeopleFragment extends BaseLazyFragment {
         incomePeopleVm = ViewModelProviders.of(this).get(IncomePeopleVm.class);
         incomePeopleVm.showLiveData.observe(this, peopleBean -> {
             isInited = true;
-            tvIncomeAmount.setText(peopleBean.getNetworking_funds()+"元");
+            tvIncomeAmount.setText(peopleBean.getNetworking_funds()+"紫金币");
         });
     }
 

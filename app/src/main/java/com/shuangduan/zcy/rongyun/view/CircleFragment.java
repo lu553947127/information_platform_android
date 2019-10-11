@@ -65,7 +65,7 @@ import io.rong.imlib.model.UserInfo;
  * @author 宁文强 QQ:858777523
  * @name information_platform_android
  * @class name：com.shuangduan.zcy.rongyun.view
- * @class describe  工程圈
+ * @class 工程圈
  * @time 2019/8/27 15:11
  * @change
  * @chang time

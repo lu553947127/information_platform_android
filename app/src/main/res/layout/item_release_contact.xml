@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <FrameLayout
@@ -14,10 +17,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
             android:layout_gravity="center_vertical"
             android:textColor="@color/colorTv"
             android:textSize="14sp"
-            android:text="@string/contacts_type"/>
+            android:text="部门"/>
 
         <EditText
             android:id="@+id/edt_type"
@@ -30,7 +34,7 @@
             android:textColorHint="@color/colorTvHint"
             android:textColor="@color/colorTv"
             android:textSize="14sp"
-            android:hint="@string/please_hint"/>
+            android:hint="请输入联系人部门"/>
 
         <ImageView
             android:id="@+id/iv_del"
@@ -62,6 +66,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
             android:layout_gravity="center_vertical"
             android:textColor="@color/colorTv"
             android:textSize="14sp"
@@ -78,7 +83,7 @@
             android:textColorHint="@color/colorTvHint"
             android:textColor="@color/colorTv"
             android:textSize="14sp"
-            android:hint="@string/please_hint"/>
+            android:hint="请输入联系人单位"/>
 
         <View
             android:layout_width="match_parent"
@@ -100,9 +105,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:textColor="@color/color_F83425"
+            android:text="*"
+            tools:ignore="HardcodedText,RtlHardcoded" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_gravity="center_vertical"
             android:textColor="@color/colorTv"
             android:textSize="14sp"
-            android:text="@string/principle"/>
+            android:text="联系人"/>
 
         <EditText
             android:id="@+id/edt_principle"
@@ -115,7 +129,7 @@
             android:textColorHint="@color/colorTvHint"
             android:textColor="@color/colorTv"
             android:textSize="14sp"
-            android:hint="@string/please_hint"/>
+            android:hint="请输入联系人"/>
 
         <View
             android:layout_width="match_parent"
@@ -137,6 +151,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:textColor="@color/color_F83425"
+            android:text="*"
+            tools:ignore="HardcodedText,RtlHardcoded" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_gravity="center_vertical"
             android:textColor="@color/colorTv"
             android:textSize="14sp"
             android:text="@string/mobile_code"/>
@@ -153,7 +176,7 @@
             android:textColorHint="@color/colorTvHint"
             android:textColor="@color/colorTv"
             android:textSize="14sp"
-            android:hint="@string/please_hint"/>
+            android:hint="请输入联系人手机号"/>
 
         <View
             android:layout_width="match_parent"
@@ -174,6 +197,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
             android:layout_gravity="center_vertical"
             android:textColor="@color/colorTv"
             android:textSize="14sp"
@@ -186,11 +210,12 @@
             android:gravity="center_vertical"
             android:layout_marginLeft="87dp"
             android:background="@null"
+            android:drawableRight="@drawable/icon_next"
             android:singleLine="true"
             android:textColorHint="@color/colorTvHint"
             android:textColor="@color/colorTv"
             android:textSize="14sp"
-            android:hint="@string/please_select"/>
+            android:hint="请选择联系人地址"/>
 
         <View
             android:layout_width="match_parent"

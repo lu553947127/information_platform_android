@@ -1,5 +1,6 @@
 package com.shuangduan.zcy.view.projectinfo;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RadioButton;
@@ -75,6 +76,7 @@ public class GoToSubActivity extends BaseActivity {
         return false;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
@@ -89,18 +91,18 @@ public class GoToSubActivity extends BaseActivity {
             switch (checkedId) {
                 case R.id.rb_first:
                     goToSubVm.month = valueSelect.get(0).getMonths();
-                    tvSubPrice.setText(valueSelect.get(0).getPrice());
-                    tvExpectedReturn.setText(valueSelect.get(0).getExpect_price());
+                    tvSubPrice.setText(valueSelect.get(0).getPrice()+"紫金币");
+                    tvExpectedReturn.setText(valueSelect.get(0).getExpect_price()+"紫金币");
                     break;
                 case R.id.rb_second:
                     goToSubVm.month = valueSelect.get(1).getMonths();
-                    tvSubPrice.setText(valueSelect.get(1).getPrice());
-                    tvExpectedReturn.setText(valueSelect.get(1).getExpect_price());
+                    tvSubPrice.setText(valueSelect.get(1).getPrice()+"紫金币");
+                    tvExpectedReturn.setText(valueSelect.get(1).getExpect_price()+"紫金币");
                     break;
                 case R.id.rb_third:
                     goToSubVm.month = valueSelect.get(2).getMonths();
-                    tvSubPrice.setText(valueSelect.get(2).getPrice());
-                    tvExpectedReturn.setText(valueSelect.get(2).getExpect_price());
+                    tvSubPrice.setText(valueSelect.get(2).getPrice()+"紫金币");
+                    tvExpectedReturn.setText(valueSelect.get(2).getExpect_price()+"紫金币");
                     break;
             }
         });
@@ -115,8 +117,8 @@ public class GoToSubActivity extends BaseActivity {
                     ProjectSubFirstBean.SelectBean selectBean = projectSubFirstBean.getSelect().get(i);
                     if (i == 0) {
                         rbFirst.setText(selectBean.getTime());
-                        tvSubPrice.setText(selectBean.getPrice());
-                        tvExpectedReturn.setText(selectBean.getExpect_price());
+                        tvSubPrice.setText(selectBean.getPrice()+"紫金币");
+                        tvExpectedReturn.setText(selectBean.getExpect_price()+"紫金币");
                         goToSubVm.month = selectBean.getMonths();
                     }else if (i == 1){
                         rbSecond.setText(selectBean.getTime());

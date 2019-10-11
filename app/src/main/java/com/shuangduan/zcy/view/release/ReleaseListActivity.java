@@ -13,6 +13,7 @@ import com.blankj.utilcode.util.BarUtils;
 import com.google.android.material.tabs.TabLayout;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ViewPagerAdapter;
+import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 
 import butterknife.BindView;
@@ -53,10 +54,8 @@ public class ReleaseListActivity extends BaseActivity {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.my_project));
 
-        Fragment[] fragments = {
-            ProjectInfoFragment.newInstance(),
-                LocusFragment.newInstance()
-        };
+        Fragment[] fragments = {ProjectInfoFragment.newInstance(),
+                LocusFragment.newInstance()};
         String[] titles = getResources().getStringArray(R.array.release_list);
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), fragments, titles);
         vp.setAdapter(viewPagerAdapter);
@@ -72,10 +71,10 @@ public class ReleaseListActivity extends BaseActivity {
             case R.id.tv_release:
                 Bundle bundle = new Bundle();
                 if (vp.getCurrentItem()==0){
-                    bundle.putString("type", "0");
+                    bundle.putInt(CustomConfig.RELEASE_TYPE, 0);
                     ActivityUtils.startActivity(bundle,ReleaseProjectActivity.class);
                 }else if (vp.getCurrentItem()==1){
-                    bundle.putString("type", "1");
+                    bundle.putInt(CustomConfig.RELEASE_TYPE, 1);
                     ActivityUtils.startActivity(bundle,ReleaseProjectActivity.class);
                 }
                 break;

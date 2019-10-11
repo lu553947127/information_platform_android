@@ -81,7 +81,7 @@ import io.rong.imlib.model.Conversation;
  * @author 宁文强 QQ:858777523
  * @name ZICAICloudPlatform
  * @class name：com.example.zicaicloudplatform.view.fragment
- * @class describe
+ * @class 首页
  * @time 2019/7/5 13:26
  * @change
  * @chang time

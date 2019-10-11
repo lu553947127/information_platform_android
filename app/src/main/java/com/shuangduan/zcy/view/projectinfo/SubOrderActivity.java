@@ -1,5 +1,6 @@
 package com.shuangduan.zcy.view.projectinfo;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.text.Html;
@@ -86,13 +87,14 @@ public class SubOrderActivity extends BaseActivity {
         return false;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.sub_order));
         confirmBean = getIntent().getParcelableExtra(CustomConfig.ORDER);
         tvProjectName.setText(confirmBean.getTitle());
-        tvSubAmount.setText(confirmBean.getPrice());
+        tvSubAmount.setText(confirmBean.getPrice()+"紫金币");
         tvOrderNum.setText(confirmBean.getOrder_sn());
         tvSubCycle.setText(confirmBean.getTime());
         String price = "<font>共计支付</font><font color = '#EF583E'>" + confirmBean.getPrice() +"</font><font>紫金币</font>";

@@ -279,7 +279,7 @@ public class ProjectDetailActivity extends BaseActivity {
                 }
                 break;
             case R.id.fl_release:
-                bundle.putInt(CustomConfig.RELEASE_TYPE, 1);
+                bundle.putInt(CustomConfig.RELEASE_TYPE, 2);
                 bundle.putInt(CustomConfig.PROJECT_ID, getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0));
                 bundle.putString(CustomConfig.PROJECT_NAME, tvTitle.getText().toString());
                 ActivityUtils.startActivity(bundle, ReleaseProjectActivity.class);
