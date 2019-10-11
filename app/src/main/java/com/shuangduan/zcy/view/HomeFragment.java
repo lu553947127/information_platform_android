@@ -45,7 +45,6 @@ import com.shuangduan.zcy.model.bean.HomeBannerBean;
 import com.shuangduan.zcy.model.bean.HomeListBean;
 import com.shuangduan.zcy.model.bean.HomePushBean;
 import com.shuangduan.zcy.model.bean.IMFriendApplyCountBean;
-import com.shuangduan.zcy.utils.AuthenticationUtils;
 import com.shuangduan.zcy.utils.DensityUtil;
 import com.shuangduan.zcy.utils.LoginUtils;
 import com.shuangduan.zcy.utils.VersionUtils;
@@ -205,7 +204,6 @@ public class HomeFragment extends BaseFragment {
                     ActivityUtils.startActivity(DemandActivity.class);
                     break;
                 case ClassifyBean.FBXX:
-                    if (!AuthenticationUtils.Authentication(CustomConfig.RELEASE_MESSAGE)) return;
                     ActivityUtils.startActivity(ReleaseListActivity.class);
                     break;
             }

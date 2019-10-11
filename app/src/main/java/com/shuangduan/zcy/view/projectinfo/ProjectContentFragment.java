@@ -16,7 +16,6 @@ import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.lzy.okgo.OkGo;
@@ -34,19 +33,13 @@ import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
 import com.shuangduan.zcy.model.bean.IMFriendApplyCountBean;
 import com.shuangduan.zcy.model.bean.ProjectDetailBean;
-import com.shuangduan.zcy.model.event.RefreshViewLocusEvent;
-import com.shuangduan.zcy.utils.AuthenticationUtils;
 import com.shuangduan.zcy.utils.LoginUtils;
-import com.shuangduan.zcy.view.mine.AuthenticationActivity;
 import com.shuangduan.zcy.view.mine.SetPwdPayActivity;
 import com.shuangduan.zcy.view.recharge.RechargeActivity;
 import com.shuangduan.zcy.vm.CoinPayVm;
 import com.shuangduan.zcy.vm.ProjectDetailVm;
 import com.shuangduan.zcy.vm.UpdatePwdPayVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
-import com.shuangduan.zcy.weight.RichText;
-
-import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -171,27 +164,24 @@ public class ProjectContentFragment extends BaseFragment {
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_read_detail:
-                //验证身份信息
-                if (AuthenticationUtils.Authentication(CustomConfig.PROJECT_INFO)) {
-                    addDialog(new CustomDialog(mActivity)
-                            .setTip(String.format(getString(R.string.format_pay_price), projectDetailVm.detailLiveData.getValue().getDetail().getDetail_price()))
-                            .setCallBack(new BaseDialog.CallBack() {
-                                @Override
-                                public void cancel() {
+                addDialog(new CustomDialog(mActivity)
+                        .setTip(String.format(getString(R.string.format_pay_price), projectDetailVm.detailLiveData.getValue().getDetail().getDetail_price()))
+                        .setCallBack(new BaseDialog.CallBack() {
+                            @Override
+                            public void cancel() {
+                            }
+                            @Override
+                            public void ok(String s) {
+                                int status = SPUtils.getInstance().getInt(SpConfig.PWD_PAY_STATUS, 0);
+                                if (status == 1) {
+                                    goToPay();
+                                } else {
+                                    //查询是否设置支付密码
+                                    updatePwdPayVm.payPwdState();
                                 }
-                                @Override
-                                public void ok(String s) {
-                                    int status = SPUtils.getInstance().getInt(SpConfig.PWD_PAY_STATUS, 0);
-                                    if (status == 1) {
-                                        goToPay();
-                                    } else {
-                                        //查询是否设置支付密码
-                                        updatePwdPayVm.payPwdState();
-                                    }
-                                }
-                            })
-                            .showDialog());
-                }
+                            }
+                        })
+                        .showDialog());
                 break;
         }
     }

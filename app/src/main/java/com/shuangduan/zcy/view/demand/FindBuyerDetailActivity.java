@@ -26,7 +26,6 @@ import com.shuangduan.zcy.dialog.PayDialog;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.BuyerDetailBean;
 import com.shuangduan.zcy.model.bean.CoinPayResultBean;
-import com.shuangduan.zcy.utils.AuthenticationUtils;
 import com.shuangduan.zcy.view.mine.SetPwdPayActivity;
 import com.shuangduan.zcy.view.recharge.RechargeActivity;
 import com.shuangduan.zcy.vm.CoinPayVm;
@@ -99,7 +98,6 @@ public class FindBuyerDetailActivity extends BaseActivity {
         buyerAdapter.setEmptyView(R.layout.layout_loading, rv);
         rv.setAdapter(buyerAdapter);
         buyerAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-            if (!AuthenticationUtils.Authentication(CustomConfig.PROJECT_INFO)) return;
             BuyerDetailBean.ListBean listBean = buyerAdapter.getData().get(position);
             coinPayVm.findSubstanceId = listBean.getId();
             demandBuyerVm.currentPay = 1;
@@ -137,7 +135,6 @@ public class FindBuyerDetailActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_read_detail:
-                if (!AuthenticationUtils.Authentication(CustomConfig.PROJECT_INFO)) return;
                 coinPayVm.findBuyerId = getIntent().getIntExtra(CustomConfig.DEMAND_ID, 0);
                 demandBuyerVm.currentPay = 2;
                 showPayDialog(demandBuyerVm.detailLiveData.getValue().getInfo().getPrice());

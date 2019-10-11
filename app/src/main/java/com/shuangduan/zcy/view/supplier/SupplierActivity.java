@@ -30,7 +30,6 @@ import com.shuangduan.zcy.dialog.CustomDialog;
 import com.shuangduan.zcy.dialog.PayDialog;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.SupplierBean;
-import com.shuangduan.zcy.utils.AuthenticationUtils;
 import com.shuangduan.zcy.view.mine.SetPwdPayActivity;
 import com.shuangduan.zcy.view.recharge.RechargeActivity;
 import com.shuangduan.zcy.vm.CoinPayVm;
@@ -94,30 +93,27 @@ public class SupplierActivity extends BaseActivity {
             SupplierBean.ListBean listBean = adapter.getData().get(position);
             switch (view.getId()) {
                 case R.id.tv_read:
-                    //验证身份信息
-                    if (AuthenticationUtils.Authentication(CustomConfig.SUPPLIER_INFO)) {
-                        coinPayVm.supplierId = listBean.getId();
-                        addDialog(new CustomDialog(this)
-                                .setTip(String.format(getString(R.string.format_pay_price), listBean.getDetail_price()))
-                                .setCallBack(new BaseDialog.CallBack() {
-                                    @Override
-                                    public void cancel() {
+                    coinPayVm.supplierId = listBean.getId();
+                    addDialog(new CustomDialog(this)
+                            .setTip(String.format(getString(R.string.format_pay_price), listBean.getDetail_price()))
+                            .setCallBack(new BaseDialog.CallBack() {
+                                @Override
+                                public void cancel() {
 
-                                    }
+                                }
 
-                                    @Override
-                                    public void ok(String s) {
-                                        int status = SPUtils.getInstance().getInt(SpConfig.PWD_PAY_STATUS, 0);
-                                        if (status == 1) {
-                                            goToPay();
-                                        } else {
-                                            //查询是否设置支付密码
-                                            updatePwdPayVm.payPwdState();
-                                        }
+                                @Override
+                                public void ok(String s) {
+                                    int status = SPUtils.getInstance().getInt(SpConfig.PWD_PAY_STATUS, 0);
+                                    if (status == 1) {
+                                        goToPay();
+                                    } else {
+                                        //查询是否设置支付密码
+                                        updatePwdPayVm.payPwdState();
                                     }
-                                })
-                                .showDialog());
-                    }
+                                }
+                            })
+                            .showDialog());
                     break;
             }
         });

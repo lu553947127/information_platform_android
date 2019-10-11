@@ -47,7 +47,6 @@ import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
 import com.shuangduan.zcy.model.bean.ProjectMembersStatusBean;
 import com.shuangduan.zcy.model.event.LocusRefreshEvent;
 import com.shuangduan.zcy.model.event.WarrantSuccessEvent;
-import com.shuangduan.zcy.utils.AuthenticationUtils;
 import com.shuangduan.zcy.utils.LoginUtils;
 import com.shuangduan.zcy.view.release.ReleaseProjectActivity;
 import com.shuangduan.zcy.vm.PermissionVm;
@@ -268,23 +267,18 @@ public class ProjectDetailActivity extends BaseActivity {
                 getMembersStatus();
                 break;
             case R.id.fl_subscription:
-                //验证身份信息
-                if (AuthenticationUtils.Authentication(CustomConfig.PROJECT_SUBSCRIPTION)) {
-                    switch (projectDetailVm.subscribeLiveData.getValue()) {
-                        case 1:
-                            bundle.putInt(CustomConfig.PROJECT_ID, getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0));
-                            ActivityUtils.startActivity(bundle, SubInfoActivity.class);
-                            break;
-                        case 0:
-                            bundle.putInt(CustomConfig.PROJECT_ID, getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0));
-                            ActivityUtils.startActivity(bundle, GoToSubActivity.class);
-                            break;
-                    }
+                switch (projectDetailVm.subscribeLiveData.getValue()) {
+                    case 1:
+                        bundle.putInt(CustomConfig.PROJECT_ID, getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0));
+                        ActivityUtils.startActivity(bundle, SubInfoActivity.class);
+                        break;
+                    case 0:
+                        bundle.putInt(CustomConfig.PROJECT_ID, getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0));
+                        ActivityUtils.startActivity(bundle, GoToSubActivity.class);
+                        break;
                 }
-
                 break;
             case R.id.fl_release:
-                if (!AuthenticationUtils.Authentication(CustomConfig.RELEASE_MESSAGE)) return;
                 bundle.putInt(CustomConfig.RELEASE_TYPE, 1);
                 bundle.putInt(CustomConfig.PROJECT_ID, getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0));
                 bundle.putString(CustomConfig.PROJECT_NAME, tvTitle.getText().toString());

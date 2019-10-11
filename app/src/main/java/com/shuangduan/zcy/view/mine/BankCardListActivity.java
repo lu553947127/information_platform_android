@@ -98,7 +98,7 @@ public class BankCardListActivity extends BaseActivity {
     }
 
     @OnClick(R.id.iv_bar_back)
-    void onClick(){finish();};
+    void onClick(){finish();}
 
     @Subscribe
     public void onEventUpdateBankcard(BankcardUpdateEvent event){

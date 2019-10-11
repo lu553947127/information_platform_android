@@ -70,7 +70,6 @@ public class BindBankCardActivity extends BaseActivity implements BaseDialog.Pho
     private PermissionVm permissionVm;
     private RxPermissions rxPermissions;
     private UploadPhotoVm uploadPhotoVm;
-    private AuthenticationVm authenticationVm;
     private BankCardVm bankCardVm;
 
     @Override
@@ -126,8 +125,8 @@ public class BindBankCardActivity extends BaseActivity implements BaseDialog.Pho
             }
         });
 
-
-        authenticationVm = ViewModelProviders.of(this).get(AuthenticationVm.class);
+        //若实名认证成功直接获取姓名和身份证号
+        AuthenticationVm authenticationVm = ViewModelProviders.of(this).get(AuthenticationVm.class);
         authenticationVm.authenticationStatusLiveData.observe(this, authenBean -> {
             tvRealName.setText(authenBean.getReal_name());
             tvIdentityNumber.setText(authenBean.getIdentity_card());

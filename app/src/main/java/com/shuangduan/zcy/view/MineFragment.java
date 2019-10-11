@@ -22,7 +22,6 @@ import com.shuangduan.zcy.model.event.AvatarEvent;
 import com.shuangduan.zcy.model.event.CoinEvent;
 import com.shuangduan.zcy.model.event.RechargeSuccessEvent;
 import com.shuangduan.zcy.model.event.UserNameEvent;
-import com.shuangduan.zcy.utils.AuthenticationUtils;
 import com.shuangduan.zcy.utils.BarUtils;
 import com.shuangduan.zcy.utils.DensityUtil;
 import com.shuangduan.zcy.utils.image.ImageConfig;
@@ -203,10 +202,7 @@ public class MineFragment extends BaseFragment {
             case R.id.tv_agreement_manage://合同管理
                 break;
             case R.id.tv_pwd_pay://支付密码
-                //验证身份信息
-                if (AuthenticationUtils.Authentication(CustomConfig.SET_PAYMENT_PASSWORD)) {
-                    ActivityUtils.startActivity(PwdPayActivity.class);
-                }
+                ActivityUtils.startActivity(PwdPayActivity.class);
                 break;
             case R.id.tv_read_history://浏览历史
                 ActivityUtils.startActivity(ReadHistoryActivity.class);

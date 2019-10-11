@@ -24,7 +24,6 @@ import com.shuangduan.zcy.dialog.BottomSheetDialogs;
 import com.shuangduan.zcy.dialog.UnitDialog;
 import com.shuangduan.zcy.dialog.pop.CommonPopupWindow;
 import com.shuangduan.zcy.model.api.PageState;
-import com.shuangduan.zcy.utils.AuthenticationUtils;
 import com.shuangduan.zcy.utils.KeyboardUtil;
 import com.shuangduan.zcy.vm.DemandReleaseVm;
 import com.shuangduan.zcy.weight.datepicker.CustomDatePicker;
@@ -461,7 +460,6 @@ public class DemandReleaseActivity extends BaseActivity {
         TextView tv_find_substance=dialog_view.findViewById(R.id.tv_find_substance);
         TextView tv_find_buyer=dialog_view.findViewById(R.id.tv_find_buyer);
         tv_find_relationship.setOnClickListener(view -> {
-            if (!AuthenticationUtils.Authentication(CustomConfig.NEED_RELATIONSHIP)) return;
             tvReleaseType.setText(getString(R.string.find_relationship));
             demandReleaseVm.releaseType = DemandReleaseVm.RELEASE_TYPE_RELATIONSHIP;
             flTitle.setVisibility(View.VISIBLE);

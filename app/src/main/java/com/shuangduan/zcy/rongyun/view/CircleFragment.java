@@ -146,6 +146,7 @@ public class CircleFragment extends BaseFragment {
         });
 
         refresh.setEnableLoadMore(false);
+        refresh.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);
         refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {

@@ -13,16 +13,11 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shuangduan.zcy.R;
-import com.shuangduan.zcy.adapter.ProjectInfoAdapter;
 import com.shuangduan.zcy.adapter.ProjectInfoSearchAdapter;
-import com.shuangduan.zcy.adapter.RecruitSubAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseLazyFragment;
 import com.shuangduan.zcy.model.bean.ProjectInfoBean;
-import com.shuangduan.zcy.model.bean.RecruitSubBean;
 import com.shuangduan.zcy.view.projectinfo.ProjectDetailActivity;
-import com.shuangduan.zcy.view.recruit.RecruitDetailActivity;
-import com.shuangduan.zcy.vm.MineSubVm;
 import com.shuangduan.zcy.vm.SearchVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
@@ -46,9 +41,7 @@ public class ProjectSearchFragment extends BaseLazyFragment {
     private SearchVm searchVm;
 
     public static ProjectSearchFragment newInstance() {
-
         Bundle args = new Bundle();
-
         ProjectSearchFragment fragment = new ProjectSearchFragment();
         fragment.setArguments(args);
         return fragment;

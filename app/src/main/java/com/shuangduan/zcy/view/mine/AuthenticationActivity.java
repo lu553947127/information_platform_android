@@ -216,7 +216,6 @@ public class AuthenticationActivity extends BaseActivity implements BaseDialog.P
                 }else {
                     ToastUtils.showShort("已认证，请勿重复认证");
                 }
-
                 break;
             case R.id.iv_id_card_positive:
                 uploadPhotoVm.type = UploadPhotoVm.ID_CARD_POSITIVE;

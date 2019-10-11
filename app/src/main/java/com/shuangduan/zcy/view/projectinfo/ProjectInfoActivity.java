@@ -30,6 +30,7 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
@@ -173,7 +174,11 @@ public class ProjectInfoActivity extends BaseActivity {
         projectInfoVm.mapLiveData.observe(ProjectInfoActivity.this, mapBeans -> {
             //marker经纬度数据
             throughPointList = mapBeans != null ? mapBeans : new ArrayList<>();
-            setMarker();
+            if (throughPointList.size()!=0){
+                setMarker();
+            }else {
+                ToastUtils.showShort("您所处位置周围没有工程项目，换个地方吧！");
+            }
         });
         setupLocationStyle();
     }
