@@ -58,7 +58,17 @@ public class IncomePeopleBean {
         @SerializedName("apply_status")
         private int applyStatus;
 
+        //身份认证状态：0未认证 1审核中 2已认证
+        @SerializedName("card_status")
+        private int cardStatus;
 
+        public int getCardStatus() {
+            return cardStatus;
+        }
+
+        public void setCardStatus(int cardStatus) {
+            this.cardStatus = cardStatus;
+        }
 
         public int getUser_id() {
             return user_id;

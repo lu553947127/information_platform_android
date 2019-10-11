@@ -1,6 +1,8 @@
 package com.shuangduan.zcy.model.bean;
 
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * @author 宁文强 QQ:858777523
  * @name information_platform_android
@@ -43,6 +45,18 @@ public class PeopleDetailBean {
     private int count;
     private String price;
     private String apply_status;
+
+    //身份认证状态 ： 0未认证 1审核中 2已认证
+    @SerializedName("card_status")
+    private int cardStatus;
+
+    public int getCardStatus() {
+        return cardStatus;
+    }
+
+    public void setCardStatus(int cardStatus) {
+        this.cardStatus = cardStatus;
+    }
 
     public String getApply_status() {
         return apply_status;

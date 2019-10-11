@@ -606,4 +606,8 @@
     <string name="canceled">已取消</string>
 
     <string name="contacts_type">身份类型</string>
+
+
+    <string name="real_name">已实名</string>
+    <string name="un_real_name">未实名</string>
 </resources>

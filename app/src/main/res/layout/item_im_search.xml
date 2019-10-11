@@ -22,7 +22,6 @@
         android:src="@drawable/icon_mini_sgs"
         app:layout_constraintBottom_toBottomOf="@id/iv_header"
         app:layout_constraintRight_toRightOf="@id/iv_header"
-        android:layout_marginBottom="1dp"
         android:visibility="invisible"/>
 
     <TextView

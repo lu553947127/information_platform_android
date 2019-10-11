@@ -37,7 +37,8 @@ public class NewFriendAdapter extends BaseQuickAdapter<IMFriendApplyListBean.Dat
         helper.setText(R.id.tv_name, item.getUsername())
                 .setText(R.id.tv_time, item.getCreate_time())
                 .setText(R.id.tv_msg, item.getApply_user_msg())
-                .setVisible(R.id.tv_refuse, item.getApply_status() == 1);
+                .setVisible(R.id.tv_refuse, item.getApply_status() == 1)
+                .setVisible(R.id.iv_sgs, item.getCardStatus() == 2);
         CircleImageView ivHead = helper.getView(R.id.civ_header);
         ImageLoader.load(mContext, new ImageConfig.Builder()
                 .url(item.getImage())
@@ -46,7 +47,7 @@ public class NewFriendAdapter extends BaseQuickAdapter<IMFriendApplyListBean.Dat
                 .errorPic(R.drawable.default_head)
                 .build());
         TextView tvAccept = helper.getView(R.id.tv_accept);
-        switch (item.getApply_status()){
+        switch (item.getApply_status()) {
             case 1:
                 helper.addOnClickListener(R.id.tv_accept)
                         .addOnClickListener(R.id.tv_refuse);
@@ -54,12 +55,12 @@ public class NewFriendAdapter extends BaseQuickAdapter<IMFriendApplyListBean.Dat
             case 2:
                 tvAccept.setText("已接受");
                 tvAccept.setBackground(mContext.getDrawable(R.drawable.shape_btn_confirm_gray_20));
-                tvAccept.setTextColor(ContextCompat.getColor(mContext,R.color.color_646464));
+                tvAccept.setTextColor(ContextCompat.getColor(mContext, R.color.color_646464));
                 break;
             case 3:
                 tvAccept.setText("已拒绝");
                 tvAccept.setBackground(mContext.getDrawable(R.drawable.shape_btn_confirm_gray_20));
-                tvAccept.setTextColor(ContextCompat.getColor(mContext,R.color.color_646464));
+                tvAccept.setTextColor(ContextCompat.getColor(mContext, R.color.color_646464));
                 break;
         }
     }

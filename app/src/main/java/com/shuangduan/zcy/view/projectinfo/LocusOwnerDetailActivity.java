@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
@@ -56,6 +57,10 @@ public class LocusOwnerDetailActivity extends BaseActivity {
     TextView tvProduction;
     @BindView(R.id.tv_add_friend)
     TextView tvAddFriend;
+
+    @BindView(R.id.iv_sgs)
+    AppCompatImageView ivSgs;
+
     private UserInfoVm userInfoVm;
 
     @Override
@@ -80,9 +85,9 @@ public class LocusOwnerDetailActivity extends BaseActivity {
             tvCompany.setText(userInfoBean.getCompany());
             tvOffice.setText(userInfoBean.getPosition());
             tvBusinessArea.setText(userInfoBean.getBusiness_city());
-            tvBusinessExp.setText(userInfoBean.getExperience() > 0 ? getResources().getStringArray(R.array.experience_list)[userInfoBean.getExperience() - 1] + "年": "");
+            tvBusinessExp.setText(userInfoBean.getExperience() > 0 ? getResources().getStringArray(R.array.experience_list)[userInfoBean.getExperience() - 1] + "年" : "");
             tvProduction.setText(userInfoBean.getManaging_products());
-            switch (userInfoBean.getSex()){
+            switch (userInfoBean.getSex()) {
                 case 0:
                     tvSex.setText(getString(R.string.select_not));
                     break;
@@ -93,15 +98,18 @@ public class LocusOwnerDetailActivity extends BaseActivity {
                     tvSex.setText(getString(R.string.woman));
                     break;
             }
+
+            ivSgs.setVisibility(userInfoBean.getCardStatus() == 2 ? View.VISIBLE : View.INVISIBLE);
+
             ImageLoader.load(this, new ImageConfig.Builder()
                     .url(userInfoBean.getImage_source())
                     .placeholder(R.drawable.default_head)
                     .errorPic(R.drawable.default_head)
                     .imageView(ivUser)
                     .build());
-            if (userInfoBean.getApply_status()!=null && userInfoBean.getApply_status().equals("1")){
+            if (userInfoBean.getApply_status() != null && userInfoBean.getApply_status().equals("1")) {
                 tvAddFriend.setText(getString(R.string.im_add_friend));
-            }else {
+            } else {
                 tvAddFriend.setText(getString(R.string.im_send_message));
             }
         });
@@ -111,8 +119,8 @@ public class LocusOwnerDetailActivity extends BaseActivity {
         userInfoVm.information();
     }
 
-    @OnClick({R.id.iv_bar_back,R.id.tv_add_friend})
-    void onClick(View view){
+    @OnClick({R.id.iv_bar_back, R.id.tv_add_friend})
+    void onClick(View view) {
         Bundle bundle = new Bundle();
         switch (view.getId()) {
             case R.id.iv_bar_back:
@@ -120,14 +128,14 @@ public class LocusOwnerDetailActivity extends BaseActivity {
                 break;
             case R.id.tv_add_friend:
                 userInfoVm.informationLiveData.observe(this, userInfoBean -> {
-                    if (userInfoBean.getApply_status()!=null && userInfoBean.getApply_status().equals("1")){
+                    if (userInfoBean.getApply_status() != null && userInfoBean.getApply_status().equals("1")) {
                         bundle.putInt(CustomConfig.FRIEND_DATA, 0);
                         bundle.putString("id", String.valueOf(userInfoBean.getId()));
-                        bundle.putString("name",userInfoBean.getUsername());
-                        bundle.putString("msg",userInfoBean.getCompany());
-                        bundle.putString("image",userInfoBean.getImage());
+                        bundle.putString("name", userInfoBean.getUsername());
+                        bundle.putString("msg", userInfoBean.getCompany());
+                        bundle.putString("image", userInfoBean.getImage());
                         ActivityUtils.startActivity(bundle, IMAddFriendActivity.class);
-                    }else {
+                    } else {
                         RongIM.getInstance().startPrivateChat(LocusOwnerDetailActivity.this, String.valueOf(userInfoBean.getId())
                                 , userInfoBean.getUsername());
                     }

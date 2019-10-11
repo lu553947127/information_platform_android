@@ -31,6 +31,7 @@ public class ConsumptionAdapter extends BaseQuickAdapter<ConsumeBean.ListBean, B
     @Override
     protected void convert(BaseViewHolder helper, ConsumeBean.ListBean item) {
         helper.setText(R.id.tv_title, item.getUsername())
+                .setVisible(R.id.iv_sgs, item.getCardStatus() == 2)
                 .setText(R.id.tv_amount, String.format(mContext.getString(R.string.format_consumption), item.getCount()));
 
         ImageView ivHead = helper.getView(R.id.iv_header);

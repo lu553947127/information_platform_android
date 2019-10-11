@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
@@ -63,6 +64,10 @@ public class PeopleInfoActivity extends BaseActivity {
     AppCompatTextView tvIncomeAmount;
     @BindView(R.id.tv_add_friend)
     TextView tvAddFriend;
+
+    @BindView(R.id.iv_sgs)
+    AppCompatImageView ivSgs;
+
     private IncomePeopleVm incomePeopleVm;
 
     @Override
@@ -94,16 +99,17 @@ public class PeopleInfoActivity extends BaseActivity {
                 tvBusinessExp.setText(getResources().getStringArray(R.array.experience_list)[peopleDetailBean.getExperience() - 1] + "年");
             tvLocusNum.setText(peopleDetailBean.getCount() + "条");
             tvIncomeAmount.setText(String.format(getString(R.string.format_amount_people), peopleDetailBean.getPrice()));
-
+            //身份认证显示状态
+            ivSgs.setVisibility(peopleDetailBean.getCardStatus() == 2 ? View.VISIBLE : View.INVISIBLE);
             ImageLoader.load(this, new ImageConfig.Builder()
                     .url(peopleDetailBean.getImage())
                     .placeholder(R.drawable.default_head)
                     .errorPic(R.drawable.default_head)
                     .imageView(ivUser)
                     .build());
-            if (peopleDetailBean.getApply_status()!=null && peopleDetailBean.getApply_status().equals("1")){
+            if (peopleDetailBean.getApply_status() != null && peopleDetailBean.getApply_status().equals("1")) {
                 tvAddFriend.setText(getString(R.string.im_add_friend));
-            }else {
+            } else {
                 tvAddFriend.setText(getString(R.string.im_send_message));
             }
         });
@@ -122,10 +128,10 @@ public class PeopleInfoActivity extends BaseActivity {
         incomePeopleVm.getDetail();
     }
 
-    @OnClick({R.id.iv_bar_back, R.id.fl_income_record,R.id.tv_add_friend})
-    void onClick(View view){
+    @OnClick({R.id.iv_bar_back, R.id.fl_income_record, R.id.tv_add_friend})
+    void onClick(View view) {
         Bundle bundle = new Bundle();
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.iv_bar_back:
                 finish();
                 break;
@@ -135,14 +141,14 @@ public class PeopleInfoActivity extends BaseActivity {
                 break;
             case R.id.tv_add_friend:
                 incomePeopleVm.detailLiveData.observe(this, peopleDetailBean -> {
-                    if (peopleDetailBean.getApply_status()!=null && peopleDetailBean.getApply_status().equals("1")){
+                    if (peopleDetailBean.getApply_status() != null && peopleDetailBean.getApply_status().equals("1")) {
                         bundle.putInt(CustomConfig.FRIEND_DATA, 0);
                         bundle.putString("id", String.valueOf(peopleDetailBean.getId()));
-                        bundle.putString("name",peopleDetailBean.getUsername());
-                        bundle.putString("msg",peopleDetailBean.getCompany());
-                        bundle.putString("image",peopleDetailBean.getImage());
+                        bundle.putString("name", peopleDetailBean.getUsername());
+                        bundle.putString("msg", peopleDetailBean.getCompany());
+                        bundle.putString("image", peopleDetailBean.getImage());
                         ActivityUtils.startActivity(bundle, IMAddFriendActivity.class);
-                    }else {
+                    } else {
                         RongIM.getInstance().startPrivateChat(PeopleInfoActivity.this, String.valueOf(peopleDetailBean.getId())
                                 , peopleDetailBean.getUsername());
                     }

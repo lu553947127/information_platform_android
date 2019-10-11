@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
@@ -97,6 +99,10 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
     TextView tvProductionTip;
     @BindView(R.id.tv_add_friend)
     TextView tvAddFriend;
+    @BindView(R.id.iv_sgs)
+    AppCompatImageView ivSgs;
+    @BindView(R.id.cb_state)
+    CheckBox cbState;
 
     private PermissionVm permissionVm;
     private RxPermissions rxPermissions;
@@ -115,30 +121,30 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
         tvBarTitle.setText(getString(R.string.base_info));
         int uid = getIntent().getIntExtra(CustomConfig.UID, 0);
 
-        if (SPUtils.getInstance().getInt(SpConfig.USER_ID)!=uid){
+        if (SPUtils.getInstance().getInt(SpConfig.USER_ID) != uid) {
             ivUser.setClickable(false);
             findViewById(R.id.fl_name).setClickable(false);
-            tvName.setCompoundDrawables(null,null,null,null);
+            tvName.setCompoundDrawables(null, null, null, null);
             findViewById(R.id.fl_sex).setClickable(false);
-            tvSex.setCompoundDrawables(null,null,null,null);
+            tvSex.setCompoundDrawables(null, null, null, null);
             findViewById(R.id.fl_mobile).setClickable(false);
             findViewById(R.id.fl_mobile).setVisibility(View.GONE);
-            tvMobile.setCompoundDrawables(null,null,null,null);
+            tvMobile.setCompoundDrawables(null, null, null, null);
             findViewById(R.id.fl_id_card).setClickable(false);
             findViewById(R.id.fl_id_card).setVisibility(View.GONE);
-            tvIdCard.setCompoundDrawables(null,null,null,null);
+            tvIdCard.setCompoundDrawables(null, null, null, null);
             findViewById(R.id.fl_email).setClickable(false);
-            tvEmail.setCompoundDrawables(null,null,null,null);
+            tvEmail.setCompoundDrawables(null, null, null, null);
             findViewById(R.id.fl_company).setClickable(false);
-            tvCompany.setCompoundDrawables(null,null,null,null);
+            tvCompany.setCompoundDrawables(null, null, null, null);
             findViewById(R.id.fl_office).setClickable(false);
-            tvOffice.setCompoundDrawables(null,null,null,null);
+            tvOffice.setCompoundDrawables(null, null, null, null);
             findViewById(R.id.fl_business_area).setClickable(false);
-            tvBusinessArea.setCompoundDrawables(null,null,null,null);
+            tvBusinessArea.setCompoundDrawables(null, null, null, null);
             findViewById(R.id.fl_business_exp).setClickable(false);
-            tvBusinessExp.setCompoundDrawables(null,null,null,null);
+            tvBusinessExp.setCompoundDrawables(null, null, null, null);
             tvProductionTip.setClickable(false);
-            tvProductionTip.setCompoundDrawables(null,null,null,null);
+            tvProductionTip.setCompoundDrawables(null, null, null, null);
             findViewById(R.id.tv_production).setClickable(false);
         }
 
@@ -155,19 +161,27 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
             tvCompany.setText(userInfoBean.getCompany());
             tvOffice.setText(userInfoBean.getPosition());
             tvBusinessArea.setText(userInfoBean.getBusiness_city());
+
+            //用户认证标识状态显示
+            ivSgs.setVisibility(userInfoBean.getCardStatus() == 2 ? View.VISIBLE : View.INVISIBLE);
+            cbState.setChecked(userInfoBean.getCardStatus() == 2);
+            cbState.setText(userInfoBean.getCardStatus() == 2 ? R.string.real_name :R.string.un_real_name);
+
             if (userInfoBean.getExperience() >= 1 && userInfoBean.getExperience() <= 5)
                 tvBusinessExp.setText(getResources().getStringArray(R.array.experience_list)[userInfoBean.getExperience() - 1] + "年");
             tvProduction.setText(userInfoBean.getManaging_products());
-            if (userInfoBean.getApply_status()!=null && userInfoBean.getApply_status().equals("1")){
-                if (SPUtils.getInstance().getInt(SpConfig.USER_ID)!=uid){
+            if (userInfoBean.getApply_status() != null && userInfoBean.getApply_status().equals("1")) {
+                if (SPUtils.getInstance().getInt(SpConfig.USER_ID) != uid) {
                     tvAddFriend.setText(getString(R.string.im_add_friend));
-                }else {
+                } else {
                     tvAddFriend.setVisibility(View.GONE);
                 }
-            }else {
+            } else {
                 tvAddFriend.setText(getString(R.string.im_send_message));
             }
         });
+
+
         userInfoVm.avatarLiveData.observe(this, s -> {
             ImageLoader.load(this, new ImageConfig.Builder()
                     .url(s)
@@ -266,7 +280,7 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
 
     @OnClick({R.id.iv_bar_back, R.id.iv_user, R.id.fl_name, R.id.fl_sex, R.id.fl_mobile, R.id.fl_email, R.id.fl_id_card,
             R.id.fl_company, R.id.fl_office, R.id.fl_business_area, R.id.fl_business_exp, R.id.tv_production_tip, R.id.tv_production
-            ,R.id.tv_add_friend})
+            , R.id.tv_add_friend})
     void onClick(View view) {
         Bundle bundle = new Bundle();
         switch (view.getId()) {
@@ -325,8 +339,8 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
                 break;
             case R.id.fl_business_exp:
                 int experience = Objects.requireNonNull(userInfoVm.informationLiveData.getValue()).getExperience();
-                if (experience > 0){
-                    experience=experience-1;
+                if (experience > 0) {
+                    experience = experience - 1;
                 }
                 new BusinessExpDialog(this)
                         .setSelected(userInfoVm.experience.getValue() == null ? experience : userInfoVm.experience.getValue() - 1)
@@ -340,14 +354,14 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
                 break;
             case R.id.tv_add_friend:
                 userInfoVm.informationLiveData.observe(this, userInfoBean -> {
-                    if (userInfoBean.getApply_status()!=null && userInfoBean.getApply_status().equals("1")){
+                    if (userInfoBean.getApply_status() != null && userInfoBean.getApply_status().equals("1")) {
                         bundle.putInt(CustomConfig.FRIEND_DATA, 0);
                         bundle.putString("id", String.valueOf(userInfoBean.getId()));
-                        bundle.putString("name",userInfoBean.getUsername());
-                        bundle.putString("msg",userInfoBean.getCompany());
-                        bundle.putString("image",userInfoBean.getImage());
+                        bundle.putString("name", userInfoBean.getUsername());
+                        bundle.putString("msg", userInfoBean.getCompany());
+                        bundle.putString("image", userInfoBean.getImage());
                         ActivityUtils.startActivity(bundle, IMAddFriendActivity.class);
-                    }else {
+                    } else {
                         RongIM.getInstance().startPrivateChat(UserInfoActivity.this, String.valueOf(userInfoBean.getId())
                                 , userInfoBean.getUsername());
                     }

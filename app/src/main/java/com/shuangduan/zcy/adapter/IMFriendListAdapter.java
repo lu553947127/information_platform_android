@@ -39,6 +39,7 @@ public class IMFriendListAdapter extends BaseQuickAdapter<IMFriendListBean.DataB
     protected void convert(BaseViewHolder helper, IMFriendListBean.DataBean.ListBean item) {
         helper.setText(R.id.tv_name, item.getName());
         helper.setText(R.id.tv_type, item.getCompany());
+        helper.setVisible(R.id.iv_sgs, item.getCardStatus() == 2);
         CircleImageView ivHead = helper.getView(R.id.iv_avatar);
         ImageLoader.load(mContext, new ImageConfig.Builder()
                 .url(item.getPortraitUri())

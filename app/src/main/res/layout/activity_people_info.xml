@@ -2,6 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <include layout="@layout/toolbar"/>
@@ -16,7 +18,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <FrameLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:background="@color/colorFFF">
@@ -25,9 +27,24 @@
                     android:id="@+id/iv_user"
                     android:layout_width="73dp"
                     android:layout_height="73dp"
-                    android:layout_gravity="center"/>
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="MissingConstraints" />
 
-            </FrameLayout>
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_sgs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="64dp"
+                    android:src="@drawable/icon_sgs"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_user"
+                    app:layout_constraintRight_toRightOf="@id/iv_user"
+                    tools:ignore="MissingConstraints" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <Space
                 android:layout_width="match_parent"

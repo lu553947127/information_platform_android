@@ -1,5 +1,7 @@
 package com.shuangduan.zcy.model.bean;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 /**
@@ -116,6 +118,18 @@ public class IMFriendApplyListBean {
             private int apply_status;
             private int look_status;
             private String create_time;
+
+            //身份认证状态: 0未认证 1审核中 2已认证
+            @SerializedName("card_status")
+            private int cardStatus;
+
+            public int getCardStatus() {
+                return cardStatus;
+            }
+
+            public void setCardStatus(int cardStatus) {
+                this.cardStatus = cardStatus;
+            }
 
             public String getId() {
                 return id;

@@ -41,6 +41,7 @@ public class LocusReadAdapter extends BaseQuickAdapter<TrackBean.ListBean, BaseV
                 .setGone(R.id.iv_pic_second, item.getImage() != null && item.getImage().size() >= 2)
                 .setGone(R.id.iv_pic_third, item.getImage() != null && item.getImage().size() >= 3)
                 .setGone(R.id.tv_more, item.getImage() != null && item.getImage().size() >= 4)
+                .setVisible(R.id.iv_sgs, item.getCardStatus() == 2)
                 .addOnClickListener(R.id.iv_pic_first)
                 .addOnClickListener(R.id.iv_pic_second)
                 .addOnClickListener(R.id.iv_pic_third)
@@ -50,29 +51,29 @@ public class LocusReadAdapter extends BaseQuickAdapter<TrackBean.ListBean, BaseV
         TextView tvContent = helper.getView(R.id.tv_content);
         SpanUtils spanUtils = SpanUtils.with(tvContent);
         spanUtils.append(item.getRemarks());
-        if (!TextUtils.isEmpty(item.getName())){
+        if (!TextUtils.isEmpty(item.getName())) {
             spanUtils.append("，")
                     .append(mContext.getString(R.string.visitor))
                     .append(":")
                     .append(item.getName());
         }
-        if (!TextUtils.isEmpty(item.getTel())){
+        if (!TextUtils.isEmpty(item.getTel())) {
             spanUtils
                     .append("，")
                     .append(item.getTel());
         }
         spanUtils.create();
 
-        if (item.getImage() != null){
-            if (item.getImage().size() >= 1){
+        if (item.getImage() != null) {
+            if (item.getImage().size() >= 1) {
                 ImageView ivFirst = helper.getView(R.id.iv_pic_first);
                 ImageLoader.load(mContext, new ImageConfig.Builder().url(item.getImage().get(0).getThumbnail()).placeholder(R.drawable.default_pic).errorPic(R.drawable.default_pic).imageView(ivFirst).build());
             }
-            if (item.getImage().size() >= 2){
+            if (item.getImage().size() >= 2) {
                 ImageView ivFirst = helper.getView(R.id.iv_pic_second);
                 ImageLoader.load(mContext, new ImageConfig.Builder().url(item.getImage().get(1).getThumbnail()).placeholder(R.drawable.default_pic).errorPic(R.drawable.default_pic).imageView(ivFirst).build());
             }
-            if (item.getImage().size() >= 3){
+            if (item.getImage().size() >= 3) {
                 ImageView ivFirst = helper.getView(R.id.iv_pic_third);
                 ImageLoader.load(mContext, new ImageConfig.Builder().url(item.getImage().get(2).getThumbnail()).placeholder(R.drawable.default_pic).errorPic(R.drawable.default_pic).imageView(ivFirst).build());
             }

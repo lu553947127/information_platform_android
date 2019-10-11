@@ -1,5 +1,7 @@
 package com.shuangduan.zcy.model.bean;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 /**
@@ -104,6 +106,18 @@ public class IMFriendListBean {
             private String name;
             private String portraitUri;
             private String company;
+
+            //省份验证状态：0未认证 1审核中 2已认证
+            @SerializedName("card_status")
+            private int cardStatus;
+
+            public int getCardStatus() {
+                return cardStatus;
+            }
+
+            public void setCardStatus(int cardStatus) {
+                this.cardStatus = cardStatus;
+            }
 
             public String getUserId() {
                 return userId;

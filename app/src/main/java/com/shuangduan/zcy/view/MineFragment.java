@@ -86,6 +86,8 @@ public class MineFragment extends BaseFragment {
     AdaptationScrollView scrollView;
     @BindView(R.id.rl_toolbar)
     RelativeLayout toolbar;
+
+
     private UserInfoVm userInfoVm;
 
     public static MineFragment newInstance() {
@@ -111,6 +113,8 @@ public class MineFragment extends BaseFragment {
             tvNumOfPeople.setText(String.format(getString(R.string.format_num_of_people), userInfoBean.getCount()));
             tvBalance.setText(String.format(getString(R.string.format_balance), userInfoBean.getCoin()));
             EventBus.getDefault().post(new CoinEvent(userInfoBean.getCoin()));
+            //头像标识显示状态
+            ivSgs.setVisibility(userInfoBean.getCardStatus() == 2 ? View.VISIBLE : View.INVISIBLE);
             ImageLoader.load(mContext, new ImageConfig.Builder()
                     .url(userInfoBean.getImage_thumbnail())
                     .placeholder(R.drawable.default_head)
