@@ -39,6 +39,7 @@ import com.shuangduan.zcy.dialog.CustomDialog;
 import com.shuangduan.zcy.dialog.pop.CommonPopupWindow;
 import com.shuangduan.zcy.model.bean.MapBean;
 import com.shuangduan.zcy.utils.GpsUtils;
+import com.shuangduan.zcy.view.release.ReleaseProjectActivity;
 import com.shuangduan.zcy.view.search.SearchActivity;
 import com.shuangduan.zcy.vm.PermissionVm;
 import com.shuangduan.zcy.vm.ProjectInfoVm;
@@ -389,8 +390,9 @@ public class ProjectInfoActivity extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.iv_bar_back, R.id.iv_bar_right, R.id.fl_list})
+    @OnClick({R.id.iv_bar_back, R.id.iv_bar_right, R.id.fl_list, R.id.iv_release})
     void onClick(View view) {
+        Bundle bundle = new Bundle();
         switch (view.getId()) {
             case R.id.iv_bar_back:
                 finish();
@@ -405,6 +407,10 @@ public class ProjectInfoActivity extends BaseActivity {
                 break;
             case R.id.fl_list:
                 ActivityUtils.startActivity(ProjectInfoListActivity.class);
+                break;
+            case R.id.iv_release:
+                bundle.putInt(CustomConfig.RELEASE_TYPE, 0);
+                ActivityUtils.startActivity(bundle,ReleaseProjectActivity.class);
                 break;
         }
     }

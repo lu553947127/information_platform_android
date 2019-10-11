@@ -103,8 +103,8 @@ public class ProjectInfoListActivity extends BaseActivity {
     View over;
     @BindView(R.id.line)
     View line;
-    @BindView(R.id.iv_subscribed)
-    ImageView ivSubscribed;
+    @BindView(R.id.iv_release)
+    ImageView ivRelease;
 
     private ProjectListVm projectListVm;
     private MultiStageVm stageVm;
@@ -180,11 +180,11 @@ public class ProjectInfoListActivity extends BaseActivity {
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 if(distance < -ViewConfiguration.getTouchSlop() && !visible){
-                    AnimationUtils.showFABAnimation(ivSubscribed);
+                    AnimationUtils.showFABAnimation(ivRelease);
                     distance = 0;
                     visible = true;
                 }else if(distance > ViewConfiguration.getTouchSlop() && visible){
-                    AnimationUtils.hideFABAnimation(ivSubscribed);
+                    AnimationUtils.hideFABAnimation(ivRelease);
                     distance = 0;
                     visible = false;
                 }
@@ -214,8 +214,9 @@ public class ProjectInfoListActivity extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.iv_bar_back, R.id.iv_bar_right, R.id.ll_area, R.id.ll_stage, R.id.ll_type, R.id.ll_time, R.id.ll_subscribe, R.id.over, R.id.iv_subscribed})
+    @OnClick({R.id.iv_bar_back, R.id.iv_bar_right, R.id.ll_area, R.id.ll_stage, R.id.ll_type, R.id.ll_time, R.id.ll_subscribe, R.id.over, R.id.iv_release})
     void onClick(View view) {
+        Bundle bundle = new Bundle();
         switch (view.getId()) {
             case R.id.iv_bar_back:
                 finish();
@@ -243,8 +244,9 @@ public class ProjectInfoListActivity extends BaseActivity {
             case R.id.over:
                 popDismiss();
                 break;
-            case R.id.iv_subscribed:
-                ActivityUtils.startActivity(ReleaseProjectActivity.class);
+            case R.id.iv_release:
+                bundle.putInt(CustomConfig.RELEASE_TYPE, 0);
+                ActivityUtils.startActivity(bundle,ReleaseProjectActivity.class);
                 break;
         }
     }

@@ -145,12 +145,13 @@
         <include layout="@layout/layout_refresh_rv"/>
 
         <ImageView
-            android:id="@+id/iv_subscribed"
+            android:id="@+id/iv_release"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"
-            android:src="@drawable/shopping_cart_order"
-            android:visibility="gone"/>
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="145dp"
+            android:src="@drawable/shopping_cart_order" />
 
         <View
             android:id="@+id/over"

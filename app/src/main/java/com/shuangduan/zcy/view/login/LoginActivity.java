@@ -113,7 +113,7 @@ public class LoginActivity extends BaseActivity {
         imConnectVm.pageStateLiveData.observe(this, this::showPageState);
     }
 
-    @OnClick({R.id.tv_login_account, R.id.tv_login_verification_code, R.id.tv_send_verification_code, R.id.tv_login, R.id.tv_forget_pwd})
+    @OnClick({R.id.tv_login_account, R.id.tv_login_verification_code, R.id.tv_send_verification_code, R.id.tv_login, R.id.tv_forget_pwd,R.id.iv_wechat})
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_login_account:
@@ -130,6 +130,8 @@ public class LoginActivity extends BaseActivity {
                 break;
             case R.id.tv_forget_pwd:
                 ActivityUtils.startActivity(ForgetPwdActivity.class);
+                break;
+            case R.id.iv_wechat:
                 break;
         }
     }
