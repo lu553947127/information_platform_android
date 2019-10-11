@@ -3,6 +3,7 @@ package com.shuangduan.zcy.view.people;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatImageView;
@@ -68,6 +69,9 @@ public class PeopleInfoActivity extends BaseActivity {
     @BindView(R.id.iv_sgs)
     AppCompatImageView ivSgs;
 
+    @BindView(R.id.cb_state)
+    CheckBox cbState;
+
     private IncomePeopleVm incomePeopleVm;
 
     @Override
@@ -101,6 +105,9 @@ public class PeopleInfoActivity extends BaseActivity {
             tvIncomeAmount.setText(String.format(getString(R.string.format_amount_people), peopleDetailBean.getPrice()));
             //身份认证显示状态
             ivSgs.setVisibility(peopleDetailBean.getCardStatus() == 2 ? View.VISIBLE : View.INVISIBLE);
+            cbState.setChecked(peopleDetailBean.getCardStatus() == 2);
+            cbState.setText(peopleDetailBean.getCardStatus() == 2 ? R.string.real_name : R.string.un_real_name);
+
             ImageLoader.load(this, new ImageConfig.Builder()
                     .url(peopleDetailBean.getImage())
                     .placeholder(R.drawable.default_head)

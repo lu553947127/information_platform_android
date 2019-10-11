@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/toolbar"/>
+    <include layout="@layout/toolbar" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -50,7 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="10dp" />
 
-            <FrameLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/selector_bg_custom"
@@ -60,28 +60,46 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
+                    android:layout_centerVertical="true"
+                    android:text="@string/name"
                     android:textColor="@color/colorTv"
-                    android:textSize="14sp"
-                    android:text="@string/name"/>
+                    android:textSize="14sp" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_name"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:gravity="center_vertical"
                     android:layout_marginLeft="87dp"
+                    android:gravity="center_vertical"
                     android:singleLine="true"
                     android:textColor="@color/color_666666"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp" />
+
+                <CheckBox
+                    android:id="@+id/cb_state"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@id/tv_name"
+                    android:background="@drawable/selector_card_status_bg"
+                    android:button="@null"
+                    android:enabled="false"
+                    android:paddingLeft="7dp"
+                    android:paddingTop="2dp"
+                    android:paddingRight="7dp"
+                    android:paddingBottom="2dp"
+                    android:textColor="@drawable/selector_card_status_text_color"
+                    android:textSize="12sp" />
+
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_gravity="bottom"
-                    android:background="@color/colorDivider"/>
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/colorDivider" />
 
-            </FrameLayout>
+            </RelativeLayout>
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -94,25 +112,25 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:text="@string/phone"
                     android:textColor="@color/colorTv"
-                    android:textSize="14sp"
-                    android:text="@string/phone"/>
+                    android:textSize="14sp" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_mobile"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center_vertical"
                     android:layout_marginLeft="87dp"
+                    android:gravity="center_vertical"
                     android:singleLine="true"
                     android:textColor="@color/color_666666"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_gravity="bottom"
-                    android:background="@color/colorDivider"/>
+                    android:background="@color/colorDivider" />
 
             </FrameLayout>
 
@@ -127,28 +145,28 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:text="@string/company"
                     android:textColor="@color/colorTv"
-                    android:textSize="14sp"
-                    android:text="@string/company"/>
+                    android:textSize="14sp" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_company"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:drawablePadding="32dp"
-                    android:gravity="center_vertical"
                     android:layout_marginLeft="87dp"
                     android:background="@null"
-                    android:singleLine="true"
+                    android:drawablePadding="32dp"
                     android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:singleLine="true"
                     android:textColor="@color/color_666666"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_gravity="bottom"
-                    android:background="@color/colorDivider"/>
+                    android:background="@color/colorDivider" />
 
             </FrameLayout>
 
@@ -163,26 +181,26 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:text="@string/office"
                     android:textColor="@color/colorTv"
-                    android:textSize="14sp"
-                    android:text="@string/office"/>
+                    android:textSize="14sp" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_office"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center_vertical"
                     android:layout_marginLeft="87dp"
                     android:background="@null"
+                    android:gravity="center_vertical"
                     android:singleLine="true"
                     android:textColor="@color/color_666666"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_gravity="bottom"
-                    android:background="@color/colorDivider"/>
+                    android:background="@color/colorDivider" />
 
             </FrameLayout>
 
@@ -197,28 +215,28 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:text="@string/business_area"
                     android:textColor="@color/colorTv"
-                    android:textSize="14sp"
-                    android:text="@string/business_area"/>
+                    android:textSize="14sp" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_business_area"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:drawablePadding="32dp"
-                    android:gravity="center_vertical"
                     android:layout_marginLeft="87dp"
                     android:background="@null"
-                    android:singleLine="true"
+                    android:drawablePadding="32dp"
                     android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:singleLine="true"
                     android:textColor="@color/color_666666"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_gravity="bottom"
-                    android:background="@color/colorDivider"/>
+                    android:background="@color/colorDivider" />
 
             </FrameLayout>
 
@@ -233,57 +251,57 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:text="@string/business_exp"
                     android:textColor="@color/colorTv"
-                    android:textSize="14sp"
-                    android:text="@string/business_exp"/>
+                    android:textSize="14sp" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_business_exp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center_vertical"
                     android:layout_marginLeft="87dp"
                     android:background="@null"
+                    android:gravity="center_vertical"
                     android:textColor="@color/color_666666"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp" />
 
             </FrameLayout>
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="10dp"/>
+                android:layout_height="10dp" />
 
             <FrameLayout
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/selector_bg_custom"
                 android:paddingLeft="14dp"
-                android:paddingRight="14dp">
+                android:paddingRight="14dp"
+                android:visibility="gone">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:text="@string/locus_num"
                     android:textColor="@color/colorTv"
-                    android:textSize="14sp"
-                    android:text="@string/locus_num"/>
+                    android:textSize="14sp" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_locus_num"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center_vertical"
                     android:layout_marginLeft="87dp"
                     android:background="@null"
+                    android:gravity="center_vertical"
                     android:textColor="@color/color_666666"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_gravity="bottom"
-                    android:background="@color/colorDivider"/>
+                    android:background="@color/colorDivider" />
 
             </FrameLayout>
 
@@ -299,27 +317,27 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:text="@string/income_record"
                     android:textColor="@color/colorTv"
-                    android:textSize="14sp"
-                    android:text="@string/income_record"/>
+                    android:textSize="14sp" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_income_amount"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:drawableRight="@drawable/icon_next"
-                    android:gravity="center_vertical"
                     android:layout_marginLeft="87dp"
                     android:background="@null"
+                    android:drawableRight="@drawable/icon_next"
+                    android:gravity="center_vertical"
                     android:textColor="@color/color_666666"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp" />
 
             </FrameLayout>
 
             <TextView
                 android:id="@+id/tv_add_friend"
-                android:layout_width="335dp"
                 style="@style/BtnConfirm"
+                android:layout_width="335dp"
                 android:layout_marginTop="35dp"
                 android:text="@string/im_add_friend" />
 

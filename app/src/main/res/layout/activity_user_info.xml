@@ -90,7 +90,6 @@
                     android:paddingTop="2dp"
                     android:paddingRight="7dp"
                     android:paddingBottom="2dp"
-                    android:text="未实名"
                     android:textColor="@drawable/selector_card_status_text_color"
                     android:textSize="12sp" />
 

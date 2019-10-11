@@ -47,7 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="10dp" />
 
-            <FrameLayout
+            <RelativeLayout
                 android:id="@+id/fl_name"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -58,14 +58,14 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
+                    android:layout_centerVertical="true"
                     android:textColor="@color/colorTv"
                     android:textSize="14sp"
                     android:text="@string/name"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_name"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:layout_marginLeft="87dp"
@@ -73,13 +73,31 @@
                     android:textColor="@color/color_666666"
                     android:textSize="14sp"/>
 
+                <CheckBox
+                    android:id="@+id/cb_state"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@id/tv_name"
+                    android:background="@drawable/selector_card_status_bg"
+                    android:button="@null"
+                    android:enabled="false"
+                    android:paddingLeft="7dp"
+                    android:paddingTop="2dp"
+                    android:paddingRight="7dp"
+                    android:paddingBottom="2dp"
+                    android:textColor="@drawable/selector_card_status_text_color"
+                    android:textSize="12sp" />
+
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_gravity="bottom"
+                    android:layout_alignParentBottom="true"
                     android:background="@color/colorDivider"/>
 
-            </FrameLayout>
+            </RelativeLayout>
 
             <FrameLayout
                 android:id="@+id/fl_sex"

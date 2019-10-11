@@ -2,6 +2,7 @@ package com.shuangduan.zcy.view.projectinfo;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatImageView;
@@ -61,6 +62,9 @@ public class LocusOwnerDetailActivity extends BaseActivity {
     @BindView(R.id.iv_sgs)
     AppCompatImageView ivSgs;
 
+    @BindView(R.id.cb_state)
+    CheckBox cbState;
+
     private UserInfoVm userInfoVm;
 
     @Override
@@ -100,6 +104,8 @@ public class LocusOwnerDetailActivity extends BaseActivity {
             }
 
             ivSgs.setVisibility(userInfoBean.getCardStatus() == 2 ? View.VISIBLE : View.INVISIBLE);
+            cbState.setChecked(userInfoBean.getCardStatus() == 2);
+            cbState.setText(userInfoBean.getCardStatus() == 2 ? R.string.real_name : R.string.un_real_name);
 
             ImageLoader.load(this, new ImageConfig.Builder()
                     .url(userInfoBean.getImage_source())
