@@ -31,8 +31,6 @@ import butterknife.OnClick;
 public class DemandActivity extends BaseActivity {
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
-    @BindView(R.id.tv_bar_right)
-    AppCompatTextView tvBarRight;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.vp)
@@ -54,7 +52,6 @@ public class DemandActivity extends BaseActivity {
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.release_demand));
-        tvBarRight.setText(getString(R.string.release));
 
         Fragment[] fragments = new Fragment[]{
                 FindRelationshipFragment.newInstance(),
@@ -69,14 +66,14 @@ public class DemandActivity extends BaseActivity {
         tabLayout.setupWithViewPager(vp);
     }
 
-    @OnClick({R.id.iv_bar_back, R.id.tv_bar_right})
+    @OnClick({R.id.iv_bar_back, R.id.tv_release})
     void onClick(View v){
         Bundle bundle = new Bundle();
         switch (v.getId()){
             case R.id.iv_bar_back:
                 finish();
                 break;
-            case R.id.tv_bar_right:
+            case R.id.tv_release:
                 if (vp.getCurrentItem()==0){
                     bundle.putString("type", "0");
                     ActivityUtils.startActivity(bundle,DemandReleaseActivity.class);

@@ -739,7 +739,7 @@
                 android:layout_width="335dp"
                 style="@style/BtnConfirm"
                 android:layout_marginTop="40dp"
-                android:text="@string/release"/>
+                android:text="@string/submit"/>
 
             <Space
                 android:layout_width="match_parent"

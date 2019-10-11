@@ -60,6 +60,7 @@ public class BalanceActivity extends BaseActivity {
                 ActivityUtils.startActivity(WithdrawActivity.class);
                 break;
             case R.id.tv_bank_card://银行卡
+                if (!AuthenticationUtils.Authentication(CustomConfig.BALANCE_BANK)) return;
                 ActivityUtils.startActivity(BankCardListActivity.class);
                 break;
             case R.id.tv_withdraw_record://提现记录

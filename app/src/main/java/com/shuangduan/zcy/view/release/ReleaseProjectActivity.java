@@ -10,9 +10,9 @@ import android.text.Html;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -26,33 +26,32 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
-import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.TimeUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ReleaseContactAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
+import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.BottomSheetDialogs;
 import com.shuangduan.zcy.dialog.PhotoDialog;
-import com.shuangduan.zcy.dialog.pop.CommonPopupWindow;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.ContactBean;
 import com.shuangduan.zcy.model.event.AddressEvent;
 import com.shuangduan.zcy.model.event.ContactTypeEvent;
 import com.shuangduan.zcy.model.event.LocationEvent;
-import com.shuangduan.zcy.model.event.LocusRefreshEvent;
 import com.shuangduan.zcy.model.event.ProjectNameEvent;
 import com.shuangduan.zcy.model.event.StageEvent;
 import com.shuangduan.zcy.model.event.TypesArrayEvent;
-import com.shuangduan.zcy.model.event.TypesEvent;
 import com.shuangduan.zcy.utils.AndroidBug5497Workaround;
 import com.shuangduan.zcy.utils.KeyboardUtil;
 import com.shuangduan.zcy.utils.matisse.Glide4Engine;
 import com.shuangduan.zcy.utils.matisse.MatisseCamera;
 import com.shuangduan.zcy.view.PhotoViewActivity;
+import com.shuangduan.zcy.view.mine.AuthenticationActivity;
 import com.shuangduan.zcy.vm.PermissionVm;
 import com.shuangduan.zcy.vm.ReleaseVm;
 import com.shuangduan.zcy.vm.UploadPhotoVm;
@@ -63,8 +62,6 @@ import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
-
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.File;
@@ -168,12 +165,13 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
     EditText edtProjectCompany;
     @BindView(R.id.scrollView)
     NestedScrollView scrollView;
+    @BindView(R.id.ll_authentication)
+    LinearLayout llAuthentication;
     @BindView(R.id.marquee)
     TextView tvMarquee;
     private PermissionVm permissionVm;
     private RxPermissions rxPermissions;
     private ReleaseVm releaseVm;
-    private CommonPopupWindow popupWindow;
     private ReleaseContactAdapter releaseContactAdapter;
     private UploadPhotoVm uploadPhotoVm;
     private BottomSheetDialogs btn_dialog;
@@ -195,7 +193,6 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
         tvBarTitle.setText(getString(R.string.release_msg));
 
         initPhoto();
-
         photoSet();
 
         releaseVm = ViewModelProviders.of(this).get(ReleaseVm.class);
@@ -295,10 +292,11 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
 
         KeyboardUtil.RemoveDecimalPoints(edtProjectAcreage);
         KeyboardUtil.RemoveDecimalPoints(edtProjectPrice);
-        String str="已通过实名认证发布信息审核时间为<font color=\"#6a5ff8\">"+"2小时内"+"</font>，" +
-                "未实名认证审核时间则为<font color=\"#6a5ff8\">"+"24小时内"+"</font>，建议您先实名认证再发布，审核会更快哦~";
-        tvMarquee.setText(Html.fromHtml(str));
-        tvMarquee.setSelected(true);
+        if (Objects.requireNonNull(getIntent().getStringExtra("type")).equals("0")){
+            projectLocus();
+        }else if (Objects.requireNonNull(getIntent().getStringExtra("type")).equals("1")){
+            clickLocus();
+        }
     }
 
     private void photoSet() {
@@ -417,8 +415,9 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
         permissionVm.getPermissionAlbum(rxPermissions);
     }
 
-    @OnClick({R.id.iv_bar_back, R.id.tv_release, R.id.tv_project_type, R.id.tv_project_address, R.id.tv_project_stage, R.id.tv_project_types, R.id.tv_time_start, R.id.tv_time_end, R.id.tv_add, R.id.tv_project_name})
+    @OnClick({R.id.iv_bar_back, R.id.tv_release, R.id.tv_project_type, R.id.tv_project_address, R.id.tv_project_stage, R.id.tv_project_types, R.id.tv_time_start, R.id.tv_time_end, R.id.tv_add, R.id.tv_project_name,R.id.tv_authentication})
     void onClick(View view) {
+        Bundle bundle = new Bundle();
         switch (view.getId()) {
             case R.id.iv_bar_back:
                 finish();
@@ -426,54 +425,8 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
             case R.id.tv_project_type:
                 getBottomWindow();
                 btn_dialog.show();
-//                if (popupWindow == null){
-//                    popupWindow = new CommonPopupWindow.Builder(this)
-//                            .setView(R.layout.dialog_release_type)
-//                            .setOutsideTouchable(true)
-//                            .setBackGroundLevel(0.8f)
-//                            .setWidthAndHeight(ConvertUtils.dp2px(260), ViewGroup.LayoutParams.WRAP_CONTENT)
-//                            .setViewOnclickListener((popView, layoutResId) -> {
-//                                popView.findViewById(R.id.tv_project).setOnClickListener(v -> {
-//                                    releaseVm.type = 1;
-//                                    flProjectNameEdit.setVisibility(View.VISIBLE);
-//                                    tvProjectAddress.setClickable(true);
-//                                    flProjectStage.setVisibility(View.VISIBLE);
-//                                    flProjectTypes.setVisibility(View.VISIBLE);
-//                                    rlProjectCycle.setVisibility(View.VISIBLE);
-//                                    flProjectAcreage.setVisibility(View.VISIBLE);
-//                                    flProjectPrice.setVisibility(View.VISIBLE);
-//                                    flProjectDetail.setVisibility(View.VISIBLE);
-//                                    flProjectMaterial.setVisibility(View.VISIBLE);
-//                                    rvContact.setVisibility(View.VISIBLE);
-//                                    flAdd.setVisibility(View.VISIBLE);
-//                                    flProjectCompany.setVisibility(View.VISIBLE);
-//                                    flProjectAddress.setVisibility(View.VISIBLE);
-//                                    flProjectNameSelect.setVisibility(View.GONE);
-//                                    flProjectDes.setVisibility(View.GONE);
-//                                    flVisitor.setVisibility(View.GONE);
-//                                    flMobile.setVisibility(View.GONE);
-//                                    flUpdateTime.setVisibility(View.GONE);
-//                                    rlPhoto.setVisibility(View.GONE);
-//                                    picContentView.setVisibility(View.GONE);
-//                                    tvProjectType.setText(getString(R.string.project_project));
-//                                    popupWindow.dismiss();
-//                                });
-//                                popView.findViewById(R.id.tv_locus).setOnClickListener(v -> {
-//                                    clickLocus();
-//                                    popupWindow.dismiss();
-//                                });
-//                            })
-//                            .create();
-//                }
-//                if (!popupWindow.isShowing()){
-//                    WindowManager.LayoutParams attributes = getWindow().getAttributes();
-//                    attributes.alpha = 0.8f;
-//                    getWindow().setAttributes(attributes);
-//                    popupWindow.showAsDropDown(tvProjectType);
-//                }
                 break;
             case R.id.tv_project_address:
-                Bundle bundle = new Bundle();
                 bundle.putInt(CustomConfig.PROJECT_ADDRESS, 1);
                 ActivityUtils.startActivity(bundle, ReleaseAreaSelectActivity.class);
                 break;
@@ -502,9 +455,41 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
                     releaseVm.releaseLocus(edtProjectDes.getText().toString(), edtVisitor.getText().toString(), edtMobile.getText().toString());
                 }
                 break;
+            case R.id.tv_authentication:
+                bundle.putString(CustomConfig.UPLOAD_TYPE, CustomConfig.uploadTypeIdCard);
+                bundle.putString(CustomConfig.AUTHENTICATION_TYPE, CustomConfig.ID_USER_INFO);
+                ActivityUtils.startActivity(bundle, AuthenticationActivity.class);
+                break;
         }
     }
 
+    //工程信息显示
+    private void projectLocus() {
+        releaseVm.type = 1;
+        flProjectNameEdit.setVisibility(View.VISIBLE);
+        tvProjectAddress.setClickable(true);
+        flProjectStage.setVisibility(View.VISIBLE);
+        flProjectTypes.setVisibility(View.VISIBLE);
+        rlProjectCycle.setVisibility(View.VISIBLE);
+        flProjectAcreage.setVisibility(View.VISIBLE);
+        flProjectPrice.setVisibility(View.VISIBLE);
+        flProjectDetail.setVisibility(View.VISIBLE);
+        flProjectMaterial.setVisibility(View.VISIBLE);
+        rvContact.setVisibility(View.VISIBLE);
+        flAdd.setVisibility(View.VISIBLE);
+        flProjectCompany.setVisibility(View.VISIBLE);
+        flProjectAddress.setVisibility(View.VISIBLE);
+        flProjectNameSelect.setVisibility(View.GONE);
+        flProjectDes.setVisibility(View.GONE);
+        flVisitor.setVisibility(View.GONE);
+        flMobile.setVisibility(View.GONE);
+        flUpdateTime.setVisibility(View.GONE);
+        rlPhoto.setVisibility(View.GONE);
+        picContentView.setVisibility(View.GONE);
+        tvProjectType.setText(getString(R.string.project_project));
+    }
+
+    //动态信息显示
     private void clickLocus() {
         releaseVm.type = 2;
         flProjectNameEdit.setVisibility(View.GONE);
@@ -656,28 +641,7 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
         TextView tv_project=dialog_view.findViewById(R.id.tv_project);
         TextView tv_locus=dialog_view.findViewById(R.id.tv_locus);
         tv_project.setOnClickListener(view -> {
-            releaseVm.type = 1;
-            flProjectNameEdit.setVisibility(View.VISIBLE);
-            tvProjectAddress.setClickable(true);
-            flProjectStage.setVisibility(View.VISIBLE);
-            flProjectTypes.setVisibility(View.VISIBLE);
-            rlProjectCycle.setVisibility(View.VISIBLE);
-            flProjectAcreage.setVisibility(View.VISIBLE);
-            flProjectPrice.setVisibility(View.VISIBLE);
-            flProjectDetail.setVisibility(View.VISIBLE);
-            flProjectMaterial.setVisibility(View.VISIBLE);
-            rvContact.setVisibility(View.VISIBLE);
-            flAdd.setVisibility(View.VISIBLE);
-            flProjectCompany.setVisibility(View.VISIBLE);
-            flProjectAddress.setVisibility(View.VISIBLE);
-            flProjectNameSelect.setVisibility(View.GONE);
-            flProjectDes.setVisibility(View.GONE);
-            flVisitor.setVisibility(View.GONE);
-            flMobile.setVisibility(View.GONE);
-            flUpdateTime.setVisibility(View.GONE);
-            rlPhoto.setVisibility(View.GONE);
-            picContentView.setVisibility(View.GONE);
-            tvProjectType.setText(getString(R.string.project_project));
+            projectLocus();
             btn_dialog.cancel();
         });
         tv_locus.setOnClickListener(view -> {
@@ -686,4 +650,22 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
         });
     }
 
+    //身份认证滚动文字显示
+    private void getAuthenticationData() {
+        if (SPUtils.getInstance().getInt(SpConfig.IS_VERIFIED)!=2) {
+            llAuthentication.setVisibility(View.VISIBLE);
+            String str="已通过实名认证发布信息审核时间为<font color=\"#6a5ff8\">"+"2小时内"+"</font>，" +
+                    "未实名认证审核时间则为<font color=\"#6a5ff8\">"+"24小时内"+"</font>，建议您先实名认证再发布，审核会更快哦~";
+            tvMarquee.setText(Html.fromHtml(str));
+            tvMarquee.setSelected(true);
+        }else {
+            llAuthentication.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getAuthenticationData();
+    }
 }

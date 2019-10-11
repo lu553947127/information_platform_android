@@ -2,12 +2,14 @@ package com.shuangduan.zcy.view.demand;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
@@ -16,15 +18,18 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
+import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BottomSheetDialogs;
 import com.shuangduan.zcy.dialog.UnitDialog;
 import com.shuangduan.zcy.dialog.pop.CommonPopupWindow;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.utils.KeyboardUtil;
+import com.shuangduan.zcy.view.mine.AuthenticationActivity;
 import com.shuangduan.zcy.vm.DemandReleaseVm;
 import com.shuangduan.zcy.weight.datepicker.CustomDatePicker;
 import java.text.DateFormat;
@@ -120,6 +125,10 @@ public class DemandReleaseActivity extends BaseActivity {
     EditText edtDes;
     @BindView(R.id.fl_des)
     FrameLayout flDes;
+    @BindView(R.id.ll_authentication)
+    LinearLayout llAuthentication;
+    @BindView(R.id.marquee)
+    TextView tvMarquee;
     private DemandReleaseVm demandReleaseVm;
     private BottomSheetDialogs btn_dialog;
     int demand_num=0;
@@ -206,9 +215,9 @@ public class DemandReleaseActivity extends BaseActivity {
         }
     }
 
-    private CommonPopupWindow popupWindow;
-    @OnClick({R.id.iv_bar_back, R.id.tv_release_type, R.id.cb_lease, R.id.cb_sell, R.id.tv_time_end, R.id.tv_release,R.id.tv_demand_num,R.id.tv_supply_num})
+    @OnClick({R.id.iv_bar_back, R.id.tv_release_type, R.id.cb_lease, R.id.cb_sell, R.id.tv_time_end, R.id.tv_release,R.id.tv_demand_num,R.id.tv_supply_num,R.id.tv_authentication})
     void onClick(View view) {
+        Bundle bundle = new Bundle();
         switch (view.getId()) {
             case R.id.iv_bar_back:
                 finish();
@@ -216,79 +225,6 @@ public class DemandReleaseActivity extends BaseActivity {
             case R.id.tv_release_type:
                 getBottomWindow();
                 btn_dialog.show();
-//                if (popupWindow == null){
-//                    popupWindow = new CommonPopupWindow.Builder(this)
-//                            .setView(R.layout.dialog_release_demand)
-//                            .setOutsideTouchable(true)
-//                            .setBackGroundLevel(0.8f)
-//                            .setWidthAndHeight(ConvertUtils.dp2px(260), ViewGroup.LayoutParams.WRAP_CONTENT)
-//                            .setViewOnclickListener((popView, layoutResId) -> {
-//                                popView.findViewById(R.id.tv_find_relationship).setOnClickListener(l -> {
-//                                    tvReleaseType.setText(getString(R.string.find_relationship));
-//                                    demandReleaseVm.releaseType = DemandReleaseVm.RELEASE_TYPE_RELATIONSHIP;
-//                                    flTitle.setVisibility(View.VISIBLE);
-//                                    flCommission.setVisibility(View.VISIBLE);
-//                                    flDes.setVisibility(View.VISIBLE);
-//                                    flMaterialName.setVisibility(View.GONE);
-//                                    flDemandNum.setVisibility(View.GONE);
-//                                    flDemandProject.setVisibility(View.GONE);
-//                                    flProjectAddress.setVisibility(View.GONE);
-//                                    flPriceAccept.setVisibility(View.GONE);
-//                                    flContactsInfo.setVisibility(View.GONE);
-//                                    flOwner.setVisibility(View.GONE);
-//                                    flSupplyNum.setVisibility(View.GONE);
-//                                    flSupplyStyle.setVisibility(View.GONE);
-//                                    flSupplyAddress.setVisibility(View.GONE);
-//                                    flSupplyPrice.setVisibility(View.GONE);
-//                                    popupWindow.dismiss();
-//                                });
-//                                popView.findViewById(R.id.tv_find_substance).setOnClickListener(l -> {
-//                                    tvReleaseType.setText(getString(R.string.find_substance));
-//                                    demandReleaseVm.releaseType = DemandReleaseVm.RELEASE_TYPE_SUBSTANCE;
-//                                    flTitle.setVisibility(View.GONE);
-//                                    flCommission.setVisibility(View.GONE);
-//                                    flDes.setVisibility(View.GONE);
-//                                    flMaterialName.setVisibility(View.VISIBLE);
-//                                    flDemandNum.setVisibility(View.VISIBLE);
-//                                    flDemandProject.setVisibility(View.VISIBLE);
-//                                    flProjectAddress.setVisibility(View.VISIBLE);
-//                                    flPriceAccept.setVisibility(View.VISIBLE);
-//                                    flContactsInfo.setVisibility(View.VISIBLE);
-//                                    flOwner.setVisibility(View.VISIBLE);
-//                                    flSupplyNum.setVisibility(View.GONE);
-//                                    flSupplyStyle.setVisibility(View.GONE);
-//                                    flSupplyAddress.setVisibility(View.GONE);
-//                                    flSupplyPrice.setVisibility(View.GONE);
-//                                    popupWindow.dismiss();
-//                                });
-//                                popView.findViewById(R.id.tv_find_buyer).setOnClickListener(l -> {
-//                                    tvReleaseType.setText(getString(R.string.find_buyer));
-//                                    demandReleaseVm.releaseType = DemandReleaseVm.RELEASE_TYPE_BUYER;
-//                                    flTitle.setVisibility(View.GONE);
-//                                    flCommission.setVisibility(View.GONE);
-//                                    flDes.setVisibility(View.GONE);
-//                                    flMaterialName.setVisibility(View.VISIBLE);
-//                                    flDemandNum.setVisibility(View.GONE);
-//                                    flDemandProject.setVisibility(View.GONE);
-//                                    flProjectAddress.setVisibility(View.GONE);
-//                                    flPriceAccept.setVisibility(View.GONE);
-//                                    flContactsInfo.setVisibility(View.VISIBLE);
-//                                    flOwner.setVisibility(View.VISIBLE);
-//                                    flSupplyNum.setVisibility(View.VISIBLE);
-//                                    flSupplyStyle.setVisibility(View.VISIBLE);
-//                                    flSupplyAddress.setVisibility(View.VISIBLE);
-//                                    flSupplyPrice.setVisibility(View.VISIBLE);
-//                                    popupWindow.dismiss();
-//                                });
-//                            })
-//                            .create();
-//                }
-//                if (!popupWindow.isShowing()){
-//                    WindowManager.LayoutParams attributes = getWindow().getAttributes();
-//                    attributes.alpha = 0.8f;
-//                    getWindow().setAttributes(attributes);
-//                    popupWindow.showAsDropDown(tvReleaseType);
-//                }
                 break;
             case R.id.cb_lease:
                 demandReleaseVm.way = 2;
@@ -399,6 +335,11 @@ public class DemandReleaseActivity extends BaseActivity {
                     supply_num=position+1;
                     tvSupplyNum.setText(item);
                 }).showDialog();
+                break;
+            case R.id.tv_authentication:
+                bundle.putString(CustomConfig.UPLOAD_TYPE, CustomConfig.uploadTypeIdCard);
+                bundle.putString(CustomConfig.AUTHENTICATION_TYPE, CustomConfig.ID_USER_INFO);
+                ActivityUtils.startActivity(bundle, AuthenticationActivity.class);
                 break;
         }
     }
@@ -516,5 +457,24 @@ public class DemandReleaseActivity extends BaseActivity {
             flSupplyPrice.setVisibility(View.VISIBLE);
             btn_dialog.cancel();
         });
+    }
+
+    //身份认证滚动文字显示
+    private void getAuthenticationData() {
+        if (SPUtils.getInstance().getInt(SpConfig.IS_VERIFIED)!=2) {
+            llAuthentication.setVisibility(View.VISIBLE);
+            String str="已通过实名认证发布信息审核时间为<font color=\"#6a5ff8\">"+"2小时内"+"</font>，" +
+                    "未实名认证审核时间则为<font color=\"#6a5ff8\">"+"24小时内"+"</font>，建议您先实名认证再发布，审核会更快哦~";
+            tvMarquee.setText(Html.fromHtml(str));
+            tvMarquee.setSelected(true);
+        }else {
+            llAuthentication.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getAuthenticationData();
     }
 }

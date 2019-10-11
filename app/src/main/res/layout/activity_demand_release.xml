@@ -5,6 +5,8 @@
 
     <include layout="@layout/toolbar"/>
 
+    <include layout="@layout/layout_authentication"/>
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -684,7 +686,7 @@
         android:id="@+id/tv_release"
         android:layout_width="335dp"
         style="@style/BtnConfirm"
-        android:text="@string/release"/>
+        android:text="@string/submit"/>
 
     <Space
         android:layout_width="match_parent"
