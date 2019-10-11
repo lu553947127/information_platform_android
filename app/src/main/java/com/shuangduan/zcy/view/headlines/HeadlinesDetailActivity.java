@@ -82,6 +82,7 @@ public class HeadlinesDetailActivity extends BaseActivity {
         tvBarTitle.setText(getString(R.string.head_detail));
         ivBarRight.setImageResource(R.drawable.icon_share);
         tvBarRight.setVisibility(View.GONE);
+        ivBarRight.setVisibility(View.GONE);
 
         headlinesVm = ViewModelProviders.of(this).get(HeadlinesVm.class);
         headlinesVm.id = id;
@@ -124,7 +125,7 @@ public class HeadlinesDetailActivity extends BaseActivity {
         Tencent.onActivityResultData(requestCode, resultCode, data, shareManage.getQQListener());
     }
 
-    @OnClick({R.id.iv_bar_back,R.id.iv_bar_right})
+    @OnClick({R.id.iv_bar_back, R.id.iv_bar_right})
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_bar_back:
