@@ -35,6 +35,7 @@ import com.shuangduan.zcy.adapter.SelectorSecondAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.pop.CommonPopupWindow;
+import com.shuangduan.zcy.factory.EmptyViewFactory;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.ProjectFilterBean;
 import com.shuangduan.zcy.model.bean.ProjectInfoBean;
@@ -66,7 +67,7 @@ import butterknife.OnClick;
  * @chang time
  * @class describe
  */
-public class ProjectInfoListActivity extends BaseActivity {
+public class ProjectInfoListActivity extends BaseActivity implements EmptyViewFactory.EmptyViewCallBack {
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
     @BindView(R.id.iv_bar_right)
@@ -126,6 +127,7 @@ public class ProjectInfoListActivity extends BaseActivity {
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
+        View emptyView = emptyViewFactory.createEmptyView(R.drawable.icon_empty_project, R.string.empty_project_info, R.string.see_all, this);
         tvBarTitle.setText(getResources().getStringArray(R.array.classify)[0]);
         ivBarRight.setImageResource(R.drawable.icon_search);
         tvBarRight.setVisibility(View.GONE);
@@ -165,7 +167,7 @@ public class ProjectInfoListActivity extends BaseActivity {
         projectListVm.projectLiveData.observe(this, projectInfoBeans -> {
             if (projectInfoBeans.getPage() == 1) {
                 projectInfoAdapter.setNewData(projectInfoBeans.getList());
-                projectInfoAdapter.setEmptyView(R.layout.layout_empty, rv);
+                projectInfoAdapter.setEmptyView(emptyView);
             } else {
                 projectInfoAdapter.addData(projectInfoBeans.getList());
             }
@@ -176,15 +178,16 @@ public class ProjectInfoListActivity extends BaseActivity {
         rv.setOnScrollListener(new RecyclerView.OnScrollListener() {
             int distance;
             boolean visible = true;
+
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                if(distance < -ViewConfiguration.getTouchSlop() && !visible){
+                if (distance < -ViewConfiguration.getTouchSlop() && !visible) {
                     AnimationUtils.showFABAnimation(ivRelease);
                     ivRelease.setVisibility(View.VISIBLE);
                     distance = 0;
                     visible = true;
-                }else if(distance > ViewConfiguration.getTouchSlop() && visible){
+                } else if (distance > ViewConfiguration.getTouchSlop() && visible) {
                     AnimationUtils.hideFABAnimation(ivRelease);
                     ivRelease.setVisibility(View.GONE);
                     distance = 0;
@@ -248,7 +251,7 @@ public class ProjectInfoListActivity extends BaseActivity {
                 break;
             case R.id.iv_release:
                 bundle.putInt(CustomConfig.RELEASE_TYPE, 0);
-                ActivityUtils.startActivity(bundle,ReleaseProjectActivity.class);
+                ActivityUtils.startActivity(bundle, ReleaseProjectActivity.class);
                 break;
         }
     }
@@ -702,4 +705,15 @@ public class ProjectInfoListActivity extends BaseActivity {
         customDatePicker.show(TimeUtils.getNowString());
     }
 
+    @Override
+    public void onEmptyClick() {
+        projectListVm.province = null;
+        projectListVm.city = null;
+        projectListVm.phases = null;
+        projectListVm.type = null;
+        projectListVm.stime = null;
+        projectListVm.etime = null;
+        projectListVm.warrant_status = null;
+        projectListVm.projectList();
+    }
 }
