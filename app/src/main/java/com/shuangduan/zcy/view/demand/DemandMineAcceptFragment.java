@@ -1,6 +1,7 @@
 package com.shuangduan.zcy.view.demand;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProviders;
@@ -15,8 +16,11 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.DemandAcceptAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
+import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.base.BaseLazyFragment;
+import com.shuangduan.zcy.factory.EmptyViewFactory;
 import com.shuangduan.zcy.model.bean.DemandRelationshipBean;
+import com.shuangduan.zcy.view.release.ReleaseListActivity;
 import com.shuangduan.zcy.vm.DemandRelationshipVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
@@ -32,7 +36,7 @@ import butterknife.BindView;
  * @chang time
  * @class describe
  */
-public class DemandMineAcceptFragment extends BaseLazyFragment {
+public class DemandMineAcceptFragment extends BaseLazyFragment implements EmptyViewFactory.EmptyViewCallBack {
     @BindView(R.id.rv)
     RecyclerView rv;
     @BindView(R.id.refresh)
@@ -60,6 +64,9 @@ public class DemandMineAcceptFragment extends BaseLazyFragment {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
+
+        View emptyView = createEmptyView(R.drawable.icon_empty_project, R.string.empty_mine_order_info, R.string.pull_strings, this);
+
         rv.setLayoutManager(new LinearLayoutManager(mContext));
         rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
         DemandAcceptAdapter acceptAdapter = new DemandAcceptAdapter(R.layout.item_demand_relationship_release, null);
@@ -73,12 +80,12 @@ public class DemandMineAcceptFragment extends BaseLazyFragment {
         });
 
         demandRelationshipVm = ViewModelProviders.of(mActivity).get(DemandRelationshipVm.class);
-        demandRelationshipVm.acceptLiveData.observe(this, demandRelationshipBean-> {
+        demandRelationshipVm.acceptLiveData.observe(this, demandRelationshipBean -> {
             isInited = true;
             if (demandRelationshipBean.getPage() == 1) {
                 acceptAdapter.setNewData(demandRelationshipBean.getList());
-                acceptAdapter.setEmptyView(R.layout.layout_empty, rv);
-            }else {
+                acceptAdapter.setEmptyView(emptyView);
+            } else {
                 acceptAdapter.addData(demandRelationshipBean.getList());
             }
             setNoMore(demandRelationshipBean.getPage(), demandRelationshipBean.getCount());
@@ -102,23 +109,28 @@ public class DemandMineAcceptFragment extends BaseLazyFragment {
         demandRelationshipVm.getAcceptRelationship();
     }
 
-    private void setNoMore(int page, int count){
-        if (page == 1){
-            if (page * 10 >= count){
-                if (refresh.getState() == RefreshState.None){
+    private void setNoMore(int page, int count) {
+        if (page == 1) {
+            if (page * 10 >= count) {
+                if (refresh.getState() == RefreshState.None) {
                     refresh.setNoMoreData(true);
-                }else {
+                } else {
                     refresh.finishRefreshWithNoMoreData();
                 }
-            }else {
+            } else {
                 refresh.finishRefresh();
             }
-        }else {
-            if (page * 10 >= count){
+        } else {
+            if (page * 10 >= count) {
                 refresh.finishLoadMoreWithNoMoreData();
-            }else {
+            } else {
                 refresh.finishLoadMore();
             }
         }
+    }
+
+    @Override
+    public void onEmptyClick() {
+        ActivityUtils.startActivity(DemandActivity.class);
     }
 }

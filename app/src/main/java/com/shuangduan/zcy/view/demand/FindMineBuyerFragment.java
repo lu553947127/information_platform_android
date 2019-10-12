@@ -1,6 +1,7 @@
 package com.shuangduan.zcy.view.demand;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProviders;
@@ -15,7 +16,9 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.DemandMineBuyerAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
+import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.base.BaseLazyFragment;
+import com.shuangduan.zcy.factory.EmptyViewFactory;
 import com.shuangduan.zcy.model.bean.DemandBuyerBean;
 import com.shuangduan.zcy.vm.DemandBuyerVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
@@ -32,7 +35,7 @@ import butterknife.BindView;
  * @chang time
  * @class describe
  */
-public class FindMineBuyerFragment extends BaseLazyFragment {
+public class FindMineBuyerFragment extends BaseLazyFragment implements EmptyViewFactory.EmptyViewCallBack {
     @BindView(R.id.rv)
     RecyclerView rv;
     @BindView(R.id.refresh)
@@ -60,6 +63,7 @@ public class FindMineBuyerFragment extends BaseLazyFragment {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
+        View emptyView = createEmptyView(R.drawable.icon_empty_project, R.string.empty_mine_buyer_info, R.string.go_release, this);
         rv.setLayoutManager(new LinearLayoutManager(mContext));
         rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
         DemandMineBuyerAdapter buyerAdapter = new DemandMineBuyerAdapter(R.layout.item_demand_buyer, null);
@@ -78,8 +82,8 @@ public class FindMineBuyerFragment extends BaseLazyFragment {
             isInited = true;
             if (demandBuyerBean.getPage() == 1) {
                 buyerAdapter.setNewData(demandBuyerBean.getList());
-                buyerAdapter.setEmptyView(R.layout.layout_empty, rv);
-            }else {
+                buyerAdapter.setEmptyView(emptyView);
+            } else {
                 buyerAdapter.addData(demandBuyerBean.getList());
             }
             setNoMore(demandBuyerBean.getPage(), demandBuyerBean.getCount());
@@ -103,23 +107,30 @@ public class FindMineBuyerFragment extends BaseLazyFragment {
         demandBuyerVm.getBuyer();
     }
 
-    private void setNoMore(int page, int count){
-        if (page == 1){
-            if (page * 10 >= count){
-                if (refresh.getState() == RefreshState.None){
+    private void setNoMore(int page, int count) {
+        if (page == 1) {
+            if (page * 10 >= count) {
+                if (refresh.getState() == RefreshState.None) {
                     refresh.setNoMoreData(true);
-                }else {
+                } else {
                     refresh.finishRefreshWithNoMoreData();
                 }
-            }else {
+            } else {
                 refresh.finishRefresh();
             }
-        }else {
-            if (page * 10 >= count){
+        } else {
+            if (page * 10 >= count) {
                 refresh.finishLoadMoreWithNoMoreData();
-            }else {
+            } else {
                 refresh.finishLoadMore();
             }
         }
+    }
+
+    @Override
+    public void onEmptyClick() {
+        Bundle bundle = new Bundle();
+        bundle.putString("type", "2");
+        ActivityUtils.startActivity(bundle, DemandReleaseActivity.class);
     }
 }

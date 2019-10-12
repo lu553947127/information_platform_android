@@ -17,7 +17,9 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.FindRelationshipAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
+import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.base.BaseLazyFragment;
+import com.shuangduan.zcy.factory.EmptyViewFactory;
 import com.shuangduan.zcy.model.bean.DemandRelationshipBean;
 import com.shuangduan.zcy.vm.DemandRelationshipVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
@@ -62,6 +64,9 @@ public class FindRelationshipFragment extends BaseLazyFragment {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
+
+        View emptyView = createEmptyView(R.drawable.icon_empty_project, R.string.empty_pull_strings_info, 0, null);
+
         rv.setLayoutManager(new LinearLayoutManager(mContext));
         rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
         FindRelationshipAdapter relationshipAdapter = new FindRelationshipAdapter(R.layout.item_demand_relationship, null);
@@ -79,8 +84,8 @@ public class FindRelationshipFragment extends BaseLazyFragment {
             isInited = true;
             if (relationshipBean.getPage() == 1) {
                 relationshipAdapter.setNewData(relationshipBean.getList());
-                relationshipAdapter.setEmptyView(R.layout.layout_empty, rv);
-            }else {
+                relationshipAdapter.setEmptyView(emptyView);
+            } else {
                 relationshipAdapter.addData(relationshipBean.getList());
             }
             setNoMore(relationshipBean.getPage(), relationshipBean.getCount());
@@ -104,23 +109,25 @@ public class FindRelationshipFragment extends BaseLazyFragment {
         demandRelationshipVm.getRelationship();
     }
 
-    private void setNoMore(int page, int count){
-        if (page == 1){
-            if (page * 10 >= count){
-                if (refresh.getState() == RefreshState.None){
+    private void setNoMore(int page, int count) {
+        if (page == 1) {
+            if (page * 10 >= count) {
+                if (refresh.getState() == RefreshState.None) {
                     refresh.setNoMoreData(true);
-                }else {
+                } else {
                     refresh.finishRefreshWithNoMoreData();
                 }
-            }else {
+            } else {
                 refresh.finishRefresh();
             }
-        }else {
-            if (page * 10 >= count){
+        } else {
+            if (page * 10 >= count) {
                 refresh.finishLoadMoreWithNoMoreData();
-            }else {
+            } else {
                 refresh.finishLoadMore();
             }
         }
     }
+
+
 }

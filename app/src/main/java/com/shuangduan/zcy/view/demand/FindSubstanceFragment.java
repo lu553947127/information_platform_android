@@ -1,6 +1,7 @@
 package com.shuangduan.zcy.view.demand;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProviders;
@@ -60,6 +61,9 @@ public class FindSubstanceFragment extends BaseLazyFragment {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
+        View emptyView = createEmptyView(R.drawable.icon_empty_project, R.string.empty_substance_info, 0, null);
+
+
         rv.setLayoutManager(new LinearLayoutManager(mContext));
         rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
         FindSubstanceAdapter substanceAdapter = new FindSubstanceAdapter(R.layout.item_demand_substance, null);
@@ -77,7 +81,7 @@ public class FindSubstanceFragment extends BaseLazyFragment {
             isInited = true;
             if (demandSubstanceBean.getPage() == 1) {
                 substanceAdapter.setNewData(demandSubstanceBean.getList());
-                substanceAdapter.setEmptyView(R.layout.layout_empty, rv);
+                substanceAdapter.setEmptyView(emptyView);
             }else {
                 substanceAdapter.addData(demandSubstanceBean.getList());
             }

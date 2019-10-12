@@ -114,6 +114,67 @@ public class MultiAreaVm extends BaseViewModel {
         }
     }
 
+
+    /**
+     * 设置省份默认数据
+     */
+    public void setProjectProvinceInit() {
+        if (!provinceInited) {
+            provinceInited = true;
+            List<ProvinceBean> provinceList = provinceLiveData.getValue();
+            if (provinceList == null) return;
+
+            for (ProvinceBean bean : provinceList) {
+                //默认全选
+                bean.setIsSelect(0);
+            }
+            ProvinceBean provinceBean = new ProvinceBean();
+            provinceBean.setName("全国");
+            provinceBean.setId(0);
+            provinceBean.setIsSelect(1);
+            provinceBean.setIsCheck(1);
+
+            List<CityBean> cityList = new ArrayList<>();
+            CityBean childBean = new CityBean();
+            childBean.setIsSelect(1);
+            childBean.setId(0);
+            childBean.setName("全国");
+            cityList.add(childBean);
+            provinceBean.setCityList(cityList);
+            provinceList.add(0, provinceBean);
+
+            provinceLiveData.postValue(provinceList);
+            cityLiveData.postValue(provinceList.get(0).getCityList());
+        }
+    }
+
+    /**
+     * 设置默认的城市状态
+     */
+    public void setProjectCityInit() {
+        List<CityBean> cityList = cityLiveData.getValue();
+        if (cityList != null && cityList.size() > 0) {
+            //全国
+            if (cityList.get(0).getName().equals("全国")) {
+                provinceLiveData.getValue().get(currentPosition).setCityList(cityList);
+                return;
+            }
+            //没有添加全部选项的添加  省
+            if (!cityList.get(0).getName().equals("全部")) {
+
+                CityBean cityBean = new CityBean();
+                cityBean.setName("全部");
+                cityBean.setId(0);
+                cityBean.setIsSelect(0);
+                cityList.add(0, cityBean);
+                cityLiveData.postValue(cityList);
+            }
+            //二级数据存储
+            provinceLiveData.getValue().get(currentPosition).setCityList(cityList);
+        }
+    }
+
+
     /**
      * 点击省分类
      */
@@ -165,42 +226,17 @@ public class MultiAreaVm extends BaseViewModel {
      */
     public void clickRadioSecond(int i) {
 
-
         List<CityBean> data = cityLiveData.getValue();
         List<ProvinceBean> provinceList = provinceLiveData.getValue();
         if (i == 0) {
             LogUtils.i("***********", currentPosition, data.get(0).getIsSelect());
             if (currentPosition == 0) {//一级全部的全部
-                if (data.get(0).getIsSelect() == 1) {//更改为所有全部非选中
-                    selectAll = false;
-                    if (provinceList != null) {
-                        for (int j = 0; j < provinceList.size(); j++) {
-                            ProvinceBean provinceData = provinceList.get(j);
-                            provinceData.setIsSelect(0);
-                            List<CityBean> cityList = provinceData.getCityList();
-                            if (cityList != null) {
-                                for (int k = 0; k < cityList.size(); k++) {
-                                    cityList.get(k).setIsSelect(0);
-                                }
-                            }
-                        }
-                    }
+                if (data.get(currentPosition).getIsSelect() == 1) {//更改为所有全部非选中
+                    data.get(0).setIsSelect(0);
                 } else {//更改为所有全部选中
-                    selectAll = true;
-                    if (provinceList != null) {
-                        for (int j = 0; j < provinceList.size(); j++) {
-                            ProvinceBean provinceData = provinceList.get(j);
-                            List<CityBean> cityList = provinceData.getCityList();
-                            provinceData.setIsSelect(1);
-                            if (cityList != null) {
-                                for (int k = 0; k < cityList.size(); k++) {
-                                    cityList.get(k).setIsSelect(1);
-                                }
-                            }
-                        }
-                    }
+                    data.get(0).setIsSelect(1);
                 }
-                cityLiveData.postValue(provinceList.get(0).getCityList());
+                cityLiveData.postValue(provinceList.get(currentPosition).getCityList());
                 provinceLiveData.postValue(provinceList);
             } else {//一级非全部的全部
                 //选全部
@@ -216,20 +252,12 @@ public class MultiAreaVm extends BaseViewModel {
                     }
                 }
 
-
-                //取消上一个省份的所有城市选择状态
-                if (currentPosition != prePosition) {
-                    provinceList.get(prePosition).isSelect = 0;
-                    for (int x = 0; x < provinceList.get(prePosition).getCityList().size(); x++) {
-                        provinceList.get(prePosition).getCityList().get(x).isSelect = 0;
-                    }
-                }
-
-
                 provinceLiveData.postValue(provinceList);
                 cityLiveData.postValue(data);
                 changeFirstState();
             }
+
+
         } else {
 
             if (data.get(i).getIsSelect() != 1) {
@@ -254,19 +282,19 @@ public class MultiAreaVm extends BaseViewModel {
             //单一选项
             data.get(i).setIsSelect(data.get(i).getIsSelect() == 1 ? 0 : 1);
 
-            //取消上一个省份的所有城市选择状态
-            if (currentPosition != prePosition) {
-                provinceList.get(prePosition).isSelect = 0;
-                for (int x = 0; x < provinceList.get(prePosition).getCityList().size(); x++) {
-                    provinceList.get(prePosition).getCityList().get(x).isSelect = 0;
-                }
-            }
 
             cityLiveData.postValue(data);
             provinceLiveData.postValue(provinceList);
             changeFirstState();
         }
 
+        //取消上一个省份的所有城市选择状态
+        if (currentPosition != prePosition) {
+            provinceList.get(prePosition).isSelect = 0;
+            for (int x = 0; x < provinceList.get(prePosition).getCityList().size(); x++) {
+                provinceList.get(prePosition).getCityList().get(x).isSelect = 0;
+            }
+        }
 
         //记录上一个选择的省份Position
         if (currentPosition != prePosition) {

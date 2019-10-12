@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.LoadDialog;
+import com.shuangduan.zcy.factory.EmptyViewFactory;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -141,4 +142,9 @@ public abstract class BaseFragment extends Fragment implements IView {
      */
     protected abstract void initDataFromService();
 
+    public View createEmptyView(int iconRes, int strRes, int btnStrRes, EmptyViewFactory.EmptyViewCallBack callBack) {
+        BaseActivity activity = (BaseActivity) getActivity();
+        View view = activity.emptyViewFactory.createEmptyView(iconRes, strRes, btnStrRes, callBack);
+        return view;
+    }
 }
