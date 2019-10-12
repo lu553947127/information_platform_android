@@ -12,8 +12,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
 import com.blankj.utilcode.util.LogUtils;
+import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.LoadDialog;
+import com.shuangduan.zcy.factory.EmptyViewFactory;
 import com.shuangduan.zcy.model.event.BaseEvent;
 
 import org.greenrobot.eventbus.EventBus;
@@ -60,7 +62,7 @@ public abstract class BaseLazyFragment extends Fragment implements IView {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(initLayout(), container, false);
         unBinder = ButterKnife.bind(this, view);
-        if (isUseEventBus()){
+        if (isUseEventBus()) {
             EventBus.getDefault().register(this);
         }
         isPrepared = true;
@@ -77,20 +79,20 @@ public abstract class BaseLazyFragment extends Fragment implements IView {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser){
+        if (isVisibleToUser) {
             lazyLoad();
         }
     }
 
     private void lazyLoad() {
-        if (isPrepared && getUserVisibleHint() && !isInited){
+        if (isPrepared && getUserVisibleHint() && !isInited) {
             initDataFromService();
         }
     }
 
     @Override
     public void showLoading() {
-        if (loadDialog == null){
+        if (loadDialog == null) {
             loadDialog = new LoadDialog(mActivity);
         }
         loadDialog.showDialog();
@@ -98,7 +100,7 @@ public abstract class BaseLazyFragment extends Fragment implements IView {
 
     @Override
     public void hideLoading() {
-        if (loadDialog != null){
+        if (loadDialog != null) {
             loadDialog.hideDialog();
         }
     }
@@ -106,24 +108,24 @@ public abstract class BaseLazyFragment extends Fragment implements IView {
     /**
      * 保险起见的dialog关闭，防止内存泄漏
      */
-    public void addDialog(BaseDialog dialog){
+    public void addDialog(BaseDialog dialog) {
         dialogArray.put(dialogArray.size(), dialog);
     }
 
     @Override
     public void onDestroyView() {
         unBinder.unbind();
-        if (isUseEventBus() && EventBus.getDefault().isRegistered(this)){
+        if (isUseEventBus() && EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this);
         }
-        if (loadDialog != null){
+        if (loadDialog != null) {
             loadDialog.dismiss();
             loadDialog = null;
         }
 
-        if(dialogArray!=null){
+        if (dialogArray != null) {
             for (int i = 0; i < dialogArray.size(); i++) {
-                if (dialogArray.get(i) != null){
+                if (dialogArray.get(i) != null) {
                     dialogArray.get(i).dismiss();
                 }
             }
@@ -135,6 +137,7 @@ public abstract class BaseLazyFragment extends Fragment implements IView {
 
     /**
      * 初始化布局
+     *
      * @return 布局
      */
     protected abstract int initLayout();
@@ -146,6 +149,7 @@ public abstract class BaseLazyFragment extends Fragment implements IView {
 
     /**
      * 初始化数据
+     *
      * @param savedInstanceState 数据状态
      */
     protected abstract void initDataAndEvent(Bundle savedInstanceState);
@@ -155,4 +159,10 @@ public abstract class BaseLazyFragment extends Fragment implements IView {
      */
     protected abstract void initDataFromService();
 
+
+    public View createEmptyView(int iconRes, int strRes, int btnStrRes, EmptyViewFactory.EmptyViewCallBack callBack) {
+        BaseActivity activity = (BaseActivity) getActivity();
+        View view = activity.emptyViewFactory.createEmptyView(iconRes, strRes, btnStrRes, callBack);
+        return view;
+    }
 }

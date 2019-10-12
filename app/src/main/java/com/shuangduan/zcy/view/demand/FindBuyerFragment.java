@@ -1,6 +1,7 @@
 package com.shuangduan.zcy.view.demand;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProviders;
@@ -60,6 +61,7 @@ public class FindBuyerFragment extends BaseLazyFragment {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
+        View emptyView = createEmptyView(R.drawable.icon_empty_project, R.string.empty_buyer_info, 0, null);
         rv.setLayoutManager(new LinearLayoutManager(mContext));
         rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
         DemandBuyerAdapter buyerAdapter = new DemandBuyerAdapter(R.layout.item_demand_buyer, null);
@@ -77,7 +79,7 @@ public class FindBuyerFragment extends BaseLazyFragment {
             isInited = true;
             if (demandBuyerBean.getPage() == 1) {
                 buyerAdapter.setNewData(demandBuyerBean.getList());
-                buyerAdapter.setEmptyView(R.layout.layout_empty, rv);
+                buyerAdapter.setEmptyView(emptyView);
             }else {
                 buyerAdapter.addData(demandBuyerBean.getList());
             }

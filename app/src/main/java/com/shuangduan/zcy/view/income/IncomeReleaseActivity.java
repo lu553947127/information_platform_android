@@ -1,6 +1,7 @@
 package com.shuangduan.zcy.view.income;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
@@ -9,6 +10,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -16,7 +18,10 @@ import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.IncomeReleaseAdapter;
+import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
+import com.shuangduan.zcy.factory.EmptyViewFactory;
+import com.shuangduan.zcy.view.release.ReleaseProjectActivity;
 import com.shuangduan.zcy.vm.IncomeReleaseVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
@@ -33,7 +38,7 @@ import butterknife.OnClick;
  * @chang time
  * @class describe
  */
-public class IncomeReleaseActivity extends BaseActivity {
+public class IncomeReleaseActivity extends BaseActivity implements EmptyViewFactory.EmptyViewCallBack {
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
     @BindView(R.id.toolbar)
@@ -59,6 +64,8 @@ public class IncomeReleaseActivity extends BaseActivity {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.income_release));
 
+        View emptyView = emptyViewFactory.createEmptyView(R.drawable.icon_empty_income, R.string.empty_project_income_info, R.string.to_release, this);
+
         incomeReleaseVm = ViewModelProviders.of(this).get(IncomeReleaseVm.class);
 
         rv.setLayoutManager(new LinearLayoutManager(this));
@@ -70,8 +77,8 @@ public class IncomeReleaseActivity extends BaseActivity {
         incomeReleaseVm.liveData.observe(this, incomeReleaseBean -> {
             if (incomeReleaseBean.getPage() == 1) {
                 adapter.setNewData(incomeReleaseBean.getList());
-                adapter.setEmptyView(R.layout.layout_empty, rv);
-            }else {
+                adapter.setEmptyView(emptyView);
+            } else {
                 adapter.addData(incomeReleaseBean.getList());
             }
             setNoMore(incomeReleaseBean.getPage(), incomeReleaseBean.getCount());
@@ -92,28 +99,35 @@ public class IncomeReleaseActivity extends BaseActivity {
         incomeReleaseVm.getData();
     }
 
-    private void setNoMore(int page, int count){
-        if (page == 1){
-            if (page * 10 >= count){
-                if (refresh.getState() == RefreshState.None){
+    private void setNoMore(int page, int count) {
+        if (page == 1) {
+            if (page * 10 >= count) {
+                if (refresh.getState() == RefreshState.None) {
                     refresh.setNoMoreData(true);
-                }else {
+                } else {
                     refresh.finishRefreshWithNoMoreData();
                 }
-            }else {
+            } else {
                 refresh.finishRefresh();
             }
-        }else {
-            if (page * 10 >= count){
+        } else {
+            if (page * 10 >= count) {
                 refresh.finishLoadMoreWithNoMoreData();
-            }else {
+            } else {
                 refresh.finishLoadMore();
             }
         }
     }
 
     @OnClick({R.id.iv_bar_back})
-    void onClick(){
+    void onClick() {
         finish();
+    }
+
+    @Override
+    public void onEmptyClick() {
+        Bundle bundle = new Bundle();
+        bundle.putInt(CustomConfig.RELEASE_TYPE, 0);
+        ActivityUtils.startActivity(bundle, ReleaseProjectActivity.class);
     }
 }

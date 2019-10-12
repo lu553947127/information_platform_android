@@ -1,6 +1,7 @@
 package com.shuangduan.zcy.view.material;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProviders;
@@ -16,6 +17,7 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.SellAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseLazyFragment;
+import com.shuangduan.zcy.factory.EmptyViewFactory;
 import com.shuangduan.zcy.model.bean.MaterialBean;
 import com.shuangduan.zcy.vm.MaterialVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
@@ -32,12 +34,14 @@ import butterknife.BindView;
  * @chang time
  * @class describe
  */
-public class LeaseFragment extends BaseLazyFragment {
+public class LeaseFragment extends BaseLazyFragment implements EmptyViewFactory.EmptyViewCallBack {
     @BindView(R.id.rv)
     RecyclerView rv;
     @BindView(R.id.refresh)
     SmartRefreshLayout refresh;
     private MaterialVm materialVm;
+
+    private View emptyView;
 
     public static LeaseFragment newInstance() {
 
@@ -60,6 +64,9 @@ public class LeaseFragment extends BaseLazyFragment {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
+        //赛选条件列表为空
+        emptyView = createEmptyView(R.drawable.icon_empty_project, R.string.empty_substance_screen_info, R.string.see_all, this);
+
         rv.setLayoutManager(new LinearLayoutManager(mContext));
         rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
         SellAdapter adapter = new SellAdapter(R.layout.item_material, null);
@@ -74,10 +81,11 @@ public class LeaseFragment extends BaseLazyFragment {
 
         materialVm = ViewModelProviders.of(mActivity).get(MaterialVm.class);
         materialVm.leaseLiveData.observe(this, materialBean -> {
+
             isInited = true;
             if (materialBean.getPage() == 1) {
                 adapter.setNewData(materialBean.getList());
-                adapter.setEmptyView(R.layout.layout_empty, rv);
+                adapter.setEmptyView(emptyView);
             } else {
                 adapter.addData(materialBean.getList());
             }
@@ -120,5 +128,14 @@ public class LeaseFragment extends BaseLazyFragment {
                 refresh.finishLoadMore();
             }
         }
+    }
+
+    @Override
+    public void onEmptyClick() {
+        materialVm.materialId = 0;
+        materialVm.specification = "";
+        materialVm.supplierId = 0;
+
+        materialVm.leaseList(materialVm.materialId, materialVm.specification, materialVm.supplierId);
     }
 }

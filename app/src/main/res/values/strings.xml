@@ -609,4 +609,22 @@
 
     <string name="real_name">已实名</string>
     <string name="un_real_name">未实名</string>
+
+    <!--    空提示 -->
+    <string name="see_all">查看全部</string>
+    <string name="go_release">去发布</string>
+    <string name="pull_strings">找关系</string>
+    <string name="to_release">前去发布</string>
+    <string name="empty_project_address_info">您所处的位置周围\n没有工程项目,换个地方吧！</string>
+    <string name="empty_project_info">未找到相关的工程信息\n查看全部工程信息</string>
+    <string name="empty_relationship_info">您还没有发布过找关系\n前往发布</string>
+    <string name="empty_mine_order_info">帮助他人的同时,增加个人收益,快快行动吧！</string>
+    <string name="empty_mine_substance_info">您还没有发过找物资\n前往发布</string>
+    <string name="empty_mine_buyer_info">您还没有发布过找买家\n前往发布</string>
+    <string name="empty_pull_strings_info">暂无找关系数据</string>
+    <string name="empty_substance_info">暂无找物资数据</string>
+    <string name="empty_buyer_info">暂无找买家数据</string>
+    <string name="empty_substance_screen_info">未找到相关的物资信息\n查看全部物资信息</string>
+    <string name="empty_substance_list_info">还没有供应商发布基建物资</string>
+    <string name="empty_project_income_info">您还没有信息\n收益,去发布工程信息吧</string>
 </resources>

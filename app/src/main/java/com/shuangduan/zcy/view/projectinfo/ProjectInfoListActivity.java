@@ -2,6 +2,7 @@ package com.shuangduan.zcy.view.projectinfo;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
@@ -35,6 +36,7 @@ import com.shuangduan.zcy.adapter.SelectorSecondAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.pop.CommonPopupWindow;
+import com.shuangduan.zcy.factory.EmptyViewFactory;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.ProjectFilterBean;
 import com.shuangduan.zcy.model.bean.ProjectInfoBean;
@@ -66,7 +68,7 @@ import butterknife.OnClick;
  * @chang time
  * @class describe
  */
-public class ProjectInfoListActivity extends BaseActivity {
+public class ProjectInfoListActivity extends BaseActivity implements EmptyViewFactory.EmptyViewCallBack {
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
     @BindView(R.id.iv_bar_right)
@@ -122,10 +124,14 @@ public class ProjectInfoListActivity extends BaseActivity {
         return false;
     }
 
+
     @SuppressLint("NewApi")
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
+
+        View emptyView = emptyViewFactory.createEmptyView(R.drawable.icon_empty_project, R.string.empty_project_info, R.string.see_all, this);
+
         tvBarTitle.setText(getResources().getStringArray(R.array.classify)[0]);
         ivBarRight.setImageResource(R.drawable.icon_search);
         tvBarRight.setVisibility(View.GONE);
@@ -141,6 +147,8 @@ public class ProjectInfoListActivity extends BaseActivity {
         rv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
         projectInfoAdapter = new ProjectInfoAdapter(R.layout.item_project_info, null);
         rv.setAdapter(projectInfoAdapter);
+
+
         projectInfoAdapter.setOnItemClickListener((adapter, view, position) -> {
             ProjectInfoBean.ListBean bean = projectInfoAdapter.getData().get(position);
             Bundle bundle = new Bundle();
@@ -165,7 +173,7 @@ public class ProjectInfoListActivity extends BaseActivity {
         projectListVm.projectLiveData.observe(this, projectInfoBeans -> {
             if (projectInfoBeans.getPage() == 1) {
                 projectInfoAdapter.setNewData(projectInfoBeans.getList());
-                projectInfoAdapter.setEmptyView(R.layout.layout_empty, rv);
+                projectInfoAdapter.setEmptyView(emptyView);
             } else {
                 projectInfoAdapter.addData(projectInfoBeans.getList());
             }
@@ -176,14 +184,15 @@ public class ProjectInfoListActivity extends BaseActivity {
         rv.setOnScrollListener(new RecyclerView.OnScrollListener() {
             int distance;
             boolean visible = true;
+
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                if(distance < -ViewConfiguration.getTouchSlop() && !visible){
+                if (distance < -ViewConfiguration.getTouchSlop() && !visible) {
                     AnimationUtils.showFABAnimation(ivSubscribed);
                     distance = 0;
                     visible = true;
-                }else if(distance > ViewConfiguration.getTouchSlop() && visible){
+                } else if (distance > ViewConfiguration.getTouchSlop() && visible) {
                     AnimationUtils.hideFABAnimation(ivSubscribed);
                     distance = 0;
                     visible = false;
@@ -618,14 +627,14 @@ public class ProjectInfoListActivity extends BaseActivity {
         areaVm.provinceLiveData.observe(this, provinceBeans -> {
             if (!areaVm.provinceInited) {
                 //首次加载，未添加全部，
-                areaVm.setProvinceInit();
+                areaVm.setProjectProvinceInit();
             } else {
                 projectListVm.currentSelect = 1;
                 showPopArea(provinceBeans, null, null);
             }
         });
         areaVm.cityLiveData.observe(this, cityBeans -> {
-            areaVm.setCityInit();
+            areaVm.setProjectCityInit();
             if (cityBeans != null && cityBeans.size() > 0 && (cityBeans.get(0).getName().equals("全部") || cityBeans.get(0).getName().equals("全国"))) {
                 //刷新市区
                 cityAdapter.setNewData(cityBeans);
@@ -698,4 +707,16 @@ public class ProjectInfoListActivity extends BaseActivity {
         customDatePicker.show(TimeUtils.getNowString());
     }
 
+    //空页面按钮点击事件
+    @Override
+    public void onEmptyClick() {
+        projectListVm.province = null;
+        projectListVm.city = null;
+        projectListVm.phases = null;
+        projectListVm.type = null;
+        projectListVm.stime = null;
+        projectListVm.etime = null;
+        projectListVm.warrant_status = null;
+        projectListVm.projectList();
+    }
 }

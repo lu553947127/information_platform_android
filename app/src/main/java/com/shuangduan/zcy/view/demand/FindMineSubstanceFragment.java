@@ -17,7 +17,9 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.FindMineSubstanceAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
+import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.base.BaseLazyFragment;
+import com.shuangduan.zcy.factory.EmptyViewFactory;
 import com.shuangduan.zcy.model.bean.DemandSubstanceBean;
 import com.shuangduan.zcy.vm.DemandSubstanceVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
@@ -34,7 +36,7 @@ import butterknife.BindView;
  * @chang time
  * @class describe
  */
-public class FindMineSubstanceFragment extends BaseLazyFragment {
+public class FindMineSubstanceFragment extends BaseLazyFragment implements EmptyViewFactory.EmptyViewCallBack {
     @BindView(R.id.rv)
     RecyclerView rv;
     @BindView(R.id.refresh)
@@ -62,6 +64,8 @@ public class FindMineSubstanceFragment extends BaseLazyFragment {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
+        View emptyView = createEmptyView(R.drawable.icon_empty_project, R.string.empty_mine_substance_info, R.string.go_release, this);
+
         rv.setLayoutManager(new LinearLayoutManager(mContext));
         rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
         FindMineSubstanceAdapter substanceAdapter = new FindMineSubstanceAdapter(R.layout.item_demand_substance, null);
@@ -80,8 +84,8 @@ public class FindMineSubstanceFragment extends BaseLazyFragment {
             isInited = true;
             if (demandSubstanceBean.getPage() == 1) {
                 substanceAdapter.setNewData(demandSubstanceBean.getList());
-                substanceAdapter.setEmptyView(R.layout.layout_empty, rv);
-            }else {
+                substanceAdapter.setEmptyView(emptyView);
+            } else {
                 substanceAdapter.addData(demandSubstanceBean.getList());
             }
             setNoMore(demandSubstanceBean.getPage(), demandSubstanceBean.getCount());
@@ -105,23 +109,30 @@ public class FindMineSubstanceFragment extends BaseLazyFragment {
         demandSubstanceVm.getSubstance();
     }
 
-    private void setNoMore(int page, int count){
-        if (page == 1){
-            if (page * 10 >= count){
-                if (refresh.getState() == RefreshState.None){
+    private void setNoMore(int page, int count) {
+        if (page == 1) {
+            if (page * 10 >= count) {
+                if (refresh.getState() == RefreshState.None) {
                     refresh.setNoMoreData(true);
-                }else {
+                } else {
                     refresh.finishRefreshWithNoMoreData();
                 }
-            }else {
+            } else {
                 refresh.finishRefresh();
             }
-        }else {
-            if (page * 10 >= count){
+        } else {
+            if (page * 10 >= count) {
                 refresh.finishLoadMoreWithNoMoreData();
-            }else {
+            } else {
                 refresh.finishLoadMore();
             }
         }
+    }
+
+    @Override
+    public void onEmptyClick() {
+        Bundle bundle = new Bundle();
+        bundle.putString("type", "1");
+        ActivityUtils.startActivity(bundle, DemandReleaseActivity.class);
     }
 }

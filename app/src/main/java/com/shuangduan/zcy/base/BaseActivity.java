@@ -17,6 +17,7 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.MyApplication;
 import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.LoadDialog;
+import com.shuangduan.zcy.factory.EmptyViewFactory;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.swipeback.SwipeBackActivityBase;
 import com.shuangduan.zcy.swipeback.SwipeBackActivityHelper;
@@ -46,6 +47,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IView, S
     private SparseArray<BaseDialog> dialogArray = new SparseArray<>();
 
     private SwipeBackActivityHelper mHelper;
+    public EmptyViewFactory emptyViewFactory;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,6 +67,9 @@ public abstract class BaseActivity extends AppCompatActivity implements IView, S
             //透明状态栏
             BarUtils.setStatusBarColor(this, ContextCompat.getColor(Utils.getApp(), android.R.color.transparent), false);
         }
+
+        //初始化空页面工程
+        emptyViewFactory = EmptyViewFactory.newInstance(this);
 
         initDataAndEvent(savedInstanceState);
 
