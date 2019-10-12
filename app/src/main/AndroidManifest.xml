@@ -61,8 +61,8 @@
         </activity>
         <!-- 引导页-->
         <activity android:name="com.shuangduan.zcy.view.login.FirstStartActivity" />
-        <!-- 欢迎页-->
-        <activity android:name="com.shuangduan.zcy.view.login.WelcomeActivity" android:launchMode="singleTop"/>
+        <!-- 微信身份认证页-->
+        <activity android:name="com.shuangduan.zcy.view.login.WeChatBindingActivity" android:launchMode="singleTop"/>
         <!-- 登录页-->
         <activity android:name="com.shuangduan.zcy.view.login.LoginActivity"  android:windowSoftInputMode="stateHidden|adjustPan" />
         <!-- 注册页-->

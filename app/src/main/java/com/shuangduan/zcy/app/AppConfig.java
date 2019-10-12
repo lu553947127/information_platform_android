@@ -45,6 +45,7 @@ import java.util.logging.Level;
 import cn.jpush.android.api.JPushInterface;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.Conversation;
 import io.rong.push.RongPushClient;
 import io.rong.push.pushconfig.PushConfig;
 import okhttp3.OkHttpClient;
@@ -123,6 +124,7 @@ public class AppConfig {
      * 微信支付初始化配置
      */
     public static final String APP_ID = "wx2e2f0d4ccdf3e52f";
+    public static final String AppSecret = "53002bc09c67aa244de725a30b51dddd";
     public static IWXAPI iwxapi;
 
     private static void initWX(Context context) {
@@ -191,6 +193,14 @@ public class AppConfig {
                     break;
             }
         });
+
+        //设置消息回执的会话类型
+        Conversation.ConversationType[] types = new Conversation.ConversationType[] {
+                Conversation.ConversationType.PRIVATE,
+                Conversation.ConversationType.GROUP,
+                Conversation.ConversationType.DISCUSSION
+        };
+        RongIM.getInstance().setReadReceiptConversationTypeList(types);
     }
 
 

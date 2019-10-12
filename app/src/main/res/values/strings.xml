@@ -217,7 +217,7 @@
     <string name="no_materialId">存放地选择不能为空</string>
 
     <string name="subscribe_message">订阅信息</string>
-    <string name="model_list">列表模式</string>
+    <string name="model_list">切换列表模式</string>
     <string name="collection">收藏</string>
     <string name="collected">已收藏</string>
     <string name="read_detail">查看详情</string>

@@ -17,9 +17,7 @@ import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.modelpay.PayResp;
-import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
-import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 /**
  * <pre>
@@ -33,14 +31,10 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
 
-    private IWXAPI api;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        api = WXAPIFactory.createWXAPI(this, AppConfig.APP_ID);
-        api.registerApp(AppConfig.APP_ID);
-        api.handleIntent(getIntent(), this);
+        AppConfig.iwxapi.handleIntent(getIntent(), this);
 
     }
 
@@ -48,7 +42,7 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         setIntent(intent);
-        api.handleIntent(intent, this);
+        AppConfig.iwxapi.handleIntent(intent, this);
     }
 
     @Override

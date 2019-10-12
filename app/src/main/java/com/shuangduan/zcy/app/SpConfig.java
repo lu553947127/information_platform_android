@@ -15,6 +15,9 @@ public class SpConfig {
     /*第一个打开app标识*/
     public static final String FIRST_APP = "first_app";
 
+    /*用户账号*/
+    public static final String ACCOUNT = "account";
+
     /*用户密码*/
     public static final String PASSWORD = "password";
 

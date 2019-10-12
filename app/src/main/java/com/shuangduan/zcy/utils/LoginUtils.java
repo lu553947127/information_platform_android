@@ -1,12 +1,17 @@
 package com.shuangduan.zcy.utils;
 
+import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.view.login.LoginActivity;
-import com.shuangduan.zcy.view.login.WelcomeActivity;
+
+import java.util.List;
 
 /**
  * <pre>
@@ -69,9 +74,26 @@ public class LoginUtils {
     public static void getExitLogin() {
         SPUtils.getInstance().clear(true);
         SPUtils.getInstance().put(SpConfig.FIRST_APP, 1);
-        ActivityUtils.startActivity(WelcomeActivity.class);
-//        LogUtils.e(SPUtils.getInstance().getString(SpConfig.TOKEN));
-//        LogUtils.e(SPUtils.getInstance().getInt(SpConfig.USER_ID));
+        ActivityUtils.startActivity(LoginActivity.class);
         ActivityUtils.finishAllActivitiesExceptNewest();
+    }
+
+    /**
+     * 判断是否安装微信
+     *
+     * @return
+     */
+    public static boolean isWeixinAvilible(Context context) {
+        final PackageManager packageManager = context.getPackageManager();// 获取packagemanager
+        List<PackageInfo> pinfo = packageManager.getInstalledPackages(0);// 获取所有已安装程序的包信息
+        if (pinfo != null) {
+            for (int i = 0; i < pinfo.size(); i++) {
+                String pn = pinfo.get(i).packageName;
+                if (pn.equals("com.tencent.mm")) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

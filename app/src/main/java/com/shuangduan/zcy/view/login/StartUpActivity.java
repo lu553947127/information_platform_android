@@ -3,8 +3,6 @@ package com.shuangduan.zcy.view.login;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
-import androidx.lifecycle.ViewModelProviders;
-
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
@@ -13,7 +11,6 @@ import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.utils.LoginUtils;
 import com.shuangduan.zcy.view.MainActivity;
-import com.shuangduan.zcy.vm.IMConnectVm;
 
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
@@ -41,7 +38,7 @@ public class StartUpActivity extends BaseActivity {
             if (SPUtils.getInstance().getInt(SpConfig.INFO_STATUS) == 1){
                 getIntoActivity();
             }else {
-                ActivityUtils.startActivity(WelcomeActivity.class);
+                ActivityUtils.startActivity(LoginActivity.class);
                 finish();
             }
         }else {
@@ -84,10 +81,12 @@ public class StartUpActivity extends BaseActivity {
                 public void onError(RongIMClient.ErrorCode errorCode) {
                     LogUtils.i("融云--token--" + token);
                     LogUtils.i("融云连接失败" + errorCode);
+                    ActivityUtils.startActivity(LoginActivity.class);
+                    finish();
                 }
             });
         }else {
-            ActivityUtils.startActivity(WelcomeActivity.class);
+            ActivityUtils.startActivity(LoginActivity.class);
             finish();
         }
         SPUtils.getInstance().put(SpConfig.FIRST_APP, 1);

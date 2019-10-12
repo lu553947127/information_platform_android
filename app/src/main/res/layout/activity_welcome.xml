@@ -1,39 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorBgDark">
 
-    <ImageView
-        android:id="@+id/iv_icon"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="3"
-        app:layout_constraintDimensionRatio="720:1020"
-        android:background="@drawable/icon_login"
-        tools:ignore="MissingConstraints" />
+    <include layout="@layout/toolbar"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginBottom="40dp"
-        app:layout_constraintBottom_toBottomOf="parent">
+        android:background="@color/colorFFF">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edt_mobile"
+            style="@style/MessageHint"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:drawableLeft="@drawable/icon_username"
+            android:inputType="number"
+            android:maxLength="11"
+            android:hint="@string/hint_mobile_code"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorDivider"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="11dp">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edt_verification_code"
+                style="@style/MessageHint"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="3dp"
+                android:drawableLeft="@drawable/icon_verification_code"
+                android:inputType="number"
+                android:hint="@string/hint_SMS_verification_code"/>
+
+            <include layout="@layout/layout_verification_code"/>
+
+        </FrameLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorDivider"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"/>
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edt_mobile_invite"
+            style="@style/MessageHint"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="14dp"
+            android:drawableLeft="@drawable/icon_fly"
+            android:inputType="number"
+            android:maxLength="11"
+            android:hint="@string/hint_mobile_invite"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorDivider"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"/>
 
         <TextView
-            android:id="@+id/tv_login"
-            style="@style/BtnConfirmWhite_9"
-            android:text="@string/login"/>
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="14dp"
+            android:textSize="12sp"
+            android:textColor="@color/colorTvHint"
+            android:text="提示：邀请人手机号非必填"/>
 
-        <TextView
-            android:id="@+id/tv_register"
-            style="@style/BtnConfirm"
-            android:layout_marginTop="17dp"
-            android:text="@string/register"/>
     </LinearLayout>
 
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_binding_phone"
+        style="@style/BtnConfirm"
+        android:layout_width="335dp"
+        android:layout_marginTop="36dp"
+        android:text="绑定手机号"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
