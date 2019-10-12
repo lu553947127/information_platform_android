@@ -625,14 +625,14 @@ public class ProjectInfoListActivity extends BaseActivity implements EmptyViewFa
         areaVm.provinceLiveData.observe(this, provinceBeans -> {
             if (!areaVm.provinceInited) {
                 //首次加载，未添加全部，
-                areaVm.setProvinceInit();
+                areaVm.setProjectProvinceInit();
             } else {
                 projectListVm.currentSelect = 1;
                 showPopArea(provinceBeans, null, null);
             }
         });
         areaVm.cityLiveData.observe(this, cityBeans -> {
-            areaVm.setCityInit();
+            areaVm.setProjectCityInit();
             if (cityBeans != null && cityBeans.size() > 0 && (cityBeans.get(0).getName().equals("全部") || cityBeans.get(0).getName().equals("全国"))) {
                 //刷新市区
                 cityAdapter.setNewData(cityBeans);
