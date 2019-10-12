@@ -67,7 +67,6 @@ public class CustomConfig {
     public static final String ORDER = "order";
     public static final String RELEASE_TYPE = "release_type";//0发布项目1发布动态
     public static final String FRIEND_DATA = "friend_data";
-
     public static final String PROJECT_TYPE = "project_type";//搜索区分工程信息还是招采信息
 
 
@@ -100,14 +99,10 @@ public class CustomConfig {
     public static final String SET_PAYMENT_PASSWORD = "set_payment_password";
     //-------------------------------------------------------------------------------------------------------
 
-
-
     //------------------------------------基建物资搜索类型----------------------------------------------------
     public static final int MATERIAL_TYPE = 1;                                             //
     public static final int SUPPLIER_TYPE = 2;                                               //
     //-------------------------------------------------------------------------------------------------------
-
-
 
     public static final String MORE = "更多";
 
@@ -120,6 +115,7 @@ public class CustomConfig {
     public static final int SIX_DEGREE = 6;//6°人脉收益
     public static final int SEVEN_DEGREE = 7;//1~6°人脉收益
 
+    //获取验证码 type参数
     public static final String SMS_TYPE = "sms_type";
     public static final int SMS_REGISTER = 1;//注册
     public static final int SMS_LOGIN = 2;//登录
@@ -127,6 +123,7 @@ public class CustomConfig {
     public static final int SMS_UPDATE_PWD = 4;//修改密码
     public static final int SMS_PWD_PAY = 5;//修改支付密码
     public static final int SMS_UPDATE_PHONE = 6;//修改手机号码
+    public static final int SMS_WECHAT_LOGIN = 7;//微信登录
 
     public static final int PAY_STYLE_ALIPAY = 2;//支付宝支付
     public static final int PAY_STYLE_WECHAT = 1;//微信支付

@@ -113,7 +113,7 @@ public class FirstStartActivity extends BaseActivity implements View.OnClickList
                 //滑动跳转
                 if (viewPager.getCurrentItem() == Objects.requireNonNull(viewPager.getAdapter()).getCount() - 1 && !isScrolled) {
                     SPUtils.getInstance().put(SpConfig.FIRST_APP, 1);
-                    ActivityUtils.startActivity(WelcomeActivity.class);
+                    ActivityUtils.startActivity(LoginActivity.class);
                     finish();
                 }
                 isScrolled = true;
@@ -128,7 +128,7 @@ public class FirstStartActivity extends BaseActivity implements View.OnClickList
             case R.id.rl_experience:
             case R.id.tv_next_three:
                 SPUtils.getInstance().put(SpConfig.FIRST_APP, 1);
-                ActivityUtils.startActivity(WelcomeActivity.class);
+                ActivityUtils.startActivity(LoginActivity.class);
                 finish();
                 break;
         }

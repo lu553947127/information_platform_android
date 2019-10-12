@@ -138,4 +138,13 @@
         <item name="android:windowSoftInputMode">adjustResize</item>
         <item name="android:statusBarColor" tools:ignore="NewApi">@android:color/transparent</item>
     </style>
+
+    <!--设置CheckBox属性颜色-->
+    <style name="CheckBox_background" parent="@android:style/Widget.Material.CompoundButton.CheckBox" tools:ignore="NewApi">
+        <!--选中颜色-->
+        <item name="android:colorControlActivated">@color/colorPrimary</item>
+        <!--默认颜色-->
+        <!--<item name="android:colorControlNormal">@color/colorPrimary</item> -->
+    </style>
+
 </resources>

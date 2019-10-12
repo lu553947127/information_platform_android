@@ -1,6 +1,7 @@
 package com.shuangduan.zcy.rongyun.view;
 
 import android.content.Context;
+import android.text.InputFilter;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -91,6 +92,7 @@ public class ConversationListAdapterEx extends ConversationListAdapter {
                                     (v.findViewById(R.id.tv_post)).setVisibility(View.VISIBLE);
                                     ((TextView)v.findViewById(R.id.tv_company)).setText(company);
                                     ((TextView)v.findViewById(R.id.tv_post)).setText(post);
+                                    ((TextView)(v.findViewById(R.id.rc_conversation_title))).setFilters(new InputFilter[] { new InputFilter.LengthFilter(6)});
                                 }
                             }else {
                                 ToastUtils.showShort(bean.getMsg());

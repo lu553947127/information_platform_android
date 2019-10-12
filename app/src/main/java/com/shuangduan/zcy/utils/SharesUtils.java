@@ -41,7 +41,7 @@ public class SharesUtils {
         //SharedPreferences的获取
         SharedPreferences shared = ctx.getSharedPreferences(name, Context.MODE_PRIVATE);
         //按照传入key获取value如果key不存在返回参数二添加的默认内容
-        String result = shared.getString(key, "-1");
+        String result = shared.getString(key, "");
         return result;
     }
 

@@ -1302,4 +1302,23 @@ public interface ApiService {
             @Field("user_id") int userId,
             @Field("id") int id
     );
+
+    //微信登录验证
+    @FormUrlEncoded
+    @POST("api/passport/wechatLogin")
+    Flowable<BaseResponse> getWeChatVerification(
+            @Field("unionid") String unionid,
+            @Field("openid") String openid
+    );
+
+    //微信登录绑定
+    @FormUrlEncoded
+    @POST("api/passport/wechatBind")
+    Flowable<BaseResponse> getWeChatBinding(
+            @Field("unionid") String unionid,
+            @Field("openid") String openid,
+            @Field("tel") String tel,
+            @Field("code") String code,
+            @Field("invite_tel") String invite_tel
+    );
 }
