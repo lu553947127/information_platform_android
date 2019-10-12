@@ -626,6 +626,7 @@ public class ProjectInfoListActivity extends BaseActivity implements EmptyViewFa
             if (!areaVm.provinceInited) {
                 //首次加载，未添加全部，
                 areaVm.setProjectProvinceInit();
+
             } else {
                 projectListVm.currentSelect = 1;
                 showPopArea(provinceBeans, null, null);
