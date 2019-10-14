@@ -64,5 +64,7 @@ public class MaterialCollectBean {
         public String unit;
         //库存
         public int stock;
+        //状态 1可预订 0已失效
+        public int status;
     }
 }

@@ -164,44 +164,6 @@
             </FrameLayout>
 
             <FrameLayout
-                android:id="@+id/fl_project_company"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@color/colorFFF"
-                android:paddingLeft="14dp"
-                android:paddingRight="14dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:layout_gravity="center_vertical"
-                    android:textColor="@color/colorTv"
-                    android:textSize="14sp"
-                    android:text="甲方公司"/>
-
-                <EditText
-                    android:id="@+id/edt_project_company"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:layout_marginLeft="87dp"
-                    android:background="@null"
-                    android:singleLine="true"
-                    android:textColorHint="@color/colorTvHint"
-                    android:textColor="@color/colorTv"
-                    android:textSize="14sp"
-                    android:hint="请输入甲方公司"/>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_gravity="bottom"
-                    android:background="@color/colorDivider"/>
-
-            </FrameLayout>
-
-            <FrameLayout
                 android:id="@+id/fl_project_address"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -414,6 +376,90 @@
             </RelativeLayout>
 
             <FrameLayout
+                android:id="@+id/fl_project_detail"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/colorFFF"
+                android:paddingLeft="14dp"
+                android:paddingRight="14dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/color_F83425"
+                    android:text="*"
+                    tools:ignore="HardcodedText,RtlHardcoded" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/colorTv"
+                    android:textSize="14sp"
+                    android:text="@string/project_detail"/>
+
+                <EditText
+                    android:id="@+id/edt_project_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="87dp"
+                    android:background="@null"
+                    android:singleLine="true"
+                    android:textColorHint="@color/colorTvHint"
+                    android:textColor="@color/colorTv"
+                    android:textSize="14sp"
+                    android:hint="请输入项目详情"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_gravity="bottom"
+                    android:background="@color/colorDivider"/>
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/fl_project_company"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/colorFFF"
+                android:paddingLeft="14dp"
+                android:paddingRight="14dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/colorTv"
+                    android:textSize="14sp"
+                    android:text="甲方公司"/>
+
+                <EditText
+                    android:id="@+id/edt_project_company"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="87dp"
+                    android:background="@null"
+                    android:singleLine="true"
+                    android:textColorHint="@color/colorTvHint"
+                    android:textColor="@color/colorTv"
+                    android:textSize="14sp"
+                    android:hint="请输入甲方公司"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_gravity="bottom"
+                    android:background="@color/colorDivider"/>
+
+            </FrameLayout>
+
+            <FrameLayout
                 android:id="@+id/fl_project_acreage"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -496,52 +542,6 @@
                     android:textColor="@color/colorTv"
                     android:textSize="14sp"
                     android:layout_gravity="right|center_vertical"/>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_gravity="bottom"
-                    android:background="@color/colorDivider"/>
-
-            </FrameLayout>
-
-            <FrameLayout
-                android:id="@+id/fl_project_detail"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@color/colorFFF"
-                android:paddingLeft="14dp"
-                android:paddingRight="14dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:textColor="@color/color_F83425"
-                    android:text="*"
-                    tools:ignore="HardcodedText,RtlHardcoded" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:layout_gravity="center_vertical"
-                    android:textColor="@color/colorTv"
-                    android:textSize="14sp"
-                    android:text="@string/project_detail"/>
-
-                <EditText
-                    android:id="@+id/edt_project_detail"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:layout_marginLeft="87dp"
-                    android:background="@null"
-                    android:singleLine="true"
-                    android:textColorHint="@color/colorTvHint"
-                    android:textColor="@color/colorTv"
-                    android:textSize="14sp"
-                    android:hint="请输入项目详情"/>
 
                 <View
                     android:layout_width="match_parent"

@@ -371,7 +371,7 @@
             android:name="com.shuangduan.zcy.wxapi.WXPayEntryActivity"
             android:exported="true"
             android:launchMode="singleTop" />
-        <!-- 微信分享-->
+        <!-- 微信分享和登录 返回结果页-->
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:exported="true"

@@ -77,7 +77,11 @@ public class ReleaseAreaSelectActivity extends BaseActivity {
         } else {
             tvBarTitle.setText(getString(R.string.business_area));
         }
-        tvBarRight.setText(getString(R.string.save));
+        if (getIntent().getIntExtra(CustomConfig.PROJECT_ADDRESS, 0)==1){
+            tvBarRight.setText(getString(R.string.next));
+        }else {
+            tvBarRight.setText(getString(R.string.save));
+        }
 
         LinearLayoutManager managerProvence = new LinearLayoutManager(this);
         rvProvince.setLayoutManager(managerProvence);

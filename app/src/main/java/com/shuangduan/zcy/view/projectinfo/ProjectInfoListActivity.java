@@ -184,12 +184,10 @@ public class ProjectInfoListActivity extends BaseActivity implements EmptyViewFa
                 super.onScrolled(recyclerView, dx, dy);
                 if (distance < -ViewConfiguration.getTouchSlop() && !visible) {
                     AnimationUtils.showFABAnimation(ivRelease);
-                    ivRelease.setVisibility(View.VISIBLE);
                     distance = 0;
                     visible = true;
                 } else if (distance > ViewConfiguration.getTouchSlop() && visible) {
                     AnimationUtils.hideFABAnimation(ivRelease);
-                    ivRelease.setVisibility(View.GONE);
                     distance = 0;
                     visible = false;
                 }

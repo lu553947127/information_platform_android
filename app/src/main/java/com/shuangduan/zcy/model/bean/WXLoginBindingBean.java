@@ -14,18 +14,18 @@ package com.shuangduan.zcy.model.bean;
  */
 public class WXLoginBindingBean {
 
-    String user_id;
-    String token;
-    String tel;
-    String info_status;
-    String pay_status;
-    String card_status;
+    private int user_id;
+    private String token;
+    private String tel;
+    private int info_status;
+    private int pay_status;
+    private int card_status;
 
-    public String getUser_id() {
+    public int getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(String user_id) {
+    public void setUser_id(int user_id) {
         this.user_id = user_id;
     }
 
@@ -45,27 +45,27 @@ public class WXLoginBindingBean {
         this.tel = tel;
     }
 
-    public String getInfo_status() {
+    public int getInfo_status() {
         return info_status;
     }
 
-    public void setInfo_status(String info_status) {
+    public void setInfo_status(int info_status) {
         this.info_status = info_status;
     }
 
-    public String getPay_status() {
+    public int getPay_status() {
         return pay_status;
     }
 
-    public void setPay_status(String pay_status) {
+    public void setPay_status(int pay_status) {
         this.pay_status = pay_status;
     }
 
-    public String getCard_status() {
+    public int getCard_status() {
         return card_status;
     }
 
-    public void setCard_status(String card_status) {
+    public void setCard_status(int card_status) {
         this.card_status = card_status;
     }
 }

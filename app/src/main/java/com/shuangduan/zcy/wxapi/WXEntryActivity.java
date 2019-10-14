@@ -113,6 +113,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                                 LogUtils.i(bean.getOpenid());
                                 LogUtils.i(bean.getUnionid());
                                 EventBus.getDefault().post(new WxLoginEvent(bean.getUnionid(),bean.getOpenid()));
+                                finish();
                             }else {
                                 ToastUtils.showShort("微信登录失败");
                             }

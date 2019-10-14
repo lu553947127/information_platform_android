@@ -1,6 +1,8 @@
 package com.shuangduan.zcy.adapter;
 
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
@@ -38,6 +40,12 @@ public class MaterialCollectAdapter extends BaseQuickAdapter<MaterialCollectBean
                 .setText(R.id.tv_price, item.guidance_price)
                 .setText(R.id.tv_price_unit, String.format(mContext.getString(R.string.format_price_unit), item.unit))
                 .setText(R.id.tv_sold_num, "库存: " + item.stock + item.unit);
+        TextView tvStatus = helper.getView(R.id.tv_status);
+        if (item.status==1){
+            tvStatus.setVisibility(View.GONE);
+        }else {
+            tvStatus.setVisibility(View.VISIBLE);
+        }
         ImageView ivIcon = helper.getView(R.id.iv_icon);
         try {
             String thumb = item.images;

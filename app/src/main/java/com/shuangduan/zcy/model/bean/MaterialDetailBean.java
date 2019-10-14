@@ -55,8 +55,17 @@ public class MaterialDetailBean {
     private String supplie_address;
     private String is_collection;
     private String enclosure;
+    private String status;
     private List<ImagesBean> images;
     private List<AddressListBean> address_list;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public String getEnclosure() {
         return enclosure;

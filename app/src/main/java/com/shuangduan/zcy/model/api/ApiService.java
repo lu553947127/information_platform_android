@@ -94,6 +94,8 @@ import com.shuangduan.zcy.model.bean.TransactionFlowTypeBean;
 import com.shuangduan.zcy.model.bean.TypeBean;
 import com.shuangduan.zcy.model.bean.UploadBean;
 import com.shuangduan.zcy.model.bean.UserInfoBean;
+import com.shuangduan.zcy.model.bean.WXLoginBindingBean;
+import com.shuangduan.zcy.model.bean.WXLoginVerificationBean;
 import com.shuangduan.zcy.model.bean.WithdrawBean;
 import com.shuangduan.zcy.model.bean.WithdrawRecordBean;
 
@@ -1306,7 +1308,7 @@ public interface ApiService {
     //微信登录验证
     @FormUrlEncoded
     @POST("api/passport/wechatLogin")
-    Flowable<BaseResponse> getWeChatVerification(
+    Flowable<BaseResponse<WXLoginVerificationBean>> getWeChatVerification(
             @Field("unionid") String unionid,
             @Field("openid") String openid
     );
@@ -1314,7 +1316,7 @@ public interface ApiService {
     //微信登录绑定
     @FormUrlEncoded
     @POST("api/passport/wechatBind")
-    Flowable<BaseResponse> getWeChatBinding(
+    Flowable<BaseResponse<WXLoginBindingBean>> getWeChatBinding(
             @Field("unionid") String unionid,
             @Field("openid") String openid,
             @Field("tel") String tel,

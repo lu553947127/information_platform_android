@@ -94,6 +94,7 @@ public class LoginActivity extends BaseActivity {
     private int loginStyle = LOGIN;//默认显示登录页面
     private int isAccount=0;
     private SharesUtils sharesUtils;
+    private String openid,unionid;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -157,16 +158,25 @@ public class LoginActivity extends BaseActivity {
         //微信验证是否绑定过返回结果
         loginVm.wxLoginVerificationBeanMutableLiveData.observe(this,wxLoginVerificationBean -> {
             //判断是否绑定
-            if (wxLoginVerificationBean.getWechat_status().equals("1")){
+            if (wxLoginVerificationBean.getWechat_status()==1){
+
+                SPUtils.getInstance().put(SpConfig.USER_ID, wxLoginVerificationBean.getUser_id(), true);
+                SPUtils.getInstance().put(SpConfig.TOKEN, wxLoginVerificationBean.getToken(), true);
+                SPUtils.getInstance().put(SpConfig.MOBILE, wxLoginVerificationBean.getTel(), true);
+                SPUtils.getInstance().put(SpConfig.INFO_STATUS, wxLoginVerificationBean.getInfo_status(), true);
+
                 //判断是否完善信息
-                if (wxLoginVerificationBean.getInfo_status().equals("1")){
-                    imConnectVm.userId = Integer.parseInt(wxLoginVerificationBean.getUser_id());
+                if (wxLoginVerificationBean.getInfo_status()==1){
+                    imConnectVm.userId = wxLoginVerificationBean.getUser_id();
                     imConnectVm.getToken();
                 }else {
                     ActivityUtils.startActivity(UserInfoInputActivity.class);
                 }
             }else {
-
+                Bundle bundle = new Bundle();
+                bundle.putString("open_id",openid);
+                bundle.putString("union_id",unionid);
+                ActivityUtils.startActivity(bundle,WeChatBindingActivity.class);
             }
         });
     }
@@ -399,6 +409,8 @@ public class LoginActivity extends BaseActivity {
 
     @Subscribe
     public void onEventWxLogin(WxLoginEvent event) {
-        loginVm.getWeChatVerification(event.getUnionId(),event.getOpenId());
+        openid=event.getOpenId();
+        unionid=event.getUnionId();
+        loginVm.getWeChatVerification(unionid,openid);
     }
 }

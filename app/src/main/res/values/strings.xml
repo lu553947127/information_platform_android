@@ -58,6 +58,7 @@
     <string name="please_select">请选择</string>
     <string name="base_info">基本信息</string>
     <string name="save">保存</string>
+    <string name="next">下一步</string>
     <string name="my_order">我的订单</string>
     <string name="my_income">我的收益</string>
     <string name="my_income_explain">收益说明</string>

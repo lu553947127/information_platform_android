@@ -153,6 +153,15 @@ public class MaterialDetailActivity extends BaseActivity {
                 is_collect=materialDetailBean.getIs_collection();
                 ivCollection.setBackgroundResource(R.drawable.icon_new_collection);
             }
+            if (materialDetailBean.getStatus().equals("1")){
+                tvReserve.setBackgroundResource(R.drawable.selector_btn_confirm);
+                tvReserve.setText("立即预定");
+                tvReserve.setClickable(true);
+            }else {
+                tvReserve.setBackgroundResource(R.drawable.selector_btn_confirm_gray);
+                tvReserve.setText("已失效");
+                tvReserve.setClickable(false);
+            }
         });
 
         materialDetailVm.collectedLiveData.observe(this, o -> {

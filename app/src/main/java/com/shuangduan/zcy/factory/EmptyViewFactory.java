@@ -60,7 +60,7 @@ public class EmptyViewFactory {
         tvTip.setText(strRes);
         TextView tvGoto = view.findViewById(R.id.tv_goto);
 
-        
+
         //跳转的点击回调
         if (callBack != null) {
             tvGoto.setText(btnStrRes);

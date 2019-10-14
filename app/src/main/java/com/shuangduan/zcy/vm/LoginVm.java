@@ -111,6 +111,6 @@ public class LoginVm extends BaseViewModel {
 
     //微信登录绑定
     public void getWeChatBinding(String unionid, String openid,String tel,String code,String invite_tel){
-        new LoginRepository().getWeChatBinding(wxLoginBindingBeanMutableLiveData, unionid, openid,tel,code,invite_tel);
+        new LoginRepository().getWeChatBinding(wxLoginBindingBeanMutableLiveData,pageStateLiveData, unionid, openid,tel,code,invite_tel);
     }
 }

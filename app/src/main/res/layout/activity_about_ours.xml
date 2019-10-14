@@ -67,6 +67,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
         android:layout_above="@+id/tv_official_name"
         android:textColor="@color/color_666666"
         android:textSize="12sp"
@@ -81,6 +83,7 @@
         android:layout_marginBottom="20dp"
         android:textColor="@color/color_666666"
         android:textSize="12sp"
-        android:text="@string/official_name"/>
+        android:text="@string/official_name"
+        android:visibility="gone"/>
 
 </RelativeLayout>

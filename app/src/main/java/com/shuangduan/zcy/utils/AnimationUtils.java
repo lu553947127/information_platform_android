@@ -24,6 +24,7 @@ public class AnimationUtils {
         PropertyValuesHolder pvhY = PropertyValuesHolder.ofFloat("scaleX", 1f);
         PropertyValuesHolder pvhZ = PropertyValuesHolder.ofFloat("scaleY", 1f);
         ObjectAnimator.ofPropertyValuesHolder(view, pvhX, pvhY,pvhZ).setDuration(400).start();
+        view.setClickable(true);
     }
 
     //隐藏fab的动画
@@ -32,5 +33,6 @@ public class AnimationUtils {
         PropertyValuesHolder pvhY = PropertyValuesHolder.ofFloat("scaleX", 0f);
         PropertyValuesHolder pvhZ = PropertyValuesHolder.ofFloat("scaleY", 0f);
         ObjectAnimator.ofPropertyValuesHolder(view, pvhX, pvhY,pvhZ).setDuration(400).start();
+        view.setClickable(false);
     }
 }

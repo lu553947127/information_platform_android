@@ -52,7 +52,7 @@ public class LoginRepository extends BaseRepository {
     }
 
     //微信登录验证
-    public void getWeChatBinding(MutableLiveData<WXLoginBindingBean> liveData, String unionid, String openid, String tel, String code, String invite_tel){
-        request(apiService.getWeChatBinding(unionid,openid,tel,code,invite_tel)).setData(liveData).send();
+    public void getWeChatBinding(MutableLiveData<WXLoginBindingBean> liveData, MutableLiveData<String> pageStateLiveData, String unionid, String openid, String tel, String code, String invite_tel){
+        request(apiService.getWeChatBinding(unionid,openid,tel,code,invite_tel)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 }

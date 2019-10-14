@@ -127,6 +127,7 @@ public class RegisterActivity extends BaseActivity {
             //注册成功走一遍登录
             loginVm.accountLogin(edtMobile.getText().toString(), edtPwd.getText().toString(), DeviceUtils.getAndroidID());
             loginVm.accountLoginLiveData.observe(RegisterActivity.this, loginBean -> {
+
                 SPUtils.getInstance().put(SpConfig.USER_ID, loginBean.getUser_id());
                 SPUtils.getInstance().put(SpConfig.TOKEN, loginBean.getToken());
                 SPUtils.getInstance().put(SpConfig.MOBILE, loginBean.getTel());
