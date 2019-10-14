@@ -498,10 +498,10 @@
         <item>招采信息</item>
         <item>基建物资</item>
         <item>优质供应商</item>
-<!--        <item>品权中心</item>-->
-<!--        <item>我的收益</item>-->
-<!--        <item>需求广场</item>-->
-<!--        <item>发布信息</item>-->
+        <!--        <item>品权中心</item>-->
+        <!--        <item>我的收益</item>-->
+        <!--        <item>需求广场</item>-->
+        <!--        <item>发布信息</item>-->
     </string-array>
 
     <string-array name="project_detail">
@@ -652,7 +652,7 @@
 
     <string name="empty_deal_info">暂无交易记录</string>
     <string name="empty_contacts_msg_info">暂无消息</string>
-    <string name="empty_income_info">暂无消息</string>
+    <string name="empty_income_info">暂无收益</string>
 
 
     <string name="empty_project_collect_info">您还没收藏过工程信息\n前往查看全部工程信息</string>
@@ -662,7 +662,6 @@
 
     <string name="empty_new_friends_info">查看工程信息,获取更多好友</string>
     <string name="empty_im_group_info">查看工程信息\n可加入讨论组,快去加入吧</string>
-
 
 
 </resources>
