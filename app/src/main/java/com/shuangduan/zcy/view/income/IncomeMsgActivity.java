@@ -21,8 +21,10 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.IncomeMsgAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
+import com.shuangduan.zcy.factory.EmptyViewFactory;
 import com.shuangduan.zcy.model.bean.IncomeMsgBean;
 import com.shuangduan.zcy.view.mine.TransRecordDetailActivity;
+import com.shuangduan.zcy.view.projectinfo.ProjectInfoListActivity;
 import com.shuangduan.zcy.vm.IncomeMsgVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
@@ -39,7 +41,7 @@ import butterknife.OnClick;
  * @chang time
  * @class describe
  */
-public class IncomeMsgActivity extends BaseActivity {
+public class IncomeMsgActivity extends BaseActivity implements EmptyViewFactory.EmptyViewCallBack {
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
     @BindView(R.id.toolbar)
@@ -63,6 +65,10 @@ public class IncomeMsgActivity extends BaseActivity {
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
+
+        View emptyView = emptyViewFactory.createEmptyView(R.drawable.icon_empty_income, R.string.empty_subscribe_income_info, R.string.to_subscribe, this);
+
+
         tvBarTitle.setText(getString(R.string.income_msg));
 
         incomeReleaseVm = ViewModelProviders.of(this).get(IncomeMsgVm.class);
@@ -82,7 +88,7 @@ public class IncomeMsgActivity extends BaseActivity {
         incomeReleaseVm.liveData.observe(this, incomeMsgBean -> {
             if (incomeMsgBean.getPage() == 1) {
                 incomeMsgAdapter.setNewData(incomeMsgBean.getList());
-                incomeMsgAdapter.setEmptyView(R.layout.layout_empty, rv);
+                incomeMsgAdapter.setEmptyView(emptyView);
             }else {
                 incomeMsgAdapter.addData(incomeMsgBean.getList());
             }
@@ -127,5 +133,10 @@ public class IncomeMsgActivity extends BaseActivity {
     @OnClick({R.id.iv_bar_back})
     void onClick(){
         finish();
+    }
+
+    @Override
+    public void onEmptyClick() {
+        ActivityUtils.startActivity(ProjectInfoListActivity.class);
     }
 }

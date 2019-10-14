@@ -21,8 +21,10 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.IncomePeopleAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
+import com.shuangduan.zcy.factory.EmptyViewFactory;
 import com.shuangduan.zcy.model.bean.IncomePeopleBean;
 import com.shuangduan.zcy.rongyun.view.IMAddFriendActivity;
+import com.shuangduan.zcy.view.mine.RecommendFriendsActivity;
 import com.shuangduan.zcy.view.people.PeopleInfoActivity;
 import com.shuangduan.zcy.vm.IncomePeopleVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
@@ -41,7 +43,7 @@ import io.rong.imkit.RongIM;
  * @chang time
  * @class describe
  */
-public class IncomePeopleActivity extends BaseActivity implements BaseQuickAdapter.OnItemChildClickListener {
+public class IncomePeopleActivity extends BaseActivity implements BaseQuickAdapter.OnItemChildClickListener, EmptyViewFactory.EmptyViewCallBack {
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
     @BindView(R.id.toolbar)
@@ -52,6 +54,7 @@ public class IncomePeopleActivity extends BaseActivity implements BaseQuickAdapt
     SmartRefreshLayout refresh;
     private IncomePeopleVm incomeReleaseVm;
     private IncomePeopleAdapter incomePeopleAdapter;
+    private View emptyView;
 
     @Override
     protected int initLayoutRes() {
@@ -67,9 +70,15 @@ public class IncomePeopleActivity extends BaseActivity implements BaseQuickAdapt
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         int degree = getIntent().getIntExtra(CustomConfig.PEOPLE_DEGREE, CustomConfig.FIRST_DEGREE);
+
+
         if (degree == 7) {
+            emptyView = emptyViewFactory.createEmptyView(R.drawable.icon_empty_income, R.string.empty_people_income_info, R.string.to_recommend, this);
             tvBarTitle.setText(getString(R.string.income_people));
+        } else if (degree == 1) {
+            emptyView = emptyViewFactory.createEmptyView(R.drawable.icon_empty_income, R.string.empty_recommend_friends_info, R.string.to_recommend, this);
         } else {
+            emptyView = emptyViewFactory.createEmptyView(R.drawable.icon_empty_income, R.string.empty_income_info, R.string.to_recommend, this);
             tvBarTitle.setText(String.format(getString(R.string.format_income_degree), degree));
         }
 
@@ -95,7 +104,7 @@ public class IncomePeopleActivity extends BaseActivity implements BaseQuickAdapt
         incomeReleaseVm.liveData.observe(this, incomePeopleBean -> {
             if (incomePeopleBean.getPage() == 1) {
                 incomePeopleAdapter.setNewData(incomePeopleBean.getList());
-                incomePeopleAdapter.setEmptyView(R.layout.layout_empty, rv);
+                incomePeopleAdapter.setEmptyView(emptyView);
             } else {
                 incomePeopleAdapter.addData(incomePeopleBean.getList());
             }
@@ -149,5 +158,10 @@ public class IncomePeopleActivity extends BaseActivity implements BaseQuickAdapt
         Bundle bundle = new Bundle();
         bundle.putInt(CustomConfig.UID, listBean.getUser_id());
         ActivityUtils.startActivity(bundle, PeopleInfoActivity.class);
+    }
+
+    @Override
+    public void onEmptyClick() {
+        ActivityUtils.startActivity(RecommendFriendsActivity.class);
     }
 }

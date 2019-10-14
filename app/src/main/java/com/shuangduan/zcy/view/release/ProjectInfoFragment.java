@@ -18,6 +18,7 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ProjectMineAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseLazyFragment;
+import com.shuangduan.zcy.factory.EmptyViewFactory;
 import com.shuangduan.zcy.model.bean.ProjectMineBean;
 import com.shuangduan.zcy.model.event.ProjectReleaseEvent;
 import com.shuangduan.zcy.view.projectinfo.ProjectDetailActivity;
@@ -38,7 +39,7 @@ import butterknife.BindView;
  * @chang time
  * @class describe
  */
-public class ProjectInfoFragment extends BaseLazyFragment {
+public class ProjectInfoFragment extends BaseLazyFragment{
 
     @BindView(R.id.rv)
     RecyclerView rv;
@@ -67,20 +68,19 @@ public class ProjectInfoFragment extends BaseLazyFragment {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
+        View emptyView = createEmptyView(R.drawable.icon_empty_project, R.string.empty_release_project_info, 0, null);
+
         rv.setLayoutManager(new LinearLayoutManager(mContext));
         rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
         ProjectMineAdapter adapter = new ProjectMineAdapter(R.layout.item_mine_project, null);
         adapter.setEmptyView(R.layout.layout_loading, rv);
         rv.setAdapter(adapter);
-        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter helper, View view, int position) {
-                ProjectMineBean.ListBean listBean = adapter.getData().get(position);
-                Bundle bundle = new Bundle();
-                bundle.putInt(CustomConfig.PROJECT_ID, listBean.getId());
-                bundle.putInt(CustomConfig.LOCATION, 1);
-                ActivityUtils.startActivity(bundle, ProjectDetailActivity.class);
-            }
+        adapter.setOnItemClickListener((helper, view, position) -> {
+            ProjectMineBean.ListBean listBean = adapter.getData().get(position);
+            Bundle bundle = new Bundle();
+            bundle.putInt(CustomConfig.PROJECT_ID, listBean.getId());
+            bundle.putInt(CustomConfig.LOCATION, 1);
+            ActivityUtils.startActivity(bundle, ProjectDetailActivity.class);
         });
 
         mineReleaseVm = ViewModelProviders.of(this).get(MineReleaseVm.class);
@@ -88,8 +88,8 @@ public class ProjectInfoFragment extends BaseLazyFragment {
             isInited = true;
             if (projectMineBean.getPage() == 1) {
                 adapter.setNewData(projectMineBean.getList());
-                adapter.setEmptyView(R.layout.layout_empty, rv);
-            }else {
+                adapter.setEmptyView(emptyView);
+            } else {
                 adapter.addData(projectMineBean.getList());
             }
             setNoMore(projectMineBean.getPage(), projectMineBean.getCount());
@@ -114,27 +114,29 @@ public class ProjectInfoFragment extends BaseLazyFragment {
     }
 
     @Subscribe
-    public void onEventReleaseSuccess(ProjectReleaseEvent event){
+    public void onEventReleaseSuccess(ProjectReleaseEvent event) {
         mineReleaseVm.myProject();
     }
 
-    private void setNoMore(int page, int count){
-        if (page == 1){
-            if (page * 10 >= count){
-                if (refresh.getState() == RefreshState.None){
+    private void setNoMore(int page, int count) {
+        if (page == 1) {
+            if (page * 10 >= count) {
+                if (refresh.getState() == RefreshState.None) {
                     refresh.setNoMoreData(true);
-                }else {
+                } else {
                     refresh.finishRefreshWithNoMoreData();
                 }
-            }else {
+            } else {
                 refresh.finishRefresh();
             }
-        }else {
-            if (page * 10 >= count){
+        } else {
+            if (page * 10 >= count) {
                 refresh.finishLoadMoreWithNoMoreData();
-            }else {
+            } else {
                 refresh.finishLoadMore();
             }
         }
     }
+
+
 }

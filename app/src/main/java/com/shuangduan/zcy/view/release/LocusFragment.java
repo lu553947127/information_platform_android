@@ -1,6 +1,7 @@
 package com.shuangduan.zcy.view.release;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProviders;
@@ -60,6 +61,8 @@ public class LocusFragment extends BaseLazyFragment {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
+        View emptyView = createEmptyView(R.drawable.icon_empty_project, R.string.empty_release_dynamics_info, 0, null);
+
         rv.setLayoutManager(new LinearLayoutManager(mContext));
         rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
         LocusMineAdapter adapter = new LocusMineAdapter(R.layout.item_mine_locus, null);
@@ -78,7 +81,7 @@ public class LocusFragment extends BaseLazyFragment {
             isInited = true;
             if (locusMineBean.getPage() == 1) {
                 adapter.setNewData(locusMineBean.getList());
-                adapter.setEmptyView(R.layout.layout_empty, rv);
+                adapter.setEmptyView(emptyView);
             }else {
                 adapter.addData(locusMineBean.getList());
             }

@@ -3,6 +3,7 @@ package com.shuangduan.zcy.rongyun.view;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
@@ -30,11 +31,13 @@ import com.shuangduan.zcy.app.Common;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
+import com.shuangduan.zcy.factory.EmptyViewFactory;
 import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
 import com.shuangduan.zcy.model.bean.IMFriendApplyListBean;
 import com.shuangduan.zcy.model.bean.IMFriendOperationBean;
 import com.shuangduan.zcy.utils.LoginUtils;
 import com.shuangduan.zcy.utils.SharedUtils;
+import com.shuangduan.zcy.view.projectinfo.ProjectInfoListActivity;
 import com.shuangduan.zcy.vm.IMAddVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
@@ -59,7 +62,7 @@ import io.rong.message.TextMessage;
  * @chang time
  * @class describe
  */
-public class NewFriendsActivity extends BaseActivity {
+public class NewFriendsActivity extends BaseActivity implements EmptyViewFactory.EmptyViewCallBack {
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
     @BindView(R.id.toolbar)
@@ -70,7 +73,8 @@ public class NewFriendsActivity extends BaseActivity {
     SmartRefreshLayout refresh;
     NewFriendAdapter newFriendAdapter;
     IMFriendApplyListBean imFriendApplyListBean;
-    List<IMFriendApplyListBean.DataBean.ListBean> list=new ArrayList<>();
+    List<IMFriendApplyListBean.DataBean.ListBean> list = new ArrayList<>();
+    private View emptyView;
 
     @Override
     protected int initLayoutRes() {
@@ -85,6 +89,9 @@ public class NewFriendsActivity extends BaseActivity {
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
+
+        emptyView = emptyViewFactory.createEmptyView(R.drawable.icon_empty_circle_contacts, R.string.empty_new_friends_info, R.string.to_look_over, this);
+
         tvBarTitle.setText(getString(R.string.friends_new_notice));
 
 
@@ -94,18 +101,18 @@ public class NewFriendsActivity extends BaseActivity {
         newFriendAdapter.setEmptyView(R.layout.layout_loading, rv);
         rv.setAdapter(newFriendAdapter);
         newFriendAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-            switch (view.getId()){
+            switch (view.getId()) {
                 case R.id.tv_accept://接受
-                    getFriendOperation(imFriendApplyListBean.getData().getList().get(position).getId(),"2","");
+                    getFriendOperation(imFriendApplyListBean.getData().getList().get(position).getId(), "2", "");
                     break;
                 case R.id.tv_refuse://拒绝
                     Bundle bundle = new Bundle();
                     bundle.putInt(CustomConfig.FRIEND_DATA, 3);
-                    bundle.putString("id",imFriendApplyListBean.getData().getList().get(position).getId());
-                    bundle.putString("name",imFriendApplyListBean.getData().getList().get(position).getUsername());
-                    bundle.putString("msg",imFriendApplyListBean.getData().getList().get(position).getApply_user_msg());
-                    bundle.putString("image",imFriendApplyListBean.getData().getList().get(position).getImage());
-                    ActivityUtils.startActivity(bundle,IMAddFriendActivity.class);
+                    bundle.putString("id", imFriendApplyListBean.getData().getList().get(position).getId());
+                    bundle.putString("name", imFriendApplyListBean.getData().getList().get(position).getUsername());
+                    bundle.putString("msg", imFriendApplyListBean.getData().getList().get(position).getApply_user_msg());
+                    bundle.putString("image", imFriendApplyListBean.getData().getList().get(position).getImage());
+                    ActivityUtils.startActivity(bundle, IMAddFriendActivity.class);
                     break;
             }
         });
@@ -127,7 +134,7 @@ public class NewFriendsActivity extends BaseActivity {
     //我的新好友列表
     private void getNewFriendList() {
 
-        OkGo.<String>post(RetrofitHelper.BASE_TEST_URL+ Common.FRIEND_APPLY_LIST)
+        OkGo.<String>post(RetrofitHelper.BASE_TEST_URL + Common.FRIEND_APPLY_LIST)
                 .tag(this)
                 .headers("token", SPUtils.getInstance().getString(SpConfig.TOKEN))//请求头
                 .params("user_id", SPUtils.getInstance().getInt(SpConfig.USER_ID))//用户编号
@@ -143,24 +150,24 @@ public class NewFriendsActivity extends BaseActivity {
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
                         LogUtils.json(response.body());
                         try {
-                            imFriendApplyListBean=new Gson().fromJson(response.body(), IMFriendApplyListBean.class);
-                            if (imFriendApplyListBean.getCode().equals("200")){
+                            imFriendApplyListBean = new Gson().fromJson(response.body(), IMFriendApplyListBean.class);
+                            if (imFriendApplyListBean.getCode().equals("200")) {
                                 list.clear();
                                 list.addAll(imFriendApplyListBean.getData().getList());
-                                setNoMore(imFriendApplyListBean.getData().getPage(),imFriendApplyListBean.getData().getCount());
-                                if(list!=null&&list.size()!=0){
+                                setNoMore(imFriendApplyListBean.getData().getPage(), imFriendApplyListBean.getData().getCount());
+                                if (list != null && list.size() != 0) {
                                     newFriendAdapter.notifyDataSetChanged();
-                                }else {
-                                    newFriendAdapter.setEmptyView(R.layout.layout_empty, rv);
+                                } else {
+                                    newFriendAdapter.setEmptyView(emptyView);
                                 }
-                            }else if (imFriendApplyListBean.getCode().equals("-1")){
+                            } else if (imFriendApplyListBean.getCode().equals("-1")) {
                                 ToastUtils.showShort(imFriendApplyListBean.getMsg());
                                 LoginUtils.getExitLogin();
-                            }else {
-                                newFriendAdapter.setEmptyView(R.layout.layout_empty, rv);
+                            } else {
+                                newFriendAdapter.setEmptyView(emptyView);
                                 list.clear();
                             }
-                        }catch (JsonSyntaxException | IllegalStateException ignored){
+                        } catch (JsonSyntaxException | IllegalStateException ignored) {
                             ToastUtils.showShort(getString(R.string.request_error));
                         }
                     }
@@ -168,15 +175,15 @@ public class NewFriendsActivity extends BaseActivity {
     }
 
     //好友添加/拒绝验证
-    private void getFriendOperation(String user_id,String status,String msg) {
+    private void getFriendOperation(String user_id, String status, String msg) {
 
-        OkGo.<String>post(RetrofitHelper.BASE_TEST_URL+ Common.FRIEND_OPERATION)
+        OkGo.<String>post(RetrofitHelper.BASE_TEST_URL + Common.FRIEND_OPERATION)
                 .tag(this)
                 .headers("token", SPUtils.getInstance().getString(SpConfig.TOKEN))//请求头
                 .params("user_id", SPUtils.getInstance().getInt(SpConfig.USER_ID))//用户编号
-                .params("id",user_id)//接受/拒绝用户编号
-                .params("status",status)//接受/拒绝
-                .params("msg",msg)//接受/拒绝原因
+                .params("id", user_id)//接受/拒绝用户编号
+                .params("status", status)//接受/拒绝
+                .params("msg", msg)//接受/拒绝原因
                 .execute(new com.lzy.okgo.callback.StringCallback() {//返回值
 
                     @Override
@@ -189,49 +196,56 @@ public class NewFriendsActivity extends BaseActivity {
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
                         LogUtils.json(response.body());
                         try {
-                            IMFriendOperationBean bean=new Gson().fromJson(response.body(), IMFriendOperationBean.class);
-                            if (bean.getCode().equals("200")){
+                            IMFriendOperationBean bean = new Gson().fromJson(response.body(), IMFriendOperationBean.class);
+                            if (bean.getCode().equals("200")) {
                                 getNewFriendList();
-                            }else if (bean.getCode().equals("-1")){
+                            } else if (bean.getCode().equals("-1")) {
                                 ToastUtils.showShort(bean.getMsg());
                                 LoginUtils.getExitLogin();
-                            }else {
+                            } else {
                                 ToastUtils.showShort(bean.getMsg());
                             }
-                        }catch (JsonSyntaxException | IllegalStateException ignored){
+                        } catch (JsonSyntaxException | IllegalStateException ignored) {
                             ToastUtils.showShort(getString(R.string.request_error));
                         }
                     }
                 });
     }
 
-    private void setNoMore(int page, int count){
-        if (page == 1){
-            if (page * 10 >= count){
-                if (refresh.getState() == RefreshState.None){
+    private void setNoMore(int page, int count) {
+        if (page == 1) {
+            if (page * 10 >= count) {
+                if (refresh.getState() == RefreshState.None) {
                     refresh.setNoMoreData(true);
-                }else {
+                } else {
                     refresh.finishRefreshWithNoMoreData();
                 }
-            }else {
+            } else {
                 refresh.finishRefresh();
             }
-        }else {
-            if (page * 10 >= count){
+        } else {
+            if (page * 10 >= count) {
                 refresh.finishLoadMoreWithNoMoreData();
-            }else {
+            } else {
                 refresh.finishLoadMore();
             }
         }
     }
 
     @OnClick(R.id.iv_bar_back)
-    void onClick(){finish();}
+    void onClick() {
+        finish();
+    }
 
 
     @Override
     protected void onResume() {
         super.onResume();
         getNewFriendList();
+    }
+
+    @Override
+    public void onEmptyClick() {
+        ActivityUtils.startActivity(ProjectInfoListActivity.class);
     }
 }

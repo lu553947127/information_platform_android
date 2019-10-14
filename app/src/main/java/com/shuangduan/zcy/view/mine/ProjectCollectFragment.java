@@ -17,8 +17,10 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ProjectCollectAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseFragment;
+import com.shuangduan.zcy.factory.EmptyViewFactory;
 import com.shuangduan.zcy.model.bean.ProjectCollectBean;
 import com.shuangduan.zcy.view.projectinfo.ProjectDetailActivity;
+import com.shuangduan.zcy.view.projectinfo.ProjectInfoListActivity;
 import com.shuangduan.zcy.vm.MineCollectionVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
@@ -34,7 +36,7 @@ import butterknife.BindView;
  * @chang time
  * @class describe
  */
-public class ProjectCollectFragment extends BaseFragment {
+public class ProjectCollectFragment extends BaseFragment implements EmptyViewFactory.EmptyViewCallBack {
     @BindView(R.id.rv)
     RecyclerView rv;
     @BindView(R.id.refresh)
@@ -62,6 +64,8 @@ public class ProjectCollectFragment extends BaseFragment {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState, View v) {
+        View emptyView = createEmptyView(R.drawable.icon_empty_project, R.string.empty_project_collect_info, R.string.to_look_over, this);
+
         rv.setLayoutManager(new LinearLayoutManager(mContext));
         rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
         ProjectCollectAdapter adapter = new ProjectCollectAdapter(R.layout.item_mine_project, null);
@@ -79,8 +83,8 @@ public class ProjectCollectFragment extends BaseFragment {
         mineCollectionVm.projectCollectLiveData.observe(this, projectCollectBean -> {
             if (projectCollectBean.getPage() == 1) {
                 adapter.setNewData(projectCollectBean.getList());
-                adapter.setEmptyView(R.layout.layout_empty, rv);
-            }else {
+                adapter.setEmptyView(emptyView);
+            } else {
                 adapter.addData(projectCollectBean.getList());
             }
             setNoMore(projectCollectBean.getPage(), projectCollectBean.getCount());
@@ -104,23 +108,28 @@ public class ProjectCollectFragment extends BaseFragment {
         mineCollectionVm.projectCollection();
     }
 
-    private void setNoMore(int page, int count){
-        if (page == 1){
-            if (page * 10 >= count){
-                if (refresh.getState() == RefreshState.None){
+    private void setNoMore(int page, int count) {
+        if (page == 1) {
+            if (page * 10 >= count) {
+                if (refresh.getState() == RefreshState.None) {
                     refresh.setNoMoreData(true);
-                }else {
+                } else {
                     refresh.finishRefreshWithNoMoreData();
                 }
-            }else {
+            } else {
                 refresh.finishRefresh();
             }
-        }else {
-            if (page * 10 >= count){
+        } else {
+            if (page * 10 >= count) {
                 refresh.finishLoadMoreWithNoMoreData();
-            }else {
+            } else {
                 refresh.finishLoadMore();
             }
         }
+    }
+
+    @Override
+    public void onEmptyClick() {
+        ActivityUtils.startActivity(ProjectInfoListActivity.class);
     }
 }

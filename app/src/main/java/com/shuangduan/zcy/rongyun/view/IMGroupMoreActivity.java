@@ -3,6 +3,7 @@ package com.shuangduan.zcy.rongyun.view;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,6 +12,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
@@ -29,9 +31,11 @@ import com.shuangduan.zcy.adapter.IMGroupListAdapter;
 import com.shuangduan.zcy.app.Common;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
+import com.shuangduan.zcy.factory.EmptyViewFactory;
 import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
 import com.shuangduan.zcy.model.bean.IMGroupListBean;
 import com.shuangduan.zcy.utils.LoginUtils;
+import com.shuangduan.zcy.view.projectinfo.ProjectInfoListActivity;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
 import java.util.ArrayList;
@@ -52,7 +56,7 @@ import io.rong.imkit.RongIM;
  * @class describe
  */
 @SuppressLint("Registered")
-public class IMGroupMoreActivity extends BaseActivity {
+public class IMGroupMoreActivity extends BaseActivity implements EmptyViewFactory.EmptyViewCallBack {
 
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
@@ -65,11 +69,12 @@ public class IMGroupMoreActivity extends BaseActivity {
     @BindView(R.id.refresh)
     SmartRefreshLayout refresh;
     IMGroupListAdapter imGroupListAdapter;
-    List<IMGroupListBean.DataBean.ListBean> listGroup=new ArrayList<>();
+    List<IMGroupListBean.DataBean.ListBean> listGroup = new ArrayList<>();
     IMGroupListBean imGroupListBean;
     String name;
-    int pageSize=20;
+    int pageSize = 20;
     int count;
+    private View emptyView;
 
     @Override
     protected int initLayoutRes() {
@@ -84,6 +89,8 @@ public class IMGroupMoreActivity extends BaseActivity {
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
+        emptyView = emptyViewFactory.createEmptyView(R.drawable.icon_empty_circle_contacts, R.string.empty_im_group_info, R.string.to_look_over, this);
+
         tvBarTitle.setText(getString(R.string.search_group));
         tvTitle.setText(getString(R.string.im_search_group));
         rvGroup.setLayoutManager(new LinearLayoutManager(this));
@@ -92,30 +99,30 @@ public class IMGroupMoreActivity extends BaseActivity {
         imGroupListAdapter.setEmptyView(R.layout.layout_loading, rvGroup);
         rvGroup.setAdapter(imGroupListAdapter);
 
-        name=getIntent().getStringExtra("name");
+        name = getIntent().getStringExtra("name");
 
         refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                if (pageSize<count){
-                    pageSize+=20;
-                    if (name!=null){
-                        getGroupList("1",pageSize);
-                    }else {
-                        getGroupList("",pageSize);
+                if (pageSize < count) {
+                    pageSize += 20;
+                    if (name != null) {
+                        getGroupList("1", pageSize);
+                    } else {
+                        getGroupList("", pageSize);
                     }
                     refreshLayout.finishLoadMore(2000);
-                }else {
+                } else {
                     refresh.finishLoadMoreWithNoMoreData();
                 }
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                if (name!=null){
-                    getGroupList("1",pageSize);
-                }else {
-                    getGroupList("",pageSize);
+                if (name != null) {
+                    getGroupList("1", pageSize);
+                } else {
+                    getGroupList("", pageSize);
                 }
                 refresh.finishRefresh(2000);
             }
@@ -123,32 +130,37 @@ public class IMGroupMoreActivity extends BaseActivity {
         imGroupListAdapter.setOnItemClickListener((adapter, view, position) -> RongIM.getInstance().startGroupChat(IMGroupMoreActivity.this
                 , imGroupListBean.getData().getList().get(position).getGroup_id()
                 , imGroupListBean.getData().getList().get(position).getGroup_name()));
-        if (name!=null){
-            getGroupList("1",pageSize);
-        }else {
-            getGroupList("",pageSize);
+        if (name != null) {
+            getGroupList("1", pageSize);
+        } else {
+            getGroupList("", pageSize);
         }
     }
 
     //我的群组列表
-    private void getGroupList(String size,int pageSize) {
+    private void getGroupList(String size, int pageSize) {
 
-        if(size.equals("1")){
-            OkGo.<String>post(RetrofitHelper.BASE_TEST_URL+ Common.SEARCH_GROUP)
+        if (size.equals("1")) {
+            OkGo.<String>post(RetrofitHelper.BASE_TEST_URL + Common.SEARCH_GROUP)
                     .tag(this)
                     .headers("token", SPUtils.getInstance().getString(SpConfig.TOKEN))//请求头
                     .params("user_id", SPUtils.getInstance().getInt(SpConfig.USER_ID))//用户编号
-                    .params("name",name)
-                    .params("pageSize",pageSize)
+                    .params("name", name)
+                    .params("pageSize", pageSize)
                     .execute(new MyStringCallback());
-        }else {
-            OkGo.<String>post(RetrofitHelper.BASE_TEST_URL+ Common.WECHAT_MY_GROUP)
+        } else {
+            OkGo.<String>post(RetrofitHelper.BASE_TEST_URL + Common.WECHAT_MY_GROUP)
                     .tag(this)
                     .headers("token", SPUtils.getInstance().getString(SpConfig.TOKEN))//请求头
                     .params("user_id", SPUtils.getInstance().getInt(SpConfig.USER_ID))//用户编号
-                    .params("pageSize",pageSize)
+                    .params("pageSize", pageSize)
                     .execute(new MyStringCallback());
         }
+    }
+
+    @Override
+    public void onEmptyClick() {
+        ActivityUtils.startActivity(ProjectInfoListActivity.class);
     }
 
     public class MyStringCallback extends StringCallback {
@@ -163,29 +175,31 @@ public class IMGroupMoreActivity extends BaseActivity {
         public void onSuccess(Response<String> response) {
             LogUtils.json(response.body());
             try {
-                imGroupListBean=new Gson().fromJson(response.body(), IMGroupListBean.class);
-                if (imGroupListBean.getCode().equals("200")){
+                imGroupListBean = new Gson().fromJson(response.body(), IMGroupListBean.class);
+                if (imGroupListBean.getCode().equals("200")) {
                     listGroup.clear();
                     listGroup.addAll(imGroupListBean.getData().getList());
-                    count=imGroupListBean.getData().getCount();
-                    if(listGroup!=null&&listGroup.size()!=0){
+                    count = imGroupListBean.getData().getCount();
+                    if (listGroup != null && listGroup.size() != 0) {
                         imGroupListAdapter.notifyDataSetChanged();
-                    }else {
-                        imGroupListAdapter.setEmptyView(R.layout.layout_empty, rvGroup);
+                    } else {
+                        imGroupListAdapter.setEmptyView(emptyView);
                     }
-                }else if (imGroupListBean.getCode().equals("-1")){
+                } else if (imGroupListBean.getCode().equals("-1")) {
                     ToastUtils.showShort(imGroupListBean.getMsg());
                     LoginUtils.getExitLogin();
-                }else {
-                    imGroupListAdapter.setEmptyView(R.layout.layout_empty, rvGroup);
+                } else {
+                    imGroupListAdapter.setEmptyView(emptyView);
                     listGroup.clear();
                 }
-            }catch (JsonSyntaxException | IllegalStateException ignored){
+            } catch (JsonSyntaxException | IllegalStateException ignored) {
                 ToastUtils.showShort(getString(R.string.request_error));
             }
         }
     }
 
     @OnClick({R.id.iv_bar_back})
-    void onClick(){ finish(); }
+    void onClick() {
+        finish();
+    }
 }

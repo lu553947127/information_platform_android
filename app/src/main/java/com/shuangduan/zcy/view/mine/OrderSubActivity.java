@@ -1,6 +1,7 @@
 package com.shuangduan.zcy.view.mine;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
@@ -9,6 +10,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -17,6 +19,8 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.SubOrderAdapter;
 import com.shuangduan.zcy.base.BaseActivity;
+import com.shuangduan.zcy.factory.EmptyViewFactory;
+import com.shuangduan.zcy.view.projectinfo.ProjectInfoListActivity;
 import com.shuangduan.zcy.vm.OrderVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
@@ -33,7 +37,7 @@ import butterknife.OnClick;
  * @chang time
  * @class describe
  */
-public class OrderSubActivity extends BaseActivity {
+public class OrderSubActivity extends BaseActivity implements EmptyViewFactory.EmptyViewCallBack {
 
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
@@ -58,6 +62,9 @@ public class OrderSubActivity extends BaseActivity {
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
+
+        View emptyView = emptyViewFactory.createEmptyView(R.drawable.icon_empty_deal, R.string.empty_mine_sub_info, R.string.to_subscribe, this);
+
         tvBarTitle.setText(getString(R.string.subscribe));
 
         rv.setLayoutManager(new LinearLayoutManager(this));
@@ -70,8 +77,8 @@ public class OrderSubActivity extends BaseActivity {
         orderVm.subLiveData.observe(this, orderSubBean -> {
             if (orderSubBean.getPage() == 1) {
                 adapter.setNewData(orderSubBean.getList());
-                adapter.setEmptyView(R.layout.layout_empty, rv);
-            }else {
+                adapter.setEmptyView(emptyView);
+            } else {
                 adapter.addData(orderSubBean.getList());
             }
             setNoMore(orderSubBean.getPage(), orderSubBean.getCount());
@@ -92,26 +99,33 @@ public class OrderSubActivity extends BaseActivity {
         orderVm.getSubOrder();
     }
 
-    private void setNoMore(int page, int count){
-        if (page == 1){
-            if (page * 10 >= count){
-                if (refresh.getState() == RefreshState.None){
+    private void setNoMore(int page, int count) {
+        if (page == 1) {
+            if (page * 10 >= count) {
+                if (refresh.getState() == RefreshState.None) {
                     refresh.setNoMoreData(true);
-                }else {
+                } else {
                     refresh.finishRefreshWithNoMoreData();
                 }
-            }else {
+            } else {
                 refresh.finishRefresh();
             }
-        }else {
-            if (page * 10 >= count){
+        } else {
+            if (page * 10 >= count) {
                 refresh.finishLoadMoreWithNoMoreData();
-            }else {
+            } else {
                 refresh.finishLoadMore();
             }
         }
     }
 
     @OnClick(R.id.iv_bar_back)
-    void onClick(){finish();}
+    void onClick() {
+        finish();
+    }
+
+    @Override
+    public void onEmptyClick() {
+        ActivityUtils.startActivity(ProjectInfoListActivity.class);
+    }
 }

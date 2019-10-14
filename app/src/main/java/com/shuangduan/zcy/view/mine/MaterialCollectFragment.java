@@ -1,6 +1,7 @@
 package com.shuangduan.zcy.view.mine;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProviders;
@@ -16,8 +17,10 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.MaterialCollectAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseLazyFragment;
+import com.shuangduan.zcy.factory.EmptyViewFactory;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.MaterialCollectBean;
+import com.shuangduan.zcy.view.material.MaterialActivity;
 import com.shuangduan.zcy.view.material.MaterialDetailActivity;
 import com.shuangduan.zcy.vm.MineCollectionVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
@@ -33,7 +36,7 @@ import butterknife.BindView;
  * @change
  * @class describe
  */
-public class MaterialCollectFragment extends BaseLazyFragment {
+public class MaterialCollectFragment extends BaseLazyFragment implements EmptyViewFactory.EmptyViewCallBack {
     @BindView(R.id.rv)
     RecyclerView rv;
     @BindView(R.id.refresh)
@@ -61,6 +64,7 @@ public class MaterialCollectFragment extends BaseLazyFragment {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
+        View emptyView = createEmptyView(R.drawable.icon_empty_project, R.string.empty_material_collect_info, R.string.to_look_over, this);
         rv.setLayoutManager(new LinearLayoutManager(mContext));
         rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
         MaterialCollectAdapter materialAdapter = new MaterialCollectAdapter(R.layout.item_material, null);
@@ -77,7 +81,7 @@ public class MaterialCollectFragment extends BaseLazyFragment {
         mineCollectionVm.materialCollectLiveData.observe(this, recruitBean -> {
             if (recruitBean.getPage() == 1) {
                 materialAdapter.setNewData(recruitBean.getList());
-                materialAdapter.setEmptyView(R.layout.layout_empty, rv);
+                materialAdapter.setEmptyView(emptyView);
             } else {
                 materialAdapter.addData(recruitBean.getList());
             }
@@ -122,5 +126,10 @@ public class MaterialCollectFragment extends BaseLazyFragment {
                 refresh.finishLoadMore();
             }
         }
+    }
+
+    @Override
+    public void onEmptyClick() {
+        ActivityUtils.startActivity(MaterialActivity.class);
     }
 }

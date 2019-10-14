@@ -616,16 +616,53 @@
     <string name="go_release">去发布</string>
     <string name="pull_strings">找关系</string>
     <string name="to_release">前去发布</string>
+    <string name="to_subscribe">前往认购</string>
+    <string name="to_recommend">前往推荐</string>
+    <string name="to_look_over">前往查看</string>
     <string name="empty_project_address_info">您所处的位置周围\n没有工程项目,换个地方吧！</string>
     <string name="empty_project_info">未找到相关的工程信息\n查看全部工程信息</string>
+    <string name="empty_release_project_info">您还没有发布工程信息\n快去发布吧</string>
+    <string name="empty_release_dynamics_info">您还没有发布动态信息\n快去发布吧</string>
+    <string name="empty_get_project_info">您还没有查看工程信息\n查看工程信息可加入讨论组,快去加入吧</string>
+    <string name="empty_get_dynamics_info">您还没有查看动态信息\n查看动态信息可加入讨论组,快去加入吧</string>
+    <string name="empty_get_supplier_info">查看供应商信息\n获取更多优质供应商</string>
+    <string name="empty_get_recruit_info">查看招采信息\n获取更多资讯</string>
+
+
     <string name="empty_relationship_info">您还没有发布过找关系\n前往发布</string>
     <string name="empty_mine_order_info">帮助他人的同时,增加个人收益,快快行动吧！</string>
     <string name="empty_mine_substance_info">您还没有发过找物资\n前往发布</string>
     <string name="empty_mine_buyer_info">您还没有发布过找买家\n前往发布</string>
+    <string name="empty_mine_sub_info">认购工程信息,增加个人收益</string>
+
     <string name="empty_pull_strings_info">暂无找关系数据</string>
     <string name="empty_substance_info">暂无找物资数据</string>
     <string name="empty_buyer_info">暂无找买家数据</string>
     <string name="empty_substance_screen_info">未找到相关的物资信息\n查看全部物资信息</string>
     <string name="empty_substance_list_info">还没有供应商发布基建物资</string>
     <string name="empty_project_income_info">您还没有信息\n收益,去发布工程信息吧</string>
+    <string name="empty_dynamics_income_info">您还没有动态\n收益,去发布动态信息吧 </string>
+    <string name="empty_subscribe_income_info">您还没有认购\n收益,去认购信息吧</string>
+    <string name="empty_people_income_info">您还没有人脉\n收益,去拓展人脉吧</string>
+    <string name="empty_recommend_friends_info">推荐好友，获取收益</string>
+
+
+    <string name="empty_project_subscribe_info">您的业务地区暂时没有\n相关工程信息,我们已经尽力了</string>
+    <string name="empty_recruit_subscribe_info">您的业务地区暂时没有\n相关招采信息,我们已经尽力了</string>
+
+    <string name="empty_deal_info">暂无交易记录</string>
+    <string name="empty_contacts_msg_info">暂无消息</string>
+    <string name="empty_income_info">暂无消息</string>
+
+
+    <string name="empty_project_collect_info">您还没收藏过工程信息\n前往查看全部工程信息</string>
+    <string name="empty_recruit_collect_info">您还没收藏过招采信息</string>
+    <string name="empty_material_collect_info">您还没收藏过物资信息</string>
+
+
+    <string name="empty_new_friends_info">查看工程信息,获取更多好友</string>
+    <string name="empty_im_group_info">查看工程信息\n可加入讨论组,快去加入吧</string>
+
+
+
 </resources>

@@ -13,9 +13,11 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ReadHistoryAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseLazyFragment;
+import com.shuangduan.zcy.factory.EmptyViewFactory;
 import com.shuangduan.zcy.model.bean.ProjectSubBean;
 import com.shuangduan.zcy.model.bean.ReadHistoryBean;
 import com.shuangduan.zcy.view.projectinfo.ProjectDetailActivity;
+import com.shuangduan.zcy.view.projectinfo.ProjectInfoListActivity;
 import com.shuangduan.zcy.vm.ReadHistoryVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
@@ -31,7 +33,7 @@ import butterknife.BindView;
  * @chang time
  * @class describe
  */
-public class ProjectHistoryFragment extends BaseLazyFragment {
+public class ProjectHistoryFragment extends BaseLazyFragment implements EmptyViewFactory.EmptyViewCallBack {
     @BindView(R.id.rv)
     RecyclerView rv;
     private ReadHistoryVm readHistoryVm;
@@ -57,6 +59,8 @@ public class ProjectHistoryFragment extends BaseLazyFragment {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
+        View emptyView = createEmptyView(R.drawable.icon_empty_project, R.string.empty_get_project_info, R.string.to_look_over, this);
+
         rv.setLayoutManager(new LinearLayoutManager(mContext));
         rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
         ReadHistoryAdapter readHistoryAdapter = new ReadHistoryAdapter(R.layout.item_read_history, null);
@@ -74,12 +78,17 @@ public class ProjectHistoryFragment extends BaseLazyFragment {
         readHistoryVm.projectHistoryLiveData.observe(this, readHistoryBeans -> {
             isInited = true;
             readHistoryAdapter.setNewData(readHistoryBeans);
-            readHistoryAdapter.setEmptyView(R.layout.layout_empty_top, rv);
+            readHistoryAdapter.setEmptyView(emptyView);
         });
     }
 
     @Override
     protected void initDataFromService() {
         readHistoryVm.getProjectHistory();
+    }
+
+    @Override
+    public void onEmptyClick() {
+        ActivityUtils.startActivity(ProjectInfoListActivity.class);
     }
 }

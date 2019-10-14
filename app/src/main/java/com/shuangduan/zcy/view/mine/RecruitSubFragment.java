@@ -1,6 +1,7 @@
 package com.shuangduan.zcy.view.mine;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProviders;
@@ -61,6 +62,9 @@ public class RecruitSubFragment extends BaseLazyFragment {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
+
+        View emptyView = createEmptyView(R.drawable.icon_empty_subscibe, R.string.empty_recruit_subscribe_info, 0, null);
+
         rv.setLayoutManager(new LinearLayoutManager(mContext));
         rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
         RecruitSubAdapter recruitAdapter = new RecruitSubAdapter(R.layout.item_recruit, null);
@@ -78,8 +82,8 @@ public class RecruitSubFragment extends BaseLazyFragment {
         mineSubVm.recruitLiveData.observe(this, recruitSubBean -> {
             if (recruitSubBean.getPage() == 1) {
                 recruitAdapter.setNewData(recruitSubBean.getList());
-                recruitAdapter.setEmptyView(R.layout.layout_empty, rv);
-            }else {
+                recruitAdapter.setEmptyView(emptyView);
+            } else {
                 recruitAdapter.addData(recruitSubBean.getList());
             }
             setNoMore(recruitSubBean.getPage(), recruitSubBean.getCount());
@@ -103,21 +107,21 @@ public class RecruitSubFragment extends BaseLazyFragment {
 
     }
 
-    private void setNoMore(int page, int count){
-        if (page == 1){
-            if (page * 10 >= count){
-                if (refresh.getState() == RefreshState.None){
+    private void setNoMore(int page, int count) {
+        if (page == 1) {
+            if (page * 10 >= count) {
+                if (refresh.getState() == RefreshState.None) {
                     refresh.setNoMoreData(true);
-                }else {
+                } else {
                     refresh.finishRefreshWithNoMoreData();
                 }
-            }else {
+            } else {
                 refresh.finishRefresh();
             }
-        }else {
-            if (page * 10 >= count){
+        } else {
+            if (page * 10 >= count) {
                 refresh.finishLoadMoreWithNoMoreData();
-            }else {
+            } else {
                 refresh.finishLoadMore();
             }
         }

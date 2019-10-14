@@ -85,6 +85,8 @@ public class TransRecordActivity extends BaseActivity {
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
+        View emptyView = emptyViewFactory.createEmptyView(R.drawable.icon_empty_deal, R.string.empty_deal_info, 0, null);
+
         tvBarTitle.setText(getResources().getString(R.string.transaction_record));
 
         rv.setLayoutManager(new LinearLayoutManager(this));
@@ -102,7 +104,7 @@ public class TransRecordActivity extends BaseActivity {
         transRecordVm.transRecordLiveData.observe(this, transRecordBean -> {
             if (transRecordBean.getPage() == 1) {
                 transRecordAdapter.setNewData(transRecordBean.getList());
-                transRecordAdapter.setEmptyView(R.layout.layout_empty, rv);
+                transRecordAdapter.setEmptyView(emptyView);
             }else {
                 transRecordAdapter.addData(transRecordBean.getList());
             }

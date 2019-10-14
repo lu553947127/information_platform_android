@@ -62,6 +62,9 @@ public class ProjectSubFragment extends BaseFragment {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState, View v) {
+
+        View emptyView = createEmptyView(R.drawable.icon_empty_subscibe, R.string.empty_project_subscribe_info, 0, null);
+
         rv.setLayoutManager(new LinearLayoutManager(mContext));
         rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
         ProjectSubAdapter adapter = new ProjectSubAdapter(R.layout.item_mine_project, null);
@@ -80,7 +83,7 @@ public class ProjectSubFragment extends BaseFragment {
         mineSubVm.projectLiveData.observe(this, projectMineBean -> {
             if (projectMineBean.getPage() == 1) {
                 adapter.setNewData(projectMineBean.getList());
-                adapter.setEmptyView(R.layout.layout_empty, rv);
+                adapter.setEmptyView(emptyView);
             }else {
                 adapter.addData(projectMineBean.getList());
             }

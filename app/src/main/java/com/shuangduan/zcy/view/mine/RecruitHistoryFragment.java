@@ -1,6 +1,7 @@
 package com.shuangduan.zcy.view.mine;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -11,8 +12,10 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ReadHistoryAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseLazyFragment;
+import com.shuangduan.zcy.factory.EmptyViewFactory;
 import com.shuangduan.zcy.model.bean.ReadHistoryBean;
 import com.shuangduan.zcy.view.projectinfo.ProjectDetailActivity;
+import com.shuangduan.zcy.view.recruit.RecruitActivity;
 import com.shuangduan.zcy.view.recruit.RecruitDetailActivity;
 import com.shuangduan.zcy.vm.ReadHistoryVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
@@ -29,7 +32,7 @@ import butterknife.BindView;
  * @chang time
  * @class describe
  */
-public class RecruitHistoryFragment extends BaseLazyFragment {
+public class RecruitHistoryFragment extends BaseLazyFragment implements EmptyViewFactory.EmptyViewCallBack {
     @BindView(R.id.rv)
     RecyclerView rv;
     private ReadHistoryVm readHistoryVm;
@@ -55,6 +58,8 @@ public class RecruitHistoryFragment extends BaseLazyFragment {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
+        View emptyView = createEmptyView(R.drawable.icon_empty_project, R.string.empty_get_recruit_info, R.string.to_look_over, this);
+
         rv.setLayoutManager(new LinearLayoutManager(mContext));
         rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
         ReadHistoryAdapter readHistoryAdapter = new ReadHistoryAdapter(R.layout.item_read_history, null);
@@ -71,12 +76,17 @@ public class RecruitHistoryFragment extends BaseLazyFragment {
         readHistoryVm.recruitHistoryLiveData.observe(this, readHistoryBeans -> {
             isInited = true;
             readHistoryAdapter.setNewData(readHistoryBeans);
-            readHistoryAdapter.setEmptyView(R.layout.layout_empty_top, rv);
+            readHistoryAdapter.setEmptyView(emptyView);
         });
     }
 
     @Override
     protected void initDataFromService() {
         readHistoryVm.getRecruitHistory();
+    }
+
+    @Override
+    public void onEmptyClick() {
+        ActivityUtils.startActivity(RecruitActivity.class);
     }
 }
