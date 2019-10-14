@@ -2,6 +2,7 @@ package com.shuangduan.zcy.view;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -13,7 +14,9 @@ import androidx.core.widget.NestedScrollView;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSmoothScroller;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
@@ -31,7 +34,9 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ClassifyAdapter;
+import com.shuangduan.zcy.adapter.FindRelationshipAdapter;
 import com.shuangduan.zcy.adapter.HomeHeadlinesAdapter;
+import com.shuangduan.zcy.adapter.XTabLayoutAdapter;
 import com.shuangduan.zcy.app.Common;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
@@ -39,6 +44,7 @@ import com.shuangduan.zcy.base.BaseFragment;
 import com.shuangduan.zcy.dialog.UpdateManager;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
+import com.shuangduan.zcy.model.bean.DemandRelationshipBean;
 import com.shuangduan.zcy.model.bean.VersionUpgradesBean;
 import com.shuangduan.zcy.model.bean.ClassifyBean;
 import com.shuangduan.zcy.model.bean.HomeBannerBean;
@@ -49,7 +55,8 @@ import com.shuangduan.zcy.utils.DensityUtil;
 import com.shuangduan.zcy.utils.LoginUtils;
 import com.shuangduan.zcy.utils.VersionUtils;
 import com.shuangduan.zcy.utils.image.GlideImageLoader;
-import com.shuangduan.zcy.view.demand.DemandActivity;
+import com.shuangduan.zcy.view.demand.DemandReleaseActivity;
+import com.shuangduan.zcy.view.demand.FindRelationshipDetailActivity;
 import com.shuangduan.zcy.view.headlines.HeadlinesActivity;
 import com.shuangduan.zcy.view.headlines.HeadlinesDetailActivity;
 import com.shuangduan.zcy.view.material.MaterialActivity;
@@ -57,13 +64,16 @@ import com.shuangduan.zcy.view.income.MineIncomeActivity;
 import com.shuangduan.zcy.view.mine.MineSubActivity;
 import com.shuangduan.zcy.view.projectinfo.ProjectInfoActivity;
 import com.shuangduan.zcy.view.recruit.RecruitActivity;
-import com.shuangduan.zcy.view.release.ReleaseListActivity;
 import com.shuangduan.zcy.view.search.SearchActivity;
 import com.shuangduan.zcy.view.supplier.SupplierActivity;
+import com.shuangduan.zcy.vm.DemandRelationshipVm;
 import com.shuangduan.zcy.vm.HomeVm;
 import com.shuangduan.zcy.weight.AdaptationScrollView;
+import com.shuangduan.zcy.weight.AutoScrollRecyclerView;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 import com.shuangduan.zcy.weight.MarqueeListView;
+import com.shuangduan.zcy.weight.MaterialIndicator;
+import com.shuangduan.zcy.weight.XTabLayout;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -71,9 +81,14 @@ import com.youth.banner.Transformer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Conversation;
 
@@ -99,7 +114,6 @@ public class HomeFragment extends BaseFragment {
     RecyclerView rvClassify;
     @BindView(R.id.refresh)
     SmartRefreshLayout refresh;
-
     @BindView(R.id.rv_infrastructure_headlines)
     RecyclerView rvHeadlines;
     @BindView(R.id.banner)
@@ -108,6 +122,14 @@ public class HomeFragment extends BaseFragment {
     MarqueeListView marqueeView;
     @BindView(R.id.tv_subscribe_state)
     TextView tvSubscribeState;
+    @BindView(R.id.tab_layout)
+    XTabLayout tabLayout;
+    @BindView(R.id.material_indicator)
+    MaterialIndicator materialIndicator;
+    @BindView(R.id.view_pager)
+    ViewPager viewPager;
+    private List<View> viewList=new ArrayList<>();
+    private List<String> titleList=new ArrayList<>();
     private HomeHeadlinesAdapter headlinesAdapter;
     private RelativeLayout relativeLayout;
     private TextView number;
@@ -192,19 +214,8 @@ public class HomeFragment extends BaseFragment {
                 case ClassifyBean.JJWZ:
                     ActivityUtils.startActivity(MaterialActivity.class);
                     break;
-                case ClassifyBean.PQZX:
-                    break;
-                case ClassifyBean.WDSY:
-                    ActivityUtils.startActivity(MineIncomeActivity.class);
-                    break;
                 case ClassifyBean.YZGYS:
                     ActivityUtils.startActivity(SupplierActivity.class);
-                    break;
-                case ClassifyBean.FBXQ:
-                    ActivityUtils.startActivity(DemandActivity.class);
-                    break;
-                case ClassifyBean.FBXX:
-                    ActivityUtils.startActivity(ReleaseListActivity.class);
                     break;
             }
         });
@@ -273,24 +284,132 @@ public class HomeFragment extends BaseFragment {
         });
         homeVm.getInit();
         getBadgeViewInitView();
+        getNeedData();
+    }
+
+    //需求资讯
+    private LinearSmoothScroller mScroller;
+    private Disposable mAutoTask;
+    private AutoScrollRecyclerView recyclerView;
+    @SuppressLint("InflateParams")
+    private void getNeedData() {
+        LayoutInflater inflater = getLayoutInflater();
+        View view1 = inflater.inflate(R.layout.fragment_demand_information, null);
+        View view2 = inflater.inflate(R.layout.fragment_demand_information, null);
+        View view3 = inflater.inflate(R.layout.fragment_demand_information, null);
+        titleList.add("找关系");
+        titleList.add("找物资");
+        titleList.add("找买家");
+        viewList.add(view1);
+        viewList.add(view2);
+        viewList.add(view3);
+        XTabLayoutAdapter xTabLayoutAdapter = new XTabLayoutAdapter(viewList, titleList);
+        viewPager.setAdapter(xTabLayoutAdapter);
+        tabLayout.setupWithViewPager(viewPager);
+        viewPager.addOnPageChangeListener(materialIndicator);
+        materialIndicator.setAdapter(Objects.requireNonNull(viewPager.getAdapter()));
+
+        recyclerView=view1.findViewById(R.id.rv);
+        recyclerView.setNestedScrollingEnabled(false);
+        recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+        recyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
+        FindRelationshipAdapter relationshipAdapter = new FindRelationshipAdapter(R.layout.item_demand_relationship, null);
+        recyclerView.setAdapter(relationshipAdapter);
+
+        relationshipAdapter.setOnItemClickListener((adapter, view, position) -> {
+            DemandRelationshipBean.ListBean listBean = relationshipAdapter.getData().get(position%adapter.getData().size());
+            Bundle bundle = new Bundle();
+            bundle.putInt(CustomConfig.DEMAND_ID, listBean.getId());
+            ActivityUtils.startActivity(bundle, FindRelationshipDetailActivity.class);
+        });
+
+        DemandRelationshipVm demandRelationshipVm= ViewModelProviders.of(mActivity).get(DemandRelationshipVm.class);
+        demandRelationshipVm.getRelationship();
+        demandRelationshipVm.relationshipLiveData.observe(this, relationshipBean -> {
+            if (relationshipBean.getPage() == 1) {
+                relationshipAdapter.setNewData(relationshipBean.getList());
+            } else {
+                relationshipAdapter.addData(relationshipBean.getList());
+            }
+        });
+
+        //item滚动步骤1：自定义LinearSmoothScroller，重写方法，滚动item至顶部，控制滚动速度
+        mScroller = new LinearSmoothScroller(Objects.requireNonNull(getActivity())){
+            //将移动的置顶显示
+            @Override
+            protected int getVerticalSnapPreference() {
+                return LinearSmoothScroller.SNAP_TO_START;
+            }
+            //控制速度，这里注意当速度过慢的时候可能会形成流式的效果，因为这里是代表移动像素的速度，
+            // 当定时器中每隔的2秒之内正好或者还未移动一个item的高度的时候会出现，前一个还没移动完成又继续移动下一个了，就形成了流滚动的效果了
+            // 这个问题后续可通过重写另外一个方法来进行控制，暂时就先这样了
+            @Override
+            protected float calculateSpeedPerPixel(DisplayMetrics displayMetrics) {
+                return 3f / displayMetrics.density;
+            }
+        };
+        startAuto();
+    }
+
+    //item滚动步骤2：设置定时器自动滚动
+    private void startAuto() {
+        if (mAutoTask!= null && !mAutoTask.isDisposed()) {
+            mAutoTask.dispose();
+        }
+        mAutoTask = Observable.interval(1, 2, TimeUnit.SECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(aLong -> {
+            //滚动到指定item
+            mScroller.setTargetPosition(aLong.intValue());
+            Objects.requireNonNull(recyclerView.getLayoutManager()).startSmoothScroll(mScroller);
+        });
+    }
+
+    private void stopAuto() {
+        if (mAutoTask!= null && !mAutoTask.isDisposed()) {
+            mAutoTask.dispose();
+            mAutoTask = null;
+        }
     }
 
     @Override
-    protected void initDataFromService() {}
+    public void onDestroy() {
+        super.onDestroy();
+        stopAuto();
+    }
 
-    @OnClick({R.id.tv_bar_title, R.id.tv_more, R.id.iv_subscribed,R.id.tv_bar_title_home,R.id.iv_subscribed_home})
+    @Override
+    protected void initDataFromService() {
+
+    }
+
+    @OnClick({R.id.tv_bar_title, R.id.tv_more, R.id.iv_subscribed,R.id.tv_bar_title_home,R.id.iv_subscribed_home,R.id.iv_my_income,R.id.rl_zgx,R.id.rl_zwz,R.id.rl_zmj})
     void onClick(View view){
+        Bundle bundle = new Bundle();
         switch (view.getId()){
             case R.id.tv_bar_title:
-            case R.id.tv_bar_title_home:
+            case R.id.tv_bar_title_home://搜索
                 ActivityUtils.startActivity(SearchActivity.class);
                 break;
-            case R.id.tv_more:
+            case R.id.tv_more://基建头条查看更多
                 ActivityUtils.startActivity(HeadlinesActivity.class);
                 break;
             case R.id.iv_subscribed:
-            case R.id.iv_subscribed_home:
+            case R.id.iv_subscribed_home://我的订阅
                 ActivityUtils.startActivity(MineSubActivity.class);
+                break;
+            case R.id.iv_my_income://我的收益
+                ActivityUtils.startActivity(MineIncomeActivity.class);
+                break;
+            case R.id.rl_zgx:
+                bundle.putString("type", "0");
+                ActivityUtils.startActivity(bundle, DemandReleaseActivity.class);
+                break;
+            case R.id.rl_zwz:
+                bundle.putString("type", "1");
+                ActivityUtils.startActivity(bundle,DemandReleaseActivity.class);
+                break;
+            case R.id.rl_zmj:
+                bundle.putString("type", "2");
+                ActivityUtils.startActivity(bundle,DemandReleaseActivity.class);
                 break;
         }
     }
@@ -313,12 +432,7 @@ public class HomeFragment extends BaseFragment {
         list.add(new ClassifyBean(R.drawable.classify_xxgc, classifys[0], 1));
         list.add(new ClassifyBean(R.drawable.classify_zcxx, classifys[1], 2));
         list.add(new ClassifyBean(R.drawable.classify_jjwz, classifys[2], 3));
-//        list.add(new ClassifyBean(R.drawable.classify_pqzx, classifys[3], 4));
-        list.add(new ClassifyBean(R.drawable.classify_wdsy, classifys[4], 5));
-        list.add(new ClassifyBean(R.drawable.classify_gys, classifys[5], 6));
-        list.add(new ClassifyBean(R.drawable.classify_fbxq, classifys[6], 7));
-        list.add(new ClassifyBean(R.drawable.classify_fbxx, classifys[7], 8));
-
+        list.add(new ClassifyBean(R.drawable.classify_yzgys, classifys[3], 4));
         return list;
     }
 

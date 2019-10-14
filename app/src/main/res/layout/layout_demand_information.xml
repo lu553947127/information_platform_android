@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="355dp"
+    android:background="@color/colorFFF"
+    android:layout_marginTop="10dp">
+
+    <LinearLayout
+        android:id="@+id/ll_need"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:drawableLeft="@drawable/shape_home_mark"
+            android:drawablePadding="7dp"
+            android:paddingLeft="16dp"
+            android:textColor="@color/colorTv"
+            android:textSize="15sp"
+            android:text="需求资讯"/>
+
+        <com.shuangduan.zcy.weight.XTabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="93dp"
+            app:x_tabMode="fixed"
+            app:x_tabGravity="fill"
+            app:x_tabIndicatorAnimation="true"
+            app:x_tabIndicatorColor="@color/colorPrimary"
+            app:x_tabSelectedTextColor="@color/colorPrimary"
+            app:x_tabTextColor="@color/color_999999"/>
+    </LinearLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/ll_need"/>
+
+    <com.shuangduan.zcy.weight.MaterialIndicator
+        android:id="@+id/material_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/MaterialIndicator"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="16dp"/>
+</RelativeLayout>

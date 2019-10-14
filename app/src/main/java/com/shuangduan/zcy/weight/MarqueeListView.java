@@ -41,7 +41,7 @@ public class MarqueeListView extends View implements Runnable {
     private String string;//最终绘制的文本
     private float speed = 1;//移动速度
     private int textColor = Color.BLACK;//文字颜色,默认黑色
-    private float textSize = 12;//文字颜色,默认黑色
+    private float textSize = 13;//文字颜色,默认黑色
     private int textDistance;//
     private int textDistance1= 10;//item间距，dp单位
     private String black_count = "";//间距转化成空格距离

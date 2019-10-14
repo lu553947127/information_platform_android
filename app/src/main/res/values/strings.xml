@@ -497,11 +497,11 @@
         <item>工程信息</item>
         <item>招采信息</item>
         <item>基建物资</item>
-        <item>品权中心</item>
-        <item>我的收益</item>
         <item>优质供应商</item>
-        <item>需求广场</item>
-        <item>发布信息</item>
+<!--        <item>品权中心</item>-->
+<!--        <item>我的收益</item>-->
+<!--        <item>需求广场</item>-->
+<!--        <item>发布信息</item>-->
     </string-array>
 
     <string-array name="project_detail">
