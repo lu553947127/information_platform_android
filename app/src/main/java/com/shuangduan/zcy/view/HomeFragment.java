@@ -465,7 +465,7 @@ public class HomeFragment extends BaseFragment {
     public void onStart() {
         super.onStart();
         banner.startAutoPlay();
-//        recyclerView1.startLine();
+        recyclerView1.startLine();
 //        recyclerView2.startLine();
 //        recyclerView3.startLine();
     }
@@ -601,7 +601,6 @@ public class HomeFragment extends BaseFragment {
                                     //版本更新弹出框显示
                                     UpdateManager manager = new UpdateManager(getActivity(), bean);
                                     manager.showNoticeDialog();
-
                                 }
                             }
                         }catch (JsonSyntaxException | IllegalStateException ignored){

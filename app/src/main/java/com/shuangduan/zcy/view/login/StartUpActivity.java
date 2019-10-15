@@ -69,6 +69,8 @@ public class StartUpActivity extends BaseActivity {
             RongIM.connect(token, new RongIMClient.ConnectCallback() {
                 @Override
                 public void onTokenIncorrect() {
+                    ActivityUtils.startActivity(LoginActivity.class);
+                    finish();
                 }
                 @Override
                 public void onSuccess(String userid) {

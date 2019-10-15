@@ -59,6 +59,13 @@
         android:layout_above="@+id/tv_more_need"
         android:visibility="gone"/>
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/icon_version_bottom"
+        android:layout_above="@+id/tv_more_need"
+        android:layout_marginBottom="-10dp" />
+
     <TextView
         android:id="@+id/tv_more_need"
         android:layout_width="wrap_content"

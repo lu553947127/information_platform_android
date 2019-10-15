@@ -174,8 +174,8 @@ public class AppConfig {
 //        RongPushClient.setPushConfig(builder.build());
 
         //融云初始化
-        RongIM.init(context, "pwe86ga5p43i6");//测试版
-//        RongIM.init(context, "pvxdm17jpo4nr");//正式版
+//        RongIM.init(context, "pwe86ga5p43i6");//测试版
+        RongIM.init(context, "pvxdm17jpo4nr");//正式版
         //融云推送初始化
         PushConfig config = new PushConfig
                 .Builder()
