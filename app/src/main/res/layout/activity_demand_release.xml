@@ -70,7 +70,7 @@
             android:textColorHint="@color/colorTvHint"
             android:textColor="@color/colorTv"
             android:textSize="14sp"
-            android:hint="@string/please_hint"/>
+            android:hint="请输入标题"/>
 
         <View
             android:layout_width="match_parent"
@@ -108,7 +108,7 @@
             android:textColorHint="@color/colorTvHint"
             android:textColor="@color/colorTv"
             android:textSize="14sp"
-            android:hint="@string/please_hint"/>
+            android:hint="请输入佣金"/>
 
         <TextView
             android:id="@+id/tv_commission"
@@ -157,7 +157,7 @@
             android:textColorHint="@color/colorTvHint"
             android:textColor="@color/colorTv"
             android:textSize="14sp"
-            android:hint="@string/please_hint"/>
+            android:hint="请输入物资名称"/>
 
         <View
             android:layout_width="match_parent"
@@ -197,7 +197,7 @@
             android:textColorHint="@color/colorTvHint"
             android:textColor="@color/colorTv"
             android:textSize="14sp"
-            android:hint="@string/please_hint"/>
+            android:hint="请输入需求数量"/>
 
         <TextView
             android:id="@+id/tv_demand_num"
@@ -210,7 +210,7 @@
             android:padding="10dp"
             android:textColor="@color/colorTvHint"
             android:textSize="14sp"
-            android:text="选择单位"/>
+            android:text="请选择单位"/>
 
         <View
             android:layout_width="match_parent"
@@ -248,7 +248,7 @@
             android:textColorHint="@color/colorTvHint"
             android:textColor="@color/colorTv"
             android:textSize="14sp"
-            android:hint="@string/please_hint"/>
+            android:hint="请输入需求项目"/>
 
         <View
             android:layout_width="match_parent"
@@ -286,7 +286,7 @@
             android:textColorHint="@color/colorTvHint"
             android:textColor="@color/colorTv"
             android:textSize="14sp"
-            android:hint="@string/please_hint"/>
+            android:hint="请输入项目地址"/>
 
         <View
             android:layout_width="match_parent"
@@ -325,7 +325,7 @@
             android:textColorHint="@color/colorTvHint"
             android:textColor="@color/colorTv"
             android:textSize="14sp"
-            android:hint="@string/please_hint"/>
+            android:hint="请输入接受价格"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -373,7 +373,7 @@
             android:textColorHint="@color/colorTvHint"
             android:textColor="@color/colorTv"
             android:textSize="14sp"
-            android:hint="@string/please_hint"/>
+            android:hint="请输入供应数量"/>
 
         <TextView
             android:id="@+id/tv_supply_num"
@@ -386,7 +386,7 @@
             android:padding="10dp"
             android:textColor="@color/colorTvHint"
             android:textSize="14sp"
-            android:text="选择单位"/>
+            android:text="请选择单位"/>
 
         <View
             android:layout_width="match_parent"
@@ -473,7 +473,7 @@
             android:textColorHint="@color/colorTvHint"
             android:textColor="@color/colorTv"
             android:textSize="14sp"
-            android:hint="@string/please_hint"/>
+            android:hint="请输入供应地点"/>
 
         <View
             android:layout_width="match_parent"
@@ -512,7 +512,7 @@
             android:textColorHint="@color/colorTvHint"
             android:textColor="@color/colorTv"
             android:textSize="14sp"
-            android:hint="@string/please_hint"/>
+            android:hint="请输入供应价格"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -607,7 +607,7 @@
             android:textColorHint="@color/colorTvHint"
             android:textColor="@color/colorTv"
             android:textSize="14sp"
-            android:hint="@string/please_hint"/>
+            android:hint="请输入联系人"/>
 
         <View
             android:layout_width="match_parent"
@@ -646,7 +646,7 @@
             android:textColorHint="@color/colorTvHint"
             android:textColor="@color/colorTv"
             android:textSize="14sp"
-            android:hint="@string/please_hint"/>
+            android:hint="请输入联系方式"/>
 
         <View
             android:layout_width="match_parent"

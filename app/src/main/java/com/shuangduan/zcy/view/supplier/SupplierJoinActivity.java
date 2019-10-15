@@ -2,10 +2,6 @@ package com.shuangduan.zcy.view.supplier;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
-import android.content.ClipData;
-import android.content.ClipboardManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
@@ -13,13 +9,9 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.text.Html;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,7 +22,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.content.ContextCompat;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.ActivityUtils;
@@ -54,20 +45,15 @@ import com.shuangduan.zcy.dialog.PhotoDialog;
 import com.shuangduan.zcy.dialog.ScaleDialog;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
-import com.shuangduan.zcy.model.bean.ContactBean;
 import com.shuangduan.zcy.model.bean.FileUploadBean;
-import com.shuangduan.zcy.model.bean.UploadBean;
 import com.shuangduan.zcy.model.event.AddressEvent;
-import com.shuangduan.zcy.model.event.CityEvent;
 import com.shuangduan.zcy.model.event.MultiAreaEvent;
 import com.shuangduan.zcy.utils.LoginUtils;
 import com.shuangduan.zcy.utils.matisse.Glide4Engine;
 import com.shuangduan.zcy.utils.matisse.MatisseCamera;
 import com.shuangduan.zcy.view.MultiAreaActivity;
 import com.shuangduan.zcy.view.PhotoViewActivity;
-import com.shuangduan.zcy.view.mine.BusinessAreaActivity;
 import com.shuangduan.zcy.view.photo.CameraActivity;
-import com.shuangduan.zcy.view.release.ReleaseAreaSelectActivity;
 import com.shuangduan.zcy.vm.PermissionVm;
 import com.shuangduan.zcy.vm.SupplierVm;
 import com.shuangduan.zcy.vm.UploadPhotoVm;
@@ -80,14 +66,11 @@ import com.zhihu.matisse.internal.entity.CaptureStrategy;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -343,38 +326,6 @@ public class SupplierJoinActivity extends BaseActivity implements BaseDialog.Pho
                 finish();
                 break;
             case R.id.tv_confirm:
-                if (TextUtils.isEmpty(edtCompany.getText().toString())) {
-                    ToastUtils.showShort(getString(R.string.hint_company));
-                    return;
-                }
-                if (TextUtils.isEmpty(edtAddressDetail.getText().toString())) {
-                    ToastUtils.showShort(getString(R.string.hint_address_detail));
-                    return;
-                }
-                if (scale == 0) {
-                    ToastUtils.showShort(getString(R.string.hint_scale));
-                    return;
-                }
-                if (TextUtils.isEmpty(edtCompanyWebsite.getText().toString())) {
-                    ToastUtils.showShort(getString(R.string.hind_company_website));
-                    return;
-                }
-                if (TextUtils.isEmpty(edtName.getText().toString())) {
-                    ToastUtils.showShort(getString(R.string.hint_name));
-                    return;
-                }
-                if (TextUtils.isEmpty(edtContactInfo.getText().toString())) {
-                    ToastUtils.showShort(getString(R.string.hint_mobile_code));
-                    return;
-                }
-                if (TextUtils.isEmpty(edtProduction.getText())) {
-                    ToastUtils.showShort(getString(R.string.hint_production));
-                    return;
-                }
-                if (TextUtils.isEmpty(logo)) {
-                    ToastUtils.showShort("请上传公司Logo");
-                    return;
-                }
                 supplierVm.join(edtName.getText().toString(), edtContactInfo.getText().toString(), edtCompany.getText().toString(), edtAddressDetail.getText().toString(), edtProduction.getText().toString()
                         , scale, edtCompanyWebsite.getText().toString(), authorization, logo);
                 break;

@@ -82,6 +82,7 @@
         <attr name="bga_iv_borderColor" format="reference|color"/>
     </declare-styleable>
 
+    <!--首页跑马灯文字属性设置-->
     <declare-styleable name="MarqueeView">
         <attr name="marqueeview_repet_type" format="enum">
             <enum name="repet_oncetime" value="0"/><!-- 播放一次 -->

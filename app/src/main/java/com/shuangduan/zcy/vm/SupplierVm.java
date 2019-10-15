@@ -1,10 +1,11 @@
 package com.shuangduan.zcy.vm;
 
-import androidx.lifecycle.MutableLiveData;
+import android.text.TextUtils;
 
-import com.blankj.utilcode.util.LogUtils;
+import androidx.lifecycle.MutableLiveData;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseViewModel;
 import com.shuangduan.zcy.model.api.PageState;
@@ -12,11 +13,12 @@ import com.shuangduan.zcy.model.api.repository.SupplierRepository;
 import com.shuangduan.zcy.model.bean.SupplierBean;
 import com.shuangduan.zcy.model.bean.SupplierDetailBean;
 import com.shuangduan.zcy.model.bean.SupplierJoinImageBean;
-import com.shuangduan.zcy.model.event.CityEvent;
 import com.shuangduan.zcy.model.event.MultiAreaEvent;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.blankj.utilcode.util.StringUtils.getString;
 
 /**
  * @author 宁文强 QQ:858777523
@@ -88,16 +90,45 @@ public class SupplierVm extends BaseViewModel {
     public void join(String name, String tel, String company, String address, String product,int scale,String company_website
             ,String authorization,String logo){
         MultiAreaEvent areaValue = serviceArea.getValue();
+
+        if (TextUtils.isEmpty(company)) {
+            ToastUtils.showShort(getString(R.string.hint_company));
+            return;
+        }
+        if (TextUtils.isEmpty(address)) {
+            ToastUtils.showShort(getString(R.string.hint_address_detail));
+            return;
+        }
+        if (scale == 0) {
+            ToastUtils.showShort(getString(R.string.hint_scale));
+            return;
+        }
+        if (TextUtils.isEmpty(company_website)) {
+            ToastUtils.showShort(getString(R.string.hind_company_website));
+            return;
+        }
+        if (TextUtils.isEmpty(name)) {
+            ToastUtils.showShort(getString(R.string.hint_name));
+            return;
+        }
+        if (TextUtils.isEmpty(tel)) {
+            ToastUtils.showShort("请输入联系方式");
+            return;
+        }
         if (areaValue == null || areaValue.getCityResult() == null || areaValue.getCityResult().size() == 0){
             ToastUtils.showShort("请选择服务地区");
             return;
         }
-//        if (cityId == 0){
-//            ToastUtils.showShort("请选择公司所在地");
-//            return;
-//        }
+        if (TextUtils.isEmpty(product)) {
+            ToastUtils.showShort("请输入经营产品");
+            return;
+        }
         if (imageIds == null || imageIds.size() == 0){
             ToastUtils.showShort("请上传营业执照以及相关文件资料");
+            return;
+        }
+        if (TextUtils.isEmpty(logo)) {
+            ToastUtils.showShort("请上传公司Logo");
             return;
         }
         SupplierJoinImageBean supplierJoinImageBean = new SupplierJoinImageBean();
