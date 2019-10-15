@@ -51,6 +51,10 @@ public class FindRelationshipAdapter extends BaseQuickAdapter<DemandRelationship
 
     @Override
     public int getItemCount() {
-        return Integer.MAX_VALUE;
+        if (getData().size()>0){
+            return Integer.MAX_VALUE;
+        }else {
+            return getData().size();
+        }
     }
 }

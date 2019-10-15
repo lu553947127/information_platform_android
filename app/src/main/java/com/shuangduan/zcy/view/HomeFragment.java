@@ -303,8 +303,9 @@ public class HomeFragment extends BaseFragment {
     }
 
     //需求资讯
-    private Disposable mAutoTask;
-    private AutoScrollRecyclerView recyclerView1,recyclerView2,recyclerView3;
+    private AutoScrollRecyclerView recyclerView1;
+    private AutoScrollRecyclerView recyclerView2;
+    private AutoScrollRecyclerView recyclerView3;
     @SuppressLint("InflateParams")
     private void getNeedData() {
         view.getBackground().mutate().setAlpha(10);
@@ -324,9 +325,9 @@ public class HomeFragment extends BaseFragment {
         viewPager.addOnPageChangeListener(materialIndicator);
         materialIndicator.setAdapter(Objects.requireNonNull(viewPager.getAdapter()));
 
-        recyclerView1=view1.findViewById(R.id.rv);
-        recyclerView2=view2.findViewById(R.id.rv);
-        recyclerView3=view3.findViewById(R.id.rv);
+        recyclerView1 = view1.findViewById(R.id.rv);
+        recyclerView2 = view2.findViewById(R.id.rv);
+        recyclerView3 = view3.findViewById(R.id.rv);
         recyclerView1.setNestedScrollingEnabled(false);
         recyclerView2.setNestedScrollingEnabled(false);
         recyclerView3.setNestedScrollingEnabled(false);
@@ -397,52 +398,26 @@ public class HomeFragment extends BaseFragment {
         });
 
         if (viewPager.getCurrentItem()==0){
-            startAuto(recyclerView1);
+            recyclerView1.startLine();
+            recyclerView2.stop();
+            recyclerView3.stop();
         }else if (viewPager.getCurrentItem()==1){
-            startAuto(recyclerView2);
+            recyclerView1.stop();
+            recyclerView2.startLine();
+            recyclerView3.stop();
         }else if (viewPager.getCurrentItem()==2){
-            startAuto(recyclerView3);
-        }
-    }
-
-    private void startAuto(AutoScrollRecyclerView recyclerView) {
-        //item滚动步骤1：自定义LinearSmoothScroller，重写方法，滚动item至顶部，控制滚动速度
-        LinearSmoothScroller mScroller = new LinearSmoothScroller(Objects.requireNonNull(getActivity())){
-            //将移动的置顶显示
-            @Override
-            protected int getVerticalSnapPreference() {
-                return LinearSmoothScroller.SNAP_TO_START;
-            }
-            //控制速度，这里注意当速度过慢的时候可能会形成流式的效果，因为这里是代表移动像素的速度，
-            // 当定时器中每隔的2秒之内正好或者还未移动一个item的高度的时候会出现，前一个还没移动完成又继续移动下一个了，就形成了流滚动的效果了
-            // 这个问题后续可通过重写另外一个方法来进行控制，暂时就先这样了
-            @Override
-            protected float calculateSpeedPerPixel(DisplayMetrics displayMetrics) {
-                return 3f / displayMetrics.density;
-            }
-        };
-        //item滚动步骤2：设置定时器自动滚动
-        if (mAutoTask!= null && !mAutoTask.isDisposed()) {
-            mAutoTask.dispose();
-        }
-        mAutoTask = Observable.interval(1, 2, TimeUnit.SECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(aLong -> {
-            //滚动到指定item
-            mScroller.setTargetPosition(aLong.intValue());
-            Objects.requireNonNull(recyclerView.getLayoutManager()).startSmoothScroll(mScroller);
-        });
-    }
-
-    private void stopAuto() {
-        if (mAutoTask!= null && !mAutoTask.isDisposed()) {
-            mAutoTask.dispose();
-            mAutoTask = null;
+            recyclerView1.stop();
+            recyclerView2.stop();
+            recyclerView3.startLine();
         }
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        stopAuto();
+        recyclerView1.stop();
+        recyclerView2.stop();
+        recyclerView3.stop();
     }
 
     @Override
