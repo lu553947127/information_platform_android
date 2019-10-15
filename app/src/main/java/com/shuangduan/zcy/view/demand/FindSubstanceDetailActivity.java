@@ -89,6 +89,9 @@ public class FindSubstanceDetailActivity extends BaseActivity {
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
+
+        View emptyView = emptyViewFactory.createEmptyView(R.drawable.icon_empty_project, R.string.empty_recommend_substance_info, 0, null);
+
         tvBarTitle.setText(getString(R.string.find_substance_detail));
 
         initPay();
@@ -122,7 +125,7 @@ public class FindSubstanceDetailActivity extends BaseActivity {
             tvReadDetail.setVisibility(info.getIs_pay() != 1? View.VISIBLE: View.INVISIBLE);
             tvTime.setText(String.format(getString(R.string.format_validity_period_less), info.getStart_time(), info.getEnd_time()));
             subOrderAdapter.setNewData(substanceDetailBean.getList());
-            subOrderAdapter.setEmptyView(R.layout.layout_empty, rv);
+            subOrderAdapter.setEmptyView(emptyView);
         });
 
         demandSubstanceVm.getDetail();

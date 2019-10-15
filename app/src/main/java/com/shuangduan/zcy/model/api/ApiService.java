@@ -1305,6 +1305,15 @@ public interface ApiService {
             @Field("id") int id
     );
 
+    //基建头条分享
+    @FormUrlEncoded
+    @POST("api/Headline/share")
+    Flowable<BaseResponse<ShareBean.DataBean>> headlinesShare(
+            @Field("user_id") int userId,
+            @Field("id") int id
+    );
+
+
     //微信登录验证
     @FormUrlEncoded
     @POST("api/passport/wechatLogin")

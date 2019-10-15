@@ -97,7 +97,7 @@ public class ShareManage {
                 shareVm.tendererShare(id);
                 break;
             case SHARE_HEADLINES_TYPE:
-                initDialog(activity, "https://www.baidu.com", "基建头条分享", "基建头条分享", "", null);
+                shareVm.headlinesShare(id);
                 break;
         }
 

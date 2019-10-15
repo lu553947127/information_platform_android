@@ -89,6 +89,9 @@ public class FindBuyerDetailActivity extends BaseActivity {
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
+
+        View emptyView = emptyViewFactory.createEmptyView(R.drawable.icon_empty_project, R.string.empty_recommend_buyer_info, 0, null);
+
         tvBarTitle.setText(getString(R.string.find_buyer_detail));
 
         initPay();
@@ -122,7 +125,7 @@ public class FindBuyerDetailActivity extends BaseActivity {
             tvTime.setText(String.format(getString(R.string.format_validity_period_less), info.getStart_time(), info.getEnd_time()));
             tvSupplyAddress.setText(info.getAddress());
             buyerAdapter.setNewData(buyerDetailBean.getList());
-            buyerAdapter.setEmptyView(R.layout.layout_empty, rv);
+            buyerAdapter.setEmptyView(emptyView);
         });
 
         demandBuyerVm.getDetail();

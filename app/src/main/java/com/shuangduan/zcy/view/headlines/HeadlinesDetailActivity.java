@@ -82,7 +82,7 @@ public class HeadlinesDetailActivity extends BaseActivity {
         tvBarTitle.setText(getString(R.string.head_detail));
         ivBarRight.setImageResource(R.drawable.icon_share);
         tvBarRight.setVisibility(View.GONE);
-        ivBarRight.setVisibility(View.GONE);
+
 
         headlinesVm = ViewModelProviders.of(this).get(HeadlinesVm.class);
         headlinesVm.id = id;
