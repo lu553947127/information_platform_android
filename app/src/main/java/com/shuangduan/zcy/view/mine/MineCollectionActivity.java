@@ -40,7 +40,7 @@ public class MineCollectionActivity extends BaseActivity {
 
     @Override
     protected int initLayoutRes() {
-        return R.layout.activity_mine_sub;
+        return R.layout.activity_tab_vp;
     }
 
     @Override
