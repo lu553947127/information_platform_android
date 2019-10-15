@@ -2,6 +2,7 @@ package com.shuangduan.zcy.view.demand;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProviders;
@@ -16,6 +17,7 @@ import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.FindRelationshipAdapter;
+import com.shuangduan.zcy.adapter.FindRelationshipFragmentAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.base.BaseLazyFragment;
@@ -23,6 +25,8 @@ import com.shuangduan.zcy.factory.EmptyViewFactory;
 import com.shuangduan.zcy.model.bean.DemandRelationshipBean;
 import com.shuangduan.zcy.vm.DemandRelationshipVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
+
+import java.util.Objects;
 
 import butterknife.BindView;
 
@@ -64,12 +68,14 @@ public class FindRelationshipFragment extends BaseLazyFragment {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
+        TextView tvBarTitle = Objects.requireNonNull(getActivity()).findViewById(R.id.tv_bar_title);
+        tvBarTitle.setText(R.string.find_relationship);
 
         View emptyView = createEmptyView(R.drawable.icon_empty_project, R.string.empty_pull_strings_info, 0, null);
 
         rv.setLayoutManager(new LinearLayoutManager(mContext));
         rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
-        FindRelationshipAdapter relationshipAdapter = new FindRelationshipAdapter(R.layout.item_demand_relationship, null);
+        FindRelationshipFragmentAdapter relationshipAdapter = new FindRelationshipFragmentAdapter(R.layout.item_demand_relationship, null);
         relationshipAdapter.setEmptyView(R.layout.layout_loading, rv);
         rv.setAdapter(relationshipAdapter);
         relationshipAdapter.setOnItemClickListener((adapter, view, position) -> {

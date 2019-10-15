@@ -76,6 +76,7 @@ public class IncomePeopleActivity extends BaseActivity implements BaseQuickAdapt
             emptyView = emptyViewFactory.createEmptyView(R.drawable.icon_empty_income, R.string.empty_people_income_info, R.string.to_recommend, this);
             tvBarTitle.setText(getString(R.string.income_people));
         } else if (degree == 1) {
+            tvBarTitle.setText(String.format(getString(R.string.format_income_degree), degree));
             emptyView = emptyViewFactory.createEmptyView(R.drawable.icon_empty_income, R.string.empty_recommend_friends_info, R.string.to_recommend, this);
         } else {
             emptyView = emptyViewFactory.createEmptyView(R.drawable.icon_empty_income, R.string.empty_income_info, R.string.to_recommend, this);

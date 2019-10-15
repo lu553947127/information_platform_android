@@ -2,6 +2,7 @@ package com.shuangduan.zcy.view.demand;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProviders;
@@ -15,11 +16,14 @@ import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.DemandBuyerAdapter;
+import com.shuangduan.zcy.adapter.DemandBuyerFragmentAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseLazyFragment;
 import com.shuangduan.zcy.model.bean.DemandBuyerBean;
 import com.shuangduan.zcy.vm.DemandBuyerVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
+
+import java.util.Objects;
 
 import butterknife.BindView;
 
@@ -61,10 +65,13 @@ public class FindBuyerFragment extends BaseLazyFragment {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
+        TextView tvBarTitle = Objects.requireNonNull(getActivity()).findViewById(R.id.tv_bar_title);
+        tvBarTitle.setText(R.string.find_buyer);
+
         View emptyView = createEmptyView(R.drawable.icon_empty_project, R.string.empty_buyer_info, 0, null);
         rv.setLayoutManager(new LinearLayoutManager(mContext));
         rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
-        DemandBuyerAdapter buyerAdapter = new DemandBuyerAdapter(R.layout.item_demand_buyer, null);
+        DemandBuyerFragmentAdapter buyerAdapter = new DemandBuyerFragmentAdapter(R.layout.item_demand_buyer, null);
         buyerAdapter.setEmptyView(R.layout.layout_loading, rv);
         rv.setAdapter(buyerAdapter);
         buyerAdapter.setOnItemClickListener((adapter1, view, position) -> {
@@ -80,7 +87,7 @@ public class FindBuyerFragment extends BaseLazyFragment {
             if (demandBuyerBean.getPage() == 1) {
                 buyerAdapter.setNewData(demandBuyerBean.getList());
                 buyerAdapter.setEmptyView(emptyView);
-            }else {
+            } else {
                 buyerAdapter.addData(demandBuyerBean.getList());
             }
             setNoMore(demandBuyerBean.getPage(), demandBuyerBean.getCount());
@@ -104,21 +111,21 @@ public class FindBuyerFragment extends BaseLazyFragment {
         demandBuyerVm.getBuyer();
     }
 
-    private void setNoMore(int page, int count){
-        if (page == 1){
-            if (page * 10 >= count){
-                if (refresh.getState() == RefreshState.None){
+    private void setNoMore(int page, int count) {
+        if (page == 1) {
+            if (page * 10 >= count) {
+                if (refresh.getState() == RefreshState.None) {
                     refresh.setNoMoreData(true);
-                }else {
+                } else {
                     refresh.finishRefreshWithNoMoreData();
                 }
-            }else {
+            } else {
                 refresh.finishRefresh();
             }
-        }else {
-            if (page * 10 >= count){
+        } else {
+            if (page * 10 >= count) {
                 refresh.finishLoadMoreWithNoMoreData();
-            }else {
+            } else {
                 refresh.finishLoadMore();
             }
         }

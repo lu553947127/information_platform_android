@@ -130,4 +130,14 @@ public class CustomConfig {
 
     public static final int AREA_REQUEST_CODE = 1001;
 
+
+    public static String DEMAND_TYPE = "DEMAND_TYPE";
+
+    //找关系
+    public static int FIND_RELATIONSHIP_TYPE = 0;
+    //找物资
+    public static int FIND_SUBSTANCE_TYPE = 1;
+    //找买家
+    public static int FIND_BUYER_TYPE = 2;
+
 }

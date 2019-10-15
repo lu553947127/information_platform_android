@@ -6,6 +6,8 @@ import android.view.View;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import com.blankj.utilcode.util.ActivityUtils;
@@ -14,9 +16,15 @@ import com.google.android.material.tabs.TabLayout;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ViewPagerAdapter;
 import com.shuangduan.zcy.base.BaseActivity;
+import com.shuangduan.zcy.view.HomeFragment;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static com.shuangduan.zcy.app.CustomConfig.DEMAND_TYPE;
+import static com.shuangduan.zcy.app.CustomConfig.FIND_BUYER_TYPE;
+import static com.shuangduan.zcy.app.CustomConfig.FIND_RELATIONSHIP_TYPE;
+import static com.shuangduan.zcy.app.CustomConfig.FIND_SUBSTANCE_TYPE;
 
 /**
  * @author 宁文强 QQ:858777523
@@ -29,14 +37,9 @@ import butterknife.OnClick;
  * @class describe
  */
 public class DemandActivity extends BaseActivity {
-    @BindView(R.id.tv_bar_title)
-    AppCompatTextView tvBarTitle;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.vp)
-    ViewPager vp;
-    @BindView(R.id.tab_layout)
-    TabLayout tabLayout;
+    private int type;
 
     @Override
     protected int initLayoutRes() {
@@ -51,38 +54,38 @@ public class DemandActivity extends BaseActivity {
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
-        tvBarTitle.setText(getString(R.string.release_demand));
+        type = getIntent().getIntExtra(DEMAND_TYPE, FIND_RELATIONSHIP_TYPE);
 
         Fragment[] fragments = new Fragment[]{
                 FindRelationshipFragment.newInstance(),
                 FindSubstanceFragment.newInstance(),
                 FindBuyerFragment.newInstance()
         };
-        vp.setOffscreenPageLimit(2);
-        vp.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), fragments, getResources().getStringArray(R.array.demand)));
-        tabLayout.addTab(tabLayout.newTab());
-        tabLayout.addTab(tabLayout.newTab());
-        tabLayout.addTab(tabLayout.newTab());
-        tabLayout.setupWithViewPager(vp);
+
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        // 加载当前显示的Fragment
+        transaction.replace(R.id.fl_content, fragments[type]);
+        transaction.commit(); // 提交创建Fragment请求
     }
 
     @OnClick({R.id.iv_bar_back, R.id.tv_release})
-    void onClick(View v){
+    void onClick(View v) {
         Bundle bundle = new Bundle();
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.iv_bar_back:
                 finish();
                 break;
             case R.id.tv_release:
-                if (vp.getCurrentItem()==0){
+                if (type == FIND_RELATIONSHIP_TYPE) {
                     bundle.putString("type", "0");
-                    ActivityUtils.startActivity(bundle,DemandReleaseActivity.class);
-                }else if (vp.getCurrentItem()==1){
+                    ActivityUtils.startActivity(bundle, DemandReleaseActivity.class);
+                } else if (type == FIND_SUBSTANCE_TYPE) {
                     bundle.putString("type", "1");
-                    ActivityUtils.startActivity(bundle,DemandReleaseActivity.class);
-                }else {
+                    ActivityUtils.startActivity(bundle, DemandReleaseActivity.class);
+                } else if (type == FIND_BUYER_TYPE) {
                     bundle.putString("type", "2");
-                    ActivityUtils.startActivity(bundle,DemandReleaseActivity.class);
+                    ActivityUtils.startActivity(bundle, DemandReleaseActivity.class);
                 }
                 break;
         }
