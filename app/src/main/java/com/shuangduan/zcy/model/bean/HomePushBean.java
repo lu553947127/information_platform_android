@@ -19,18 +19,7 @@ public class HomePushBean {
      * warrant_status : 1
      */
 
-    private int type;
     private String title;
-    private int id;
-    private int warrant_status;
-
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
 
     public String getTitle() {
         return title;
@@ -40,19 +29,4 @@ public class HomePushBean {
         this.title = title;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getWarrant_status() {
-        return warrant_status;
-    }
-
-    public void setWarrant_status(int warrant_status) {
-        this.warrant_status = warrant_status;
-    }
 }

@@ -353,7 +353,7 @@ public class LoginActivity extends BaseActivity {
         loginVm.register(edtMobile.getText().toString(), edtVerificationCodeRegister.getText().toString(), edtPwdRegister.getText().toString(), Objects.requireNonNull(edtMobileInvite.getText()).toString());
         loginVm.registerLiveData.observe(this, registerBean -> {
             //注册成功走一遍登录
-            loginVm.accountLogin(edtMobile.getText().toString(), edtPwd.getText().toString(), DeviceUtils.getAndroidID());
+            loginVm.accountLogin(edtMobile.getText().toString(), edtPwdRegister.getText().toString(), DeviceUtils.getAndroidID());
             loginVm.accountLoginLiveData.observe(LoginActivity.this, loginBean -> {
                 SPUtils.getInstance().put(SpConfig.USER_ID, loginBean.getUser_id());
                 SPUtils.getInstance().put(SpConfig.TOKEN, loginBean.getToken());

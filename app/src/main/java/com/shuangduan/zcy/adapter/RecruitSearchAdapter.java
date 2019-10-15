@@ -35,7 +35,7 @@ public class RecruitSearchAdapter extends BaseQuickAdapter<RecruitBean.ListBean,
     protected void convert(BaseViewHolder helper, RecruitBean.ListBean item) {
         helper.setText(R.id.tv_title, setSpan(item.getTitle()))
                 .setText(R.id.tv_content, item.getContent())
-                .setText(R.id.tv_area, item.getProvince() + item.getCity())
+                .setText(R.id.tv_area, item.getArea())
                 .setText(R.id.tv_time, item.getCreate_time());
     }
 

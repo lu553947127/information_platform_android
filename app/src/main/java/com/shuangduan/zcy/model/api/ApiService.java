@@ -910,7 +910,7 @@ public interface ApiService {
     );
 
     @FormUrlEncoded
-    @POST("api/index/index")
+    @POST("api/index/profitPaper")
     Flowable<BaseListResponse<HomePushBean>> homePush(
             @Field("user_id") int user_id
     );

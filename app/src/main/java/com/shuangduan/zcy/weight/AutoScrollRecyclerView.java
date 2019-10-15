@@ -1,10 +1,8 @@
 package com.shuangduan.zcy.weight;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.view.MotionEvent;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearSmoothScroller;

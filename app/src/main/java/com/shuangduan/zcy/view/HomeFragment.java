@@ -2,7 +2,6 @@ package com.shuangduan.zcy.view;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -14,7 +13,6 @@ import androidx.core.widget.NestedScrollView;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.LinearSmoothScroller;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
@@ -90,13 +88,9 @@ import com.youth.banner.Transformer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Conversation;
 
@@ -242,9 +236,6 @@ public class HomeFragment extends BaseFragment {
                 marquee.add(bean.getTitle());
             }
             marqueeView.setContent(marquee);
-            if (homePushBeans.size() > 0){
-                tvSubscribeState.setText(homePushBeans.get(0).getWarrant_status() == 1?"已认购":"未认购");
-            }
         });
         homeVm.bannerLiveData.observe(this, homeBannerBeans -> {
             ArrayList<String> pics = new ArrayList<>();
@@ -287,9 +278,7 @@ public class HomeFragment extends BaseFragment {
         marqueeView.setLocationListener(new MarqueeListView.LocationListener() {
             @Override
             public void start(int position) {
-                if (homeVm.pushLiveData.getValue() != null && homeVm.pushLiveData.getValue().size() > 0){
-                    tvSubscribeState.setText(homeVm.pushLiveData.getValue().get(position).getWarrant_status() == 1?"已认购":"未认购");
-                }
+
             }
 
             @Override
@@ -396,11 +385,35 @@ public class HomeFragment extends BaseFragment {
                 buyerAdapter.addData(demandBuyerBean.getList());
             }
         });
-    }
 
-    @Override
-    protected void initDataFromService() {
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (position==0){
+                    recyclerView1.startLine();
+                    recyclerView2.stop();
+                    recyclerView3.stop();
+                }else if (position==1){
+                    recyclerView1.stop();
+                    recyclerView2.startLine();
+                    recyclerView3.stop();
+                }else if (position==2){
+                    recyclerView1.stop();
+                    recyclerView2.stop();
+                    recyclerView3.startLine();
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     @OnClick({R.id.tv_bar_title, R.id.tv_more, R.id.iv_subscribed,R.id.tv_bar_title_home,R.id.iv_subscribed_home,R.id.iv_my_income,R.id.rl_zgx,R.id.rl_zwz,R.id.rl_zmj,R.id.tv_more_need})
@@ -421,15 +434,15 @@ public class HomeFragment extends BaseFragment {
             case R.id.iv_my_income://我的收益
                 ActivityUtils.startActivity(MineIncomeActivity.class);
                 break;
-            case R.id.rl_zgx:
+            case R.id.rl_zgx://发布找关系
                 bundle.putString("type", "0");
                 ActivityUtils.startActivity(bundle, DemandReleaseActivity.class);
                 break;
-            case R.id.rl_zwz:
+            case R.id.rl_zwz://发布找物资
                 bundle.putString("type", "1");
                 ActivityUtils.startActivity(bundle,DemandReleaseActivity.class);
                 break;
-            case R.id.rl_zmj:
+            case R.id.rl_zmj://发布找买家
                 bundle.putString("type", "2");
                 ActivityUtils.startActivity(bundle,DemandReleaseActivity.class);
                 break;
@@ -452,19 +465,9 @@ public class HomeFragment extends BaseFragment {
     public void onStart() {
         super.onStart();
         banner.startAutoPlay();
-        if (viewPager.getCurrentItem()==0){
-            recyclerView1.startLine();
-            recyclerView2.stop();
-            recyclerView3.stop();
-        }else if (viewPager.getCurrentItem()==1){
-            recyclerView1.stop();
-            recyclerView2.startLine();
-            recyclerView3.stop();
-        }else if (viewPager.getCurrentItem()==2){
-            recyclerView1.stop();
-            recyclerView2.stop();
-            recyclerView3.startLine();
-        }
+//        recyclerView1.startLine();
+//        recyclerView2.startLine();
+//        recyclerView3.startLine();
     }
 
     @Override
@@ -617,5 +620,10 @@ public class HomeFragment extends BaseFragment {
             getFriendApplyCount(i);
         }, Conversation.ConversationType.PRIVATE,Conversation.ConversationType.GROUP);
         getAndroidVersionUpgrades();
+    }
+
+    @Override
+    protected void initDataFromService() {
+
     }
 }

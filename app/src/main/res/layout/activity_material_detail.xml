@@ -83,7 +83,8 @@
                         android:layout_marginRight="15dp"
                         android:layout_marginTop="11dp"
                         android:textColor="@color/color_666666"
-                        android:textSize="13sp" />
+                        android:textSize="13sp"
+                        android:visibility="gone"/>
                 </RelativeLayout>
 
                 <TextView

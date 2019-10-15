@@ -281,6 +281,10 @@ public class DemandReleaseActivity extends BaseActivity {
                             ToastUtils.showShort(getString(R.string.hint_commission));
                             return;
                         }
+                        if (Double.valueOf(edtCommission.getText().toString())<10){
+                            ToastUtils.showShort("佣金不能低于10紫金币");
+                            return;
+                        }
                         demandReleaseVm.releaseRelationShip(edtTitle.getText().toString(), edtDes.getText().toString(), edtCommission.getText().toString());
                         break;
                     case DemandReleaseVm.RELEASE_TYPE_SUBSTANCE:
