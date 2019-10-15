@@ -79,7 +79,7 @@ public class ProjectInfoFragment extends BaseLazyFragment{
             ProjectMineBean.ListBean listBean = adapter.getData().get(position);
             Bundle bundle = new Bundle();
             bundle.putInt(CustomConfig.PROJECT_ID, listBean.getId());
-            bundle.putInt(CustomConfig.LOCATION, 1);
+            bundle.putInt(CustomConfig.LOCATION, 0);
             ActivityUtils.startActivity(bundle, ProjectDetailActivity.class);
         });
 

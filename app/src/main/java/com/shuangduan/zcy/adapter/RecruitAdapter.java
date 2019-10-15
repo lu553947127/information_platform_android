@@ -28,7 +28,7 @@ public class RecruitAdapter extends BaseQuickAdapter<RecruitBean.ListBean, BaseV
     protected void convert(BaseViewHolder helper, RecruitBean.ListBean item) {
         String time=item.getCreate_time().substring(0,11);
         helper.setText(R.id.tv_title, item.getTitle())
-                .setText(R.id.tv_content, item.getContent())
+                .setText(R.id.tv_content, item.getContent().trim())
                 .setText(R.id.tv_area, item.getArea())
                 .setText(R.id.tv_time, time);
     }
