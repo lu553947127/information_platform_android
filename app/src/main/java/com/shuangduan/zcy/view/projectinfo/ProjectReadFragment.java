@@ -122,7 +122,7 @@ public class ProjectReadFragment extends BaseLazyFragment {
     }
 
     private void setEmpty() {
-        View empty = LayoutInflater.from(mContext).inflate(R.layout.layout_empty, null);
+        View empty = LayoutInflater.from(mContext).inflate(R.layout.layout_empty_top, null);
         TextView tvTip = empty.findViewById(R.id.tv_tip);
         tvTip.setText(getString(R.string.empty_view_locus));
         locusAdapter.setEmptyView(empty);

@@ -641,8 +641,8 @@
     <string name="empty_substance_info">暂无找物资数据</string>
     <string name="empty_withdraw_info">暂无提现记录</string>
     <string name="empty_recharge_info">暂无充值记录</string>
-    <string name="empty_recommend_substance_info">暂无推荐物资数据</string>
-    <string name="empty_recommend_buyer_info">暂无推荐买家数据</string>
+    <string name="empty_recommend_substance_info">暂无推荐物资</string>
+    <string name="empty_recommend_buyer_info">暂无推荐买家</string>
     <string name="empty_buyer_info">暂无找买家数据</string>
     <string name="empty_substance_screen_info">未找到相关的物资信息\n查看全部物资信息</string>
     <string name="empty_substance_list_info">还没有供应商发布基建物资</string>
@@ -651,7 +651,7 @@
     <string name="empty_subscribe_income_info">您还没有认购\n收益,去认购信息吧</string>
     <string name="empty_people_income_info">您还没有人脉\n收益,去拓展人脉吧</string>
     <string name="empty_recommend_friends_info">推荐好友，获取收益</string>
-    <string name="empty_material_order_info">您还没有预定基建物资\n去预定物资吧</string>
+    <string name="empty_material_order_info">您还没有预定过基建物资，\n前去预定物资吧</string>
 
 
     <string name="empty_project_subscribe_info">您的业务地区暂时没有\n相关工程信息,我们已经尽力了</string>

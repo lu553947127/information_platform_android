@@ -61,6 +61,7 @@
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             android:layout_gravity="center"
+            android:layout_marginLeft="7dp"
             android:src="@drawable/icon_empty_circle_contacts" />
 
         <TextView
