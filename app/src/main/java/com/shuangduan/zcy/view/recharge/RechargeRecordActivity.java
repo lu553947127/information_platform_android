@@ -1,6 +1,7 @@
 package com.shuangduan.zcy.view.recharge;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
@@ -59,6 +60,8 @@ public class RechargeRecordActivity extends BaseActivity {
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
+        View emptyView = emptyViewFactory.createEmptyView(R.drawable.icon_empty_income, R.string.empty_recharge_info, 0, null);
+
         tvBarTitle.setText(getString(R.string.recharge_record));
 
         RechargeRecordVm rechargeRecordVm = ViewModelProviders.of(this).get(RechargeRecordVm.class);
@@ -78,8 +81,8 @@ public class RechargeRecordActivity extends BaseActivity {
         rechargeRecordVm.recordLiveData.observe(this, rechargeRecordBean -> {
             if (rechargeRecordBean.getPage() == 1) {
                 recordAdapter.setNewData(rechargeRecordBean.getList());
-                recordAdapter.setEmptyView(R.layout.layout_empty, rv);
-            }else {
+                recordAdapter.setEmptyView(emptyView);
+            } else {
                 recordAdapter.addData(rechargeRecordBean.getList());
             }
             setNoMore(rechargeRecordBean.getPage(), rechargeRecordBean.getCount());
@@ -100,26 +103,28 @@ public class RechargeRecordActivity extends BaseActivity {
         rechargeRecordVm.getRecord();
     }
 
-    private void setNoMore(int page, int count){
-        if (page == 1){
-            if (page * 10 >= count){
-                if (refresh.getState() == RefreshState.None){
+    private void setNoMore(int page, int count) {
+        if (page == 1) {
+            if (page * 10 >= count) {
+                if (refresh.getState() == RefreshState.None) {
                     refresh.setNoMoreData(true);
-                }else {
+                } else {
                     refresh.finishRefreshWithNoMoreData();
                 }
-            }else {
+            } else {
                 refresh.finishRefresh();
             }
-        }else {
-            if (page * 10 >= count){
+        } else {
+            if (page * 10 >= count) {
                 refresh.finishLoadMoreWithNoMoreData();
-            }else {
+            } else {
                 refresh.finishLoadMore();
             }
         }
     }
 
     @OnClick(R.id.iv_bar_back)
-    void onClick(){finish();}
+    void onClick() {
+        finish();
+    }
 }

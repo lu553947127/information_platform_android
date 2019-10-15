@@ -20,7 +20,9 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.MaterialOrderAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
+import com.shuangduan.zcy.factory.EmptyViewFactory;
 import com.shuangduan.zcy.model.bean.MaterialOrderBean;
+import com.shuangduan.zcy.view.material.MaterialActivity;
 import com.shuangduan.zcy.vm.MaterialVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
@@ -36,7 +38,7 @@ import butterknife.OnClick;
  * @change
  * @class describe
  */
-public class MaterialOrderActivity extends BaseActivity {
+public class MaterialOrderActivity extends BaseActivity implements EmptyViewFactory.EmptyViewCallBack {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.tv_bar_title)
@@ -60,10 +62,10 @@ public class MaterialOrderActivity extends BaseActivity {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
-
-
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(R.string.my_material);
+
+        View emptyView = emptyViewFactory.createEmptyView(R.drawable.icon_empty_project, R.string.empty_material_order_info, R.string.to_reserve, this);
 
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
@@ -81,7 +83,7 @@ public class MaterialOrderActivity extends BaseActivity {
         materialVm.orderLiveData.observe(this, materialBean -> {
             if (materialBean.getPage() == 1) {
                 adapter.setNewData(materialBean.getList());
-                adapter.setEmptyView(R.layout.layout_empty, rv);
+                adapter.setEmptyView(emptyView);
             } else {
                 adapter.addData(materialBean.getList());
             }
@@ -130,5 +132,10 @@ public class MaterialOrderActivity extends BaseActivity {
                 finish();
                 break;
         }
+    }
+
+    @Override
+    public void onEmptyClick() {
+        ActivityUtils.startActivity(MaterialActivity.class);
     }
 }

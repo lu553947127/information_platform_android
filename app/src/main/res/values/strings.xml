@@ -618,6 +618,7 @@
     <string name="pull_strings">找关系</string>
     <string name="to_release">前去发布</string>
     <string name="to_subscribe">前往认购</string>
+    <string name="to_reserve">前往预定</string>
     <string name="to_recommend">前往推荐</string>
     <string name="to_look_over">前往查看</string>
     <string name="empty_project_address_info">您所处的位置周围\n没有工程项目,换个地方吧！</string>
@@ -639,6 +640,7 @@
     <string name="empty_pull_strings_info">暂无找关系数据</string>
     <string name="empty_substance_info">暂无找物资数据</string>
     <string name="empty_withdraw_info">暂无提现记录</string>
+    <string name="empty_recharge_info">暂无充值记录</string>
     <string name="empty_recommend_substance_info">暂无推荐物资数据</string>
     <string name="empty_recommend_buyer_info">暂无推荐买家数据</string>
     <string name="empty_buyer_info">暂无找买家数据</string>
@@ -649,6 +651,7 @@
     <string name="empty_subscribe_income_info">您还没有认购\n收益,去认购信息吧</string>
     <string name="empty_people_income_info">您还没有人脉\n收益,去拓展人脉吧</string>
     <string name="empty_recommend_friends_info">推荐好友，获取收益</string>
+    <string name="empty_material_order_info">您还没有预定基建物资\n去预定物资吧</string>
 
 
     <string name="empty_project_subscribe_info">您的业务地区暂时没有\n相关工程信息,我们已经尽力了</string>
