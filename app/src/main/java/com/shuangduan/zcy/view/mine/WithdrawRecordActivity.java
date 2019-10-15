@@ -1,6 +1,7 @@
 package com.shuangduan.zcy.view.mine;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
@@ -60,6 +61,9 @@ public class WithdrawRecordActivity extends BaseActivity {
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
+
+        View emptyView = emptyViewFactory.createEmptyView(R.drawable.icon_empty_income,R.string.empty_withdraw_info,0,null);
+
         tvBarTitle.setText(getString(R.string.withdraw_record));
 
         rv.setLayoutManager(new LinearLayoutManager(this));
@@ -78,7 +82,7 @@ public class WithdrawRecordActivity extends BaseActivity {
         withdrawVm.recordLiveData.observe(this, withdrawRecordBean -> {
             if (withdrawRecordBean.getPage() == 1) {
                 adapter.setNewData(withdrawRecordBean.getList());
-                adapter.setEmptyView(R.layout.layout_empty, rv);
+                adapter.setEmptyView(emptyView);
             }else {
                 adapter.addData(withdrawRecordBean.getList());
             }

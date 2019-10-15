@@ -2,10 +2,13 @@ package com.shuangduan.zcy.view.mine;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.FrameLayout;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
@@ -41,10 +44,11 @@ public class MineSubActivity extends BaseActivity {
     AppCompatTextView tvBarRight;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.tab_layout)
-    TabLayout tabLayout;
-    @BindView(R.id.vp)
-    ViewPager vp;
+
+
+    @BindView(R.id.fl_content)
+    FrameLayout flConteng;
+
     private MineSubVm mineSubVm;
 
     @Override
@@ -63,34 +67,14 @@ public class MineSubActivity extends BaseActivity {
         tvBarTitle.setText(getString(R.string.subscribe_message));
         tvBarRight.setText(getString(R.string.push_select));
 
-        Fragment[] fragments = new Fragment[]{
-                ProjectSubFragment.newInstance(),
-                RecruitSubFragment.newInstance()
-        };
-        tabLayout.addTab(tabLayout.newTab());
-        tabLayout.addTab(tabLayout.newTab());
-        vp.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), fragments, getResources().getStringArray(R.array.mine_sub)));
-        tabLayout.setupWithViewPager(vp);
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                if (tab.getText().equals("工程信息")){
-                    tvBarRight.setVisibility(View.VISIBLE);
-                }else if (tab.getText().equals("招采信息")){
-                    tvBarRight.setVisibility(View.GONE);
-                }
-            }
 
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
 
-            }
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        // 加载当前显示的Fragment
+        transaction.replace(R.id.fl_content,  ProjectSubFragment.newInstance());
+        transaction.commit(); // 提交创建Fragment请求
 
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
 
         mineSubVm = ViewModelProviders.of(this).get(MineSubVm.class);
         mineSubVm.phasesLiveData.observe(this, myPhasesBean -> {

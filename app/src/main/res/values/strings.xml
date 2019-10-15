@@ -637,6 +637,7 @@
 
     <string name="empty_pull_strings_info">暂无找关系数据</string>
     <string name="empty_substance_info">暂无找物资数据</string>
+    <string name="empty_withdraw_info">暂无提现记录</string>
     <string name="empty_recommend_substance_info">暂无推荐物资数据</string>
     <string name="empty_recommend_buyer_info">暂无推荐买家数据</string>
     <string name="empty_buyer_info">暂无找买家数据</string>
