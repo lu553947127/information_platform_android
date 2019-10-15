@@ -34,7 +34,9 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ClassifyAdapter;
+import com.shuangduan.zcy.adapter.DemandBuyerAdapter;
 import com.shuangduan.zcy.adapter.FindRelationshipAdapter;
+import com.shuangduan.zcy.adapter.FindSubstanceAdapter;
 import com.shuangduan.zcy.adapter.HomeHeadlinesAdapter;
 import com.shuangduan.zcy.adapter.XTabLayoutAdapter;
 import com.shuangduan.zcy.app.Common;
@@ -66,7 +68,9 @@ import com.shuangduan.zcy.view.projectinfo.ProjectInfoActivity;
 import com.shuangduan.zcy.view.recruit.RecruitActivity;
 import com.shuangduan.zcy.view.search.SearchActivity;
 import com.shuangduan.zcy.view.supplier.SupplierActivity;
+import com.shuangduan.zcy.vm.DemandBuyerVm;
 import com.shuangduan.zcy.vm.DemandRelationshipVm;
+import com.shuangduan.zcy.vm.DemandSubstanceVm;
 import com.shuangduan.zcy.vm.HomeVm;
 import com.shuangduan.zcy.weight.AdaptationScrollView;
 import com.shuangduan.zcy.weight.AutoScrollRecyclerView;
@@ -88,7 +92,6 @@ import butterknife.OnClick;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Conversation;
 
@@ -128,6 +131,8 @@ public class HomeFragment extends BaseFragment {
     MaterialIndicator materialIndicator;
     @BindView(R.id.view_pager)
     ViewPager viewPager;
+    @BindView(R.id.view)
+    View view;
     private List<View> viewList=new ArrayList<>();
     private List<String> titleList=new ArrayList<>();
     private HomeHeadlinesAdapter headlinesAdapter;
@@ -288,11 +293,11 @@ public class HomeFragment extends BaseFragment {
     }
 
     //需求资讯
-    private LinearSmoothScroller mScroller;
     private Disposable mAutoTask;
-    private AutoScrollRecyclerView recyclerView;
+    private AutoScrollRecyclerView recyclerView1,recyclerView2,recyclerView3;
     @SuppressLint("InflateParams")
     private void getNeedData() {
+        view.getBackground().mutate().setAlpha(10);
         LayoutInflater inflater = getLayoutInflater();
         View view1 = inflater.inflate(R.layout.fragment_demand_information, null);
         View view2 = inflater.inflate(R.layout.fragment_demand_information, null);
@@ -309,12 +314,29 @@ public class HomeFragment extends BaseFragment {
         viewPager.addOnPageChangeListener(materialIndicator);
         materialIndicator.setAdapter(Objects.requireNonNull(viewPager.getAdapter()));
 
-        recyclerView=view1.findViewById(R.id.rv);
-        recyclerView.setNestedScrollingEnabled(false);
-        recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        recyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
+        recyclerView1=view1.findViewById(R.id.rv);
+        recyclerView2=view2.findViewById(R.id.rv);
+        recyclerView3=view3.findViewById(R.id.rv);
+        recyclerView1.setNestedScrollingEnabled(false);
+        recyclerView2.setNestedScrollingEnabled(false);
+        recyclerView3.setNestedScrollingEnabled(false);
+
+        recyclerView1.setLayoutManager(new LinearLayoutManager(mContext));
+        recyclerView1.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
         FindRelationshipAdapter relationshipAdapter = new FindRelationshipAdapter(R.layout.item_demand_relationship, null);
-        recyclerView.setAdapter(relationshipAdapter);
+        recyclerView1.setAdapter(relationshipAdapter);
+
+        recyclerView2.setLayoutManager(new LinearLayoutManager(mContext));
+        recyclerView2.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
+        FindSubstanceAdapter substanceAdapter = new FindSubstanceAdapter(R.layout.item_demand_substance, null);
+        substanceAdapter.setEmptyView(R.layout.layout_loading, recyclerView2);
+        recyclerView2.setAdapter(substanceAdapter);
+
+        recyclerView3.setLayoutManager(new LinearLayoutManager(mContext));
+        recyclerView3.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
+        DemandBuyerAdapter buyerAdapter = new DemandBuyerAdapter(R.layout.item_demand_buyer, null);
+        buyerAdapter.setEmptyView(R.layout.layout_loading, recyclerView3);
+        recyclerView3.setAdapter(buyerAdapter);
 
         relationshipAdapter.setOnItemClickListener((adapter, view, position) -> {
             DemandRelationshipBean.ListBean listBean = relationshipAdapter.getData().get(position%adapter.getData().size());
@@ -325,6 +347,11 @@ public class HomeFragment extends BaseFragment {
 
         DemandRelationshipVm demandRelationshipVm= ViewModelProviders.of(mActivity).get(DemandRelationshipVm.class);
         demandRelationshipVm.getRelationship();
+        DemandSubstanceVm demandSubstanceVm = ViewModelProviders.of(mActivity).get(DemandSubstanceVm.class);
+        demandSubstanceVm.getSubstance();
+        DemandBuyerVm demandBuyerVm = ViewModelProviders.of(mActivity).get(DemandBuyerVm.class);
+        demandBuyerVm.getBuyer();
+
         demandRelationshipVm.relationshipLiveData.observe(this, relationshipBean -> {
             if (relationshipBean.getPage() == 1) {
                 relationshipAdapter.setNewData(relationshipBean.getList());
@@ -332,9 +359,34 @@ public class HomeFragment extends BaseFragment {
                 relationshipAdapter.addData(relationshipBean.getList());
             }
         });
+        demandSubstanceVm.substanceLiveData.observe(this, demandSubstanceBean -> {
+            if (demandSubstanceBean.getPage() == 1) {
+                substanceAdapter.setNewData(demandSubstanceBean.getList());
+            }else {
+                substanceAdapter.addData(demandSubstanceBean.getList());
+            }
+        });
+        demandBuyerVm.buyerLiveData.observe(this, demandBuyerBean -> {
+            if (demandBuyerBean.getPage() == 1) {
+                buyerAdapter.setNewData(demandBuyerBean.getList());
+            }else {
+                buyerAdapter.addData(demandBuyerBean.getList());
+            }
+        });
 
+
+        if (viewPager.getCurrentItem()==0){
+            startAuto(recyclerView1);
+        }else if (viewPager.getCurrentItem()==1){
+            startAuto(recyclerView2);
+        }else {
+            startAuto(recyclerView3);
+        }
+    }
+
+    private void startAuto(AutoScrollRecyclerView recyclerView) {
         //item滚动步骤1：自定义LinearSmoothScroller，重写方法，滚动item至顶部，控制滚动速度
-        mScroller = new LinearSmoothScroller(Objects.requireNonNull(getActivity())){
+        LinearSmoothScroller mScroller = new LinearSmoothScroller(Objects.requireNonNull(getActivity())){
             //将移动的置顶显示
             @Override
             protected int getVerticalSnapPreference() {
@@ -348,11 +400,7 @@ public class HomeFragment extends BaseFragment {
                 return 3f / displayMetrics.density;
             }
         };
-        startAuto();
-    }
-
-    //item滚动步骤2：设置定时器自动滚动
-    private void startAuto() {
+        //item滚动步骤2：设置定时器自动滚动
         if (mAutoTask!= null && !mAutoTask.isDisposed()) {
             mAutoTask.dispose();
         }
@@ -381,7 +429,7 @@ public class HomeFragment extends BaseFragment {
 
     }
 
-    @OnClick({R.id.tv_bar_title, R.id.tv_more, R.id.iv_subscribed,R.id.tv_bar_title_home,R.id.iv_subscribed_home,R.id.iv_my_income,R.id.rl_zgx,R.id.rl_zwz,R.id.rl_zmj})
+    @OnClick({R.id.tv_bar_title, R.id.tv_more, R.id.iv_subscribed,R.id.tv_bar_title_home,R.id.iv_subscribed_home,R.id.iv_my_income,R.id.rl_zgx,R.id.rl_zwz,R.id.rl_zmj,R.id.tv_more_need})
     void onClick(View view){
         Bundle bundle = new Bundle();
         switch (view.getId()){
@@ -410,6 +458,15 @@ public class HomeFragment extends BaseFragment {
             case R.id.rl_zmj:
                 bundle.putString("type", "2");
                 ActivityUtils.startActivity(bundle,DemandReleaseActivity.class);
+                break;
+            case R.id.tv_more_need://需求资讯查看更多
+                if(viewPager.getCurrentItem()==0){
+
+                }else if (viewPager.getCurrentItem()==1){
+
+                }else if (viewPager.getCurrentItem()==2){
+
+                }
                 break;
         }
     }

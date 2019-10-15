@@ -81,18 +81,20 @@ public class ConversationListAdapterEx extends ConversationListAdapter {
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
                         try {
                             IMWechatUserInfoBean bean=new Gson().fromJson(response.body(),IMWechatUserInfoBean.class);
+                            LogUtils.json(response.body());
                             if (bean.getCode().equals("200")){
-                                LogUtils.json(response.body());
-                                LogUtils.i(bean);
-                                LogUtils.i(bean.getData().getCompany());
-                                company=bean.getData().getCompany();
-                                post=bean.getData().getPosition();
-                                if (data.getConversationType().equals(Conversation.ConversationType.PRIVATE)){
-                                    (v.findViewById(R.id.tv_company)).setVisibility(View.VISIBLE);
-                                    (v.findViewById(R.id.tv_post)).setVisibility(View.VISIBLE);
-                                    ((TextView)v.findViewById(R.id.tv_company)).setText(company);
-                                    ((TextView)v.findViewById(R.id.tv_post)).setText(post);
-                                    ((TextView)(v.findViewById(R.id.rc_conversation_title))).setFilters(new InputFilter[] { new InputFilter.LengthFilter(6)});
+                                if (bean.getData()!=null){
+                                    if (bean.getData().getCompany()!=null&&bean.getData().getPosition()!=null){
+                                        company=bean.getData().getCompany();
+                                        post=bean.getData().getPosition();
+                                        if (data.getConversationType().equals(Conversation.ConversationType.PRIVATE)){
+                                            (v.findViewById(R.id.tv_company)).setVisibility(View.VISIBLE);
+                                            (v.findViewById(R.id.tv_post)).setVisibility(View.VISIBLE);
+                                            ((TextView)v.findViewById(R.id.tv_company)).setText(company);
+                                            ((TextView)v.findViewById(R.id.tv_post)).setText(post);
+                                            ((TextView)(v.findViewById(R.id.rc_conversation_title))).setFilters(new InputFilter[] { new InputFilter.LengthFilter(6)});
+                                        }
+                                    }
                                 }
                             }else {
                                 ToastUtils.showShort(bean.getMsg());

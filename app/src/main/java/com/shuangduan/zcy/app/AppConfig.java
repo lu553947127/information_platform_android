@@ -5,6 +5,7 @@ import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Environment;
@@ -37,15 +38,18 @@ import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
 import cn.jpush.android.api.JPushInterface;
+import io.rong.imkit.RongContext;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.Message;
 import io.rong.push.RongPushClient;
 import io.rong.push.pushconfig.PushConfig;
 import okhttp3.OkHttpClient;
@@ -201,6 +205,33 @@ public class AppConfig {
                 Conversation.ConversationType.DISCUSSION
         };
         RongIM.getInstance().setReadReceiptConversationTypeList(types);
+
+//        boolean readRec =false;
+//        try {
+//            readRec= RongContext.getInstance().getResources().getBoolean(R.bool.rc_read_receipt);
+//        }catch (Resources.NotFoundException e){
+//
+//        }
+//        if (readRec){
+//            RongIMClient.setReadReceiptListener(new RongIMClient.ReadReceiptListener() {
+//                @Override
+//                public void onReadReceiptReceived(Message message) {
+//                    LogUtils.i(message);
+//                }
+//
+//                @Override
+//                public void onMessageReceiptRequest(Conversation.ConversationType conversationType, String s, String s1) {
+//                    LogUtils.i(conversationType);
+//                }
+//
+//                @Override
+//                public void onMessageReceiptResponse(Conversation.ConversationType conversationType, String s, String s1, HashMap<String, Long> hashMap) {
+//                    LogUtils.i(conversationType);
+//                }
+//            });
+//        }
+
+
     }
 
 
