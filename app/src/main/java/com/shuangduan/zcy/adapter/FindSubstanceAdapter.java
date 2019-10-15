@@ -58,6 +58,10 @@ public class FindSubstanceAdapter extends BaseQuickAdapter<DemandSubstanceBean.L
 
     @Override
     public int getItemCount() {
-        return Integer.MAX_VALUE;
+        if (getData().size()>3){
+            return Integer.MAX_VALUE;
+        }else {
+            return getData().size();
+        }
     }
 }

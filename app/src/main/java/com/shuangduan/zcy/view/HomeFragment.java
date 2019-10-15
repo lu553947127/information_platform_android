@@ -396,28 +396,6 @@ public class HomeFragment extends BaseFragment {
                 buyerAdapter.addData(demandBuyerBean.getList());
             }
         });
-
-        if (viewPager.getCurrentItem()==0){
-            recyclerView1.startLine();
-            recyclerView2.stop();
-            recyclerView3.stop();
-        }else if (viewPager.getCurrentItem()==1){
-            recyclerView1.stop();
-            recyclerView2.startLine();
-            recyclerView3.stop();
-        }else if (viewPager.getCurrentItem()==2){
-            recyclerView1.stop();
-            recyclerView2.stop();
-            recyclerView3.startLine();
-        }
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        recyclerView1.stop();
-        recyclerView2.stop();
-        recyclerView3.stop();
     }
 
     @Override
@@ -474,12 +452,28 @@ public class HomeFragment extends BaseFragment {
     public void onStart() {
         super.onStart();
         banner.startAutoPlay();
+        if (viewPager.getCurrentItem()==0){
+            recyclerView1.startLine();
+            recyclerView2.stop();
+            recyclerView3.stop();
+        }else if (viewPager.getCurrentItem()==1){
+            recyclerView1.stop();
+            recyclerView2.startLine();
+            recyclerView3.stop();
+        }else if (viewPager.getCurrentItem()==2){
+            recyclerView1.stop();
+            recyclerView2.stop();
+            recyclerView3.startLine();
+        }
     }
 
     @Override
     public void onStop() {
         super.onStop();
         banner.stopAutoPlay();
+        recyclerView1.stop();
+        recyclerView2.stop();
+        recyclerView3.stop();
     }
 
     private List<ClassifyBean> getClassify(){
