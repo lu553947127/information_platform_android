@@ -37,14 +37,32 @@
         android:textColor="@color/color_666666"
         android:textSize="13sp"/>
 
-    <TextView
-        android:id="@+id/tv_price"
+    <RelativeLayout
+        android:id="@+id/rl_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginRight="13dp"
-        app:layout_constraintTop_toTopOf="@+id/tv_demand_num"
-        android:textColor="@color/color_666666"
-        android:textSize="14sp"/>
+        android:layout_marginRight="14dp"
+        app:layout_constraintTop_toTopOf="@+id/tv_title">
+
+        <TextView
+            android:id="@+id/tv_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/circular_background_orange"
+            android:padding="8dp"
+            android:textColor="@color/color_EF583E"
+            android:textSize="11sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="-25dp"
+            android:layout_toRightOf="@+id/tv_price"
+            android:scaleType="centerCrop"
+            android:src="@drawable/icon_jieshoujiage"/>
+
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

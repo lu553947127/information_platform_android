@@ -2,21 +2,14 @@ package com.shuangduan.zcy.view.demand;
 
 import android.os.Bundle;
 import android.view.View;
-
-import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.viewpager.widget.ViewPager;
-
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
-import com.google.android.material.tabs.TabLayout;
 import com.shuangduan.zcy.R;
-import com.shuangduan.zcy.adapter.ViewPagerAdapter;
 import com.shuangduan.zcy.base.BaseActivity;
-import com.shuangduan.zcy.view.HomeFragment;
 
 import butterknife.BindView;
 import butterknife.OnClick;

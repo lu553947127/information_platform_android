@@ -46,7 +46,9 @@ import com.shuangduan.zcy.base.BaseFragment;
 import com.shuangduan.zcy.dialog.UpdateManager;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
+import com.shuangduan.zcy.model.bean.DemandBuyerBean;
 import com.shuangduan.zcy.model.bean.DemandRelationshipBean;
+import com.shuangduan.zcy.model.bean.DemandSubstanceBean;
 import com.shuangduan.zcy.model.bean.VersionUpgradesBean;
 import com.shuangduan.zcy.model.bean.ClassifyBean;
 import com.shuangduan.zcy.model.bean.HomeBannerBean;
@@ -57,8 +59,11 @@ import com.shuangduan.zcy.utils.DensityUtil;
 import com.shuangduan.zcy.utils.LoginUtils;
 import com.shuangduan.zcy.utils.VersionUtils;
 import com.shuangduan.zcy.utils.image.GlideImageLoader;
+import com.shuangduan.zcy.view.demand.DemandActivity;
 import com.shuangduan.zcy.view.demand.DemandReleaseActivity;
+import com.shuangduan.zcy.view.demand.FindBuyerDetailActivity;
 import com.shuangduan.zcy.view.demand.FindRelationshipDetailActivity;
+import com.shuangduan.zcy.view.demand.FindSubstanceDetailActivity;
 import com.shuangduan.zcy.view.headlines.HeadlinesActivity;
 import com.shuangduan.zcy.view.headlines.HeadlinesDetailActivity;
 import com.shuangduan.zcy.view.material.MaterialActivity;
@@ -94,6 +99,11 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Conversation;
+
+import static com.shuangduan.zcy.app.CustomConfig.DEMAND_TYPE;
+import static com.shuangduan.zcy.app.CustomConfig.FIND_BUYER_TYPE;
+import static com.shuangduan.zcy.app.CustomConfig.FIND_RELATIONSHIP_TYPE;
+import static com.shuangduan.zcy.app.CustomConfig.FIND_SUBSTANCE_TYPE;
 
 /**
  * @author 宁文强 QQ:858777523
@@ -299,9 +309,9 @@ public class HomeFragment extends BaseFragment {
     private void getNeedData() {
         view.getBackground().mutate().setAlpha(10);
         LayoutInflater inflater = getLayoutInflater();
-        View view1 = inflater.inflate(R.layout.fragment_demand_information, null);
-        View view2 = inflater.inflate(R.layout.fragment_demand_information, null);
-        View view3 = inflater.inflate(R.layout.fragment_demand_information, null);
+        View view1 = inflater.inflate(R.layout.fragment_demand_information, null,false);
+        View view2 = inflater.inflate(R.layout.fragment_demand_information, null,false);
+        View view3 = inflater.inflate(R.layout.fragment_demand_information, null,false);
         titleList.add("找关系");
         titleList.add("找物资");
         titleList.add("找买家");
@@ -329,13 +339,11 @@ public class HomeFragment extends BaseFragment {
         recyclerView2.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerView2.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
         FindSubstanceAdapter substanceAdapter = new FindSubstanceAdapter(R.layout.item_demand_substance, null);
-        substanceAdapter.setEmptyView(R.layout.layout_loading, recyclerView2);
         recyclerView2.setAdapter(substanceAdapter);
 
         recyclerView3.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerView3.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
         DemandBuyerAdapter buyerAdapter = new DemandBuyerAdapter(R.layout.item_demand_buyer, null);
-        buyerAdapter.setEmptyView(R.layout.layout_loading, recyclerView3);
         recyclerView3.setAdapter(buyerAdapter);
 
         relationshipAdapter.setOnItemClickListener((adapter, view, position) -> {
@@ -343,6 +351,20 @@ public class HomeFragment extends BaseFragment {
             Bundle bundle = new Bundle();
             bundle.putInt(CustomConfig.DEMAND_ID, listBean.getId());
             ActivityUtils.startActivity(bundle, FindRelationshipDetailActivity.class);
+        });
+
+        substanceAdapter.setOnItemClickListener((adapter, view, position) -> {
+            DemandSubstanceBean.ListBean listBean = substanceAdapter.getData().get(position%adapter.getData().size());
+            Bundle bundle = new Bundle();
+            bundle.putInt(CustomConfig.DEMAND_ID, listBean.getId());
+            ActivityUtils.startActivity(bundle, FindSubstanceDetailActivity.class);
+        });
+
+        buyerAdapter.setOnItemClickListener((adapter1, view, position) -> {
+            DemandBuyerBean.ListBean listBean = buyerAdapter.getData().get(position%adapter1.getData().size());
+            Bundle bundle = new Bundle();
+            bundle.putInt(CustomConfig.DEMAND_ID, listBean.getId());
+            ActivityUtils.startActivity(bundle, FindBuyerDetailActivity.class);
         });
 
         DemandRelationshipVm demandRelationshipVm= ViewModelProviders.of(mActivity).get(DemandRelationshipVm.class);
@@ -374,12 +396,11 @@ public class HomeFragment extends BaseFragment {
             }
         });
 
-
         if (viewPager.getCurrentItem()==0){
             startAuto(recyclerView1);
         }else if (viewPager.getCurrentItem()==1){
             startAuto(recyclerView2);
-        }else {
+        }else if (viewPager.getCurrentItem()==2){
             startAuto(recyclerView3);
         }
     }
@@ -461,11 +482,14 @@ public class HomeFragment extends BaseFragment {
                 break;
             case R.id.tv_more_need://需求资讯查看更多
                 if(viewPager.getCurrentItem()==0){
-
+                    bundle.putInt(DEMAND_TYPE,FIND_RELATIONSHIP_TYPE);//找关系列表
+                    ActivityUtils.startActivity(bundle,DemandActivity.class);
                 }else if (viewPager.getCurrentItem()==1){
-
+                    bundle.putInt(DEMAND_TYPE,FIND_SUBSTANCE_TYPE);//找物资列表
+                    ActivityUtils.startActivity(bundle, DemandActivity.class);
                 }else if (viewPager.getCurrentItem()==2){
-
+                    bundle.putInt(DEMAND_TYPE,FIND_BUYER_TYPE);//找买家列表
+                    ActivityUtils.startActivity(bundle,DemandActivity.class);
                 }
                 break;
         }
