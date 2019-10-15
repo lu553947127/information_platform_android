@@ -76,6 +76,17 @@ public class RecruitBean {
         private String create_time;
         private int is_pay;
 
+        private String area;
+
+
+        public String getArea() {
+            return area;
+        }
+
+        public void setArea(String area) {
+            this.area = area;
+        }
+
         public int getId() {
             return id;
         }

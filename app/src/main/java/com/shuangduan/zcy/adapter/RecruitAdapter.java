@@ -29,7 +29,7 @@ public class RecruitAdapter extends BaseQuickAdapter<RecruitBean.ListBean, BaseV
         String time=item.getCreate_time().substring(0,11);
         helper.setText(R.id.tv_title, item.getTitle())
                 .setText(R.id.tv_content, item.getContent())
-                .setText(R.id.tv_area, item.getProvince())
+                .setText(R.id.tv_area, item.getArea())
                 .setText(R.id.tv_time, time);
     }
 }
