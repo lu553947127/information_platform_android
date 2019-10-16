@@ -58,7 +58,7 @@ public class DemandBuyerAdapter extends BaseQuickAdapter<DemandBuyerBean.ListBea
 
     @Override
     public int getItemCount() {
-        if (getData().size()>3){
+        if (getData().size()>2){
             return Integer.MAX_VALUE;
         }else {
             return getData().size();

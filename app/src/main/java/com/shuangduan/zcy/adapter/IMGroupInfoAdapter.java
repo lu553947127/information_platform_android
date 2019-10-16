@@ -32,6 +32,7 @@ public class IMGroupInfoAdapter extends BaseQuickAdapter<IMGroupInfoBean.DataBea
     protected void convert(BaseViewHolder helper, IMGroupInfoBean.DataBean.ListBean item) {
         if (item.getUsername()!=null){
             helper.setText(R.id.tv_name, item.getUsername());
+            helper.setVisible(R.id.iv_sgs, item.getCardStatus() == 2);
             CircleImageView ivHead = helper.getView(R.id.iv_icon);
             if (item.getUsername().equals("更多")){
                 ImageLoader.load(mContext, new ImageConfig.Builder()

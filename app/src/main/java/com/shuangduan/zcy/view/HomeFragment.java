@@ -386,34 +386,34 @@ public class HomeFragment extends BaseFragment {
             }
         });
 
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                if (position==0){
-                    recyclerView1.startLine();
-                    recyclerView2.stop();
-                    recyclerView3.stop();
-                }else if (position==1){
-                    recyclerView1.stop();
-                    recyclerView2.startLine();
-                    recyclerView3.stop();
-                }else if (position==2){
-                    recyclerView1.stop();
-                    recyclerView2.stop();
-                    recyclerView3.startLine();
-                }
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
+//        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+//            @Override
+//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+//
+//            }
+//
+//            @Override
+//            public void onPageSelected(int position) {
+//                if (position==0){
+//                    recyclerView1.startLine();
+//                    recyclerView2.stop();
+//                    recyclerView3.stop();
+//                }else if (position==1){
+//                    recyclerView1.stop();
+//                    recyclerView2.startLine();
+//                    recyclerView3.stop();
+//                }else if (position==2){
+//                    recyclerView1.stop();
+//                    recyclerView2.stop();
+//                    recyclerView3.startLine();
+//                }
+//            }
+//
+//            @Override
+//            public void onPageScrollStateChanged(int state) {
+//
+//            }
+//        });
     }
 
     @OnClick({R.id.tv_bar_title, R.id.tv_more, R.id.iv_subscribed,R.id.tv_bar_title_home,R.id.iv_subscribed_home,R.id.iv_my_income,R.id.rl_zgx,R.id.rl_zwz,R.id.rl_zmj,R.id.tv_more_need})
@@ -466,8 +466,8 @@ public class HomeFragment extends BaseFragment {
         super.onStart();
         banner.startAutoPlay();
         recyclerView1.startLine();
-//        recyclerView2.startLine();
-//        recyclerView3.startLine();
+        recyclerView2.startLine();
+        recyclerView3.startLine();
     }
 
     @Override

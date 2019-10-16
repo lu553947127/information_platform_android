@@ -87,21 +87,21 @@ public class PwdPayActivity extends BaseActivity {
             case R.id.iv_bar_back:
                 finish();
                 break;
-            case R.id.tv_pwd_set:
+            case R.id.tv_pwd_set://设置支付密码
                 if (updatePwdPayVm.status == 1){
                     ToastUtils.showShort(getString(R.string.pwd_pay_done));
                     return;
                 }
                 ActivityUtils.startActivity(SetPwdPayActivity.class);
                 break;
-            case R.id.tv_pwd_update:
+            case R.id.tv_pwd_update://修改支付密码
                 if (updatePwdPayVm.status != 1){
                     ToastUtils.showShort(getString(R.string.pwd_pay_not_set));
                     return;
                 }
                 ActivityUtils.startActivity(UpdatePwdPayActivity.class);
                 break;
-            case R.id.tv_pwd_forget:
+            case R.id.tv_pwd_forget://忘记密码
                 if (updatePwdPayVm.status != 1){
                     ToastUtils.showShort(getString(R.string.pwd_pay_not_set));
                     return;

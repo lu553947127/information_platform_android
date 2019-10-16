@@ -355,10 +355,10 @@ public class LoginActivity extends BaseActivity {
             //注册成功走一遍登录
             loginVm.accountLogin(edtMobile.getText().toString(), edtPwdRegister.getText().toString(), DeviceUtils.getAndroidID());
             loginVm.accountLoginLiveData.observe(LoginActivity.this, loginBean -> {
-                SPUtils.getInstance().put(SpConfig.USER_ID, loginBean.getUser_id());
-                SPUtils.getInstance().put(SpConfig.TOKEN, loginBean.getToken());
-                SPUtils.getInstance().put(SpConfig.MOBILE, loginBean.getTel());
-                SPUtils.getInstance().put(SpConfig.INFO_STATUS, loginBean.getInfo_status());
+                SPUtils.getInstance().put(SpConfig.USER_ID, loginBean.getUser_id(),true);
+                SPUtils.getInstance().put(SpConfig.TOKEN, loginBean.getToken(),true);
+                SPUtils.getInstance().put(SpConfig.MOBILE, loginBean.getTel(),true);
+                SPUtils.getInstance().put(SpConfig.INFO_STATUS, loginBean.getInfo_status(),true);
 
                 if (loginBean.getInfo_status() == 1){
                     imConnectVm.userId = loginBean.getUser_id();

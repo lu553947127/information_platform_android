@@ -57,6 +57,7 @@ public class IMWechatUserInfoBean {
         private String name;
         private String company;
         private String position;
+        private String card_status;
 
         public String getUserId() {
             return userId;
@@ -96,6 +97,14 @@ public class IMWechatUserInfoBean {
 
         public void setPosition(String position) {
             this.position = position;
+        }
+
+        public String getCard_status() {
+            return card_status;
+        }
+
+        public void setCard_status(String card_status) {
+            this.card_status = card_status;
         }
     }
 }

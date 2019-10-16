@@ -2,6 +2,7 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@id/rc_item_conversation"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -16,15 +17,31 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="6dp">
 
-        <io.rong.imkit.widget.AsyncImageView
-            android:id="@+id/rc_left"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_gravity="center"
-            android:background="@android:color/transparent"
-            app:RCCornerRadius="3dp"
-            app:RCDefDrawable="@drawable/default_head"
-            app:RCShape="circle" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <io.rong.imkit.widget.AsyncImageView
+                android:id="@+id/rc_left"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@android:color/transparent"
+                app:RCCornerRadius="3dp"
+                app:RCDefDrawable="@drawable/default_head"
+                app:RCShape="circle"
+                tools:ignore="MissingConstraints" />
+
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_sgs"
+                android:layout_width="12dp"
+                android:layout_height="13dp"
+                android:src="@drawable/icon_mini_sgs"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@id/rc_left"
+                app:layout_constraintRight_toRightOf="@id/rc_left" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <FrameLayout
             android:id="@+id/rc_unread_view_left"

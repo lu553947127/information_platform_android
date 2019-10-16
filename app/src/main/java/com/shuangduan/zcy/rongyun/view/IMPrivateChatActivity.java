@@ -33,6 +33,7 @@ import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.rong.imkit.RongContext;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationFragment;
 import io.rong.imlib.model.Conversation;
@@ -60,7 +61,7 @@ public class IMPrivateChatActivity extends BaseActivity implements RongIM.Conver
     @BindView(R.id.iv_bar_right)
     ImageView ivBarRight;
 
-    private ConversationFragment fragment;
+    private ConversationFragmentEx fragment;
     private Conversation.ConversationType mConversationType;
     private String user_id;
 
@@ -99,7 +100,7 @@ public class IMPrivateChatActivity extends BaseActivity implements RongIM.Conver
 
     //加载会话页面
     private void enterFragment(Conversation.ConversationType mConversationType, String mTargetId) {
-        fragment = new ConversationFragment();
+        fragment = new ConversationFragmentEx();
         Uri uri = Uri.parse("rong://" + getApplicationInfo().packageName).buildUpon()
                 .appendPath("conversation").appendPath(mConversationType.getName().toLowerCase())
                 .appendQueryParameter("targetId", mTargetId).build();

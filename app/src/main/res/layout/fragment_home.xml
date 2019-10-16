@@ -62,7 +62,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:layout_marginLeft="6dp"
-                        app:marqueeview_text_speed="2"
+                        app:marqueeview_text_speed="1.5"
                         app:marqueeview_text_color="@color/color_6D6F78"/>
 
                     <TextView

@@ -158,6 +158,7 @@ public class IMGroupInfoBean {
             private int id;
             private String image;
             private String username;
+            private int cardStatus;
 
             public ListBean(String username) {
                 this.username = username;
@@ -185,6 +186,14 @@ public class IMGroupInfoBean {
 
             public void setUsername(String username) {
                 this.username = username;
+            }
+
+            public int getCardStatus() {
+                return cardStatus;
+            }
+
+            public void setCardStatus(int cardStatus) {
+                this.cardStatus = cardStatus;
             }
         }
     }

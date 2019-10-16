@@ -152,8 +152,8 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
         userInfoVm = ViewModelProviders.of(this).get(UserInfoVm.class);
         userInfoVm.uid = uid;
         userInfoVm.informationLiveData.observe(this, userInfoBean -> {
-            SPUtils.getInstance().put(SpConfig.USERNAME, userInfoBean.getUsername());
-            SPUtils.getInstance().put(SpConfig.MOBILE, userInfoBean.getTel());
+            SPUtils.getInstance().put(SpConfig.USERNAME, userInfoBean.getUsername(),true);
+            SPUtils.getInstance().put(SpConfig.MOBILE, userInfoBean.getTel(),true);
             tvName.setText(userInfoBean.getUsername());
             tvMobile.setText(userInfoBean.getTel());
             tvIdCard.setText(userInfoBean.getIdentity_card());

@@ -6,7 +6,7 @@
 
     <RelativeLayout
         android:layout_width="260dp"
-        android:layout_height="325dp"
+        android:layout_height="355dp"
         android:layout_gravity="center"
         android:background="@drawable/circular_background_white">
 
@@ -64,6 +64,10 @@
                     android:text="1.修复了已知bug"
                     android:textColor="#666666"
                     android:textSize="13sp" />
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp" />
             </LinearLayout>
 
         </com.shuangduan.zcy.utils.ElasticScrollView>

@@ -101,16 +101,16 @@ public class SetActivity extends BaseActivity {
             case R.id.iv_bar_back:
                 finish();
                 break;
-            case R.id.tv_update_pwd:
+            case R.id.tv_update_pwd://修改登录密码
                 ActivityUtils.startActivity(UpdatePwdActivity.class);
                 break;
             case R.id.tv_pwd_pay://支付密码
                 ActivityUtils.startActivity(PwdPayActivity.class);
                 break;
-            case R.id.tv_about_ours:
+            case R.id.tv_about_ours://关于
                 ActivityUtils.startActivity(AboutOursActivity.class);
                 break;
-            case R.id.tv_exit:
+            case R.id.tv_exit://退出登录
                 new CustomDialog(SetActivity.this)
                         .setTip(getString(R.string.exit_confirm))
                         .setCallBack(new BaseDialog.CallBack() {

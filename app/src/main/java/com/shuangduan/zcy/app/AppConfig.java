@@ -174,8 +174,8 @@ public class AppConfig {
 //        RongPushClient.setPushConfig(builder.build());
 
         //融云初始化
-//        RongIM.init(context, "pwe86ga5p43i6");//测试版
-        RongIM.init(context, "pvxdm17jpo4nr");//正式版
+        RongIM.init(context, "pwe86ga5p43i6");//测试版
+//        RongIM.init(context, "pvxdm17jpo4nr");//正式版
         //融云推送初始化
         PushConfig config = new PushConfig
                 .Builder()
@@ -210,30 +210,28 @@ public class AppConfig {
 //        try {
 //            readRec= RongContext.getInstance().getResources().getBoolean(R.bool.rc_read_receipt);
 //        }catch (Resources.NotFoundException e){
-//
+//            e.printStackTrace();
 //        }
 //        if (readRec){
-//            RongIMClient.setReadReceiptListener(new RongIMClient.ReadReceiptListener() {
-//                @Override
-//                public void onReadReceiptReceived(Message message) {
-//                    LogUtils.i(message);
-//                }
 //
-//                @Override
-//                public void onMessageReceiptRequest(Conversation.ConversationType conversationType, String s, String s1) {
-//                    LogUtils.i(conversationType);
-//                }
-//
-//                @Override
-//                public void onMessageReceiptResponse(Conversation.ConversationType conversationType, String s, String s1, HashMap<String, Long> hashMap) {
-//                    LogUtils.i(conversationType);
-//                }
-//            });
 //        }
+        RongIMClient.setReadReceiptListener(new RongIMClient.ReadReceiptListener() {
+            @Override
+            public void onReadReceiptReceived(Message message) {
+                LogUtils.i("onReadReceiptReceived"+message);
+            }
 
+            @Override
+            public void onMessageReceiptRequest(Conversation.ConversationType conversationType, String s, String s1) {
+                LogUtils.i("onMessageReceiptRequest"+conversationType);
+            }
 
+            @Override
+            public void onMessageReceiptResponse(Conversation.ConversationType conversationType, String s, String s1, HashMap<String, Long> hashMap) {
+                LogUtils.i("onMessageReceiptResponse"+conversationType);
+            }
+        });
     }
-
 
     /**
      * 获得当前进程的名字
@@ -251,7 +249,6 @@ public class AppConfig {
         }
         return null;
     }
-
 
     //判断类型
     private static boolean shouldInit(Context context) {

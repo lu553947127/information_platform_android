@@ -20,28 +20,27 @@ import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
 import com.shuangduan.zcy.model.bean.IMWechatUserInfoBean;
 
 import io.rong.imkit.model.UIConversation;
-import io.rong.imkit.widget.adapter.ConversationListAdapter;
+import io.rong.imkit.model.UIMessage;
+import io.rong.imkit.widget.adapter.MessageListAdapter;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.UserInfo;
 
 /**
  * @ProjectName: information_platform_android
  * @Package: com.shuangduan.zcy.rongyun.view
- * @ClassName: ConversationListAdapterEx
- * @Description: 会话列表的适配器
+ * @ClassName: MessageListAdapterEx
+ * @Description: java类作用描述
  * @Author: 鹿鸿祥
- * @CreateDate: 2019/10/9 14:42
+ * @CreateDate: 2019/10/16 10:00
  * @UpdateUser: 鹿鸿祥
- * @UpdateDate: 2019/10/9 14:42
+ * @UpdateDate: 2019/10/16 10:00
  * @UpdateRemark: 更新说明
  * @Version: 1.0
  */
-public class ConversationListAdapterEx extends ConversationListAdapter {
+public class MessageListAdapterEx extends MessageListAdapter {
 
-    private String company;
-    private String post;
 
-    public ConversationListAdapterEx(Context context) {
+    public MessageListAdapterEx(Context context) {
         super(context);
     }
 
@@ -51,18 +50,15 @@ public class ConversationListAdapterEx extends ConversationListAdapter {
     }
 
     @Override
-    protected void bindView(View v, int position, UIConversation data) {
+    protected void bindView(View v, int position, UIMessage data) {
         super.bindView(v, position, data);
         if (data != null) {
-            //修改群聊消息显示为红点
-            if (data.getConversationType().equals(Conversation.ConversationType.DISCUSSION))
-                data.setUnreadType(UIConversation.UnreadRemindType.REMIND_ONLY);
-            getFriendData(data.getConversationTargetId(),v,data);
+            getFriendData(data.getTargetId(),v,data);
         }
     }
 
     //会话列表头像名称显示
-    private UserInfo getFriendData(String userId,View v,UIConversation data) {
+    private UserInfo getFriendData(String userId, View v, UIMessage data) {
 
         OkGo.<String>post(RetrofitHelper.BASE_TEST_URL+ Common.WECHAT_USER_INFO)
                 .tag(this)
@@ -85,18 +81,13 @@ public class ConversationListAdapterEx extends ConversationListAdapter {
                             if (bean.getCode().equals("200")){
                                 if (bean.getData()!=null){
                                     if (bean.getData().getCompany()!=null&&bean.getData().getPosition()!=null){
-                                        company=bean.getData().getCompany();
-                                        post=bean.getData().getPosition();
                                         if (data.getConversationType().equals(Conversation.ConversationType.PRIVATE)){
-                                            (v.findViewById(R.id.tv_company)).setVisibility(View.VISIBLE);
-                                            (v.findViewById(R.id.tv_post)).setVisibility(View.VISIBLE);
-                                            ((TextView)v.findViewById(R.id.tv_company)).setText(company);
-                                            ((TextView)v.findViewById(R.id.tv_post)).setText(post);
-                                            ((TextView)(v.findViewById(R.id.rc_conversation_title))).setFilters(new InputFilter[] { new InputFilter.LengthFilter(6)});
                                             if (bean.getData().getCard_status().equals("2")){
                                                 (v.findViewById(R.id.iv_sgs)).setVisibility(View.VISIBLE);
+                                                (v.findViewById(R.id.iv_sgs_right)).setVisibility(View.VISIBLE);
                                             }else {
                                                 (v.findViewById(R.id.iv_sgs)).setVisibility(View.INVISIBLE);
+                                                (v.findViewById(R.id.iv_sgs_right)).setVisibility(View.INVISIBLE);
                                             }
                                         }
                                     }
