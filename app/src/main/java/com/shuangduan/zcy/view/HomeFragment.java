@@ -365,13 +365,18 @@ public class HomeFragment extends BaseFragment {
         demandBuyerVm.getBuyer();
 
         demandRelationshipVm.relationshipLiveData.observe(this, relationshipBean -> {
-            if (relationshipBean.getPage() == 1) {
-                relationshipAdapter.setNewData(relationshipBean.getList());
-            } else {
-                relationshipAdapter.addData(relationshipBean.getList());
+            if (relationshipBean.getList()!=null&&relationshipBean.getList().size()>0){
+                if (relationshipBean.getPage() == 1) {
+                    relationshipAdapter.setNewData(relationshipBean.getList());
+                } else {
+                    relationshipAdapter.addData(relationshipBean.getList());
+                }
+            }else {
+                relationshipAdapter.setEmptyView(createEmptyView(R.drawable.icon_empty_project, R.string.empty_pull_strings_info, 0, null));
             }
         });
         demandSubstanceVm.substanceLiveData.observe(this, demandSubstanceBean -> {
+            relationshipAdapter.setEmptyView(createEmptyView(R.drawable.icon_empty_project, R.string.empty_substance_info, 0, null));
             if (demandSubstanceBean.getPage() == 1) {
                 substanceAdapter.setNewData(demandSubstanceBean.getList());
             }else {
@@ -379,6 +384,7 @@ public class HomeFragment extends BaseFragment {
             }
         });
         demandBuyerVm.buyerLiveData.observe(this, demandBuyerBean -> {
+            relationshipAdapter.setEmptyView(createEmptyView(R.drawable.icon_empty_project, R.string.empty_buyer_info, 0, null));
             if (demandBuyerBean.getPage() == 1) {
                 buyerAdapter.setNewData(demandBuyerBean.getList());
             }else {

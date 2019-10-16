@@ -99,6 +99,8 @@ public class ConversationListAdapterEx extends ConversationListAdapter {
                                                 (v.findViewById(R.id.iv_sgs)).setVisibility(View.INVISIBLE);
                                             }
                                         }else {
+                                            (v.findViewById(R.id.tv_company)).setVisibility(View.GONE);
+                                            (v.findViewById(R.id.tv_post)).setVisibility(View.GONE);
                                             (v.findViewById(R.id.iv_sgs)).setVisibility(View.INVISIBLE);
                                         }
                                     }
