@@ -1,8 +1,14 @@
 package com.shuangduan.zcy.view.projectinfo;
 
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -16,6 +22,7 @@ import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.lzy.okgo.OkGo;
@@ -39,7 +46,6 @@ import com.shuangduan.zcy.view.recharge.RechargeActivity;
 import com.shuangduan.zcy.vm.CoinPayVm;
 import com.shuangduan.zcy.vm.ProjectDetailVm;
 import com.shuangduan.zcy.vm.UpdatePwdPayVm;
-import com.shuangduan.zcy.weight.DividerItemDecoration;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -54,7 +60,7 @@ import butterknife.OnClick;
  * @chang time
  * @class describe
  */
-public class ProjectContentFragment extends BaseFragment {
+public class ProjectContentFragment extends BaseFragment implements BaseQuickAdapter.OnItemChildClickListener {
 
     @BindView(R.id.tv_update_time)
     TextView tvUpdateTime;
@@ -78,6 +84,10 @@ public class ProjectContentFragment extends BaseFragment {
     TextView tvReadDetail;
     @BindView(R.id.ll_material)
     LinearLayout llMaterial;
+
+    @BindView(R.id.iv_attn)
+    ImageView ivAttn;
+
     private ProjectDetailVm projectDetailVm;
     private ContactAdapter contactAdapter;
     private UpdatePwdPayVm updatePwdPayVm;
@@ -107,9 +117,10 @@ public class ProjectContentFragment extends BaseFragment {
     protected void initDataAndEvent(Bundle savedInstanceState, View v) {
 
         rvContact.setLayoutManager(new LinearLayoutManager(mContext));
-        rvContact.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
         contactAdapter = new ContactAdapter(R.layout.item_contact, null);
         contactAdapter.setEmptyView(R.layout.layout_loading_top, rvContact);
+        contactAdapter.setOnItemChildClickListener(this);
+
         rvContact.setAdapter(contactAdapter);
 
         //基本信息设置
@@ -134,14 +145,36 @@ public class ProjectContentFragment extends BaseFragment {
 
             tvPrice.setText(String.format(getString(R.string.format_valuation), detail.getValuation()));
 //            tvDetail.setGlide(Glide.with(this));
-            tvDetail.setText(detail.getIntro().replace("\\n","\n").trim());
+
+
+            String introStr = detail.getIntro().replace("\\n", "\n");
+            String materialStr = detail.getMaterials();
+
+            if (detail.getIs_pay() == 1) {
+                tvDetail.setText(introStr);
+                tvMaterial.setText(materialStr);
+            } else {
+                tvDetail.setHighlightColor(getResources().getColor(R.color.color_6a5ff8));
+                SpannableString detailInfo = new SpannableString(introStr.trim() + " 查看详情");
+                detailInfo.setSpan(new Clickable(v1 -> addPayDialog()), introStr.length(), detailInfo.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                tvDetail.setText(detailInfo);
+                tvDetail.setMovementMethod(LinkMovementMethod.getInstance());
+
+                tvMaterial.setHighlightColor(getResources().getColor(R.color.color_6a5ff8));
+                SpannableString materialInfo = new SpannableString(materialStr.trim() + " 查看详情");
+                materialInfo.setSpan(new Clickable(v1 -> addPayDialog()), materialStr.length(), materialInfo.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                tvMaterial.setText(materialInfo);
+                tvMaterial.setMovementMethod(LinkMovementMethod.getInstance());
+            }
+
 
             llMaterial.setVisibility(StringUtils.isTrimEmpty(detail.getMaterials()) ? View.GONE : View.VISIBLE);
-            tvMaterial.setText(detail.getMaterials());
 
-            tvReadDetail.setVisibility(detail.getIs_pay() == 1 ? View.GONE : View.VISIBLE);
+
+//            tvReadDetail.setVisibility(detail.getIs_pay() == 1 ? View.GONE : View.VISIBLE);
 
             setEmpty();
+            contactAdapter.setIsPay(detail.getIs_pay());
             contactAdapter.setNewData(projectDetailBean.getContact());
         });
 
@@ -154,34 +187,20 @@ public class ProjectContentFragment extends BaseFragment {
     }
 
     private void setEmpty() {
+
         View empty = LayoutInflater.from(mContext).inflate(R.layout.layout_empty_top, null);
         TextView tvTip = empty.findViewById(R.id.tv_tip);
         tvTip.setText(getString(R.string.empty_contact));
         contactAdapter.setEmptyView(empty);
+
     }
+
 
     @OnClick({R.id.tv_read_detail})
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_read_detail:
-                addDialog(new CustomDialog(mActivity)
-                        .setTip(String.format(getString(R.string.format_pay_price), projectDetailVm.detailLiveData.getValue().getDetail().getDetail_price()))
-                        .setCallBack(new BaseDialog.CallBack() {
-                            @Override
-                            public void cancel() {
-                            }
-                            @Override
-                            public void ok(String s) {
-                                int status = SPUtils.getInstance().getInt(SpConfig.PWD_PAY_STATUS, 0);
-                                if (status == 1) {
-                                    goToPay();
-                                } else {
-                                    //查询是否设置支付密码
-                                    updatePwdPayVm.payPwdState();
-                                }
-                            }
-                        })
-                        .showDialog());
+                addPayDialog();
                 break;
         }
     }
@@ -293,4 +312,65 @@ public class ProjectContentFragment extends BaseFragment {
                 })
                 .showDialog());
     }
+
+    @Override
+    public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+        switch (view.getId()) {
+            case R.id.tv_phone:
+                addPayDialog();
+                break;
+        }
+    }
+
+
+    private void addPayDialog() {
+        addDialog(new CustomDialog(mActivity)
+                .setTip(String.format(getString(R.string.format_pay_price), projectDetailVm.detailLiveData.getValue().getDetail().getDetail_price()))
+                .setCallBack(new BaseDialog.CallBack() {
+                    @Override
+                    public void cancel() {
+                    }
+
+                    @Override
+                    public void ok(String s) {
+                        int status = SPUtils.getInstance().getInt(SpConfig.PWD_PAY_STATUS, 0);
+                        if (status == 1) {
+                            goToPay();
+                        } else {
+                            //查询是否设置支付密码
+                            updatePwdPayVm.payPwdState();
+                        }
+                    }
+                })
+                .showDialog());
+    }
+
+
+    /**
+     * 查看详情的点击事件
+     */
+    class Clickable extends ClickableSpan {
+
+        private final View.OnClickListener mListener;
+
+        public Clickable(View.OnClickListener l) {
+            mListener = l;
+        }
+
+        /*** 重写父类点击事件*/
+
+        @Override
+        public void onClick(View v) {
+            mListener.onClick(v);
+        }
+
+        /*** 重写父类updateDrawState方法 我们可以给TextView设置字体颜色,背景颜色等等...*/
+        @Override
+
+        public void updateDrawState(TextPaint ds) {
+            ds.setColor(getResources().getColor(R.color.color_6a5ff8));
+        }//可点击文字的颜色
+
+    }
+
 }

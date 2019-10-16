@@ -21,16 +21,26 @@ import java.util.List;
  * @class describe
  */
 public class ContactAdapter extends BaseQuickAdapter<ProjectDetailBean.ContactBean, BaseViewHolder> {
+    private int isPay;
+
     public ContactAdapter(int layoutResId, @Nullable List<ProjectDetailBean.ContactBean> data) {
         super(layoutResId, data);
     }
 
     @Override
     protected void convert(BaseViewHolder helper, ProjectDetailBean.ContactBean item) {
-        helper.setText(R.id.tv_type,String.format(mContext.getResources().getString(R.string.format_contacts_type),item.getPhone_type()))
+        helper.setText(R.id.tv_type, String.format(mContext.getResources().getString(R.string.format_contacts_type), item.getPhone_type()))
                 .setText(R.id.tv_unit, String.format(mContext.getResources().getString(R.string.format_unit), item.getCompany()))
                 .setText(R.id.tv_principal, String.format(mContext.getResources().getString(R.string.format_principal), item.getName()))
-                .setText(R.id.tv_phone, String.format(mContext.getResources().getString(R.string.format_phone), item.getTel()))
-                .setText(R.id.tv_address, String.format(mContext.getResources().getString(R.string.format_address), item.getProvince() + item.getCity()));
+                .setText(R.id.tv_phone, isPay == 1 ? String.format(mContext.getResources().getString(R.string.format_phone), item.getTel()) :
+                        String.format(mContext.getResources().getString(R.string.format_phone_look), item.getTel()))
+                .setText(R.id.tv_address, String.format(mContext.getResources().getString(R.string.format_address), item.getProvince() + item.getCity()))
+                .addOnClickListener(R.id.tv_phone);
+
+
+    }
+
+    public void setIsPay(int isPay) {
+        this.isPay = isPay;
     }
 }

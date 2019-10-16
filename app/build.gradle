@@ -172,6 +172,11 @@ dependencies {
     api 'com.huawei.android.hms:base:2.6.1.301'
     api 'com.huawei.android.hms:push:2.6.1.301'
 
+//    卡片View
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support:cardview-v7:28.0.0'
+
+
     /** 本地架包**/
     //qq和空间分享
     //noinspection GradlePath

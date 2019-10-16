@@ -412,6 +412,7 @@
     <string name="format_unit">单位：%1$s</string>
     <string name="format_principal">联系人：%1$s</string>
     <string name="format_phone">手机号：%1$s</string>
+    <string name="format_phone_look">手机号：%1$s\t\t查看</string>
     <string name="format_address">地址：%1$s</string>
     <string name="format_update">更新：%1$s</string>
     <string name="format_stage">阶段：%1$s</string>
