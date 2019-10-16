@@ -3,9 +3,8 @@ package com.shuangduan.zcy.adapter;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
-import androidx.annotation.Nullable;
 
-import com.blankj.utilcode.util.LogUtils;
+import androidx.annotation.Nullable;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.shuangduan.zcy.R;
@@ -34,9 +33,6 @@ public abstract class ReleaseContactAdapter extends BaseQuickAdapter<ContactBean
                 .addOnClickListener(R.id.tv_address)
 //                .setText(R.id.tv_type, item.getType() == null ? "" : item.getType().getType_name())
                 .setText(R.id.tv_address, item.getAddress());
-
-
-
 
         EditText edtType = helper.getView(R.id.edt_type);
         edtType.setOnFocusChangeListener((v, hasFocus) -> {

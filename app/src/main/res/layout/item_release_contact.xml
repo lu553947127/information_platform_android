@@ -4,7 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/colorFFF">
+
+    <ImageView
+        android:id="@+id/iv_del"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="10dp"
+        android:src="@drawable/delete"/>
 
     <FrameLayout
         android:id="@+id/fl_principle"
@@ -129,16 +140,6 @@
             android:textSize="14sp"
             android:hint="请输入联系人部门"/>
 
-        <ImageView
-            android:id="@+id/iv_del"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="end"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:src="@drawable/delete"/>
 
         <View
             android:layout_width="match_parent"
