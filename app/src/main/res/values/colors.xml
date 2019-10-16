@@ -14,6 +14,8 @@
     <color name="colorTvHint">#B1B1B1</color>
     <color name="colorDivider">#F3F3F3</color>
     <color name="colorRipple">#DDDDDD</color>
+    <color name="color_D2D2D2">#D2D2D2</color>
+    <color name="color_555555">#555555</color>
     <color name="color_DDDDDD">#DDDDDD</color>
     <color name="color_999999">#999999</color>
     <color name="color_666666">#666666</color>
@@ -40,6 +42,7 @@
     <color name="color_929292">#929292</color>
     <color name="color_6D6F78">#6D6F78</color>
     <color name="color_FFF3F1">#FFF3F1</color>
+    <color name="color_F6834D">#F6834D</color>
     <!--时间选择器颜色-->
     <color name="text1">#6a5ff8</color>
     <color name="text2">#B1B1B1</color>

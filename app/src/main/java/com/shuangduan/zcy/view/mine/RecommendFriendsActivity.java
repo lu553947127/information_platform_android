@@ -37,8 +37,7 @@ public class RecommendFriendsActivity extends BaseActivity {
     AppCompatTextView tvBarTitle;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.tv_url)
-    TextView tvUrl;
+
     //分享控制器
     private ShareManage shareManage;
 
@@ -49,13 +48,13 @@ public class RecommendFriendsActivity extends BaseActivity {
 
     @Override
     public boolean isUseEventBus() {
-        return true;
+        return false;
     }
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
-        tvBarTitle.setText(getString(R.string.recommend_friends));
+        tvBarTitle.setText(getString(R.string.invite_friends));
         //初始化分享功能
         shareManage = ShareManage.newInstance(getApplicationContext());
         shareManage.init(this, ShareManage.SHARE_RECOMMEND_FRIENDS_TYPE, getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0));
@@ -67,21 +66,18 @@ public class RecommendFriendsActivity extends BaseActivity {
         Tencent.onActivityResultData(requestCode, resultCode, data, shareManage.getQQListener());
     }
 
-    @OnClick({R.id.iv_bar_back, R.id.tv_share})
+    @OnClick({R.id.iv_bar_back, R.id.iv_share})
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_bar_back:
                 finish();
                 break;
-            case R.id.tv_share:
+            case R.id.iv_share:
                 shareManage.showDialog();
                 break;
         }
     }
 
-    @Subscribe
-    public void onEventUpdateUrl(ShareEvent event) {
-        tvUrl.setText(event.url);
-    }
+
 
 }
