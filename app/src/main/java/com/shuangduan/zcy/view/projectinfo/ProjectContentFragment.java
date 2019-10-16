@@ -147,26 +147,29 @@ public class ProjectContentFragment extends BaseFragment implements BaseQuickAda
 //            tvDetail.setGlide(Glide.with(this));
 
 
-            String introStr = detail.getIntro().replace("\\n", "\n");
-            String materialStr = detail.getMaterials();
+            String introStr = detail.getIntro().trim();
+            String materialStr = detail.getMaterials().trim();
 
             if (detail.getIs_pay() == 1) {
                 tvDetail.setText(introStr);
                 tvMaterial.setText(materialStr);
             } else {
-                tvDetail.setHighlightColor(getResources().getColor(R.color.color_6a5ff8));
-                SpannableString detailInfo = new SpannableString(introStr.trim() + " 查看详情");
-                detailInfo.setSpan(new Clickable(v1 -> addPayDialog()), introStr.length(), detailInfo.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                tvDetail.setText(detailInfo);
-                tvDetail.setMovementMethod(LinkMovementMethod.getInstance());
+                if (!StringUtils.isEmpty(introStr)) {
+                    tvDetail.setHighlightColor(getResources().getColor(R.color.color_6a5ff8));
+                    SpannableString detailInfo = new SpannableString(introStr + " 查看详情");
+                    detailInfo.setSpan(new Clickable(v1 -> addPayDialog()), introStr.length(), detailInfo.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    tvDetail.setText(detailInfo);
+                    tvDetail.setMovementMethod(LinkMovementMethod.getInstance());
+                }
 
-                tvMaterial.setHighlightColor(getResources().getColor(R.color.color_6a5ff8));
-                SpannableString materialInfo = new SpannableString(materialStr.trim() + " 查看详情");
-                materialInfo.setSpan(new Clickable(v1 -> addPayDialog()), materialStr.length(), materialInfo.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                tvMaterial.setText(materialInfo);
-                tvMaterial.setMovementMethod(LinkMovementMethod.getInstance());
+                if (!StringUtils.isEmpty(materialStr)) {
+                    tvMaterial.setHighlightColor(getResources().getColor(R.color.color_6a5ff8));
+                    SpannableString materialInfo = new SpannableString(materialStr + " 查看详情");
+                    materialInfo.setSpan(new Clickable(v1 -> addPayDialog()), materialStr.length(), materialInfo.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    tvMaterial.setText(materialInfo);
+                    tvMaterial.setMovementMethod(LinkMovementMethod.getInstance());
+                }
             }
-
 
             llMaterial.setVisibility(StringUtils.isTrimEmpty(detail.getMaterials()) ? View.GONE : View.VISIBLE);
 
