@@ -2,11 +2,13 @@ package com.shuangduan.zcy.view.demand;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
@@ -51,6 +53,10 @@ public class FindRelationshipReleaseDetailActivity extends BaseActivity {
     TextView tvIng;
     @BindView(R.id.tv_error)
     TextView tvError;
+    @BindView(R.id.ll_find_relation_ship)
+    LinearLayout llFindRelationShip;
+    @BindView(R.id.marquee)
+    TextView tvMarquee;
 
     @Override
     protected int initLayoutRes() {
@@ -97,6 +103,14 @@ public class FindRelationshipReleaseDetailActivity extends BaseActivity {
             showPageState(s);
         });
         demandRelationshipVm.releaseDetail();
+        //提示 只显示一次
+        if (SPUtils.getInstance().getInt("isFindRelationShip")==-1){
+            SPUtils.getInstance().put("isFindRelationShip",1);
+            llFindRelationShip.setVisibility(View.VISIBLE);
+            tvMarquee.setSelected(true);
+        }else {
+            llFindRelationShip.setVisibility(View.GONE);
+        }
     }
 
     @OnClick(R.id.iv_bar_back)

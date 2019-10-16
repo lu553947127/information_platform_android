@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
@@ -11,16 +12,16 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
-import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.vm.DemandRelationshipVm;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -52,6 +53,10 @@ public class FindRelationshipDetailActivity extends BaseActivity {
     EditText edtTel;
     @BindView(R.id.edt_remarks)
     EditText edtRemarks;
+    @BindView(R.id.ll_find_relation_ship)
+    LinearLayout llFindRelationShip;
+    @BindView(R.id.marquee)
+    TextView tvMarquee;
     private DemandRelationshipVm demandRelationshipVm;
 
     @Override
@@ -94,6 +99,15 @@ public class FindRelationshipDetailActivity extends BaseActivity {
             }
         });
         demandRelationshipVm.relationshipDetail();
+
+        //提示 只显示一次
+        if (SPUtils.getInstance().getInt("isFindRelationShip")==-1){
+            SPUtils.getInstance().put("isFindRelationShip",1);
+            llFindRelationShip.setVisibility(View.VISIBLE);
+            tvMarquee.setSelected(true);
+        }else {
+            llFindRelationShip.setVisibility(View.GONE);
+        }
     }
 
     @OnClick({R.id.iv_bar_back, R.id.tv_confirm})

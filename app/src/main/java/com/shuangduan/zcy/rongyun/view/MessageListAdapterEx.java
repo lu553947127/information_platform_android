@@ -50,10 +50,11 @@ public class MessageListAdapterEx extends MessageListAdapter {
     protected void bindView(View v, int position, UIMessage data) {
         super.bindView(v, position, data);
         if (data != null) {
-            if (data.getConversationType().equals(Conversation.ConversationType.PRIVATE)){
+            if (data.getConversationType().equals(Conversation.ConversationType.PRIVATE)||data.getConversationType().equals(Conversation.ConversationType.GROUP)){
                 getFriendData(data.getTargetId(),v);
-            }else if (data.getConversationType().equals(Conversation.ConversationType.GROUP)){
-
+                getFriendData(String.valueOf(SPUtils.getInstance().getInt(SpConfig.USER_ID)),v);
+            }else {
+                getFriendData(String.valueOf(SPUtils.getInstance().getInt(SpConfig.USER_ID)),v);
             }
         }
     }
@@ -78,18 +79,27 @@ public class MessageListAdapterEx extends MessageListAdapter {
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
                         try {
                             IMWechatUserInfoBean bean=new Gson().fromJson(response.body(),IMWechatUserInfoBean.class);
-                            LogUtils.json(response.body());
+                            LogUtils.json("MessageListAdapterEx----------"+response.body());
                             if (bean.getCode().equals("200")){
                                 if (bean.getData()!=null){
-                                    if (bean.getData().getCompany()!=null&&bean.getData().getPosition()!=null){
+                                    if (bean.getData().getCard_status()!=null){
                                         if (bean.getData().getCard_status().equals("2")){
                                             (v.findViewById(R.id.iv_sgs)).setVisibility(View.VISIBLE);
                                             (v.findViewById(R.id.iv_sgs_right)).setVisibility(View.VISIBLE);
+                                        }else if (bean.getData().getCard_status().equals("0")){
+                                            (v.findViewById(R.id.iv_sgs)).setVisibility(View.INVISIBLE);
+                                            (v.findViewById(R.id.iv_sgs_right)).setVisibility(View.INVISIBLE);
                                         }else {
                                             (v.findViewById(R.id.iv_sgs)).setVisibility(View.INVISIBLE);
                                             (v.findViewById(R.id.iv_sgs_right)).setVisibility(View.INVISIBLE);
                                         }
+                                    }else {
+                                        (v.findViewById(R.id.iv_sgs)).setVisibility(View.INVISIBLE);
+                                        (v.findViewById(R.id.iv_sgs_right)).setVisibility(View.INVISIBLE);
                                     }
+                                }else {
+                                    (v.findViewById(R.id.iv_sgs)).setVisibility(View.INVISIBLE);
+                                    (v.findViewById(R.id.iv_sgs_right)).setVisibility(View.INVISIBLE);
                                 }
                             }else {
                                 ToastUtils.showShort(bean.getMsg());

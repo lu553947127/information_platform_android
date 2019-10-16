@@ -1,10 +1,12 @@
 package com.shuangduan.zcy.rongyun.view;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
@@ -53,13 +55,16 @@ public class IMPrivateChatActivity extends BaseActivity implements RongIM.Conver
 
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-    @BindView(R.id.tv_bar_right)
-    TextView tvBarRight;
     @BindView(R.id.iv_bar_right)
     ImageView ivBarRight;
-
+    @BindView(R.id.tv_bar_right)
+    AppCompatTextView tvBarRight;
+    @BindView(R.id.tv_bar_title_small)
+    AppCompatTextView tvBarTitleSmall;
+    @BindView(R.id.tv_bar_company_or_post)
+    AppCompatTextView tvBarCompanyOrPost;
+    @BindView(R.id.ll_bar_title_small)
+    LinearLayout ll_bar_title_small;
     private ConversationFragment fragment;
     private Conversation.ConversationType mConversationType;
     private String user_id;
@@ -76,22 +81,29 @@ public class IMPrivateChatActivity extends BaseActivity implements RongIM.Conver
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
-//        BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
-        mConversationType = Conversation.ConversationType.
-                valueOf(Objects.requireNonNull(Objects.requireNonNull(getIntent().getData()).getLastPathSegment()).toUpperCase(Locale.US));
+        mConversationType = Conversation.ConversationType.valueOf(Objects.requireNonNull(Objects.requireNonNull(getIntent().getData()).getLastPathSegment()).toUpperCase(Locale.US));
         user_id = getIntent().getData().getQueryParameter("targetId");
         tvBarTitle.setText(getIntent().getData().getQueryParameter("title"));
+        tvBarTitleSmall.setText(getIntent().getData().getQueryParameter("title"));
         enterFragment(mConversationType, user_id);//加载页面
         //判断是否为群聊还是单聊
         if (mConversationType.getName().equals("group")){
-            tvBarRight.setVisibility(View.GONE);
             ivBarRight.setImageResource(R.drawable.icon_more);
+            tvBarRight.setVisibility(View.GONE);
+            tvBarTitle.setVisibility(View.VISIBLE);
+            ll_bar_title_small.setVisibility(View.GONE);
         }else if (mConversationType.getName().equals("private")){
             ivBarRight.setVisibility(View.GONE);
+            tvBarTitle.setVisibility(View.GONE);
+            ll_bar_title_small.setVisibility(View.VISIBLE);
             //刷新好友头像
             getFriendData(user_id);
             //刷新自己头像
             getFriendData(String.valueOf(SPUtils.getInstance().getInt(SpConfig.USER_ID)));
+        }else {
+            ivBarRight.setVisibility(View.GONE);
+            tvBarTitle.setVisibility(View.VISIBLE);
+            ll_bar_title_small.setVisibility(View.GONE);
         }
         //设置会话页面操作监听
         RongIM.setConversationClickListener(this);
@@ -125,6 +137,7 @@ public class IMPrivateChatActivity extends BaseActivity implements RongIM.Conver
                         LogUtils.json(response.body());
                     }
 
+                    @SuppressLint("SetTextI18n")
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
                         LogUtils.json(response.body());
@@ -134,6 +147,9 @@ public class IMPrivateChatActivity extends BaseActivity implements RongIM.Conver
                                 RongIM.getInstance().refreshUserInfoCache(new UserInfo(bean.getData().getUserId()
                                         ,bean.getData().getName()
                                         ,Uri.parse(bean.getData().getPortraitUri())));
+                                if (userId.equals(user_id)){
+                                    tvBarCompanyOrPost.setText(bean.getData().getCompany()+" "+bean.getData().getPosition());
+                                }
                             }else {
                                 ToastUtils.showShort(bean.getMsg());
                             }
@@ -181,8 +197,13 @@ public class IMPrivateChatActivity extends BaseActivity implements RongIM.Conver
 
     @Override
     public boolean onMessageClick(Context context, View view, Message message) {
-//        ToastUtils.showShort(String.valueOf(message));
-        return false;
+        if (mConversationType == Conversation.ConversationType.SYSTEM){
+//            ToastUtils.showShort(String.valueOf(message));
+            LogUtils.i(message);
+            return true;
+        }else {
+            return false;
+        }
     }
 
     @Override

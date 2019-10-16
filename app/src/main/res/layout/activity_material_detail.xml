@@ -41,16 +41,16 @@
                         android:layout_marginLeft="14dp"
                         android:textColor="@color/colorTv"
                         android:textSize="15sp" />
-                    <TextView
-                        android:id="@+id/tv_enclosure"
+
+                    <ImageView
+                        android:id="@+id/iv_purchased_goods"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@+id/tv_material_category"
-                        android:layout_marginTop="19dp"
-                        android:layout_marginLeft="11dp"
-                        android:textColor="@color/color_EF583E"
-                        android:textSize="13sp"
-                        android:text="@string/format_enclosure"/>
+                        android:layout_marginTop="9dp"
+                        android:layout_marginLeft="3dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/icon_material_intetnal"/>
                     <TextView
                         android:id="@+id/tv_unit_price"
                         android:layout_width="wrap_content"
@@ -74,6 +74,17 @@
                         android:layout_marginTop="11dp"
                         android:textColor="@color/color_666666"
                         android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/tv_enclosure"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginTop="11dp"
+                        android:textColor="@color/color_EF583E"
+                        android:textSize="13sp"
+                        android:text="@string/format_enclosure"/>
 
                     <TextView
                         android:id="@+id/tv_sales_volume"
