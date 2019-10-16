@@ -1,10 +1,8 @@
 package com.shuangduan.zcy.rongyun.view;
 
 import android.content.Context;
-import android.text.InputFilter;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
@@ -19,7 +17,6 @@ import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
 import com.shuangduan.zcy.model.bean.IMWechatUserInfoBean;
 
-import io.rong.imkit.model.UIConversation;
 import io.rong.imkit.model.UIMessage;
 import io.rong.imkit.widget.adapter.MessageListAdapter;
 import io.rong.imlib.model.Conversation;
@@ -53,12 +50,16 @@ public class MessageListAdapterEx extends MessageListAdapter {
     protected void bindView(View v, int position, UIMessage data) {
         super.bindView(v, position, data);
         if (data != null) {
-            getFriendData(data.getTargetId(),v,data);
+            if (data.getConversationType().equals(Conversation.ConversationType.PRIVATE)){
+                getFriendData(data.getTargetId(),v);
+            }else if (data.getConversationType().equals(Conversation.ConversationType.GROUP)){
+
+            }
         }
     }
 
     //会话列表头像名称显示
-    private UserInfo getFriendData(String userId, View v, UIMessage data) {
+    private UserInfo getFriendData(String userId, View v) {
 
         OkGo.<String>post(RetrofitHelper.BASE_TEST_URL+ Common.WECHAT_USER_INFO)
                 .tag(this)
@@ -81,14 +82,12 @@ public class MessageListAdapterEx extends MessageListAdapter {
                             if (bean.getCode().equals("200")){
                                 if (bean.getData()!=null){
                                     if (bean.getData().getCompany()!=null&&bean.getData().getPosition()!=null){
-                                        if (data.getConversationType().equals(Conversation.ConversationType.PRIVATE)){
-                                            if (bean.getData().getCard_status().equals("2")){
-                                                (v.findViewById(R.id.iv_sgs)).setVisibility(View.VISIBLE);
-                                                (v.findViewById(R.id.iv_sgs_right)).setVisibility(View.VISIBLE);
-                                            }else {
-                                                (v.findViewById(R.id.iv_sgs)).setVisibility(View.INVISIBLE);
-                                                (v.findViewById(R.id.iv_sgs_right)).setVisibility(View.INVISIBLE);
-                                            }
+                                        if (bean.getData().getCard_status().equals("2")){
+                                            (v.findViewById(R.id.iv_sgs)).setVisibility(View.VISIBLE);
+                                            (v.findViewById(R.id.iv_sgs_right)).setVisibility(View.VISIBLE);
+                                        }else {
+                                            (v.findViewById(R.id.iv_sgs)).setVisibility(View.INVISIBLE);
+                                            (v.findViewById(R.id.iv_sgs_right)).setVisibility(View.INVISIBLE);
                                         }
                                     }
                                 }

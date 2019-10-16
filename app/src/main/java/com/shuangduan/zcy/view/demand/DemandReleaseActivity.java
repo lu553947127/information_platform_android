@@ -150,7 +150,7 @@ public class DemandReleaseActivity extends BaseActivity {
     @SuppressLint("SetTextI18n")
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
-        tvBarTitle.setText(getString(R.string.release));
+        tvBarTitle.setText("我要找关系");
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
 
         cbSell.setChecked(true);
@@ -182,6 +182,7 @@ public class DemandReleaseActivity extends BaseActivity {
         KeyboardUtil.RemoveDecimalPoints(edtSupplyPrice);
 
         if (Objects.requireNonNull(getIntent().getStringExtra("type")).equals("1")){
+            tvBarTitle.setText("我要找物资");
             tvReleaseType.setText(getString(R.string.find_substance));
             demandReleaseVm.releaseType = DemandReleaseVm.RELEASE_TYPE_SUBSTANCE;
             flTitle.setVisibility(View.GONE);
@@ -199,6 +200,7 @@ public class DemandReleaseActivity extends BaseActivity {
             flSupplyAddress.setVisibility(View.GONE);
             flSupplyPrice.setVisibility(View.GONE);
         }else if (Objects.requireNonNull(getIntent().getStringExtra("type")).equals("2")){
+            tvBarTitle.setText("我要找买家");
             tvReleaseType.setText(getString(R.string.find_buyer));
             demandReleaseVm.releaseType = DemandReleaseVm.RELEASE_TYPE_BUYER;
             flTitle.setVisibility(View.GONE);
