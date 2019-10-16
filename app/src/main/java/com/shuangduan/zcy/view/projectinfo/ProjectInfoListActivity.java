@@ -148,6 +148,7 @@ public class ProjectInfoListActivity extends BaseActivity implements EmptyViewFa
             Bundle bundle = new Bundle();
             bundle.putInt(CustomConfig.PROJECT_ID, bean.getId());
             bundle.putInt(CustomConfig.LOCATION, 0);
+            bundle.putString(CustomConfig.PROJECT_NAME, bean.getTitle());
             ActivityUtils.startActivity(bundle, ProjectDetailActivity.class);
         });
 

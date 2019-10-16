@@ -155,7 +155,7 @@ public class ProjectDetailActivity extends BaseActivity {
 
         fragments = new Fragment[4];
         fragments[0] = ProjectContentFragment.newInstance(getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0));
-        fragments[1] = ProjectLocusFragment.newInstance(getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0));
+        fragments[1] = ProjectLocusFragment.newInstance(getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0),getIntent().getStringExtra(CustomConfig.PROJECT_NAME));
         fragments[2] = ProjectReadFragment.newInstance();
         fragments[3] = ProjectConsumptionFragment.newInstance();
 

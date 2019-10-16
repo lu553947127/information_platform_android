@@ -86,6 +86,8 @@ public class StartUpActivity extends BaseActivity {
                     ActivityUtils.startActivity(LoginActivity.class);
                     finish();
                 }
+
+
             });
         }else {
             ActivityUtils.startActivity(LoginActivity.class);

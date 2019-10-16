@@ -76,7 +76,7 @@ public class LoggingIntercepter implements Interceptor {
 
         LogUtils.i(String.format("发送请求\nmethod：%s\nurl：%s\nheaders: %s \nbody：%s\n收到响应\ncode: %s %s \n时间 %s ms", request.method(), request.url(), request.headers(), body, response.code(), response.message(), tookMs));
         //json类型的响应数据，一些手机上显示不出来，不知道什么鸡毛问题，手头的手机显示不出来就把rBody放到上一行显示String类型去
-        LogUtils.json(rBody);
+        LogUtils.json(LogUtils.I,rBody);
 
         return response;
     }

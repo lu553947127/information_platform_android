@@ -39,6 +39,7 @@ import com.shuangduan.zcy.utils.LoginUtils;
 import com.shuangduan.zcy.view.PhotoViewActivity;
 import com.shuangduan.zcy.view.mine.SetPwdPayActivity;
 import com.shuangduan.zcy.view.recharge.RechargeActivity;
+import com.shuangduan.zcy.view.release.ReleaseProjectActivity;
 import com.shuangduan.zcy.vm.CoinPayVm;
 import com.shuangduan.zcy.vm.ProjectDetailVm;
 import com.shuangduan.zcy.vm.UpdatePwdPayVm;
@@ -74,10 +75,11 @@ public class ProjectLocusFragment extends BaseLazyFragment {
     private CoinPayVm coinPayVm;
     private static int project_id;
 
-    public static ProjectLocusFragment newInstance(int id) {
+    public static ProjectLocusFragment newInstance(int id, String title) {
         Bundle args = new Bundle();
         args.putInt("id", id);
-        project_id=id;
+        args.putString("title", title);
+        project_id = id;
         ProjectLocusFragment fragment = new ProjectLocusFragment();
         fragment.setArguments(args);
         return fragment;
@@ -97,7 +99,7 @@ public class ProjectLocusFragment extends BaseLazyFragment {
     protected void initDataAndEvent(Bundle savedInstanceState) {
         tvFilter.setText(getString(R.string.release_by_me));
         rvLocus.setLayoutManager(new LinearLayoutManager(mContext));
-        locusAdapter = new LocusAdapter(R.layout.item_locus, null){
+        locusAdapter = new LocusAdapter(R.layout.item_locus, null) {
             @Override
             public void readDetail(int position, String price) {
                 TrackBean.ListBean listBean = locusAdapter.getData().get(position);
@@ -113,9 +115,9 @@ public class ProjectLocusFragment extends BaseLazyFragment {
                             @Override
                             public void ok(String s) {
                                 int status = SPUtils.getInstance().getInt(SpConfig.PWD_PAY_STATUS, 0);
-                                if (status == 1){
+                                if (status == 1) {
                                     goToPay();
-                                }else {
+                                } else {
                                     //查询是否设置支付密码
                                     updatePwdPayVm.payPwdState();
                                 }
@@ -128,7 +130,7 @@ public class ProjectLocusFragment extends BaseLazyFragment {
         rvLocus.setAdapter(locusAdapter);
         locusAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             TrackBean.ListBean listBean = locusAdapter.getData().get(position);
-            switch (view.getId()){
+            switch (view.getId()) {
                 case R.id.iv_pic_first:
                     showPic(listBean, 0, view);
                     break;
@@ -151,9 +153,9 @@ public class ProjectLocusFragment extends BaseLazyFragment {
 
         projectDetailVm = ViewModelProviders.of(mActivity).get(ProjectDetailVm.class);
         projectDetailVm.locusTypeLiveData.observe(this, type -> {
-            if (type == 1){
+            if (type == 1) {
                 tvFilter.setText(getString(R.string.release_by_me));
-            }else {
+            } else {
                 tvFilter.setText(getString(R.string.all));
             }
         });
@@ -162,7 +164,7 @@ public class ProjectLocusFragment extends BaseLazyFragment {
             if (trackBean.getPage() == 1) {
                 locusAdapter.setNewData(trackBean.getList());
                 setEmpty();
-            }else {
+            } else {
                 locusAdapter.addData(trackBean.getList());
             }
             setNoMore(trackBean.getPage(), trackBean.getCount());
@@ -177,18 +179,30 @@ public class ProjectLocusFragment extends BaseLazyFragment {
     }
 
     private void setEmpty() {
+        int id = getArguments().getInt("id", 0);
+        String title = getArguments().getString("title");
         View empty = LayoutInflater.from(mContext).inflate(R.layout.layout_empty_top, null);
         TextView tvTip = empty.findViewById(R.id.tv_tip);
+        TextView tvGo = empty.findViewById(R.id.tv_goto);
         tvTip.setText(getString(R.string.empty_locus));
+        tvGo.setVisibility(View.VISIBLE);
+        tvGo.setText(R.string.go_release);
+        empty.findViewById(R.id.tv_goto).setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putInt(CustomConfig.RELEASE_TYPE, 2);
+            bundle.putInt(CustomConfig.PROJECT_ID, id);
+            bundle.putString(CustomConfig.PROJECT_NAME, title);
+            ActivityUtils.startActivity(bundle, ReleaseProjectActivity.class);
+        });
         locusAdapter.setEmptyView(empty);
     }
 
     /**
-     *  图片预览
+     * 图片预览
      */
-    private void showPic(TrackBean.ListBean item, int position, View view){
+    private void showPic(TrackBean.ListBean item, int position, View view) {
         ArrayList<String> list = new ArrayList<>();
-        for (TrackBean.ListBean.ImageBean img: item.getImage()) {
+        for (TrackBean.ListBean.ImageBean img : item.getImage()) {
             list.add(img.getSource());
         }
 
@@ -213,40 +227,40 @@ public class ProjectLocusFragment extends BaseLazyFragment {
         }
     }
 
-    private void setNoMore(int page, int count){
-        if (page == 1){
-            if (page * 10 >= count){
-                if (refresh.getState() == RefreshState.None){
+    private void setNoMore(int page, int count) {
+        if (page == 1) {
+            if (page * 10 >= count) {
+                if (refresh.getState() == RefreshState.None) {
                     refresh.setNoMoreData(true);
-                }else {
+                } else {
                     refresh.finishRefreshWithNoMoreData();
                 }
-            }else {
+            } else {
                 refresh.finishRefresh();
             }
-        }else {
-            if (page * 10 >= count){
+        } else {
+            if (page * 10 >= count) {
                 refresh.finishLoadMoreWithNoMoreData();
-            }else {
+            } else {
                 refresh.finishLoadMore();
             }
         }
     }
 
-    private void initPay(){
+    private void initPay() {
         //支付密码状态查询
         updatePwdPayVm = ViewModelProviders.of(this).get(UpdatePwdPayVm.class);
         updatePwdPayVm.stateLiveData.observe(this, pwdPayStateBean -> {
             int status = pwdPayStateBean.getStatus();
             SPUtils.getInstance().put(SpConfig.PWD_PAY_STATUS, status);
-            if (status == 1){
+            if (status == 1) {
                 goToPay();
-            }else {
+            } else {
                 ActivityUtils.startActivity(SetPwdPayActivity.class);
             }
         });
         updatePwdPayVm.pageStateLiveData.observe(this, s -> {
-            switch (s){
+            switch (s) {
                 case PageState.PAGE_LOADING:
                     showLoading();
                     break;
@@ -259,10 +273,10 @@ public class ProjectLocusFragment extends BaseLazyFragment {
         //紫金币支付
         coinPayVm = ViewModelProviders.of(this).get(CoinPayVm.class);
         coinPayVm.locusPayLiveData.observe(this, coinPayResultBean -> {
-            if (coinPayResultBean.getPay_status() == 1){
+            if (coinPayResultBean.getPay_status() == 1) {
                 //加入工程圈讨论组（群聊）
                 getJoinGroup();
-            }else {
+            } else {
                 //余额不足
                 addDialog(new CustomDialog(mActivity)
                         .setIcon(R.drawable.icon_error)
@@ -282,7 +296,7 @@ public class ProjectLocusFragment extends BaseLazyFragment {
             }
         });
         coinPayVm.pageStateLiveData.observe(this, s -> {
-            switch (s){
+            switch (s) {
                 case PageState.PAGE_LOADING:
                     showLoading();
                     break;
@@ -296,7 +310,7 @@ public class ProjectLocusFragment extends BaseLazyFragment {
     /**
      * 去支付
      */
-    private void goToPay(){
+    private void goToPay() {
         addDialog(new PayDialog(mActivity)
                 .setSingleCallBack((item, position) -> {
                     coinPayVm.payLocus(item);
@@ -307,11 +321,11 @@ public class ProjectLocusFragment extends BaseLazyFragment {
     //加入讨论组
     private void getJoinGroup() {
 
-        OkGo.<String>post(RetrofitHelper.BASE_TEST_URL+ Common.WECHAT_JOIN_GROUP)
+        OkGo.<String>post(RetrofitHelper.BASE_TEST_URL + Common.WECHAT_JOIN_GROUP)
                 .tag(this)
                 .headers("token", SPUtils.getInstance().getString(SpConfig.TOKEN))//请求头
                 .params("user_id", SPUtils.getInstance().getInt(SpConfig.USER_ID))//用户编号
-                .params("id",project_id)
+                .params("id", project_id)
                 .execute(new com.lzy.okgo.callback.StringCallback() {//返回值
 
                     @Override
@@ -324,19 +338,19 @@ public class ProjectLocusFragment extends BaseLazyFragment {
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
                         LogUtils.json(response.body());
                         try {
-                            IMFriendApplyCountBean bean=new Gson().fromJson(response.body(), IMFriendApplyCountBean.class);
-                            if (bean.getCode().equals("200")){
+                            IMFriendApplyCountBean bean = new Gson().fromJson(response.body(), IMFriendApplyCountBean.class);
+                            if (bean.getCode().equals("200")) {
                                 ToastUtils.showShort(getString(R.string.buy_success));
                                 projectDetailVm.getTrack();
                                 //刷新已查看列表
                                 EventBus.getDefault().post(new RefreshViewLocusEvent());
-                            }else if (bean.getCode().equals("-1")){
+                            } else if (bean.getCode().equals("-1")) {
                                 ToastUtils.showShort(bean.getMsg());
                                 LoginUtils.getExitLogin();
-                            }else {
+                            } else {
                                 ToastUtils.showShort(bean.getMsg());
                             }
-                        }catch (JsonSyntaxException | IllegalStateException ignored){
+                        } catch (JsonSyntaxException | IllegalStateException ignored) {
                             ToastUtils.showShort(getString(R.string.request_error));
                         }
                     }

@@ -89,8 +89,8 @@ public class RecruitActivity extends BaseActivity {
             if (recruitBean.getPage() == 1) {
                 recruitAdapter.setNewData(recruitBean.getList());
                 recruitAdapter.setEmptyView(R.layout.layout_empty_top, rv);
-            }else {
-                recruitAdapter.addData(recruitBean.getList());
+            } else {
+                recruitAdapter.addData(recruitAdapter.getData().size(), recruitBean.getList());
             }
             setNoMore(recruitBean.getPage(), recruitBean.getCount());
         });
@@ -109,21 +109,21 @@ public class RecruitActivity extends BaseActivity {
         });
     }
 
-    private void setNoMore(int page, int count){
-        if (page == 1){
-            if (page * 10 >= count){
-                if (refresh.getState() == RefreshState.None){
+    private void setNoMore(int page, int count) {
+        if (page == 1) {
+            if (page * 10 >= count) {
+                if (refresh.getState() == RefreshState.None) {
                     refresh.setNoMoreData(true);
-                }else {
+                } else {
                     refresh.finishRefreshWithNoMoreData();
                 }
-            }else {
+            } else {
                 refresh.finishRefresh();
             }
-        }else {
-            if (page * 10 >= count){
+        } else {
+            if (page * 10 >= count) {
                 refresh.finishLoadMoreWithNoMoreData();
-            }else {
+            } else {
                 refresh.finishLoadMore();
             }
         }
@@ -138,7 +138,7 @@ public class RecruitActivity extends BaseActivity {
             case R.id.iv_bar_right:
                 Bundle bundle = new Bundle();
                 bundle.putString(CustomConfig.PROJECT_TYPE, "1");
-                ActivityUtils.startActivity(bundle,SearchActivity.class);
+                ActivityUtils.startActivity(bundle, SearchActivity.class);
 
 //                Bundle bundle = new Bundle();
 //                bundle.putString(CustomConfig.KEYWORD, "");

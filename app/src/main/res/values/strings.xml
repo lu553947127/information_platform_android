@@ -18,7 +18,7 @@
     <string name="request_error">请求出错，点击重试</string>
     <string name="empty_data">抱歉，数据暂时为空！</string>
     <string name="empty_view_locus">你还没有已查看的动态信息</string>
-    <string name="empty_locus">目前还没有已发布动态信息</string>
+    <string name="empty_locus">目前还没有已发布的\n动态信息,去发布动态信息吧</string>
     <string name="empty_consume">目前还没有已消费信息</string>
     <string name="empty_contact">目前还没有联系人信息</string>
 
