@@ -63,7 +63,7 @@ import java.util.regex.Pattern;
  *     author : 宁文强
  *     e-mail : ningwenqiang@lanhuiplay.com
  *     time   : 2018/11/27
- *     desc   :
+ *     desc   : 带查看图片，可点击网址链接监听的h5标签查看器
  *     richText.setGlide(Glide.with(this));
  *         richText.setOnRichClickListener(new RichText.CustomRichClickListener(){
  *             @Override

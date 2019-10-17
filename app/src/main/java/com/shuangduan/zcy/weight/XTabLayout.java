@@ -67,7 +67,7 @@ import static androidx.viewpager.widget.ViewPager.SCROLL_STATE_DRAGGING;
  * @ProjectName: information_platform_android
  * @Package: com.shuangduan.zcy.weight
  * @ClassName: XTabLayout
- * @Description: java类作用描述
+ * @Description: 带滑动动画的tab
  * @Author: 鹿鸿祥
  * @CreateDate: 2019/10/14 14:36
  * @UpdateUser: 鹿鸿祥

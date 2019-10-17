@@ -120,7 +120,6 @@
         <attr name="android:icon"/>
         <attr name="android:layout"/>
     </declare-styleable>
-
     <declare-styleable name="XTabLayout">
         <attr name="x_tabIndicatorAnimation" format="boolean"/>
         <attr name="x_tabIndicatorColor" format="color"/>
@@ -147,5 +146,17 @@
         <attr name="x_tabPaddingBottom" format="dimension"/>
         <attr name="x_tabPadding" format="dimension"/>
         <attr name="x_indicatorMarginTop" format="dimension" />
+    </declare-styleable>
+
+    <!--自定义输入框属性设置-->
+    <declare-styleable name="XEditText">
+        <attr name="x_separator" format="string"/>
+        <attr name="x_disableClear" format="boolean"/>
+        <attr name="x_clearDrawable" format="reference"/>
+        <attr name="x_showPwdDrawable" format="reference"/>
+        <attr name="x_hidePwdDrawable" format="reference"/>
+        <attr name="x_disableEmoji" format="boolean"/>
+        <attr name="x_togglePwdDrawableEnable" format="boolean"/>
+        <attr name="x_pattern" format="string"/>
     </declare-styleable>
 </resources>

@@ -1,5 +1,7 @@
 package com.shuangduan.zcy.adapter;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -16,6 +18,7 @@ import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.model.bean.SupplierBean;
 import com.shuangduan.zcy.utils.image.ImageConfig;
 import com.shuangduan.zcy.utils.image.ImageLoader;
+import com.shuangduan.zcy.utils.image.PictureEnlargeUtils;
 import com.shuangduan.zcy.view.PhotoViewActivity;
 import com.shuangduan.zcy.weight.CircleImageView;
 
@@ -33,6 +36,7 @@ import java.util.List;
  * @class describe
  */
 public class SupplierAdapter extends BaseQuickAdapter<SupplierBean.ListBean, BaseViewHolder> {
+
     public SupplierAdapter(int layoutResId, @Nullable List<SupplierBean.ListBean> data) {
         super(layoutResId, data);
     }
@@ -74,9 +78,14 @@ public class SupplierAdapter extends BaseQuickAdapter<SupplierBean.ListBean, Bas
                 ImageLoader.load(mContext, new ImageConfig.Builder().url(item.getImages_json().get(2).getThumbnail()).placeholder(R.drawable.default_pic).errorPic(R.drawable.default_pic).imageView(ivFirst).build());
             }
         }
+        ArrayList<String> list = new ArrayList<>();
+        for (SupplierBean.ListBean.ImageBean bean : item.getImages_json()) {
+            list.add(bean.getSource());
+        }
 
         helper.getView(R.id.iv_pic_first).setOnClickListener(v -> {
-            showPic(item.getImages_json(), 0, helper.getView(R.id.iv_pic_first));
+//            showPic(item.getImages_json(), 0, helper.getView(R.id.iv_pic_first));
+            PictureEnlargeUtils.getPictureEnlargeList((Activity) mContext,list,0);
         });
         helper.getView(R.id.iv_pic_second).setOnClickListener(v -> {
             showPic(item.getImages_json(), 1, helper.getView(R.id.iv_pic_second));

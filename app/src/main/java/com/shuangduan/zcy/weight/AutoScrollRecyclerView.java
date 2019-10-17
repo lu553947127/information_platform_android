@@ -19,7 +19,7 @@ import io.reactivex.disposables.Disposable;
  * @ProjectName: information_platform_android
  * @Package: com.shuangduan.zcy.weight
  * @ClassName: AutoScrollRecyclerView
- * @Description: java类作用描述
+ * @Description: 带跑马灯滚动的列表
  * @Author: 鹿鸿祥
  * @CreateDate: 2019/10/14 14:34
  * @UpdateUser: 鹿鸿祥

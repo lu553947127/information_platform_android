@@ -94,9 +94,12 @@ public class WeChatBindingActivity extends BaseActivity {
         imConnectVm.pageStateLiveData.observe(this, this::showPageState);
     }
 
-    @OnClick({R.id.tv_send_verification_code, R.id.tv_binding_phone})
+    @OnClick({R.id.iv_bar_back,R.id.tv_send_verification_code, R.id.tv_binding_phone})
     void onClick(View view){
         switch (view.getId()){
+            case R.id.iv_bar_back:
+                finish();
+                break;
             case R.id.tv_send_verification_code://获取验证码
                 smsCode();
                 break;

@@ -11,7 +11,7 @@ import androidx.viewpager.widget.ViewPager;
  *     author : 宁文强
  *     e-mail : ningwenqiang@lanhuiplay.com
  *     time   : 2018/10/17
- *     desc   :
+ *     desc   : 关闭viewpager的滑动监听
  *     version: 1.0
  * </pre>
  */

@@ -8,7 +8,7 @@ import java.util.Map;
  * @ProjectName: information_platform_android
  * @Package: com.shuangduan.zcy.weight
  * @ClassName: DataHolder
- * @Description: java类作用描述
+ * @Description: 大文件数据传输工具
  * @Author: 鹿鸿祥
  * @CreateDate: 2019/9/25 20:43
  * @UpdateUser: 鹿鸿祥

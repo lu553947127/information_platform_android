@@ -5,7 +5,6 @@ import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Environment;
@@ -45,7 +44,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
 import cn.jpush.android.api.JPushInterface;
-import io.rong.imkit.RongContext;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;

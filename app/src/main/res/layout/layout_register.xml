@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -61,13 +62,14 @@
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"/>
 
-    <androidx.appcompat.widget.AppCompatEditText
+    <com.shuangduan.zcy.weight.XEditText
         android:id="@+id/edt_pwd_register"
         style="@style/MessageHint"
         android:layout_marginTop="14dp"
         android:drawableLeft="@drawable/icon_pwd"
         android:inputType="textPassword"
-        android:hint="@string/hint_pwd"/>
+        android:hint="@string/hint_pwd"
+        app:x_disableEmoji="false" />
 
     <View
         android:layout_width="match_parent"

@@ -18,19 +18,16 @@ import android.view.WindowManager;
 import androidx.appcompat.widget.TintTypedArray;
 
 import com.blankj.utilcode.util.ConvertUtils;
-import com.blankj.utilcode.util.LogUtils;
-import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.Utils;
 import com.shuangduan.zcy.R;
 
 import java.util.List;
-import java.util.Observable;
 
 /**
  * @author 宁文强 QQ:858777523
  * @name information_platform_android
  * @class name：com.shuangduan.zcy.weight
- * @class describe  跑马灯
+ * @class describe  跑马灯横向滚动列表
  * @time 2019/7/13 16:42
  * @change
  * @chang time

@@ -10,7 +10,7 @@ import androidx.viewpager.widget.ViewPager;
  * @author 鹿鸿祥 QQ:553947127
  * @name information_platform_android
  * @class name：com.shuangduan.zcy.weight
- * @class describe
+ * @class 关闭viewpager的滑动监听
  * @time 2019/9/11 13:59
  * @change
  * @chang time

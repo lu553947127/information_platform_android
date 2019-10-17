@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
@@ -32,6 +31,7 @@ import com.shuangduan.zcy.view.WebViewActivity;
 import com.shuangduan.zcy.view.mine.ForgetPwdActivity;
 import com.shuangduan.zcy.vm.IMConnectVm;
 import com.shuangduan.zcy.vm.LoginVm;
+import com.shuangduan.zcy.weight.XEditText;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -84,7 +84,7 @@ public class LoginActivity extends BaseActivity {
     @BindView(R.id.tv_send_verification_code_register)
     AppCompatTextView tvSendVerificationCodeRegister;
     @BindView(R.id.edt_pwd_register)
-    AppCompatEditText edtPwdRegister;
+    XEditText edtPwdRegister;
     @BindView(R.id.edt_mobile_invite)
     AppCompatEditText edtMobileInvite;
     @BindView(R.id.cb_agreement)

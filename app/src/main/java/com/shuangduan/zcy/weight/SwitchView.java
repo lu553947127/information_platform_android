@@ -25,7 +25,7 @@ import com.shuangduan.zcy.R;
  * @author 鹿鸿祥 QQ:553947127
  * @name information_platform_android
  * @class name：com.shuangduan.zcy.weight
- * @class describe
+ * @class 仿ios选择按钮
  * @time 2019/9/11 11:04
  * @change
  * @chang time
