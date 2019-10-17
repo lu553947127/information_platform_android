@@ -389,7 +389,7 @@
     <string name="material_tv_add">+添加数量、存放地</string>
     <string name="material_tv_submission">提交预订单</string>
 
-    <string name="format_version_name">当前版本号：v%1$s</string>
+    <string name="format_version_name">v%1$s</string>
     <string name="format_get_verification_code_again">重新获取 (%1$ds)</string>
     <string name="format_balance">余额:%1$s紫金币</string>
     <string name="format_amount">%1$s元</string>
@@ -425,6 +425,7 @@
     <string name="format_locus_num">动态信息：%1$d条</string>
     <string name="format_pay_price_release">发布此消息请支付%1$s紫金币</string>
     <string name="format_pay_price">查看此消息请支付%1$s紫金币</string>
+    <string name="format_pay_price_project">查看这条工程信息和全部联系人需要支付%1$s紫金币</string>
     <string name="format_pay_price_sub">认购此工程请支付%1$s紫金币</string>
     <string name="format_stock">库存：%1$d%2$s</string>
     <string name="format_enclosure">查看物资图纸</string>

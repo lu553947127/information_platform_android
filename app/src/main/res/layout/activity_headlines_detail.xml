@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/icon_headlines_detail">
 
-    <include layout="@layout/toolbar"/>
-
-    <ScrollView
+    <com.shuangduan.zcy.weight.AdaptationScrollView
+        android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="none">
@@ -13,26 +15,37 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginTop="330dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="42dp"
+            android:orientation="vertical"
+            android:background="@drawable/circular_background_white_5">
 
             <TextView
                 android:id="@+id/tv_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/icon_headlines_detail_left"
+                android:drawableRight="@drawable/icon_headlines_detail_right"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="22dp"
+                android:layout_marginRight="22dp"
+                android:drawablePadding="6dp"
                 android:gravity="center"
-                android:layout_marginTop="15dp"
-                android:layout_marginLeft="74dp"
-                android:layout_marginRight="74dp"
+                android:singleLine="true"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit="marquee_forever"
                 android:layout_gravity="center_horizontal"
                 android:textColor="@color/colorTv"
-                android:textSize="14sp"/>
+                android:textSize="14sp"
+                tools:ignore="RtlHardcoded" />
 
             <TextView
                 android:id="@+id/tv_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginRight="15dp"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
                 android:textColor="@color/color_666666"
                 android:textSize="12sp"/>
@@ -45,8 +58,92 @@
                 android:paddingRight="14dp"
                 android:layout_marginTop="20dp"/>
 
+
         </LinearLayout>
 
-    </ScrollView>
+    </com.shuangduan.zcy.weight.AdaptationScrollView>
 
-</LinearLayout>
+    <!--头部-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="74dp"
+        android:layout_alignParentTop="true">
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_bar_back"
+            android:layout_width="36dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="35dp"
+            android:layout_marginLeft="15dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/toolbar_back"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_bar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:layout_centerHorizontal="true"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:lines="1"
+            android:maxEms="13"
+            android:singleLine="true"
+            android:textColor="@color/colorFFF"
+            android:textSize="18sp"
+            android:text="详情"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_bar_right"
+            android:layout_width="36dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="35dp"
+            android:layout_alignParentRight="true"
+            android:scaleType="centerInside"
+            android:layout_marginRight="15dp"
+            android:src="@drawable/icon_share"/>
+
+    </RelativeLayout>
+
+    <!--隐藏头部-->
+    <RelativeLayout
+        android:id="@+id/rl_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="74dp"
+        android:alpha="0"
+        android:visibility="gone">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_bar_back_new"
+            android:layout_width="36dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="35dp"
+            android:layout_marginLeft="15dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/toolbar_back"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_bar_title_new"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:layout_centerHorizontal="true"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:lines="1"
+            android:maxEms="13"
+            android:singleLine="true"
+            android:textColor="@color/colorFFF"
+            android:textSize="18sp" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_bar_right_new"
+            android:layout_width="36dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="35dp"
+            android:layout_alignParentRight="true"
+            android:scaleType="centerInside"
+            android:layout_marginRight="15dp"
+            android:src="@drawable/icon_share"/>
+
+    </RelativeLayout>
+</RelativeLayout>

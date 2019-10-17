@@ -145,7 +145,7 @@
         <!--选中颜色-->
         <item name="android:colorControlActivated">@color/colorPrimary</item>
         <!--默认颜色-->
-        <!--<item name="android:colorControlNormal">@color/colorPrimary</item> -->
+        <item name="android:colorControlNormal">@color/colorRipple</item>
     </style>
 
     <!--滑动的tab栏设置属性参数-->

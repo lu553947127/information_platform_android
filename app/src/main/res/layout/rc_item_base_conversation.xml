@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             android:layout_marginLeft="6dp"
-            android:maxLength="6"
+            android:maxLength="5"
             android:singleLine="true"
             android:textColor="#6E6E6E"
             android:textSize="11sp"

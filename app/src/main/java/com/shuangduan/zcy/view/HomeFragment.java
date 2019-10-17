@@ -4,10 +4,12 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.lifecycle.ViewModelProviders;
@@ -317,6 +319,15 @@ public class HomeFragment extends BaseFragment {
         recyclerView1 = view1.findViewById(R.id.rv);
         recyclerView2 = view2.findViewById(R.id.rv);
         recyclerView3 = view3.findViewById(R.id.rv);
+        ImageView iv_empty1=view1.findViewById(R.id.iv_icon);
+        ImageView iv_empty2=view2.findViewById(R.id.iv_icon);
+        ImageView iv_empty3=view3.findViewById(R.id.iv_icon);
+        TextView tv_empty1=view1.findViewById(R.id.tv_tip);
+        TextView tv_empty2=view2.findViewById(R.id.tv_tip);
+        TextView tv_empty3=view3.findViewById(R.id.tv_tip);
+        ConstraintLayout cl_empty1=view1.findViewById(R.id.cl_empty);
+        ConstraintLayout cl_empty2=view2.findViewById(R.id.cl_empty);
+        ConstraintLayout cl_empty3=view3.findViewById(R.id.cl_empty);
         recyclerView1.setNestedScrollingEnabled(false);
         recyclerView2.setNestedScrollingEnabled(false);
         recyclerView3.setNestedScrollingEnabled(false);
@@ -365,61 +376,47 @@ public class HomeFragment extends BaseFragment {
         demandBuyerVm.getBuyer();
 
         demandRelationshipVm.relationshipLiveData.observe(this, relationshipBean -> {
-            if (relationshipBean.getList()!=null&&relationshipBean.getList().size()>0){
+            if (relationshipBean.getList()!=null&&relationshipBean.getList().size()!=0){
+                cl_empty1.setVisibility(View.GONE);
                 if (relationshipBean.getPage() == 1) {
                     relationshipAdapter.setNewData(relationshipBean.getList());
                 } else {
                     relationshipAdapter.addData(relationshipBean.getList());
                 }
             }else {
-                relationshipAdapter.setEmptyView(createEmptyView(R.drawable.icon_empty_project, R.string.empty_pull_strings_info, 0, null));
+                cl_empty1.setVisibility(View.VISIBLE);
+                iv_empty1.setImageResource(R.drawable.icon_empty_project);
+                tv_empty1.setText(R.string.empty_pull_strings_info);
             }
         });
         demandSubstanceVm.substanceLiveData.observe(this, demandSubstanceBean -> {
-            relationshipAdapter.setEmptyView(createEmptyView(R.drawable.icon_empty_project, R.string.empty_substance_info, 0, null));
-            if (demandSubstanceBean.getPage() == 1) {
-                substanceAdapter.setNewData(demandSubstanceBean.getList());
+            if (demandSubstanceBean.getList()!=null&&demandSubstanceBean.getList().size()!=0){
+                cl_empty2.setVisibility(View.GONE);
+                if (demandSubstanceBean.getPage() == 1) {
+                    substanceAdapter.setNewData(demandSubstanceBean.getList());
+                }else {
+                    substanceAdapter.addData(demandSubstanceBean.getList());
+                }
             }else {
-                substanceAdapter.addData(demandSubstanceBean.getList());
+                cl_empty2.setVisibility(View.VISIBLE);
+                iv_empty2.setImageResource(R.drawable.icon_empty_project);
+                tv_empty2.setText(R.string.empty_substance_info);
             }
         });
         demandBuyerVm.buyerLiveData.observe(this, demandBuyerBean -> {
-            relationshipAdapter.setEmptyView(createEmptyView(R.drawable.icon_empty_project, R.string.empty_buyer_info, 0, null));
-            if (demandBuyerBean.getPage() == 1) {
-                buyerAdapter.setNewData(demandBuyerBean.getList());
+            if (demandBuyerBean.getList()!=null&&demandBuyerBean.getList().size()!=0){
+                cl_empty3.setVisibility(View.GONE);
+                if (demandBuyerBean.getPage() == 1) {
+                    buyerAdapter.setNewData(demandBuyerBean.getList());
+                }else {
+                    buyerAdapter.addData(demandBuyerBean.getList());
+                }
             }else {
-                buyerAdapter.addData(demandBuyerBean.getList());
+                cl_empty3.setVisibility(View.VISIBLE);
+                iv_empty3.setImageResource(R.drawable.icon_empty_project);
+                tv_empty3.setText(R.string.empty_buyer_info);
             }
         });
-
-//        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-//            @Override
-//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//
-//            }
-//
-//            @Override
-//            public void onPageSelected(int position) {
-//                if (position==0){
-//                    recyclerView1.startLine();
-//                    recyclerView2.stop();
-//                    recyclerView3.stop();
-//                }else if (position==1){
-//                    recyclerView1.stop();
-//                    recyclerView2.startLine();
-//                    recyclerView3.stop();
-//                }else if (position==2){
-//                    recyclerView1.stop();
-//                    recyclerView2.stop();
-//                    recyclerView3.startLine();
-//                }
-//            }
-//
-//            @Override
-//            public void onPageScrollStateChanged(int state) {
-//
-//            }
-//        });
     }
 
     @OnClick({R.id.tv_bar_title, R.id.tv_more, R.id.iv_subscribed,R.id.tv_bar_title_home,R.id.iv_subscribed_home,R.id.iv_my_income,R.id.rl_zgx,R.id.rl_zwz,R.id.rl_zmj,R.id.tv_more_need})

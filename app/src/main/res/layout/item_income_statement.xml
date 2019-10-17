@@ -1,13 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
-    android:paddingLeft="15dp"
-    android:paddingRight="15dp"
-    android:gravity="center_vertical"
-    android:drawableRight="@drawable/icon_next"
-    android:textColor="@color/color_666666"
-    android:textSize="14sp"
-    android:id="@+id/tv_title">
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingLeft="18dp"
+    android:paddingRight="18dp"
+    android:layout_marginTop="13dp">
 
-</TextView>
+    <ImageView
+        android:id="@+id/iv_attn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/icon_income_statement"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/iv_attn"
+        android:layout_marginLeft="12dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:textColor="@color/colorTv"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/tv_des"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/color_666666"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:padding="3dp"
+        android:background="@drawable/circular_background_yellow"
+        android:textColor="@color/colorFFF"
+        android:textSize="12sp"
+        android:text="点击查看"/>
+
+</RelativeLayout>

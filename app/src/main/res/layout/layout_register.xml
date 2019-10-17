@@ -97,32 +97,30 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="15dp"
-        android:layout_marginLeft="45dp"
+        android:layout_marginLeft="35dp"
         android:layout_marginRight="40dp">
 
-        <TextView
+        <CheckBox
+            android:id="@+id/cb_agreement"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="11sp"
-            android:textColor="@color/color_666666"
-            android:text="注册即表示同意"/>
+            android:scaleX="0.9"
+            android:scaleY="0.9"
+            android:layout_gravity="center_vertical"
+            android:theme="@style/CheckBox_background" />
         <TextView
             android:id="@+id/tv_privacy_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:textSize="11sp"
             android:textColor="@color/colorTvStates"
             android:text="《隐私协议》"/>
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="11sp"
-            android:textColor="@color/color_666666"
-            android:text="和"/>
-        <TextView
             android:id="@+id/tv_register_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:textSize="11sp"
             android:textColor="@color/colorTvStates"
             android:text="《用户注册协议》"/>

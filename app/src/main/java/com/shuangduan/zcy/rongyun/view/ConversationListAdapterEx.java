@@ -92,7 +92,7 @@ public class ConversationListAdapterEx extends ConversationListAdapter {
                                             (v.findViewById(R.id.tv_post)).setVisibility(View.VISIBLE);
                                             ((TextView)v.findViewById(R.id.tv_company)).setText(company);
                                             ((TextView)v.findViewById(R.id.tv_post)).setText(post);
-                                            ((TextView)(v.findViewById(R.id.rc_conversation_title))).setFilters(new InputFilter[] { new InputFilter.LengthFilter(6)});
+                                            ((TextView)(v.findViewById(R.id.rc_conversation_title))).setFilters(new InputFilter[] { new InputFilter.LengthFilter(5)});
                                             if (bean.getData().getCard_status().equals("2")){
                                                 (v.findViewById(R.id.iv_sgs)).setVisibility(View.VISIBLE);
                                             }else {

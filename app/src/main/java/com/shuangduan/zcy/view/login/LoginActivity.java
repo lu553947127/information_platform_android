@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
@@ -86,6 +87,8 @@ public class LoginActivity extends BaseActivity {
     AppCompatEditText edtPwdRegister;
     @BindView(R.id.edt_mobile_invite)
     AppCompatEditText edtMobileInvite;
+    @BindView(R.id.cb_agreement)
+    CheckBox cbAgreement;
 
     private LoginVm loginVm;
     private IMConnectVm imConnectVm;
@@ -95,6 +98,7 @@ public class LoginActivity extends BaseActivity {
     private int isAccount=0;
     private SharesUtils sharesUtils;
     private String openid,unionid;
+    private int isAgreement=1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -142,6 +146,20 @@ public class LoginActivity extends BaseActivity {
                         isAccount=1;
                     }else {
                         isAccount=0;
+                    }
+                    break;
+            }
+        });
+
+        //同意隐私协议和用户注册协议
+        cbAgreement.setChecked(true);
+        cbAgreement.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            switch (buttonView.getId()){
+                case R.id.cb_agreement:
+                    if(isChecked){
+                        isAgreement=1;
+                    }else {
+                        isAgreement=0;
                     }
                     break;
             }
@@ -347,6 +365,10 @@ public class LoginActivity extends BaseActivity {
         }
         if (TextUtils.isEmpty(edtPwdRegister.getText())){
             ToastUtils.showShort(getString(R.string.pwd_empty));
+            return;
+        }
+        if (isAgreement==0){
+            ToastUtils.showShort("请您同意隐私协议和用户注册协议");
             return;
         }
         //注册

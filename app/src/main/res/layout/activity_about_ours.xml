@@ -1,89 +1,180 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
 
     <include layout="@layout/toolbar"/>
 
-    <ImageView
-        android:id="@+id/iv_logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/toolbar"
-        android:layout_marginTop="96dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/logo_about"/>
+    <com.shuangduan.zcy.utils.ElasticScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/iv_logo"
-        android:layout_marginTop="10dp"
-        android:textColor="@color/colorTv"
-        android:textSize="14sp"
-        android:text="@string/app_name"/>
-
-    <TextView
-        android:id="@+id/tv_app_version"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/iv_logo"
-        android:layout_marginTop="30dp"
-        android:textColor="@color/color_666666"
-        android:textSize="12sp"/>
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_app_version"
-        android:layout_marginTop="35dp">
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_income_statement"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:overScrollMode="never"
-            android:nestedScrollingEnabled="false"
-            android:background="@color/colorFFF"
-            tools:ignore="UnusedAttribute">
+            android:orientation="vertical"
+            android:background="@drawable/icon_about_ours">
 
-        </androidx.recyclerview.widget.RecyclerView>
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/tv_app_version"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:layout_marginTop="159dp"
+                android:layout_marginRight="86dp"
+                android:textColor="@color/colorFFF"
+                android:textSize="18sp"
+                android:textStyle="bold|italic"
+                android:text="v1.0.0"
+                tools:ignore="RtlHardcoded" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_above="@+id/tv_official_email"
-        android:textColor="@color/color_666666"
-        android:textSize="12sp"
-        android:text="@string/official_phone"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="34dp"
+                android:background="@drawable/circular_background_white_5"
+                android:layout_marginLeft="14dp"
+                android:layout_marginRight="14dp"
+                android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tv_official_email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="20dp"
-        android:layout_above="@+id/tv_official_name"
-        android:textColor="@color/color_666666"
-        android:textSize="12sp"
-        android:text="@string/official_email"/>
+                <ImageView
+                    android:id="@+id/iv_logo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="36dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/logo_about"/>
 
-    <TextView
-        android:id="@+id/tv_official_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="20dp"
-        android:textColor="@color/color_666666"
-        android:textSize="12sp"
-        android:text="@string/official_name"
-        android:visibility="gone"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="22dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:lineSpacingExtra="10dp"
+                    android:textScaleX="1.1"
+                    android:textColor="@color/color_666666"
+                    android:textSize="12sp"
+                    android:text="         易基建依托“紫菜云”平台的智能系统和基建物资装备行业大数据，为基建物资装备行业的从业者提供包括：及时、准确、全面的工程信息、项目轨迹等信息，基建物资的展示销售、共享租赁等功能，物资供求信息、人脉需求的发布等功能，真正为基建物资装备行业的从业单位及从业人员提供互联互通、便利高效的服务。"/>
 
-</RelativeLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="38dp"
+                    android:layout_marginLeft="19dp"
+                    android:layout_marginRight="19dp">
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1"
+                        android:layout_gravity="center_vertical"
+                        android:background="@color/colorPrimary" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="16sp"
+                        android:text="收益说明"/>
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1"
+                        android:layout_gravity="center_vertical"
+                        android:background="@color/colorPrimary" />
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="13dp">
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_income_statement"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:overScrollMode="never"
+                        android:nestedScrollingEnabled="false"
+                        android:background="@color/colorFFF"
+                        tools:ignore="UnusedAttribute">
+
+                    </androidx.recyclerview.widget.RecyclerView>
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="38dp"
+                    android:layout_marginLeft="19dp"
+                    android:layout_marginRight="19dp">
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1"
+                        android:layout_gravity="center_vertical"
+                        android:background="@color/colorPrimary" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="16sp"
+                        android:text="联系我们"/>
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1"
+                        android:layout_gravity="center_vertical"
+                        android:background="@color/colorPrimary" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="24dp"
+                    android:textColor="@color/color_666666"
+                    android:textSize="12sp"
+                    android:text="@string/official_phone"/>
+
+                <TextView
+                    android:id="@+id/tv_official_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/color_666666"
+                    android:textSize="12sp"
+                    android:text="@string/official_email"/>
+
+                <TextView
+                    android:id="@+id/tv_official_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_666666"
+                    android:textSize="12sp"
+                    android:text="@string/official_name"
+                    android:visibility="gone"/>
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </com.shuangduan.zcy.utils.ElasticScrollView>
+
+</LinearLayout>

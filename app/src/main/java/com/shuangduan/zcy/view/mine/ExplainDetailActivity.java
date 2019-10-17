@@ -18,7 +18,6 @@ import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.view.PhotoViewActivity;
 import com.shuangduan.zcy.vm.ExplainVm;
-import com.shuangduan.zcy.vm.HeadlinesVm;
 import com.shuangduan.zcy.weight.RichText;
 
 import java.util.ArrayList;
@@ -51,7 +50,7 @@ public class ExplainDetailActivity extends BaseActivity {
 
     @Override
     protected int initLayoutRes() {
-        return R.layout.activity_headlines_detail;
+        return R.layout.activity_explain_eetail;
     }
 
     @Override
@@ -73,10 +72,7 @@ public class ExplainDetailActivity extends BaseActivity {
             tvContent.setOnRichClickListener(new RichText.CustomRichClickListener(){
                 @Override
                 public void onNormalUrl(String url) {
-//                    Bundle bundle = new Bundle();
-//                    bundle.putString(CustomConfig.TITLE, getString(R.string.app_name));
-//                    bundle.putString(CustomConfig.URL, url);
-//                    ActivityUtils.startActivity(bundle, WebActivity.class);
+
                 }
 
                 @Override

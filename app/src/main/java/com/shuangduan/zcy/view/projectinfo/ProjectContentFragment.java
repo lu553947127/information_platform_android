@@ -328,7 +328,7 @@ public class ProjectContentFragment extends BaseFragment implements BaseQuickAda
 
     private void addPayDialog() {
         addDialog(new CustomDialog(mActivity)
-                .setTip(String.format(getString(R.string.format_pay_price), projectDetailVm.detailLiveData.getValue().getDetail().getDetail_price()))
+                .setTip(String.format(getString(R.string.format_pay_price_project), projectDetailVm.detailLiveData.getValue().getDetail().getDetail_price()))
                 .setCallBack(new BaseDialog.CallBack() {
                     @Override
                     public void cancel() {

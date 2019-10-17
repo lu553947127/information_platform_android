@@ -1,5 +1,7 @@
 package com.shuangduan.zcy.view.mine;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -19,7 +21,6 @@ import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.bean.HomeListBean;
 import com.shuangduan.zcy.utils.VersionUtils;
 import com.shuangduan.zcy.vm.HomeVm;
-import com.shuangduan.zcy.weight.DividerItemDecoration;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -72,7 +73,6 @@ public class AboutOursActivity extends BaseActivity {
         homeVm.listLiveData.observe(this, homeListBean -> {
             if (incomeStatementAdapter == null){
                 rvIncomeStatement.setLayoutManager(new LinearLayoutManager(this));
-                rvIncomeStatement.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
                 incomeStatementAdapter = new IncomeStatementAdapter(R.layout.item_income_statement, homeListBean.getExplain());
                 rvIncomeStatement.setAdapter(incomeStatementAdapter);
                 incomeStatementAdapter.setOnItemClickListener((adapter, view, position) -> {
@@ -88,12 +88,23 @@ public class AboutOursActivity extends BaseActivity {
         homeVm.getInit();
     }
 
-    @OnClick({R.id.iv_bar_back})
+    @OnClick({R.id.iv_bar_back,R.id.tv_phone})
     void onClick(View view){
         switch (view.getId()) {
             case R.id.iv_bar_back:
                 finish();
                 break;
+            case R.id.tv_phone:
+                getCallPhone();
+                break;
         }
+    }
+
+    //拨打电话方法
+    private void getCallPhone() {
+        Intent intent = new Intent();
+        intent.setAction("android.intent.action.DIAL");
+        intent.setData(Uri.parse("tel:" + "4009-987-789"));
+        startActivity(intent);
     }
 }
