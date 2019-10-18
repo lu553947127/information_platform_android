@@ -64,12 +64,13 @@
                     android:background="@null"
                     android:singleLine="true"
                     android:inputType="number"
+                    android:maxLength="10"
                     android:digits="0123456789"
                     android:layout_marginLeft="48dp"
                     android:textColorHint="@color/colorTvHint"
                     android:textColor="@color/colorTv"
                     android:textSize="14sp"
-                    android:hint="请输入"/>
+                    android:hint="请输入数量"/>
             </LinearLayout>
 
             <LinearLayout

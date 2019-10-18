@@ -9,6 +9,7 @@ import com.shuangduan.zcy.model.bean.MaterialDepositingPlaceBean;
 import com.shuangduan.zcy.model.bean.MaterialDetailBean;
 import com.shuangduan.zcy.model.bean.MaterialOrderBean;
 
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -47,7 +48,7 @@ public class MaterialRepository extends BaseRepository {
         request(apiService.addressList(userId, id,supplier_id)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
-    public void getAddMaterial(MutableLiveData<MaterialAddBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int material_id, int num) {
+    public void getAddMaterial(MutableLiveData<MaterialAddBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int material_id, BigInteger num) {
         request(apiService.getAddMaterial(userId, material_id, num)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 

@@ -12,6 +12,7 @@ import com.shuangduan.zcy.model.bean.MaterialDepositingPlaceBean;
 import com.shuangduan.zcy.model.bean.MaterialDetailBean;
 import com.shuangduan.zcy.model.bean.MaterialOrderBean;
 
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -71,7 +72,7 @@ public class MaterialDetailVm extends BaseViewModel {
         new MaterialRepository().getAddress(depositingPlaceBeanMutableLiveData, pageStateLiveData, userId, id,supplier_id);
     }
 
-    public void getAddMaterial(int material_id, int num) {
+    public void getAddMaterial(int material_id, BigInteger num) {
         new MaterialRepository().getAddMaterial(mutableLiveData, pageStateLiveData, userId, material_id, num);
     }
 

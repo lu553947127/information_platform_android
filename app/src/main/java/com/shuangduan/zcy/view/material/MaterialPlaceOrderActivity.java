@@ -43,6 +43,7 @@ import com.yanzhenjie.recyclerview.SwipeRecyclerView;
 
 import org.greenrobot.eventbus.Subscribe;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -290,7 +291,8 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
                 ToastUtils.showShort(getString(R.string.no_materialId));
                 return;
             }
-            materialDetailVm.getAddMaterial(materialId,Integer.valueOf(et_num.getText().toString()));
+            BigInteger number = new BigInteger(et_num.getText().toString());
+            materialDetailVm.getAddMaterial(materialId,number);
         });
         btn_dialog.show();
     }

@@ -469,7 +469,7 @@ public class ProjectInfoListActivity extends BaseActivity implements EmptyViewFa
                             popDismiss();
                         });
                     })
-                    .create();
+                     .create();
         }
         switch (projectListVm.currentSelect) {
             case 1:

@@ -99,6 +99,7 @@ import com.shuangduan.zcy.model.bean.WXLoginVerificationBean;
 import com.shuangduan.zcy.model.bean.WithdrawBean;
 import com.shuangduan.zcy.model.bean.WithdrawRecordBean;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import io.reactivex.Flowable;
@@ -1247,7 +1248,7 @@ public interface ApiService {
     Flowable<BaseResponse<MaterialAddBean>> getAddMaterial(
             @Field("user_id") int userId,
             @Field("material_id") int material_id,
-            @Field("num") int num
+            @Field("num") BigInteger num
     );
 
     //基建物资提交预订单 删除存放地

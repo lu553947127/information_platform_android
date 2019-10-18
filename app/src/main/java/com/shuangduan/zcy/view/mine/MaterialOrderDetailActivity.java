@@ -1,17 +1,12 @@
 package com.shuangduan.zcy.view.mine;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.ClipboardManager;
 import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
@@ -19,13 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.BarUtils;
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.chad.library.adapter.base.BaseViewHolder;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shuangduan.zcy.R;
-import com.shuangduan.zcy.adapter.MaterialOrderAdapter;
 import com.shuangduan.zcy.adapter.MaterialOrderAddressAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
@@ -35,7 +25,6 @@ import com.shuangduan.zcy.model.bean.MaterialOrderBean;
 import com.shuangduan.zcy.utils.image.ImageConfig;
 import com.shuangduan.zcy.utils.image.ImageLoader;
 import com.shuangduan.zcy.vm.MaterialDetailVm;
-import com.shuangduan.zcy.vm.MaterialVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
 import butterknife.BindView;
@@ -55,10 +44,8 @@ public class MaterialOrderDetailActivity extends BaseActivity {
     Toolbar toolbar;
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
-
     @BindView(R.id.rv)
     RecyclerView rv;
-
     @BindView(R.id.iv_icon)
     ImageView ivIcon;
     @BindView(R.id.tv_title)
@@ -91,10 +78,8 @@ public class MaterialOrderDetailActivity extends BaseActivity {
     TextView tvIntroduceValue;
     @BindView(R.id.tv_cancel)
     TextView tvCancel;
-
     private MaterialDetailVm materialVm;
     private int orderId;
-
 
     @Override
     protected int initLayoutRes() {
@@ -132,7 +117,6 @@ public class MaterialOrderDetailActivity extends BaseActivity {
                 e.printStackTrace();
                 ivIcon.setImageResource(R.drawable.wuzhi_default);
             }
-
             tvTitle.setText(item.category);
             tvPrice.setText(Html.fromHtml("商品单价：<font color=#EF583E>" + item.price + "<font/>/ " + item.unit));
             tvSpec.setText("规格：" + item.spec);
@@ -148,10 +132,7 @@ public class MaterialOrderDetailActivity extends BaseActivity {
             tvCompanyNameValue.setText(item.company);
             tvOrderAddressValue.setText(item.address);
             tvIntroduceValue.setText(item.remark);
-
             tvState.setText("状态："+item.status);
-
-
             if (item.isClose ==0) {
                 tvCancel.setEnabled(false);
             }else {
@@ -159,10 +140,13 @@ public class MaterialOrderDetailActivity extends BaseActivity {
             }
         });
 
+        materialVm.mutableLiveDataCancel.observe(this,item->{
+            ToastUtils.showShort("订单取消成功");
+            tvCancel.setEnabled(false);
+        });
+
         materialVm.materialOrderDetail(orderId);
     }
-
-
 
     @OnClick({R.id.iv_bar_back, R.id.tv_replication, R.id.tv_cancel})
     void onClick(View v) {
@@ -193,13 +177,12 @@ public class MaterialOrderDetailActivity extends BaseActivity {
         }
     }
 
+    //取消预定订单
     private void cancelOrder() {
         MaterialOrderBean.ListBean order = materialVm.orderDetailLiveData.getValue();
         materialVm.materialOrderCancel(order.id);
         materialVm.detailLiveData.observe(this, item -> {
-            ToastUtils.showShort("订单取消成功");
             materialVm.materialOrderCancel(orderId);
-            tvCancel.setEnabled(false);
         });
     }
 }
