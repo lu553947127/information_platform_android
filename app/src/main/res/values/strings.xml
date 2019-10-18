@@ -644,6 +644,7 @@
     <string name="empty_mine_buyer_info">您还没有发布过找买家\n前往发布</string>
     <string name="empty_mine_sub_info">认购工程信息,增加个人收益</string>
 
+    <string name="empty_depositing_place">暂无存放地数据</string>
     <string name="empty_pull_strings_info">暂无找关系数据</string>
     <string name="empty_substance_info">暂无找物资数据</string>
     <string name="empty_withdraw_info">暂无提现记录</string>

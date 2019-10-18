@@ -29,6 +29,7 @@ import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
 import com.shuangduan.zcy.model.bean.IMWechatUserInfoBean;
 import com.shuangduan.zcy.rongyun.RongExtraBean;
+import com.shuangduan.zcy.utils.image.PictureEnlargeUtils;
 import com.shuangduan.zcy.view.demand.FindBuyerDetailActivity;
 import com.shuangduan.zcy.view.demand.FindRelationshipDetailActivity;
 import com.shuangduan.zcy.view.demand.FindSubstanceDetailActivity;
@@ -49,6 +50,9 @@ import io.rong.imkit.fragment.ConversationFragment;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.UserInfo;
+import io.rong.message.ImageMessage;
+import io.rong.message.LocationMessage;
+import io.rong.message.TextMessage;
 
 /**
  * @author 鹿鸿祥 QQ:553947127
@@ -207,6 +211,21 @@ public class IMPrivateChatActivity extends BaseActivity implements RongIM.Conver
     @Override
     public boolean onMessageClick(Context context, View view, Message message) {
 
+        LogUtils.i(message);
+        LogUtils.i(message.getContent());
+        if (message.getContent() instanceof TextMessage) {
+            LogUtils.i(((TextMessage) message.getContent()).getExtra());
+        }
+        if (message.getContent() instanceof LocationMessage) {
+            LogUtils.i(((LocationMessage) message.getContent()).getLat());
+            LogUtils.i(((LocationMessage) message.getContent()).getLng());
+        }
+        if (message.getContent() instanceof ImageMessage) {
+            LogUtils.i(((ImageMessage) message.getContent()).getThumUri());
+            LogUtils.i(((ImageMessage) message.getContent()).getLocalUri());
+            LogUtils.i(((ImageMessage) message.getContent()).getRemoteUri());
+//            PictureEnlargeUtils.getPictureEnlarge(this, String.valueOf(((ImageMessage) message.getContent()).getRemoteUri()));
+        }
 
         if (mConversationType == Conversation.ConversationType.SYSTEM) {
 
@@ -281,8 +300,6 @@ public class IMPrivateChatActivity extends BaseActivity implements RongIM.Conver
 //                    RongIM.getInstance().startPrivateChat(this, String.valueOf(extraBean.data.id),"");
                     break;
             }
-
-
             return true;
         } else {
             return false;

@@ -2,6 +2,7 @@ package com.shuangduan.zcy.view.material;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
@@ -16,7 +17,6 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.MaterialDepositingPlaceAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
-import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.MaterialPlaceOrderBean;
 import com.shuangduan.zcy.model.event.MaterialDetailEvent;
 import com.shuangduan.zcy.vm.MaterialDetailVm;
@@ -70,6 +70,7 @@ public class DepositingPlaceActivity extends BaseActivity {
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.material_depositing_place));
+        View empty=emptyViewFactory.createEmptyView(R.drawable.icon_empty_project,R.string.empty_depositing_place,0,null);
         materialDetailVm = ViewModelProviders.of(this).get(MaterialDetailVm.class);
         materialDetailVm.id = getIntent().getIntExtra(CustomConfig.MATERIAL_ID, 0);
         materialDetailVm.supplier_id = getIntent().getIntExtra(CustomConfig.SUPPLIER_ID, 0);
@@ -89,17 +90,17 @@ public class DepositingPlaceActivity extends BaseActivity {
                                     if (String.valueOf(materialDepositingPlaceBean.get(j).getId()).equals(type_no)) {
                                         materialDepositingPlaceBean.remove(j);
                                         if (materialDepositingPlaceBean.size()==0){
-                                            materialDepositingPlaceAdapter.setEmptyView(R.layout.layout_empty, recyclerView);
+                                            materialDepositingPlaceAdapter.setEmptyView(empty);
                                         }
                                     }
                                 }
                             }
                         }else {
-                            materialDepositingPlaceAdapter.setEmptyView(R.layout.layout_empty, recyclerView);
+                            materialDepositingPlaceAdapter.setEmptyView(empty);
                         }
                         materialDepositingPlaceAdapter.setNewData(materialDepositingPlaceBean);
                     }else {
-                        materialDepositingPlaceAdapter.setEmptyView(R.layout.layout_empty, recyclerView);
+                        materialDepositingPlaceAdapter.setEmptyView(empty);
                     }
                     materialDepositingPlaceAdapter.setOnItemClickListener((adapter, view, position) -> {
                         LogUtils.i(materialDepositingPlaceBean.get(position).getId());

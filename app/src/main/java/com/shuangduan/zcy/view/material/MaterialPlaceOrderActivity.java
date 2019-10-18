@@ -287,6 +287,19 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
                 ToastUtils.showShort(getString(R.string.no_mun));
                 return;
             }
+            if (Integer.valueOf(et_num.getText().toString())==0){
+                ToastUtils.showShort("数量不能为0");
+                return;
+            }
+            if (materialId!=0){
+                for (int i = 0; i < list.size(); i++) {
+                    String type_no = String.valueOf(list.get(i).getMaterialId());
+                    if (type_no.equals(String.valueOf(materialId))){
+                        materialId=0;
+                        return;
+                    }
+                }
+            }
             if (materialId==0){
                 ToastUtils.showShort(getString(R.string.no_materialId));
                 return;
