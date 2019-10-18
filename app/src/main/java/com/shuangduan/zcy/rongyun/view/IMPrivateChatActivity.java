@@ -12,8 +12,10 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.JsonUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
@@ -26,7 +28,9 @@ import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
 import com.shuangduan.zcy.model.bean.IMWechatUserInfoBean;
+import com.shuangduan.zcy.rongyun.RongExtraBean;
 import com.shuangduan.zcy.view.mine.UserInfoActivity;
+import com.shuangduan.zcy.view.projectinfo.ProjectDetailActivity;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -37,6 +41,7 @@ import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationFragment;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
+import io.rong.imlib.model.MessageContent;
 import io.rong.imlib.model.UserInfo;
 
 /**
@@ -85,12 +90,12 @@ public class IMPrivateChatActivity extends BaseActivity implements RongIM.Conver
         tvBarTitleSmall.setText(getIntent().getData().getQueryParameter("title"));
         enterFragment(mConversationType, user_id);//加载页面
         //判断是否为群聊还是单聊
-        if (mConversationType.getName().equals("group")){
+        if (mConversationType.getName().equals("group")) {
             ivBarRight.setImageResource(R.drawable.icon_more);
             tvBarRight.setVisibility(View.GONE);
             tvBarTitle.setVisibility(View.VISIBLE);
             ll_bar_title_small.setVisibility(View.GONE);
-        }else if (mConversationType.getName().equals("private")){
+        } else if (mConversationType.getName().equals("private")) {
             ivBarRight.setVisibility(View.GONE);
             tvBarTitle.setVisibility(View.GONE);
             ll_bar_title_small.setVisibility(View.VISIBLE);
@@ -98,7 +103,7 @@ public class IMPrivateChatActivity extends BaseActivity implements RongIM.Conver
             getFriendData(user_id);
             //刷新自己头像
             getFriendData(String.valueOf(SPUtils.getInstance().getInt(SpConfig.USER_ID)));
-        }else {
+        } else {
             ivBarRight.setVisibility(View.GONE);
             tvBarTitle.setVisibility(View.VISIBLE);
             ll_bar_title_small.setVisibility(View.GONE);
@@ -122,10 +127,10 @@ public class IMPrivateChatActivity extends BaseActivity implements RongIM.Conver
     //会话列表头像名称显示
     private void getFriendData(String userId) {
 
-        OkGo.<String>post(RetrofitHelper.BASE_TEST_URL+ Common.WECHAT_USER_INFO)
+        OkGo.<String>post(RetrofitHelper.BASE_TEST_URL + Common.WECHAT_USER_INFO)
                 .tag(this)
                 .headers("token", SPUtils.getInstance().getString(SpConfig.TOKEN))//请求头
-                .params("id",userId)//对应的用户编号
+                .params("id", userId)//对应的用户编号
                 .params("user_id", SPUtils.getInstance().getInt(SpConfig.USER_ID))//用户编号
                 .execute(new com.lzy.okgo.callback.StringCallback() {//返回值
 
@@ -140,34 +145,34 @@ public class IMPrivateChatActivity extends BaseActivity implements RongIM.Conver
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
                         LogUtils.json(response.body());
                         try {
-                            IMWechatUserInfoBean bean=new Gson().fromJson(response.body(),IMWechatUserInfoBean.class);
-                            if (bean.getCode().equals("200")){
+                            IMWechatUserInfoBean bean = new Gson().fromJson(response.body(), IMWechatUserInfoBean.class);
+                            if (bean.getCode().equals("200")) {
                                 RongIM.getInstance().refreshUserInfoCache(new UserInfo(bean.getData().getUserId()
-                                        ,bean.getData().getName()
-                                        ,Uri.parse(bean.getData().getPortraitUri())));
-                                if (userId.equals(user_id)){
-                                    tvBarCompanyOrPost.setText(bean.getData().getCompany()+" "+bean.getData().getPosition());
+                                        , bean.getData().getName()
+                                        , Uri.parse(bean.getData().getPortraitUri())));
+                                if (userId.equals(user_id)) {
+                                    tvBarCompanyOrPost.setText(bean.getData().getCompany() + " " + bean.getData().getPosition());
                                 }
-                            }else {
+                            } else {
                                 ToastUtils.showShort(bean.getMsg());
                             }
-                        }catch (JsonSyntaxException | IllegalStateException ignored){
+                        } catch (JsonSyntaxException | IllegalStateException ignored) {
                             ToastUtils.showShort(getString(R.string.request_error));
                         }
                     }
                 });
     }
 
-    @OnClick({R.id.iv_bar_back,R.id.iv_bar_right})
-    void onClick(View view){
-        switch (view.getId()){
+    @OnClick({R.id.iv_bar_back, R.id.iv_bar_right})
+    void onClick(View view) {
+        switch (view.getId()) {
             case R.id.iv_bar_back:
                 finish();
                 break;
             case R.id.iv_bar_right:
                 Bundle bundle = new Bundle();
                 bundle.putString("group_id", user_id);
-                ActivityUtils.startActivity(bundle,IMGroupDetailsActivity.class);
+                ActivityUtils.startActivity(bundle, IMGroupDetailsActivity.class);
                 break;
         }
     }
@@ -175,11 +180,11 @@ public class IMPrivateChatActivity extends BaseActivity implements RongIM.Conver
     @Override
     public boolean onUserPortraitClick(Context context, Conversation.ConversationType conversationType, UserInfo userInfo, String s) {
         if (conversationType == Conversation.ConversationType.CUSTOMER_SERVICE || conversationType == Conversation.ConversationType.PUBLIC_SERVICE
-                || conversationType == Conversation.ConversationType.APP_PUBLIC_SERVICE|| conversationType == Conversation.ConversationType.SYSTEM) {
+                || conversationType == Conversation.ConversationType.APP_PUBLIC_SERVICE || conversationType == Conversation.ConversationType.SYSTEM) {
             return false;
         }
         if (userInfo.getUserId() != null) {
-            if (Integer.parseInt(userInfo.getUserId())!= SPUtils.getInstance().getInt(SpConfig.USER_ID)){
+            if (Integer.parseInt(userInfo.getUserId()) != SPUtils.getInstance().getInt(SpConfig.USER_ID)) {
                 Bundle bundle = new Bundle();
                 bundle.putInt(CustomConfig.UID, Integer.parseInt(userInfo.getUserId()));
                 ActivityUtils.startActivity(bundle, UserInfoActivity.class);
@@ -195,11 +200,35 @@ public class IMPrivateChatActivity extends BaseActivity implements RongIM.Conver
 
     @Override
     public boolean onMessageClick(Context context, View view, Message message) {
-        if (mConversationType == Conversation.ConversationType.SYSTEM){
-//            ToastUtils.showShort(String.valueOf(message));
-            LogUtils.i(message.getTargetId());
+        if (mConversationType == Conversation.ConversationType.SYSTEM) {
+
+            if (Integer.valueOf(message.getTargetId()) != 18) return false;
+
+            String messageJson = new Gson().toJson(message.getContent());
+            String extra = JsonUtils.getString(messageJson, "extra");
+
+            LogUtils.i(extra);
+
+            if (StringUtils.isEmpty(extra)) return false;
+
+            RongExtraBean extraBean = new Gson().fromJson(extra, RongExtraBean.class);
+
+            Bundle bundle = new Bundle();
+            switch (extraBean.type) {
+                case 3: //工程信息：%s已通过审核
+                    bundle.putInt(CustomConfig.PROJECT_ID, extraBean.data.id);
+                    bundle.putInt(CustomConfig.LOCATION, 0);
+                    ActivityUtils.startActivity(bundle, ProjectDetailActivity.class);
+                case 5: //工程动态：%s已通过审核
+                    bundle.putInt(CustomConfig.PROJECT_ID, extraBean.data.id);
+                    bundle.putInt(CustomConfig.LOCATION, 1);
+                    ActivityUtils.startActivity(bundle, ProjectDetailActivity.class);
+                    break;
+            }
+
+
             return true;
-        }else {
+        } else {
             return false;
         }
     }
@@ -213,4 +242,6 @@ public class IMPrivateChatActivity extends BaseActivity implements RongIM.Conver
     public boolean onMessageLongClick(Context context, View view, Message message) {
         return false;
     }
+
+
 }

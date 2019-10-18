@@ -45,6 +45,17 @@ public class MaterialVm extends BaseViewModel {
     public int supplierId;
 
     public String specification;
+    //供应方式ID
+    public int supplierMethodId;
+
+    //筛选的商品名称
+    public String materialName;
+
+    //赛选的供应商名称
+    public String supplier;
+    //筛选框的供应方式
+    public String supplierMethod;
+
 
     public MaterialVm() {
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
@@ -62,7 +73,11 @@ public class MaterialVm extends BaseViewModel {
 
         materialId = 0;
         supplierId = 0;
+        supplierMethodId =0;
+
         specification = "";
+
+        supplierMethod = "";
     }
 
     public void sellList(int materialId, String spec, int supplierId) {

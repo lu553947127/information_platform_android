@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        app:tabIndicatorColor="@color/colorPrimary"
+        app:tabIndicatorFullWidth="false"
+        app:tabIndicatorHeight="3dp"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@color/text1"
+        app:tabTextAppearance="@style/TabLayoutTextStyle"
+        app:tabTextColor="@color/colorTv">
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_filter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tab_layout"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="10dp"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/ll_name"
+            style="@style/MaterialFilterStyle"
+            android:orientation="horizontal"
+            android:gravity="center"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/space"
+            tools:ignore="MissingConstraints,NotSibling">
+            <CheckBox
+                android:id="@+id/cb_filter_name"
+                style="@style/MaterialCbFilterStyle"
+                android:text="@string/filter_name"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_spec"
+            style="@style/MaterialFilterStyle"
+            android:orientation="horizontal"
+            android:gravity="center"
+            app:layout_constraintLeft_toRightOf="@id/ll_name"
+            app:layout_constraintRight_toLeftOf="@id/ll_supplier"
+            tools:ignore="MissingConstraints,NotSibling">
+            <CheckBox
+                android:id="@+id/cb_filter_spec"
+                style="@style/MaterialCbFilterStyle"
+                android:text="@string/filter_spec"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_supplier"
+            style="@style/MaterialFilterStyle"
+            android:orientation="horizontal"
+            android:gravity="center"
+            app:layout_constraintLeft_toRightOf="@id/ll_spec"
+            app:layout_constraintRight_toLeftOf="@id/ll_supplier_method"
+            tools:ignore="MissingConstraints,NotSibling">
+
+            <CheckBox
+                android:id="@+id/cb_filter_supplier"
+                style="@style/MaterialCbFilterStyle"
+                android:text="@string/filter_supplier"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_supplier_method"
+            style="@style/MaterialFilterStyle"
+            android:orientation="horizontal"
+            android:gravity="center"
+            app:layout_constraintLeft_toRightOf="@id/ll_supplier"
+            app:layout_constraintRight_toRightOf="parent"
+            tools:ignore="MissingConstraints,NotSibling">
+
+            <CheckBox
+                android:id="@+id/cb_filter_supplier_method"
+                style="@style/MaterialCbFilterStyle"
+                android:text="@string/filter_supplier_method"/>
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:id="@+id/space"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_below="@+id/cl_filter"
+        android:background="@color/color_F5F5F5"
+        android:visibility="gone"/>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/vp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/space">
+
+    </androidx.viewpager.widget.ViewPager>
+
+</merge>

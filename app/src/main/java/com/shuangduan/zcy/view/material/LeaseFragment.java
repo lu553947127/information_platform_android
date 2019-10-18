@@ -69,6 +69,7 @@ public class LeaseFragment extends BaseLazyFragment implements EmptyViewFactory.
 
         rv.setLayoutManager(new LinearLayoutManager(mContext));
         rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
+//        rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_h_5));
         SellAdapter adapter = new SellAdapter(R.layout.item_material, null);
         adapter.setEmptyView(R.layout.layout_loading, rv);
         rv.setAdapter(adapter);

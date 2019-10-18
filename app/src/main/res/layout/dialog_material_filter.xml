@@ -1,123 +1,158 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorFFF">
 
-    <TextView
-        android:id="@+id/tv_material"
-        android:layout_width="wrap_content"
+
+    <RelativeLayout
+        android:id="@+id/rl_filter_name"
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        android:background="@color/colorFFF">
+
+        <TextView
+            android:id="@+id/tv_filter_name"
+            android:layout_width="wrap_content"
+            android:layout_height="33dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/shape_f8f8f8_17"
+            android:gravity="center_vertical"
+            android:hint="@string/selector_product"
+            android:minWidth="179dp"
+            android:paddingLeft="21dp"
+            android:textColor="@color/text2"
+            android:textColorHint="@color/text2"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rl_filter_spec"
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        android:background="@color/colorFFF"
+        android:visibility="gone">
+
+        <EditText
+            android:id="@+id/et_filter_spec"
+            android:layout_width="wrap_content"
+            android:layout_height="33dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/shape_f8f8f8_17"
+            android:gravity="center_vertical"
+            android:hint="@string/input_specification"
+            android:minWidth="179dp"
+            android:paddingLeft="21dp"
+            android:textColor="@color/text2"
+            android:textColorHint="@color/text2"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_filter_supplier"
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        android:background="@color/colorFFF"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv_filter_supplier"
+            android:layout_width="wrap_content"
+            android:layout_height="33dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/shape_f8f8f8_17"
+            android:gravity="center_vertical"
+            android:hint="@string/selector_supplier"
+            android:minWidth="179dp"
+            android:paddingLeft="21dp"
+            android:textColor="@color/text2"
+            android:textColorHint="@color/text2"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rl_filter_supply_method"
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        android:background="@color/colorFFF"
+        android:visibility="gone">
+
+        <RadioGroup
+            android:id="@+id/rg_filter_supply_method"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="26dp"
+            android:layout_marginRight="30dp">
+
+            <RadioButton
+                android:id="@+id/rb_filter_sell"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:drawableRight="@drawable/selector_supply_method"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text="@string/sell"
+                android:textColor="@drawable/selector_text_color_666_3c2fdc"
+                android:textSize="14sp" />
+
+            <RadioButton
+                android:id="@+id/rb_filter_lease"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:button="@null"
+                android:drawableRight="@drawable/selector_supply_method"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text="@string/lease"
+                android:textColor="@drawable/selector_text_color_666_3c2fdc"
+                android:textSize="14sp" />
+
+        </RadioGroup>
+
+
+    </RelativeLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="29dp"
-        android:layout_marginTop="30dp"
-        android:text="商品名称"
-        android:textColor="@color/color_666666"
-        android:textSize="14sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_gravity="bottom">
+        <TextView
+            android:id="@+id/tv_negative"
+            android:layout_width="0dp"
+            android:layout_height="42dp"
+            android:layout_marginTop="61dp"
+            android:background="#E0E0E5"
+            android:gravity="center"
+            android:text="@string/reset"
+            android:textColor="@color/color_666666"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/tv_positive"
+            app:layout_constraintTop_toBottomOf="@+id/tv_supplier_value" />
 
-    <TextView
-        android:id="@+id/tv_material_value"
-        android:layout_width="wrap_content"
-        android:layout_height="33dp"
-        android:layout_marginTop="12dp"
-        android:background="@drawable/shape_f4f2f7_17"
-        android:gravity="center_vertical"
-        android:paddingLeft="13dp"
-        android:minWidth="133dp"
-        android:hint="@string/selector_product"
-        android:textColorHint="@color/text2"
-        android:textColor="@color/text2"
-        android:textSize="14sp"
-        app:layout_constraintLeft_toLeftOf="@id/tv_material"
-        app:layout_constraintTop_toBottomOf="@id/tv_material"
-        tools:ignore="MissingConstraints" />
+        <TextView
+            android:id="@+id/tv_positive"
+            android:layout_width="0dp"
+            android:layout_height="42dp"
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:text="@string/positive"
+            android:textColor="@color/colorFFF"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toRightOf="@+id/tv_negative"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_negative" />
 
-
-    <TextView
-        android:id="@+id/tv_specification"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:text="规格"
-        android:textColor="@color/color_666666"
-        android:textSize="14sp"
-        app:layout_constraintLeft_toLeftOf="@id/tv_material"
-        app:layout_constraintTop_toBottomOf="@id/tv_material_value" />
-
-    <EditText
-        android:id="@+id/et_specification"
-        android:layout_width="wrap_content"
-        android:layout_height="33dp"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/shape_f4f2f7_17"
-        android:gravity="center_vertical"
-        android:paddingLeft="13dp"
-        android:hint="@string/input_specification"
-        android:textColor="@color/text2"
-        android:textColorHint="@color/text2"
-        android:textSize="14sp"
-        android:minWidth="133dp"
-        app:layout_constraintLeft_toLeftOf="@id/tv_specification"
-        app:layout_constraintTop_toBottomOf="@id/tv_specification"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/tv_supplier"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:text="供应商"
-        android:textColor="@color/color_666666"
-        android:textSize="14sp"
-        app:layout_constraintLeft_toLeftOf="@id/et_specification"
-        app:layout_constraintTop_toBottomOf="@id/et_specification" />
-
-
-    <TextView
-        android:id="@+id/tv_supplier_value"
-        android:layout_width="wrap_content"
-        android:layout_height="33dp"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/shape_f4f2f7_17"
-        android:gravity="center_vertical"
-        android:paddingLeft="13dp"
-        android:hint="@string/selector_supplier"
-        android:textColorHint="@color/text2"
-        android:textColor="@color/text2"
-        android:textSize="14sp"
-        android:minWidth="133dp"
-        app:layout_constraintLeft_toLeftOf="@id/tv_supplier"
-        app:layout_constraintTop_toBottomOf="@id/tv_supplier"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/tv_negative"
-        android:layout_width="0dp"
-        android:layout_height="42dp"
-        android:layout_marginTop="61dp"
-        android:background="#E0E0E5"
-        android:gravity="center"
-        android:text="@string/reset"
-        android:textColor="@color/color_666666"
-        android:textSize="16sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/tv_positive"
-        app:layout_constraintTop_toBottomOf="@+id/tv_supplier_value" />
-
-    <TextView
-        android:id="@+id/tv_positive"
-        android:layout_width="0dp"
-        android:layout_height="42dp"
-        android:background="@color/colorPrimary"
-        android:gravity="center"
-        android:text="@string/positive"
-        android:textColor="@color/colorFFF"
-        android:textSize="16sp"
-        app:layout_constraintLeft_toRightOf="@+id/tv_negative"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tv_negative" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
