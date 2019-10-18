@@ -41,7 +41,6 @@ import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationFragment;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
-import io.rong.imlib.model.MessageContent;
 import io.rong.imlib.model.UserInfo;
 
 /**
@@ -200,6 +199,8 @@ public class IMPrivateChatActivity extends BaseActivity implements RongIM.Conver
 
     @Override
     public boolean onMessageClick(Context context, View view, Message message) {
+
+
         if (mConversationType == Conversation.ConversationType.SYSTEM) {
 
             if (Integer.valueOf(message.getTargetId()) != 18) return false;
