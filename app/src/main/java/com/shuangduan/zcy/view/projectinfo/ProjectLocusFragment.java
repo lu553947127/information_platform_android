@@ -73,10 +73,11 @@ public class ProjectLocusFragment extends BaseLazyFragment {
     private CoinPayVm coinPayVm;
     private static int project_id;
 
-    public static ProjectLocusFragment newInstance(int id, String title) {
+    private String title ;
+
+    public static ProjectLocusFragment newInstance(int id) {
         Bundle args = new Bundle();
         args.putInt("id", id);
-        args.putString("title", title);
         project_id = id;
         ProjectLocusFragment fragment = new ProjectLocusFragment();
         fragment.setArguments(args);
@@ -96,6 +97,11 @@ public class ProjectLocusFragment extends BaseLazyFragment {
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         tvFilter.setText(getString(R.string.release_by_me));
+
+        projectDetailVm = ViewModelProviders.of(mActivity).get(ProjectDetailVm.class);
+
+        projectDetailVm.titleLiveData.observe(this, s -> title = s);
+
         rvLocus.setLayoutManager(new LinearLayoutManager(mContext));
         locusAdapter = new LocusAdapter(R.layout.item_locus, null) {
             @Override
@@ -153,7 +159,7 @@ public class ProjectLocusFragment extends BaseLazyFragment {
 
         refresh.setOnLoadMoreListener(refreshLayout -> projectDetailVm.getMoreViewTrack());
 
-        projectDetailVm = ViewModelProviders.of(mActivity).get(ProjectDetailVm.class);
+
         projectDetailVm.locusTypeLiveData.observe(this, type -> {
             if (type == 1) {
                 tvFilter.setText(getString(R.string.release_by_me));
@@ -182,7 +188,7 @@ public class ProjectLocusFragment extends BaseLazyFragment {
 
     private void setEmpty() {
         int id = getArguments().getInt("id", 0);
-        String title = getArguments().getString("title");
+
         View empty = LayoutInflater.from(mContext).inflate(R.layout.layout_empty_top, null);
         TextView tvTip = empty.findViewById(R.id.tv_tip);
         TextView tvGo = empty.findViewById(R.id.tv_goto);

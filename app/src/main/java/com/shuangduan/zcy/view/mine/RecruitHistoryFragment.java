@@ -14,7 +14,6 @@ import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseLazyFragment;
 import com.shuangduan.zcy.factory.EmptyViewFactory;
 import com.shuangduan.zcy.model.bean.ReadHistoryBean;
-import com.shuangduan.zcy.view.projectinfo.ProjectDetailActivity;
 import com.shuangduan.zcy.view.recruit.RecruitActivity;
 import com.shuangduan.zcy.view.recruit.RecruitDetailActivity;
 import com.shuangduan.zcy.vm.ReadHistoryVm;

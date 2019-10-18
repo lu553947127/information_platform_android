@@ -35,6 +35,7 @@ import com.shuangduan.zcy.view.demand.FindRelationshipDetailActivity;
 import com.shuangduan.zcy.view.demand.FindSubstanceDetailActivity;
 import com.shuangduan.zcy.view.mine.MaterialOrderDetailActivity;
 import com.shuangduan.zcy.view.mine.TransRecordActivity;
+import com.shuangduan.zcy.view.mine.TransRecordDetailActivity;
 import com.shuangduan.zcy.view.mine.UserInfoActivity;
 import com.shuangduan.zcy.view.projectinfo.ProjectDetailActivity;
 import com.shuangduan.zcy.view.recruit.RecruitDetailActivity;
@@ -269,7 +270,8 @@ public class IMPrivateChatActivity extends BaseActivity implements RongIM.Conver
                 case 21://您查看了一条供应商信息消费
                 case 22://您查看了一条找买家需求信息消费
                 case 23://您查看了一条找物资需求信息消费
-                    ActivityUtils.startActivity(TransRecordActivity.class);  //跳转交易记录列表
+                    bundle.putInt(CustomConfig.TRANS_RECORD_ID, extraBean.data.id);
+                    ActivityUtils.startActivity(bundle, TransRecordDetailActivity.class);
                     break;
                 case 24:// 物资订单状态有更新
                     bundle.putInt(CustomConfig.ORDER_ID, extraBean.data.id);

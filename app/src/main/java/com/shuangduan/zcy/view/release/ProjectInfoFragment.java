@@ -80,7 +80,6 @@ public class ProjectInfoFragment extends BaseLazyFragment{
             Bundle bundle = new Bundle();
             bundle.putInt(CustomConfig.PROJECT_ID, listBean.getId());
             bundle.putInt(CustomConfig.LOCATION, 0);
-            bundle.putString(CustomConfig.PROJECT_NAME, listBean.getTitle());
             ActivityUtils.startActivity(bundle, ProjectDetailActivity.class);
         });
 
