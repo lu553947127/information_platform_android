@@ -1,12 +1,10 @@
 package com.shuangduan.zcy.view.projectinfo;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
-import androidx.core.app.ActivityOptionsCompat;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -36,7 +34,7 @@ import com.shuangduan.zcy.model.bean.IMFriendApplyCountBean;
 import com.shuangduan.zcy.model.bean.TrackBean;
 import com.shuangduan.zcy.model.event.RefreshViewLocusEvent;
 import com.shuangduan.zcy.utils.LoginUtils;
-import com.shuangduan.zcy.view.PhotoViewActivity;
+import com.shuangduan.zcy.utils.image.PictureEnlargeUtils;
 import com.shuangduan.zcy.view.mine.SetPwdPayActivity;
 import com.shuangduan.zcy.view.recharge.RechargeActivity;
 import com.shuangduan.zcy.view.release.ReleaseProjectActivity;
@@ -130,16 +128,20 @@ public class ProjectLocusFragment extends BaseLazyFragment {
         rvLocus.setAdapter(locusAdapter);
         locusAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             TrackBean.ListBean listBean = locusAdapter.getData().get(position);
+            ArrayList<String> list = new ArrayList<>();
+            for (TrackBean.ListBean.ImageBean img : listBean.getImage()) {
+                list.add(img.getSource());
+            }
             switch (view.getId()) {
                 case R.id.iv_pic_first:
-                    showPic(listBean, 0, view);
+                    PictureEnlargeUtils.getPictureEnlargeList(getActivity(),list,0);
                     break;
                 case R.id.iv_pic_second:
-                    showPic(listBean, 1, view);
+                    PictureEnlargeUtils.getPictureEnlargeList(getActivity(),list,1);
                     break;
                 case R.id.iv_pic_third:
                 case R.id.tv_more:
-                    showPic(listBean, 2, view);
+                    PictureEnlargeUtils.getPictureEnlargeList(getActivity(),list,2);
                     break;
                 case R.id.iv_mark:
                     Bundle bundle = new Bundle();
@@ -195,27 +197,6 @@ public class ProjectLocusFragment extends BaseLazyFragment {
             ActivityUtils.startActivity(bundle, ReleaseProjectActivity.class);
         });
         locusAdapter.setEmptyView(empty);
-    }
-
-    /**
-     * 图片预览
-     */
-    private void showPic(TrackBean.ListBean item, int position, View view) {
-        ArrayList<String> list = new ArrayList<>();
-        for (TrackBean.ListBean.ImageBean img : item.getImage()) {
-            list.add(img.getSource());
-        }
-
-        Bundle bundle = new Bundle();
-        bundle.putInt("position", position);
-        bundle.putStringArrayList(CustomConfig.PHOTO_VIEW_URL_LIST, list);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            //共享shareElement这个View
-            ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(mActivity, view, "shareElement");
-            ActivityUtils.startActivity(bundle, PhotoViewActivity.class, activityOptionsCompat.toBundle());
-        } else {
-            ActivityUtils.startActivity(bundle, PhotoViewActivity.class);
-        }
     }
 
     @OnClick({R.id.tv_filter})

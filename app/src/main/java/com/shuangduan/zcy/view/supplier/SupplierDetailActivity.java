@@ -1,6 +1,5 @@
 package com.shuangduan.zcy.view.supplier;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -9,21 +8,17 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityOptionsCompat;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
-import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.SupplierDetailBean;
 import com.shuangduan.zcy.utils.image.ImageConfig;
 import com.shuangduan.zcy.utils.image.ImageLoader;
 import com.shuangduan.zcy.utils.image.PictureEnlargeUtils;
-import com.shuangduan.zcy.view.PhotoViewActivity;
 import com.shuangduan.zcy.vm.SupplierVm;
 import com.shuangduan.zcy.weight.CircleImageView;
 
@@ -139,38 +134,24 @@ public class SupplierDetailActivity extends BaseActivity {
         supplierVm.getDetail(getIntent().getIntExtra(CustomConfig.SUPPLIER_ID, 0));
     }
 
-    private void showPic(SupplierDetailBean item, int position, View view){
-        ArrayList<String> list = new ArrayList<>();
-        for (SupplierDetailBean.ImagesJsonBean img: item.getImages_json()) {
-            list.add(img.getSource());
-        }
-
-        Bundle bundle = new Bundle();
-        bundle.putInt("position", position);
-        bundle.putStringArrayList(CustomConfig.PHOTO_VIEW_URL_LIST, list);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            //共享shareElement这个View
-            ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(this, view, "shareElement");
-            ActivityUtils.startActivity(bundle, PhotoViewActivity.class, activityOptionsCompat.toBundle());
-        } else {
-            ActivityUtils.startActivity(bundle, PhotoViewActivity.class);
-        }
-    }
-
     @OnClick({R.id.iv_bar_back, R.id.iv_pic_first,R.id.iv_pic_two,R.id.iv_pic_three,R.id.iv_authorization})
     void onClick(View view){
+        ArrayList<String> list = new ArrayList<>();
+        for (SupplierDetailBean.ImagesJsonBean img: listBean.getImages_json()) {
+            list.add(img.getSource());
+        }
         switch (view.getId()){
             case R.id.iv_bar_back:
                 finish();
                 break;
             case R.id.iv_pic_first:
-                showPic(listBean,0,ivOne);
+                PictureEnlargeUtils.getPictureEnlargeList(this,list,0);
                 break;
             case R.id.iv_pic_two:
-                showPic(listBean,1,ivTwo);
+                PictureEnlargeUtils.getPictureEnlargeList(this,list,1);
                 break;
             case R.id.iv_pic_three:
-                showPic(listBean,2,ivThree);
+                PictureEnlargeUtils.getPictureEnlargeList(this,list,2);
                 break;
             case R.id.iv_authorization:
                 if (!TextUtils.isEmpty(authorization)){

@@ -79,14 +79,12 @@ public class CircleFragment extends BaseFragment {
     CircleImageView iv_header;
     @BindView(R.id.refresh)
     SmartRefreshLayout refresh;
-//    @BindView(R.id.tv_numbers)
     private TextView tvNumber;
     private UserInfoVm userInfoVm;
     private NoScrollViewPager viewPager;
     private RelativeLayout relativeLayout;
     private TextView number;
     private int count=0;
-    private ConversationListAdapterEx adapterEx;
 
     public static CircleFragment newInstance() {
 
@@ -112,7 +110,7 @@ public class CircleFragment extends BaseFragment {
         BarUtils.setStatusBarColorRes(fakeStatusBar, getResources().getColor(R.color.colorPrimary));
         FragmentManager fragmentManage = getChildFragmentManager();
         ConversationListFragment fragement = (ConversationListFragment) fragmentManage.findFragmentById(R.id.conversationlist);
-        adapterEx=new ConversationListAdapterEx(RongContext.getInstance());
+        ConversationListAdapterEx adapterEx = new ConversationListAdapterEx(RongContext.getInstance());
         Objects.requireNonNull(fragement).setAdapter(adapterEx);
         Uri uri = Uri.parse("rong://" + MyApplication.getInstance().getApplicationInfo().packageName).buildUpon()
                 .appendPath("conversationlist")

@@ -182,6 +182,7 @@ public class LoginActivity extends BaseActivity {
                 SPUtils.getInstance().put(SpConfig.TOKEN, wxLoginVerificationBean.getToken(), true);
                 SPUtils.getInstance().put(SpConfig.MOBILE, wxLoginVerificationBean.getTel(), true);
                 SPUtils.getInstance().put(SpConfig.INFO_STATUS, wxLoginVerificationBean.getInfo_status(), true);
+                SPUtils.getInstance().put(SpConfig.IS_VERIFIED, wxLoginVerificationBean.getCard_status(),true);
 
                 //判断是否完善信息
                 if (wxLoginVerificationBean.getInfo_status()==1){
@@ -323,6 +324,7 @@ public class LoginActivity extends BaseActivity {
             SPUtils.getInstance().put(SpConfig.TOKEN, loginBean.getToken(), true);
             SPUtils.getInstance().put(SpConfig.MOBILE, loginBean.getTel(), true);
             SPUtils.getInstance().put(SpConfig.INFO_STATUS, loginBean.getInfo_status(), true);
+            SPUtils.getInstance().put(SpConfig.IS_VERIFIED, loginBean.getCard_status(),true);
 
             //记住用户名 记忆开始
             if (isAccount==1){

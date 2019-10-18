@@ -22,6 +22,24 @@ public class LoginBean {
     private String token;
     private String tel;
     private int info_status;
+    private int card_status;
+    private int pay_status;
+
+    public int getCard_status() {
+        return card_status;
+    }
+
+    public void setCard_status(int card_status) {
+        this.card_status = card_status;
+    }
+
+    public int getPay_status() {
+        return pay_status;
+    }
+
+    public void setPay_status(int pay_status) {
+        this.pay_status = pay_status;
+    }
 
     public int getUser_id() {
         return user_id;

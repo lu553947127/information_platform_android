@@ -69,6 +69,7 @@ public class StartUpActivity extends BaseActivity {
             RongIM.connect(token, new RongIMClient.ConnectCallback() {
                 @Override
                 public void onTokenIncorrect() {
+                    LogUtils.i("融云连接失败");
                     ActivityUtils.startActivity(LoginActivity.class);
                     finish();
                 }

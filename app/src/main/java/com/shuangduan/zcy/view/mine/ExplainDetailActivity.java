@@ -1,26 +1,21 @@
 package com.shuangduan.zcy.view.mine;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityOptionsCompat;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.bumptech.glide.Glide;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.PageState;
-import com.shuangduan.zcy.view.PhotoViewActivity;
+import com.shuangduan.zcy.utils.image.PictureEnlargeUtils;
 import com.shuangduan.zcy.vm.ExplainVm;
 import com.shuangduan.zcy.weight.RichText;
-
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -77,7 +72,7 @@ public class ExplainDetailActivity extends BaseActivity {
 
                 @Override
                 public void OnImg(String imgUrl) {
-                    startPhotoActivity(imgUrl);
+                    PictureEnlargeUtils.getPictureEnlarge(ExplainDetailActivity.this,imgUrl);
                 }
             });
             tvContent.setHtml(explainDetailBean.getContent());
@@ -93,20 +88,6 @@ public class ExplainDetailActivity extends BaseActivity {
             }
         });
         explainVm.getDetail();
-    }
-
-    private void startPhotoActivity(String url){
-        ArrayList<String> list = new ArrayList<>();
-        Bundle bundle = new Bundle();
-        bundle.putInt("position", 0);
-        bundle.putStringArrayList(CustomConfig.PHOTO_VIEW_URL_LIST, list);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            //共享shareElement这个View
-            ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(this, tvContent, "shareElement");
-            ActivityUtils.startActivity(bundle, PhotoViewActivity.class, activityOptionsCompat.toBundle());
-        } else {
-            ActivityUtils.startActivity(bundle, PhotoViewActivity.class);
-        }
     }
 
     @OnClick(R.id.iv_bar_back)

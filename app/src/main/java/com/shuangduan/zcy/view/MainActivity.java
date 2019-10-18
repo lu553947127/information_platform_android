@@ -23,7 +23,6 @@ import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.rongyun.view.CircleFragment;
 import com.shuangduan.zcy.view.login.UserInfoInputActivity;
-import com.shuangduan.zcy.vm.AuthenticationVm;
 import com.shuangduan.zcy.vm.IMConnectVm;
 import com.shuangduan.zcy.weight.NoScrollViewPager;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
@@ -85,14 +84,6 @@ public class MainActivity extends BaseActivity {
         setAlias();
         initBottomNavigation();
         checkInfoState();
-        //初始实名状态查询
-        AuthenticationVm authenticationVm = ViewModelProviders.of(this).get(AuthenticationVm.class);
-        authenticationVm.authenticationStatusLiveData.observe(this, authenBean -> {
-            SPUtils.getInstance().put(SpConfig.IS_VERIFIED, authenBean.getCard_status());
-        });
-        authenticationVm.pageStateLiveData.observe(this, this::showPageState);
-        authenticationVm.authentication();
-
         if (SPUtils.getInstance().getInt(SpConfig.INFO_STATUS) == 1) {
             //初始化，融云链接服务器
             IMConnectVm imConnectVm = ViewModelProviders.of(this).get(IMConnectVm.class);

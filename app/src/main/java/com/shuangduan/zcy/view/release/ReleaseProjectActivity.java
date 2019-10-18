@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.MotionEvent;
@@ -18,7 +17,6 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -48,9 +46,9 @@ import com.shuangduan.zcy.model.event.StageEvent;
 import com.shuangduan.zcy.model.event.TypesArrayEvent;
 import com.shuangduan.zcy.utils.AndroidBug5497Workaround;
 import com.shuangduan.zcy.utils.KeyboardUtil;
+import com.shuangduan.zcy.utils.image.PictureEnlargeUtils;
 import com.shuangduan.zcy.utils.matisse.Glide4Engine;
 import com.shuangduan.zcy.utils.matisse.MatisseCamera;
-import com.shuangduan.zcy.view.PhotoViewActivity;
 import com.shuangduan.zcy.view.mine.AuthenticationActivity;
 import com.shuangduan.zcy.vm.PermissionVm;
 import com.shuangduan.zcy.vm.ReleaseVm;
@@ -68,7 +66,6 @@ import java.io.File;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -321,18 +318,8 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
                         list.add(pic.getPath());
                     }
                 }
-
-                Bundle bundle = new Bundle();
-                bundle.putInt("position", position);
-                bundle.putStringArrayList(CustomConfig.PHOTO_VIEW_URL_LIST, list);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    //共享shareElement这个View
-                    ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(ReleaseProjectActivity.this, view, "shareElement");
-                    ActivityUtils.startActivity(bundle, PhotoViewActivity.class, Objects.requireNonNull(activityOptionsCompat.toBundle()));
-                } else {
-                    ActivityUtils.startActivity(bundle, PhotoViewActivity.class);
-                }
-
+                //查看图片
+                PictureEnlargeUtils.getPictureEnlargeList(ReleaseProjectActivity.this,list,position);
             }
 
             @Override

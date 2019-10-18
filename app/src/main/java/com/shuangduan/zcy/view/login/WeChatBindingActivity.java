@@ -129,6 +129,7 @@ public class WeChatBindingActivity extends BaseActivity {
             SPUtils.getInstance().put(SpConfig.TOKEN, wxLoginBindingBean.getToken(), true);
             SPUtils.getInstance().put(SpConfig.MOBILE, wxLoginBindingBean.getTel(), true);
             SPUtils.getInstance().put(SpConfig.INFO_STATUS, wxLoginBindingBean.getInfo_status(), true);
+            SPUtils.getInstance().put(SpConfig.IS_VERIFIED, wxLoginBindingBean.getCard_status(),true);
 
             //判断是否完善信息
             if (wxLoginBindingBean.getInfo_status()==1){

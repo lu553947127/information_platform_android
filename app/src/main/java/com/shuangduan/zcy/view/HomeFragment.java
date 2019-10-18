@@ -56,7 +56,6 @@ import com.shuangduan.zcy.model.bean.HomeListBean;
 import com.shuangduan.zcy.model.bean.HomePushBean;
 import com.shuangduan.zcy.model.bean.IMFriendApplyCountBean;
 import com.shuangduan.zcy.utils.DensityUtil;
-import com.shuangduan.zcy.utils.LoginUtils;
 import com.shuangduan.zcy.utils.VersionUtils;
 import com.shuangduan.zcy.utils.image.GlideImageLoader;
 import com.shuangduan.zcy.view.demand.DemandActivity;
@@ -566,9 +565,6 @@ public class HomeFragment extends BaseFragment {
                                     relativeLayout.setVisibility(View.VISIBLE);
                                     number.setText("99+");
                                 }
-                            }else if (bean.getCode().equals("-1")) {
-                                ToastUtils.showShort(bean.getMsg());
-                                LoginUtils.getExitLogin();
                             }
                         }catch (JsonSyntaxException | IllegalStateException ignored){
                             ToastUtils.showShort(getString(R.string.request_error));
@@ -620,7 +616,7 @@ public class HomeFragment extends BaseFragment {
             LogUtils.i(i);
             // i 是未读数量
             getFriendApplyCount(i);
-        }, Conversation.ConversationType.PRIVATE,Conversation.ConversationType.GROUP);
+        }, Conversation.ConversationType.PRIVATE,Conversation.ConversationType.GROUP,Conversation.ConversationType.SYSTEM);
         getAndroidVersionUpgrades();
     }
 

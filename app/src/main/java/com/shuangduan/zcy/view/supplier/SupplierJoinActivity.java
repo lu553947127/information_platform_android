@@ -20,7 +20,6 @@ import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
-import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -49,10 +48,10 @@ import com.shuangduan.zcy.model.bean.FileUploadBean;
 import com.shuangduan.zcy.model.event.AddressEvent;
 import com.shuangduan.zcy.model.event.MultiAreaEvent;
 import com.shuangduan.zcy.utils.LoginUtils;
+import com.shuangduan.zcy.utils.image.PictureEnlargeUtils;
 import com.shuangduan.zcy.utils.matisse.Glide4Engine;
 import com.shuangduan.zcy.utils.matisse.MatisseCamera;
 import com.shuangduan.zcy.view.MultiAreaActivity;
-import com.shuangduan.zcy.view.PhotoViewActivity;
 import com.shuangduan.zcy.view.photo.CameraActivity;
 import com.shuangduan.zcy.vm.PermissionVm;
 import com.shuangduan.zcy.vm.SupplierVm;
@@ -231,25 +230,19 @@ public class SupplierJoinActivity extends BaseActivity implements BaseDialog.Pho
                         list.add(pic.getPath());
                     }
                 }
-
-                Bundle bundle = new Bundle();
-                bundle.putInt("position", position);
-                bundle.putStringArrayList(CustomConfig.PHOTO_VIEW_URL_LIST, list);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    //共享shareElement这个View
-                    ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(SupplierJoinActivity.this, view, "shareElement");
-                    ActivityUtils.startActivity(bundle, PhotoViewActivity.class, Objects.requireNonNull(activityOptionsCompat.toBundle()));
-                } else {
-                    ActivityUtils.startActivity(bundle, PhotoViewActivity.class);
-                }
+                //查看图片
+                PictureEnlargeUtils.getPictureEnlargeList(SupplierJoinActivity.this,list,position);
             }
 
             @Override
             public void delete(int pos) {
                 supplierVm.delImage(pos);
+                LogUtils.i("supplierVm"+pos);
                 //显示提示语句
                 if (pos == 0) {
                     tvPicContent.setVisibility(View.VISIBLE);
+                }else {
+
                 }
             }
         });

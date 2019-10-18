@@ -32,12 +32,12 @@ import com.shuangduan.zcy.callback.EmptyCallback;
 import com.shuangduan.zcy.callback.ErrorCallback;
 import com.shuangduan.zcy.callback.LoadingCallback;
 import com.shuangduan.zcy.callback.TimeOutCallback;
+import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
 import com.shuangduan.zcy.utils.LoginUtils;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -47,7 +47,6 @@ import cn.jpush.android.api.JPushInterface;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
-import io.rong.imlib.model.Message;
 import io.rong.push.RongPushClient;
 import io.rong.push.pushconfig.PushConfig;
 import okhttp3.OkHttpClient;
@@ -123,7 +122,7 @@ public class AppConfig {
     }
 
     /**
-     * 微信支付初始化配置
+     * 微信初始化配置
      */
     public static final String APP_ID = "wx2e2f0d4ccdf3e52f";
     public static final String AppSecret = "53002bc09c67aa244de725a30b51dddd";
@@ -133,11 +132,6 @@ public class AppConfig {
         iwxapi = WXAPIFactory.createWXAPI(context, APP_ID, true);
         iwxapi.registerApp(APP_ID);
     }
-
-//    private static void initBugly(Context context) {
-//        Beta.upgradeDialogLayoutId = R.layout.upgrade_dialog;
-//        Bugly.init(context, "52396056dc", BuildConfig.IS_DEBUG);
-//    }
 
     /**
      * 测试版本收集崩溃日志
@@ -172,8 +166,7 @@ public class AppConfig {
 //        RongPushClient.setPushConfig(builder.build());
 
         //融云初始化
-        RongIM.init(context, "pwe86ga5p43i6");//测试版
-//        RongIM.init(context, "pvxdm17jpo4nr");//正式版
+        RongIM.init(context, RetrofitHelper.RONG_YUN_APP_KEY);
         //融云推送初始化
         PushConfig config = new PushConfig
                 .Builder()
@@ -203,32 +196,6 @@ public class AppConfig {
                 Conversation.ConversationType.DISCUSSION
         };
         RongIM.getInstance().setReadReceiptConversationTypeList(types);
-
-//        boolean readRec =false;
-//        try {
-//            readRec= RongContext.getInstance().getResources().getBoolean(R.bool.rc_read_receipt);
-//        }catch (Resources.NotFoundException e){
-//            e.printStackTrace();
-//        }
-//        if (readRec){
-//
-//        }
-        RongIMClient.setReadReceiptListener(new RongIMClient.ReadReceiptListener() {
-            @Override
-            public void onReadReceiptReceived(Message message) {
-                LogUtils.i("onReadReceiptReceived"+message);
-            }
-
-            @Override
-            public void onMessageReceiptRequest(Conversation.ConversationType conversationType, String s, String s1) {
-                LogUtils.i("onMessageReceiptRequest"+conversationType);
-            }
-
-            @Override
-            public void onMessageReceiptResponse(Conversation.ConversationType conversationType, String s, String s1, HashMap<String, Long> hashMap) {
-                LogUtils.i("onMessageReceiptResponse"+conversationType);
-            }
-        });
     }
 
     /**

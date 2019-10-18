@@ -123,9 +123,6 @@ public class IMContactsActivity extends BaseActivity {
 
         imFriendListAdapter.setOnItemClickListener((adapter, view, position) -> RongIM.getInstance().startPrivateChat(IMContactsActivity.this, imFriendListBean.getData().getList().get(position).getUserId()
                 , imFriendListBean.getData().getList().get(position).getName()));
-
-        getGroupList();
-        getFriendList();
     }
 
     //我的群组列表
@@ -308,5 +305,7 @@ public class IMContactsActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         getFriendApplyCount();
+        getGroupList();
+        getFriendList();
     }
 }
