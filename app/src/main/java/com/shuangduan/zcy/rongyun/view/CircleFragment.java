@@ -57,6 +57,7 @@ import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationListFragment;
 import io.rong.imkit.model.UIConversation;
 import io.rong.imkit.widget.adapter.ConversationListAdapter;
+import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Group;
 import io.rong.imlib.model.UserInfo;
@@ -197,6 +198,18 @@ public class CircleFragment extends BaseFragment {
             @Override
             public boolean onPortraitItemLongClick(View view, UIConversation uiConversation) {
                 return false;
+            }
+        });
+        //设置官方消息默认置顶
+        RongIM.getInstance().setConversationToTop(Conversation.ConversationType.SYSTEM, "18", true, new RongIMClient.ResultCallback<Boolean>() {
+            @Override
+            public void onSuccess(Boolean aBoolean) {
+                LogUtils.i("成功");
+            }
+
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+                LogUtils.i("失败");
             }
         });
     }

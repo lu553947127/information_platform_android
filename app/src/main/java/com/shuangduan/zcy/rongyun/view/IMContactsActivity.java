@@ -121,7 +121,8 @@ public class IMContactsActivity extends BaseActivity {
         imFriendListAdapter.setEmptyView(R.layout.layout_loading, rvFriend);
         rvFriend.setAdapter(imFriendListAdapter);
 
-        imFriendListAdapter.setOnItemClickListener((adapter, view, position) -> RongIM.getInstance().startPrivateChat(IMContactsActivity.this, imFriendListBean.getData().getList().get(position).getUserId()
+        imFriendListAdapter.setOnItemClickListener((adapter, view, position) ->
+                RongIM.getInstance().startPrivateChat(IMContactsActivity.this, imFriendListBean.getData().getList().get(position).getUserId()
                 , imFriendListBean.getData().getList().get(position).getName()));
     }
 

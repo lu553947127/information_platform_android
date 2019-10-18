@@ -38,7 +38,7 @@ public class RetrofitHelper {
                 .readTimeout(10000, TimeUnit.MILLISECONDS)
                 .writeTimeout(10000, TimeUnit.MILLISECONDS)
                 .retryOnConnectionFailure(true)
-//                .sslSocketFactory(Objects.requireNonNull(SSLSocketClient.getSSLSocketFactory()))//配置https证书
+                .sslSocketFactory(Objects.requireNonNull(SSLSocketClient.getSSLSocketFactory()))//配置https证书
                 .hostnameVerifier((hostname, session) -> true)//配置
                 .addInterceptor(chain -> {
                     Request original = chain.request();

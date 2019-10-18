@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -90,6 +91,19 @@
                 android:textColor="@color/color_666666"
                 android:textSize="12sp"/>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:textColor="@color/colorTvHint"
+                android:textSize="12sp"
+                android:text="声明：本站招标采购信息来源于公共网络转载，并不代表本站赞同其观点和对其真实性负责。如涉及作品内容、版权和其它问题，请在30日内与本网联系，我们将在第一时间删除内容！"/>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp"/>
         </LinearLayout>
 
     </ScrollView>

@@ -48,6 +48,7 @@ public class IMFriendListAdapter extends BaseQuickAdapter<IMFriendListBean.DataB
                 .errorPic(R.drawable.default_head)
                 .build());
         ivHead.setOnClickListener(view -> {
+            if (item.getUserId().equals("18"))return;
             Bundle bundle = new Bundle();
             bundle.putInt(CustomConfig.UID, Integer.parseInt(item.getUserId()));
             ActivityUtils.startActivity(bundle, UserInfoActivity.class);

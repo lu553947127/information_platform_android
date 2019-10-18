@@ -197,7 +197,7 @@ public class IMPrivateChatActivity extends BaseActivity implements RongIM.Conver
     public boolean onMessageClick(Context context, View view, Message message) {
         if (mConversationType == Conversation.ConversationType.SYSTEM){
 //            ToastUtils.showShort(String.valueOf(message));
-            LogUtils.i(message);
+            LogUtils.i(message.getTargetId());
             return true;
         }else {
             return false;
