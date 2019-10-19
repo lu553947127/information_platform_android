@@ -20,6 +20,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:layout_marginLeft="-15dp"
                 android:background="@drawable/selector_toolbar"
                 android:scaleType="centerInside"
                 android:src="@drawable/toolbar_back"/>

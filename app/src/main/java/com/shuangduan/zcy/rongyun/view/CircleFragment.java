@@ -379,13 +379,13 @@ public class CircleFragment extends BaseFragment {
                 .build());
     }
 
-    @OnClick({R.id.tv_bar_title, R.id.iv_message,R.id.iv_header})
+    @OnClick({R.id.tv_bar_title, R.id.rl_message,R.id.iv_header})
     void onClick(View view){
         switch (view.getId()){
             case R.id.tv_bar_title:
                 ActivityUtils.startActivity(IMSearchActivity.class);
                 break;
-            case R.id.iv_message:
+            case R.id.rl_message:
                 ActivityUtils.startActivity(IMContactsActivity.class);
                 break;
             case R.id.iv_header:
