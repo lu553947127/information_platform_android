@@ -45,13 +45,10 @@ public class TransRecordVm extends BaseViewModel {
         filterLiveData = new MutableLiveData<>();
         pageStateLiveData = new MutableLiveData<>();
         idLiveData = new MutableLiveData<>();
-        detailLiveData = Transformations.switchMap(idLiveData, new Function<Integer, LiveData<TransRecordDetailBean>>() {
-            @Override
-            public LiveData<TransRecordDetailBean> apply(Integer input) {
-                MutableLiveData<TransRecordDetailBean> detailLiveData = new MutableLiveData<>();
-                new UserRepository().transRecordDetail(detailLiveData, pageStateLiveData, userId, input);
-                return detailLiveData;
-            }
+        detailLiveData = Transformations.switchMap(idLiveData, input -> {
+            MutableLiveData<TransRecordDetailBean> detailLiveData = new MutableLiveData<>();
+            new UserRepository().transRecordDetail(detailLiveData, pageStateLiveData, userId, input);
+            return detailLiveData;
         });
     }
 

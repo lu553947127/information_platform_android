@@ -246,11 +246,14 @@ public class IMPrivateChatActivity extends BaseActivity implements RongIM.Conver
                 case 3: //工程信息：%s已通过审核
                 case 7: //收藏的工程信息更新
                 case 15://认购的工程信息即将到期
+                case 18://查看了工程信息消费记录
+                case 20://认购了一条工程信息消费
                     bundle.putInt(CustomConfig.PROJECT_ID, extraBean.data.id);
                     bundle.putInt(CustomConfig.LOCATION, 0);
                     ActivityUtils.startActivity(bundle, ProjectDetailActivity.class);//工程信息详情->概况
                     break;
                 case 5: //工程动态：%s已通过审核
+                case 19://查看了工程动态收益消费
                     bundle.putInt(CustomConfig.PROJECT_ID, extraBean.data.id);
                     bundle.putInt(CustomConfig.LOCATION, 1);
                     ActivityUtils.startActivity(bundle, ProjectDetailActivity.class);//工程信息详情-->动态
@@ -264,9 +267,6 @@ public class IMPrivateChatActivity extends BaseActivity implements RongIM.Conver
                 case 14://认购的工程信息有新的收益
                 case 16://人脉有新的收益
                 case 17://回答的找关系已被采纳，有一笔收益到账
-                case 18://查看了工程信息消费记录
-                case 19://查看了工程动态收益消费
-                case 20://认购了一条工程信息消费
                 case 21://您查看了一条供应商信息消费
                 case 22://您查看了一条找买家需求信息消费
                 case 23://您查看了一条找物资需求信息消费
