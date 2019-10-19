@@ -87,6 +87,15 @@ public class HomeListBean {
 
         private int id;
         private String title;
+        private String content;
+
+        public String getContent() {
+            return content;
+        }
+
+        public void setContent(String content) {
+            this.content = content;
+        }
 
         public int getId() {
             return id;

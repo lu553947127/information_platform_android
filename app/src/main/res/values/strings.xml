@@ -408,6 +408,7 @@
     <string name="format_read_num">%1$s 浏览</string>
     <string name="format_update_time">更新时间：%1$s</string>
     <string name="format_release_time">发布时间：%1$s</string>
+    <string name="format_source">来源：%1$s</string>
     <string name="format_contacts_type">部门：%1$s</string>
     <string name="format_unit">单位：%1$s</string>
     <string name="format_principal">联系人：%1$s</string>

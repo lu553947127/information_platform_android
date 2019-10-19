@@ -29,6 +29,7 @@ public class RecruitDetailBean {
     private String price;
     private int collection;
     private int is_pay;
+    private String sourceName;
 
     public int getId() {
         return id;
@@ -84,5 +85,13 @@ public class RecruitDetailBean {
 
     public void setIs_pay(int is_pay) {
         this.is_pay = is_pay;
+    }
+
+    public String getSourceName() {
+        return sourceName;
+    }
+
+    public void setSourceName(String sourceName) {
+        this.sourceName = sourceName;
     }
 }

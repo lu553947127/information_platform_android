@@ -70,6 +70,8 @@ public class RecruitDetailActivity extends BaseActivity {
     TextView tvIntroTitle;
     @BindView(R.id.tv_intro_time)
     TextView tvIntroTime;
+    @BindView(R.id.tv_release_source)
+    TextView tvReleaseSource;
     @BindView(R.id.tv_intro_content)
     RichText tvIntroContent;
     private int id;
@@ -109,6 +111,7 @@ public class RecruitDetailActivity extends BaseActivity {
             tvIntroTitle.setText(recruitDetailBean.getTitle());
             tvReleaseTime.setText(String.format(getString(R.string.format_release_time), recruitDetailBean.getStart_time()));
             tvIntroTime.setText(String.format(getString(R.string.format_release_time), recruitDetailBean.getStart_time()));
+            tvReleaseSource.setText(String.format(getString(R.string.format_source), recruitDetailBean.getSourceName()));
             tvIntroContent.setGlide(Glide.with(this));
             tvIntroContent.setHtml(recruitDetailBean.getContent());
             recruitDetailVm.collectionLiveData.postValue(recruitDetailBean.getCollection());

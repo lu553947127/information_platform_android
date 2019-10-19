@@ -38,9 +38,6 @@ import io.rong.imlib.model.UserInfo;
  */
 public class ConversationListAdapterEx extends ConversationListAdapter {
 
-    private String company;
-    private String post;
-
     public ConversationListAdapterEx(Context context) {
         super(context);
     }
@@ -54,10 +51,13 @@ public class ConversationListAdapterEx extends ConversationListAdapter {
     protected void bindView(View v, int position, UIConversation data) {
         super.bindView(v, position, data);
         if (data != null) {
-            //修改群聊消息显示为红点
-            if (data.getConversationType().equals(Conversation.ConversationType.DISCUSSION))
-                data.setUnreadType(UIConversation.UnreadRemindType.REMIND_ONLY);
-            getFriendData(data.getConversationTargetId(),v,data);
+            if (data.getConversationType().equals(Conversation.ConversationType.PRIVATE)){
+                getFriendData(data.getConversationTargetId(),v,data);
+            }else {
+                (v.findViewById(R.id.tv_company)).setVisibility(View.GONE);
+                (v.findViewById(R.id.tv_post)).setVisibility(View.GONE);
+                (v.findViewById(R.id.iv_sgs)).setVisibility(View.INVISIBLE);
+            }
         }
     }
 
@@ -84,26 +84,20 @@ public class ConversationListAdapterEx extends ConversationListAdapter {
                             LogUtils.json(response.body());
                             if (bean.getCode().equals("200")){
                                 if (bean.getData()!=null){
-                                    if (bean.getData().getCompany()!=null&&bean.getData().getPosition()!=null){
-                                        company=bean.getData().getCompany();
-                                        post=bean.getData().getPosition();
-                                        if (data.getConversationType().equals(Conversation.ConversationType.PRIVATE)){
-                                            (v.findViewById(R.id.tv_company)).setVisibility(View.VISIBLE);
-                                            (v.findViewById(R.id.tv_post)).setVisibility(View.VISIBLE);
-                                            ((TextView)v.findViewById(R.id.tv_company)).setText(company);
-                                            ((TextView)v.findViewById(R.id.tv_post)).setText(post);
-                                            ((TextView)(v.findViewById(R.id.rc_conversation_title))).setFilters(new InputFilter[] { new InputFilter.LengthFilter(5)});
-                                            if (bean.getData().getCard_status().equals("2")){
-                                                (v.findViewById(R.id.iv_sgs)).setVisibility(View.VISIBLE);
-                                            }else {
-                                                (v.findViewById(R.id.iv_sgs)).setVisibility(View.INVISIBLE);
-                                            }
-                                        }else {
-                                            (v.findViewById(R.id.tv_company)).setVisibility(View.GONE);
-                                            (v.findViewById(R.id.tv_post)).setVisibility(View.GONE);
-                                            (v.findViewById(R.id.iv_sgs)).setVisibility(View.INVISIBLE);
-                                        }
+                                    (v.findViewById(R.id.tv_company)).setVisibility(View.VISIBLE);
+                                    (v.findViewById(R.id.tv_post)).setVisibility(View.VISIBLE);
+                                    ((TextView)v.findViewById(R.id.tv_company)).setText(bean.getData().getCompany());
+                                    ((TextView)v.findViewById(R.id.tv_post)).setText(bean.getData().getPosition());
+                                    ((TextView)(v.findViewById(R.id.rc_conversation_title))).setFilters(new InputFilter[] { new InputFilter.LengthFilter(5)});
+                                    if (bean.getData().getCard_status().equals("2")){
+                                        (v.findViewById(R.id.iv_sgs)).setVisibility(View.VISIBLE);
+                                    }else {
+                                        (v.findViewById(R.id.iv_sgs)).setVisibility(View.INVISIBLE);
                                     }
+                                }else {
+                                    (v.findViewById(R.id.tv_company)).setVisibility(View.GONE);
+                                    (v.findViewById(R.id.tv_post)).setVisibility(View.GONE);
+                                    (v.findViewById(R.id.iv_sgs)).setVisibility(View.INVISIBLE);
                                 }
                             }else {
                                 ToastUtils.showShort(bean.getMsg());
