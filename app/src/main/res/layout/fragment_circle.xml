@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.scwang.smartrefresh.layout.SmartRefreshLayout
-    android:id="@+id/refresh"
+<com.scwang.smartrefresh.layout.SmartRefreshLayout android:id="@+id/refresh"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <com.scwang.smartrefresh.layout.header.ClassicsHeader
         android:layout_width="match_parent"
@@ -32,14 +32,31 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <com.shuangduan.zcy.weight.CircleImageView
-                    android:id="@+id/iv_header"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="15dp"
-                    android:background="@drawable/selector_toolbar"
-                    android:src="@drawable/default_head"/>
+                    android:background="@drawable/selector_toolbar">
+
+                    <com.shuangduan.zcy.weight.CircleImageView
+                        android:id="@+id/iv_header"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        tools:ignore="MissingConstraints"
+                        android:src="@drawable/default_head"/>
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_sgs"
+                        android:layout_width="12dp"
+                        android:layout_height="13dp"
+                        android:src="@drawable/icon_mini_sgs"
+                        android:visibility="invisible"
+                        app:layout_constraintBottom_toBottomOf="@id/iv_header"
+                        app:layout_constraintRight_toRightOf="@id/iv_header" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <TextView
                     android:id="@+id/tv_bar_title"

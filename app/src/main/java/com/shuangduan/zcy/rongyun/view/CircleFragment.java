@@ -9,6 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -80,6 +81,8 @@ public class CircleFragment extends BaseFragment {
     CircleImageView iv_header;
     @BindView(R.id.refresh)
     SmartRefreshLayout refresh;
+    @BindView(R.id.iv_sgs)
+    AppCompatImageView ivSgs;
     private TextView tvNumber;
     private UserInfoVm userInfoVm;
     private NoScrollViewPager viewPager;
@@ -143,6 +146,13 @@ public class CircleFragment extends BaseFragment {
                     break;
             }
         });
+
+        //判断是否认证
+        if (SPUtils.getInstance().getInt(SpConfig.IS_VERIFIED)==2){
+            ivSgs.setVisibility(View.VISIBLE);
+        }else {
+            ivSgs.setVisibility(View.INVISIBLE);
+        }
 
         refresh.setEnableLoadMore(false);
         refresh.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);

@@ -52,7 +52,7 @@ public class ConversationListAdapterEx extends ConversationListAdapter {
         super.bindView(v, position, data);
         if (data != null) {
             if (data.getConversationType().equals(Conversation.ConversationType.PRIVATE)){
-                getFriendData(data.getConversationTargetId(),v,data);
+                getFriendData(data.getConversationTargetId(),v);
             }else {
                 (v.findViewById(R.id.tv_company)).setVisibility(View.GONE);
                 (v.findViewById(R.id.tv_post)).setVisibility(View.GONE);
@@ -62,7 +62,7 @@ public class ConversationListAdapterEx extends ConversationListAdapter {
     }
 
     //会话列表头像名称显示
-    private UserInfo getFriendData(String userId,View v,UIConversation data) {
+    private UserInfo getFriendData(String userId,View v) {
 
         OkGo.<String>post(RetrofitHelper.BASE_TEST_URL+ Common.WECHAT_USER_INFO)
                 .tag(this)
