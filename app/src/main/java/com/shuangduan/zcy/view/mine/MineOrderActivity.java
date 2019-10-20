@@ -3,19 +3,11 @@ package com.shuangduan.zcy.view.mine;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-
-import androidx.appcompat.widget.AppCompatTextView;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-
-import com.blankj.utilcode.util.ActivityUtils;
-import com.blankj.utilcode.util.BarUtils;
-import com.blankj.utilcode.util.ConvertUtils;
+import androidx.viewpager.widget.ViewPager;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ViewPagerAdapter;
 import com.shuangduan.zcy.base.BaseActivity;
-import com.shuangduan.zcy.dialog.pop.CommonPopupWindow;
-import com.shuangduan.zcy.weight.MyViewPager;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -31,14 +23,13 @@ import butterknife.OnClick;
  * @class describe
  */
 public class MineOrderActivity extends BaseActivity {
-    @BindView(R.id.tv_bar_title)
-    AppCompatTextView tvBarTitle;
-    @BindView(R.id.tv_bar_right)
-    AppCompatTextView tvBarRight;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+
     @BindView(R.id.vp)
-    MyViewPager vp;
+    ViewPager vp;
+    @BindView(R.id.tv_project)
+    TextView tvProject;
+    @BindView(R.id.tv_recruit)
+    TextView tvRecruit;
 
     @Override
     protected int initLayoutRes() {
@@ -52,65 +43,60 @@ public class MineOrderActivity extends BaseActivity {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
-        BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
-        tvBarTitle.setText(getString(R.string.order));
-        tvBarRight.setText(getString(R.string.filter));
-
         Fragment[] fragments = new Fragment[]{
                 ProjectOrderFragment.newInstance(),
-                RecruitOrderFragment.newInstance(),
+                RecruitHistoryFragment.newInstance(),
                 SupplierOrderFragment.newInstance()
         };
         vp.setOffscreenPageLimit(2);
         vp.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), fragments, null));
+        vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (position==0){
+                    tvProject.setBackgroundResource(R.drawable.circular_white_half_left);
+                    tvProject.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    tvRecruit.setBackgroundResource(R.drawable.circular_violet_half_right);
+                    tvRecruit.setTextColor(getResources().getColor(R.color.colorFFF));
+                }else if (position==1){
+                    tvProject.setBackgroundResource(R.drawable.circular_violet_half_left);
+                    tvProject.setTextColor(getResources().getColor(R.color.colorFFF));
+                    tvRecruit.setBackgroundResource(R.drawable.circular_white_half_right);
+                    tvRecruit.setTextColor(getResources().getColor(R.color.colorPrimary));
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
-    private CommonPopupWindow popupWindow;
-    @OnClick({R.id.iv_bar_back, R.id.tv_bar_right})
+    @OnClick({R.id.iv_bar_back,R.id.tv_project,R.id.tv_recruit})
     void onClick(View v){
         switch (v.getId()){
             case R.id.iv_bar_back:
                 finish();
                 break;
-            case R.id.tv_bar_right:
-                if (popupWindow == null){
-                    popupWindow = new CommonPopupWindow.Builder(this)
-                            .setView(R.layout.dialog_order)
-                            .setOutsideTouchable(true)
-                            .setWidthAndHeight(ConvertUtils.dp2px(82), ConvertUtils.dp2px(104))
-                            .setViewOnclickListener((view, layoutResId) -> {
-                                TextView tvProject = view.findViewById(R.id.tv_project);
-                                TextView tvRecruit = view.findViewById(R.id.tv_recruit);
-                                TextView tvSupplier = view.findViewById(R.id.tv_supplier);
-                                //初始颜色
-                                tvProject.setTextColor(getResources().getColor(R.color.colorPrimary));
-                                tvProject.setOnClickListener(l ->{
-                                    tvProject.setTextColor(getResources().getColor(R.color.colorPrimary));
-                                    tvRecruit.setTextColor(getResources().getColor(R.color.color_666666));
-                                    tvSupplier.setTextColor(getResources().getColor(R.color.color_666666));
-                                    vp.setCurrentItem(0);
-                                    popupWindow.dismiss();
-                                });
-                                tvRecruit.setOnClickListener(l ->{
-                                    tvProject.setTextColor(getResources().getColor(R.color.color_666666));
-                                    tvRecruit.setTextColor(getResources().getColor(R.color.colorPrimary));
-                                    tvSupplier.setTextColor(getResources().getColor(R.color.color_666666));
-                                    vp.setCurrentItem(1);
-                                    popupWindow.dismiss();
-                                });
-                                tvSupplier.setOnClickListener(l ->{
-                                    tvProject.setTextColor(getResources().getColor(R.color.color_666666));
-                                    tvRecruit.setTextColor(getResources().getColor(R.color.color_666666));
-                                    tvSupplier.setTextColor(getResources().getColor(R.color.colorPrimary));
-                                    vp.setCurrentItem(2);
-                                    popupWindow.dismiss();
-                                });
-                            })
-                            .create();
-                }
-                if (!popupWindow.isShowing()){
-                    popupWindow.showAsDropDown(tvBarRight, ConvertUtils.dp2px(-40), ConvertUtils.dp2px(-10));
-                }
+            case R.id.tv_project://工程信息
+                tvProject.setBackgroundResource(R.drawable.circular_white_half_left);
+                tvProject.setTextColor(getResources().getColor(R.color.colorPrimary));
+                tvRecruit.setBackgroundResource(R.drawable.circular_violet_half_right);
+                tvRecruit.setTextColor(getResources().getColor(R.color.colorFFF));
+                vp.setCurrentItem(0);
+                break;
+            case R.id.tv_recruit://招采信息
+                tvProject.setBackgroundResource(R.drawable.circular_violet_half_left);
+                tvProject.setTextColor(getResources().getColor(R.color.colorFFF));
+                tvRecruit.setBackgroundResource(R.drawable.circular_white_half_right);
+                tvRecruit.setTextColor(getResources().getColor(R.color.colorPrimary));
+                vp.setCurrentItem(1);
                 break;
         }
     }

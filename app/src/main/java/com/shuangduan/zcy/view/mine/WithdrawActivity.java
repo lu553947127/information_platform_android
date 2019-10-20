@@ -20,7 +20,6 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BankCardDialog;
-import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.BankCardBean;
 import com.shuangduan.zcy.model.event.BankcardUpdateEvent;

@@ -36,8 +36,11 @@ public class CustomDialog extends BaseDialog {
     ImageView ivIcon;
     @BindView(R.id.tv_enclosure_title)
     TextView tvEnclosureTitle;
+    @BindView(R.id.tv_tip_left_icon)
+    TextView tvTipLeftIcon;
     private String ok = "";
     private String tip = "";
+    private String tip_left_icon = "";
     private String title ="";
     private int iconRes = 0;
 
@@ -56,12 +59,15 @@ public class CustomDialog extends BaseDialog {
         setCancelOutside(false);
         DialogUtils.enterCustomAnim(this);
         tvTip.setText(tip);
+        if (!TextUtils.isEmpty(tip_left_icon)){
+            tvTipLeftIcon.setText(tip_left_icon);
+            tvTipLeftIcon.setVisibility(View.VISIBLE);
+        }
         if (ok.equals("")){
             tvOk.setText(getString(R.string.positive));
         }else {
             tvOk.setText(ok);
         }
-
         if (iconRes != 0){
             ivIcon.setImageResource(iconRes);
             ivIcon.setVisibility(View.VISIBLE);
@@ -85,6 +91,11 @@ public class CustomDialog extends BaseDialog {
 
     public CustomDialog setTip(String tip){
         this.tip = tip;
+        return this;
+    }
+
+    public CustomDialog setTipLeftIcon(String tip_left_icon){
+        this.tip_left_icon = tip_left_icon;
         return this;
     }
 

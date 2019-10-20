@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.scwang.smartrefresh.layout.SmartRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBgDark"
+    android:id="@+id/refresh">
+
+    <com.scwang.smartrefresh.layout.header.ClassicsHeader
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:ignore="ScrollViewSize">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:background="@drawable/shape_bg_wallet">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_bar_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="35dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/toolbar_back"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_bar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="35dp"
+                android:layout_centerHorizontal="true"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:lines="1"
+                android:maxEms="13"
+                android:singleLine="true"
+                android:textColor="@color/colorFFF"
+                android:textSize="18sp"
+                android:text="@string/wallet"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_withdraw_record"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="65dp"
+                android:layout_marginRight="16dp"
+                android:drawablePadding="10dp"
+                android:layout_alignParentRight="true"
+                android:drawableRight="@drawable/icon_next_white"
+                android:textSize="13sp"
+                android:textColor="@color/colorFFF"
+                android:text="@string/withdraw_record"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_withdraw_record"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="16dp"
+                android:textSize="13sp"
+                android:textColor="@color/color_D4CFFF"
+                android:text="余额（紫金币）"/>
+
+            <com.shuangduan.zcy.weight.NumberAnimTextView
+                android:id="@+id/tv_balance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_withdraw_record"
+                android:layout_marginTop="49dp"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/colorFFF"
+                android:textStyle="bold"
+                android:textSize="44sp"
+                android:text="0"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:orientation="horizontal"
+                android:layout_below="@+id/tv_balance"
+                android:layout_marginTop="34dp"
+                android:layout_marginLeft="49dp"
+                android:layout_marginRight="49dp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_loose_change_withdraw"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/circular_background_white_half"
+                    android:padding="5dp"
+                    android:gravity="center"
+                    android:textColor="@color/colorFFF"
+                    android:textSize="15sp"
+                    android:text="@string/withdraw"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_recharge"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="46dp"
+                    android:background="@drawable/circular_background_white_half"
+                    android:padding="5dp"
+                    android:gravity="center"
+                    android:textColor="@color/colorFFF"
+                    android:textSize="15sp"
+                    android:text="@string/recharge"/>
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_bank_card"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorFFF"
+            android:gravity="center_vertical"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:drawableLeft="@drawable/icon_bank_card"
+            android:drawablePadding="10dp"
+            android:drawableRight="@drawable/icon_next_friend"
+            android:textColor="@color/color_666666"
+            android:textSize="15sp"
+            android:text="@string/bank_card"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/colorBgDark"/>
+
+        <TextView
+            android:id="@+id/tv_transaction_record"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/colorFFF"
+            android:gravity="center_vertical"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:drawableLeft="@drawable/icon_loose_change"
+            android:drawablePadding="10dp"
+            android:drawableRight="@drawable/icon_next_friend"
+            android:textColor="@color/color_666666"
+            android:textSize="15sp"
+            android:text="@string/transaction_record"/>
+
+    </LinearLayout>
+
+</com.scwang.smartrefresh.layout.SmartRefreshLayout>

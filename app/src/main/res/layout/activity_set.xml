@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <include layout="@layout/toolbar"/>
@@ -106,8 +108,6 @@
 
     <include layout="@layout/divider_15"/>
 
-
-
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_about_ours"
         android:layout_width="match_parent"
@@ -120,6 +120,24 @@
         android:textColor="@color/color_666666"
         android:textSize="16sp"
         android:text="@string/about_ours"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/divider_15"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_feedback"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/selector_bg_custom"
+        android:drawableRight="@drawable/icon_next"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/color_666666"
+        android:textSize="16sp"
+        android:text="意见反馈"/>
 
     <View
         android:layout_width="match_parent"

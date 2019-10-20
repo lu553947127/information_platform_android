@@ -95,7 +95,7 @@ public class SetActivity extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.iv_bar_back, R.id.tv_update_pwd, R.id.tv_about_ours, R.id.tv_exit,R.id.tv_pwd_pay})
+    @OnClick({R.id.iv_bar_back, R.id.tv_update_pwd,R.id.tv_pwd_pay, R.id.tv_about_ours,R.id.tv_feedback, R.id.tv_exit})
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_bar_back:
@@ -109,6 +109,9 @@ public class SetActivity extends BaseActivity {
                 break;
             case R.id.tv_about_ours://关于
                 ActivityUtils.startActivity(AboutOursActivity.class);
+                break;
+            case R.id.tv_feedback://意见反馈
+                ActivityUtils.startActivity(FeedbackActivity.class);
                 break;
             case R.id.tv_exit://退出登录
                 new CustomDialog(SetActivity.this)

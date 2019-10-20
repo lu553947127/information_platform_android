@@ -497,7 +497,7 @@ public class DemandReleaseActivity extends BaseActivity {
     //身份认证滚动文字显示
     private void getAuthenticationData() {
         if (SPUtils.getInstance().getInt(SpConfig.IS_VERIFIED)!=2) {
-            llAuthentication.setVisibility(View.GONE);
+            llAuthentication.setVisibility(View.VISIBLE);
             String str="已通过实名认证发布信息审核时间为<font color=\"#6a5ff8\">"+"2小时内"+"</font>，" +
                     "未实名认证审核时间则为<font color=\"#6a5ff8\">"+"24小时内"+"</font>，建议您先实名认证再发布，审核会更快哦~";
             tvMarquee.setText(Html.fromHtml(str));

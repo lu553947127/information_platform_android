@@ -10,4 +10,6 @@
     <dimen name="app_bar_height">230dp</dimen>
 
     <dimen name="x_design_tab_max_width">264dp</dimen>
+
+    <dimen name="spacing_medium">8dp</dimen>
 </resources>

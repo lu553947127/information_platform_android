@@ -1,11 +1,14 @@
 package com.shuangduan.zcy.utils;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
+import com.shuangduan.zcy.dialog.BaseDialog;
+import com.shuangduan.zcy.dialog.CustomDialog;
 import com.shuangduan.zcy.view.mine.AuthenticationActivity;
 
 /**
@@ -19,6 +22,7 @@ import com.shuangduan.zcy.view.mine.AuthenticationActivity;
  * @class describe
  */
 public class AuthenticationUtils {
+
     /**
      * 没有认证调认证界面，认证过的返回true
      * @return
@@ -31,6 +35,33 @@ public class AuthenticationUtils {
             bundle.putString(CustomConfig.UPLOAD_TYPE, CustomConfig.uploadTypeIdCard);
             bundle.putString(CustomConfig.AUTHENTICATION_TYPE, type);
             ActivityUtils.startActivity(bundle, AuthenticationActivity.class);
+        }else {
+            return true;
+        }
+        return false;
+    }
+
+    ///判断没有认证弹窗
+    public static boolean AuthenticationCustom(Activity activity,String type){
+        int authentication = SPUtils.getInstance().getInt(SpConfig.IS_VERIFIED);
+        if (authentication != 2){
+            new CustomDialog(activity)
+                    .setTipLeftIcon("抱歉，您还没有实名认证哦！")
+                    .setOk("去实名")
+                    .setCallBack(new BaseDialog.CallBack() {
+                        @Override
+                        public void cancel() {
+
+                        }
+
+                        @Override
+                        public void ok(String s) {
+                            Bundle bundle = new Bundle();
+                            bundle.putString(CustomConfig.UPLOAD_TYPE, CustomConfig.uploadTypeIdCard);
+                            bundle.putString(CustomConfig.AUTHENTICATION_TYPE, type);
+                            ActivityUtils.startActivity(bundle, AuthenticationActivity.class);
+                        }
+                    }).showDialog();
         }else {
             return true;
         }

@@ -17,7 +17,7 @@ import com.shuangduan.zcy.dialog.pop.CommonPopupWindow;
 import com.shuangduan.zcy.view.demand.FindMineBuyerFragment;
 import com.shuangduan.zcy.view.demand.FindMineRelationshipFragment;
 import com.shuangduan.zcy.view.demand.FindMineSubstanceFragment;
-import com.shuangduan.zcy.weight.MyViewPager;
+import com.shuangduan.zcy.weight.NoScrollViewPager;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -40,7 +40,7 @@ public class MineDemandActivity extends BaseActivity {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.vp)
-    MyViewPager vp;
+    NoScrollViewPager vp;
 
     @Override
     protected int initLayoutRes() {

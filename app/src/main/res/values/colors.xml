@@ -37,6 +37,7 @@
     <color name="color_F88037">#F88037</color>
     <color name="whisper">#F7F5FA</color>
     <color name="color_ff000000">#ff000000</color>
+    <color name="color_2F2F2F">#2F2F2F</color>
     <color name="color_EE573E">#EE573E</color>
     <color name="color_6358F7">#6358F7</color>
     <color name="color_929292">#929292</color>
@@ -48,6 +49,14 @@
     <color name="color_3C2FDC">#3C2FDC</color>
     <color name="color_FEB23A">#FEB23A</color>
     <color name="color_FFBB44">#FFBB44</color>
+    <color name="color_6E5421">#6E5421</color>
+    <color name="color_313134">#313134</color>
+    <color name="color_4A4A4A">#4A4A4A</color>
+    <color name="color_F4F4F4">#F4F4F4</color>
+    <color name="color_FFECBF">#FFECBF</color>
+    <color name="color_FFE8BF">#FFE8BF</color>
+    <color name="color_D4CFFF">#D4CFFF</color>
+    <color name="color_ECE6FF">#ECE6FF</color>
     <!--时间选择器颜色-->
     <color name="text1">#6a5ff8</color>
     <color name="text2">#B1B1B1</color>

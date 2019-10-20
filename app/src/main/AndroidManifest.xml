@@ -142,8 +142,8 @@
         <activity android:name="com.shuangduan.zcy.view.mine.MineSubActivity" />
         <!-- 我的收藏-->
         <activity android:name="com.shuangduan.zcy.view.mine.MineCollectionActivity" />
-        <!-- 余额页面-->
-        <activity android:name="com.shuangduan.zcy.view.mine.BalanceActivity" android:theme="@style/AppThemeBgGray" />
+        <!-- 我的钱包页面-->
+        <activity android:name="com.shuangduan.zcy.view.mine.MineWalletActivity" android:theme="@style/AppThemeBgGray" />
         <!-- 银行卡列表-->
         <activity android:name="com.shuangduan.zcy.view.mine.BankCardListActivity"
             android:theme="@style/AppThemeBgGray" />

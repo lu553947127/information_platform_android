@@ -65,12 +65,12 @@
     <string name="my_subscription">我的订阅</string>
     <string name="my_project">我的工程</string>
     <string name="my_demand">我的需求</string>
-    <string name="mine_subscription">我的认购</string>
-    <string name="my_material">物资预定</string>
+    <string name="mine_subscription">信息认购</string>
+    <string name="my_material">预定订单</string>
     <string name="transaction_record">交易记录</string>
     <string name="agreement_manage">合同管理</string>
     <string name="pwd_pay">支付密码</string>
-    <string name="read_history">浏览历史</string>
+    <string name="read_history">查看记录</string>
     <string name="feedback">意见反馈</string>
     <string name="recommend_friends">推荐好友</string>
     <string name="invite_friends">邀请好友</string>
@@ -85,7 +85,7 @@
     <string name="please_bind_bank_card">未绑定银行卡，请绑定</string>
     <string name="arrival_two_hours">2小时到账</string>
     <string name="withdrawal_amount">提现金额</string>
-    <string name="withdraw">提现</string>
+    <string name="withdraw">提  现</string>
     <string name="bind_bank_card">绑定银行卡</string>
     <string name="unbind_bank_card">解绑银行卡</string>
     <string name="unbind">解绑</string>
@@ -149,7 +149,7 @@
     <string name="hint_company">请输入公司名称</string>
     <string name="edit_success">信息编辑成功</string>
     <string name="hint_production">请输入产品信息</string>
-    <string name="recharge">充值</string>
+    <string name="recharge">充  值</string>
     <string name="recharge_center">充值中心</string>
     <string name="recharge_record">充值记录</string>
     <string name="done">完成</string>
@@ -333,10 +333,20 @@
     <string name="filter">筛选</string>
     <string name="loose_change_withdraw">紫金币提现</string>
     <string name="withdraw_record">提现记录</string>
-    <string name="bank_card">银行卡</string>
+    <string name="bank_card">我的银行卡</string>
     <string name="add_bank_card">添加银行卡</string>
     <string name="add_bank_card_tip">(最多只能添加5张银行卡)</string>
-    <string name="balance">余额</string>
+    <string name="wallet">我的钱包</string>
+    <string name="Invite_friends">邀请好友加入</string>
+    <string name="make_money">赚取紫金币</string>
+    <string name="my_channel">我的频道</string>
+    <string name="material_services">基建服务</string>
+    <string name="admin_manage">后台管理</string>
+
+    <string name="turnover_material">周转材料</string>
+    <string name="device_management">设备管理</string>
+    <string name="order_management">订单管理</string>
+
     <string name="trans_order_number">交易单号</string>
     <string name="target_account">到账账户</string>
     <string name="withdraw_state">提现状态</string>
@@ -355,6 +365,7 @@
     <string name="supplier_join_success">申请成功，请等待审核...</string>
     <string name="project_msg">工程信息</string>
     <string name="recruit_msg">招采信息</string>
+    <string name="view_record">查看记录</string>
     <string name="supplier_msg">供应商信息</string>
     <string name="locus_num">动态数量</string>
     <string name="find_relationship">找关系</string>
@@ -503,10 +514,6 @@
         <item>招采信息</item>
         <item>基建物资</item>
         <item>优质供应商</item>
-        <!--        <item>品权中心</item>-->
-        <!--        <item>我的收益</item>-->
-        <!--        <item>需求广场</item>-->
-        <!--        <item>发布信息</item>-->
     </string-array>
 
     <string-array name="project_detail">
@@ -528,8 +535,8 @@
     </string-array>
 
     <string-array name="project_order">
-        <item>概况订单</item>
-        <item>动态订单</item>
+        <item>工程概况</item>
+        <item>工程动态</item>
     </string-array>
 
     <string-array name="demand_relationship">

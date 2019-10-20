@@ -1,20 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
 
-    <include layout="@layout/toolbar"/>
-
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <com.shuangduan.zcy.weight.MyViewPager
-            android:id="@+id/vp"
+        android:layout_height="120dp"
+        android:orientation="vertical"
+        android:background="@color/colorPrimary">
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="44dp">
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_bar_back"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:background="@drawable/selector_toolbar"
+                android:scaleType="centerInside"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:src="@drawable/toolbar_back"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_bar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:lines="1"
+                android:maxEms="13"
+                android:singleLine="true"
+                android:textColor="@color/colorFFF"
+                android:textSize="18sp"
+                android:text="@string/view_record"/>
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="214dp"
+            android:layout_height="32dp"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="23dp">
 
-    </FrameLayout>
+            <TextView
+                android:id="@+id/tv_project"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/circular_white_half_left"
+                android:gravity="center"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp"
+                android:text="@string/project_msg"/>
 
+            <TextView
+                android:id="@+id/tv_recruit"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/circular_violet_half_right"
+                android:gravity="center"
+                android:textColor="@color/colorFFF"
+                android:textSize="14sp"
+                android:text="@string/recruit_msg"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/vp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </LinearLayout>
