@@ -1,6 +1,8 @@
 package com.shuangduan.zcy.utils;
 
 import android.app.Activity;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.text.InputFilter;
 import android.text.InputType;
@@ -9,12 +11,12 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import java.util.List;
+import java.util.Objects;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
 
 public class KeyboardUtil {
 
-    private Activity mActivity;
     /**
      * 隐藏键盘的方法
      *
@@ -92,5 +94,14 @@ public class KeyboardUtil {
             }
         }
         return stringBuffer.toString();
+    }
+
+    public static void copyString(Context context,String str) {
+        //获取剪贴板管理器：
+        ClipboardManager cm = (ClipboardManager)context.getSystemService(Context.CLIPBOARD_SERVICE);
+        //创建普通字符型ClipData
+        ClipData mClipData = ClipData.newPlainText("Label", str);
+        //将ClipData内容放到系统剪贴板里。
+        Objects.requireNonNull(cm).setPrimaryClip(mClipData);
     }
 }

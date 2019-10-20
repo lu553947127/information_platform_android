@@ -24,7 +24,7 @@ import java.text.DecimalFormat;
  * @UpdateRemark: 更新说明
  * @Version: 1.0
  */
-@SuppressLint("AppCompatCustomView")
+@SuppressLint({"AppCompatCustomView","SetTextI18n"})
 public class NumberAnimTextView extends TextView {
 
     /**
@@ -142,12 +142,9 @@ public class NumberAnimTextView extends TextView {
         animator = ValueAnimator.ofObject(new BigDecimalEvaluator(), new BigDecimal(mNumStart), new BigDecimal(mNumEnd));
         animator.setDuration(mDuration);
         animator.setInterpolator(new AccelerateDecelerateInterpolator());
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                BigDecimal value = (BigDecimal) valueAnimator.getAnimatedValue();
-                setText(mPrefixString + format(value) + mPostfixString);
-            }
+        animator.addUpdateListener(valueAnimator -> {
+            BigDecimal value = (BigDecimal) valueAnimator.getAnimatedValue();
+            setText(mPrefixString + format(value) + mPostfixString);
         });
         animator.start();
     }

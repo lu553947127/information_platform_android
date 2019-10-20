@@ -1,8 +1,6 @@
 package com.shuangduan.zcy.view.mine;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.text.ClipboardManager;
 import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
@@ -22,6 +20,7 @@ import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.CustomDialog;
 import com.shuangduan.zcy.model.bean.MaterialOrderBean;
+import com.shuangduan.zcy.utils.KeyboardUtil;
 import com.shuangduan.zcy.utils.image.ImageConfig;
 import com.shuangduan.zcy.utils.image.ImageLoader;
 import com.shuangduan.zcy.vm.MaterialDetailVm;
@@ -34,7 +33,7 @@ import butterknife.OnClick;
  * @author xuyu
  * @Package com.shuangduan.zcy.view.mine$
  * @class MaterialOrderDetailActivity$
- * @class describe
+ * @class 物资预定详情
  * @time 2019/9/25 20:02
  * @change
  * @class describe
@@ -155,8 +154,7 @@ public class MaterialOrderDetailActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_replication:
-                ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                cm.setText(tvOrderNumberValue.getText());
+                KeyboardUtil.copyString(MaterialOrderDetailActivity.this,tvOrderNumberValue.getText().toString());
                 ToastUtils.showShort(R.string.replication_success);
                 break;
             case R.id.tv_cancel:

@@ -1,9 +1,6 @@
 package com.shuangduan.zcy.view.material;
 
 import android.annotation.SuppressLint;
-import android.content.ClipData;
-import android.content.ClipboardManager;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -30,6 +27,7 @@ import com.shuangduan.zcy.dialog.CustomDialog;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.MaterialDetailBean;
 import com.shuangduan.zcy.model.event.MaterialDetailEvent;
+import com.shuangduan.zcy.utils.KeyboardUtil;
 import com.shuangduan.zcy.utils.image.GlideImageLoader;
 import com.shuangduan.zcy.utils.image.PictureEnlargeUtils;
 import com.shuangduan.zcy.vm.MaterialDetailVm;
@@ -41,7 +39,6 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -213,12 +210,7 @@ public class MaterialDetailActivity extends BaseActivity {
 
                             @Override
                             public void ok(String s) {
-                                //获取剪贴板管理器：
-                                ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                                //创建普通字符型ClipData
-                                ClipData mClipData = ClipData.newPlainText("Label", enclosure);
-                                //将ClipData内容放到系统剪贴板里。
-                                Objects.requireNonNull(cm).setPrimaryClip(mClipData);
+                                KeyboardUtil.copyString(MaterialDetailActivity.this,enclosure);
                                 ToastUtils.showShort(getString(R.string.replication_success));
                             }
                         }).showDialog();

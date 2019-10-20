@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:roundiv="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_marginLeft="14dp"
@@ -8,11 +9,13 @@
     android:layout_marginTop="5dp"
     android:layout_height="90dp">
 
-    <ImageView
+    <com.shuangduan.zcy.weight.CornerImageView
         android:id="@+id/iv_bg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#2B9D7B"/>
+        android:scaleType="fitXY"
+        roundiv:radius="7dp"
+        android:src="@color/color_2B9D7B" />
 
     <ImageView
         android:id="@+id/iv_icon"

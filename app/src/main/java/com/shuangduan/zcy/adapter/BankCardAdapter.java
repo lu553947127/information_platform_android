@@ -1,16 +1,14 @@
 package com.shuangduan.zcy.adapter;
 
 import android.widget.ImageView;
-
 import androidx.annotation.Nullable;
-
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.model.bean.BankCardBean;
 import com.shuangduan.zcy.utils.image.ImageConfig;
 import com.shuangduan.zcy.utils.image.ImageLoader;
-
+import com.shuangduan.zcy.weight.CornerImageView;
 import java.util.List;
 
 /**
@@ -39,7 +37,7 @@ public class BankCardAdapter extends BaseQuickAdapter<BankCardBean, BaseViewHold
                 .errorPic(R.drawable.default_pic)
                 .imageView(ivIcon)
                 .build());
-        ImageView ivBg = helper.getView(R.id.iv_bg);
+        CornerImageView ivBg = helper.getView(R.id.iv_bg);
         ImageLoader.load(mContext, new ImageConfig.Builder()
                 .url(item.getBackground())
                 .imageView(ivBg)
