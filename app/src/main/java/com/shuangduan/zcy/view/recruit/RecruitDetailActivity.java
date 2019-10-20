@@ -119,7 +119,7 @@ public class RecruitDetailActivity extends BaseActivity {
         });
         recruitDetailVm.collectionLiveData.observe(this, i -> {
             tvCollect.setText(getString(i == 1 ? R.string.collected : R.string.collection));
-            ivCollect.setImageResource(i == 1 ? R.drawable.icon_collected : R.drawable.icon_collect);
+            ivCollect.setImageResource(i == 1 ? R.drawable.icon_collected : R.drawable.icon_collection);
         });
         recruitDetailVm.collectLiveData.observe(this, o -> recruitDetailVm.collectionLiveData.postValue(1));
         recruitDetailVm.collectCancelLiveData.observe(this, o -> recruitDetailVm.collectionLiveData.postValue(0));

@@ -54,6 +54,7 @@ public class ConversationListAdapterEx extends ConversationListAdapter {
             if (data.getConversationType().equals(Conversation.ConversationType.PRIVATE)){
                 getFriendData(data.getConversationTargetId(),v);
             }else {
+                ((TextView)(v.findViewById(R.id.rc_conversation_title))).setFilters(new InputFilter[] { new InputFilter.LengthFilter(12)});
                 (v.findViewById(R.id.tv_company)).setVisibility(View.GONE);
                 (v.findViewById(R.id.tv_post)).setVisibility(View.GONE);
                 (v.findViewById(R.id.iv_sgs)).setVisibility(View.INVISIBLE);

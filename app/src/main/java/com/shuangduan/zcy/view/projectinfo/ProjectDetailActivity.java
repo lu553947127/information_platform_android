@@ -143,7 +143,7 @@ public class ProjectDetailActivity extends BaseActivity {
         projectDetailVm.locationLiveData.observe(this, s -> tvLocation.setText(s));
         projectDetailVm.collectionLiveData.observe(this, i -> {
             tvCollect.setText(getString(i == 1 ? R.string.collected : R.string.collection));
-            ivCollect.setImageResource(i == 1 ? R.drawable.icon_collected : R.drawable.icon_collect);
+            ivCollect.setImageResource(i == 1 ? R.drawable.icon_collected : R.drawable.icon_collection);
         });
         projectDetailVm.subscribeLiveData.observe(this, i -> {
             tvSubscribe.setText(getString(i == 1 ? R.string.subscribed : R.string.unsubscribe));

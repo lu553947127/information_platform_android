@@ -32,7 +32,8 @@
         app:layout_constraintTop_toTopOf="@+id/tv_name"
         android:textColor="@color/colorPrimary"
         android:textSize="13sp"
-        android:text="@string/read" />
+        android:text="@string/read"
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/tv_mobile"
@@ -43,7 +44,8 @@
         app:layout_constraintTop_toTopOf="@+id/tv_name"
         android:layout_marginRight="6dp"
         android:textColor="@color/color_666666"
-        android:textSize="13sp" />
+        android:textSize="13sp"
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/tv_company"
