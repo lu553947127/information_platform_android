@@ -169,7 +169,8 @@
                 android:layout_height="50dp"
                 android:background="@drawable/selector_bg_custom"
                 android:paddingLeft="14dp"
-                android:paddingRight="14dp">
+                android:paddingRight="14dp"
+                android:visibility="gone">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
@@ -204,7 +205,8 @@
                 android:layout_height="50dp"
                 android:background="@drawable/selector_bg_custom"
                 android:paddingLeft="14dp"
-                android:paddingRight="14dp">
+                android:paddingRight="14dp"
+                android:visibility="gone">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
