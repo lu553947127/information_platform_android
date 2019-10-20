@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ActivityUtils;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
@@ -18,10 +17,9 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ProjectMineAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseLazyFragment;
-import com.shuangduan.zcy.factory.EmptyViewFactory;
 import com.shuangduan.zcy.model.bean.ProjectMineBean;
 import com.shuangduan.zcy.model.event.ProjectReleaseEvent;
-import com.shuangduan.zcy.view.projectinfo.ProjectDetailActivity;
+import com.shuangduan.zcy.view.mine.MineProjectActivity;
 import com.shuangduan.zcy.vm.MineReleaseVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
@@ -80,7 +78,7 @@ public class ProjectInfoFragment extends BaseLazyFragment{
             Bundle bundle = new Bundle();
             bundle.putInt(CustomConfig.PROJECT_ID, listBean.getId());
             bundle.putInt(CustomConfig.LOCATION, 0);
-            ActivityUtils.startActivity(bundle, ProjectDetailActivity.class);
+            ActivityUtils.startActivity(bundle, MineProjectActivity.class);
         });
 
         mineReleaseVm = ViewModelProviders.of(this).get(MineReleaseVm.class);

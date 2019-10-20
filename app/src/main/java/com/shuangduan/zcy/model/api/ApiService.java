@@ -1333,4 +1333,12 @@ public interface ApiService {
             @Field("code") String code,
             @Field("invite_tel") String invite_tel
     );
+
+    //我的工程 --- 工程信息概况
+    @FormUrlEncoded
+    @POST("api/Userinfo/myProjectDateil")
+    Flowable<BaseResponse<ProjectDetailBean>> getMyProjectDateil(
+            @Field("user_id") int userId,
+            @Field("id") int id
+    );
 }

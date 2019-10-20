@@ -32,6 +32,7 @@ import com.shuangduan.zcy.rongyun.RongExtraBean;
 import com.shuangduan.zcy.utils.image.PictureEnlargeUtils;
 import com.shuangduan.zcy.view.demand.FindBuyerDetailActivity;
 import com.shuangduan.zcy.view.demand.FindRelationshipDetailActivity;
+import com.shuangduan.zcy.view.demand.FindRelationshipReleaseDetailActivity;
 import com.shuangduan.zcy.view.demand.FindSubstanceDetailActivity;
 import com.shuangduan.zcy.view.mine.MaterialOrderDetailActivity;
 import com.shuangduan.zcy.view.mine.TransRecordActivity;
@@ -274,7 +275,7 @@ public class IMPrivateChatActivity extends BaseActivity implements RongIM.Conver
                     ActivityUtils.startActivity(bundle, TransRecordDetailActivity.class);
                     break;
                 case 24:// 物资订单状态有更新
-                    bundle.putInt(CustomConfig.ORDER_ID, extraBean.data.id);
+                    bundle.putInt(CustomConfig.ORDER_ID, extraBean.data.orderId);
                     ActivityUtils.startActivity(bundle, MaterialOrderDetailActivity.class);//物资预定详情
                     break;
                 case 25://优质供应商申请已通过审核
@@ -285,7 +286,7 @@ public class IMPrivateChatActivity extends BaseActivity implements RongIM.Conver
                 case 28://发布的找关系即将到期
                 case 29://发布的找关系有人回答
                     bundle.putInt(CustomConfig.DEMAND_ID, extraBean.data.id);
-                    ActivityUtils.startActivity(bundle, FindRelationshipDetailActivity.class);//找关系详情页
+                    ActivityUtils.startActivity(bundle, FindRelationshipReleaseDetailActivity.class);//找关系详情页
                     break;
                 case 30://发布的找物资成功
                     bundle.putInt(CustomConfig.DEMAND_ID, extraBean.data.id);

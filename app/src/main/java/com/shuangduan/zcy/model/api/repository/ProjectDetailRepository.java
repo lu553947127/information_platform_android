@@ -23,49 +23,57 @@ public class ProjectDetailRepository extends BaseRepository {
     /**
      * 工程信息概况
      */
-    public void getDetail(MutableLiveData<ProjectDetailBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, int id){
+    public void getDetail(MutableLiveData<ProjectDetailBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, int id) {
         request(apiService.getDetail(user_id, id)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
     /**
+     * 我的工程信息---概况详情
+     */
+    public void getMyProjectDetail(MutableLiveData<ProjectDetailBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, int id) {
+        request(apiService.getMyProjectDateil(user_id, id)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+
+    /**
      * 工程动态列表
      */
-    public void getTrack(MutableLiveData<TrackBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, int id, int page, int type){
+    public void getTrack(MutableLiveData<TrackBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, int id, int page, int type) {
         request(apiService.getTrack(user_id, id, page, type)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
     /**
      * 已查看动态
      */
-    public void getViewTrack(MutableLiveData<TrackBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, int id, int page){
+    public void getViewTrack(MutableLiveData<TrackBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, int id, int page) {
         request(apiService.getViewTrack(user_id, id, page)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
     /**
      * 消费列表
      */
-    public void consumeList(MutableLiveData<ConsumeBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, int id, int page){
+    public void consumeList(MutableLiveData<ConsumeBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, int id, int page) {
         request(apiService.consumeList(user_id, id, page)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
     /**
      * 收藏
      */
-    public void collect(MutableLiveData liveData, int user_id, int id){
+    public void collect(MutableLiveData liveData, int user_id, int id) {
         request(apiService.collect(user_id, id)).setData(liveData).send();
     }
 
     /**
      * 取消收藏
      */
-    public void cancelCollect(MutableLiveData liveData, int user_id, int id){
+    public void cancelCollect(MutableLiveData liveData, int user_id, int id) {
         request(apiService.cancelCollection(user_id, id)).setData(liveData).send();
     }
 
     /**
      * 纠错
      */
-    public void error(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int user_id, int id, String content){
+    public void error(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int user_id, int id, String content) {
         request(apiService.correction(user_id, id, content)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 

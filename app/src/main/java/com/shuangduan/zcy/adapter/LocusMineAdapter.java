@@ -27,8 +27,7 @@ public class LocusMineAdapter extends BaseQuickAdapter<LocusMineBean.ListBean, B
     @Override
     protected void convert(BaseViewHolder helper, LocusMineBean.ListBean item) {
         helper.setText(R.id.tv_title, item.getTitle())
-                .setText(R.id.tv_content, item.getPhases())
-                .setText(R.id.tv_time, item.getCreate_time())
-                .setText(R.id.tv_locus_num, String.format(mContext.getString(R.string.format_locus_num), item.getTrack_count()));
+                .setText(R.id.tv_intro, item.getPhases())
+                .setText(R.id.tv_time, item.getCreate_time());
     }
 }

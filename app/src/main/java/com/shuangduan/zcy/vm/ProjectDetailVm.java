@@ -79,6 +79,13 @@ public class ProjectDetailVm extends BaseViewModel {
         repositoryDetail.getDetail(detailLiveData, pageStateLiveData, userId, id);
     }
 
+    public void getMyProjectDateil(){
+        if (repositoryDetail == null)
+            repositoryDetail = new ProjectDetailRepository();
+        repositoryDetail.getMyProjectDetail(detailLiveData, pageStateLiveData, userId, id);
+    }
+
+
     public void getTrack(){
         pageTrack = 1;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);

@@ -53,7 +53,9 @@
         android:theme="@style/BaseAppTheme"
         tools:ignore="GoogleAppIndexingWarning,UnusedAttribute">
         <!-- 启动页-->
-        <activity android:name="com.shuangduan.zcy.view.login.StartUpActivity"  android:theme="@style/SplashTheme" >
+        <activity
+            android:name="com.shuangduan.zcy.view.login.StartUpActivity"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -62,15 +64,27 @@
         <!-- 引导页-->
         <activity android:name="com.shuangduan.zcy.view.login.FirstStartActivity" />
         <!-- 微信身份认证页-->
-        <activity android:name="com.shuangduan.zcy.view.login.WeChatBindingActivity" android:launchMode="singleTop"/>
+        <activity
+            android:name="com.shuangduan.zcy.view.login.WeChatBindingActivity"
+            android:launchMode="singleTop" />
         <!-- 登录页-->
-        <activity android:name="com.shuangduan.zcy.view.login.LoginActivity"  android:windowSoftInputMode="stateHidden|adjustPan" android:launchMode="singleTop" />
+        <activity
+            android:name="com.shuangduan.zcy.view.login.LoginActivity"
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
         <!-- 注册页-->
-        <activity android:name="com.shuangduan.zcy.view.login.RegisterActivity"  android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name="com.shuangduan.zcy.view.login.RegisterActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
         <!-- 首次登陆需要录入信息页-->
-        <activity android:name="com.shuangduan.zcy.view.login.UserInfoInputActivity" android:launchMode="singleTop" android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name="com.shuangduan.zcy.view.login.UserInfoInputActivity"
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <!-- 首页-->
-        <activity android:name="com.shuangduan.zcy.view.MainActivity" android:launchMode="singleTask">
+        <activity
+            android:name="com.shuangduan.zcy.view.MainActivity"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -129,7 +143,9 @@
         <!-- 帮助页-->
         <activity android:name="com.shuangduan.zcy.view.mine.HelperActivity" />
         <!-- 设置页-->
-        <activity android:name="com.shuangduan.zcy.view.mine.SetActivity" android:theme="@style/AppThemeBgGray" />
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.SetActivity"
+            android:theme="@style/AppThemeBgGray" />
         <!-- 关于页-->
         <activity android:name="com.shuangduan.zcy.view.mine.AboutOursActivity" />
         <!-- 推荐好友页-->
@@ -143,14 +159,19 @@
         <!-- 我的收藏-->
         <activity android:name="com.shuangduan.zcy.view.mine.MineCollectionActivity" />
         <!-- 我的钱包页面-->
-        <activity android:name="com.shuangduan.zcy.view.mine.MineWalletActivity" android:theme="@style/AppThemeBgGray" />
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.MineWalletActivity"
+            android:theme="@style/AppThemeBgGray" />
         <!-- 银行卡列表-->
-        <activity android:name="com.shuangduan.zcy.view.mine.BankCardListActivity"
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.BankCardListActivity"
             android:theme="@style/AppThemeBgGray" />
         <!-- 提现记录页-->
         <activity android:name="com.shuangduan.zcy.view.mine.WithdrawRecordActivity" />
         <!-- 提现记录详情页-->
-        <activity android:name="com.shuangduan.zcy.view.mine.WithdrawDetailActivity" android:theme="@style/AppThemeBgGray" />
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.WithdrawDetailActivity"
+            android:theme="@style/AppThemeBgGray" />
         <!-- 解绑银行卡-->
         <activity android:name="com.shuangduan.zcy.view.mine.UnbindBankCardActivity" />
         <!-- 我的订单-->
@@ -304,6 +325,10 @@
         <activity android:name="com.shuangduan.zcy.view.demand.FindRelationshipAcceptDetailActivity" />
         <!-- 我的需求 我发布详情-->
         <activity android:name="com.shuangduan.zcy.view.demand.FindRelationshipReleaseDetailActivity" />
+        <!--  我的工程 工程信息概况详情页 -->
+        <activity android:name=".view.mine.MineProjectActivity" />
+        <!--  我的工程 工程信息动态详情页 -->
+        <activity android:name=".view.mine.MineLocusActivity" />
         <!-- 图片放大查看页-->
         <activity
             android:name="com.shuangduan.zcy.view.PhotoViewActivity"

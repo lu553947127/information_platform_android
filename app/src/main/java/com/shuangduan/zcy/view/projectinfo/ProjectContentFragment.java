@@ -117,7 +117,7 @@ public class ProjectContentFragment extends BaseFragment implements BaseQuickAda
     protected void initDataAndEvent(Bundle savedInstanceState, View v) {
 
         rvContact.setLayoutManager(new LinearLayoutManager(mContext));
-        contactAdapter = new ContactAdapter(R.layout.item_contact, null);
+        contactAdapter = new ContactAdapter(R.layout.item_contact, null,0);
         contactAdapter.setEmptyView(R.layout.layout_loading_top, rvContact);
         contactAdapter.setOnItemChildClickListener(this);
 

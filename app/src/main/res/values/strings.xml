@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">易基建</string>
     <string name="official_name">双端数字科技有限公司版权所有</string>
     <string name="official_email">邮箱：kefu@zicai365.com</string>
@@ -418,14 +418,14 @@
     <string name="format_email">您的邮箱为：%1$s</string>
     <string name="format_read_num">%1$s 浏览</string>
     <string name="format_update_time">更新时间：%1$s</string>
-    <string name="format_release_time">发布时间：%1$s</string>
-    <string name="format_source">来源：%1$s</string>
-    <string name="format_contacts_type">部门：%1$s</string>
-    <string name="format_unit">单位：%1$s</string>
+
+    <string name="format_source" tools:ignore="ExtraTranslation">来源：%1$s</string>
+    <string name="format_contacts_type">部&#160;&#160;&#160;&#160;门：%1$s</string>
+    <string name="format_unit">单&#160;&#160;&#160;&#160;位：%1$s</string>
     <string name="format_principal">联系人：%1$s</string>
     <string name="format_phone">手机号：%1$s</string>
     <string name="format_phone_look">手机号：%1$s\t\t查看</string>
-    <string name="format_address">地址：%1$s</string>
+    <string name="format_address">地&#160;&#160;&#160;&#160;址：%1$s</string>
     <string name="format_update">更新：%1$s</string>
     <string name="format_stage">阶段：%1$s</string>
     <string name="format_type">类别：%1$s</string>

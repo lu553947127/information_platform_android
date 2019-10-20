@@ -1,5 +1,9 @@
 package com.shuangduan.zcy.rongyun;
 
+import com.google.gson.annotations.SerializedName;
+
+import retrofit2.http.POST;
+
 /**
  * @author xuyu
  * @Package com.shuangduan.zcy.rongyun$
@@ -17,10 +21,14 @@ public class RongExtraBean {
     public class ExtraData {
         public int id;
 
+        @SerializedName("order_id")
+        public int orderId;
+
         @Override
         public String toString() {
             return "ExtraData{" +
                     "id=" + id +
+                    ", orderId=" + orderId +
                     '}';
         }
     }

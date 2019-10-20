@@ -63,6 +63,26 @@ public class ProjectMineBean {
         private String phases;
         private String create_time;
 
+        private String valuation;
+
+        private int status;
+
+        public int getStatus() {
+            return status;
+        }
+
+        public void setStatus(int status) {
+            this.status = status;
+        }
+
+        public String getValuation() {
+            return valuation;
+        }
+
+        public void setValuation(String valuation) {
+            this.valuation = valuation;
+        }
+
         public int getId() {
             return id;
         }

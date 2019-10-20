@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="format_project_phases">工程阶段：%1$s</string>
+    <string name="format_project_valuation">工程造价：%1$s</string>
+    <string name="format_project_content">概况</string>
+
+    <string name="format_project_name"><![CDATA[项目名称：<font color="#6a5ff8">%1$s</font>]]></string>
+
+    <string name="format_release_time">发布时间：%1$s</string>
+    <string name="format_project_stage">项目阶段：%1$s</string>
+
+    <string name="format_project_cycle">项目周期：%1$s</string>
+    <string name="format_project_acreage">项目面积：%1$s平方米</string>
+    <string name="format_project_price">项目估价：%1$s</string>
+
+
+    <string name="mine_project_name">项目名称：</string>
+    <string name="mine_project_address">项目地址：</string>
+    <string name="mine_project_types">项目类别：</string>
+    <string name="mine_project_party">甲方公司：</string>
+    <string name="mine_project_detail">项目详情：</string>
+    <string name="mine_project_material">项目用材：</string>
+    <string name="mine_locus_intro">动态描述：</string>
+    <string name="mine_upload_photo">上传照片：</string>
+    <string name="close_all">关闭全部</string>
+    <string name="audit">审核中</string>
+    <string name="pass">通过</string>
+    <string name="failure">失效</string>
+
+</resources>

@@ -1,5 +1,7 @@
 package com.shuangduan.zcy.model.bean;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 /**
@@ -78,6 +80,27 @@ public class ProjectDetailBean {
         private String materials;
         private int is_pay;
         private int collection;
+        //甲方公司
+        @SerializedName("unit")
+        private String party;
+        // 0待审核 1审核成功 2审核失败
+        private int status;
+
+        public int getStatus() {
+            return status;
+        }
+
+        public void setStatus(int status) {
+            this.status = status;
+        }
+
+        public String getParty() {
+            return party;
+        }
+
+        public void setParty(String party) {
+            this.party = party;
+        }
 
         public String getTitle() {
             return title;
