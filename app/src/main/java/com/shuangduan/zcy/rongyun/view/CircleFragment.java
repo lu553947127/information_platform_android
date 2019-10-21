@@ -175,9 +175,9 @@ public class CircleFragment extends BaseFragment {
         getBadgeViewInitView(view);
 
         //根据 userId 去你的用户系统里查询对应的用户信息返回给融云 SDK。
-        RongIM.setUserInfoProvider(this::getFriendData, true);
+//        RongIM.setUserInfoProvider(this::getFriendData,true);
         //设置群聊列表数据
-        RongIM.setGroupInfoProvider(this::getGroupData,true);
+//        RongIM.setGroupInfoProvider(this::getGroupData,true);
         //获取未读消息数量
         RongIM.getInstance().addUnReadMessageCountChangedObserver(i -> {
             LogUtils.i(i);

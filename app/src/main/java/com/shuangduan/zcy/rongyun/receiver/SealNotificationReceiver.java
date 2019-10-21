@@ -1,19 +1,25 @@
 package com.shuangduan.zcy.rongyun.receiver;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
+import com.blankj.utilcode.util.LogUtils;
+import com.shuangduan.zcy.view.MainActivity;
+
+import io.rong.imkit.RongIM;
 import io.rong.push.PushType;
 import io.rong.push.notification.PushMessageReceiver;
 import io.rong.push.notification.PushNotificationMessage;
 
 public class SealNotificationReceiver extends PushMessageReceiver {
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
+
     @Override
-    public boolean onNotificationMessageArrived(Context context, PushType pushType, PushNotificationMessage pushNotificationMessage) {
+    public boolean onNotificationMessageArrived(Context context, PushType pushType, PushNotificationMessage message) {
+        LogUtils.e("推送数据", "onNotificationMessageArrived....点击了");
 //        LogUtils.e("推送数据", pushNotificationMessage.getPushContent());
 //        //1.获取系统通知的管理者
 //        NotificationManager nm = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
@@ -41,6 +47,12 @@ public class SealNotificationReceiver extends PushMessageReceiver {
 
     @Override
     public boolean onNotificationMessageClicked(Context context, PushType pushType, PushNotificationMessage message) {
+        LogUtils.json(LogUtils.E, message);
         return false;
+    }
+
+    @Override
+    public void onThirdPartyPushState(PushType pushType, String action, long resultCode) {
+        super.onThirdPartyPushState(pushType, action, resultCode);
     }
 }

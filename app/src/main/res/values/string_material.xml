@@ -4,4 +4,7 @@
     <string name="filter_spec">规格</string>
     <string name="filter_supplier">供应商</string>
     <string name="filter_supplier_method">供应方式</string>
+
+    <string name="material_open">公开物资</string>
+    <string name="material_default">内定物资</string>
 </resources>

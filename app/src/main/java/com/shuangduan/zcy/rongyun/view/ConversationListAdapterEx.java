@@ -14,12 +14,14 @@ import com.google.gson.JsonSyntaxException;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.shuangduan.zcy.R;
+import com.shuangduan.zcy.adapter.MaterialPlaceOrderAdapter;
 import com.shuangduan.zcy.app.Common;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
 import com.shuangduan.zcy.model.bean.IMWechatUserInfoBean;
 
 import io.rong.imkit.model.UIConversation;
+import io.rong.imkit.userInfoCache.RongUserInfoManager;
 import io.rong.imkit.widget.adapter.ConversationListAdapter;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.UserInfo;
