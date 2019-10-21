@@ -12,7 +12,7 @@ import com.shuangduan.zcy.dialog.CustomDialog;
 import com.shuangduan.zcy.view.mine.AuthenticationActivity;
 
 /**
- * @author 宁文强 QQ:858777523
+ * @author 徐玉 QQ:876885613
  * @name information_platform_android
  * @class name：com.shuangduan.zcy.utils
  * @class describe 实名认证检测工具

@@ -39,7 +39,7 @@ import top.zibin.luban.Luban;
 
 /**
  * <pre>
- *     author : 宁文强
+ *     author : 徐玉
  *     e-mail : ningwenqiang@lanhuiplay.com
  *     time   : 2018/04/26
  *     desc   : 用于增减图片盛放容器

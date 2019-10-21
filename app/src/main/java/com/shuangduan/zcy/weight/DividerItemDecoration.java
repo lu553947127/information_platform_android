@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * <pre>
- *     author : 宁文强
+ *     author : 徐玉
  *     e-mail : ningwenqiang@lanhuiplay.com
  *     time   : 2018/04/10
  *     desc   : 使用于LinearLayoutManager的分割线

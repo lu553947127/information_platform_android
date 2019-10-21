@@ -64,7 +64,7 @@ import io.rong.imlib.model.Group;
 import io.rong.imlib.model.UserInfo;
 
 /**
- * @author 宁文强 QQ:858777523
+ * @author 徐玉 QQ:876885613
  * @name information_platform_android
  * @class name：com.shuangduan.zcy.rongyun.view
  * @class 工程圈

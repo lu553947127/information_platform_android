@@ -13,7 +13,7 @@ import retrofit2.HttpException;
 
 /**
  * <pre>
- *     author : 宁文强
+ *     author : 徐玉
  *     e-mail : ningwenqiang@lanhuiplay.com
  *     time   : 2018/07/31
  *     desc   : 网络请求错误信息

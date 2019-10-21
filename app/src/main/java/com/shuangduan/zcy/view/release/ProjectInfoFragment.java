@@ -28,7 +28,7 @@ import org.greenrobot.eventbus.Subscribe;
 import butterknife.BindView;
 
 /**
- * @author 宁文强 QQ:858777523
+ * @author 徐玉 QQ:876885613
  * @name information_platform_android
  * @class name：com.shuangduan.zcy.view.release
  * @class describe  我发布的工程信息列表

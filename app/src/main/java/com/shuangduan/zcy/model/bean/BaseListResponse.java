@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  * <pre>
- *     author : 宁文强
+ *     author : 徐玉
  *     e-mail : ningwenqiang@lanhuiplay.com
  *     time   : 2018/05/16
  *     desc   : data为数组集合

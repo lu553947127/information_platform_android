@@ -9,7 +9,7 @@ import com.shuangduan.zcy.model.bean.IMFriendSearchBean;
 import com.shuangduan.zcy.model.bean.IMTokenBean;
 
 /**
- * @author 宁文强 QQ:858777523
+ * @author 徐玉 QQ:876885613
  * @name information_platform_android
  * @class name：com.shuangduan.zcy.model.api.repository
  * @class describe  即时通讯

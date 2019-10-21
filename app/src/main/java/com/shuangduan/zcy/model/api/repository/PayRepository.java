@@ -6,7 +6,7 @@ import com.shuangduan.zcy.model.bean.CoinPayResultBean;
 import com.shuangduan.zcy.model.bean.PayInfoBean;
 
 /**
- * @author 宁文强 QQ:858777523
+ * @author 徐玉 QQ:876885613
  * @name information_platform_android
  * @class name：com.shuangduan.zcy.model.api.repository
  * @class describe

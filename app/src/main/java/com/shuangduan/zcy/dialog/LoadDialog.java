@@ -9,7 +9,7 @@ import com.blankj.utilcode.util.LogUtils;
 import com.shuangduan.zcy.R;
 
 /**
- * @author 宁文强 QQ:858777523
+ * @author 徐玉 QQ:876885613
  * @name information_platform_android
  * @class name：com.shuangduan.zicaicloudplatform.dialog
  * @class describe  加载中弹窗

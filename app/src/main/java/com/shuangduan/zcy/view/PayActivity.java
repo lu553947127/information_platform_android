@@ -28,17 +28,14 @@ import com.shuangduan.zcy.view.recharge.RechargeResultActivity;
 import com.shuangduan.zcy.wxapi.PayVm;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 
-import org.greenrobot.eventbus.EventBus;
-
 import java.lang.ref.WeakReference;
 import java.util.Map;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * @author 宁文强 QQ:858777523
+ * @author 徐玉 QQ:876885613
  * @name information_platform_android
  * @class name：com.shuangduan.zcy.view
  * @class describe  支付

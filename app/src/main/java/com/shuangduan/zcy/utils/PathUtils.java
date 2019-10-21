@@ -15,7 +15,7 @@ import java.io.File;
 
 /**
  * <pre>
- *     author : 宁文强
+ *     author : 徐玉
  *     e-mail : ningwenqiang@lanhuiplay.com
  *     time   : 2018/09/05
  *     desc   :

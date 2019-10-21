@@ -21,7 +21,7 @@ import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 
 /**
  * <pre>
- *     author : 宁文强
+ *     author : 徐玉
  *     e-mail : ningwenqiang@lanhuiplay.com
  *     time   : 2018/07/04
  *     desc   : 微信支付返回结果页

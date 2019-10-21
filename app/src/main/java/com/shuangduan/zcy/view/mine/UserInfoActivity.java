@@ -58,7 +58,7 @@ import butterknife.OnClick;
 import io.rong.imkit.RongIM;
 
 /**
- * @author 宁文强 QQ:858777523
+ * @author 徐玉 QQ:876885613
  * @name ZICAICloudPlatform
  * @class name：com.example.zicaicloudplatform.view.activity
  * @class describe  基本信息界面

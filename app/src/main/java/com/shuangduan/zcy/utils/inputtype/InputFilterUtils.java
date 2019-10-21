@@ -5,7 +5,7 @@ import android.widget.EditText;
 
 /**
  * <pre>
- *     author : 宁文强
+ *     author : 徐玉
  *     e-mail : ningwenqiang@lanhuiplay.com
  *     time   : 2018/11/12
  *     desc   :

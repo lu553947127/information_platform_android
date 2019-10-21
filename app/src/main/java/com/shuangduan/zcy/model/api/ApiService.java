@@ -113,7 +113,7 @@ import retrofit2.http.Part;
 import retrofit2.http.Query;
 
 /**
- * @author 宁文强 QQ:858777523
+ * @author 徐玉 QQ:876885613
  * @name ZICAICloudPlatform
  * @class name：com.example.zicaicloudplatform.model.api
  * @class describe  后台接口集合

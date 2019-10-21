@@ -31,7 +31,7 @@ import cn.jpush.android.service.JPushMessageReceiver;
 
 /**
  * <pre>
- *     author : 宁文强
+ *     author : 徐玉
  *     e-mail : ningwenqiang@lanhuiplay.com
  *     time   : 2018/04/20
  *     desc   : JPush新的tag/alias接口结果返回需要开发者配置一个自定的广播

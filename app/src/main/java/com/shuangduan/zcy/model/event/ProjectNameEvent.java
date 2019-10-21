@@ -3,7 +3,7 @@ package com.shuangduan.zcy.model.event;
 import com.blankj.utilcode.util.StringUtils;
 
 /**
- * @author 宁文强 QQ:858777523
+ * @author 徐玉 QQ:876885613
  * @name information_platform_android
  * @class name：com.shuangduan.zcy.model.event
  * @class describe

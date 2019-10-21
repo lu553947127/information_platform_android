@@ -45,7 +45,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * @author 宁文强 QQ:858777523
+ * @author 徐玉 QQ:876885613
  * @name ZICAICloudPlatform
  * @class name：com.example.zicaicloudplatform.view.activity
  * @class describe     首次登录需要录入信息

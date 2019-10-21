@@ -7,7 +7,7 @@ import android.view.ViewTreeObserver;
 
 /**
  * <pre>
- *     author : 宁文强
+ *     author : 徐玉
  *     e-mail : ningwenqiang@lanhuiplay.com
  *     time   : 2018/08/31
  *     desc   : 解决透明状态栏是AdjustResize失效问题

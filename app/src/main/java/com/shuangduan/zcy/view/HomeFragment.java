@@ -101,7 +101,7 @@ import static com.shuangduan.zcy.app.CustomConfig.FIND_RELATIONSHIP_TYPE;
 import static com.shuangduan.zcy.app.CustomConfig.FIND_SUBSTANCE_TYPE;
 
 /**
- * @author 宁文强 QQ:858777523
+ * @author 徐玉 QQ:876885613
  * @name ZICAICloudPlatform
  * @class name：com.example.zicaicloudplatform.view.fragment
  * @class 首页

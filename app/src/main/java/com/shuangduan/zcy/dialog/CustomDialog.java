@@ -17,7 +17,7 @@ import butterknife.OnClick;
 import static com.blankj.utilcode.util.StringUtils.getString;
 
 /**
- * @author 宁文强 QQ:858777523
+ * @author 徐玉 QQ:876885613
  * @name information_platform_android
  * @class name：com.shuangduan.zcy.dialog
  * @class describe  双按钮弹窗

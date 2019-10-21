@@ -8,7 +8,7 @@ import com.blankj.utilcode.util.ConvertUtils;
 
 /**
  * <pre>
- *     author : 宁文强
+ *     author : 徐玉
  *     e-mail : ningwenqiang@lanhuiplay.com
  *     time   : 2018/11/21
  *     desc   : 可以设置最大高度的scrollview

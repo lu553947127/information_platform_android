@@ -53,7 +53,7 @@ import okhttp3.OkHttpClient;
 
 /**
  * <pre>
- *     author : 宁文强
+ *     author : 徐玉
  *     e-mail : ningwenqiang@lanhuiplay.com
  *     time   : 2018/07/17
  *     desc   : application初始化

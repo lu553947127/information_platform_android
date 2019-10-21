@@ -10,7 +10,7 @@ import com.shuangduan.zcy.base.BaseViewModel;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 /**
- * @author 宁文强 QQ:858777523
+ * @author 徐玉 QQ:876885613
  * @name ZICAICloudPlatform
  * @class name：com.example.zicaicloudplatform.vm
  * @class describe

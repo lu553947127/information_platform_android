@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 
 /**
  * <pre>
- *     author : 宁文强
+ *     author : 徐玉
  *     e-mail : ningwenqiang@lanhuiplay.com
  *     time   : 2018/08/29
  *     desc   : 主要功能有清除内/外缓存，清除数据库，清除sharedPreference，清除files和清除自定义目录

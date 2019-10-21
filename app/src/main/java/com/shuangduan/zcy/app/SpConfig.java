@@ -2,7 +2,7 @@ package com.shuangduan.zcy.app;
 
 /**
  * <pre>
- *     author : 宁文强
+ *     author : 徐玉
  *     e-mail : ningwenqiang@lanhuiplay.com
  *     time   : 2018/05/19
  *     desc   : SharePreference保存数据的key

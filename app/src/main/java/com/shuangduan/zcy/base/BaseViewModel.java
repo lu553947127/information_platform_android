@@ -7,7 +7,7 @@ import io.reactivex.disposables.Disposable;
 
 /**
  * <pre>
- *     author : 宁文强
+ *     author : 徐玉
  *     e-mail : ningwenqiang@lanhuiplay.com
  *     time   : 2018/04/03
  *     desc   :

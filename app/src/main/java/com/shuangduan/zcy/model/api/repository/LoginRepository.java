@@ -8,7 +8,7 @@ import com.shuangduan.zcy.model.bean.WXLoginBindingBean;
 import com.shuangduan.zcy.model.bean.WXLoginVerificationBean;
 
 /**
- * @author 宁文强 QQ:858777523
+ * @author 徐玉 QQ:876885613
  * @name information_platform_android
  * @class name：com.shuangduan.zcy.model.api.repository
  * @class describe

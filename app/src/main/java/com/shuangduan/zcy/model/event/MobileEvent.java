@@ -1,7 +1,7 @@
 package com.shuangduan.zcy.model.event;
 
 /**
- * @author 宁文强 QQ:858777523
+ * @author 徐玉 QQ:876885613
  * @name information_platform_android
  * @class name：com.shuangduan.zicaicloudplatform.model.event
  * @class describe  更新手机号通知事件

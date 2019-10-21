@@ -4,7 +4,7 @@ import cn.jpush.android.service.JCommonService;
 
 /**
  * <pre>
- *     author : 宁文强
+ *     author : 徐玉
  *     e-mail : ningwenqiang@lanhuiplay.com
  *     time   : 2019/05/30
  *     desc   :

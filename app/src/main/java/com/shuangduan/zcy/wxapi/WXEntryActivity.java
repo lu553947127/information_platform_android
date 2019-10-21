@@ -28,7 +28,7 @@ import org.greenrobot.eventbus.EventBus;
 
 /**
  * <pre>
- *     author : 宁文强
+ *     author : 徐玉
  *     e-mail : ningwenqiang@lanhuiplay.com
  *     time   : 2018/05/25
  *     desc   : 微信分享和登录返回结果页
