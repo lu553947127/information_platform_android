@@ -41,9 +41,7 @@ public class OrderContentFragment extends BaseLazyFragment implements EmptyViewF
     private OrderVm orderVm;
 
     public static OrderContentFragment newInstance() {
-
         Bundle args = new Bundle();
-
         OrderContentFragment fragment = new OrderContentFragment();
         fragment.setArguments(args);
         return fragment;

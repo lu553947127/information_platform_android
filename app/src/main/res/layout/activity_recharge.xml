@@ -58,6 +58,7 @@
             android:singleLine="true"
             android:inputType="number"
             android:digits="0123456789"
+            android:maxLength="10"
             android:layout_marginLeft="31dp"
             android:textColorHint="@color/colorTvHint"
             android:textColor="@color/colorTv"

@@ -132,7 +132,7 @@ public class MineFragment extends BaseFragment {
         scrollView.setOnScrollChangeListener(new AdaptationScrollView.OnScrollChangeListener() {
             private int mScrollY_2 = 0;
             private int lastScrollY = 0;
-            private int h = DensityUtil.dp2px(70);
+            private int h = DensityUtil.dp2px(30);
             //设置折叠标题背景颜色
             private int color = ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.colorPrimary) & 0x00ffffff;
 

@@ -64,7 +64,7 @@ public class MineWalletActivity extends BaseActivity {
             tvBalance.setDuration(500);
         });
         refresh.setEnableLoadMore(false);
-        refresh.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);
+        refresh.setPrimaryColorsId(R.color.color_6a46e7, android.R.color.white);
         refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {

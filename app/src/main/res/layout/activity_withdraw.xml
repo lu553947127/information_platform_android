@@ -61,6 +61,7 @@
             android:layout_alignBottom="@+id/tv_money"
             android:layout_marginLeft="60dp"
             android:background="@null"
+            android:maxLength="10"
             android:singleLine="true"
             android:inputType="numberDecimal"
             android:textColor="@color/colorTv"

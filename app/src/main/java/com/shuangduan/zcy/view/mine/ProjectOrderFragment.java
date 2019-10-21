@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
-
 import com.google.android.material.tabs.TabLayout;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ViewPagerAdapter;
@@ -29,9 +28,7 @@ public class ProjectOrderFragment extends BaseLazyFragment {
     ViewPager vp;
 
     public static ProjectOrderFragment newInstance() {
-
         Bundle args = new Bundle();
-
         ProjectOrderFragment fragment = new ProjectOrderFragment();
         fragment.setArguments(args);
         return fragment;

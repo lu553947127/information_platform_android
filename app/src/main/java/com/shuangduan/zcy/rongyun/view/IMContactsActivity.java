@@ -18,6 +18,7 @@ import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.lzy.okgo.OkGo;
@@ -41,6 +42,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.rong.imkit.RongIM;
+import io.rong.imlib.model.Conversation;
 
 /**
  * @author 鹿鸿祥 QQ:553947127
@@ -121,9 +123,18 @@ public class IMContactsActivity extends BaseActivity {
         imFriendListAdapter.setEmptyView(R.layout.layout_loading, rvFriend);
         rvFriend.setAdapter(imFriendListAdapter);
 
-        imFriendListAdapter.setOnItemClickListener((adapter, view, position) ->
+        imFriendListAdapter.setOnItemClickListener((adapter, view, position) -> {
+            if (imFriendListBean.getData().getList().get(position).getUserId().equals("18")){
+                RongIM.getInstance().startConversation(IMContactsActivity.this,Conversation.ConversationType.SYSTEM, imFriendListBean.getData().getList().get(position).getUserId()
+                        , imFriendListBean.getData().getList().get(position).getName());
+            }else {
                 RongIM.getInstance().startPrivateChat(IMContactsActivity.this, imFriendListBean.getData().getList().get(position).getUserId()
-                , imFriendListBean.getData().getList().get(position).getName()));
+                        , imFriendListBean.getData().getList().get(position).getName());
+            }
+        });
+
+
+
     }
 
     //我的群组列表

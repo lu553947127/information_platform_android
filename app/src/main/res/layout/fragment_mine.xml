@@ -205,7 +205,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="26dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp">
 
@@ -214,6 +214,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:padding="15dp"
                     android:background="@drawable/selector_bg_custom"
                     android:drawableTop="@drawable/icon_income"
                     android:drawablePadding="8dp"
@@ -227,6 +228,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:padding="15dp"
                     android:background="@drawable/selector_bg_custom"
                     android:drawableTop="@drawable/icon_mine_subscription"
                     android:drawablePadding="8dp"
@@ -241,6 +243,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:padding="15dp"
                     android:background="@drawable/selector_bg_custom"
                     android:drawableTop="@drawable/icon_history"
                     android:drawablePadding="8dp"
@@ -255,7 +258,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/color_F4F4F4"
-                android:layout_margin="26dp"/>
+                android:layout_margin="16dp"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -268,6 +271,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:padding="15dp"
                     android:background="@drawable/selector_bg_custom"
                     android:drawableTop="@drawable/icon_my_project"
                     android:drawablePadding="8dp"
@@ -281,6 +285,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:padding="15dp"
                     android:background="@drawable/selector_bg_custom"
                     android:drawableTop="@drawable/icon_mine_demand"
                     android:drawablePadding="8dp"
@@ -295,6 +300,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:padding="15dp"
                     android:background="@drawable/selector_bg_custom"
                     android:drawableTop="@drawable/icon_collect"
                     android:drawablePadding="8dp"
@@ -308,7 +314,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="16dp"
                 android:background="@color/colorBgDark"/>
             <!--基建服务-->
             <!--我的频道-->
@@ -327,9 +333,10 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/selector_bg_custom"
                 android:drawableTop="@drawable/icon_my_material"
+                android:padding="15dp"
                 android:drawablePadding="8dp"
-                android:layout_marginTop="26dp"
-                android:layout_marginLeft="45dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="30dp"
                 android:gravity="center"
                 android:textSize="13sp"
                 android:textColor="@color/color_4A4A4A"
@@ -344,7 +351,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="10dp"
-                    android:layout_marginTop="25dp"
+                    android:layout_marginTop="16dp"
                     android:background="@color/colorBgDark"/>
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
@@ -359,7 +366,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginTop="26dp"
+                    android:layout_marginTop="16dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp">
 
@@ -368,6 +375,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:padding="15dp"
                         android:background="@drawable/selector_bg_custom"
                         android:drawableTop="@drawable/icon_turnover_material"
                         android:drawablePadding="8dp"
@@ -381,6 +389,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:padding="15dp"
                         android:background="@drawable/selector_bg_custom"
                         android:drawableTop="@drawable/icon_device_management"
                         android:drawablePadding="8dp"
@@ -395,6 +404,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:padding="15dp"
                         android:background="@drawable/selector_bg_custom"
                         android:drawableTop="@drawable/icon_order_management"
                         android:drawablePadding="8dp"
@@ -410,7 +420,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="16dp"
                 android:background="@color/colorBgDark"
                 android:orientation="vertical">
 

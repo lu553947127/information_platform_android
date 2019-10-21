@@ -41,9 +41,7 @@ public class SupplierOrderFragment extends BaseLazyFragment implements EmptyView
     private OrderVm orderVm;
 
     public static SupplierOrderFragment newInstance() {
-
         Bundle args = new Bundle();
-
         SupplierOrderFragment fragment = new SupplierOrderFragment();
         fragment.setArguments(args);
         return fragment;
@@ -62,7 +60,6 @@ public class SupplierOrderFragment extends BaseLazyFragment implements EmptyView
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         View emptyView = createEmptyView(R.drawable.icon_empty_project, R.string.empty_get_supplier_info, R.string.to_look_over, this);
-
 
         rv.setLayoutManager(new LinearLayoutManager(mContext));
         rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));

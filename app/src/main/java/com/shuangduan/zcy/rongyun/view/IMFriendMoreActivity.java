@@ -42,6 +42,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.rong.imkit.RongIM;
+import io.rong.imlib.model.Conversation;
 
 /**
  * @author 鹿鸿祥 QQ:553947127
@@ -125,8 +126,13 @@ public class IMFriendMoreActivity extends BaseActivity implements EmptyViewFacto
             }
         });
         imFriendListAdapter.setOnItemClickListener((adapter, view, position) -> {
-            RongIM.getInstance().startPrivateChat(IMFriendMoreActivity.this, imFriendListBean.getData().getList().get(position).getUserId()
-                    , imFriendListBean.getData().getList().get(position).getName());
+            if (imFriendListBean.getData().getList().get(position).getUserId().equals("18")){
+                RongIM.getInstance().startConversation(IMFriendMoreActivity.this, Conversation.ConversationType.SYSTEM, imFriendListBean.getData().getList().get(position).getUserId()
+                        , imFriendListBean.getData().getList().get(position).getName());
+            }else {
+                RongIM.getInstance().startPrivateChat(IMFriendMoreActivity.this, imFriendListBean.getData().getList().get(position).getUserId()
+                        , imFriendListBean.getData().getList().get(position).getName());
+            }
         });
         if (name != null) {
             getFriendList("1", pageSize);
