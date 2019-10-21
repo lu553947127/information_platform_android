@@ -2,6 +2,7 @@ package com.shuangduan.zcy.model.api.repository;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.shuangduan.zcy.base.TrackDateilBean;
 import com.shuangduan.zcy.model.bean.ConsumeBean;
 import com.shuangduan.zcy.model.bean.ProjectDetailBean;
 import com.shuangduan.zcy.model.bean.TrackBean;
@@ -32,6 +33,18 @@ public class ProjectDetailRepository extends BaseRepository {
      */
     public void getMyProjectDetail(MutableLiveData<ProjectDetailBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, int id) {
         request(apiService.getMyProjectDateil(user_id, id)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    /**
+     * 我的工程---动态详情
+     *
+     * @param liveData
+     * @param pageStateLiveData
+     * @param user_id
+     * @param id
+     */
+    public void getMyTrackDateil(MutableLiveData<TrackDateilBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, int id) {
+        request(apiService.getMyTrackDateil(user_id, id)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
 

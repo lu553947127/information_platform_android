@@ -300,7 +300,7 @@ public class IMPrivateChatActivity extends BaseActivity implements RongIM.Conver
                     ActivityUtils.startActivity(NewFriendsActivity.class);//好友提醒
                     break;
                 case 36://好友申请通过
-//                    RongIM.getInstance().startPrivateChat(this, String.valueOf(extraBean.data.id),"");
+                    RongIM.getInstance().startPrivateChat(this, String.valueOf(extraBean.data.userId), extraBean.data.name);
                     break;
             }
             return true;

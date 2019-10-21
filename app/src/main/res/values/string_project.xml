@@ -13,7 +13,8 @@
     <string name="format_project_cycle">项目周期：%1$s</string>
     <string name="format_project_acreage">项目面积：%1$s平方米</string>
     <string name="format_project_price">项目估价：%1$s</string>
-
+    <string name="format_locus_visit">拜&#160;&#160;访&#160;&#160;人：%1$s</string>
+    <string name="format_contacts_phone">联系电话：%1$s</string>
 
     <string name="mine_project_name">项目名称：</string>
     <string name="mine_project_address">项目地址：</string>
@@ -23,6 +24,7 @@
     <string name="mine_project_material">项目用材：</string>
     <string name="mine_locus_intro">动态描述：</string>
     <string name="mine_upload_photo">上传照片：</string>
+    <string name="reject_intro">驳回原因：</string>
 
     <string name="close_all">关闭全部</string>
     <string name="audit">审核中</string>

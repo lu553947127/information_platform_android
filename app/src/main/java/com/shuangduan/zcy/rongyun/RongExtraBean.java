@@ -24,6 +24,11 @@ public class RongExtraBean {
         @SerializedName("order_id")
         public int orderId;
 
+        @SerializedName("user_id")
+        public int userId;
+
+        public String name;
+
         @Override
         public String toString() {
             return "ExtraData{" +

@@ -1,5 +1,6 @@
 package com.shuangduan.zcy.model.api;
 
+import com.shuangduan.zcy.base.TrackDateilBean;
 import com.shuangduan.zcy.model.bean.AddTrackBean;
 import com.shuangduan.zcy.model.bean.AuthenBean;
 import com.shuangduan.zcy.model.bean.BankCardBean;
@@ -1338,6 +1339,14 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("api/Userinfo/myProjectDateil")
     Flowable<BaseResponse<ProjectDetailBean>> getMyProjectDateil(
+            @Field("user_id") int userId,
+            @Field("id") int id
+    );
+
+    //我的工程 --- 动态信息概况
+    @FormUrlEncoded
+    @POST("api/Userinfo/myTrackDateil")
+    Flowable<BaseResponse<TrackDateilBean>> getMyTrackDateil(
             @Field("user_id") int userId,
             @Field("id") int id
     );

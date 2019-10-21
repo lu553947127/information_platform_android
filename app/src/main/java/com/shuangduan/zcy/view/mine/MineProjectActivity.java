@@ -136,6 +136,7 @@ public class MineProjectActivity extends BaseActivity implements CompoundButton.
 
             switch (detail.getStatus()) {
                 case 0:
+                    tvTitle.setEnabled(false);
                     tvTitle.setTextColor(getResources().getColor(R.color.color_646464));
                     ivState.setImageResource(R.drawable.icon_project_audit);
                     break;
@@ -144,6 +145,7 @@ public class MineProjectActivity extends BaseActivity implements CompoundButton.
                     ivState.setImageResource(R.drawable.icon_check_succeed);
                     break;
                 case 2:
+                    tvTitle.setEnabled(false);
                     tvTitle.setTextColor(getResources().getColor(R.color.color_646464));
                     ivState.setImageResource(R.drawable.icon_project_failure);
                     break;

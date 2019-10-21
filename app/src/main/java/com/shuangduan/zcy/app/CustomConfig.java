@@ -37,6 +37,7 @@ public class CustomConfig {
     public static final String uploadTypeIdCard = "id_card";
     public static final String uploadTypeBusinessCard = "business_card";
     public static final String PROJECT_ID = "project_id";
+    public static final String DYNAMICS_ID = "dynamics_id";
     public static final String PROJECT_NAME = "project_name";
     public static final String PROVINCE_NAME = "province_name";
     public static final String CITY_NAME = "city_name";

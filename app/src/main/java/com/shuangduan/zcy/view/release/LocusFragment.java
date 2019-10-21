@@ -72,8 +72,7 @@ public class LocusFragment extends BaseLazyFragment {
         adapter.setOnItemClickListener((helper, view, position) -> {
             LocusMineBean.ListBean listBean = adapter.getData().get(position);
             Bundle bundle = new Bundle();
-            bundle.putInt(CustomConfig.PROJECT_ID, listBean.getId());
-            bundle.putInt(CustomConfig.LOCATION, 1);
+            bundle.putInt(CustomConfig.DYNAMICS_ID, listBean.getId());
             ActivityUtils.startActivity(bundle, MineLocusActivity.class);
         });
 
