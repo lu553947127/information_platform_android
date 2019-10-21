@@ -1,18 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="MainRb">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_gravity">bottom</item>
-        <item name="android:gravity">center</item>
-        <item name="android:button">@null</item>
-        <item name="android:paddingTop">3dp</item>
-        <item name="android:textColor">@color/selector_main_rb</item>
-        <item name="android:textSize">12sp</item>
-    </style>
-
     <style name="BtnConfirm">
         <item name="android:layout_width">295dp</item>
         <item name="android:layout_height">40dp</item>
@@ -21,18 +9,6 @@
         <item name="android:background">@drawable/selector_btn_confirm</item>
         <item name="android:textColor">@color/colorFFF</item>
         <item name="android:textSize">16sp</item>
-    </style>
-
-    <style name="BtnConfirmWhite" parent="BtnConfirm">
-        <item name="android:background">@drawable/shape_btn_confirm_white</item>
-        <item name="android:textColor">@color/color_6a5ff8</item>
-    </style>
-
-    <style name="BtnConfirmWhite_9" parent="BtnConfirm">
-        <item name="android:layout_width">305dp</item>
-        <item name="android:layout_height">50dp</item>
-        <item name="android:background">@drawable/icon_login_background</item>
-        <item name="android:textColor">@color/color_6a5ff8</item>
     </style>
 
     <style name="BtnConfirmGray" parent="BtnConfirm">
