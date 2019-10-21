@@ -334,6 +334,7 @@ public class CircleFragment extends BaseFragment {
                         LogUtils.json(response.body());
                     }
 
+                    @SuppressLint("SetTextI18n")
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
                         LogUtils.json(response.body());
