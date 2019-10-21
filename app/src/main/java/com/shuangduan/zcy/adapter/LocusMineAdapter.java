@@ -26,8 +26,23 @@ public class LocusMineAdapter extends BaseQuickAdapter<LocusMineBean.ListBean, B
 
     @Override
     protected void convert(BaseViewHolder helper, LocusMineBean.ListBean item) {
-        helper.setText(R.id.tv_title, item.getTitle())
-                .setText(R.id.tv_intro, item.getPhases())
-                .setText(R.id.tv_time, item.getCreate_time());
+        helper.setText(R.id.tv_remarks, item.getRemarks())
+                .setText(R.id.tv_title, String.format(mContext.getResources().getString(R.string.format_project_intro), item.getTitle()))
+                .setText(R.id.tv_time, String.format(mContext.getResources().getString(R.string.format_release_time), item.getCreate_time()));
+
+        switch (item.getStatus()) {
+            case 0://待审核
+                helper.setText(R.id.tv_state, R.string.audit)
+                        .setTextColor(R.id.tv_state,mContext.getResources().getColor(R.color.color_F88037));
+                break;
+            case 1://审核成功
+                helper.setText(R.id.tv_state, R.string.pass)
+                        .setTextColor(R.id.tv_state,mContext.getResources().getColor(R.color.color_EF583E));
+                break;
+            case 2://审核失败
+                helper.setText(R.id.tv_state, R.string.reject)
+                        .setTextColor(R.id.tv_state,mContext.getResources().getColor(R.color.text2));
+                break;
+        }
     }
 }

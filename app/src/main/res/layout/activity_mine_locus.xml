@@ -39,12 +39,11 @@
             android:layout_marginRight="15dp"
             android:src="@drawable/icon_check_succeed"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tv_content"
-            android:visibility="invisible"/>
+            app:layout_constraintTop_toTopOf="@id/tv_content"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
+    <include layout="@layout/layout_project_locus"/>
 
 </LinearLayout>

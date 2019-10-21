@@ -19,6 +19,7 @@ import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseLazyFragment;
 import com.shuangduan.zcy.model.bean.LocusMineBean;
 import com.shuangduan.zcy.model.event.LocusRefreshEvent;
+import com.shuangduan.zcy.view.mine.MineLocusActivity;
 import com.shuangduan.zcy.view.projectinfo.ProjectDetailActivity;
 import com.shuangduan.zcy.vm.MineReleaseVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
@@ -73,7 +74,7 @@ public class LocusFragment extends BaseLazyFragment {
             Bundle bundle = new Bundle();
             bundle.putInt(CustomConfig.PROJECT_ID, listBean.getId());
             bundle.putInt(CustomConfig.LOCATION, 1);
-            ActivityUtils.startActivity(bundle, ProjectDetailActivity.class);
+            ActivityUtils.startActivity(bundle, MineLocusActivity.class);
         });
 
         mineReleaseVm = ViewModelProviders.of(this).get(MineReleaseVm.class);

@@ -68,7 +68,7 @@ public class ProjectCollectFragment extends BaseFragment implements EmptyViewFac
 
         rv.setLayoutManager(new LinearLayoutManager(mContext));
         rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
-        ProjectCollectAdapter adapter = new ProjectCollectAdapter(R.layout.item_mine_project, null);
+        ProjectCollectAdapter adapter = new ProjectCollectAdapter(R.layout.item_project_item, null);
         adapter.setEmptyView(R.layout.layout_loading, rv);
         rv.setAdapter(adapter);
         adapter.setOnItemClickListener((helper, view, position) -> {

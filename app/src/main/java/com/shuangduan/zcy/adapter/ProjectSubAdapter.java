@@ -28,6 +28,6 @@ public class ProjectSubAdapter extends BaseQuickAdapter<ProjectSubBean.ListBean,
     protected void convert(BaseViewHolder helper, ProjectSubBean.ListBean item) {
         helper.setText(R.id.tv_title, item.getTitle())
                 .setText(R.id.tv_content, item.getIntro())
-                .setText(R.id.tv_time, item.getPhases());
+                .setText(R.id.tv_phases, item.getPhases());
     }
 }

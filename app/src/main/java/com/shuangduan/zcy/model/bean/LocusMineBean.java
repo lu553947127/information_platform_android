@@ -65,6 +65,26 @@ public class LocusMineBean {
         private int track_count;
         private String create_time;
 
+        public String remarks;
+
+        public int status;
+
+        public String getRemarks() {
+            return remarks;
+        }
+
+        public void setRemarks(String remarks) {
+            this.remarks = remarks;
+        }
+
+        public int getStatus() {
+            return status;
+        }
+
+        public void setStatus(int status) {
+            this.status = status;
+        }
+
         public int getId() {
             return id;
         }

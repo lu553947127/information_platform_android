@@ -67,7 +67,7 @@ public class ProjectSubFragment extends BaseFragment {
 
         rv.setLayoutManager(new LinearLayoutManager(mContext));
         rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
-        ProjectSubAdapter adapter = new ProjectSubAdapter(R.layout.item_mine_project, null);
+        ProjectSubAdapter adapter = new ProjectSubAdapter(R.layout.item_project_item, null);
         adapter.setEmptyView(R.layout.layout_loading, rv);
         rv.setAdapter(adapter);
         adapter.setOnItemClickListener((helper, view, position) -> {

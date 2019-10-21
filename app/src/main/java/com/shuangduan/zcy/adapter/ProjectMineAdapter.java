@@ -34,14 +34,14 @@ public class ProjectMineAdapter extends BaseQuickAdapter<ProjectMineBean.ListBea
         switch (item.getStatus()) {
             case 0://待审核
                 helper.setText(R.id.tv_state, R.string.audit)
-                .setTextColor(R.id.tv_state,mContext.getResources().getColor(R.color.color_EF583E));
+                .setTextColor(R.id.tv_state,mContext.getResources().getColor(R.color.color_F88037));
                 break;
             case 1://审核成功
                 helper.setText(R.id.tv_state, R.string.pass)
-                        .setTextColor(R.id.tv_state,mContext.getResources().getColor(R.color.color_F88037));
+                        .setTextColor(R.id.tv_state,mContext.getResources().getColor(R.color.color_EF583E));
                 break;
             case 2://审核失败
-                helper.setText(R.id.tv_state, R.string.failure)
+                helper.setText(R.id.tv_state, R.string.reject)
                         .setTextColor(R.id.tv_state,mContext.getResources().getColor(R.color.text2));
                 break;
         }

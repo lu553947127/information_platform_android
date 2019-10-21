@@ -7,7 +7,7 @@
 
     <include layout="@layout/toolbar" />
 
-    <include layout="@layout/layout_tab_vp" />
+    <include layout="@layout/layout_tab_vp_divider" />
 
 
 </LinearLayout>

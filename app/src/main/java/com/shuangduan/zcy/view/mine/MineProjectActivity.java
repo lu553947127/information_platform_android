@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.amap.api.maps.model.LatLng;
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.StringUtils;
@@ -29,6 +30,7 @@ import com.shuangduan.zcy.adapter.ContactAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.bean.ProjectDetailBean;
+import com.shuangduan.zcy.view.projectinfo.ProjectDetailActivity;
 import com.shuangduan.zcy.vm.ProjectDetailVm;
 
 import java.util.List;
@@ -111,17 +113,15 @@ public class MineProjectActivity extends BaseActivity implements CompoundButton.
         rvContact.setAdapter(contactAdapter);
 
         cbLoad.setOnCheckedChangeListener(this);
-
         //基本信息设置
         projectDetailVm = ViewModelProviders.of(this).get(ProjectDetailVm.class);
-
 
         projectDetailVm.init(getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0));
         projectDetailVm.detailLiveData.observe(this, projectDetailBean -> {
             contactList = projectDetailBean.getContact();
             ProjectDetailBean.DetailBean detail = projectDetailBean.getDetail();
-            LogUtils.json(LogUtils.E, detail);
             tvTitle.setText(detail.getTitle());
+
             tvAddress.setText(detail.getProvince() + detail.getCity());
             tvDate.setText(getString(R.string.format_release_time, detail.getUpdate_time()));
             tvSate.setText(getString(R.string.format_project_stage, detail.getPhases()));
@@ -134,14 +134,17 @@ public class MineProjectActivity extends BaseActivity implements CompoundButton.
             tvMaterial.setText(detail.getMaterials());
             llMaterial.setVisibility(StringUtils.isTrimEmpty(detail.getMaterials()) ? View.GONE : View.VISIBLE);
 
-            switch (detail.getStatus()){
+            switch (detail.getStatus()) {
                 case 0:
+                    tvTitle.setTextColor(getResources().getColor(R.color.color_646464));
                     ivState.setImageResource(R.drawable.icon_project_audit);
                     break;
                 case 1:
+                    tvTitle.setTextColor(getResources().getColor(R.color.text1));
                     ivState.setImageResource(R.drawable.icon_check_succeed);
                     break;
                 case 2:
+                    tvTitle.setTextColor(getResources().getColor(R.color.color_646464));
                     ivState.setImageResource(R.drawable.icon_project_failure);
                     break;
             }
@@ -170,11 +173,17 @@ public class MineProjectActivity extends BaseActivity implements CompoundButton.
     }
 
 
-    @OnClick({R.id.iv_bar_back})
+    @OnClick({R.id.iv_bar_back, R.id.tv_title})
     void OnClick(View v) {
         switch (v.getId()) {
             case R.id.iv_bar_back:
                 finish();
+                break;
+            case R.id.tv_title:
+                Bundle bundle = new Bundle();
+                bundle.putInt(CustomConfig.PROJECT_ID, getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0));
+                bundle.putInt(CustomConfig.LOCATION, 0);
+                ActivityUtils.startActivity(bundle, ProjectDetailActivity.class);
                 break;
         }
 

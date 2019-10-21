@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="format_project_phases">工程阶段：%1$s</string>
+    <string name="format_project_intro">工程信息：%1$s</string>
     <string name="format_project_valuation">工程造价：%1$s</string>
     <string name="format_project_content">概况</string>
 
@@ -22,9 +23,10 @@
     <string name="mine_project_material">项目用材：</string>
     <string name="mine_locus_intro">动态描述：</string>
     <string name="mine_upload_photo">上传照片：</string>
+
     <string name="close_all">关闭全部</string>
     <string name="audit">审核中</string>
     <string name="pass">通过</string>
-    <string name="failure">失效</string>
+    <string name="reject">驳回</string>
 
 </resources>
