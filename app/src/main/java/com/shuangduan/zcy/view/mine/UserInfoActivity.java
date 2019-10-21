@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
@@ -156,7 +157,11 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
             SPUtils.getInstance().put(SpConfig.MOBILE, userInfoBean.getTel(),true);
             tvName.setText(userInfoBean.getUsername());
             tvMobile.setText(userInfoBean.getTel());
-            tvIdCard.setText(userInfoBean.getIdentity_card());
+            if (!TextUtils.isEmpty(userInfoBean.getIdentity_card())){
+                tvIdCard.setText(userInfoBean.getIdentity_card());
+            }else {
+                tvIdCard.setText("请申请实名认证");
+            }
             tvEmail.setText(userInfoBean.getEmail());
             tvCompany.setText(userInfoBean.getCompany());
             tvOffice.setText(userInfoBean.getPosition());
@@ -284,18 +289,18 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
     void onClick(View view) {
         Bundle bundle = new Bundle();
         switch (view.getId()) {
-            case R.id.iv_bar_back:
+            case R.id.iv_bar_back://返回
                 finish();
                 break;
-            case R.id.iv_user:
+            case R.id.iv_user://更换头像
                 new PhotoDialog(this)
                         .setPhotoCallBack(this)
                         .showDialog();
                 break;
-            case R.id.fl_name:
+            case R.id.fl_name://修改姓名
                 ActivityUtils.startActivity(UpdateNameActivity.class);
                 break;
-            case R.id.fl_sex:
+            case R.id.fl_sex://修改性别
                 new SexDialog(this)
                         .setSex(userInfoVm.sexLiveData.getValue())
                         .setOnSexSelectListener(new SexDialog.OnSexSelectListener() {
@@ -313,7 +318,7 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
                         })
                         .showDialog();
                 break;
-            case R.id.fl_mobile:
+            case R.id.fl_mobile://手改手机号
                 bundle.putString(CustomConfig.UPDATE_TYPE, CustomConfig.updateTypePhone);
                 ActivityUtils.startActivity(bundle, UpdateResultActivity.class);
                 break;

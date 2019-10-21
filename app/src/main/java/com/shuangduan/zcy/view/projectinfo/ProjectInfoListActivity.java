@@ -715,10 +715,4 @@ public class ProjectInfoListActivity extends BaseActivity implements EmptyViewFa
         projectListVm.warrant_status = null;
         projectListVm.projectList();
     }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        projectListVm.projectList();
-    }
 }
