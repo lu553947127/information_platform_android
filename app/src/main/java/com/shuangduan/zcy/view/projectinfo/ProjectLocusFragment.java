@@ -150,9 +150,11 @@ public class ProjectLocusFragment extends BaseLazyFragment {
                     PictureEnlargeUtils.getPictureEnlargeList(getActivity(),list,2);
                     break;
                 case R.id.iv_mark:
-                    Bundle bundle = new Bundle();
-                    bundle.putInt(CustomConfig.UID, listBean.getUser_id());
-                    ActivityUtils.startActivity(bundle, LocusOwnerDetailActivity.class);
+                    if (listBean.getUser_id()!=SPUtils.getInstance().getInt(SpConfig.USER_ID)){
+                        Bundle bundle = new Bundle();
+                        bundle.putInt(CustomConfig.UID, listBean.getUser_id());
+                        ActivityUtils.startActivity(bundle, LocusOwnerDetailActivity.class);
+                    }
                     break;
             }
         });

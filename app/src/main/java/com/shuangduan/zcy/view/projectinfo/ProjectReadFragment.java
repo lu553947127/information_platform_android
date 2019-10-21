@@ -10,12 +10,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.bumptech.glide.Glide;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.LocusReadAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
+import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseLazyFragment;
 import com.shuangduan.zcy.model.bean.TrackBean;
 import com.shuangduan.zcy.model.event.RefreshViewLocusEvent;
@@ -95,9 +97,11 @@ public class ProjectReadFragment extends BaseLazyFragment {
                     PictureEnlargeUtils.getPictureEnlargeList(getActivity(),list,2);
                     break;
                 case R.id.iv_mark:
-                    Bundle bundle = new Bundle();
-                    bundle.putInt(CustomConfig.UID, listBean.getUser_id());
-                    ActivityUtils.startActivity(bundle, LocusOwnerDetailActivity.class);
+                    if (listBean.getUser_id()!= SPUtils.getInstance().getInt(SpConfig.USER_ID)){
+                        Bundle bundle = new Bundle();
+                        bundle.putInt(CustomConfig.UID, listBean.getUser_id());
+                        ActivityUtils.startActivity(bundle, LocusOwnerDetailActivity.class);
+                    }
                     break;
             }
         });
