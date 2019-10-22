@@ -22,6 +22,8 @@ import com.shuangduan.zcy.model.bean.MaterialBean;
 import com.shuangduan.zcy.vm.MaterialVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
+import java.util.Objects;
+
 import butterknife.BindView;
 
 /**
@@ -68,9 +70,9 @@ public class SellFragment extends BaseLazyFragment implements EmptyViewFactory.E
         emptyView = createEmptyView(R.drawable.icon_empty_project, R.string.empty_substance_screen_info, R.string.see_all, this);
 
         rv.setLayoutManager(new LinearLayoutManager(mContext));
-        rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
-//        rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_h_5));
-        SellAdapter adapter = new SellAdapter(R.layout.item_material, null);
+//        rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
+        rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_h_5));
+        SellAdapter adapter = new SellAdapter(R.layout.item_material_list, null);
         adapter.setEmptyView(R.layout.layout_loading, rv);
         rv.setAdapter(adapter);
         adapter.setOnItemClickListener((helper, view, position) -> {
@@ -133,9 +135,13 @@ public class SellFragment extends BaseLazyFragment implements EmptyViewFactory.E
     @Override
     public void onEmptyClick() {
         materialVm.materialId = 0;
+        materialVm.materialName = "";
         materialVm.specification = "";
         materialVm.supplierId = 0;
-
+        materialVm.supplier = "";
+        materialVm.supplierMethod = "";
+        materialVm.supplierMethodId = 0;
+        ((MaterialActivity)getActivity()).updateFilterStyle();
         materialVm.sellList(materialVm.materialId, materialVm.specification, materialVm.supplierId);
     }
 }

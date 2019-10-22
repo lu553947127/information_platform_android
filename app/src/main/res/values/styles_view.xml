@@ -35,10 +35,11 @@
     </style>
 
 
+<!--    <item name="android:background">@drawable/shape_f5f5f5_14</item>-->
     <style name="MaterialFilterStyle">
         <item name="android:layout_width">82dp</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@drawable/shape_f5f5f5_14</item>
+
         <item name="android:gravity">center_vertical</item>
         <item name="android:paddingTop">5dp</item>
         <item name="android:paddingBottom">5dp</item>

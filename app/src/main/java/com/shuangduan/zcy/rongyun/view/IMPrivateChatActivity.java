@@ -272,7 +272,7 @@ public class IMPrivateChatActivity extends BaseActivity implements RongIM.Conver
                 case 22://您查看了一条找买家需求信息消费
                 case 23://您查看了一条找物资需求信息消费
                     bundle.putInt(CustomConfig.TRANS_RECORD_ID, extraBean.data.id);
-                    ActivityUtils.startActivity(bundle, TransRecordDetailActivity.class);
+                    ActivityUtils.startActivity(bundle, TransRecordDetailActivity.class); //交易记录详情
                     break;
                 case 24:// 物资订单状态有更新
                     bundle.putInt(CustomConfig.ORDER_ID, extraBean.data.orderId);

@@ -5,12 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="15dp">
+    android:padding="15dp"
+    tools:ignore="MissingConstraints">
 
     <ImageView
         android:id="@+id/iv_icon"
         android:layout_width="100dp"
-        android:layout_height="66dp"
+        android:layout_height="100dp"
         android:scaleType="centerCrop"
         android:src="@drawable/wuzhi_default"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -21,10 +22,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="1dp"
         android:textColor="@color/colorTv"
         android:textSize="14sp"
         app:layout_constraintLeft_toRightOf="@+id/iv_icon"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_bought"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:src="@drawable/icon_bought"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@id/tv_title"
+        app:layout_constraintLeft_toRightOf="@id/tv_title"
+        app:layout_constraintTop_toTopOf="@id/tv_title" />
+
 
     <TextView
         android:id="@+id/tv_stock"
@@ -34,9 +48,7 @@
         android:textColor="@color/color_666666"
         android:textSize="12sp"
         app:layout_constraintLeft_toLeftOf="@+id/tv_title"
-        app:layout_constraintTop_toBottomOf="@+id/tv_title"
-        tools:ignore="MissingConstraints" />
-
+        app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
     <TextView
         android:id="@+id/tv_spec"
@@ -46,8 +58,7 @@
         android:textColor="@color/color_666666"
         android:textSize="12sp"
         app:layout_constraintLeft_toLeftOf="@id/tv_title"
-        app:layout_constraintTop_toBottomOf="@id/tv_stock"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintTop_toBottomOf="@id/tv_stock" />
 
     <TextView
         android:id="@+id/tv_supplier"
@@ -57,18 +68,8 @@
         android:textColor="@color/color_666666"
         android:textSize="12sp"
         app:layout_constraintLeft_toLeftOf="@+id/tv_title"
-        app:layout_constraintTop_toBottomOf="@+id/tv_title"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_spec" />
 
-    <TextView
-        android:id="@+id/tv_owner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
-        android:textColor="@color/color_666666"
-        android:textSize="12sp"
-        app:layout_constraintLeft_toLeftOf="@+id/tv_title"
-        app:layout_constraintTop_toBottomOf="@id/tv_spec" />
 
     <TextView
         android:id="@+id/tv_address"
@@ -78,61 +79,27 @@
         android:textColor="@color/color_666666"
         android:textSize="12sp"
         app:layout_constraintLeft_toLeftOf="@+id/tv_title"
-        app:layout_constraintTop_toBottomOf="@id/tv_owner" />
+        app:layout_constraintTop_toBottomOf="@id/tv_supplier" />
 
     <TextView
         android:id="@+id/tv_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/color_EF583E"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_title"
-        app:layout_constraintRight_toLeftOf="@+id/tv_price_unit" />
-
-    <TextView
-        android:id="@+id/tv_price_unit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/color_666666"
-        android:textSize="14sp"
+        android:textSize="11sp"
         app:layout_constraintBottom_toBottomOf="@+id/tv_title"
         app:layout_constraintRight_toRightOf="parent" />
 
+
     <TextView
-        android:id="@+id/tv_sold_num"
+        android:id="@+id/tv_browse_num"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:textColor="@color/color_666666"
         android:textSize="12sp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_stock"
-        app:layout_constraintRight_toRightOf="parent" />
-
-    <TextView
-        android:id="@+id/tv_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/circular_background_gray2"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:text="失效"
-        android:textColor="@color/colorFFF"
-        android:textSize="14sp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/tv_title"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv_title" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_price" />
 
-    <TextView
-        android:id="@+id/tv_bought"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
-        android:text="买过的产品"
-        android:textColor="@color/color_EF583E"
-        android:textSize="12sp"
-        android:visibility="gone"
-        app:layout_constraintLeft_toLeftOf="@id/iv_icon"
-        app:layout_constraintTop_toBottomOf="@id/iv_icon" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

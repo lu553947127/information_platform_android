@@ -35,15 +35,20 @@ public class MaterialCollectAdapter extends BaseQuickAdapter<MaterialCollectBean
         String method = item.method == 1 ? "租赁" : "售卖";
         helper.setText(R.id.tv_title, item.catname)
                 .setText(R.id.tv_stock, "分类: " + item.category)
-                .setText(R.id.tv_spec, "方式: " +method)
+                .setText(R.id.tv_spec, "方式: " + method)
                 .setText(R.id.tv_owner, "供应商: " + item.company)
                 .setText(R.id.tv_price, item.guidance_price)
                 .setText(R.id.tv_price_unit, String.format(mContext.getString(R.string.format_price_unit), item.unit))
                 .setText(R.id.tv_sold_num, "库存: " + item.stock + item.unit);
         TextView tvStatus = helper.getView(R.id.tv_status);
-        if (item.status==1){
+        if (item.status == 1) {
+
+            helper.setGone(R.id.tv_price, true)
+                    .setGone(R.id.tv_price_unit, true);
             tvStatus.setVisibility(View.GONE);
-        }else {
+        } else {
+            helper.setGone(R.id.tv_price, false)
+                    .setGone(R.id.tv_price_unit, false);
             tvStatus.setVisibility(View.VISIBLE);
         }
         ImageView ivIcon = helper.getView(R.id.iv_icon);

@@ -549,16 +549,17 @@
         <item>找物资</item>
         <item>找买家</item>
     </string-array>
-    <!--
-        <string-array name="infrastructure">
-            <item>全部物资</item>
-            <item>内购物资</item>
-        </string-array>
-        -->
+
     <string-array name="infrastructure">
-        <item>售卖</item>
-        <item>租赁</item>
+        <item>周转材料</item>
+        <item>设备物资</item>
     </string-array>
+    <!--
+     <string-array name="infrastructure">
+         <item>售卖</item>
+         <item>租赁</item>
+     </string-array>
+    -->
     <string-array name="withdraw_state">
         <item>审核中</item>
         <item>成功</item>

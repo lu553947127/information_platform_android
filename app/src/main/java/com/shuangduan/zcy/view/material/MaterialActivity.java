@@ -29,6 +29,7 @@ import com.shuangduan.zcy.dialog.pop.CommonPopupWindow;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.event.MaterialEvent;
 import com.shuangduan.zcy.model.event.SupplierEvent;
+import com.shuangduan.zcy.utils.DensityUtil;
 import com.shuangduan.zcy.vm.MaterialVm;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -53,6 +54,14 @@ public class MaterialActivity extends BaseActivity {
     AppCompatTextView tvBarRight;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.toolbar_material)
+    Toolbar toolbarMaterial;
+    @BindView(R.id.tv_open)
+    TextView tvOpen;
+    @BindView(R.id.tv_default)
+    TextView tvDefault;
+
+
     @BindView(R.id.tab_layout)
     TabLayout tabLayout;
     @BindView(R.id.vp)
@@ -86,6 +95,8 @@ public class MaterialActivity extends BaseActivity {
     private EditText etSpecification;
     private RadioGroup radioGroup;
 
+    //物资大分类 0：公开物资 1：内定物资
+    private int materialFlag;
 
     @Override
     protected int initLayoutRes() {
@@ -99,9 +110,13 @@ public class MaterialActivity extends BaseActivity {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
-        BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
+        BarUtils.addMarginTopEqualStatusBarHeight(toolbarMaterial);
         tvBarTitle.setText(getString(R.string.material_base));
         tvBarRight.setText(getString(R.string.filter));
+        tvBarRight.setVisibility(View.GONE);
+
+        toolbar.setVisibility(View.GONE);
+        toolbarMaterial.setVisibility(View.VISIBLE);
 
         Fragment[] fragments = new Fragment[]{
                 SellFragment.newInstance(),
@@ -127,11 +142,30 @@ public class MaterialActivity extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.iv_bar_back, R.id.over, R.id.ll_name, R.id.ll_spec, R.id.ll_supplier, R.id.ll_supplier_method, R.id.tv_bar_right})
+    @OnClick({R.id.iv_bar_back, R.id.iv_back, R.id.tv_open, R.id.tv_default, R.id.over, R.id.ll_name, R.id.ll_spec, R.id.ll_supplier, R.id.ll_supplier_method, R.id.tv_bar_right})
     void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_bar_back:
+            case R.id.iv_back:
                 finish();
+                break;
+            case R.id.tv_open:
+                if (materialFlag == 0) return;
+                tvOpen.setTextSize(18);
+                tvDefault.setTextSize(14);
+                //TODO 后续修改接口
+                materialVm.sellList(materialVm.materialId, materialVm.specification, materialVm.supplierId);
+                materialVm.leaseList(materialVm.materialId, materialVm.specification, materialVm.supplierId);
+                materialFlag = 0;
+                break;
+            case R.id.tv_default:
+                if (materialFlag == 1) return;
+                tvOpen.setTextSize(14);
+                tvDefault.setTextSize(18);
+                //TODO 后续修改接口
+                materialVm.sellList(materialVm.materialId, materialVm.specification, materialVm.supplierId);
+                materialVm.leaseList(materialVm.materialId, materialVm.specification, materialVm.supplierId);
+                materialFlag = 1;
                 break;
             case R.id.tv_bar_right:
                 initPop();
@@ -314,12 +348,12 @@ public class MaterialActivity extends BaseActivity {
         if (!popupWindowCategory.isShowing()) {
             over.setVisibility(View.VISIBLE);
             showPopView(popupWindowCategory.getContentView(), filterType);
-            popupWindowCategory.showAsDropDown(clFilter, 0, 0);
+            popupWindowCategory.showAsDropDown(clFilter, 0, DensityUtil.dp2px(10));
         }
     }
 
 
-    private void updateFilterStyle() {
+    public void updateFilterStyle() {
         //筛选框文字
         cbFilterName.setText(StringUtils.isEmpty(materialVm.materialName) ?
                 getResources().getString(R.string.filter_name) : materialVm.materialName);
@@ -339,10 +373,10 @@ public class MaterialActivity extends BaseActivity {
         cbFilterSupplier.setChecked(!StringUtils.isEmpty(materialVm.supplier));
         cbFilterSupplierMethod.setChecked(!StringUtils.isEmpty(materialVm.supplierMethod));
         //筛选框背景
-        llName.setBackgroundResource(StringUtils.isEmpty(materialVm.materialName) ? R.drawable.shape_f5f5f5_14 : R.drawable.shape_stroke_6a5ff8_bg_f5f5f5_14);
-        llSpec.setBackgroundResource(StringUtils.isEmpty(materialVm.specification) ? R.drawable.shape_f5f5f5_14 : R.drawable.shape_stroke_6a5ff8_bg_f5f5f5_14);
-        llSupplier.setBackgroundResource(StringUtils.isEmpty(materialVm.supplier) ? R.drawable.shape_f5f5f5_14 : R.drawable.shape_stroke_6a5ff8_bg_f5f5f5_14);
-        llSupplierMethod.setBackgroundResource(StringUtils.isEmpty(materialVm.supplierMethod) ? R.drawable.shape_f5f5f5_14 : R.drawable.shape_stroke_6a5ff8_bg_f5f5f5_14);
+//        llName.setBackgroundResource(StringUtils.isEmpty(materialVm.materialName) ? R.drawable.shape_f5f5f5_14 : R.drawable.shape_stroke_6a5ff8_bg_f5f5f5_14);
+//        llSpec.setBackgroundResource(StringUtils.isEmpty(materialVm.specification) ? R.drawable.shape_f5f5f5_14 : R.drawable.shape_stroke_6a5ff8_bg_f5f5f5_14);
+//        llSupplier.setBackgroundResource(StringUtils.isEmpty(materialVm.supplier) ? R.drawable.shape_f5f5f5_14 : R.drawable.shape_stroke_6a5ff8_bg_f5f5f5_14);
+//        llSupplierMethod.setBackgroundResource(StringUtils.isEmpty(materialVm.supplierMethod) ? R.drawable.shape_f5f5f5_14 : R.drawable.shape_stroke_6a5ff8_bg_f5f5f5_14);
     }
 
     private void showPopView(View view, int type) {
@@ -364,7 +398,6 @@ public class MaterialActivity extends BaseActivity {
                 cbFilterSpec.setChecked(!StringUtils.isEmpty(materialVm.specification));
                 cbFilterSupplier.setChecked(!StringUtils.isEmpty(materialVm.supplier));
                 cbFilterSupplierMethod.setChecked(!StringUtils.isEmpty(materialVm.supplierMethod));
-
                 filterViewShow(view, View.VISIBLE, View.GONE, View.GONE, View.GONE);
                 break;
             case 1:
@@ -373,7 +406,6 @@ public class MaterialActivity extends BaseActivity {
                 cbFilterName.setChecked(!StringUtils.isEmpty(materialVm.materialName));
                 cbFilterSupplier.setChecked(!StringUtils.isEmpty(materialVm.supplier));
                 cbFilterSupplierMethod.setChecked(!StringUtils.isEmpty(materialVm.supplierMethod));
-
                 filterViewShow(view, View.GONE, View.VISIBLE, View.GONE, View.GONE);
                 break;
             case 2:
@@ -382,7 +414,6 @@ public class MaterialActivity extends BaseActivity {
                 cbFilterName.setChecked(!StringUtils.isEmpty(materialVm.materialName));
                 cbFilterSpec.setChecked(!StringUtils.isEmpty(materialVm.specification));
                 cbFilterSupplierMethod.setChecked(!StringUtils.isEmpty(materialVm.supplierMethod));
-
                 filterViewShow(view, View.GONE, View.GONE, View.VISIBLE, View.GONE);
                 break;
             case 3:

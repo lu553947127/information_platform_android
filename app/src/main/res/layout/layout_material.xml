@@ -17,16 +17,22 @@
 
     </com.google.android.material.tabs.TabLayout>
 
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@id/tab_layout"
+        android:background="@color/color_DDDDDD"/>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_filter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tab_layout"
+        android:layout_below="@id/divider"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="15dp"
-        android:layout_marginBottom="10dp"
-        android:visibility="gone">
+        android:layout_marginBottom="10dp">
 
         <LinearLayout
             android:id="@+id/ll_name"
@@ -95,8 +101,7 @@
         android:layout_width="match_parent"
         android:layout_height="5dp"
         android:layout_below="@+id/cl_filter"
-        android:background="@color/color_F5F5F5"
-        android:visibility="gone"/>
+        android:background="@color/color_F5F5F5"/>
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/vp"
