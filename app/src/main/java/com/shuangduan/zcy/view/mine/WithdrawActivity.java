@@ -92,6 +92,7 @@ public class WithdrawActivity extends BaseActivity {
         });
         withdrawVm.operateLiveData.observe(this, o -> {
             ToastUtils.showShort("提现申请已提交审核");
+            withdrawVm.withdrawMsg();
         });
         withdrawVm.pageStateLiveData.observe(this, s -> {
             switch (s){

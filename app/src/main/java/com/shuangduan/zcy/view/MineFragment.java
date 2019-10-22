@@ -45,6 +45,7 @@ import com.shuangduan.zcy.view.release.ReleaseListActivity;
 import com.shuangduan.zcy.vm.UserInfoVm;
 import com.shuangduan.zcy.weight.AdaptationScrollView;
 import com.shuangduan.zcy.weight.CircleImageView;
+import com.shuangduan.zcy.weight.HeadZoomScrollView;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -66,7 +67,7 @@ import butterknife.OnClick;
 public class MineFragment extends BaseFragment {
 
     @BindView(R.id.scroll)
-    AdaptationScrollView scrollView;
+    HeadZoomScrollView scrollView;
     @BindView(R.id.rl_toolbar)
     RelativeLayout toolbar;
     @BindView(R.id.iv_user)
@@ -132,7 +133,7 @@ public class MineFragment extends BaseFragment {
         scrollView.setOnScrollChangeListener(new AdaptationScrollView.OnScrollChangeListener() {
             private int mScrollY_2 = 0;
             private int lastScrollY = 0;
-            private int h = DensityUtil.dp2px(30);
+            private int h = DensityUtil.dp2px(65);
             //设置折叠标题背景颜色
             private int color = ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.colorPrimary) & 0x00ffffff;
 
@@ -149,6 +150,8 @@ public class MineFragment extends BaseFragment {
                 lastScrollY = scrollY;
             }
         });
+
+        scrollView.smoothScrollTo(0,0);
 
         //判断是否已经实名
         if (SPUtils.getInstance().getInt(SpConfig.IS_VERIFIED)==2){

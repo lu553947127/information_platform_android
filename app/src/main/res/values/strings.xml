@@ -231,7 +231,7 @@
     <string name="time">时间</string>
     <string name="unsubscribe">未认购</string>
     <string name="subscribed">已认购</string>
-    <string name="subscribe">我的认购</string>
+    <string name="subscribe">信息认购</string>
     <string name="subscribe_push">认购推送</string>
     <string name="error_correction">纠错</string>
     <string name="discuss_group">讨论组</string>
@@ -483,7 +483,7 @@
     <string name="im_contacts_new_friend">新的朋友</string>
     <string name="im_contacts_my_group">我的工程群</string>
     <string name="im_contacts_my_friend">我的好友</string>
-    <string name="im_no_read_message">...</string>
+    <string name="im_no_read_message">…</string>
     <string name="im_group_details">群资料</string>
     <string name="im_group_details_name">项目名称</string>
     <string name="im_group_details_address">项目地址</string>

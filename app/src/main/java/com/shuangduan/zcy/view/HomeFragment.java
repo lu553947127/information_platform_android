@@ -561,9 +561,11 @@ public class HomeFragment extends BaseFragment {
                                 } else if (counts < 100) {
                                     relativeLayout.setVisibility(View.VISIBLE);
                                     number.setText(" " + counts + " ");
+                                    number.setTextSize(11);
                                 } else {
                                     relativeLayout.setVisibility(View.VISIBLE);
                                     number.setText("99+");
+                                    number.setTextSize(9);
                                 }
                             }
                         }catch (JsonSyntaxException | IllegalStateException ignored){

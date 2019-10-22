@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.shuangduan.zcy.weight.AdaptationScrollView
+    <com.shuangduan.zcy.weight.HeadZoomScrollView
         android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -16,16 +16,25 @@
             android:orientation="vertical"
             android:background="@color/colorFFF">
 
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:scaleType="centerCrop"
+                android:src="@drawable/shape_bg_mine"
+                android:layout_marginTop="-35dp"/>
+
             <!--头布局-->
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-185dp">
 
                 <!--右上角设置和帮助-->
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    android:background="@drawable/shape_bg_mine">
+                    android:layout_marginTop="39dp">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/iv_set"
@@ -34,8 +43,8 @@
                         android:scaleType="centerCrop"
                         android:src="@drawable/icon_set"
                         android:layout_alignParentRight="true"
-                        android:layout_marginTop="39dp"
-                        android:layout_marginRight="19dp"/>
+                        android:layout_marginRight="19dp"
+                        tools:ignore="RtlHardcoded" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/iv_help"
@@ -45,7 +54,7 @@
                         android:src="@drawable/icon_help_white"
                         android:layout_toLeftOf="@+id/iv_set"
                         android:layout_marginRight="24dp"
-                        android:layout_marginTop="39dp" />
+                        tools:ignore="RtlHardcoded" />
 
                 </RelativeLayout>
 
@@ -437,7 +446,7 @@
             </LinearLayout>
 
         </LinearLayout>
-    </com.shuangduan.zcy.weight.AdaptationScrollView>
+    </com.shuangduan.zcy.weight.HeadZoomScrollView>
 
     <RelativeLayout
         android:id="@+id/rl_toolbar"

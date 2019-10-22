@@ -175,9 +175,9 @@ public class CircleFragment extends BaseFragment {
         getBadgeViewInitView(view);
 
         //根据 userId 去你的用户系统里查询对应的用户信息返回给融云 SDK。
-//        RongIM.setUserInfoProvider(this::getFriendData,true);
+        RongIM.setUserInfoProvider(this::getFriendData,true);
         //设置群聊列表数据
-//        RongIM.setGroupInfoProvider(this::getGroupData,true);
+        RongIM.setGroupInfoProvider(this::getGroupData,true);
         //获取未读消息数量
         RongIM.getInstance().addUnReadMessageCountChangedObserver(i -> {
             LogUtils.i(i);
@@ -214,12 +214,12 @@ public class CircleFragment extends BaseFragment {
         RongIM.getInstance().setConversationToTop(Conversation.ConversationType.SYSTEM, "18", true, new RongIMClient.ResultCallback<Boolean>() {
             @Override
             public void onSuccess(Boolean aBoolean) {
-                LogUtils.i("成功");
+                LogUtils.i("置顶成功");
             }
 
             @Override
             public void onError(RongIMClient.ErrorCode errorCode) {
-                LogUtils.i("失败");
+                LogUtils.i("置顶失败");
             }
         });
     }
@@ -356,15 +356,14 @@ public class CircleFragment extends BaseFragment {
                                 if (counts < 1) {
                                     relativeLayout.setVisibility(View.GONE);
                                 } else if (counts < 100) {
+                                    number.setTextSize(11);
                                     relativeLayout.setVisibility(View.VISIBLE);
                                     number.setText(" " + counts + " ");
                                 } else {
                                     relativeLayout.setVisibility(View.VISIBLE);
+                                    number.setTextSize(9);
                                     number.setText("99+");
                                 }
-//                            }else if (bean.getCode().equals("-1")){
-//                                ToastUtils.showShort(bean.getMsg());
-//                                LoginUtils.getExitLogin();
                             }else {
                                 tvNumber.setVisibility(View.INVISIBLE);
                             }
