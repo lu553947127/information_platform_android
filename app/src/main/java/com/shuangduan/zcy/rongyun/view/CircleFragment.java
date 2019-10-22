@@ -91,7 +91,6 @@ public class CircleFragment extends BaseFragment {
     private int count=0;
 
     public static CircleFragment newInstance() {
-
         Bundle args = new Bundle();
         CircleFragment fragment = new CircleFragment();
         fragment.setArguments(args);

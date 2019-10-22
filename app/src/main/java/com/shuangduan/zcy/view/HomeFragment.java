@@ -7,8 +7,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
@@ -30,7 +28,7 @@ import com.google.gson.JsonSyntaxException;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ClassifyAdapter;
@@ -118,6 +116,8 @@ public class HomeFragment extends BaseFragment {
     TextView tvBarTitle;
     @BindView(R.id.rl_toolbar)
     RelativeLayout toolbar;
+    @BindView(R.id.rl_toolbar_top)
+    RelativeLayout rl_toolbar;
     @BindView(R.id.rv_classify)
     RecyclerView rvClassify;
     @BindView(R.id.refresh)
@@ -163,6 +163,7 @@ public class HomeFragment extends BaseFragment {
         return false;
     }
 
+    @SuppressLint("NewApi")
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState, View v) {
 //        BarUtils.setStatusBarColorRes(fakeStatusBar, getResources().getColor(R.color.colorPrimary));
@@ -199,16 +200,31 @@ public class HomeFragment extends BaseFragment {
             }
         });
         refresh.setEnableLoadMore(false);
-        refresh.setEnableRefresh(false);
+        refresh.setEnableRefresh(true);
         refresh.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);
+        refresh.setOnRefreshListener(refreshLayout -> {
+            homeVm.getInit();
+            RongIM.getInstance().addUnReadMessageCountChangedObserver(i -> {
+                LogUtils.i(i);
+                // i 是未读数量
+                getFriendApplyCount(i);
+            }, Conversation.ConversationType.PRIVATE,Conversation.ConversationType.GROUP,Conversation.ConversationType.SYSTEM);
+            getAndroidVersionUpgrades();
+            refreshLayout.finishRefresh(1000);
+        });
+        refresh.setEnableOverScrollDrag(true);
+        refresh.setEnableOverScrollBounce(true);
+        //监听下拉刷新滑动距离
         refresh.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
             @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                homeVm.getInit();
-                refreshLayout.finishRefresh(1000);
+            public void onHeaderMoving(RefreshHeader header, boolean isDragging, float percent, int offset, int headerHeight, int maxDragHeight) {
+                if (offset>0){
+                    rl_toolbar.setVisibility(View.GONE);
+                }else {
+                    rl_toolbar.setVisibility(View.VISIBLE);
+                }
             }
         });
-
         List<ClassifyBean> list = getClassify();
         rvClassify.setLayoutManager(new GridLayoutManager(mContext, 4));
         ClassifyAdapter classifyAdapter = new ClassifyAdapter(list);

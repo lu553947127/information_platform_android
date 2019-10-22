@@ -1,10 +1,8 @@
 package com.shuangduan.zcy.rongyun.view;
 
 import android.content.Context;
-import android.text.InputFilter;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
@@ -14,14 +12,12 @@ import com.google.gson.JsonSyntaxException;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.shuangduan.zcy.R;
-import com.shuangduan.zcy.adapter.MaterialPlaceOrderAdapter;
 import com.shuangduan.zcy.app.Common;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
 import com.shuangduan.zcy.model.bean.IMWechatUserInfoBean;
 
 import io.rong.imkit.model.UIConversation;
-import io.rong.imkit.userInfoCache.RongUserInfoManager;
 import io.rong.imkit.widget.adapter.ConversationListAdapter;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.UserInfo;
@@ -56,9 +52,6 @@ public class ConversationListAdapterEx extends ConversationListAdapter {
             if (data.getConversationType().equals(Conversation.ConversationType.PRIVATE)){
                 getFriendData(data.getConversationTargetId(),v);
             }else {
-                ((TextView)(v.findViewById(R.id.rc_conversation_title))).setFilters(new InputFilter[] { new InputFilter.LengthFilter(12)});
-                (v.findViewById(R.id.tv_company)).setVisibility(View.GONE);
-                (v.findViewById(R.id.tv_post)).setVisibility(View.GONE);
                 (v.findViewById(R.id.iv_sgs)).setVisibility(View.INVISIBLE);
             }
         }
@@ -87,19 +80,12 @@ public class ConversationListAdapterEx extends ConversationListAdapter {
                             LogUtils.json(response.body());
                             if (bean.getCode().equals("200")){
                                 if (bean.getData()!=null){
-                                    (v.findViewById(R.id.tv_company)).setVisibility(View.VISIBLE);
-                                    (v.findViewById(R.id.tv_post)).setVisibility(View.VISIBLE);
-                                    ((TextView)v.findViewById(R.id.tv_company)).setText(bean.getData().getCompany());
-                                    ((TextView)v.findViewById(R.id.tv_post)).setText(bean.getData().getPosition());
-                                    ((TextView)(v.findViewById(R.id.rc_conversation_title))).setFilters(new InputFilter[] { new InputFilter.LengthFilter(5)});
                                     if (bean.getData().getCard_status().equals("2")){
                                         (v.findViewById(R.id.iv_sgs)).setVisibility(View.VISIBLE);
                                     }else {
                                         (v.findViewById(R.id.iv_sgs)).setVisibility(View.INVISIBLE);
                                     }
                                 }else {
-                                    (v.findViewById(R.id.tv_company)).setVisibility(View.GONE);
-                                    (v.findViewById(R.id.tv_post)).setVisibility(View.GONE);
                                     (v.findViewById(R.id.iv_sgs)).setVisibility(View.INVISIBLE);
                                 }
                             }else {

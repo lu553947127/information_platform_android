@@ -33,6 +33,7 @@ import com.shuangduan.zcy.callback.ErrorCallback;
 import com.shuangduan.zcy.callback.LoadingCallback;
 import com.shuangduan.zcy.callback.TimeOutCallback;
 import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
+import com.shuangduan.zcy.rongyun.provider.CustomPrivateConversationProvider;
 import com.shuangduan.zcy.utils.LoginUtils;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -196,6 +197,8 @@ public class AppConfig {
                 Conversation.ConversationType.DISCUSSION
         };
         RongIM.getInstance().setReadReceiptConversationTypeList(types);
+        //注册复写的会话列表布局
+        RongIM.getInstance().registerConversationTemplate(new CustomPrivateConversationProvider());
     }
 
     /**

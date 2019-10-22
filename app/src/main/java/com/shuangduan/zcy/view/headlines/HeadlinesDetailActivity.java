@@ -154,6 +154,8 @@ public class HeadlinesDetailActivity extends BaseActivity {
             }
         });
         headlinesVm.getDetail();
+        //置顶
+        scrollView.smoothScrollTo(0,0);
     }
 
     @Override

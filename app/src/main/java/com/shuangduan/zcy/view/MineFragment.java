@@ -151,8 +151,6 @@ public class MineFragment extends BaseFragment {
             }
         });
 
-        scrollView.smoothScrollTo(0,0);
-
         //判断是否已经实名
         if (SPUtils.getInstance().getInt(SpConfig.IS_VERIFIED)==2){
             tvAuthentication.setText("已实名认证");
