@@ -29,6 +29,7 @@ import com.shuangduan.zcy.utils.AnimationUtils;
 import com.shuangduan.zcy.utils.DensityUtil;
 import com.shuangduan.zcy.utils.image.ImageConfig;
 import com.shuangduan.zcy.utils.image.ImageLoader;
+import com.shuangduan.zcy.view.adminManage.AdminManageActivity;
 import com.shuangduan.zcy.view.mine.AuthenticationActivity;
 import com.shuangduan.zcy.view.mine.MineWalletActivity;
 import com.shuangduan.zcy.view.mine.HelperActivity;
@@ -86,6 +87,12 @@ public class MineFragment extends BaseFragment {
     AppCompatImageView ivRedEnvelopes;
     @BindView(R.id.ll_admin_manage)
     LinearLayout llAdminManage;
+    @BindView(R.id.tv_turnover_material)
+    AppCompatTextView tvTurnoverMaterial;
+    @BindView(R.id.tv_device_management)
+    AppCompatTextView tvDeviceManagement;
+    @BindView(R.id.tv_order_management)
+    AppCompatTextView tvOrderManagement;
     private UserInfoVm userInfoVm;
 
     public static MineFragment newInstance() {
@@ -178,7 +185,7 @@ public class MineFragment extends BaseFragment {
 
     @OnClick({R.id.iv_help,R.id.iv_set,R.id.cl_user, R.id.tv_authentication, R.id.tv_wallet, R.id.rl_recommend_friends,
             R.id.tv_income, R.id.tv_mine_subscription, R.id.tv_read_history, R.id.tv_my_project, R.id.tv_my_demand,
-            R.id.tv_my_collection,R.id.tv_my_material})
+            R.id.tv_my_collection,R.id.tv_my_material,R.id.tv_turnover_material,R.id.tv_device_management,R.id.tv_order_management})
     void onClick(View view) {
         Bundle bundle = new Bundle();
         switch (view.getId()) {
@@ -223,6 +230,18 @@ public class MineFragment extends BaseFragment {
                 break;
             case R.id.tv_my_material: //预定订单
                 ActivityUtils.startActivity(MaterialOrderActivity.class);
+                break;
+            case R.id.tv_turnover_material://周转材料
+                bundle.putInt(CustomConfig.IS_ADMIN_MANAGE,1);
+                ActivityUtils.startActivity(bundle,AdminManageActivity.class);
+                break;
+            case R.id.tv_device_management://设备管理
+                bundle.putInt(CustomConfig.IS_ADMIN_MANAGE,2);
+                ActivityUtils.startActivity(bundle,AdminManageActivity.class);
+                break;
+            case R.id.tv_order_management://订单管理
+                bundle.putInt(CustomConfig.IS_ADMIN_MANAGE,3);
+                ActivityUtils.startActivity(bundle,AdminManageActivity.class);
                 break;
         }
     }

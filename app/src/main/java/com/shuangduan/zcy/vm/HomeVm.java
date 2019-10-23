@@ -46,18 +46,22 @@ public class HomeVm extends BaseViewModel {
         getList();
     }
 
+    //快讯标题
     public void getPush(){
         new HomeRepository().homePush(pushLiveData, pageStateLiveData, userId);
     }
 
+    //首页轮播图
     public void getBanner(){
         new HomeRepository().homeBanner(bannerLiveData, pageStateLiveData, userId);
     }
 
+    //基建头条+收益说明列表
     public void getList(){
         new HomeRepository().homeList(listLiveData, pageStateLiveData, userId);
     }
 
+    //用户权限设置 appoint 1.普通用户 2.普通供应商 3.集团供应商 4.集团供应商子公司
     public void getDetail(){
         new HomeRepository().homeListDetail(detailLiveData, pageStateLiveData, userId);
     }

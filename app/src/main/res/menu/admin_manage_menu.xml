@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--周转材料-->
+    <item
+        android:id="@+id/menu_turnover_material"
+        android:icon="@drawable/icon_admin_turnover_material"
+        android:title="周转材料" />
+    <!--设备管理-->
+    <item
+        android:id="@+id/menu_device_management"
+        android:icon="@drawable/icon_admin_device_management"
+        android:title="设备管理" />
+    <!--订单管理-->
+    <item
+        android:id="@+id/menu_order_management"
+        android:icon="@drawable/icon_admin_order_management"
+        android:title="订单管理" />
+</menu>

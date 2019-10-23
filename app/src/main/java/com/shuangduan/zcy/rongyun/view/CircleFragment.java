@@ -258,12 +258,12 @@ public class CircleFragment extends BaseFragment {
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        LogUtils.json(response.body());
+//                        LogUtils.json(response.body());
                     }
 
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-                        LogUtils.json(response.body());
+//                        LogUtils.json(response.body());
                         try {
                             IMWechatUserInfoBean bean=new Gson().fromJson(response.body(),IMWechatUserInfoBean.class);
                             if (bean.getCode().equals("200")){
@@ -294,12 +294,12 @@ public class CircleFragment extends BaseFragment {
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        LogUtils.json(response.body());
+//                        LogUtils.json(response.body());
                     }
 
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-                        LogUtils.json(response.body());
+//                        LogUtils.json(response.body());
                         try {
                             IMWechatGroupInfoBean bean=new Gson().fromJson(response.body(),IMWechatGroupInfoBean.class);
                             if (bean.getCode().equals("200")){
@@ -330,13 +330,13 @@ public class CircleFragment extends BaseFragment {
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        LogUtils.json(response.body());
+//                        LogUtils.json(response.body());
                     }
 
                     @SuppressLint("SetTextI18n")
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-                        LogUtils.json(response.body());
+//                        LogUtils.json(response.body());
                         try {
                             IMFriendApplyCountBean bean=new Gson().fromJson(response.body(), IMFriendApplyCountBean.class);
                             if (bean.getCode().equals("200")){

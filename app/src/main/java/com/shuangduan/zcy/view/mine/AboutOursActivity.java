@@ -85,7 +85,7 @@ public class AboutOursActivity extends BaseActivity {
                 incomeStatementAdapter.setNewData(homeListBean.getExplain());
             }
         });
-        homeVm.getInit();
+        homeVm.getList();
     }
 
     @OnClick({R.id.iv_bar_back,R.id.tv_phone})

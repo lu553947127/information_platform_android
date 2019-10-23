@@ -3,7 +3,6 @@ package com.shuangduan.zcy.view.projectinfo;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.FrameLayout;
@@ -174,25 +173,12 @@ public class ProjectInfoListActivity extends BaseActivity implements EmptyViewFa
             setNoMore(projectInfoBeans.getPage(), projectInfoBeans.getCount());
         });
 
-        //列表滑动动画
-        rv.setOnScrollListener(new RecyclerView.OnScrollListener() {
-            int distance;
-            boolean visible = true;
-
+        //滑动监听
+        rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                if (distance < -ViewConfiguration.getTouchSlop() && !visible) {
-                    AnimationUtils.showFABAnimation(ivRelease);
-                    distance = 0;
-                    visible = true;
-                } else if (distance > ViewConfiguration.getTouchSlop() && visible) {
-                    AnimationUtils.hideFABAnimation(ivRelease);
-                    distance = 0;
-                    visible = false;
-                }
-                if ((dy > 0 && visible) || (dy < 0 && !visible))//向下滑并且可见  或者  向上滑并且不可见
-                    distance += dy;
+                AnimationUtils.listScrollAnimation(ivRelease,dy);
             }
         });
     }

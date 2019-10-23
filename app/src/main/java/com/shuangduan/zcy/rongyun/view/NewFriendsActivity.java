@@ -227,7 +227,6 @@ public class NewFriendsActivity extends BaseActivity implements EmptyViewFactory
         finish();
     }
 
-
     @Override
     protected void onResume() {
         super.onResume();

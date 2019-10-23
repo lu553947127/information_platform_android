@@ -4,6 +4,7 @@ import android.animation.Keyframe;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.animation.Animation;
 import android.view.animation.CycleInterpolator;
 import android.view.animation.TranslateAnimation;
@@ -67,6 +68,7 @@ public class AnimationUtils {
         return animation;
     }
 
+    //晃动动画
     public static ObjectAnimator nope(View view) {
         int delta = view.getResources().getDimensionPixelOffset(R.dimen.spacing_medium);
         PropertyValuesHolder pvhTranslateX = PropertyValuesHolder.ofKeyframe(View.TRANSLATION_X,
@@ -83,6 +85,7 @@ public class AnimationUtils {
                 setDuration(500);
     }
 
+    //红包晃动方法动画
     public static ObjectAnimator tada(View view) {
         return tada(view, 1f);
     }
@@ -127,5 +130,22 @@ public class AnimationUtils {
                 Keyframe.ofFloat(1f, 0)
         );
         return ObjectAnimator.ofPropertyValuesHolder(view, pvhScaleX, pvhScaleY, pvhRotate).setDuration(1000);
+    }
+
+    //列表滑动按钮隐藏动画
+    private static int distance;
+    private static boolean visible = true;
+    public static void listScrollAnimation(View view,int dy){
+        if (distance < -ViewConfiguration.getTouchSlop() && !visible) {
+            showFABAnimation(view);
+            distance = 0;
+            visible = true;
+        } else if (distance > ViewConfiguration.getTouchSlop() && visible) {
+            hideFABAnimation(view);
+            distance = 0;
+            visible = false;
+        }
+        if ((dy > 0 && visible) || (dy < 0 && !visible))//向下滑并且可见  或者  向上滑并且不可见
+            distance += dy;
     }
 }

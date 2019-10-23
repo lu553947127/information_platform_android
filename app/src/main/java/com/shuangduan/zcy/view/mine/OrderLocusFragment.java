@@ -15,8 +15,11 @@ import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.LocusOrderAdapter;
+import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseLazyFragment;
 import com.shuangduan.zcy.factory.EmptyViewFactory;
+import com.shuangduan.zcy.model.bean.OrderListBean;
+import com.shuangduan.zcy.view.projectinfo.ProjectDetailActivity;
 import com.shuangduan.zcy.view.projectinfo.ProjectInfoListActivity;
 import com.shuangduan.zcy.vm.OrderVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
@@ -41,9 +44,7 @@ public class OrderLocusFragment extends BaseLazyFragment implements EmptyViewFac
     private OrderVm orderVm;
 
     public static OrderLocusFragment newInstance() {
-
         Bundle args = new Bundle();
-
         OrderLocusFragment fragment = new OrderLocusFragment();
         fragment.setArguments(args);
         return fragment;
@@ -65,18 +66,25 @@ public class OrderLocusFragment extends BaseLazyFragment implements EmptyViewFac
 
         rv.setLayoutManager(new LinearLayoutManager(mContext));
         rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
-        LocusOrderAdapter adapter = new LocusOrderAdapter(R.layout.item_order_locus, null);
-        adapter.setEmptyView(R.layout.layout_loading, rv);
-        rv.setAdapter(adapter);
+        LocusOrderAdapter locusOrderAdapter = new LocusOrderAdapter(R.layout.item_order_locus, null);
+        locusOrderAdapter.setEmptyView(R.layout.layout_loading, rv);
+        rv.setAdapter(locusOrderAdapter);
+        locusOrderAdapter.setOnItemClickListener((adapter, view, position) -> {
+            OrderListBean.ListBean listBean =locusOrderAdapter.getData().get(position);
+            Bundle bundle = new Bundle();
+            bundle.putInt(CustomConfig.PROJECT_ID, Integer.parseInt(listBean.getProject_id()));
+            bundle.putInt(CustomConfig.LOCATION, 1);
+            ActivityUtils.startActivity(bundle, ProjectDetailActivity.class);
+        });
 
         orderVm = ViewModelProviders.of(mActivity).get(OrderVm.class);
         orderVm.locusLiveData.observe(this, orderListBean -> {
             isInited = true;
             if (orderListBean.getPage() == 1) {
-                adapter.setNewData(orderListBean.getList());
-                adapter.setEmptyView(emptyView);
+                locusOrderAdapter.setNewData(orderListBean.getList());
+                locusOrderAdapter.setEmptyView(emptyView);
             } else {
-                adapter.addData(orderListBean.getList());
+                locusOrderAdapter.addData(orderListBean.getList());
             }
             setNoMore(orderListBean.getPage(), orderListBean.getCount());
         });

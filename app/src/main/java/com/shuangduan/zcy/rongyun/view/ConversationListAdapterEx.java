@@ -70,14 +70,14 @@ public class ConversationListAdapterEx extends ConversationListAdapter {
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        LogUtils.json(response.body());
+//                        LogUtils.json(response.body());
                     }
 
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
                         try {
                             IMWechatUserInfoBean bean=new Gson().fromJson(response.body(),IMWechatUserInfoBean.class);
-                            LogUtils.json(response.body());
+//                            LogUtils.json(response.body());
                             if (bean.getCode().equals("200")){
                                 if (bean.getData()!=null){
                                     if (bean.getData().getCard_status().equals("2")){

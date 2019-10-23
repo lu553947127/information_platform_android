@@ -204,11 +204,6 @@ public class HomeFragment extends BaseFragment {
         refresh.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);
         refresh.setOnRefreshListener(refreshLayout -> {
             homeVm.getInit();
-            RongIM.getInstance().addUnReadMessageCountChangedObserver(i -> {
-                LogUtils.i(i);
-                // i 是未读数量
-                getFriendApplyCount(i);
-            }, Conversation.ConversationType.PRIVATE,Conversation.ConversationType.GROUP,Conversation.ConversationType.SYSTEM);
             getAndroidVersionUpgrades();
             refreshLayout.finishRefresh(1000);
         });

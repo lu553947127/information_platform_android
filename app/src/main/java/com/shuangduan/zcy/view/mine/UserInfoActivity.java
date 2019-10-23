@@ -78,6 +78,8 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
     CircleImageView ivUser;
     @BindView(R.id.tv_name)
     AppCompatTextView tvName;
+    @BindView(R.id.iv_name)
+    AppCompatTextView ivName;
     @BindView(R.id.tv_sex)
     AppCompatTextView tvSex;
     @BindView(R.id.tv_mobile)
@@ -109,6 +111,7 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
     private RxPermissions rxPermissions;
     private UserInfoVm userInfoVm;
     private UploadPhotoVm uploadPhotoVm;
+    private String apply_status,id,user_name,company,image;
 
     @Override
     protected int initLayoutRes() {
@@ -125,7 +128,7 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
         if (SPUtils.getInstance().getInt(SpConfig.USER_ID) != uid) {
             ivUser.setClickable(false);
             findViewById(R.id.fl_name).setClickable(false);
-            tvName.setCompoundDrawables(null, null, null, null);
+            ivName.setVisibility(View.GONE);
             findViewById(R.id.fl_sex).setClickable(false);
             tvSex.setCompoundDrawables(null, null, null, null);
             findViewById(R.id.fl_mobile).setClickable(false);
@@ -175,7 +178,12 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
             if (userInfoBean.getExperience() >= 1 && userInfoBean.getExperience() <= 5)
                 tvBusinessExp.setText(getResources().getStringArray(R.array.experience_list)[userInfoBean.getExperience() - 1] + "年");
             tvProduction.setText(userInfoBean.getManaging_products());
-            if (userInfoBean.getApply_status() != null && userInfoBean.getApply_status().equals("1")) {
+
+            apply_status=userInfoBean.getApply_status();
+            id= String.valueOf(userInfoBean.getId());
+            user_name=userInfoBean.getUsername();
+            image=userInfoBean.getImage();
+            if (apply_status != null && apply_status.equals("1")) {
                 if (SPUtils.getInstance().getInt(SpConfig.USER_ID) != uid) {
                     tvAddFriend.setText(getString(R.string.im_add_friend));
                 } else {
@@ -358,19 +366,16 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
                 ActivityUtils.startActivity(bundle, UpdateProductionActivity.class);
                 break;
             case R.id.tv_add_friend:
-                userInfoVm.informationLiveData.observe(this, userInfoBean -> {
-                    if (userInfoBean.getApply_status() != null && userInfoBean.getApply_status().equals("1")) {
-                        bundle.putInt(CustomConfig.FRIEND_DATA, 0);
-                        bundle.putString("id", String.valueOf(userInfoBean.getId()));
-                        bundle.putString("name", userInfoBean.getUsername());
-                        bundle.putString("msg", userInfoBean.getCompany());
-                        bundle.putString("image", userInfoBean.getImage());
-                        ActivityUtils.startActivity(bundle, IMAddFriendActivity.class);
-                    } else {
-                        RongIM.getInstance().startPrivateChat(UserInfoActivity.this, String.valueOf(userInfoBean.getId())
-                                , userInfoBean.getUsername());
-                    }
-                });
+                if (apply_status != null && apply_status.equals("1")) {
+                    bundle.putInt(CustomConfig.FRIEND_DATA, 0);
+                    bundle.putString("id", id);
+                    bundle.putString("name", user_name);
+                    bundle.putString("msg", company);
+                    bundle.putString("image",image);
+                    ActivityUtils.startActivity(bundle, IMAddFriendActivity.class);
+                } else {
+                    RongIM.getInstance().startPrivateChat(UserInfoActivity.this,id,user_name);
+                }
                 break;
         }
     }

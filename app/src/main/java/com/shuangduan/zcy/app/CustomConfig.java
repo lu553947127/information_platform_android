@@ -64,12 +64,11 @@ public class CustomConfig {
     public static final String TRANS_RECORD_ID = "trans_record_id";
     public static final String DEMAND_ID = "demand_id";
     public static final String FIND_RELATIONSHIP_ID = "find_relationship_id";
-    public static final String IS_MY = "is_my";
     public static final String ORDER = "order";
     public static final String RELEASE_TYPE = "release_type";//0发布项目1发布动态
     public static final String FRIEND_DATA = "friend_data";
     public static final String PROJECT_TYPE = "project_type";//搜索区分工程信息还是招采信息
-
+    public static final String IS_ADMIN_MANAGE = "is_admin_manage";//区分后台管理 1.周转材料 2.设备管理 3.订单管理
 
     //------------------------------------身份验证判断----------------------------------------------------
     //身份认证提示类型

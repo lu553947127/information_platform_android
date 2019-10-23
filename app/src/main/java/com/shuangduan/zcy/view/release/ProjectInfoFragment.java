@@ -46,9 +46,7 @@ public class ProjectInfoFragment extends BaseLazyFragment{
     private MineReleaseVm mineReleaseVm;
 
     public static ProjectInfoFragment newInstance() {
-
         Bundle args = new Bundle();
-
         ProjectInfoFragment fragment = new ProjectInfoFragment();
         fragment.setArguments(args);
         return fragment;

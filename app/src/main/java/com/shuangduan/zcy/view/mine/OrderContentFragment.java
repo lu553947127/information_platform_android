@@ -9,14 +9,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ProjectOrderAdapter;
+import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseLazyFragment;
 import com.shuangduan.zcy.factory.EmptyViewFactory;
+import com.shuangduan.zcy.model.bean.OrderListBean;
+import com.shuangduan.zcy.view.projectinfo.ProjectDetailActivity;
 import com.shuangduan.zcy.view.projectinfo.ProjectInfoListActivity;
 import com.shuangduan.zcy.vm.OrderVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
@@ -63,18 +67,25 @@ public class OrderContentFragment extends BaseLazyFragment implements EmptyViewF
 
         rv.setLayoutManager(new LinearLayoutManager(mContext));
         rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
-        ProjectOrderAdapter adapter = new ProjectOrderAdapter(R.layout.item_order_project, null);
-        adapter.setEmptyView(R.layout.layout_loading, rv);
-        rv.setAdapter(adapter);
+        ProjectOrderAdapter orderAdapter = new ProjectOrderAdapter(R.layout.item_order_project, null);
+        orderAdapter.setEmptyView(R.layout.layout_loading, rv);
+        rv.setAdapter(orderAdapter);
+        orderAdapter.setOnItemClickListener((adapter, view, position) -> {
+            OrderListBean.ListBean listBean =orderAdapter.getData().get(position);
+            Bundle bundle = new Bundle();
+            bundle.putInt(CustomConfig.PROJECT_ID, listBean.getId());
+            bundle.putInt(CustomConfig.LOCATION, 0);
+            ActivityUtils.startActivity(bundle, ProjectDetailActivity.class);
+        });
 
         orderVm = ViewModelProviders.of(mActivity).get(OrderVm.class);
         orderVm.projectLiveData.observe(this, orderListBean -> {
             isInited = true;
             if (orderListBean.getPage() == 1) {
-                adapter.setNewData(orderListBean.getList());
-                adapter.setEmptyView(emptyView);
+                orderAdapter.setNewData(orderListBean.getList());
+                orderAdapter.setEmptyView(emptyView);
             }else {
-                adapter.addData(orderListBean.getList());
+                orderAdapter.addData(orderListBean.getList());
             }
             setNoMore(orderListBean.getPage(), orderListBean.getCount());
         });
