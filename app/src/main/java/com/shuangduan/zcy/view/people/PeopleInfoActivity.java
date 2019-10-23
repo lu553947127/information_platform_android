@@ -20,13 +20,10 @@ import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.rongyun.view.IMAddFriendActivity;
 import com.shuangduan.zcy.utils.image.ImageConfig;
 import com.shuangduan.zcy.utils.image.ImageLoader;
-import com.shuangduan.zcy.view.mine.UserInfoActivity;
 import com.shuangduan.zcy.vm.IncomePeopleVm;
-import com.shuangduan.zcy.vm.UserInfoVm;
 import com.shuangduan.zcy.weight.CircleImageView;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.rong.imkit.RongIM;
 

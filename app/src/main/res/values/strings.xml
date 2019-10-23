@@ -687,5 +687,6 @@
     <string name="empty_new_friends_info">查看工程信息,获取更多好友</string>
     <string name="empty_im_group_info">查看工程信息\n可加入讨论组,快去加入吧</string>
 
-
+    <string name="empty_mine_materials_info">您还没有预定过周转材料\n查看全部基建物资</string>
+    <string name="empty_mine_equipment_info">您还没有预定过设备物资\n查看全部基建物资</string>
 </resources>

@@ -21,8 +21,6 @@ import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.CityBean;
 import com.shuangduan.zcy.model.bean.ProvinceBean;
 import com.shuangduan.zcy.model.event.AddressEvent;
-import com.shuangduan.zcy.model.event.CityEvent;
-import com.shuangduan.zcy.model.event.LocationEvent;
 import com.shuangduan.zcy.vm.AreaVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 

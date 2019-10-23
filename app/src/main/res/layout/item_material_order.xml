@@ -26,6 +26,17 @@
         app:layout_constraintLeft_toRightOf="@+id/iv_icon"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/iv_bought"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:src="@drawable/icon_default_material"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/tv_title"
+        app:layout_constraintLeft_toRightOf="@id/tv_title"
+        app:layout_constraintTop_toTopOf="@id/tv_title" />
+
     <TextView
         android:id="@+id/tv_category"
         android:layout_width="wrap_content"

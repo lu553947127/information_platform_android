@@ -1,15 +1,9 @@
 package com.shuangduan.zcy.rongyun.receiver;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
 
 import com.blankj.utilcode.util.LogUtils;
-import com.shuangduan.zcy.view.MainActivity;
 
-import io.rong.imkit.RongIM;
 import io.rong.push.PushType;
 import io.rong.push.notification.PushMessageReceiver;
 import io.rong.push.notification.PushNotificationMessage;

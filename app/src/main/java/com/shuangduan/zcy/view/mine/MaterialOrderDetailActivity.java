@@ -5,6 +5,7 @@ import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
@@ -77,6 +78,10 @@ public class MaterialOrderDetailActivity extends BaseActivity {
     TextView tvIntroduceValue;
     @BindView(R.id.tv_cancel)
     TextView tvCancel;
+    @BindView(R.id.iv_default)
+    ImageView ivDefault;
+
+
     private MaterialDetailVm materialVm;
     private int orderId;
 
@@ -131,15 +136,15 @@ public class MaterialOrderDetailActivity extends BaseActivity {
             tvCompanyNameValue.setText(item.company);
             tvOrderAddressValue.setText(item.address);
             tvIntroduceValue.setText(item.remark);
-            tvState.setText("状态："+item.status);
-            if (item.isClose ==0) {
+            tvState.setText("状态：" + item.status);
+            if (item.isClose == 0) {
                 tvCancel.setEnabled(false);
-            }else {
+            } else {
                 tvCancel.setEnabled(true);
             }
         });
 
-        materialVm.mutableLiveDataCancel.observe(this,item->{
+        materialVm.mutableLiveDataCancel.observe(this, item -> {
             ToastUtils.showShort("订单取消成功");
             tvCancel.setEnabled(false);
         });
@@ -154,7 +159,7 @@ public class MaterialOrderDetailActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_replication:
-                KeyboardUtil.copyString(MaterialOrderDetailActivity.this,tvOrderNumberValue.getText().toString());
+                KeyboardUtil.copyString(MaterialOrderDetailActivity.this, tvOrderNumberValue.getText().toString());
                 ToastUtils.showShort(R.string.replication_success);
                 break;
             case R.id.tv_cancel:

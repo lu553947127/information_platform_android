@@ -23,7 +23,6 @@ import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.bean.RecruitBean;
 import com.shuangduan.zcy.view.search.SearchActivity;
-import com.shuangduan.zcy.view.search.SearchResultActivity;
 import com.shuangduan.zcy.vm.RecruitVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 

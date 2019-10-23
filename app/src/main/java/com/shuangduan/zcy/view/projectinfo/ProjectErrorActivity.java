@@ -18,7 +18,6 @@ import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.vm.ProjectDetailVm;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**

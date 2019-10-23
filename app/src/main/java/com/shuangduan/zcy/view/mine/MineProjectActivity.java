@@ -1,10 +1,6 @@
 package com.shuangduan.zcy.view.mine;
 
 import android.os.Bundle;
-import android.text.Html;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
@@ -19,12 +15,9 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.amap.api.maps.model.LatLng;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.StringUtils;
-import com.bumptech.glide.Glide;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ContactAdapter;
 import com.shuangduan.zcy.app.CustomConfig;

@@ -213,11 +213,16 @@ public class HomeFragment extends BaseFragment {
         refresh.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
             @Override
             public void onHeaderMoving(RefreshHeader header, boolean isDragging, float percent, int offset, int headerHeight, int maxDragHeight) {
-                if (offset>0){
-                    rl_toolbar.setVisibility(View.GONE);
-                }else {
-                    rl_toolbar.setVisibility(View.VISIBLE);
+                try {
+                    if (offset > 0) {
+                        rl_toolbar.setVisibility(View.GONE);
+                    } else {
+                        rl_toolbar.setVisibility(View.VISIBLE);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
+
             }
         });
         List<ClassifyBean> list = getClassify();

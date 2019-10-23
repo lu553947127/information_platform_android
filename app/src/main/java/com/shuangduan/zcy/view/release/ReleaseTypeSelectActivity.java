@@ -5,7 +5,6 @@ import android.view.View;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,13 +14,10 @@ import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.SelectorFirstAdapter;
-import com.shuangduan.zcy.adapter.SelectorSecondAdapter;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.PageState;
-import com.shuangduan.zcy.model.bean.BaseSelectorBean;
 import com.shuangduan.zcy.model.bean.TypeBean;
 import com.shuangduan.zcy.model.event.TypesArrayEvent;
-import com.shuangduan.zcy.model.event.TypesEvent;
 import com.shuangduan.zcy.vm.TypesVm;
 
 import org.greenrobot.eventbus.EventBus;
@@ -30,7 +26,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**

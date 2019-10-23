@@ -3,7 +3,6 @@ package com.shuangduan.zcy.view.mine;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
@@ -13,10 +12,7 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.manage.ShareManage;
-import com.shuangduan.zcy.model.event.ShareEvent;
 import com.tencent.tauth.Tencent;
-
-import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
 import butterknife.OnClick;

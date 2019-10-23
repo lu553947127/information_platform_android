@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:src="@drawable/icon_bought"
-        android:visibility="invisible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/tv_title"
         app:layout_constraintLeft_toRightOf="@id/tv_title"
         app:layout_constraintTop_toTopOf="@id/tv_title" />

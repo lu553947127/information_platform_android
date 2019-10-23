@@ -20,7 +20,6 @@ import com.shuangduan.zcy.base.BaseLazyFragment;
 import com.shuangduan.zcy.model.bean.LocusMineBean;
 import com.shuangduan.zcy.model.event.LocusRefreshEvent;
 import com.shuangduan.zcy.view.mine.MineLocusActivity;
-import com.shuangduan.zcy.view.projectinfo.ProjectDetailActivity;
 import com.shuangduan.zcy.vm.MineReleaseVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 

@@ -17,7 +17,6 @@ import com.shuangduan.zcy.utils.BarUtils;
 import com.shuangduan.zcy.vm.DemandRelationshipVm;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**

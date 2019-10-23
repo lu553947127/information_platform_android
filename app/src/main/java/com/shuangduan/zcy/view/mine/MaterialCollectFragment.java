@@ -18,7 +18,6 @@ import com.shuangduan.zcy.adapter.MaterialCollectAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseLazyFragment;
 import com.shuangduan.zcy.factory.EmptyViewFactory;
-import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.MaterialCollectBean;
 import com.shuangduan.zcy.view.material.MaterialActivity;
 import com.shuangduan.zcy.view.material.MaterialDetailActivity;

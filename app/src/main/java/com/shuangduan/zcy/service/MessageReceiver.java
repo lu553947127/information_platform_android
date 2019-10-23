@@ -5,22 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-
-import com.blankj.utilcode.util.ActivityUtils;
-import com.blankj.utilcode.util.LogUtils;
-import com.blankj.utilcode.util.SPUtils;
 import com.google.gson.Gson;
 import com.shuangduan.zcy.app.CustomConfig;
-import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.model.bean.JPushExtraBean;
-import com.shuangduan.zcy.view.MainActivity;
-import com.shuangduan.zcy.view.mine.MineDemandActivity;
 import com.shuangduan.zcy.view.projectinfo.ProjectDetailActivity;
 import com.shuangduan.zcy.view.recruit.RecruitDetailActivity;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import cn.jpush.android.api.CmdMessage;
 import cn.jpush.android.api.CustomMessage;

@@ -11,12 +11,10 @@ import androidx.lifecycle.ViewModelProviders;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
-import com.shuangduan.zcy.model.bean.FindRelationshipReleaseBean;
 import com.shuangduan.zcy.utils.BarUtils;
 import com.shuangduan.zcy.vm.DemandRelationshipVm;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**

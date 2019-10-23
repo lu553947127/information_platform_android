@@ -1,8 +1,6 @@
 package com.shuangduan.zcy.view.login;
 
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 
@@ -13,7 +11,6 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -25,19 +22,15 @@ import com.shuangduan.zcy.dialog.BusinessExpDialog;
 import com.shuangduan.zcy.dialog.SexDialog;
 import com.shuangduan.zcy.dialog.SubscriptionTypeDialog;
 import com.shuangduan.zcy.model.api.PageState;
-import com.shuangduan.zcy.model.event.CityEvent;
-import com.shuangduan.zcy.model.event.CompanyEvent;
 import com.shuangduan.zcy.model.event.MultiAreaEvent;
 import com.shuangduan.zcy.utils.AndroidBug5497Workaround;
 import com.shuangduan.zcy.view.MainActivity;
 import com.shuangduan.zcy.view.MultiAreaActivity;
-import com.shuangduan.zcy.view.mine.BusinessAreaActivity;
 import com.shuangduan.zcy.vm.IMConnectVm;
 import com.shuangduan.zcy.vm.MineSubVm;
 import com.shuangduan.zcy.vm.UserInfoVm;
 
 import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.Objects;
 

@@ -13,11 +13,9 @@ import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.base.BaseActivity;
-import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.vm.UpdatePwdVm;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**

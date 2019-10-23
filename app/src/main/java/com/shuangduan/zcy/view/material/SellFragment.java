@@ -22,8 +22,6 @@ import com.shuangduan.zcy.model.bean.MaterialBean;
 import com.shuangduan.zcy.vm.MaterialVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
-import java.util.Objects;
-
 import butterknife.BindView;
 
 /**

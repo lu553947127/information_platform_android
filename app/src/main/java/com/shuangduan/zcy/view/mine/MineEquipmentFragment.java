@@ -1,4 +1,4 @@
-package com.shuangduan.zcy.view.demand;
+package com.shuangduan.zcy.view.mine;
 
 import android.os.Bundle;
 import android.view.View;
@@ -14,38 +14,44 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shuangduan.zcy.R;
-import com.shuangduan.zcy.adapter.DemandReleaseAdapter;
+import com.shuangduan.zcy.adapter.MaterialOrderAdapter;
+import com.shuangduan.zcy.adapter.SellAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseLazyFragment;
 import com.shuangduan.zcy.factory.EmptyViewFactory;
-import com.shuangduan.zcy.model.bean.DemandRelationshipBean;
-import com.shuangduan.zcy.vm.DemandRelationshipVm;
+import com.shuangduan.zcy.model.bean.MaterialBean;
+import com.shuangduan.zcy.model.bean.MaterialOrderBean;
+import com.shuangduan.zcy.view.material.LeaseFragment;
+import com.shuangduan.zcy.view.material.MaterialActivity;
+import com.shuangduan.zcy.view.material.MaterialDetailActivity;
+import com.shuangduan.zcy.vm.MaterialVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
 import butterknife.BindView;
 
 /**
- * @author 徐玉 QQ:876885613
- * @name information_platform_android
- * @class name：com.shuangduan.zcy.view.mine
- * @class describe  我的需求，找关系, 我发布的
- * @time 2019/8/12 16:49
+ * @author xuyu
+ * @Package com.shuangduan.zcy.view.mine$
+ * @class MineEquipmentFragment$
+ * @class describe
+ * @time 2019/10/23 11:38
  * @change
- * @chang time
  * @class describe
  */
-public class DemandMineReleaseFragment extends BaseLazyFragment implements EmptyViewFactory.EmptyViewCallBack {
+public class MineEquipmentFragment extends BaseLazyFragment implements EmptyViewFactory.EmptyViewCallBack {
     @BindView(R.id.rv)
     RecyclerView rv;
     @BindView(R.id.refresh)
     SmartRefreshLayout refresh;
-    private DemandRelationshipVm demandRelationshipVm;
+    private MaterialVm materialVm;
 
-    public static DemandMineReleaseFragment newInstance() {
+    private View emptyView;
+
+    public static MineEquipmentFragment newInstance() {
 
         Bundle args = new Bundle();
 
-        DemandMineReleaseFragment fragment = new DemandMineReleaseFragment();
+        MineEquipmentFragment fragment = new MineEquipmentFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -62,47 +68,53 @@ public class DemandMineReleaseFragment extends BaseLazyFragment implements Empty
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
-        View emptyView = createEmptyView(R.drawable.icon_empty_project, R.string.empty_relationship_info, R.string.go_release, this);
+        //赛选条件列表为空
+        emptyView = createEmptyView(R.drawable.icon_empty_project, R.string.empty_substance_screen_info, R.string.see_all, this);
+
         rv.setLayoutManager(new LinearLayoutManager(mContext));
-        rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
-        DemandReleaseAdapter releaseAdapter = new DemandReleaseAdapter(R.layout.item_demand_relationship_release, null);
-        releaseAdapter.setEmptyView(R.layout.layout_loading, rv);
-        rv.setAdapter(releaseAdapter);
-        releaseAdapter.setOnItemClickListener((adapter, view, position) -> {
-            DemandRelationshipBean.ListBean listBean = releaseAdapter.getData().get(position);
+//        rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
+        rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_h_5));
+        MaterialOrderAdapter adapter = new MaterialOrderAdapter(R.layout.item_material_order, null);
+
+        adapter.setEmptyView(R.layout.layout_loading, rv);
+        rv.setAdapter(adapter);
+        adapter.setOnItemClickListener((helper, view, position) -> {
+            MaterialOrderBean.ListBean listBean = adapter.getData().get(position);
             Bundle bundle = new Bundle();
-            bundle.putInt(CustomConfig.DEMAND_ID, listBean.getId());
-            ActivityUtils.startActivity(bundle, FindRelationshipReleaseDetailActivity.class);
+            bundle.putInt(CustomConfig.ORDER_ID, listBean.orderId);
+            ActivityUtils.startActivity(bundle, MaterialOrderDetailActivity.class);
+
         });
 
-        demandRelationshipVm = ViewModelProviders.of(mActivity).get(DemandRelationshipVm.class);
-        demandRelationshipVm.releaseLiveData.observe(this, demandRelationshipBean -> {
+        materialVm = ViewModelProviders.of(mActivity).get(MaterialVm.class);
+        materialVm.orderLiveData.observe(this, materialBean -> {
+
             isInited = true;
-            if (demandRelationshipBean.getPage() == 1) {
-                releaseAdapter.setNewData(demandRelationshipBean.getList());
-                releaseAdapter.setEmptyView(emptyView);
+            if (materialBean.getPage() == 1) {
+                adapter.setNewData(materialBean.getList());
+                adapter.setEmptyView(emptyView);
             } else {
-                releaseAdapter.addData(demandRelationshipBean.getList());
+                adapter.addData(materialBean.getList());
             }
-            setNoMore(demandRelationshipBean.getPage(), demandRelationshipBean.getCount());
+            setNoMore(materialBean.getPage(), materialBean.getCount());
         });
 
         refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                demandRelationshipVm.getMoreReleaseRelationship();
+                materialVm.moreOrderList();
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                demandRelationshipVm.getReleaseRelationship();
+                materialVm.orderList();
             }
         });
     }
 
     @Override
     protected void initDataFromService() {
-        demandRelationshipVm.getReleaseRelationship();
+        materialVm.orderList();
     }
 
     private void setNoMore(int page, int count) {
@@ -127,8 +139,7 @@ public class DemandMineReleaseFragment extends BaseLazyFragment implements Empty
 
     @Override
     public void onEmptyClick() {
-        Bundle bundle = new Bundle();
-        bundle.putString("type", "0");
-        ActivityUtils.startActivity(bundle, DemandReleaseActivity.class);
+        ActivityUtils.startActivity(MaterialActivity.class);
     }
+
 }

@@ -21,7 +21,6 @@ import com.shuangduan.zcy.adapter.IncomeLocusAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.factory.EmptyViewFactory;
-import com.shuangduan.zcy.view.projectinfo.ProjectInfoListActivity;
 import com.shuangduan.zcy.view.release.ReleaseProjectActivity;
 import com.shuangduan.zcy.vm.IncomeLocusVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;

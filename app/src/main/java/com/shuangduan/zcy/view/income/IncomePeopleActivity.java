@@ -23,7 +23,6 @@ import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.factory.EmptyViewFactory;
 import com.shuangduan.zcy.model.bean.IncomePeopleBean;
-import com.shuangduan.zcy.rongyun.view.IMAddFriendActivity;
 import com.shuangduan.zcy.view.mine.RecommendFriendsActivity;
 import com.shuangduan.zcy.view.people.PeopleInfoActivity;
 import com.shuangduan.zcy.vm.IncomePeopleVm;
@@ -31,7 +30,6 @@ import com.shuangduan.zcy.weight.DividerItemDecoration;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import io.rong.imkit.RongIM;
 
 /**
  * @author 徐玉 QQ:876885613

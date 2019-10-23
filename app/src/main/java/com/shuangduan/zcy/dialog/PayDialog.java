@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 
 import com.blankj.utilcode.util.ActivityUtils;
-import com.blankj.utilcode.util.ConvertUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.view.mine.ForgetPwdPayActivity;
 

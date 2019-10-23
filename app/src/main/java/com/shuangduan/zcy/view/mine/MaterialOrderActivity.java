@@ -2,27 +2,40 @@ package com.shuangduan.zcy.view.mine;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
+import com.google.android.material.tabs.TabLayout;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.MaterialOrderAdapter;
+import com.shuangduan.zcy.adapter.ViewPagerAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.factory.EmptyViewFactory;
+import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.MaterialOrderBean;
+import com.shuangduan.zcy.view.material.LeaseFragment;
 import com.shuangduan.zcy.view.material.MaterialActivity;
+import com.shuangduan.zcy.view.material.SellFragment;
 import com.shuangduan.zcy.vm.MaterialVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
@@ -38,17 +51,29 @@ import butterknife.OnClick;
  * @change
  * @class describe
  */
-public class MaterialOrderActivity extends BaseActivity implements EmptyViewFactory.EmptyViewCallBack {
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+public class MaterialOrderActivity extends BaseActivity {
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
-    @BindView(R.id.refresh)
-    SmartRefreshLayout refresh;
-    @BindView(R.id.rv)
-    RecyclerView rv;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.toolbar_material)
+    Toolbar toolbarMaterial;
+    @BindView(R.id.tv_open)
+    TextView tvOpen;
+    @BindView(R.id.tv_default)
+    TextView tvDefault;
+
+    @BindView(R.id.tab_layout)
+    TabLayout tabLayout;
+    @BindView(R.id.vp)
+    ViewPager vp;
+
+
 
     private MaterialVm materialVm;
+
+    //物资大分类 0：公开物资 1：内定物资
+    private int materialFlag;
 
     @Override
     protected int initLayoutRes() {
@@ -63,79 +88,61 @@ public class MaterialOrderActivity extends BaseActivity implements EmptyViewFact
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
-        tvBarTitle.setText(R.string.my_material);
+        tvBarTitle.setText(getString(R.string.my_material));
 
-        View emptyView = emptyViewFactory.createEmptyView(R.drawable.icon_empty_project, R.string.empty_material_order_info, R.string.to_reserve, this);
+        toolbar.setVisibility(View.VISIBLE);
+        toolbarMaterial.setVisibility(View.GONE);
 
-        rv.setLayoutManager(new LinearLayoutManager(this));
-        rv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
-        MaterialOrderAdapter adapter = new MaterialOrderAdapter(R.layout.item_material_order, null);
-        adapter.setEmptyView(R.layout.layout_loading, rv);
-        rv.setAdapter(adapter);
-        adapter.setOnItemClickListener((helper, view, position) -> {
-            MaterialOrderBean.ListBean listBean = adapter.getData().get(position);
-            Bundle bundle = new Bundle();
-            bundle.putInt(CustomConfig.ORDER_ID, listBean.orderId);
-            ActivityUtils.startActivity(bundle, MaterialOrderDetailActivity.class);
-        });
+        Fragment[] fragments = new Fragment[]{
+                MineMaterialsFragment.newInstance(),
+                MineEquipmentFragment.newInstance()
+        };
+        tabLayout.addTab(tabLayout.newTab());
+        tabLayout.addTab(tabLayout.newTab());
+        vp.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), fragments, getResources().getStringArray(R.array.infrastructure)));
+        tabLayout.setupWithViewPager(vp);
 
         materialVm = ViewModelProviders.of(this).get(MaterialVm.class);
-        materialVm.orderLiveData.observe(this, materialBean -> {
-            if (materialBean.getPage() == 1) {
-                adapter.setNewData(materialBean.getList());
-                adapter.setEmptyView(emptyView);
-            } else {
-                adapter.addData(materialBean.getList());
-            }
-            setNoMore(materialBean.getPage(), materialBean.getCount());
-        });
 
-        refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
-            @Override
-            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                materialVm.moreOrderList();
-            }
 
-            @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                materialVm.orderList();
+        materialVm.pageStateLiveData.observe(this, s -> {
+            switch (s) {
+                case PageState.PAGE_LOADING:
+                    showLoading();
+                    break;
+                default:
+                    hideLoading();
+                    break;
             }
         });
-        materialVm.orderList();
     }
 
-    private void setNoMore(int page, int count) {
-        if (page == 1) {
-            if (page * 10 >= count) {
-                if (refresh.getState() == RefreshState.None) {
-                    refresh.setNoMoreData(true);
-                } else {
-                    refresh.finishRefreshWithNoMoreData();
-                }
-            } else {
-                refresh.finishRefresh();
-            }
-        } else {
-            if (page * 10 >= count) {
-                refresh.finishLoadMoreWithNoMoreData();
-            } else {
-                refresh.finishLoadMore();
-            }
-        }
-    }
-
-
-    @OnClick({R.id.iv_bar_back})
-    void onClick(View view) {
-        switch (view.getId()) {
+    @OnClick({R.id.iv_bar_back, R.id.iv_back, R.id.tv_open, R.id.tv_default})
+    void onClick(View v) {
+        switch (v.getId()) {
             case R.id.iv_bar_back:
+            case R.id.iv_back:
                 finish();
+                break;
+            case R.id.tv_open:
+                if (materialFlag == 0) return;
+                tvOpen.setTextSize(18);
+                tvDefault.setTextSize(14);
+                //TODO 后续修改接口
+                materialVm.sellList(materialVm.materialId, materialVm.specification, materialVm.supplierId);
+                materialVm.leaseList(materialVm.materialId, materialVm.specification, materialVm.supplierId);
+                materialFlag = 0;
+                break;
+            case R.id.tv_default:
+                if (materialFlag == 1) return;
+                tvOpen.setTextSize(14);
+                tvDefault.setTextSize(18);
+                //TODO 后续修改接口
+                materialVm.sellList(materialVm.materialId, materialVm.specification, materialVm.supplierId);
+                materialVm.leaseList(materialVm.materialId, materialVm.specification, materialVm.supplierId);
+                materialFlag = 1;
                 break;
         }
     }
 
-    @Override
-    public void onEmptyClick() {
-        ActivityUtils.startActivity(MaterialActivity.class);
-    }
 }
