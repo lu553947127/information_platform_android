@@ -28,7 +28,7 @@ public class LocusOrderAdapter extends BaseQuickAdapter<OrderListBean.ListBean, 
     protected void convert(BaseViewHolder helper, OrderListBean.ListBean item) {
         helper.setText(R.id.tv_title, item.getRemarks() + ", 负责人: " + item.getName() + " " + item.getTel())
                 .setText(R.id.tv_content, item.getProject_title())
-                .setText(R.id.tv_time, item.getCreate_time())
-                .setText(R.id.tv_amount, String.format(mContext.getString(R.string.format_pay_amount), item.getPrice()));
+                .setText(R.id.tv_time, item.getCreate_time()+" 浏览")
+                .setText(R.id.tv_amount, String.format(mContext.getString(R.string.format_pay_read), item.getPrice()));
     }
 }

@@ -8,7 +8,7 @@ import com.shuangduan.zcy.base.BaseViewModel;
 import com.shuangduan.zcy.model.api.repository.HomeRepository;
 import com.shuangduan.zcy.model.bean.HomeBannerBean;
 import com.shuangduan.zcy.model.bean.HomeListBean;
-import com.shuangduan.zcy.model.bean.HomeListDetailBean;
+import com.shuangduan.zcy.model.bean.SupplierCliqueBean;
 import com.shuangduan.zcy.model.bean.HomePushBean;
 
 import java.util.List;
@@ -28,7 +28,7 @@ public class HomeVm extends BaseViewModel {
     public MutableLiveData<List<HomePushBean>> pushLiveData;
     public MutableLiveData<List<HomeBannerBean>> bannerLiveData;
     public MutableLiveData<HomeListBean> listLiveData;
-    public MutableLiveData<HomeListDetailBean> detailLiveData;
+    public MutableLiveData<SupplierCliqueBean> supplierCliqueLiveData;
     public MutableLiveData<String> pageStateLiveData;
 
     public HomeVm() {
@@ -36,7 +36,7 @@ public class HomeVm extends BaseViewModel {
         pushLiveData = new MutableLiveData<>();
         bannerLiveData = new MutableLiveData<>();
         listLiveData = new MutableLiveData<>();
-        detailLiveData = new MutableLiveData<>();
+        supplierCliqueLiveData = new MutableLiveData<>();
         pageStateLiveData = new MutableLiveData<>();
     }
 
@@ -44,6 +44,7 @@ public class HomeVm extends BaseViewModel {
         getPush();
         getBanner();
         getList();
+        getSupplierClique();
     }
 
     //快讯标题
@@ -61,8 +62,8 @@ public class HomeVm extends BaseViewModel {
         new HomeRepository().homeList(listLiveData, pageStateLiveData, userId);
     }
 
-    //用户权限设置 appoint 1.普通用户 2.普通供应商 3.集团供应商 4.集团供应商子公司
-    public void getDetail(){
-        new HomeRepository().homeListDetail(detailLiveData, pageStateLiveData, userId);
+    //基建物资 内定物资显示权限 supplier_status 0.普通用户 1.普通供应商 2.集团供应商子公司 3.集团供应商
+    public void getSupplierClique(){
+        new HomeRepository().getSupplierClique(supplierCliqueLiveData,userId);
     }
 }

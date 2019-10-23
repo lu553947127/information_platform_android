@@ -42,7 +42,6 @@ import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseFragment;
 import com.shuangduan.zcy.dialog.UpdateManager;
-import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
 import com.shuangduan.zcy.model.bean.DemandBuyerBean;
 import com.shuangduan.zcy.model.bean.DemandRelationshipBean;
@@ -138,12 +137,12 @@ public class HomeFragment extends BaseFragment {
     ViewPager viewPager;
     @BindView(R.id.view)
     View view;
-    private List<View> viewList=new ArrayList<>();
-    private List<String> titleList=new ArrayList<>();
+    private List<View> viewList = new ArrayList<>();
+    private List<String> titleList = new ArrayList<>();
     private HomeHeadlinesAdapter headlinesAdapter;
     private RelativeLayout relativeLayout;
     private TextView number;
-    private int count=0;
+    private int count = 0;
     private HomeVm homeVm;
 
     public static HomeFragment newInstance() {
@@ -184,7 +183,8 @@ public class HomeFragment extends BaseFragment {
             private int lastScrollY = 0;
             private int h = DensityUtil.dp2px(70);
             //设置折叠标题背景颜色
-            private int color = ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.colorPrimary)&0x00ffffff;
+            private int color = ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.colorPrimary) & 0x00ffffff;
+
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
                 if (lastScrollY < h) {
@@ -193,7 +193,7 @@ public class HomeFragment extends BaseFragment {
                     mScrollY_2 = scrollY > h ? h : scrollY;
                     toolbar.setAlpha(1f * mScrollY_2 / h);
                     toolbar.setBackgroundColor(((255 * mScrollY_2 / h) << 24) | color);
-                }else {
+                } else {
                     toolbar.setVisibility(View.VISIBLE);
                 }
                 lastScrollY = scrollY;
@@ -230,7 +230,7 @@ public class HomeFragment extends BaseFragment {
         ClassifyAdapter classifyAdapter = new ClassifyAdapter(list);
         rvClassify.setAdapter(classifyAdapter);
         classifyAdapter.setOnItemClickListener((adapter, view, position) -> {
-            switch (list.get(position).getType()){
+            switch (list.get(position).getType()) {
                 case ClassifyBean.GCXX:
                     ActivityUtils.startActivity(ProjectInfoActivity.class);
                     break;
@@ -249,7 +249,7 @@ public class HomeFragment extends BaseFragment {
         homeVm = ViewModelProviders.of(this).get(HomeVm.class);
         homeVm.pushLiveData.observe(this, homePushBeans -> {
             List<String> marquee = new ArrayList<>();
-            for (HomePushBean bean: homePushBeans) {
+            for (HomePushBean bean : homePushBeans) {
                 marquee.add(bean.getTitle());
             }
             marqueeView.setContent(marquee);
@@ -265,7 +265,7 @@ public class HomeFragment extends BaseFragment {
         });
         homeVm.listLiveData.observe(this, homeListBean -> {
 
-            if (headlinesAdapter == null){
+            if (headlinesAdapter == null) {
                 rvHeadlines.setLayoutManager(new LinearLayoutManager(mContext));
                 rvHeadlines.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
                 headlinesAdapter = new HomeHeadlinesAdapter(R.layout.item_headlines, homeListBean.getHeadlines());
@@ -276,31 +276,8 @@ public class HomeFragment extends BaseFragment {
                     bundle.putInt(CustomConfig.HEADLINES_ID, headlinesBean.getId());
                     ActivityUtils.startActivity(bundle, HeadlinesDetailActivity.class);
                 });
-            }else {
+            } else {
                 headlinesAdapter.setNewData(homeListBean.getHeadlines());
-            }
-        });
-        homeVm.pageStateLiveData.observe(this, s -> {
-            switch (s){
-                case PageState.PAGE_LOADING:
-//                    showLoading();
-                    break;
-                default:
-                    hideLoading();
-                    break;
-            }
-        });
-
-        //添加走马灯变化监听
-        marqueeView.setLocationListener(new MarqueeListView.LocationListener() {
-            @Override
-            public void start(int position) {
-
-            }
-
-            @Override
-            public void end() {
-
             }
         });
         homeVm.getInit();
@@ -643,3 +620,4 @@ public class HomeFragment extends BaseFragment {
 
     }
 }
+

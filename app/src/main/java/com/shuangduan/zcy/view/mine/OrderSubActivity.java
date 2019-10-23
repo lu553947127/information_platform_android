@@ -18,8 +18,11 @@ import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.SubOrderAdapter;
+import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.factory.EmptyViewFactory;
+import com.shuangduan.zcy.model.bean.OrderSubBean;
+import com.shuangduan.zcy.view.projectinfo.ProjectDetailActivity;
 import com.shuangduan.zcy.view.projectinfo.ProjectInfoListActivity;
 import com.shuangduan.zcy.vm.OrderVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
@@ -69,17 +72,24 @@ public class OrderSubActivity extends BaseActivity implements EmptyViewFactory.E
 
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
-        SubOrderAdapter adapter = new SubOrderAdapter(R.layout.item_order_sub, null);
-        adapter.setEmptyView(R.layout.layout_loading, rv);
-        rv.setAdapter(adapter);
+        SubOrderAdapter subOrderAdapter = new SubOrderAdapter(R.layout.item_order_sub, null);
+        subOrderAdapter.setEmptyView(R.layout.layout_loading, rv);
+        rv.setAdapter(subOrderAdapter);
+        subOrderAdapter.setOnItemClickListener((adapter, view, position) -> {
+            OrderSubBean.ListBean listBean = subOrderAdapter.getData().get(position);
+            Bundle bundle = new Bundle();
+            bundle.putInt(CustomConfig.PROJECT_ID, listBean.getId());
+            bundle.putInt(CustomConfig.LOCATION, 0);
+            ActivityUtils.startActivity(bundle, ProjectDetailActivity.class);
+        });
 
         orderVm = ViewModelProviders.of(this).get(OrderVm.class);
         orderVm.subLiveData.observe(this, orderSubBean -> {
             if (orderSubBean.getPage() == 1) {
-                adapter.setNewData(orderSubBean.getList());
-                adapter.setEmptyView(emptyView);
+                subOrderAdapter.setNewData(orderSubBean.getList());
+                subOrderAdapter.setEmptyView(emptyView);
             } else {
-                adapter.addData(orderSubBean.getList());
+                subOrderAdapter.addData(orderSubBean.getList());
             }
             setNoMore(orderSubBean.getPage(), orderSubBean.getCount());
         });

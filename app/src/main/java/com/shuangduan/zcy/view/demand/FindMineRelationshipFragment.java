@@ -29,9 +29,7 @@ public class FindMineRelationshipFragment extends BaseLazyFragment {
     ViewPager vp;
 
     public static FindMineRelationshipFragment newInstance() {
-
         Bundle args = new Bundle();
-
         FindMineRelationshipFragment fragment = new FindMineRelationshipFragment();
         fragment.setArguments(args);
         return fragment;

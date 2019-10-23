@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatImageView;
@@ -79,7 +80,7 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
     @BindView(R.id.tv_name)
     AppCompatTextView tvName;
     @BindView(R.id.iv_name)
-    AppCompatTextView ivName;
+    ImageView ivName;
     @BindView(R.id.tv_sex)
     AppCompatTextView tvSex;
     @BindView(R.id.tv_mobile)

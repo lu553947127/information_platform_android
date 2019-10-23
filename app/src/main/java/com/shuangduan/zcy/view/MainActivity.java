@@ -195,11 +195,9 @@ public class MainActivity extends BaseActivity {
      * 微信支付
      * IWXAPI 是第三方app和微信通信的openApi接口
      */
-    private IWXAPI api;
-
     private void regToWx() {
         // 通过WXAPIFactory工厂，获取IWXAPI的实例
-        api = WXAPIFactory.createWXAPI(this, APP_ID, true);
+        IWXAPI api = WXAPIFactory.createWXAPI(this, APP_ID, true);
         // 将应用的appId注册到微信
         api.registerApp(APP_ID);
         //建议动态监听微信启动广播进行注册到微信

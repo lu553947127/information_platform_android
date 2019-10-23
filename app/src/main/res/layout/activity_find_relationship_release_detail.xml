@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -12,7 +13,15 @@
 
     <include android:id="@+id/toolbar" layout="@layout/toolbar"/>
 
-    <include layout="@layout/layout_find_relation_ship"/>
+    <RelativeLayout
+        android:id="@+id/rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+        <include layout="@layout/layout_find_relation_ship" />
+
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/tv_content_tip"
@@ -23,7 +32,7 @@
         android:layout_marginTop="18dp"
         android:layout_marginLeft="15dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintTop_toBottomOf="@+id/rl"
         android:textColor="@color/colorTv"
         android:textSize="14sp"
         android:text="概况"/>

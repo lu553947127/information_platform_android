@@ -24,7 +24,7 @@ import com.shuangduan.zcy.model.bean.HeadlinesBean;
 import com.shuangduan.zcy.model.bean.HeadlinesDetailBean;
 import com.shuangduan.zcy.model.bean.HomeBannerBean;
 import com.shuangduan.zcy.model.bean.HomeListBean;
-import com.shuangduan.zcy.model.bean.HomeListDetailBean;
+import com.shuangduan.zcy.model.bean.SupplierCliqueBean;
 import com.shuangduan.zcy.model.bean.HomePushBean;
 import com.shuangduan.zcy.model.bean.IMFriendApplyDetailBean;
 import com.shuangduan.zcy.model.bean.IMFriendApplyListBean;
@@ -929,9 +929,10 @@ public interface ApiService {
             @Field("user_id") int user_id
     );
 
+    //基建物资 内定物资显示权限
     @FormUrlEncoded
-    @POST("api/index/details")
-    Flowable<BaseResponse<HomeListDetailBean>> homeListDetail(
+    @POST("api/Manage/getSupplierClique")
+    Flowable<BaseResponse<SupplierCliqueBean>> getSupplierClique(
             @Field("user_id") int user_id
     );
 

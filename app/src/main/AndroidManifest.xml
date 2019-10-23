@@ -133,7 +133,7 @@
         <activity android:name="com.shuangduan.zcy.view.mine.WithdrawDetailActivity" android:theme="@style/BaseAppTheme" />
         <!-- 解绑银行卡-->
         <activity android:name="com.shuangduan.zcy.view.mine.UnbindBankCardActivity" android:theme="@style/BaseAppTheme" />
-        <!-- 我的订单-->
+        <!-- 查看记录-->
         <activity android:name="com.shuangduan.zcy.view.mine.MineOrderActivity" android:theme="@style/BaseAppTheme" />
         <!-- 已认购订单-->
         <activity android:name="com.shuangduan.zcy.view.mine.OrderSubActivity" android:theme="@style/BaseAppTheme" />

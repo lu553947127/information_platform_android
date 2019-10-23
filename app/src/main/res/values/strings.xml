@@ -456,6 +456,7 @@
     <string name="format_supplier_service_area">服务地区：%1$s</string>
     <string name="format_sales_volume">已成交：%1$s单</string>
     <string name="format_pay_amount">支付金额: %1$s紫金币</string>
+    <string name="format_pay_read">-%1$s紫金币</string>
     <string name="format_amount_sub">认购金额: %1$s紫金币</string>
     <string name="format_amount_return">已返金额: %1$s紫金币</string>
     <string name="format_price">价格: %1$s元</string>

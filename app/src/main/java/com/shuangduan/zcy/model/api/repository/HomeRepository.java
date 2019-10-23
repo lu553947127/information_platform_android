@@ -7,7 +7,7 @@ import com.shuangduan.zcy.model.bean.HeadlinesBean;
 import com.shuangduan.zcy.model.bean.HeadlinesDetailBean;
 import com.shuangduan.zcy.model.bean.HomeBannerBean;
 import com.shuangduan.zcy.model.bean.HomeListBean;
-import com.shuangduan.zcy.model.bean.HomeListDetailBean;
+import com.shuangduan.zcy.model.bean.SupplierCliqueBean;
 import com.shuangduan.zcy.model.bean.HomePushBean;
 
 import java.util.List;
@@ -35,10 +35,6 @@ public class HomeRepository extends BaseRepository {
         request(apiService.homeList(userId)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
-    public void homeListDetail(MutableLiveData<HomeListDetailBean> liveData, MutableLiveData<String> pageStateLiveData, int userId){
-        request(apiService.homeListDetail(userId)).setData(liveData).setPageState(pageStateLiveData).send();
-    }
-
     public void headlines(MutableLiveData<HeadlinesBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int page){
         request(apiService.headlines(userId, page)).setData(liveData).setPageState(pageStateLiveData).send();
     }
@@ -49,5 +45,9 @@ public class HomeRepository extends BaseRepository {
 
     public void explainDetail(MutableLiveData<ExplainDetailBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int id){
         request(apiService.explainDetail(userId, id)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    public void getSupplierClique(MutableLiveData<SupplierCliqueBean> liveData, int userId){
+        request(apiService.getSupplierClique(userId)).setData(liveData).send();
     }
 }
