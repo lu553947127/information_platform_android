@@ -30,6 +30,7 @@ import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.event.MaterialEvent;
 import com.shuangduan.zcy.model.event.SupplierEvent;
 import com.shuangduan.zcy.utils.DensityUtil;
+import com.shuangduan.zcy.vm.HomeVm;
 import com.shuangduan.zcy.vm.MaterialVm;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -140,6 +141,13 @@ public class MaterialActivity extends BaseActivity {
                     break;
             }
         });
+
+        //获取内定物资显示权限
+        HomeVm homeVm = ViewModelProviders.of(this).get(HomeVm.class);
+        homeVm.supplierCliqueLiveData.observe(this,supplierCliqueBean -> {
+
+        });
+        homeVm.getSupplierClique();
     }
 
     @OnClick({R.id.iv_bar_back, R.id.iv_back, R.id.tv_open, R.id.tv_default, R.id.over, R.id.ll_name, R.id.ll_spec, R.id.ll_supplier, R.id.ll_supplier_method, R.id.tv_bar_right})
