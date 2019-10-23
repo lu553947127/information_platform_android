@@ -99,6 +99,7 @@ import com.shuangduan.zcy.model.bean.WXLoginBindingBean;
 import com.shuangduan.zcy.model.bean.WXLoginVerificationBean;
 import com.shuangduan.zcy.model.bean.WithdrawBean;
 import com.shuangduan.zcy.model.bean.WithdrawRecordBean;
+import com.shuangduan.zcy.model.bean.*;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -669,15 +670,15 @@ public interface ApiService {
     );
 
     //基建物质列表
-    @FormUrlEncoded
     @POST("api/Material/dateList")
     Flowable<BaseResponse<MaterialBean>> materialList(
-            @Field("user_id") int user_id,
-            @Field("type") int type,
-            @Field("material_id") int materialId,
-            @Field("spec") String spec,
-            @Field("supplier_id") int supplierId,
-            @Field("page") int page
+            @Query("user_id") int user_id,
+            @Query("type") int type,
+            @Query("material_id") int materialId,
+            @Query("spec") String spec,
+            @Query("supplier_id") int supplierId,
+            @Query("page") int page,
+           @Body AuthGroupBean auth_group
     );
 
     @FormUrlEncoded

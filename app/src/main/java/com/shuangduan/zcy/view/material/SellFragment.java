@@ -95,19 +95,19 @@ public class SellFragment extends BaseLazyFragment implements EmptyViewFactory.E
         refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                materialVm.moreSellList(materialVm.materialId, materialVm.specification, materialVm.supplierId);
+                materialVm.moreSellList();
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                materialVm.sellList(materialVm.materialId, materialVm.specification, materialVm.supplierId);
+                materialVm.sellList();
             }
         });
     }
 
     @Override
     protected void initDataFromService() {
-        materialVm.sellList(materialVm.materialId, materialVm.specification, materialVm.supplierId);
+        materialVm.sellList();
     }
 
     private void setNoMore(int page, int count) {
@@ -140,6 +140,6 @@ public class SellFragment extends BaseLazyFragment implements EmptyViewFactory.E
         materialVm.supplierMethod = "";
         materialVm.supplierMethodId = 0;
         ((MaterialActivity)getActivity()).updateFilterStyle();
-        materialVm.sellList(materialVm.materialId, materialVm.specification, materialVm.supplierId);
+        materialVm.sellList();
     }
 }

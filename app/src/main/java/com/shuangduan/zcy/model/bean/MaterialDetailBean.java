@@ -1,5 +1,7 @@
 package com.shuangduan.zcy.model.bean;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 /**
@@ -58,6 +60,51 @@ public class MaterialDetailBean {
     private String status;
     private List<ImagesBean> images;
     private List<AddressListBean> address_list;
+
+    //浏览总人数
+    @SerializedName("browse_count")
+    private int browseCount;
+
+    //浏览人信息
+    public User user;
+
+    //物资类型
+    @SerializedName("is_shelf")
+    private int isShelf;
+    //供应方式
+    private int method;
+
+    public int getBrowseCount() {
+        return browseCount;
+    }
+
+    public void setBrowseCount(int browseCount) {
+        this.browseCount = browseCount;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public int getIsShelf() {
+        return isShelf;
+    }
+
+    public void setIsShelf(int isShelf) {
+        this.isShelf = isShelf;
+    }
+
+    public int getMethod() {
+        return method;
+    }
+
+    public void setMethod(int method) {
+        this.method = method;
+    }
 
     public String getStatus() {
         return status;
@@ -292,6 +339,27 @@ public class MaterialDetailBean {
 
         public void setAddress(String address) {
             this.address = address;
+        }
+    }
+
+    public class User{
+        private int id;
+        private String image;
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public String getImage() {
+            return image;
+        }
+
+        public void setImage(String image) {
+            this.image = image;
         }
     }
 }

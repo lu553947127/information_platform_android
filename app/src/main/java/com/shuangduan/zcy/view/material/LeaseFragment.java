@@ -96,19 +96,19 @@ public class LeaseFragment extends BaseLazyFragment implements EmptyViewFactory.
         refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                materialVm.moreLeaseList(materialVm.materialId, materialVm.specification, materialVm.supplierId);
+                materialVm.moreLeaseList();
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                materialVm.leaseList(materialVm.materialId, materialVm.specification, materialVm.supplierId);
+                materialVm.leaseList();
             }
         });
     }
 
     @Override
     protected void initDataFromService() {
-        materialVm.leaseList(materialVm.materialId, materialVm.specification, materialVm.supplierId);
+        materialVm.leaseList();
     }
 
     private void setNoMore(int page, int count) {
@@ -142,6 +142,6 @@ public class LeaseFragment extends BaseLazyFragment implements EmptyViewFactory.
         materialVm.supplierMethodId = 0;
         ((MaterialActivity)getActivity()).updateFilterStyle();
 
-        materialVm.leaseList(materialVm.materialId, materialVm.specification, materialVm.supplierId);
+        materialVm.leaseList();
     }
 }

@@ -129,8 +129,8 @@ public class MaterialOrderActivity extends BaseActivity {
                 tvOpen.setTextSize(18);
                 tvDefault.setTextSize(14);
                 //TODO 后续修改接口
-                materialVm.sellList(materialVm.materialId, materialVm.specification, materialVm.supplierId);
-                materialVm.leaseList(materialVm.materialId, materialVm.specification, materialVm.supplierId);
+                materialVm.sellList();
+                materialVm.leaseList();
                 materialFlag = 0;
                 break;
             case R.id.tv_default:
@@ -138,8 +138,8 @@ public class MaterialOrderActivity extends BaseActivity {
                 tvOpen.setTextSize(14);
                 tvDefault.setTextSize(18);
                 //TODO 后续修改接口
-                materialVm.sellList(materialVm.materialId, materialVm.specification, materialVm.supplierId);
-                materialVm.leaseList(materialVm.materialId, materialVm.specification, materialVm.supplierId);
+                materialVm.sellList();
+                materialVm.leaseList();
                 materialFlag = 1;
                 break;
         }

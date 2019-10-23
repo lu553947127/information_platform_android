@@ -7,6 +7,7 @@ import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseViewModel;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.api.repository.MaterialRepository;
+import com.shuangduan.zcy.model.bean.AuthGroupBean;
 import com.shuangduan.zcy.model.bean.MaterialBean;
 import com.shuangduan.zcy.model.bean.MaterialCategoryBean;
 import com.shuangduan.zcy.model.bean.MaterialOrderBean;
@@ -33,6 +34,8 @@ public class MaterialVm extends BaseViewModel {
     //物资预定列表数据
     public MutableLiveData<MaterialOrderBean> orderLiveData;
 
+    //材料列表授权组
+    public AuthGroupBean authGroup;
 
     public int categoryFirstId;//一级分类id， 用于二级数据
     public int categoryId;//二级分类id， 用于列表加载
@@ -43,7 +46,7 @@ public class MaterialVm extends BaseViewModel {
     public int materialId;
 
     public int supplierId;
-
+    //规格
     public String specification;
     //供应方式ID
     public int supplierMethodId;
@@ -66,6 +69,7 @@ public class MaterialVm extends BaseViewModel {
         categoryLiveData = new MutableLiveData<>();
         orderLiveData = new MutableLiveData<>();
 
+        authGroup = new AuthGroupBean();
 
         categoryFirstId = 0;
         categoryId = 0;
@@ -78,30 +82,32 @@ public class MaterialVm extends BaseViewModel {
         specification = "";
 
         supplierMethod = "";
+
+
     }
 
-    public void sellList(int materialId, String spec, int supplierId) {
+    public void sellList() {
         sellPage = 1;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
-        new MaterialRepository().materialList(sellLiveData, pageStateLiveData, userId, 2, materialId, spec, supplierId, sellPage);
+        new MaterialRepository().materialList(sellLiveData, pageStateLiveData, userId, supplierMethodId, materialId, specification, supplierId, sellPage,authGroup);
     }
 
-    public void moreSellList(int materialId, String spec, int supplierId) {
+    public void moreSellList() {
         sellPage++;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
-        new MaterialRepository().materialList(sellLiveData, pageStateLiveData, userId, 2, materialId, spec, supplierId, sellPage);
+        new MaterialRepository().materialList(sellLiveData, pageStateLiveData, userId, supplierMethodId, materialId, specification, supplierId, sellPage,authGroup);
     }
 
-    public void leaseList(int materialId, String spec, int supplierId) {
+    public void leaseList() {
         leasePage = 1;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
-        new MaterialRepository().materialList(leaseLiveData, pageStateLiveData, userId, 1, materialId, spec, supplierId, leasePage);
+        new MaterialRepository().materialList(leaseLiveData, pageStateLiveData, userId, supplierMethodId, materialId, specification, supplierId, leasePage,authGroup);
     }
 
-    public void moreLeaseList(int materialId, String spec, int supplierId) {
+    public void moreLeaseList() {
         leasePage++;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
-        new MaterialRepository().materialList(leaseLiveData, pageStateLiveData, userId, 1, materialId, spec, supplierId, leasePage);
+        new MaterialRepository().materialList(leaseLiveData, pageStateLiveData, userId, supplierMethodId, materialId, specification, supplierId, leasePage,authGroup);
     }
 
     //物质预定列表

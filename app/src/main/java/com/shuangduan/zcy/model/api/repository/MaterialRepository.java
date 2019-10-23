@@ -2,6 +2,7 @@ package com.shuangduan.zcy.model.api.repository;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.shuangduan.zcy.model.bean.AuthGroupBean;
 import com.shuangduan.zcy.model.bean.MaterialAddBean;
 import com.shuangduan.zcy.model.bean.MaterialBean;
 import com.shuangduan.zcy.model.bean.MaterialCategoryBean;
@@ -24,8 +25,8 @@ import java.util.List;
  */
 public class MaterialRepository extends BaseRepository {
     public void materialList(MutableLiveData<MaterialBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int type,
-                             int materialId, String spec, int supplierId, int page) {
-        request(apiService.materialList(userId, type, materialId, spec, supplierId, page)).setData(liveData).setPageState(pageStateLiveData).send();
+                             int materialId, String spec, int supplierId, int page, AuthGroupBean authGroup) {
+        request(apiService.materialList(userId, type, materialId, spec, supplierId, page,authGroup)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
     public void materialDetail(MutableLiveData<MaterialDetailBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int id) {

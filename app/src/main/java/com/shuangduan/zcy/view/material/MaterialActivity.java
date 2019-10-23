@@ -110,13 +110,13 @@ public class MaterialActivity extends BaseActivity {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
-        BarUtils.addMarginTopEqualStatusBarHeight(toolbarMaterial);
+        BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.material_base));
         tvBarRight.setText(getString(R.string.filter));
         tvBarRight.setVisibility(View.GONE);
 
-        toolbar.setVisibility(View.GONE);
-        toolbarMaterial.setVisibility(View.VISIBLE);
+        toolbar.setVisibility(View.VISIBLE);
+        toolbarMaterial.setVisibility(View.GONE);
 
         Fragment[] fragments = new Fragment[]{
                 SellFragment.newInstance(),
@@ -154,8 +154,8 @@ public class MaterialActivity extends BaseActivity {
                 tvOpen.setTextSize(18);
                 tvDefault.setTextSize(14);
                 //TODO 后续修改接口
-                materialVm.sellList(materialVm.materialId, materialVm.specification, materialVm.supplierId);
-                materialVm.leaseList(materialVm.materialId, materialVm.specification, materialVm.supplierId);
+                materialVm.sellList();
+                materialVm.leaseList();
                 materialFlag = 0;
                 break;
             case R.id.tv_default:
@@ -163,8 +163,8 @@ public class MaterialActivity extends BaseActivity {
                 tvOpen.setTextSize(14);
                 tvDefault.setTextSize(18);
                 //TODO 后续修改接口
-                materialVm.sellList(materialVm.materialId, materialVm.specification, materialVm.supplierId);
-                materialVm.leaseList(materialVm.materialId, materialVm.specification, materialVm.supplierId);
+                materialVm.sellList();
+                materialVm.leaseList();
                 materialFlag = 1;
                 break;
             case R.id.tv_bar_right:
@@ -231,8 +231,8 @@ public class MaterialActivity extends BaseActivity {
                         view.findViewById(R.id.tv_positive).setOnClickListener(item -> {
                             String spec = etSpecification.getText().toString();
                             materialVm.specification = spec;
-                            materialVm.sellList(materialVm.materialId, materialVm.specification, materialVm.supplierId);
-                            materialVm.leaseList(materialVm.materialId, materialVm.specification, materialVm.supplierId);
+                            materialVm.sellList();
+                            materialVm.leaseList();
                             popupWindowCategory.dismiss();
                             over.setVisibility(View.GONE);
                         });
@@ -284,9 +284,11 @@ public class MaterialActivity extends BaseActivity {
                         switch (checkedId) {
                             case R.id.rb_filter_sell:
                                 materialVm.supplierMethod = getResources().getString(R.string.sell);
+                                materialVm.supplierMethodId = 2;
                                 break;
                             case R.id.rb_filter_lease:
                                 materialVm.supplierMethod = getResources().getString(R.string.lease);
+                                materialVm.supplierMethodId = 1;
                                 break;
                         }
                     });
@@ -314,8 +316,8 @@ public class MaterialActivity extends BaseActivity {
                                 break;
                         }
 
-                        materialVm.sellList(materialVm.materialId, materialVm.specification, materialVm.supplierId);
-                        materialVm.leaseList(materialVm.materialId, materialVm.specification, materialVm.supplierId);
+                        materialVm.sellList();
+                        materialVm.leaseList();
                         popupWindowCategory.dismiss();
                         over.setVisibility(View.GONE);
 
@@ -326,8 +328,8 @@ public class MaterialActivity extends BaseActivity {
                     view.findViewById(R.id.tv_positive).setOnClickListener(item -> {
                         String spec = etSpecification.getText().toString();
                         materialVm.specification = spec;
-                        materialVm.sellList(materialVm.materialId, materialVm.specification, materialVm.supplierId);
-                        materialVm.leaseList(materialVm.materialId, materialVm.specification, materialVm.supplierId);
+                        materialVm.sellList();
+                        materialVm.leaseList();
                         popupWindowCategory.dismiss();
                         over.setVisibility(View.GONE);
                         updateFilterStyle();

@@ -94,12 +94,12 @@ public class MaterialDetailActivity extends BaseActivity {
     LinearLayout llCollection;
     @BindView(R.id.tv_reserve)
     TextView tvReserve;
-//    @BindView(R.id.iv_purchased_goods)
-//    TextView ivPurchasedGoods;
+    @BindView(R.id.iv_purchased_goods)
+    TextView ivPurchasedGoods;
     private MaterialDetailVm materialDetailVm;
-    private String phone,is_collect,enclosure;
+    private String phone, is_collect, enclosure;
     private List<String> pics;
-    int material_id,supplier_id;
+    int material_id, supplier_id;
 
     @Override
     protected int initLayoutRes() {
@@ -129,52 +129,54 @@ public class MaterialDetailActivity extends BaseActivity {
             }
             initBanner(pics, titles);
             tvMaterialCategory.setText(materialDetailBean.getMaterial_category());
-            String str="<font color=\"#EF583E\">"+materialDetailBean.getGuidance_price()+"</font>元/"+materialDetailBean.getUnit();
+            String str = "<font color=\"#EF583E\">" + materialDetailBean.getGuidance_price() + "</font>元/" + materialDetailBean.getUnit();
             tvUnitPrice.setText(Html.fromHtml(str));
-            tvStock.setText(String.format(getString(R.string.format_stock), materialDetailBean.getStock(),materialDetailBean.getUnit()));
+            tvStock.setText(String.format(getString(R.string.format_stock), materialDetailBean.getStock(), materialDetailBean.getUnit()));
             tvSalesVolume.setText(String.format(getString(R.string.format_sales_volume), materialDetailBean.getSales_volume()));
             tvSpec.setText(String.format(getString(R.string.format_spec), materialDetailBean.getSpec()));
-            tvCompany.setText("供应商："+materialDetailBean.getCompany());
+            tvCompany.setText("供应商：" + materialDetailBean.getCompany());
             tvAddressList.setText(materialDetailBean.getAddress());
             tvCompanyName.setText(materialDetailBean.getCompany());
             tvSupplieAddress.setText(materialDetailBean.getSupplie_address());
             tvCompanyWebsite.setText(materialDetailBean.getCompany_website());
             tvServeAddress.setText(materialDetailBean.getServe_address());
             tvProduct.setText(materialDetailBean.getProduct());
-            material_id=materialDetailBean.getMaterial_id();
-            phone=materialDetailBean.getTel();
-            enclosure=materialDetailBean.getEnclosure();
-            supplier_id=materialDetailBean.getSupplier_id();
-            if (materialDetailBean.getIs_collection().equals("1")){
-                is_collect=materialDetailBean.getIs_collection();
+            material_id = materialDetailBean.getMaterial_id();
+            phone = materialDetailBean.getTel();
+            enclosure = materialDetailBean.getEnclosure();
+            supplier_id = materialDetailBean.getSupplier_id();
+            if (materialDetailBean.getIs_collection().equals("1")) {
+                is_collect = materialDetailBean.getIs_collection();
                 ivCollection.setBackgroundResource(R.drawable.icon_new_collectioned);
-            }else {
-                is_collect=materialDetailBean.getIs_collection();
+            } else {
+                is_collect = materialDetailBean.getIs_collection();
                 ivCollection.setBackgroundResource(R.drawable.icon_new_collection);
             }
-            if (materialDetailBean.getStatus().equals("1")){
+            if (materialDetailBean.getStatus().equals("1")) {
                 tvReserve.setBackgroundResource(R.drawable.selector_btn_confirm);
                 tvReserve.setText("立即预定");
                 tvReserve.setClickable(true);
-            }else {
+            } else {
                 tvReserve.setBackgroundResource(R.drawable.selector_btn_confirm_gray);
                 tvReserve.setText("已失效");
                 tvReserve.setClickable(false);
             }
+
+            ivPurchasedGoods.setVisibility(materialDetailBean.getIsShelf() == 3 ? View.VISIBLE : View.GONE);
         });
 
         materialDetailVm.collectedLiveData.observe(this, o -> {
             llCollection.setClickable(true);
-            is_collect="1";
+            is_collect = "1";
             ivCollection.setBackgroundResource(R.drawable.icon_new_collectioned);
         });
         materialDetailVm.collectLiveData.observe(this, o -> {
             llCollection.setClickable(true);
-            is_collect="0";
+            is_collect = "0";
             ivCollection.setBackgroundResource(R.drawable.icon_new_collection);
         });
         materialDetailVm.pageStateLiveData.observe(this, s -> {
-            switch (s){
+            switch (s) {
                 case PageState.PAGE_LOADING:
                     showLoading();
                     break;
@@ -186,15 +188,15 @@ public class MaterialDetailActivity extends BaseActivity {
         materialDetailVm.getDetail(getIntent().getIntExtra(CustomConfig.MATERIAL_ID, 0));
     }
 
-    @OnClick({R.id.iv_bar_back,R.id.tv_enclosure, R.id.tv_tel, R.id.tv_address_list, R.id.ll_collect,R.id.tv_reserve})
-    void onClick(View v){
+    @OnClick({R.id.iv_bar_back, R.id.tv_enclosure, R.id.tv_tel, R.id.tv_address_list, R.id.ll_collect, R.id.tv_reserve})
+    void onClick(View v) {
         Bundle bundle = new Bundle();
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.iv_bar_back:
                 finish();
                 break;
             case R.id.tv_enclosure:
-                if (TextUtils.isEmpty(enclosure)){
+                if (TextUtils.isEmpty(enclosure)) {
                     ToastUtils.showShort(getString(R.string.no_enclosure));
                     return;
                 }
@@ -210,13 +212,13 @@ public class MaterialDetailActivity extends BaseActivity {
 
                             @Override
                             public void ok(String s) {
-                                KeyboardUtil.copyString(MaterialDetailActivity.this,enclosure);
+                                KeyboardUtil.copyString(MaterialDetailActivity.this, enclosure);
                                 ToastUtils.showShort(getString(R.string.replication_success));
                             }
                         }).showDialog();
                 break;
             case R.id.tv_tel:
-                if (TextUtils.isEmpty(phone)){
+                if (TextUtils.isEmpty(phone)) {
                     ToastUtils.showShort(getString(R.string.no_tel));
                     return;
                 }
@@ -242,9 +244,9 @@ public class MaterialDetailActivity extends BaseActivity {
                 break;
             case R.id.ll_collect:
                 llCollection.setClickable(false);
-                if (is_collect!=null&&is_collect.equals("1")){
+                if (is_collect != null && is_collect.equals("1")) {
                     materialDetailVm.getCollect();//取消收藏
-                }else {
+                } else {
                     materialDetailVm.getCollected();//收藏
                 }
                 break;
@@ -269,7 +271,7 @@ public class MaterialDetailActivity extends BaseActivity {
         startActivity(intent);
     }
 
-    private void initBanner(List<String> list, ArrayList<String> titles){
+    private void initBanner(List<String> list, ArrayList<String> titles) {
         //设置banner样式
         banner.setBannerStyle(BannerConfig.NUM_INDICATOR);
         //设置图片加载器
@@ -287,7 +289,7 @@ public class MaterialDetailActivity extends BaseActivity {
         //设置指示器位置（当banner模式中有指示器时）
         banner.setIndicatorGravity(BannerConfig.CENTER);
         //轮播图查看
-        banner.setOnBannerListener(position -> PictureEnlargeUtils.getPictureEnlargeList(this,list,position));
+        banner.setOnBannerListener(position -> PictureEnlargeUtils.getPictureEnlargeList(this, list, position));
         //banner设置方法全部调用完毕时最后调用
         banner.start();
     }
