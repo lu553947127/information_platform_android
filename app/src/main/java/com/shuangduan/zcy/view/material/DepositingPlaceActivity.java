@@ -22,6 +22,7 @@ import com.shuangduan.zcy.model.event.MaterialDetailEvent;
 import com.shuangduan.zcy.vm.MaterialDetailVm;
 import com.shuangduan.zcy.weight.DataHolder;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
+
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
@@ -54,7 +55,7 @@ public class DepositingPlaceActivity extends BaseActivity {
     @BindView(R.id.refresh)
     SmartRefreshLayout refresh;
     private MaterialDetailVm materialDetailVm;
-    List<MaterialPlaceOrderBean> list=new ArrayList<>();
+    List<MaterialPlaceOrderBean> list = new ArrayList<>();
 
     @Override
     protected int initLayoutRes() {
@@ -70,48 +71,50 @@ public class DepositingPlaceActivity extends BaseActivity {
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.material_depositing_place));
-        View empty=emptyViewFactory.createEmptyView(R.drawable.icon_empty_project,R.string.empty_depositing_place,0,null);
+        View empty = emptyViewFactory.createEmptyView(R.drawable.icon_empty_project, R.string.empty_depositing_place, 0, null);
         materialDetailVm = ViewModelProviders.of(this).get(MaterialDetailVm.class);
         materialDetailVm.id = getIntent().getIntExtra(CustomConfig.MATERIAL_ID, 0);
         materialDetailVm.supplier_id = getIntent().getIntExtra(CustomConfig.SUPPLIER_ID, 0);
-        this.list= (List<MaterialPlaceOrderBean>) DataHolder.getInstance().getData("list");
+        this.list = (List<MaterialPlaceOrderBean>) DataHolder.getInstance().getData("list");
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
         MaterialDepositingPlaceAdapter materialDepositingPlaceAdapter = new MaterialDepositingPlaceAdapter(R.layout.adapter_material_depositing_place, null);
         recyclerView.setAdapter(materialDepositingPlaceAdapter);
 
-        materialDetailVm.depositingPlaceBeanMutableLiveData.observe(this,materialDepositingPlaceBean -> {
-                    if (materialDepositingPlaceBean!=null&&materialDepositingPlaceBean.size()>0){
-                        if (list!=null){
+        materialDetailVm.depositingPlaceBeanMutableLiveData.observe(this, materialDepositingPlaceBean -> {
+                    if (materialDepositingPlaceBean != null && materialDepositingPlaceBean.size() > 0) {
+                        if (list != null) {
                             for (int i = 0; i < list.size(); i++) {
                                 String type_no = String.valueOf(list.get(i).getMaterialId());
                                 for (int j = 0; j < materialDepositingPlaceBean.size(); j++) {
                                     if (String.valueOf(materialDepositingPlaceBean.get(j).getId()).equals(type_no)) {
                                         materialDepositingPlaceBean.remove(j);
-                                        if (materialDepositingPlaceBean.size()==0){
+                                        if (materialDepositingPlaceBean.size() == 0) {
                                             materialDepositingPlaceAdapter.setEmptyView(empty);
                                         }
                                     }
                                 }
                             }
-                        }else {
+                        } else {
                             materialDepositingPlaceAdapter.setEmptyView(empty);
                         }
                         materialDepositingPlaceAdapter.setNewData(materialDepositingPlaceBean);
-                    }else {
+                    } else {
                         materialDepositingPlaceAdapter.setEmptyView(empty);
                     }
                     materialDepositingPlaceAdapter.setOnItemClickListener((adapter, view, position) -> {
                         LogUtils.i(materialDepositingPlaceBean.get(position).getId());
-                        EventBus.getDefault().post(new MaterialDetailEvent(materialDepositingPlaceBean.get(position).getId(),materialDepositingPlaceBean.get(position).getAddress()));
+                        EventBus.getDefault().post(new MaterialDetailEvent(materialDepositingPlaceBean.get(position).getId(), materialDepositingPlaceBean.get(position).getAddress()));
                         finish();
                     });
                 }
         );
-        materialDetailVm.getAddressList();
+        materialDetailVm.getAddressList(getIntent().getIntExtra(CustomConfig.IS_SHELF, 0));
     }
 
     @OnClick({R.id.iv_bar_back})
-    void onClick(){ finish(); }
+    void onClick() {
+        finish();
+    }
 }

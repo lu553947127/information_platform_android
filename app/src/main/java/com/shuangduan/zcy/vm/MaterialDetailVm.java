@@ -68,12 +68,12 @@ public class MaterialDetailVm extends BaseViewModel {
         new MaterialRepository().collect(collectLiveData, pageStateLiveData, userId, id);
     }
 
-    public void getAddressList() {
-        new MaterialRepository().getAddress(depositingPlaceBeanMutableLiveData, pageStateLiveData, userId, id,supplier_id);
+    public void getAddressList(int isShelf) {
+        new MaterialRepository().getAddress(depositingPlaceBeanMutableLiveData, pageStateLiveData, userId, id,supplier_id,isShelf);
     }
 
-    public void getAddMaterial(int material_id, BigInteger num) {
-        new MaterialRepository().getAddMaterial(mutableLiveData, pageStateLiveData, userId, material_id, num);
+    public void getAddMaterial(int material_id, BigInteger num,int day,int type) {
+        new MaterialRepository().getAddMaterial(mutableLiveData, pageStateLiveData, userId, material_id, num,day,type);
     }
 
     public void getDelMaterial(int material_id) {

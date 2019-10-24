@@ -69,6 +69,7 @@ public class CustomConfig {
     public static final String FRIEND_DATA = "friend_data";
     public static final String PROJECT_TYPE = "project_type";//搜索区分工程信息还是招采信息
     public static final String IS_ADMIN_MANAGE = "is_admin_manage";//区分后台管理 1.周转材料 2.设备管理 3.订单管理
+    public static final String IS_SHELF = "is_shelf";//1 公开物资存放地，3 内购物资存放地
 
     //------------------------------------身份验证判断----------------------------------------------------
     //身份认证提示类型

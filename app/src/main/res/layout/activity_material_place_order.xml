@@ -51,12 +51,26 @@
                             android:layout_height="wrap_content"
                             android:textColor="@color/color_5D5D5D"
                             android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/tv_supply_method"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:background="@drawable/shape_supply_method_3"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:layout_toRightOf="@id/tv_material_category"
+                            android:layout_alignTop="@id/tv_material_category"
+                            android:layout_alignBottom="@id/tv_material_category"
+                            android:textColor="@color/color_EF583E"/>
+
                         <TextView
                             android:id="@+id/tv_guidance_price"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
-                            android:textColor="@color/color_5D5D5D"
+                            android:textColor="@color/color_EF583E"
                             android:textSize="13sp"
                             tools:ignore="RtlHardcoded" />
                     </RelativeLayout>
@@ -306,14 +320,32 @@
 
                 <TextView
                     android:id="@+id/tv_add"
-                    android:layout_width="131dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="28dp"
                     android:layout_margin="22dp"
                     android:background="@drawable/circular_background_gray"
-                    android:padding="5dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
                     android:textSize="13sp"
-                    android:textColor="@color/colorTvStates"
-                    android:text="@string/material_tv_add"/>
+                    android:textColor="@color/colorTvStates"/>
+
+                <TextView
+                    android:id="@+id/tv_add_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="28dp"
+                    android:layout_margin="22dp"
+                    android:background="@drawable/circular_background_gray"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:layout_gravity="center_horizontal"
+                    android:textSize="13sp"
+                    android:text="+添加一项"
+                    android:visibility="gone"
+                    android:textColor="@color/colorTvStates"/>
             </LinearLayout>
 
 

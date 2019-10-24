@@ -72,8 +72,7 @@ public class MaterialOrderActivity extends BaseActivity {
 
     private MaterialVm materialVm;
 
-    //物资大分类 0：公开物资 1：内定物资
-    private int materialFlag;
+
 
     @Override
     protected int initLayoutRes() {
@@ -125,22 +124,23 @@ public class MaterialOrderActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_open:
-                if (materialFlag == 0) return;
+                if (materialVm.materialFlag == 0) return;
                 tvOpen.setTextSize(18);
                 tvDefault.setTextSize(14);
+                materialVm.materialFlag = 0;
                 //TODO 后续修改接口
-                materialVm.sellList();
+                materialVm.sellList(materialVm.materialFlag);
                 materialVm.leaseList();
-                materialFlag = 0;
                 break;
             case R.id.tv_default:
-                if (materialFlag == 1) return;
+                if (materialVm.materialFlag == 1) return;
                 tvOpen.setTextSize(14);
                 tvDefault.setTextSize(18);
+                materialVm.materialFlag = 1;
                 //TODO 后续修改接口
-                materialVm.sellList();
+                materialVm.sellList(materialVm.materialFlag);
                 materialVm.leaseList();
-                materialFlag = 1;
+
                 break;
         }
     }

@@ -10,6 +10,8 @@
 
     <string name="material_open">公开物资</string>
     <string name="material_default">内定物资</string>
+    <string name="material_tv_add">+添加数量、存放地</string>
+    <string name="material_tv_lease_add">+添加数量、租期、存放地</string>
 
     <string name="empty_material_intro"><![CDATA[您还不是供应商没有权限查看内部物资哦！建议您加入我们<font color="#6a5ff8">成为优质供应商，</font>查看更多内部物资供需信息。]]></string>
 

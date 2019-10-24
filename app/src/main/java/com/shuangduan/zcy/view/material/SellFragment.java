@@ -42,12 +42,11 @@ public class SellFragment extends BaseLazyFragment implements EmptyViewFactory.E
     private MaterialVm materialVm;
     private View emptyView;
 
-    public static SellFragment newInstance(int state) {
+
+    public static SellFragment newInstance() {
 
         Bundle args = new Bundle();
-        args.putInt("state", state);
         SellFragment fragment = new SellFragment();
-
         fragment.setArguments(args);
         return fragment;
     }
@@ -64,6 +63,7 @@ public class SellFragment extends BaseLazyFragment implements EmptyViewFactory.E
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
+
 
         //赛选条件列表为空
         emptyView = createEmptyView(R.drawable.icon_empty_project, R.string.empty_substance_screen_info, R.string.see_all, this);
@@ -96,28 +96,19 @@ public class SellFragment extends BaseLazyFragment implements EmptyViewFactory.E
         refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                materialVm.moreSellList();
+                materialVm.moreSellList( materialVm.materialFlag);
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                materialVm.sellList();
+                materialVm.sellList( materialVm.materialFlag);
             }
         });
     }
 
     @Override
     protected void initDataFromService() {
-        int state = getArguments().getInt("state", 0);
-        switch (state) {
-            case 2:
-            case 3:
-                materialVm.sellDefaultList();
-                break;
-            default:
-                materialVm.sellList();
-                break;
-        }
+        materialVm.sellList( materialVm.materialFlag);
     }
 
     private void setNoMore(int page, int count) {
@@ -150,6 +141,8 @@ public class SellFragment extends BaseLazyFragment implements EmptyViewFactory.E
         materialVm.supplierMethod = "";
         materialVm.supplierMethodId = 0;
         ((MaterialActivity) getActivity()).updateFilterStyle();
-        materialVm.sellList();
+        materialVm.sellList( materialVm.materialFlag);
     }
+
+
 }

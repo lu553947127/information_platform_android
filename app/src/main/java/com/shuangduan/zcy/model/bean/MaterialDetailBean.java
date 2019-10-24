@@ -71,7 +71,7 @@ public class MaterialDetailBean {
     //物资类型
     @SerializedName("is_shelf")
     private int isShelf;
-    //供应方式
+    //供应方式 1 出租 2 售卖
     private int method;
 
     public int getBrowseCount() {

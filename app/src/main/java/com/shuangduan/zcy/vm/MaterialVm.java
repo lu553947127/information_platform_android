@@ -59,6 +59,9 @@ public class MaterialVm extends BaseViewModel {
     //筛选框的供应方式
     public String supplierMethod;
 
+    //物资大分类 0：公开物资 1：内定物资
+    public int materialFlag;
+
 
     public MaterialVm() {
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
@@ -76,37 +79,34 @@ public class MaterialVm extends BaseViewModel {
 
         materialId = 0;
         supplierId = 0;
-        supplierMethodId =0;
+        supplierMethodId = 0;
 
         specification = "";
 
         supplierMethod = "";
 
-
+        materialFlag = 0;
     }
 
     //公开周转材料
-    public void sellList() {
+    public void sellList(int flag) {
         sellPage = 1;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
-        new MaterialRepository().materialList(sellLiveData, pageStateLiveData, userId, supplierMethodId, materialId, specification, supplierId, sellPage);
-    }
-    public void moreSellList() {
-        sellPage++;
-        pageStateLiveData.postValue(PageState.PAGE_REFRESH);
-        new MaterialRepository().materialList(sellLiveData, pageStateLiveData, userId, supplierMethodId, materialId, specification, supplierId, sellPage);
+        if (flag == 0) {
+            new MaterialRepository().materialList(sellLiveData, pageStateLiveData, userId, supplierMethodId, materialId, specification, supplierId, sellPage);
+        } else {
+            new MaterialRepository().materialList(sellLiveData, pageStateLiveData, userId, supplierMethodId, materialId, specification, supplierId, sellPage, authGroup);
+        }
     }
 
-    //内定周转材料
-    public void sellDefaultList() {
-        sellPage = 1;
-        pageStateLiveData.postValue(PageState.PAGE_REFRESH);
-        new MaterialRepository().materialList(sellLiveData, pageStateLiveData, userId, supplierMethodId, materialId, specification, supplierId, sellPage,authGroup);
-    }
-    public void moreSellDefaultList() {
+    public void moreSellList(int flag) {
         sellPage++;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
-        new MaterialRepository().materialList(sellLiveData, pageStateLiveData, userId, supplierMethodId, materialId, specification, supplierId, sellPage,authGroup);
+        if (flag == 0) {
+            new MaterialRepository().materialList(sellLiveData, pageStateLiveData, userId, supplierMethodId, materialId, specification, supplierId, sellPage);
+        } else {
+            new MaterialRepository().materialList(sellLiveData, pageStateLiveData, userId, supplierMethodId, materialId, specification, supplierId, sellPage, authGroup);
+        }
     }
 
     public void leaseList() {

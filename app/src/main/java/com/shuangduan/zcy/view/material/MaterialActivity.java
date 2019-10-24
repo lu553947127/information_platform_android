@@ -32,6 +32,7 @@ import com.shuangduan.zcy.model.bean.SupplierCliqueBean;
 import com.shuangduan.zcy.model.event.MaterialEvent;
 import com.shuangduan.zcy.model.event.SupplierEvent;
 import com.shuangduan.zcy.utils.DensityUtil;
+import com.shuangduan.zcy.view.mine.MineMaterialsFragment;
 import com.shuangduan.zcy.vm.HomeVm;
 import com.shuangduan.zcy.vm.MaterialVm;
 
@@ -101,8 +102,9 @@ public class MaterialActivity extends BaseActivity {
     private EditText etSpecification;
     private RadioGroup radioGroup;
 
-    //物资大分类 0：公开物资 1：内定物资
-    private int materialFlag;
+
+    private SellFragment sellFragment;
+    private LeaseFragment leaseFragment;
 
     @Override
     protected int initLayoutRes() {
@@ -119,6 +121,7 @@ public class MaterialActivity extends BaseActivity {
         //获取内定物资显示权限
         HomeVm homeVm = ViewModelProviders.of(this).get(HomeVm.class);
         homeVm.supplierCliqueLiveData.observe(this, supplierCliqueBean -> {
+            LogUtils.json(LogUtils.E, supplierCliqueBean);
             initViewAndData(supplierCliqueBean);
         });
         homeVm.getSupplierClique();
@@ -128,6 +131,9 @@ public class MaterialActivity extends BaseActivity {
     private void initViewAndData(SupplierCliqueBean supplierClique) {
 
         materialVm = ViewModelProviders.of(this).get(MaterialVm.class);
+
+        sellFragment = SellFragment.newInstance();
+        leaseFragment = LeaseFragment.newInstance();
 
         if (supplierClique.getSupplier_status() == 2 || supplierClique.getSupplier_status() == 3) {
             BarUtils.addMarginTopEqualStatusBarHeight(toolbarMaterial);
@@ -143,15 +149,12 @@ public class MaterialActivity extends BaseActivity {
             toolbarMaterial.setVisibility(View.GONE);
         }
 
-        Fragment[] fragments = new Fragment[]{
-                SellFragment.newInstance(supplierClique.getSupplier_status()),
-                LeaseFragment.newInstance(supplierClique.getSupplier_status())
-        };
+        Fragment[] fragments = new Fragment[]{sellFragment, leaseFragment};
+
         tabLayout.addTab(tabLayout.newTab());
         tabLayout.addTab(tabLayout.newTab());
         vp.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), fragments, getResources().getStringArray(R.array.infrastructure)));
         tabLayout.setupWithViewPager(vp);
-
 
         materialVm.pageStateLiveData.observe(this, s -> {
             switch (s) {
@@ -173,22 +176,22 @@ public class MaterialActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_open:
-                if (materialFlag == 0) return;
+                if (materialVm.materialFlag == 0) return;
                 tvOpen.setTextSize(18);
                 tvDefault.setTextSize(14);
+                materialVm.materialFlag = 0;
                 //TODO 后续修改接口
-                materialVm.sellDefaultList();
+                materialVm.sellList(materialVm.materialFlag);
                 materialVm.leaseList();
-                materialFlag = 0;
                 break;
             case R.id.tv_default:
-                if (materialFlag == 1) return;
+                if (materialVm.materialFlag == 1) return;
                 tvOpen.setTextSize(14);
                 tvDefault.setTextSize(18);
+                materialVm.materialFlag = 1;
                 //TODO 后续修改接口
-                materialVm.sellList();
+                materialVm.sellList(materialVm.materialFlag);
                 materialVm.leaseList();
-                materialFlag = 1;
                 break;
             case R.id.tv_bar_right:
                 initPop();
@@ -254,7 +257,7 @@ public class MaterialActivity extends BaseActivity {
                         view.findViewById(R.id.tv_positive).setOnClickListener(item -> {
                             String spec = etSpecification.getText().toString();
                             materialVm.specification = spec;
-                            materialVm.sellList();
+                            materialVm.sellList(materialVm.materialFlag);
                             materialVm.leaseList();
                             popupWindowCategory.dismiss();
                             over.setVisibility(View.GONE);
@@ -339,7 +342,7 @@ public class MaterialActivity extends BaseActivity {
                                 break;
                         }
 
-                        materialVm.sellList();
+                        materialVm.sellList(materialVm.materialFlag);
                         materialVm.leaseList();
                         popupWindowCategory.dismiss();
                         over.setVisibility(View.GONE);
@@ -351,7 +354,7 @@ public class MaterialActivity extends BaseActivity {
                     view.findViewById(R.id.tv_positive).setOnClickListener(item -> {
                         String spec = etSpecification.getText().toString();
                         materialVm.specification = spec;
-                        materialVm.sellList();
+                        materialVm.sellList(materialVm.materialFlag);
                         materialVm.leaseList();
                         popupWindowCategory.dismiss();
                         over.setVisibility(View.GONE);

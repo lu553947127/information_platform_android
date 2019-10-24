@@ -397,7 +397,7 @@
     <string name="material_et_address">请输入详细地址</string>
     <string name="material_remark">备注：</string>
     <string name="material_et_remark">如：指定规格、型号、性能、用途、表面要求等</string>
-    <string name="material_tv_add">+添加数量、存放地</string>
+
     <string name="material_tv_submission">提交预订单</string>
 
     <string name="format_version_name">v%1$s</string>

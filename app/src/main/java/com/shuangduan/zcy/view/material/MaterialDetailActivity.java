@@ -103,6 +103,10 @@ public class MaterialDetailActivity extends BaseActivity {
     RecyclerView rvBrowse;
     @BindView(R.id.tv_browse_people)
     TextView tvBrowsePeople;
+
+    @BindView(R.id.tv_supply_method)
+    TextView tvSupplyMethod;
+
     private MaterialDetailVm materialDetailVm;
     private String phone, is_collect, enclosure;
     private List<String> pics;
@@ -124,6 +128,7 @@ public class MaterialDetailActivity extends BaseActivity {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.product_detail));
 
+
         materialDetailVm = ViewModelProviders.of(this).get(MaterialDetailVm.class);
         materialDetailVm.id = getIntent().getIntExtra(CustomConfig.MATERIAL_ID, 0);
         materialDetailVm.detailLiveData.observe(this, materialDetailBean -> {
@@ -136,9 +141,15 @@ public class MaterialDetailActivity extends BaseActivity {
             }
             initBanner(pics, titles);
             tvMaterialCategory.setText(materialDetailBean.getMaterial_category());
-            String str = "<font color=\"#EF583E\">" + materialDetailBean.getGuidance_price() + "</font>元/" + materialDetailBean.getUnit();
-            tvUnitPrice.setText(Html.fromHtml(str));
+
+            tvUnitPrice.setText(materialDetailBean.getMethod() == 1 ?
+                    String.format(getString(R.string.format_material_price), String.valueOf(materialDetailBean.getGuidance_price()), "天") :
+                    String.format(getString(R.string.format_material_price), String.valueOf(materialDetailBean.getGuidance_price()), materialDetailBean.getUnit()));
+
             tvStock.setText(String.format(getString(R.string.format_stock), materialDetailBean.getStock(), materialDetailBean.getUnit()));
+
+            tvSupplyMethod.setText(materialDetailBean.getMethod() == 1 ? "出租" : "出售");
+
             tvSalesVolume.setText(String.format(getString(R.string.format_sales_volume), materialDetailBean.getSales_volume()));
             tvSpec.setText(String.format(getString(R.string.format_spec), materialDetailBean.getSpec()));
             tvCompany.setText("供应商：" + materialDetailBean.getCompany());
@@ -152,7 +163,7 @@ public class MaterialDetailActivity extends BaseActivity {
             phone = materialDetailBean.getTel();
             enclosure = materialDetailBean.getEnclosure();
             supplier_id = materialDetailBean.getSupplier_id();
-            tvBrowsePeople.setText(materialDetailBean.getBrowseCount()+"人浏览");
+            tvBrowsePeople.setText(materialDetailBean.getBrowseCount() + "人浏览");
             if (materialDetailBean.getIs_collection().equals("1")) {
                 is_collect = materialDetailBean.getIs_collection();
                 ivCollection.setBackgroundResource(R.drawable.icon_new_collectioned);
@@ -173,14 +184,14 @@ public class MaterialDetailActivity extends BaseActivity {
             ivPurchasedGoods.setVisibility(materialDetailBean.getIsShelf() == 3 ? View.VISIBLE : View.GONE);
 
             //设置浏览人数
-            if (materialDetailBean.getUser()!=null&&materialDetailBean.getUser().size()!=0){
-                LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
+            if (materialDetailBean.getUser() != null && materialDetailBean.getUser().size() != 0) {
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
                 linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
                 rvBrowse.setLayoutManager(linearLayoutManager);
-                BrowsePeopleAdapter adapter = new BrowsePeopleAdapter(R.layout.adapter_browse_people, materialDetailBean.getUser(),String.valueOf(materialDetailBean.getBrowseCount()));
+                BrowsePeopleAdapter adapter = new BrowsePeopleAdapter(R.layout.adapter_browse_people, materialDetailBean.getUser(), String.valueOf(materialDetailBean.getBrowseCount()));
                 adapter.setEmptyView(R.layout.layout_loading, rvBrowse);
                 rvBrowse.setAdapter(adapter);
-            }else {
+            } else {
                 rvBrowse.setVisibility(View.GONE);
             }
         });
