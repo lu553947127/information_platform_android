@@ -58,6 +58,8 @@
     <color name="color_ece6ff">#ece6ff</color>
     <color name="color_6a46e7">#6a46e7</color>
     <color name="color_FDEBE8">#FDEBE8</color>
+    <color name="color_868686">#868686</color>
+    <color name="color_EDEDED">#EDEDED</color>
 
     <!--时间选择器颜色-->
     <color name="text1">#6a5ff8</color>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    android:id="@+id/frame"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginRight="-8dp">
+
+    <com.shuangduan.zcy.weight.CircleImageView
+        android:id="@+id/iv_header"
+        android:layout_width="30dp"
+        android:layout_height="30dp" />
+    <TextView
+        android:id="@+id/tv_number"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/progressbar_gray"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textSize="13sp"
+        android:textColor="@color/color_868686"
+        android:visibility="gone"/>
+</FrameLayout>

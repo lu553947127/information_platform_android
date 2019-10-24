@@ -159,4 +159,5 @@
         <attr name="x_togglePwdDrawableEnable" format="boolean"/>
         <attr name="x_pattern" format="string"/>
     </declare-styleable>
+
 </resources>

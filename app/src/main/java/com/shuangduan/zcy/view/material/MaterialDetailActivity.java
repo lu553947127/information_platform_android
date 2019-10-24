@@ -14,12 +14,15 @@ import android.widget.TextView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
+import com.shuangduan.zcy.adapter.BrowsePeopleAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BaseDialog;
@@ -96,6 +99,10 @@ public class MaterialDetailActivity extends BaseActivity {
     TextView tvReserve;
     @BindView(R.id.iv_purchased_goods)
     ImageView ivPurchasedGoods;
+    @BindView(R.id.rv_browse)
+    RecyclerView rvBrowse;
+    @BindView(R.id.tv_browse_people)
+    TextView tvBrowsePeople;
     private MaterialDetailVm materialDetailVm;
     private String phone, is_collect, enclosure;
     private List<String> pics;
@@ -145,6 +152,7 @@ public class MaterialDetailActivity extends BaseActivity {
             phone = materialDetailBean.getTel();
             enclosure = materialDetailBean.getEnclosure();
             supplier_id = materialDetailBean.getSupplier_id();
+            tvBrowsePeople.setText(materialDetailBean.getBrowseCount()+"人浏览");
             if (materialDetailBean.getIs_collection().equals("1")) {
                 is_collect = materialDetailBean.getIs_collection();
                 ivCollection.setBackgroundResource(R.drawable.icon_new_collectioned);
@@ -163,6 +171,18 @@ public class MaterialDetailActivity extends BaseActivity {
             }
 
             ivPurchasedGoods.setVisibility(materialDetailBean.getIsShelf() == 3 ? View.VISIBLE : View.GONE);
+
+            //设置浏览人数
+            if (materialDetailBean.getUser()!=null&&materialDetailBean.getUser().size()!=0){
+                LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
+                linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+                rvBrowse.setLayoutManager(linearLayoutManager);
+                BrowsePeopleAdapter adapter = new BrowsePeopleAdapter(R.layout.adapter_browse_people, materialDetailBean.getUser(),String.valueOf(materialDetailBean.getBrowseCount()));
+                adapter.setEmptyView(R.layout.layout_loading, rvBrowse);
+                rvBrowse.setAdapter(adapter);
+            }else {
+                rvBrowse.setVisibility(View.GONE);
+            }
         });
 
         materialDetailVm.collectedLiveData.observe(this, o -> {

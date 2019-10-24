@@ -69,7 +69,7 @@ public class MaterialVm extends BaseViewModel {
         categoryLiveData = new MutableLiveData<>();
         orderLiveData = new MutableLiveData<>();
 
-
+        authGroup = new AuthGroupBean();
         categoryFirstId = 0;
         categoryId = 0;
 
