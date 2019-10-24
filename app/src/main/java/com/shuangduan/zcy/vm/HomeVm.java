@@ -10,6 +10,7 @@ import com.shuangduan.zcy.model.bean.HomeBannerBean;
 import com.shuangduan.zcy.model.bean.HomeListBean;
 import com.shuangduan.zcy.model.bean.SupplierCliqueBean;
 import com.shuangduan.zcy.model.bean.HomePushBean;
+import com.shuangduan.zcy.model.bean.SupplierRoleBean;
 
 import java.util.List;
 
@@ -29,6 +30,7 @@ public class HomeVm extends BaseViewModel {
     public MutableLiveData<List<HomeBannerBean>> bannerLiveData;
     public MutableLiveData<HomeListBean> listLiveData;
     public MutableLiveData<SupplierCliqueBean> supplierCliqueLiveData;
+    public MutableLiveData<List<SupplierRoleBean>> supplierRoleLiveData;
     public MutableLiveData<String> pageStateLiveData;
 
     public HomeVm() {
@@ -37,6 +39,7 @@ public class HomeVm extends BaseViewModel {
         bannerLiveData = new MutableLiveData<>();
         listLiveData = new MutableLiveData<>();
         supplierCliqueLiveData = new MutableLiveData<>();
+        supplierRoleLiveData = new MutableLiveData<>();
         pageStateLiveData = new MutableLiveData<>();
     }
 
@@ -65,5 +68,10 @@ public class HomeVm extends BaseViewModel {
     //基建物资 内定物资显示权限 supplier_status 0.普通用户 1.普通供应商 2.集团供应商子公司 3.集团供应商
     public void getSupplierClique(){
         new HomeRepository().getSupplierClique(supplierCliqueLiveData,userId);
+    }
+
+    //后台管理权限
+    public void getSupplierRole(){
+        new HomeRepository().getSupplierRole(supplierRoleLiveData,userId);
     }
 }

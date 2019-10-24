@@ -391,7 +391,7 @@
                         android:gravity="center"
                         android:textSize="13sp"
                         android:textColor="@color/color_4A4A4A"
-                        android:text="@string/turnover_material"/>
+                        android:text="@string/turnover_material" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_device_management"
@@ -402,11 +402,10 @@
                         android:background="@drawable/selector_bg_custom"
                         android:drawableTop="@drawable/icon_device_management"
                         android:drawablePadding="8dp"
-                        android:layout_marginLeft="30dp"
                         android:gravity="center"
                         android:textSize="13sp"
                         android:textColor="@color/color_4A4A4A"
-                        android:text="@string/device_management"/>
+                        android:text="@string/device_management" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_order_management"
@@ -417,7 +416,6 @@
                         android:background="@drawable/selector_bg_custom"
                         android:drawableTop="@drawable/icon_order_management"
                         android:drawablePadding="8dp"
-                        android:layout_marginLeft="30dp"
                         android:gravity="center"
                         android:textSize="13sp"
                         android:textColor="@color/color_4A4A4A"

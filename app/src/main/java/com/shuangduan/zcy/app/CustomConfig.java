@@ -140,4 +140,23 @@ public class CustomConfig {
     //找买家
     public static int FIND_BUYER_TYPE = 2;
 
+    //------------------------------------基建物资 后台管理权限----------------------------------------------------
+    public static final String SON_LIST = "son-list";//判断是否为集团 有无子公司
+    public static final String CONSTRUCTION_LIST = "construction-list";//周转材料列表
+    public static final String CONSTRUCTION_DETAIL = "construction-detail";//周转材料详情
+    public static final String CONSTRUCTION_ADD = "construction-add";//周转材料添加
+    public static final String CONSTRUCTION_EDIT = "construction-edit"; //周转材料修改
+    public static final String CONSTRUCTION_DELETE = "construction-delete";//周转材料删除
+    public static final String EQIPMENT_LIST = "equipment-list";//设备列表
+    public static final String EQIPMENT_DETAIL = "equipment-detail"; //设备详情
+    public static final String EQIPMENT_ADD = "equipment-add"; //设备添加
+    public static final String EQIPMENT_EDIT = "equipment-edit"; //设备修改
+    public static final String EQIPMENT_DELETE = "equipment-delete";//设备删除
+    public static final String EQIPMENT_ORDER_LIST = "equipment-order-list";//设备订单列表
+    public static final String EQIPMENT_ORDER_DETAIL = "equipment-order-detail";//设备订单详细
+    public static final String EQIPMENT_ORDER_EDIT = "equipment-order-edit";//设备订单修改
+    public static final String CONSTRUCTION_ORDER_LIST = "construction-order-list";//周转材料订单列表
+    public static final String CONSTRUCTION_ORDER_DETAIL = "construction-order-detail"; //周转材料订单详情
+    public static final String CONSTRUCTION_ORDER_EDIT = "construction-order-edit"; //周转材料订单修改
+    //-------------------------------------------------------------------------------------------------------
 }

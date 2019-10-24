@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.FragmentAdapter;
@@ -60,10 +61,6 @@ public class AdminManageActivity extends BaseActivity {
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
-        navigation.getMenu().findItem(R.id.menu_turnover_material).setVisible(true);
-        navigation.getMenu().findItem(R.id.menu_device_management).setVisible(true);
-        navigation.getMenu().findItem(R.id.menu_order_management).setVisible(true);
-        navigation.setVisibility(View.VISIBLE);
         initBottomNavigation();
     }
 
@@ -145,8 +142,45 @@ public class AdminManageActivity extends BaseActivity {
         });
     }
 
+    //后台管理入口判断显示
+    private void getAdminEntrance(int construction,int equipment,int equipment_order,int construction_order) {
+        if (construction==0&&equipment==0&&equipment_order==0&&construction_order==0){
+            navigation.setVisibility(View.GONE);
+        }else {
+            if (construction==1){
+                navigation.getMenu().findItem(R.id.menu_turnover_material).setVisible(true);
+            }else {
+                navigation.getMenu().findItem(R.id.menu_turnover_material).setVisible(false);
+            }
+            if (equipment==1){
+                navigation.getMenu().findItem(R.id.menu_device_management).setVisible(true);
+            }else {
+                navigation.getMenu().findItem(R.id.menu_device_management).setVisible(false);
+            }
+            if (equipment_order==1||construction_order==1){
+                navigation.getMenu().findItem(R.id.menu_order_management).setVisible(true);
+            }else {
+                navigation.getMenu().findItem(R.id.menu_order_management).setVisible(false);
+            }
+            if (construction+equipment+equipment_order+construction_order<2){
+                navigation.setVisibility(View.GONE);
+            }else {
+                navigation.setVisibility(View.VISIBLE);
+            }
+        }
+    }
+
     @OnClick(R.id.iv_bar_back)
     void onClick() {
         finish();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getAdminEntrance(SPUtils.getInstance().getInt(CustomConfig.CONSTRUCTION_LIST,0)
+                ,SPUtils.getInstance().getInt(CustomConfig.EQIPMENT_LIST,0)
+                ,SPUtils.getInstance().getInt(CustomConfig.EQIPMENT_ORDER_LIST,0)
+                ,SPUtils.getInstance().getInt(CustomConfig.CONSTRUCTION_ORDER_LIST,0));
     }
 }

@@ -937,6 +937,13 @@ public interface ApiService {
             @Field("user_id") int user_id
     );
 
+    //基建物资 管理权限
+    @FormUrlEncoded
+    @POST("api/Manage/getSupplierRole")
+    Flowable<BaseListResponse<SupplierRoleBean>> getSupplierRole(
+            @Field("user_id") int user_id
+    );
+
     @FormUrlEncoded
     @POST("api/Headline/dataList")
     Flowable<BaseResponse<HeadlinesBean>> headlines(

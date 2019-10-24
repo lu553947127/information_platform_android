@@ -29,7 +29,7 @@ public class TurnoverGroupFragment extends BaseFragment {
 
     @Override
     protected int initLayout() {
-        return R.layout.fragment_turnover_material;
+        return R.layout.fragment_turnover_group;
     }
 
     @Override

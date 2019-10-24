@@ -9,6 +9,7 @@ import com.shuangduan.zcy.model.bean.HomeBannerBean;
 import com.shuangduan.zcy.model.bean.HomeListBean;
 import com.shuangduan.zcy.model.bean.SupplierCliqueBean;
 import com.shuangduan.zcy.model.bean.HomePushBean;
+import com.shuangduan.zcy.model.bean.SupplierRoleBean;
 
 import java.util.List;
 
@@ -49,5 +50,9 @@ public class HomeRepository extends BaseRepository {
 
     public void getSupplierClique(MutableLiveData<SupplierCliqueBean> liveData, int userId){
         request(apiService.getSupplierClique(userId)).setData(liveData).send();
+    }
+
+    public void getSupplierRole(MutableLiveData<List<SupplierRoleBean>> liveData, int userId){
+        request(apiService.getSupplierRole(userId)).setDataList(liveData).send();
     }
 }

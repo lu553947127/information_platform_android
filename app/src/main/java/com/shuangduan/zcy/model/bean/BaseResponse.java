@@ -1,6 +1,5 @@
 package com.shuangduan.zcy.model.bean;
 
-import java.util.List;
 
 /**
  * <pre>

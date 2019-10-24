@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBgDark">
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/color_DDDDDD" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal"
+        android:background="@color/colorFFF"
+        android:paddingRight="25dp"
+        android:layout_below="@+id/divider">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableRight="@drawable/selector_pull_arrow"
+            android:drawablePadding="-20dp"
+            android:gravity="center"
+            android:textColor="@color/color_666666"
+            android:textSize="13sp"
+            android:text="材料名称"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableRight="@drawable/selector_pull_arrow"
+            android:drawablePadding="-20dp"
+            android:gravity="center"
+            android:textColor="@color/color_666666"
+            android:textSize="13sp"
+            android:text="是否上架"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableRight="@drawable/selector_pull_arrow"
+            android:drawablePadding="-20dp"
+            android:gravity="center"
+            android:textColor="@color/color_666666"
+            android:textSize="13sp"
+            android:text="使用状态"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableRight="@drawable/selector_pull_arrow"
+            android:drawablePadding="-20dp"
+            android:gravity="center"
+            android:textColor="@color/color_666666"
+            android:textSize="13sp"
+            android:text="存放地点"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="65dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/icon_admin_add"/>
+
+</RelativeLayout>
