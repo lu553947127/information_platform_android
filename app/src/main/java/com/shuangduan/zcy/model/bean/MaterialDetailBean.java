@@ -66,7 +66,7 @@ public class MaterialDetailBean {
     private int browseCount;
 
     //浏览人信息
-    public User user;
+    public List<User> user;
 
     //物资类型
     @SerializedName("is_shelf")
@@ -82,11 +82,11 @@ public class MaterialDetailBean {
         this.browseCount = browseCount;
     }
 
-    public User getUser() {
+    public List<User> getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(List<User> user) {
         this.user = user;
     }
 
@@ -342,7 +342,7 @@ public class MaterialDetailBean {
         }
     }
 
-    public class User{
+    public class User {
         private int id;
         private String image;
 

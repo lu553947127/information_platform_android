@@ -25,7 +25,12 @@ import java.util.List;
  */
 public class MaterialRepository extends BaseRepository {
     public void materialList(MutableLiveData<MaterialBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int type,
-                             int materialId, String spec, int supplierId, int page, AuthGroupBean authGroup) {
+                             int materialId, String spec, int supplierId, int page) {
+        request(apiService.materialList(userId, type, materialId, spec, supplierId, page)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    public void materialList(MutableLiveData<MaterialBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int type,
+                             int materialId, String spec, int supplierId, int page,AuthGroupBean authGroup) {
         request(apiService.materialList(userId, type, materialId, spec, supplierId, page,authGroup)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 

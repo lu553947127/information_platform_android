@@ -95,7 +95,7 @@ public class MaterialDetailActivity extends BaseActivity {
     @BindView(R.id.tv_reserve)
     TextView tvReserve;
     @BindView(R.id.iv_purchased_goods)
-    TextView ivPurchasedGoods;
+    ImageView ivPurchasedGoods;
     private MaterialDetailVm materialDetailVm;
     private String phone, is_collect, enclosure;
     private List<String> pics;

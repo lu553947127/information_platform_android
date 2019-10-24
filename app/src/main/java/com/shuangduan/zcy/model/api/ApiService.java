@@ -669,7 +669,18 @@ public interface ApiService {
             @Field("id") int id
     );
 
-    //基建物质列表
+    //基建物质列表--公开周转材料
+    @POST("api/Material/dateList")
+    Flowable<BaseResponse<MaterialBean>> materialList(
+            @Query("user_id") int user_id,
+            @Query("type") int type,
+            @Query("material_id") int materialId,
+            @Query("spec") String spec,
+            @Query("supplier_id") int supplierId,
+            @Query("page") int page
+    );
+
+    //基建物质列表--内定周转材料
     @POST("api/Material/dateList")
     Flowable<BaseResponse<MaterialBean>> materialList(
             @Query("user_id") int user_id,
@@ -678,7 +689,7 @@ public interface ApiService {
             @Query("spec") String spec,
             @Query("supplier_id") int supplierId,
             @Query("page") int page,
-           @Body AuthGroupBean auth_group
+            @Body AuthGroupBean auth_group
     );
 
     @FormUrlEncoded

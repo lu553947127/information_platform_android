@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="format_material_price">¥%1$s/%2$s</string>
+    <string name="format_visitors_num">%1$s人浏览</string>
 
     <string name="filter_name">商品名称</string>
     <string name="filter_spec">规格</string>

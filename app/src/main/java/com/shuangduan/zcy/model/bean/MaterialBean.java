@@ -119,6 +119,28 @@ public class MaterialBean {
         //单位
         private String unit;
 
+        //供应方式
+        private int method;
+
+        //浏览人数
+        @SerializedName("browse_count")
+        private String browseCount;
+
+        public String getBrowseCount() {
+            return browseCount;
+        }
+
+        public void setBrowseCount(String browseCount) {
+            this.browseCount = browseCount;
+        }
+
+        public int getMethod() {
+            return method;
+        }
+
+        public void setMethod(int method) {
+            this.method = method;
+        }
 
         public String getUnit() {
             return unit;

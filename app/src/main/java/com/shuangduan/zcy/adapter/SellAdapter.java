@@ -1,6 +1,7 @@
 package com.shuangduan.zcy.adapter;
 
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
@@ -9,6 +10,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.model.bean.MaterialBean;
+import com.shuangduan.zcy.utils.TextViewUtils;
 import com.shuangduan.zcy.utils.image.ImageConfig;
 import com.shuangduan.zcy.utils.image.ImageLoader;
 
@@ -31,13 +33,24 @@ public class SellAdapter extends BaseQuickAdapter<MaterialBean.ListBean, BaseVie
 
     @Override
     protected void convert(BaseViewHolder helper, MaterialBean.ListBean item) {
-        helper.setText(R.id.tv_title, item.getMaterialName())
-                .setText(R.id.tv_stock, "库存: " + item.getStock() + item.getUnit())
+
+        TextView tvTitle = helper.getView(R.id.tv_title);
+
+        if (item.getIs_order() == 1) {
+            TextViewUtils.addDrawableInEnd(tvTitle, mContext.getResources().getDrawable(R.drawable.icon_bought), item.getMaterialName());
+        } else {
+            tvTitle.setText(item.getMaterialName());
+        }
+
+        helper.setText(R.id.tv_stock, "库存: " + item.getStock() + item.getUnit())
                 .setText(R.id.tv_spec, "规格: " + item.getSpec())
                 .setText(R.id.tv_supplier, "供应商: " + item.getMaterialSupplie())
-                .setText(R.id.tv_price, String.format(mContext.getString(R.string.format_material_price),item.getGuidancePrice(),item.getUnit()))
+                .setText(R.id.tv_price, item.getMethod() == 2 ?
+                        String.format(mContext.getString(R.string.format_material_price), item.getGuidancePrice(), item.getUnit()) :
+                        String.format(mContext.getString(R.string.format_material_price), item.getGuidancePrice(), "天"))
                 .setText(R.id.tv_address, "存放地: " + item.getAddress())
-                .setGone(R.id.iv_bought, item.getIs_order() == 1);
+                .setText(R.id.tv_supply_method, item.getMethod() == 1 ? "出租" : "出售")
+                .setText(R.id.tv_browse_num, String.format(mContext.getString(R.string.format_visitors_num), item.getBrowseCount()));
         ImageView ivIcon = helper.getView(R.id.iv_icon);
         try {
             String thumb = item.getImages().get(0).headeUrl;

@@ -233,9 +233,10 @@ public class IMPrivateChatActivity extends BaseActivity implements RongIM.Conver
             String messageJson = new Gson().toJson(message.getContent());
             String extra = JsonUtils.getString(messageJson, "extra");
 
-            LogUtils.i(extra);
 
             if (StringUtils.isEmpty(extra)) return false;
+
+            LogUtils.i(extra);
 
             RongExtraBean extraBean = new Gson().fromJson(extra, RongExtraBean.class);
 
@@ -275,10 +276,10 @@ public class IMPrivateChatActivity extends BaseActivity implements RongIM.Conver
                     bundle.putInt(CustomConfig.ORDER_ID, extraBean.data.orderId);
                     ActivityUtils.startActivity(bundle, MaterialOrderDetailActivity.class);//物资预定详情
                     break;
-                case 25://优质供应商申请已通过审核
-                    bundle.putInt(CustomConfig.SUPPLIER_ID, extraBean.data.id);
-                    ActivityUtils.startActivity(bundle, SupplierDetailActivity.class);//跳转供应商详情
-                    break;
+//                case 25://优质供应商申请已通过审核
+//                    bundle.putInt(CustomConfig.SUPPLIER_ID, extraBean.data.id);
+//                    ActivityUtils.startActivity(bundle, SupplierDetailActivity.class);//跳转供应商详情
+//                    break;
                 case 27://找关系发布成功
                 case 28://发布的找关系即将到期
                 case 29://发布的找关系有人回答

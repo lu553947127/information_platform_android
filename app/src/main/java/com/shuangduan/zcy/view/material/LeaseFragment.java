@@ -43,11 +43,12 @@ public class LeaseFragment extends BaseLazyFragment implements EmptyViewFactory.
 
     private View emptyView;
 
-    public static LeaseFragment newInstance() {
+    public static LeaseFragment newInstance(int state) {
 
         Bundle args = new Bundle();
 
         LeaseFragment fragment = new LeaseFragment();
+        args.putInt("state", state);
         fragment.setArguments(args);
         return fragment;
     }
@@ -140,7 +141,7 @@ public class LeaseFragment extends BaseLazyFragment implements EmptyViewFactory.
         materialVm.supplier = "";
         materialVm.supplierMethod = "";
         materialVm.supplierMethodId = 0;
-        ((MaterialActivity)getActivity()).updateFilterStyle();
+        ((MaterialActivity) getActivity()).updateFilterStyle();
 
         materialVm.leaseList();
     }

@@ -42,11 +42,12 @@ public class SellFragment extends BaseLazyFragment implements EmptyViewFactory.E
     private MaterialVm materialVm;
     private View emptyView;
 
-    public static SellFragment newInstance() {
+    public static SellFragment newInstance(int state) {
 
         Bundle args = new Bundle();
-
+        args.putInt("state", state);
         SellFragment fragment = new SellFragment();
+
         fragment.setArguments(args);
         return fragment;
     }
@@ -107,7 +108,16 @@ public class SellFragment extends BaseLazyFragment implements EmptyViewFactory.E
 
     @Override
     protected void initDataFromService() {
-        materialVm.sellList();
+        int state = getArguments().getInt("state", 0);
+        switch (state) {
+            case 2:
+            case 3:
+                materialVm.sellDefaultList();
+                break;
+            default:
+                materialVm.sellList();
+                break;
+        }
     }
 
     private void setNoMore(int page, int count) {
@@ -139,7 +149,7 @@ public class SellFragment extends BaseLazyFragment implements EmptyViewFactory.E
         materialVm.supplier = "";
         materialVm.supplierMethod = "";
         materialVm.supplierMethodId = 0;
-        ((MaterialActivity)getActivity()).updateFilterStyle();
+        ((MaterialActivity) getActivity()).updateFilterStyle();
         materialVm.sellList();
     }
 }

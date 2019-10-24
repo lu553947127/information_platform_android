@@ -57,6 +57,8 @@
     <color name="color_2B9D7B">#2B9D7B</color>
     <color name="color_ece6ff">#ece6ff</color>
     <color name="color_6a46e7">#6a46e7</color>
+    <color name="color_FDEBE8">#FDEBE8</color>
+
     <!--时间选择器颜色-->
     <color name="text1">#6a5ff8</color>
     <color name="text2">#B1B1B1</color>

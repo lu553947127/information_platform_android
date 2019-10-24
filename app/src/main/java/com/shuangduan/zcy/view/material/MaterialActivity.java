@@ -19,6 +19,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.google.android.material.tabs.TabLayout;
 import com.shuangduan.zcy.R;
@@ -27,6 +28,7 @@ import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.pop.CommonPopupWindow;
 import com.shuangduan.zcy.model.api.PageState;
+import com.shuangduan.zcy.model.bean.SupplierCliqueBean;
 import com.shuangduan.zcy.model.event.MaterialEvent;
 import com.shuangduan.zcy.model.event.SupplierEvent;
 import com.shuangduan.zcy.utils.DensityUtil;
@@ -34,6 +36,9 @@ import com.shuangduan.zcy.vm.HomeVm;
 import com.shuangduan.zcy.vm.MaterialVm;
 
 import org.greenrobot.eventbus.Subscribe;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -111,24 +116,41 @@ public class MaterialActivity extends BaseActivity {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
-        BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
-        tvBarTitle.setText(getString(R.string.material_base));
-        tvBarRight.setText(getString(R.string.filter));
-        tvBarRight.setVisibility(View.GONE);
+        //获取内定物资显示权限
+        HomeVm homeVm = ViewModelProviders.of(this).get(HomeVm.class);
+        homeVm.supplierCliqueLiveData.observe(this, supplierCliqueBean -> {
+            initViewAndData(supplierCliqueBean);
+        });
+        homeVm.getSupplierClique();
+    }
 
-        toolbar.setVisibility(View.VISIBLE);
-        toolbarMaterial.setVisibility(View.GONE);
+
+    private void initViewAndData(SupplierCliqueBean supplierClique) {
+
+        materialVm = ViewModelProviders.of(this).get(MaterialVm.class);
+
+        if (supplierClique.getSupplier_status() == 2 || supplierClique.getSupplier_status() == 3) {
+            BarUtils.addMarginTopEqualStatusBarHeight(toolbarMaterial);
+            toolbar.setVisibility(View.GONE);
+            toolbarMaterial.setVisibility(View.VISIBLE);
+            for (SupplierCliqueBean.SupplierIdBean item : supplierClique.getSupplier_id()) {
+                materialVm.authGroup.auth_group.add(item.getId());
+            }
+        } else {
+            BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
+            tvBarTitle.setText(getString(R.string.material_base));
+            toolbar.setVisibility(View.VISIBLE);
+            toolbarMaterial.setVisibility(View.GONE);
+        }
 
         Fragment[] fragments = new Fragment[]{
-                SellFragment.newInstance(),
-                LeaseFragment.newInstance()
+                SellFragment.newInstance(supplierClique.getSupplier_status()),
+                LeaseFragment.newInstance(supplierClique.getSupplier_status())
         };
         tabLayout.addTab(tabLayout.newTab());
         tabLayout.addTab(tabLayout.newTab());
         vp.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), fragments, getResources().getStringArray(R.array.infrastructure)));
         tabLayout.setupWithViewPager(vp);
-
-        materialVm = ViewModelProviders.of(this).get(MaterialVm.class);
 
 
         materialVm.pageStateLiveData.observe(this, s -> {
@@ -141,13 +163,6 @@ public class MaterialActivity extends BaseActivity {
                     break;
             }
         });
-
-        //获取内定物资显示权限
-        HomeVm homeVm = ViewModelProviders.of(this).get(HomeVm.class);
-        homeVm.supplierCliqueLiveData.observe(this,supplierCliqueBean -> {
-
-        });
-        homeVm.getSupplierClique();
     }
 
     @OnClick({R.id.iv_bar_back, R.id.iv_back, R.id.tv_open, R.id.tv_default, R.id.over, R.id.ll_name, R.id.ll_spec, R.id.ll_supplier, R.id.ll_supplier_method, R.id.tv_bar_right})
@@ -162,7 +177,7 @@ public class MaterialActivity extends BaseActivity {
                 tvOpen.setTextSize(18);
                 tvDefault.setTextSize(14);
                 //TODO 后续修改接口
-                materialVm.sellList();
+                materialVm.sellDefaultList();
                 materialVm.leaseList();
                 materialFlag = 0;
                 break;
