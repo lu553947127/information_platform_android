@@ -45,8 +45,8 @@ public class MineOrderActivity extends BaseActivity {
     protected void initDataAndEvent(Bundle savedInstanceState) {
         Fragment[] fragments = new Fragment[]{
                 ProjectOrderFragment.newInstance(),
-                RecruitHistoryFragment.newInstance(),
-                SupplierOrderFragment.newInstance()
+                RecruitHistoryFragment.newInstance()
+//                , SupplierOrderFragment.newInstance()
         };
         vp.setOffscreenPageLimit(2);
         vp.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), fragments, null));

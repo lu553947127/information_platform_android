@@ -12,30 +12,30 @@ import butterknife.BindView;
 /**
  * @ProjectName: information_platform_android
  * @Package: com.shuangduan.zcy.view.adminManage
- * @ClassName: TurnoverGroupFragment
- * @Description: 周转材料集团列表
+ * @ClassName: DeviceGroupFragment
+ * @Description: 设备管理集团列表
  * @Author: 鹿鸿祥
- * @CreateDate: 2019/10/23 15:01
+ * @CreateDate: 2019/10/24 17:11
  * @UpdateUser: 鹿鸿祥
- * @UpdateDate: 2019/10/23 15:01
+ * @UpdateDate: 2019/10/24 17:11
  * @UpdateRemark: 更新说明
  * @Version: 1.0
  */
-public class TurnoverGroupFragment extends BaseFragment {
+public class DeviceGroupFragment extends BaseFragment {
 
     @BindView(R.id.tv_name)
     TextView tvName;
 
-    public static TurnoverGroupFragment newInstance() {
+    public static DeviceGroupFragment newInstance() {
         Bundle args = new Bundle();
-        TurnoverGroupFragment fragment = new TurnoverGroupFragment();
+        DeviceGroupFragment fragment = new DeviceGroupFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     protected int initLayout() {
-        return R.layout.fragment_turnover_group;
+        return R.layout.fragment_device_group;
     }
 
     @Override
@@ -45,7 +45,7 @@ public class TurnoverGroupFragment extends BaseFragment {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState, View view) {
-        tvName.setText("材料名称");
+        tvName.setText("设备名称");
     }
 
     @Override

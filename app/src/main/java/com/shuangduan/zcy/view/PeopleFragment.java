@@ -48,9 +48,7 @@ public class PeopleFragment extends BaseLazyFragment {
     private IncomePeopleVm incomePeopleVm;
 
     public static PeopleFragment newInstance() {
-
         Bundle args = new Bundle();
-
         PeopleFragment fragment = new PeopleFragment();
         fragment.setArguments(args);
         return fragment;

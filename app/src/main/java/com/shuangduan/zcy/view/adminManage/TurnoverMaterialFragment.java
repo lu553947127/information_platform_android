@@ -4,11 +4,14 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
+
+import com.blankj.utilcode.util.SPUtils;
 import com.google.android.material.tabs.TabLayout;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ViewPagerAdapter;
+import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseFragment;
+import com.shuangduan.zcy.weight.NoScrollViewPager;
 
 import java.util.Objects;
 
@@ -31,7 +34,7 @@ public class TurnoverMaterialFragment extends BaseFragment {
     @BindView(R.id.tab_layout)
     TabLayout tabLayout;
     @BindView(R.id.vp)
-    ViewPager vp;
+    NoScrollViewPager vp;
 
     public static TurnoverMaterialFragment newInstance() {
         Bundle args = new Bundle();
@@ -63,5 +66,18 @@ public class TurnoverMaterialFragment extends BaseFragment {
     @Override
     protected void initDataFromService() {
 
+    }
+
+    //后台管理权限判断
+    private void getAdminEntrance(int son) {
+        if (son==0){
+            tabLayout.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getAdminEntrance(SPUtils.getInstance().getInt(CustomConfig.SON_LIST,0));
     }
 }

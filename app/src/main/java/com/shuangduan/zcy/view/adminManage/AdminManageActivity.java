@@ -142,7 +142,7 @@ public class AdminManageActivity extends BaseActivity {
         });
     }
 
-    //后台管理入口判断显示
+    //后台管理权限判断
     private void getAdminEntrance(int construction,int equipment,int equipment_order,int construction_order) {
         if (construction==0&&equipment==0&&equipment_order==0&&construction_order==0){
             navigation.setVisibility(View.GONE);

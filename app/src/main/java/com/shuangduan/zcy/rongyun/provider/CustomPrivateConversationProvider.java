@@ -45,8 +45,8 @@ public class CustomPrivateConversationProvider extends PrivateConversationProvid
 
     @Override
     public void bindView(View v, int position, UIConversation data) {
-        UserInfo data1 = RongUserInfoManager.getInstance().getUserInfo(data.getConversationTargetId());
-        data1.getExtra();
+//        UserInfo data1 = RongUserInfoManager.getInstance().getUserInfo(data.getConversationTargetId());
+//        data1.getExtra();
         if (data.getConversationType().equals(Conversation.ConversationType.PRIVATE)){
             getFriendData(data.getConversationTargetId(),v);
         }else {

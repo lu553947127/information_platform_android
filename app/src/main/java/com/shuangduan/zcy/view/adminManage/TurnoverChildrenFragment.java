@@ -2,9 +2,12 @@ package com.shuangduan.zcy.view.adminManage;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.base.BaseFragment;
+
+import butterknife.BindView;
 
 /**
  * @ProjectName: information_platform_android
@@ -20,6 +23,9 @@ import com.shuangduan.zcy.base.BaseFragment;
  */
 public class TurnoverChildrenFragment extends BaseFragment {
 
+    @BindView(R.id.tv_name)
+    TextView tvName;
+
     public static TurnoverChildrenFragment newInstance() {
         Bundle args = new Bundle();
         TurnoverChildrenFragment fragment = new TurnoverChildrenFragment();
@@ -29,7 +35,7 @@ public class TurnoverChildrenFragment extends BaseFragment {
 
     @Override
     protected int initLayout() {
-        return R.layout.fragment_turnover_material;
+        return R.layout.fragment_turnover_child;
     }
 
     @Override
@@ -39,7 +45,7 @@ public class TurnoverChildrenFragment extends BaseFragment {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState, View view) {
-
+        tvName.setText("材料名称");
     }
 
     @Override
