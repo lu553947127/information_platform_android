@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.Toolbar
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="44dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+    app:contentInsetStart="0dp"
+    app:contentInsetEnd="0dp"
+    android:background="@color/colorPrimary"
+    app:layout_constraintTop_toBottomOf="@+id/fake_status_bar"
+    android:id="@+id/toolbar_admin_manage">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_bar_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:background="@drawable/selector_toolbar"
+            android:scaleType="centerInside"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:src="@drawable/toolbar_back"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_bar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:lines="1"
+            android:maxEms="13"
+            android:singleLine="true"
+            android:textColor="@color/colorFFF"
+            android:textSize="18sp"
+            android:visibility="gone"/>
+
+        <LinearLayout
+            android:id="@+id/ll_bar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_centerInParent="true"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:visibility="gone">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_turnover"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:maxEms="13"
+                android:singleLine="true"
+                android:textColor="@color/colorFFF"
+                android:textSize="18sp"
+                android:text="@string/turnover_material"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_device"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:lines="1"
+                android:maxEms="13"
+                android:singleLine="true"
+                android:textColor="@color/colorFFF"
+                android:textSize="14sp"
+                android:text="@string/device_management"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</androidx.appcompat.widget.Toolbar>

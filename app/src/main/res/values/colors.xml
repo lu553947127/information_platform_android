@@ -60,6 +60,9 @@
     <color name="color_FDEBE8">#FDEBE8</color>
     <color name="color_868686">#868686</color>
     <color name="color_EDEDED">#EDEDED</color>
+    <color name="color_5Ab532">#5Ab532</color>
+    <color name="color_FFA800">#FFA800</color>
+    <color name="color_FD603C">#FD603C</color>
 
     <!--时间选择器颜色-->
     <color name="text1">#6a5ff8</color>

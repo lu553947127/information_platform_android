@@ -1,11 +1,9 @@
-package com.shuangduan.zcy.view.adminManage;
+package com.shuangduan.zcy.adminManage.view;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.TextView;
 
 import com.shuangduan.zcy.R;
-import com.shuangduan.zcy.base.BaseFragment;
 import com.shuangduan.zcy.base.BaseLazyFragment;
 
 import butterknife.BindView;
@@ -13,30 +11,30 @@ import butterknife.BindView;
 /**
  * @ProjectName: information_platform_android
  * @Package: com.shuangduan.zcy.view.adminManage
- * @ClassName: DeviceChildrenFragment
- * @Description: 设备管理子公司列表
+ * @ClassName: DeviceGroupFragment
+ * @Description: 设备管理集团列表
  * @Author: 鹿鸿祥
- * @CreateDate: 2019/10/24 17:12
+ * @CreateDate: 2019/10/24 17:11
  * @UpdateUser: 鹿鸿祥
- * @UpdateDate: 2019/10/24 17:12
+ * @UpdateDate: 2019/10/24 17:11
  * @UpdateRemark: 更新说明
  * @Version: 1.0
  */
-public class DeviceChildrenFragment extends BaseLazyFragment {
+public class DeviceGroupFragment extends BaseLazyFragment {
 
     @BindView(R.id.tv_name)
     TextView tvName;
 
-    public static DeviceChildrenFragment newInstance() {
+    public static DeviceGroupFragment newInstance() {
         Bundle args = new Bundle();
-        DeviceChildrenFragment fragment = new DeviceChildrenFragment();
+        DeviceGroupFragment fragment = new DeviceGroupFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     protected int initLayout() {
-        return R.layout.fragment_device_children;
+        return R.layout.fragment_device_group;
     }
 
     @Override

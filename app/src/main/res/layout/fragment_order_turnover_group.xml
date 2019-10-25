@@ -5,25 +5,15 @@
     android:layout_height="match_parent"
     android:background="@color/colorBgDark">
 
-    <LinearLayout
+    <View
+        android:id="@+id/divider"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="0.5dp"
+        android:background="@color/color_DDDDDD" />
 
-        <View
-            android:id="@+id/divider"
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/color_DDDDDD" />
-
-        <include android:id="@+id/search" layout="@layout/layout_admin_manage_child" />
-
-        <include layout="@layout/layout_refresh_rv_new"/>
-
-    </LinearLayout>
+    <include layout="@layout/layout_admin_manage_group" />
 
     <ImageView
-        android:id="@+id/iv_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

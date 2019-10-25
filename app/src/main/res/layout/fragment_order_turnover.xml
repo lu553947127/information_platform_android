@@ -6,8 +6,6 @@
     android:layout_height="match_parent"
     android:background="@color/colorFFF">
 
-    <include layout="@layout/toolbar" />
-
     <include layout="@layout/layout_tab_no_scroll_vp" />
 
 </LinearLayout>

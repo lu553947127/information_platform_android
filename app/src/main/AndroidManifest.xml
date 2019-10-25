@@ -331,7 +331,7 @@
         </activity>
 
         <!-- 后台管理页-->
-        <activity android:name="com.shuangduan.zcy.view.adminManage.AdminManageActivity" android:theme="@style/BaseAppTheme" />
+        <activity android:name="com.shuangduan.zcy.adminManage.view.AdminManageActivity" android:theme="@style/BaseAppTheme" />
 
         <!--高德地图appKey-->
         <meta-data

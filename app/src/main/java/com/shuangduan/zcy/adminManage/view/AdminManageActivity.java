@@ -1,14 +1,9 @@
-package com.shuangduan.zcy.view.adminManage;
+package com.shuangduan.zcy.adminManage.view;
 
 import android.os.Bundle;
 import android.view.View;
-
-import androidx.appcompat.widget.AppCompatTextView;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
-
-import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.shuangduan.zcy.R;
@@ -21,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
 /**
  * @ProjectName: information_platform_android
@@ -37,10 +31,6 @@ import butterknife.OnClick;
  */
 public class AdminManageActivity extends BaseActivity {
 
-    @BindView(R.id.tv_bar_title)
-    AppCompatTextView tvBarTitle;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
     @BindView(R.id.navigation)
     BottomNavigationView navigation;
     @BindView(R.id.view_pager)
@@ -60,7 +50,6 @@ public class AdminManageActivity extends BaseActivity {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
-        BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         initBottomNavigation();
     }
 
@@ -73,34 +62,27 @@ public class AdminManageActivity extends BaseActivity {
         mFragments.add(OrderManagementFragment.newInstance());
         fragmentAdapter = new FragmentAdapter(getSupportFragmentManager(), this, mFragments);
         viewPager.setAdapter(fragmentAdapter);
-        viewPager.setOffscreenPageLimit(2);
         //判断加载哪个页
         if (getIntent().getIntExtra(CustomConfig.IS_ADMIN_MANAGE,0)==1){
             viewPager.setCurrentItem(0);
-            tvBarTitle.setText(getString(R.string.turnover_material));
             navigation.getMenu().getItem(0).setChecked(true);
         }else if (getIntent().getIntExtra(CustomConfig.IS_ADMIN_MANAGE,0)==2){
             viewPager.setCurrentItem(1);
-            tvBarTitle.setText(getString(R.string.device_management));
             navigation.getMenu().getItem(1).setChecked(true);
         }else {
             viewPager.setCurrentItem(2);
-            tvBarTitle.setText(getString(R.string.order_management));
             navigation.getMenu().getItem(2).setChecked(true);
         }
         navigation.setOnNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.menu_turnover_material:
                     viewPager.setCurrentItem(0);
-                    tvBarTitle.setText(getString(R.string.turnover_material));
                     break;
                 case R.id.menu_device_management:
                     viewPager.setCurrentItem(1);
-                    tvBarTitle.setText(getString(R.string.device_management));
                     break;
                 case R.id.menu_order_management:
                     viewPager.setCurrentItem(2);
-                    tvBarTitle.setText(getString(R.string.order_management));
                     break;
                 default:
                     break;
@@ -168,11 +150,6 @@ public class AdminManageActivity extends BaseActivity {
                 navigation.setVisibility(View.VISIBLE);
             }
         }
-    }
-
-    @OnClick(R.id.iv_bar_back)
-    void onClick() {
-        finish();
     }
 
     @Override

@@ -30,7 +30,7 @@ import com.shuangduan.zcy.utils.AnimationUtils;
 import com.shuangduan.zcy.utils.DensityUtil;
 import com.shuangduan.zcy.utils.image.ImageConfig;
 import com.shuangduan.zcy.utils.image.ImageLoader;
-import com.shuangduan.zcy.view.adminManage.AdminManageActivity;
+import com.shuangduan.zcy.adminManage.view.AdminManageActivity;
 import com.shuangduan.zcy.view.mine.AuthenticationActivity;
 import com.shuangduan.zcy.view.mine.MineWalletActivity;
 import com.shuangduan.zcy.view.mine.HelperActivity;

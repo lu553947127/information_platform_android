@@ -1,5 +1,6 @@
 package com.shuangduan.zcy.model.api;
 
+import com.shuangduan.zcy.adminManage.bean.TurnoverBean;
 import com.shuangduan.zcy.base.TrackDateilBean;
 import com.shuangduan.zcy.model.bean.AddTrackBean;
 import com.shuangduan.zcy.model.bean.AuthenBean;
@@ -1372,5 +1373,21 @@ public interface ApiService {
     Flowable<BaseResponse<TrackDateilBean>> getMyTrackDateil(
             @Field("user_id") int userId,
             @Field("id") int id
+    );
+
+    //后台管理 --- 周转材料列表
+    @FormUrlEncoded
+    @POST("api/Manage/constructionList")
+    Flowable<BaseResponse<TurnoverBean>> constructionList(
+            @Field("user_id") int userId,
+            @Field("page") int page,
+            @Field("type") int type,
+            @Field("is_shelf") int is_shelf,
+            @Field("use_status") int use_status,
+            @Field("province") int province,
+            @Field("city") int city,
+            @Field("p_category_id") int p_category_id,
+            @Field("category_id") int category_id,
+            @Field("supplier_id") int supplier_id
     );
 }

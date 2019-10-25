@@ -1,10 +1,13 @@
-package com.shuangduan.zcy.view.adminManage;
+package com.shuangduan.zcy.adminManage.view;
 
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.appcompat.widget.AppCompatTextView;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
+import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.google.android.material.tabs.TabLayout;
 import com.shuangduan.zcy.R;
@@ -13,7 +16,10 @@ import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseLazyFragment;
 import com.shuangduan.zcy.weight.NoScrollViewPager;
 
+import java.util.Objects;
+
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * @ProjectName: information_platform_android
@@ -29,6 +35,10 @@ import butterknife.BindView;
  */
 public class TurnoverMaterialFragment extends BaseLazyFragment {
 
+    @BindView(R.id.tv_bar_title)
+    AppCompatTextView tvBarTitle;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
     @BindView(R.id.tab_layout)
     TabLayout tabLayout;
     @BindView(R.id.vp)
@@ -53,6 +63,8 @@ public class TurnoverMaterialFragment extends BaseLazyFragment {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
+        BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
+        tvBarTitle.setText(getString(R.string.turnover_material));
         Fragment[] fragments = {TurnoverGroupFragment.newInstance(),
                 TurnoverChildrenFragment.newInstance()};
         tabLayout.addTab(tabLayout.newTab());
@@ -69,7 +81,7 @@ public class TurnoverMaterialFragment extends BaseLazyFragment {
     //后台管理权限判断
     private void getAdminEntrance(int son) {
         if (son==0){
-            tabLayout.setVisibility(View.VISIBLE);
+            tabLayout.setVisibility(View.GONE);
         }
     }
 
@@ -77,5 +89,10 @@ public class TurnoverMaterialFragment extends BaseLazyFragment {
     public void onResume() {
         super.onResume();
         getAdminEntrance(SPUtils.getInstance().getInt(CustomConfig.SON_LIST,0));
+    }
+
+    @OnClick(R.id.iv_bar_back)
+    void onClick() {
+        Objects.requireNonNull(getActivity()).finish();
     }
 }

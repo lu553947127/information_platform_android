@@ -7,6 +7,7 @@
     android:paddingRight="25dp"
     android:layout_below="@+id/divider">
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_company"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
@@ -32,6 +33,7 @@
         android:text="材料名称"/>
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_grounding"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
@@ -44,6 +46,7 @@
         android:text="是否上架"/>
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_use_statue"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
@@ -56,6 +59,7 @@
         android:text="使用状态"/>
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_depositing_place"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
