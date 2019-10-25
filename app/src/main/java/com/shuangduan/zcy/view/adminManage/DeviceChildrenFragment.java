@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.base.BaseFragment;
+import com.shuangduan.zcy.base.BaseLazyFragment;
 
 import butterknife.BindView;
 
@@ -21,7 +22,7 @@ import butterknife.BindView;
  * @UpdateRemark: 更新说明
  * @Version: 1.0
  */
-public class DeviceChildrenFragment extends BaseFragment {
+public class DeviceChildrenFragment extends BaseLazyFragment {
 
     @BindView(R.id.tv_name)
     TextView tvName;
@@ -44,7 +45,7 @@ public class DeviceChildrenFragment extends BaseFragment {
     }
 
     @Override
-    protected void initDataAndEvent(Bundle savedInstanceState, View view) {
+    protected void initDataAndEvent(Bundle savedInstanceState) {
         tvName.setText("设备名称");
     }
 

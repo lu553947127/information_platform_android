@@ -10,10 +10,8 @@ import com.google.android.material.tabs.TabLayout;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ViewPagerAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
-import com.shuangduan.zcy.base.BaseFragment;
+import com.shuangduan.zcy.base.BaseLazyFragment;
 import com.shuangduan.zcy.weight.NoScrollViewPager;
-
-import java.util.Objects;
 
 import butterknife.BindView;
 
@@ -29,7 +27,7 @@ import butterknife.BindView;
  * @UpdateRemark: 更新说明
  * @Version: 1.0
  */
-public class DeviceManagementFragment extends BaseFragment {
+public class DeviceManagementFragment extends BaseLazyFragment {
 
     @BindView(R.id.tab_layout)
     TabLayout tabLayout;
@@ -54,12 +52,12 @@ public class DeviceManagementFragment extends BaseFragment {
     }
 
     @Override
-    protected void initDataAndEvent(Bundle savedInstanceState, View view) {
+    protected void initDataAndEvent(Bundle savedInstanceState) {
         Fragment[] fragments = {DeviceGroupFragment.newInstance(),
                 DeviceChildrenFragment.newInstance()};
-        String[] titles = getResources().getStringArray(R.array.turnover_material);
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(Objects.requireNonNull(getActivity()).getSupportFragmentManager(), fragments, titles);
-        vp.setAdapter(viewPagerAdapter);
+        tabLayout.addTab(tabLayout.newTab());
+        tabLayout.addTab(tabLayout.newTab());
+        vp.setAdapter(new ViewPagerAdapter(getChildFragmentManager(), fragments, getResources().getStringArray(R.array.turnover_material)));
         tabLayout.setupWithViewPager(vp);
     }
 

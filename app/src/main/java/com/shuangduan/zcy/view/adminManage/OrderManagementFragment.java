@@ -1,10 +1,9 @@
 package com.shuangduan.zcy.view.adminManage;
 
 import android.os.Bundle;
-import android.view.View;
 
 import com.shuangduan.zcy.R;
-import com.shuangduan.zcy.base.BaseFragment;
+import com.shuangduan.zcy.base.BaseLazyFragment;
 
 /**
  * @ProjectName: information_platform_android
@@ -18,7 +17,7 @@ import com.shuangduan.zcy.base.BaseFragment;
  * @UpdateRemark: 更新说明
  * @Version: 1.0
  */
-public class OrderManagementFragment extends BaseFragment {
+public class OrderManagementFragment extends BaseLazyFragment {
 
     public static OrderManagementFragment newInstance() {
         Bundle args = new Bundle();
@@ -38,7 +37,7 @@ public class OrderManagementFragment extends BaseFragment {
     }
 
     @Override
-    protected void initDataAndEvent(Bundle savedInstanceState, View view) {
+    protected void initDataAndEvent(Bundle savedInstanceState) {
 
     }
 

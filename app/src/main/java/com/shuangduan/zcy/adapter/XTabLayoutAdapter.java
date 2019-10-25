@@ -1,6 +1,5 @@
 package com.shuangduan.zcy.adapter;
 
-import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 

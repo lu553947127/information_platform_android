@@ -3,6 +3,7 @@ package com.shuangduan.zcy.adapter;
 import android.content.Context;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -21,7 +22,7 @@ import java.util.List;
  */
 public class FragmentAdapter extends FragmentPagerAdapter {
 
-    Context context;
+    private Context context;
     private List<Fragment> fragment;
 
     public FragmentAdapter(FragmentManager fm, Context context, List<Fragment> fragment) {
@@ -30,8 +31,7 @@ public class FragmentAdapter extends FragmentPagerAdapter {
         this.fragment = fragment;
     }
 
-
-
+    @NonNull
     @Override
     public Fragment getItem(int position) {
         return fragment.get(position);
@@ -42,8 +42,7 @@ public class FragmentAdapter extends FragmentPagerAdapter {
     }
 
     @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
-//        super.destroyItem(container, position, object);
+    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+        super.destroyItem(container, position, object);
     }
-
 }

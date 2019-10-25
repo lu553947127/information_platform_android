@@ -1,6 +1,7 @@
 package com.shuangduan.zcy.adapter;
 
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -17,8 +18,8 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
-    Fragment[] fragments;
-    String[] titles;
+    private Fragment[] fragments;
+    private String[] titles;
 
     public ViewPagerAdapter(FragmentManager fm, Fragment[] fragments) {
         super(fm);
@@ -31,6 +32,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
         this.titles = titles;
     }
 
+    @NonNull
     @Override
     public Fragment getItem(int position) {
         return fragments[position];

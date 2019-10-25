@@ -73,6 +73,7 @@ public class AdminManageActivity extends BaseActivity {
         mFragments.add(OrderManagementFragment.newInstance());
         fragmentAdapter = new FragmentAdapter(getSupportFragmentManager(), this, mFragments);
         viewPager.setAdapter(fragmentAdapter);
+        viewPager.setOffscreenPageLimit(2);
         //判断加载哪个页
         if (getIntent().getIntExtra(CustomConfig.IS_ADMIN_MANAGE,0)==1){
             viewPager.setCurrentItem(0);
@@ -107,7 +108,6 @@ public class AdminManageActivity extends BaseActivity {
             // 这里注意返回true,否则点击失效
             return true;
         });
-
         //viewpager+fragment联合navigation使用多页面间切换监听
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override

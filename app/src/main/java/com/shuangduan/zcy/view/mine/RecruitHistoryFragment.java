@@ -37,9 +37,7 @@ public class RecruitHistoryFragment extends BaseLazyFragment implements EmptyVie
     private ReadHistoryVm readHistoryVm;
 
     public static RecruitHistoryFragment newInstance() {
-
         Bundle args = new Bundle();
-
         RecruitHistoryFragment fragment = new RecruitHistoryFragment();
         fragment.setArguments(args);
         return fragment;
