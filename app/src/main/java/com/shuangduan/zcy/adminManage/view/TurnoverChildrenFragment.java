@@ -52,6 +52,7 @@ public class TurnoverChildrenFragment extends BaseLazyFragment {
     @BindView(R.id.refresh)
     SmartRefreshLayout refresh;
     private TurnoverVm turnoverVm;
+    private TurnoverAdapter turnoverAdapter;
 
     public static TurnoverChildrenFragment newInstance() {
         Bundle args = new Bundle();
@@ -73,15 +74,16 @@ public class TurnoverChildrenFragment extends BaseLazyFragment {
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         tvName.setText("材料名称");
+        ivAdd.setVisibility(View.GONE);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        TurnoverAdapter turnoverAdapter = new TurnoverAdapter(R.layout.item_turnover, null);
+        turnoverAdapter = new TurnoverAdapter(R.layout.item_turnover, null,0,0,1);
         recyclerView.setAdapter(turnoverAdapter);
 
         turnoverVm = ViewModelProviders.of(this).get(TurnoverVm.class);
         turnoverVm.turnoverLiveData.observe(this,turnoverBean -> {
             if (turnoverBean.getPage() == 1) {
                 turnoverAdapter.setNewData(turnoverBean.getList());
-                turnoverAdapter.setEmptyView(R.layout.layout_empty_top, recyclerView);
+                turnoverAdapter.setEmptyView(R.layout.layout_empty_admin, recyclerView);
             } else {
                 turnoverAdapter.addData(turnoverAdapter.getData().size(), turnoverBean.getList());
             }

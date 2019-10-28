@@ -30,7 +30,8 @@ public class MultiAreaVm extends BaseViewModel {
     public MutableLiveData<String> pageStateLiveData;
     private int userId;
     public int id;//分类id  0为一级
-    private String cityResult = "";
+    public int city_id;
+    public String cityResult;
     public boolean provinceInited = false;
     public int currentPosition = 0;//上一个选中的位置
     public int prePosition = 0;//上一个选中的位置

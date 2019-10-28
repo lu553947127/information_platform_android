@@ -1,12 +1,15 @@
 package com.shuangduan.zcy.adminManage.view;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.fragment.app.Fragment;
 
+import com.blankj.utilcode.util.SPUtils;
 import com.google.android.material.tabs.TabLayout;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ViewPagerAdapter;
+import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseLazyFragment;
 import com.shuangduan.zcy.weight.NoScrollViewPager;
 
@@ -61,5 +64,18 @@ public class OrderTurnoverFragment extends BaseLazyFragment {
     @Override
     protected void initDataFromService() {
 
+    }
+
+    //后台管理权限判断
+    private void getAdminEntrance(int son) {
+        if (son==0){
+            tabLayout.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getAdminEntrance(SPUtils.getInstance().getInt(CustomConfig.SON_LIST,0));
     }
 }

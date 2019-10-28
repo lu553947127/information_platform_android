@@ -1,5 +1,7 @@
 package com.shuangduan.zcy.adminManage.adapter;
 
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -24,8 +26,13 @@ import java.util.List;
  * @Version: 1.0
  */
 public class TurnoverAdapter extends BaseQuickAdapter<TurnoverBean.ListBean, BaseViewHolder> {
-    public TurnoverAdapter(int layoutResId, @Nullable List<TurnoverBean.ListBean> data) {
+
+    private int construction_edit,construction_delete,is_children;
+    public TurnoverAdapter(int layoutResId, @Nullable List<TurnoverBean.ListBean> data,int construction_edit,int construction_delete,int is_children) {
         super(layoutResId, data);
+        this.construction_edit = construction_edit;
+        this.construction_delete = construction_delete;
+        this.is_children = is_children;
     }
 
     @Override
@@ -45,6 +52,26 @@ public class TurnoverAdapter extends BaseQuickAdapter<TurnoverBean.ListBean, Bas
         helper.setText(R.id.tv_material, item.getMaterial_id())
                 .setText(R.id.tv_company ,"子公司："+item.getCompany())
                 .setText(R.id.tv_category ,"分类："+item.getCategory()+"      是否上架："+item.getIs_shelf())
-                .setText(R.id.tv_address ,"存放地点："+item.getAddress());
+                .setText(R.id.tv_address ,"存放地点："+item.getAddress())
+                .addOnClickListener(R.id.tv_edit)
+                .addOnClickListener(R.id.tv_delete);
+
+        LinearLayout linearLayout=helper.getView(R.id.ll_edit);
+        TextView tvEdit=helper.getView(R.id.tv_edit);
+        TextView tvDelete=helper.getView(R.id.tv_delete);
+        if (is_children==0){
+            linearLayout.setVisibility(View.VISIBLE);
+            if (construction_edit==0&&construction_delete==0){
+                linearLayout.setVisibility(View.GONE);
+            }else if (construction_edit==1&&construction_delete==0){
+                tvEdit.setVisibility(View.VISIBLE);
+                tvDelete.setVisibility(View.GONE);
+            }else if (construction_edit==0&&construction_delete==1){
+                tvEdit.setVisibility(View.GONE);
+                tvDelete.setVisibility(View.VISIBLE);
+            }
+        }else {
+            linearLayout.setVisibility(View.GONE);
+        }
     }
 }
