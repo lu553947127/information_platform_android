@@ -159,5 +159,9 @@ public class CustomConfig {
     public static final String CONSTRUCTION_ORDER_LIST = "construction-order-list";//周转材料订单列表
     public static final String CONSTRUCTION_ORDER_DETAIL = "construction-order-detail"; //周转材料订单详情
     public static final String CONSTRUCTION_ORDER_EDIT = "construction-order-edit"; //周转材料订单修改
+
+    public static String ADMIN_MANAGE_TYPE = "ADMIN_MANAGE_TYPE";
+    public static int ADMIN_MANAGE_CONSTRUCTION = 1;//选择周转材料
+    public static int ADMIN_MANAGE_EQIPMENT = 2;//选择设备
     //-------------------------------------------------------------------------------------------------------
 }

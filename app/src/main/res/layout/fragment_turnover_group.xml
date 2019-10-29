@@ -19,10 +19,7 @@
 
         <include android:id="@+id/search" layout="@layout/layout_admin_manage_group" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_screen"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+        <include layout="@layout/layout_admin_manage_screen"/>
 
         <include layout="@layout/layout_refresh_rv_new"/>
 

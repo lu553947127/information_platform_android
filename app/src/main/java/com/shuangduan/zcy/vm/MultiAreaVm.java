@@ -43,6 +43,7 @@ public class MultiAreaVm extends BaseViewModel {
         cityLiveData = new MutableLiveData<>();
         pageStateLiveData = new MutableLiveData<>();
         id = 0;
+        city_id = 0;
     }
 
     public void getProvince() {

@@ -4,10 +4,15 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.adminManage.bean.TurnoverBean;
+import com.shuangduan.zcy.adminManage.bean.TurnoverCompanyBean;
+import com.shuangduan.zcy.adminManage.bean.TurnoverHistoryBean;
+import com.shuangduan.zcy.adminManage.bean.TurnoverTypeBean;
 import com.shuangduan.zcy.adminManage.repository.TurnoverRepository;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseViewModel;
 import com.shuangduan.zcy.model.api.PageState;
+
+import java.util.List;
 
 /**
  * @ProjectName: information_platform_android
@@ -25,25 +30,53 @@ public class TurnoverVm extends BaseViewModel{
 
     private int userId;
     private int page = 1;
+    public String type;
+    public int is_shelf;
+    public int use_status;
+    public int supplier_id;
     public MutableLiveData<TurnoverBean> turnoverLiveData;
+    public MutableLiveData<TurnoverTypeBean> turnoverTypeData;
+    public MutableLiveData<List<TurnoverHistoryBean>> turnoverHistoryData;
+    public MutableLiveData<List<TurnoverCompanyBean>> turnoverCompanyData;
     public MutableLiveData<String> pageStateLiveData;
 
     public TurnoverVm(){
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
         turnoverLiveData = new MutableLiveData<>();
+        turnoverTypeData = new MutableLiveData<>();
+        turnoverHistoryData = new MutableLiveData<>();
+        turnoverCompanyData = new MutableLiveData<>();
         pageStateLiveData = new MutableLiveData<>();
+        is_shelf = 0;
+        use_status = 0;
+        supplier_id = 0;
     }
 
     //后台管理 --- 周转材料列表
-    public void constructionList(int type,int is_shelf,int use_status,int province,int city,int p_category_id,int category_id,int supplier_id){
+    public void constructionList(int type,int province,int city,int p_category_id,int category_id){
         page = 1;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
         new TurnoverRepository().constructionList(turnoverLiveData, pageStateLiveData, userId,page,type,is_shelf,use_status,province,city,p_category_id,category_id,supplier_id);
     }
 
-    public void constructionListMore(int type,int is_shelf,int use_status,int province,int city,int p_category_id,int category_id,int supplier_id){
+    public void constructionListMore(int type,int province,int city,int p_category_id,int category_id){
         page ++;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
         new TurnoverRepository().constructionList(turnoverLiveData, pageStateLiveData, userId,page,type,is_shelf,use_status,province,city,p_category_id,category_id,supplier_id);
+    }
+
+    //后台管理 --- 筛选条件列表
+    public void constructionSearch(){
+        new TurnoverRepository().constructionSearch(turnoverTypeData, pageStateLiveData, userId);
+    }
+
+    //后台管理 --- 选择条件历史列表
+    public void constructionCategoryHistory(){
+        new TurnoverRepository().constructionCategoryHistory(turnoverHistoryData, pageStateLiveData, userId);
+    }
+
+    //后台管理 --- 子公司列表
+    public void getSupplierInfo(){
+        new TurnoverRepository().getSupplierInfo(turnoverCompanyData, pageStateLiveData, userId);
     }
 }
