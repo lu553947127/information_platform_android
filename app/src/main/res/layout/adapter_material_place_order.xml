@@ -1,52 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="110dp"
-    android:layout_margin="15dp">
+    android:layout_height="wrap_content"
+    android:layout_margin="15dp"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="25dp">
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="数量："
             android:textColor="@color/colorTv"
-            android:textSize="14sp"
-            android:text="数量："/>
+            android:textSize="14sp" />
+
         <TextView
             android:id="@+id/tv_num"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="48dp"
+            android:text="数量"
             android:textColor="@color/colorTvHint"
             android:textSize="14sp"
+            tools:ignore="RtlHardcoded" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_day"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="租期："
+            android:textColor="@color/colorTv"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tv_day"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="48dp"
             android:text="数量"
+            android:textColor="@color/colorTvHint"
+            android:textSize="14sp"
             tools:ignore="RtlHardcoded" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="33dp">
+        android:layout_marginTop="25dp"
+        android:orientation="horizontal">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="存放地："
             android:textColor="@color/colorTv"
-            android:textSize="14sp"
-            android:text="存放地："/>
+            android:textSize="14sp" />
+
         <TextView
             android:id="@+id/tv_material_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="33dp"
+            android:text="请选择存放地"
             android:textColor="@color/colorTvHint"
             android:textSize="14sp"
-            android:text="请选择存放地"
             tools:ignore="RtlHardcoded" />
     </LinearLayout>
 </LinearLayout>

@@ -23,6 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/background"
+                tools:ignore="MissingConstraints"
                 android:paddingLeft="15dp"
                 android:paddingTop="15dp"
                 android:paddingRight="15dp">
@@ -37,6 +38,7 @@
                     tools:ignore="MissingConstraints" />
 
                 <View
+                    android:id="@+id/title_divider"
                     android:layout_width="0dp"
                     android:layout_height="3dp"
                     android:layout_marginTop="4dp"
@@ -44,6 +46,20 @@
                     app:layout_constraintLeft_toLeftOf="@id/tv_goods_info"
                     app:layout_constraintRight_toRightOf="@id/tv_goods_info"
                     app:layout_constraintTop_toBottomOf="@id/tv_goods_info" />
+
+
+                <TextView
+                    android:id="@+id/tv_supply_method"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:background="@drawable/shape_supply_method_3"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    app:layout_constraintBottom_toBottomOf="@id/title_divider"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:layout_marginBottom="1dp"
+                    android:textColor="@color/color_EF583E"/>
 
                 <ImageView
                     android:id="@+id/iv_icon"
@@ -161,7 +177,7 @@
                     android:id="@+id/iv_default"
                     android:layout_width="60dp"
                     android:layout_height="18dp"
-                    android:src="@drawable/icon_default_material"
+                    android:src="@drawable/icon_mine_default_material"
                     android:visibility="invisible"
                     app:layout_constraintTop_toTopOf="@id/tv_order_info"
                     android:layout_marginTop="2dp"

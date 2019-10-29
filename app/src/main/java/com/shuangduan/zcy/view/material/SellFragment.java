@@ -64,7 +64,6 @@ public class SellFragment extends BaseLazyFragment implements EmptyViewFactory.E
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
 
-
         //赛选条件列表为空
         emptyView = createEmptyView(R.drawable.icon_empty_project, R.string.empty_substance_screen_info, R.string.see_all, this);
 

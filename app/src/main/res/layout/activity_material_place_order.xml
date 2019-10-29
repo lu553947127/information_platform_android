@@ -330,22 +330,6 @@
                     android:paddingRight="8dp"
                     android:textSize="13sp"
                     android:textColor="@color/colorTvStates"/>
-
-                <TextView
-                    android:id="@+id/tv_add_address"
-                    android:layout_width="wrap_content"
-                    android:layout_height="28dp"
-                    android:layout_margin="22dp"
-                    android:background="@drawable/circular_background_gray"
-                    android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
-                    android:paddingLeft="8dp"
-                    android:paddingRight="8dp"
-                    android:layout_gravity="center_horizontal"
-                    android:textSize="13sp"
-                    android:text="+添加一项"
-                    android:visibility="gone"
-                    android:textColor="@color/colorTvStates"/>
             </LinearLayout>
 
 

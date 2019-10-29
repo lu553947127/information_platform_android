@@ -66,7 +66,7 @@ public class MaterialCollectFragment extends BaseLazyFragment implements EmptyVi
         View emptyView = createEmptyView(R.drawable.icon_empty_project, R.string.empty_material_collect_info, R.string.to_look_over, this);
         rv.setLayoutManager(new LinearLayoutManager(mContext));
         rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
-        MaterialCollectAdapter materialAdapter = new MaterialCollectAdapter(R.layout.item_material, null);
+        MaterialCollectAdapter materialAdapter = new MaterialCollectAdapter(R.layout.item_material_list, null);
         materialAdapter.setEmptyView(R.layout.layout_loading, rv);
         rv.setAdapter(materialAdapter);
         materialAdapter.setOnItemClickListener((adapter, view, position) -> {

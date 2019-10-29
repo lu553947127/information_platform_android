@@ -535,6 +535,13 @@
         <item>物资信息</item>
     </string-array>
 
+    <string-array name="mine_collect">
+        <item>工程信息</item>
+        <item>招采信息</item>
+        <item>周转材料</item>
+        <item>设备物资</item>
+    </string-array>
+
     <string-array name="project_order">
         <item>工程概况</item>
         <item>工程动态</item>

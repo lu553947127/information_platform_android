@@ -103,6 +103,10 @@ public class MaterialOrderBean {
         //是否能够取消订单 0:不可以取消 1：可以取消
         @SerializedName("is_close")
         public int isClose;
+        // 1 出租 2 售卖
+        public int method;
+        //物资订单来源类型 1公开物资 3内购物资
+        public int inside;
 
         @Override
         public String toString() {

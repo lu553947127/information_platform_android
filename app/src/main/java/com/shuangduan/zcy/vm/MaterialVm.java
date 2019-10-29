@@ -59,7 +59,7 @@ public class MaterialVm extends BaseViewModel {
     //筛选框的供应方式
     public String supplierMethod;
 
-    //物资大分类 0：公开物资 1：内定物资
+    //物资大分类 1：公开物资 3：内定物资
     public int materialFlag;
 
 
@@ -85,14 +85,14 @@ public class MaterialVm extends BaseViewModel {
 
         supplierMethod = "";
 
-        materialFlag = 0;
+        materialFlag = 1;
     }
 
     //公开周转材料
     public void sellList(int flag) {
         sellPage = 1;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
-        if (flag == 0) {
+        if (flag == 1) {
             new MaterialRepository().materialList(sellLiveData, pageStateLiveData, userId, supplierMethodId, materialId, specification, supplierId, sellPage);
         } else {
             new MaterialRepository().materialList(sellLiveData, pageStateLiveData, userId, supplierMethodId, materialId, specification, supplierId, sellPage, authGroup);
@@ -102,7 +102,7 @@ public class MaterialVm extends BaseViewModel {
     public void moreSellList(int flag) {
         sellPage++;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
-        if (flag == 0) {
+        if (flag == 1) {
             new MaterialRepository().materialList(sellLiveData, pageStateLiveData, userId, supplierMethodId, materialId, specification, supplierId, sellPage);
         } else {
             new MaterialRepository().materialList(sellLiveData, pageStateLiveData, userId, supplierMethodId, materialId, specification, supplierId, sellPage, authGroup);
@@ -125,13 +125,13 @@ public class MaterialVm extends BaseViewModel {
     public void orderList() {
         orderPage = 1;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
-        new MaterialRepository().materialOrderList(orderLiveData, pageStateLiveData, userId, orderPage);
+        new MaterialRepository().materialOrderList(orderLiveData, pageStateLiveData, userId, orderPage, materialFlag);
     }
 
     public void moreOrderList() {
         orderPage++;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
-        new MaterialRepository().materialOrderList(orderLiveData, pageStateLiveData, userId, orderPage);
+        new MaterialRepository().materialOrderList(orderLiveData, pageStateLiveData, userId, orderPage, materialFlag);
     }
 
 

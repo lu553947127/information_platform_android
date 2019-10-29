@@ -176,19 +176,19 @@ public class MaterialActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_open:
-                if (materialVm.materialFlag == 0) return;
+                if (materialVm.materialFlag == 1) return;
                 tvOpen.setTextSize(18);
                 tvDefault.setTextSize(14);
-                materialVm.materialFlag = 0;
+                materialVm.materialFlag = 1;
                 //TODO 后续修改接口
                 materialVm.sellList(materialVm.materialFlag);
                 materialVm.leaseList();
                 break;
             case R.id.tv_default:
-                if (materialVm.materialFlag == 1) return;
+                if (materialVm.materialFlag == 3) return;
                 tvOpen.setTextSize(14);
                 tvDefault.setTextSize(18);
-                materialVm.materialFlag = 1;
+                materialVm.materialFlag = 3;
                 //TODO 后续修改接口
                 materialVm.sellList(materialVm.materialFlag);
                 materialVm.leaseList();

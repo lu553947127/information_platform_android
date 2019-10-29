@@ -69,6 +69,19 @@
         app:layout_constraintLeft_toLeftOf="@+id/tv_title"
         app:layout_constraintTop_toBottomOf="@id/tv_supplier" />
 
+    <TextView
+        android:id="@+id/tv_supply_method"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:background="@drawable/shape_supply_method_3"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:textColor="@color/color_EF583E"
+        app:layout_constraintBottom_toBottomOf="@id/tv_order_num"
+        app:layout_constraintLeft_toRightOf="@id/tv_order_num"
+        app:layout_constraintTop_toTopOf="@id/tv_order_num" />
+
 
     <TextView
         android:id="@+id/tv_state"

@@ -80,7 +80,8 @@ public class MaterialOrderDetailActivity extends BaseActivity {
     TextView tvCancel;
     @BindView(R.id.iv_default)
     ImageView ivDefault;
-
+    @BindView(R.id.tv_supply_method)
+    TextView tvSupplyMethod;
 
     private MaterialDetailVm materialVm;
     private int orderId;
@@ -122,7 +123,12 @@ public class MaterialOrderDetailActivity extends BaseActivity {
                 ivIcon.setImageResource(R.drawable.wuzhi_default);
             }
             tvTitle.setText(item.category);
-            tvPrice.setText(Html.fromHtml("商品单价：<font color=#EF583E>" + item.price + "<font/>/ " + item.unit));
+
+
+            tvPrice.setText(item.method == 1 ?
+                    Html.fromHtml("商品单价：<font color=#EF583E>" + item.price + "<font/>/天") :
+                    Html.fromHtml("商品单价：<font color=#EF583E>" + item.price + "<font/>/" + item.unit));
+
             tvSpec.setText("规格：" + item.spec);
             tvSupplier.setText("供应商：" + item.supplier);
             tvUnit.setText("单位：" + item.unit);
@@ -142,6 +148,9 @@ public class MaterialOrderDetailActivity extends BaseActivity {
             } else {
                 tvCancel.setEnabled(true);
             }
+            tvSupplyMethod.setText(item.method == 1 ? "出租" : "出售");
+
+            ivDefault.setVisibility(item.inside == 3 ? View.VISIBLE : View.GONE);
         });
 
         materialVm.mutableLiveDataCancel.observe(this, item -> {

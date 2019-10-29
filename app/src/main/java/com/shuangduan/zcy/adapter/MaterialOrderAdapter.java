@@ -1,6 +1,7 @@
 package com.shuangduan.zcy.adapter;
 
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
@@ -9,6 +10,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.google.gson.JsonObject;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.model.bean.MaterialOrderBean;
+import com.shuangduan.zcy.utils.TextViewUtils;
 import com.shuangduan.zcy.utils.image.ImageConfig;
 import com.shuangduan.zcy.utils.image.ImageLoader;
 
@@ -31,6 +33,15 @@ public class MaterialOrderAdapter extends BaseQuickAdapter<MaterialOrderBean.Lis
     @Override
     protected void convert(BaseViewHolder helper, MaterialOrderBean.ListBean item) {
 
+        TextView tvTitle = helper.getView(R.id.tv_title);
+
+        if (item.inside == 3) {
+            TextViewUtils.addDrawableInEnd(tvTitle, mContext.getResources().getDrawable(R.drawable.icon_mine_default_material), item.materialName);
+        } else {
+            tvTitle.setText(item.materialName);
+        }
+
+
         ImageView ivIcon = helper.getView(R.id.iv_icon);
         try {
             String thumb = item.images;
@@ -45,10 +56,10 @@ public class MaterialOrderAdapter extends BaseQuickAdapter<MaterialOrderBean.Lis
             ivIcon.setImageResource(R.drawable.wuzhi_default);
         }
 
-        helper.setText(R.id.tv_title, item.materialName)
-                .setText(R.id.tv_category, "分类:" + item.cateName)
+        helper.setText(R.id.tv_category, "分类:" + item.cateName)
                 .setText(R.id.tv_supplier, "供应商:" + item.supplier)
-                .setText(R.id.tv_order_num, "订单号:" + item.orderSn);
+                .setText(R.id.tv_order_num, "订单号:" + item.orderSn)
+                .setText(R.id.tv_supply_method, item.method == 1 ? "出租" : "出售");
         helper.setText(R.id.tv_state, item.status);
     }
 

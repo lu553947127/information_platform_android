@@ -1254,7 +1254,8 @@ public interface ApiService {
     @POST("api/Material/myMaterial")
     Flowable<BaseResponse<MaterialOrderBean>> materialOrder(
             @Field("user_id") int userId,
-            @Field("page") int page
+            @Field("page") int page,
+            @Field("inside") int inside
     );
 
     //基建物质预定详情

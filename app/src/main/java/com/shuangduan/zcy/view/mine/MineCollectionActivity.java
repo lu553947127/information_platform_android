@@ -56,12 +56,14 @@ public class MineCollectionActivity extends BaseActivity {
         Fragment[] fragments = new Fragment[]{
                 ProjectCollectFragment.newInstance(),
                 RecruitCollectFragment.newInstance(),
+                MaterialCollectFragment.newInstance(),
                 MaterialCollectFragment.newInstance()
         };
         tabLayout.addTab(tabLayout.newTab());
         tabLayout.addTab(tabLayout.newTab());
         tabLayout.addTab(tabLayout.newTab());
-        vp.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), fragments, getResources().getStringArray(R.array.mine_sub)));
+        tabLayout.addTab(tabLayout.newTab());
+        vp.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), fragments, getResources().getStringArray(R.array.mine_collect)));
         tabLayout.setupWithViewPager(vp);
     }
 
