@@ -11,6 +11,7 @@ import com.blankj.utilcode.util.BarUtils;
 import com.google.android.material.tabs.TabLayout;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ViewPagerAdapter;
+import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 
 import butterknife.BindView;
@@ -56,8 +57,8 @@ public class MineCollectionActivity extends BaseActivity {
         Fragment[] fragments = new Fragment[]{
                 ProjectCollectFragment.newInstance(),
                 RecruitCollectFragment.newInstance(),
-                MaterialCollectFragment.newInstance(),
-                MaterialCollectFragment.newInstance()
+                MaterialCollectFragment.newInstance(CustomConfig.FRP),
+                MaterialCollectFragment.newInstance( CustomConfig.EQUIPMENT)
         };
         tabLayout.addTab(tabLayout.newTab());
         tabLayout.addTab(tabLayout.newTab());

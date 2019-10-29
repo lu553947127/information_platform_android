@@ -71,6 +71,9 @@ public class CustomConfig {
     public static final String IS_ADMIN_MANAGE = "is_admin_manage";//区分后台管理 1.周转材料 2.设备管理 3.订单管理
     public static final String IS_SHELF = "is_shelf";//1 公开物资存放地，3 内购物资存放地
 
+    //基建物资类型
+    public static final String MATERIALS_TYPE = "materials_type";
+
     //------------------------------------身份验证判断----------------------------------------------------
     //身份认证提示类型
     public static final String AUTHENTICATION_TYPE = "authentication_id";
@@ -140,6 +143,11 @@ public class CustomConfig {
     public static int FIND_SUBSTANCE_TYPE = 1;
     //找买家
     public static int FIND_BUYER_TYPE = 2;
+
+    //周转材料
+    public static int FRP = 1;
+    //设备物资
+    public static int EQUIPMENT = 2;
 
     //------------------------------------基建物资 后台管理权限----------------------------------------------------
     public static final String SON_LIST = "son-list";//判断是否为集团 有无子公司

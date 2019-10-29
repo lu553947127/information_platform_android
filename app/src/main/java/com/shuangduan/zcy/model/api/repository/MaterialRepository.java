@@ -13,6 +13,8 @@ import com.shuangduan.zcy.model.bean.MaterialOrderBean;
 import java.math.BigInteger;
 import java.util.List;
 
+import retrofit2.http.Field;
+
 /**
  * @author 徐玉 QQ:876885613
  * @name information_platform_android
@@ -34,42 +36,86 @@ public class MaterialRepository extends BaseRepository {
         request(apiService.materialList(userId, type, materialId, spec, supplierId, page, authGroup)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
+    public void getEquipmentList(MutableLiveData<MaterialBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int type,
+                                 int materialId, String spec, int supplierId, int page) {
+        request(apiService.getEquipmentList(userId, type, materialId, spec, supplierId, page)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    public void getEquipmentList(MutableLiveData<MaterialBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int type,
+                                 int materialId, String spec, int supplierId, int page, AuthGroupBean authGroup) {
+        request(apiService.getEquipmentList(userId, type, materialId, spec, supplierId, page, authGroup)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    //基建物资---周转材料详情
     public void materialDetail(MutableLiveData<MaterialDetailBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int id) {
         request(apiService.materialDetail(userId, id)).setData(liveData).setPageState(pageStateLiveData).send();
     }
+
+    //基建物资---设备物资详情
+    public void getEquipmentDetail(MutableLiveData<MaterialDetailBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int id) {
+        request(apiService.getEquipmentDetail(userId, id)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
 
     public void getCategory(MutableLiveData<List<MaterialCategoryBean>> liveData, MutableLiveData<String> pageStateLiveData, int userId, int category_id) {
         request(apiService.getCategory(userId, category_id)).setDataList(liveData).setPageState(pageStateLiveData).send();
     }
 
+    //基建物资---周转材料收藏
     public void collected(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int userId, int id) {
         request(apiService.collected(userId, id)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
+    //基建物资---设备物资收藏
+    public void equipmentCollection(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int userId, int id) {
+        request(apiService.equipmentCollection(userId, id)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    //基建物资---取消周转材料收藏
     public void collect(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int userId, int id) {
         request(apiService.collectNew(userId, id)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
-    public void getAddress(MutableLiveData<List<MaterialDepositingPlaceBean>> liveData, MutableLiveData<String> pageStateLiveData, int userId, int id, int supplier_id,int isShelf) {
-        request(apiService.addressList(userId, id, supplier_id,isShelf)).setData(liveData).setPageState(pageStateLiveData).send();
+    //基建物资---取消设备物资收藏
+    public void equipmentCancelCollection(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int userId, int id) {
+        request(apiService.equipmentCancelCollection(userId, id)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+
+    public void getAddress(MutableLiveData<List<MaterialDepositingPlaceBean>> liveData, MutableLiveData<String> pageStateLiveData, int userId, int id, int supplier_id, int isShelf) {
+        request(apiService.addressList(userId, id, supplier_id, isShelf)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
     public void getAddMaterial(MutableLiveData<MaterialAddBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int material_id, BigInteger num, int day, int type) {
-        request(apiService.getAddMaterial(userId, material_id, num,day,type)).setData(liveData).setPageState(pageStateLiveData).send();
+        request(apiService.getAddMaterial(userId, material_id, num, day, type)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
     public void getDelMaterial(MutableLiveData<MaterialAddBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int material_id) {
         request(apiService.getDelMaterial(userId, material_id)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
+    //基建物资---周转材料预定订单
     public void getAddMaterialOrder(MutableLiveData<MaterialAddBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int material_id, String real_name, String tel, String company, int province, int city
             , String address, String remark, String science_num_id) {
         request(apiService.getAddMaterialOrder(userId, material_id, real_name, tel, company, province, city, address, remark, science_num_id)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
-    //基建物质预定订单列表
-    public void materialOrderList(MutableLiveData<MaterialOrderBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int page,int inside) {
-        request(apiService.materialOrder(userId, page,inside)).setData(liveData).setPageState(pageStateLiveData).send();
+    //基建物质---设备物资预定订单
+    public void getAddEquipmentOrder(MutableLiveData<MaterialAddBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int materialId,
+                                     String realName, String tel, String company, int province, int city, String address, String remark,
+                                     int method, int day, int num, int cateId) {
+        request(apiService.getAddEquipmentOrder(userId, materialId, realName, tel, company, province, city, address, remark, method, day, num, cateId)).
+                setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    //基建物质---周转材料预定订单列表
+    public void materialOrderList(MutableLiveData<MaterialOrderBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int page, int inside) {
+        request(apiService.materialOrder(userId, page, inside)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    //基建物资---设备物资预定订单列表
+    public void getEquipmentOrder(MutableLiveData<MaterialOrderBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int page, int inside) {
+        request(apiService.getEquipmentOrder(userId, page, inside)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
     //基建物资预定订单详情

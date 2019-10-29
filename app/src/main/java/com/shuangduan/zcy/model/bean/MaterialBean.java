@@ -126,6 +126,31 @@ public class MaterialBean {
         @SerializedName("browse_count")
         private String browseCount;
 
+        //设备名称
+        @SerializedName("equipment_name")
+        private String equipmentName;
+
+        //供应商名称
+        @SerializedName("equipment_supplier")
+        private String equipmentSupplier;
+
+
+        public String getEquipmentSupplier() {
+            return equipmentSupplier;
+        }
+
+        public void setEquipmentSupplier(String equipmentSupplier) {
+            this.equipmentSupplier = equipmentSupplier;
+        }
+
+        public String getEquipmentName() {
+            return equipmentName;
+        }
+
+        public void setEquipmentName(String equipmentName) {
+            this.equipmentName = equipmentName;
+        }
+
         public String getBrowseCount() {
             return browseCount;
         }
@@ -375,7 +400,7 @@ public class MaterialBean {
 
     }
 
-    public class Images{
+    public class Images {
         public String url;
         @SerializedName("heade_url")
         public String headeUrl;

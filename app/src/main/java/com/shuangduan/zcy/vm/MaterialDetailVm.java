@@ -15,6 +15,8 @@ import com.shuangduan.zcy.model.bean.MaterialOrderBean;
 import java.math.BigInteger;
 import java.util.List;
 
+import retrofit2.http.Field;
+
 /**
  * @author 徐玉 QQ:876885613
  * @name information_platform_android
@@ -40,7 +42,7 @@ public class MaterialDetailVm extends BaseViewModel {
     public MutableLiveData<MaterialOrderBean.ListBean> orderDetailLiveData;
     //取消预定订单
     public MutableLiveData mutableLiveDataCancel;
-    public int id,supplier_id;
+    public int id, supplier_id;
 
     public MaterialDetailVm() {
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
@@ -51,39 +53,66 @@ public class MaterialDetailVm extends BaseViewModel {
         depositingPlaceBeanMutableLiveData = new MutableLiveData<>();
         mutableLiveData = new MutableLiveData<>();
         mutableLiveDataDel = new MutableLiveData<>();
-        mutableLiveAddOrder= new MutableLiveData<>();
+        mutableLiveAddOrder = new MutableLiveData<>();
         orderDetailLiveData = new MutableLiveData<>();
         mutableLiveDataCancel = new MutableLiveData();
     }
 
+    //基建物资---周转材料详情
     public void getDetail(int id) {
         new MaterialRepository().materialDetail(detailLiveData, pageStateLiveData, userId, id);
     }
 
+    //基建物资---设备物资详情
+    public void getEquipmentDetail(int id) {
+        new MaterialRepository().getEquipmentDetail(detailLiveData, pageStateLiveData, userId, id);
+    }
+
+    //基建物资---周转材料收藏
     public void getCollected() {
         new MaterialRepository().collected(collectedLiveData, pageStateLiveData, userId, id);
     }
 
+    //基建物资---设备物资收藏
+    public void equipmentCollection() {
+        new MaterialRepository().equipmentCollection(collectedLiveData, pageStateLiveData, userId, id);
+    }
+
+    //基建物资---周转材料取消收藏
     public void getCollect() {
         new MaterialRepository().collect(collectLiveData, pageStateLiveData, userId, id);
     }
 
-    public void getAddressList(int isShelf) {
-        new MaterialRepository().getAddress(depositingPlaceBeanMutableLiveData, pageStateLiveData, userId, id,supplier_id,isShelf);
+    //基建物质---设备物质取消收藏
+    public void equipmentCancelCollection() {
+        new MaterialRepository().equipmentCancelCollection(collectLiveData, pageStateLiveData, userId, id);
     }
 
-    public void getAddMaterial(int material_id, BigInteger num,int day,int type) {
-        new MaterialRepository().getAddMaterial(mutableLiveData, pageStateLiveData, userId, material_id, num,day,type);
+    public void getAddressList(int isShelf) {
+        new MaterialRepository().getAddress(depositingPlaceBeanMutableLiveData, pageStateLiveData, userId, id, supplier_id, isShelf);
+    }
+
+    public void getAddMaterial(int material_id, BigInteger num, int day, int type) {
+        new MaterialRepository().getAddMaterial(mutableLiveData, pageStateLiveData, userId, material_id, num, day, type);
     }
 
     public void getDelMaterial(int material_id) {
         new MaterialRepository().getDelMaterial(mutableLiveDataDel, pageStateLiveData, userId, material_id);
     }
 
-    public void  getAddMaterialOrder(int material_id,String real_name,String tel,String company,int province,int city
-            ,String address,String remark,String science_num_id){
-        new MaterialRepository().getAddMaterialOrder(mutableLiveAddOrder, pageStateLiveData, userId, material_id,real_name,tel,company,province,city,address,remark,science_num_id);
+    //基建物资---周转材料预定订单
+    public void getAddMaterialOrder(int material_id, String real_name, String tel, String company, int province, int city
+            , String address, String remark, String science_num_id) {
+        new MaterialRepository().getAddMaterialOrder(mutableLiveAddOrder, pageStateLiveData, userId, material_id, real_name, tel, company, province, city, address, remark, science_num_id);
     }
+
+
+    //基建物资---设备物资预定订单
+    public void getAddEquipmentOrder(int materialId, String realName, String tel, String company,
+                                     int province, int city, String address, String remark, int method, int day, int num, int cateId) {
+        new MaterialRepository().getAddEquipmentOrder(mutableLiveAddOrder,pageStateLiveData,userId,materialId,realName,tel,company,province,city,address,remark,method,day,num,cateId);
+    }
+
 
     //物资预定详情
     public void materialOrderDetail(int orderId) {

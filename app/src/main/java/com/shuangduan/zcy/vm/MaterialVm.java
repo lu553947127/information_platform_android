@@ -26,8 +26,10 @@ import java.util.List;
  */
 public class MaterialVm extends BaseViewModel {
     private int userId;
+    //周转材料
     public MutableLiveData<MaterialBean> sellLiveData;
-    public MutableLiveData<MaterialBean> leaseLiveData;
+    //设备物质
+    public MutableLiveData<MaterialBean> equipmentLiveData;
     public MutableLiveData<String> pageStateLiveData;
     public MutableLiveData<List<MaterialCategoryBean>> categoryFirstLiveData;
     public MutableLiveData<List<MaterialCategoryBean>> categoryLiveData;
@@ -39,8 +41,9 @@ public class MaterialVm extends BaseViewModel {
 
     public int categoryFirstId;//一级分类id， 用于二级数据
     public int categoryId;//二级分类id， 用于列表加载
+
     private int sellPage;
-    private int leasePage;
+    private int equipmentPage;
     private int orderPage;
 
     public int materialId;
@@ -66,7 +69,7 @@ public class MaterialVm extends BaseViewModel {
     public MaterialVm() {
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
         sellLiveData = new MutableLiveData<>();
-        leaseLiveData = new MutableLiveData<>();
+        equipmentLiveData = new MutableLiveData<>();
         pageStateLiveData = new MutableLiveData<>();
         categoryFirstLiveData = new MutableLiveData<>();
         categoryLiveData = new MutableLiveData<>();
@@ -88,7 +91,11 @@ public class MaterialVm extends BaseViewModel {
         materialFlag = 1;
     }
 
-    //公开周转材料
+    /**
+     * 周转材料
+     *
+     * @param flag 1：公开物资 3：内定物资
+     */
     public void sellList(int flag) {
         sellPage = 1;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
@@ -109,19 +116,45 @@ public class MaterialVm extends BaseViewModel {
         }
     }
 
-    public void leaseList() {
-        leasePage = 1;
+    /**
+     * 设备物资
+     *
+     * @param flag 1：公开物资 3：内定物资
+     */
+    public void equipmentList(int flag) {
+        equipmentPage = 1;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
-        new MaterialRepository().materialList(leaseLiveData, pageStateLiveData, userId, supplierMethodId, materialId, specification, supplierId, leasePage);
+        if (flag == 1) {
+            new MaterialRepository().getEquipmentList(equipmentLiveData, pageStateLiveData, userId, supplierMethodId, materialId, specification, supplierId, equipmentPage);
+        } else {
+            new MaterialRepository().getEquipmentList(equipmentLiveData, pageStateLiveData, userId, supplierMethodId, materialId, specification, supplierId, equipmentPage, authGroup);
+        }
+    }
+
+    public void moreEquipmentList(int flag) {
+        equipmentPage++;
+        pageStateLiveData.postValue(PageState.PAGE_REFRESH);
+        if (flag == 1) {
+            new MaterialRepository().getEquipmentList(equipmentLiveData, pageStateLiveData, userId, supplierMethodId, materialId, specification, supplierId, equipmentPage);
+        } else {
+            new MaterialRepository().getEquipmentList(equipmentLiveData, pageStateLiveData, userId, supplierMethodId, materialId, specification, supplierId, equipmentPage, authGroup);
+        }
+    }
+
+
+    public void leaseList() {
+        equipmentPage = 1;
+        pageStateLiveData.postValue(PageState.PAGE_REFRESH);
+        new MaterialRepository().materialList(equipmentLiveData, pageStateLiveData, userId, supplierMethodId, materialId, specification, supplierId, equipmentPage);
     }
 
     public void moreLeaseList() {
-        leasePage++;
+        equipmentPage++;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
-        new MaterialRepository().materialList(leaseLiveData, pageStateLiveData, userId, supplierMethodId, materialId, specification, supplierId, leasePage);
+        new MaterialRepository().materialList(equipmentLiveData, pageStateLiveData, userId, supplierMethodId, materialId, specification, supplierId, equipmentPage);
     }
 
-    //物质预定列表
+    //基建物资---周转材料预定列表
     public void orderList() {
         orderPage = 1;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
@@ -132,6 +165,19 @@ public class MaterialVm extends BaseViewModel {
         orderPage++;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
         new MaterialRepository().materialOrderList(orderLiveData, pageStateLiveData, userId, orderPage, materialFlag);
+    }
+
+    //基建物资---设备物资预定列表
+    public void getEquipmentOrder() {
+        equipmentPage = 1;
+        pageStateLiveData.postValue(PageState.PAGE_REFRESH);
+        new MaterialRepository().getEquipmentOrder(orderLiveData, pageStateLiveData, userId, equipmentPage, materialFlag);
+    }
+
+    public void getMoreEquipmentOrder() {
+        equipmentPage++;
+        pageStateLiveData.postValue(PageState.PAGE_REFRESH);
+        new MaterialRepository().getEquipmentOrder(orderLiveData, pageStateLiveData, userId, equipmentPage, materialFlag);
     }
 
 

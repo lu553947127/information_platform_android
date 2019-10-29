@@ -205,8 +205,10 @@
         <activity android:name="com.shuangduan.zcy.view.material.MaterialOrderSuccessActivity" android:theme="@style/BaseAppTheme" />
         <!-- 物资提交预定页面-->
         <activity android:name="com.shuangduan.zcy.view.material.MaterialPlaceOrderActivity" android:theme="@style/BaseAppTheme" />
+        <activity android:name="com.shuangduan.zcy.view.material.MaterialEquipmentPlaceOrderActivity" android:theme="@style/BaseAppTheme" />
         <!-- 基建物资详情页-->
         <activity android:name="com.shuangduan.zcy.view.material.MaterialDetailActivity" android:theme="@style/BaseAppTheme" />
+        <activity android:name="com.shuangduan.zcy.view.material.MaterialEquipmentDetailActivity" android:theme="@style/BaseAppTheme" />
         <!-- 存放地选择列表-->
         <activity android:name="com.shuangduan.zcy.view.material.DepositingPlaceActivity" android:theme="@style/BaseAppTheme" />
         <!-- 物资列表搜索页面 -->

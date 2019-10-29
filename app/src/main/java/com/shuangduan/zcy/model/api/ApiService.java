@@ -673,7 +673,7 @@ public interface ApiService {
             @Field("id") int id
     );
 
-    //基建物质列表--公开周转材料
+    //基建物质--公开周转材料列表
     @POST("api/Material/dateList")
     Flowable<BaseResponse<MaterialBean>> materialList(
             @Query("user_id") int user_id,
@@ -683,6 +683,18 @@ public interface ApiService {
             @Query("supplier_id") int supplierId,
             @Query("page") int page
     );
+
+    //基建物资---公开设备物资列表
+    @POST("api/Equipment/dataList")
+    Flowable<BaseResponse<MaterialBean>> getEquipmentList(
+            @Query("user_id") int userId,
+            @Query("type") int type,
+            @Query("material_id") int materialId,
+            @Query("spec") String spec,
+            @Query("supplier_id") int supplierId,
+            @Query("page") int page
+    );
+
 
     //基建物质列表--内定周转材料
     @POST("api/Material/dateList")
@@ -696,12 +708,36 @@ public interface ApiService {
             @Body AuthGroupBean auth_group
     );
 
+    //基建物资---内定设备物资列表
+    @POST("api/Equipment/dataList")
+    Flowable<BaseResponse<MaterialBean>> getEquipmentList(
+            @Query("user_id") int userId,
+            @Query("type") int type,
+            @Query("material_id") int materialId,
+            @Query("spec") String spec,
+            @Query("supplier_id") int supplierId,
+            @Query("page") int page,
+            @Body AuthGroupBean auth_group
+    );
+
+    //基建物资---材料详情
     @FormUrlEncoded
     @POST("api/Material/getDetail")
     Flowable<BaseResponse<MaterialDetailBean>> materialDetail(
             @Field("user_id") int user_id,
             @Field("id") int id
     );
+
+    //基建物资--设备详情
+    @FormUrlEncoded
+    @POST("api/Equipment/getDetail")
+    Flowable<BaseResponse<MaterialDetailBean>> getEquipmentDetail(
+            @Field("user_id") int userId,
+            @Field("id") int id
+    );
+
+
+
 
     @FormUrlEncoded
     @POST("api/Material/getCategory")
@@ -1218,18 +1254,33 @@ public interface ApiService {
             @Field("name") String name
     );
 
-    //基建物资收藏
+    //基建物资---周转材料收藏
     @FormUrlEncoded
     @POST("api/Material/setCollection")
     Flowable<BaseResponse> collected(
             @Field("user_id") int user_id,
             @Field("id") int id
     );
+    //基建物资---设备物资收藏
+    @FormUrlEncoded
+    @POST("api/Equipment/setCollection")
+    Flowable<BaseResponse> equipmentCollection(
+            @Field("user_id") int user_id,
+            @Field("id") int id
+    );
 
-    //基建物资取消收藏
+    //基建物资---周转材料取消收藏
     @FormUrlEncoded
     @POST("api/Material/cancelCollection")
     Flowable<BaseResponse> collectNew(
+            @Field("user_id") int user_id,
+            @Field("id") int id
+    );
+
+    //基建物资---设备物资取消收藏
+    @FormUrlEncoded
+    @POST("api/Equipment/cancelCollection")
+    Flowable<BaseResponse> equipmentCancelCollection(
             @Field("user_id") int user_id,
             @Field("id") int id
     );
@@ -1252,7 +1303,7 @@ public interface ApiService {
             @Field("page") int page
     );
 
-    //基建物资预定列表
+    //基建物资---周转材料预定列表
     @FormUrlEncoded
     @POST("api/Material/myMaterial")
     Flowable<BaseResponse<MaterialOrderBean>> materialOrder(
@@ -1260,6 +1311,16 @@ public interface ApiService {
             @Field("page") int page,
             @Field("inside") int inside
     );
+
+    //基建物资---设备物资预定列表
+    @FormUrlEncoded
+    @POST("api/Equipment/myEquipment")
+    Flowable<BaseResponse<MaterialOrderBean>> getEquipmentOrder(
+            @Field("user_id") int userId,
+            @Field("page") int page,
+            @Field("inside") int inside
+    );
+
 
     //基建物质预定详情
     @FormUrlEncoded
@@ -1288,7 +1349,7 @@ public interface ApiService {
             @Field("id") int id
     );
 
-    //基建物资提交预订单 添加预订单
+    //基建物资---周转材料提交预订单
     @FormUrlEncoded
     @POST("api/Material/order")
     Flowable<BaseResponse<MaterialAddBean>> getAddMaterialOrder(
@@ -1302,6 +1363,24 @@ public interface ApiService {
             @Field("address") String address,
             @Field("remark") String remark,
             @Field("science_num_id") String science_num_id
+    );
+    //基建物资---设备物资提交预定订单
+    @FormUrlEncoded
+    @POST("api/Equipment/order")
+    Flowable<BaseResponse<MaterialAddBean>> getAddEquipmentOrder(
+            @Field("user_id") int userId,
+            @Field("material_id") int materialId,
+            @Field("real_name") String realName,
+            @Field("tel") String tel,
+            @Field("company") String company,
+            @Field("province") int province,
+            @Field("city") int city,
+            @Field("address") String address,
+            @Field("remark") String remark,
+            @Field("method") int method,
+            @Field("day") int day,
+            @Field("num") int num,
+            @Field("cate_id") int cateId
     );
 
     //基建物质预定订单删除

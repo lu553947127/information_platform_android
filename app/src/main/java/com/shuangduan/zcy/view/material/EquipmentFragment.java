@@ -14,6 +14,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shuangduan.zcy.R;
+import com.shuangduan.zcy.adapter.EquipmentAdapter;
 import com.shuangduan.zcy.adapter.SellAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseLazyFragment;
@@ -34,7 +35,7 @@ import butterknife.BindView;
  * @chang time
  * @class describe
  */
-public class LeaseFragment extends BaseLazyFragment implements EmptyViewFactory.EmptyViewCallBack {
+public class EquipmentFragment extends BaseLazyFragment implements EmptyViewFactory.EmptyViewCallBack {
     @BindView(R.id.rv)
     RecyclerView rv;
     @BindView(R.id.refresh)
@@ -43,10 +44,10 @@ public class LeaseFragment extends BaseLazyFragment implements EmptyViewFactory.
 
     private View emptyView;
 
-    public static LeaseFragment newInstance() {
+    public static EquipmentFragment newInstance() {
 
         Bundle args = new Bundle();
-        LeaseFragment fragment = new LeaseFragment();
+        EquipmentFragment fragment = new EquipmentFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -69,18 +70,18 @@ public class LeaseFragment extends BaseLazyFragment implements EmptyViewFactory.
         rv.setLayoutManager(new LinearLayoutManager(mContext));
 //        rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
         rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_h_5));
-        SellAdapter adapter = new SellAdapter(R.layout.item_material_list, null);
+        EquipmentAdapter adapter = new EquipmentAdapter(R.layout.item_material_list, null);
         adapter.setEmptyView(R.layout.layout_loading, rv);
         rv.setAdapter(adapter);
         adapter.setOnItemClickListener((helper, view, position) -> {
             MaterialBean.ListBean listBean = adapter.getData().get(position);
             Bundle bundle = new Bundle();
             bundle.putInt(CustomConfig.MATERIAL_ID, listBean.getId());
-            ActivityUtils.startActivity(bundle, MaterialDetailActivity.class);
+            ActivityUtils.startActivity(bundle, MaterialEquipmentDetailActivity.class);
         });
 
         materialVm = ViewModelProviders.of(mActivity).get(MaterialVm.class);
-        materialVm.leaseLiveData.observe(this, materialBean -> {
+        materialVm.equipmentLiveData.observe(this, materialBean -> {
 
             isInited = true;
             if (materialBean.getPage() == 1) {
@@ -95,19 +96,19 @@ public class LeaseFragment extends BaseLazyFragment implements EmptyViewFactory.
         refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                materialVm.moreLeaseList();
+                materialVm.moreEquipmentList(materialVm.materialFlag);
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                materialVm.leaseList();
+                materialVm.equipmentList(materialVm.materialFlag);
             }
         });
     }
 
     @Override
     protected void initDataFromService() {
-        materialVm.leaseList();
+        materialVm.equipmentList(materialVm.materialFlag);
     }
 
     private void setNoMore(int page, int count) {
@@ -141,7 +142,7 @@ public class LeaseFragment extends BaseLazyFragment implements EmptyViewFactory.
         materialVm.supplierMethodId = 0;
         ((MaterialActivity) getActivity()).updateFilterStyle();
 
-        materialVm.leaseList();
+        materialVm.equipmentList(materialVm.materialFlag);
     }
 
 

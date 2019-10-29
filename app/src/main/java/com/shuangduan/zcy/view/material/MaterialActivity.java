@@ -32,14 +32,10 @@ import com.shuangduan.zcy.model.bean.SupplierCliqueBean;
 import com.shuangduan.zcy.model.event.MaterialEvent;
 import com.shuangduan.zcy.model.event.SupplierEvent;
 import com.shuangduan.zcy.utils.DensityUtil;
-import com.shuangduan.zcy.view.mine.MineMaterialsFragment;
 import com.shuangduan.zcy.vm.HomeVm;
 import com.shuangduan.zcy.vm.MaterialVm;
 
 import org.greenrobot.eventbus.Subscribe;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -104,7 +100,7 @@ public class MaterialActivity extends BaseActivity {
 
 
     private SellFragment sellFragment;
-    private LeaseFragment leaseFragment;
+    private EquipmentFragment leaseFragment;
 
     @Override
     protected int initLayoutRes() {
@@ -133,7 +129,7 @@ public class MaterialActivity extends BaseActivity {
         materialVm = ViewModelProviders.of(this).get(MaterialVm.class);
 
         sellFragment = SellFragment.newInstance();
-        leaseFragment = LeaseFragment.newInstance();
+        leaseFragment = EquipmentFragment.newInstance();
 
         if (supplierClique.getSupplier_status() == 2 || supplierClique.getSupplier_status() == 3) {
             BarUtils.addMarginTopEqualStatusBarHeight(toolbarMaterial);
@@ -180,18 +176,16 @@ public class MaterialActivity extends BaseActivity {
                 tvOpen.setTextSize(18);
                 tvDefault.setTextSize(14);
                 materialVm.materialFlag = 1;
-                //TODO 后续修改接口
                 materialVm.sellList(materialVm.materialFlag);
-                materialVm.leaseList();
+                materialVm.equipmentList(materialVm.materialFlag);
                 break;
             case R.id.tv_default:
                 if (materialVm.materialFlag == 3) return;
                 tvOpen.setTextSize(14);
                 tvDefault.setTextSize(18);
                 materialVm.materialFlag = 3;
-                //TODO 后续修改接口
                 materialVm.sellList(materialVm.materialFlag);
-                materialVm.leaseList();
+                materialVm.equipmentList(materialVm.materialFlag);
                 break;
             case R.id.tv_bar_right:
                 initPop();
@@ -258,7 +252,7 @@ public class MaterialActivity extends BaseActivity {
                             String spec = etSpecification.getText().toString();
                             materialVm.specification = spec;
                             materialVm.sellList(materialVm.materialFlag);
-                            materialVm.leaseList();
+                            materialVm.equipmentList(materialVm.materialFlag);
                             popupWindowCategory.dismiss();
                             over.setVisibility(View.GONE);
                         });
@@ -343,7 +337,7 @@ public class MaterialActivity extends BaseActivity {
                         }
 
                         materialVm.sellList(materialVm.materialFlag);
-                        materialVm.leaseList();
+                        materialVm.equipmentList(materialVm.materialFlag);
                         popupWindowCategory.dismiss();
                         over.setVisibility(View.GONE);
 
@@ -355,7 +349,7 @@ public class MaterialActivity extends BaseActivity {
                         String spec = etSpecification.getText().toString();
                         materialVm.specification = spec;
                         materialVm.sellList(materialVm.materialFlag);
-                        materialVm.leaseList();
+                        materialVm.equipmentList(materialVm.materialFlag);
                         popupWindowCategory.dismiss();
                         over.setVisibility(View.GONE);
                         updateFilterStyle();

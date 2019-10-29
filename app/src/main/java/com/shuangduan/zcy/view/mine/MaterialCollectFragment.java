@@ -21,6 +21,7 @@ import com.shuangduan.zcy.factory.EmptyViewFactory;
 import com.shuangduan.zcy.model.bean.MaterialCollectBean;
 import com.shuangduan.zcy.view.material.MaterialActivity;
 import com.shuangduan.zcy.view.material.MaterialDetailActivity;
+import com.shuangduan.zcy.view.material.MaterialEquipmentDetailActivity;
 import com.shuangduan.zcy.vm.MineCollectionVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
@@ -42,10 +43,10 @@ public class MaterialCollectFragment extends BaseLazyFragment implements EmptyVi
     SmartRefreshLayout refresh;
     private MineCollectionVm mineCollectionVm;
 
-    public static MaterialCollectFragment newInstance() {
+    public static MaterialCollectFragment newInstance(int type) {
 
         Bundle args = new Bundle();
-
+        args.putInt(CustomConfig.MATERIALS_TYPE, type);
         MaterialCollectFragment fragment = new MaterialCollectFragment();
         fragment.setArguments(args);
         return fragment;
@@ -73,7 +74,12 @@ public class MaterialCollectFragment extends BaseLazyFragment implements EmptyVi
             MaterialCollectBean.ListBean listBean = materialAdapter.getData().get(position);
             Bundle bundle = new Bundle();
             bundle.putInt(CustomConfig.MATERIAL_ID, listBean.id);
-            ActivityUtils.startActivity(bundle, MaterialDetailActivity.class);
+            int type = getArguments().getInt(CustomConfig.MATERIALS_TYPE, 0);
+            if (type == 1) {
+                ActivityUtils.startActivity(bundle, MaterialDetailActivity.class);
+            } else {
+                ActivityUtils.startActivity(bundle, MaterialEquipmentDetailActivity.class);
+            }
         });
 
         mineCollectionVm = ViewModelProviders.of(this).get(MineCollectionVm.class);
@@ -86,7 +92,6 @@ public class MaterialCollectFragment extends BaseLazyFragment implements EmptyVi
             }
             setNoMore(recruitBean.getPage(), recruitBean.getCount());
         });
-
 
 
         refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {

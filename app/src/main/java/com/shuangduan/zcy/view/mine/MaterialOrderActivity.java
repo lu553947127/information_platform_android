@@ -2,45 +2,24 @@ package com.shuangduan.zcy.view.mine;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
-import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.google.android.material.tabs.TabLayout;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.constant.RefreshState;
-import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shuangduan.zcy.R;
-import com.shuangduan.zcy.adapter.MaterialOrderAdapter;
 import com.shuangduan.zcy.adapter.ViewPagerAdapter;
-import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
-import com.shuangduan.zcy.factory.EmptyViewFactory;
 import com.shuangduan.zcy.model.api.PageState;
-import com.shuangduan.zcy.model.bean.MaterialOrderBean;
 import com.shuangduan.zcy.model.bean.SupplierCliqueBean;
-import com.shuangduan.zcy.view.material.LeaseFragment;
-import com.shuangduan.zcy.view.material.MaterialActivity;
-import com.shuangduan.zcy.view.material.SellFragment;
 import com.shuangduan.zcy.vm.HomeVm;
 import com.shuangduan.zcy.vm.MaterialVm;
-import com.shuangduan.zcy.weight.DividerItemDecoration;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -72,9 +51,7 @@ public class MaterialOrderActivity extends BaseActivity {
     ViewPager vp;
 
 
-
     private MaterialVm materialVm;
-
 
 
     @Override
@@ -154,6 +131,7 @@ public class MaterialOrderActivity extends BaseActivity {
                 tvDefault.setTextSize(14);
                 materialVm.materialFlag = 1;
                 materialVm.orderList();
+                materialVm.getEquipmentOrder();
                 break;
             case R.id.tv_default:
                 if (materialVm.materialFlag == 3) return;
@@ -161,6 +139,7 @@ public class MaterialOrderActivity extends BaseActivity {
                 tvDefault.setTextSize(18);
                 materialVm.materialFlag = 3;
                 materialVm.orderList();
+                materialVm.getEquipmentOrder();
                 break;
         }
     }
