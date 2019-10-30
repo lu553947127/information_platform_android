@@ -175,13 +175,13 @@ public class TurnoverChildrenFragment extends BaseLazyFragment {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 super.onRefresh(refreshLayout);
-                turnoverVm.constructionList(2,areaVm.id,areaVm.city_id,0,0);
+                turnoverVm.constructionList(2,areaVm.id,areaVm.city_id);
             }
 
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 super.onLoadMore(refreshLayout);
-                turnoverVm.constructionListMore(2,areaVm.id,areaVm.city_id,0,0);
+                turnoverVm.constructionListMore(2,areaVm.id,areaVm.city_id);
             }
         });
         //滑动监听
@@ -216,7 +216,7 @@ public class TurnoverChildrenFragment extends BaseLazyFragment {
 
     @Override
     protected void initDataFromService() {
-        turnoverVm.constructionList(2,areaVm.id,areaVm.city_id,0,0);
+        turnoverVm.constructionList(2,areaVm.id,areaVm.city_id);
     }
 
     @SuppressLint("NewApi")
@@ -290,7 +290,7 @@ public class TurnoverChildrenFragment extends BaseLazyFragment {
                 rvCompany.setAdapter(turnoverCompanyAdapter);
                 turnoverCompanyAdapter.setOnItemClickListener((adapter, view, position) -> {
                     turnoverVm.supplier_id=companyList.get(position).getSupplier_id();
-                    turnoverVm.constructionList(2,areaVm.id,areaVm.city_id,0,0);
+                    turnoverVm.constructionList(2,areaVm.id,areaVm.city_id);
                     btn_dialog.dismiss();
                     getDrawableRightView(tvCompany,R.drawable.icon_pulldown_arrow,R.color.color_666666);
                 });
@@ -308,7 +308,7 @@ public class TurnoverChildrenFragment extends BaseLazyFragment {
                 rvGrounding.setAdapter(groundingAdapter);
                 groundingAdapter.setOnItemClickListener((adapter, view, position) -> {
                     turnoverVm.is_shelf=groundingList.get(position).getId();
-                    turnoverVm.constructionList(2,areaVm.id,areaVm.city_id,0,0);
+                    turnoverVm.constructionList(2,areaVm.id,areaVm.city_id);
                     btn_dialog.dismiss();
                     getDrawableRightView(tvGrounding,R.drawable.icon_pulldown_arrow,R.color.color_666666);
                 });
@@ -326,7 +326,7 @@ public class TurnoverChildrenFragment extends BaseLazyFragment {
                 rvUseStatue.setAdapter(useStatueAdapter);
                 useStatueAdapter.setOnItemClickListener((adapter, view, position) -> {
                     turnoverVm.use_status=useStatueList.get(position).getId();
-                    turnoverVm.constructionList(2,areaVm.id,areaVm.city_id,0,0);
+                    turnoverVm.constructionList(2,areaVm.id,areaVm.city_id);
                     btn_dialog.dismiss();
                     getDrawableRightView(tvUseStatue,R.drawable.icon_pulldown_arrow,R.color.color_666666);
                 });
@@ -353,7 +353,7 @@ public class TurnoverChildrenFragment extends BaseLazyFragment {
                     }else {
                         areaVm.id=0;
                         areaVm.city_id=0;
-                        turnoverVm.constructionList(2,areaVm.id,areaVm.city_id,0,0);
+                        turnoverVm.constructionList(2,areaVm.id,areaVm.city_id);
                         btn_dialog.dismiss();
                         getDrawableRightView(tvDepositingPlace,R.drawable.icon_pulldown_arrow,R.color.color_666666);
                     }
@@ -361,13 +361,13 @@ public class TurnoverChildrenFragment extends BaseLazyFragment {
                 cityAdapter.setOnItemClickListener((adapter, view, position) -> {
                     if (cityList.get(position).getId()!=0){
                         areaVm.city_id = cityList.get(position).getId();
-                        turnoverVm.constructionList(2,areaVm.id,areaVm.city_id,0,0);
+                        turnoverVm.constructionList(2,areaVm.id,areaVm.city_id);
                         cityAdapter.setIsSelect(cityList.get(position).getId());
                         btn_dialog.dismiss();
                         getDrawableRightView(tvDepositingPlace,R.drawable.icon_pulldown_arrow,R.color.color_666666);
                     }else {
                         areaVm.city_id=0;
-                        turnoverVm.constructionList(2,areaVm.id,areaVm.city_id,0,0);
+                        turnoverVm.constructionList(2,areaVm.id,areaVm.city_id);
                         btn_dialog.dismiss();
                         getDrawableRightView(tvDepositingPlace,R.drawable.icon_pulldown_arrow,R.color.color_666666);
                     }
@@ -396,6 +396,7 @@ public class TurnoverChildrenFragment extends BaseLazyFragment {
 
     @Subscribe
     public void onEventUpdateUserName(TurnoverEvent event) {
-
+        turnoverVm.category_id=event.company_id;
+        turnoverVm.constructionList(2,areaVm.id,areaVm.city_id);
     }
 }

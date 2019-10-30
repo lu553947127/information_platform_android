@@ -1,7 +1,11 @@
 package com.shuangduan.zcy.adminManage.view;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 
 import androidx.appcompat.widget.AppCompatTextView;
@@ -12,7 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.BarUtils;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adminManage.adapter.TurnoverFirstAdapter;
 import com.shuangduan.zcy.adminManage.adapter.TurnoverHistoryAdapter;
@@ -23,10 +26,13 @@ import com.shuangduan.zcy.adminManage.event.TurnoverEvent;
 import com.shuangduan.zcy.adminManage.vm.TurnoverVm;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
+import com.shuangduan.zcy.listener.TextWatcherWrapper;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 import com.shuangduan.zcy.weight.XEditText;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.util.Objects;
 
 import butterknife.BindView;
 
@@ -150,8 +156,39 @@ public class SelectTypeActivity extends BaseActivity {
         });
 
         turnoverVm.turnoverSecondData.observe(this,turnoverCategoryBeans -> {
-            turnoverSecondAdapter.setNewData(turnoverCategoryBeans);
+            if (turnoverCategoryBeans!=null&&turnoverCategoryBeans.size()!=0){
+                turnoverSecondAdapter.setNewData(turnoverCategoryBeans);
+                turnoverSecondAdapter.setKeyword(Objects.requireNonNull(etSearch.getText()).toString());
+            }else {
+                turnoverSecondAdapter.setEmptyView(R.layout.layout_empty_admin, rvAll);
+            }
         });
 
+        etSearch.setOnEditorActionListener((textView, i, keyEvent) -> {
+            if (i == EditorInfo.IME_ACTION_SEARCH) {
+                // 先隐藏键盘
+                ((InputMethodManager) Objects.requireNonNull(etSearch.getContext()
+                        .getSystemService(Context.INPUT_METHOD_SERVICE)))
+                        .hideSoftInputFromWindow(Objects.requireNonNull(SelectTypeActivity.this.getCurrentFocus()).getWindowToken(),
+                                InputMethodManager.HIDE_NOT_ALWAYS);
+                // 搜索，进行自己要的操作...
+                turnoverVm.constructionCategoryList(Objects.requireNonNull(etSearch.getText()).toString(),0);
+                return true;
+            }
+            return false;
+        });
+        etSearch.addTextChangedListener(new TextWatcherWrapper(){
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length()!=0){
+                    llHistory.setVisibility(View.GONE);
+                    llType.setVisibility(View.GONE);
+                }else {
+                    llHistory.setVisibility(View.VISIBLE);
+                    llType.setVisibility(View.VISIBLE);
+                }
+                turnoverVm.constructionCategoryList(Objects.requireNonNull(etSearch.getText()).toString(),0);
+            }
+        });
     }
 }

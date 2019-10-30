@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,6 +15,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.amap.api.mapcore.util.fo;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -28,6 +30,7 @@ import com.shuangduan.zcy.adminManage.adapter.TurnoverAdapter;
 import com.shuangduan.zcy.adminManage.adapter.UseStatueAdapter;
 import com.shuangduan.zcy.adminManage.bean.TurnoverBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverTypeBean;
+import com.shuangduan.zcy.adminManage.event.TurnoverEvent;
 import com.shuangduan.zcy.adminManage.vm.TurnoverVm;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseLazyFragment;
@@ -36,6 +39,8 @@ import com.shuangduan.zcy.model.bean.CityBean;
 import com.shuangduan.zcy.model.bean.ProvinceBean;
 import com.shuangduan.zcy.utils.AnimationUtils;
 import com.shuangduan.zcy.vm.MultiAreaVm;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,6 +77,8 @@ public class TurnoverGroupFragment extends BaseLazyFragment {
     RecyclerView recyclerView;
     @BindView(R.id.refresh)
     SmartRefreshLayout refresh;
+    @BindView(R.id.ll_admin_manage_screen)
+    LinearLayout llAdminManageScreen;
     private TurnoverVm turnoverVm;
     private MultiAreaVm areaVm;
     private TurnoverAdapter turnoverAdapter;
@@ -171,13 +178,13 @@ public class TurnoverGroupFragment extends BaseLazyFragment {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 super.onRefresh(refreshLayout);
-                turnoverVm.constructionList(1,areaVm.id,areaVm.city_id,0,0);
+                turnoverVm.constructionList(1,areaVm.id,areaVm.city_id);
             }
 
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 super.onLoadMore(refreshLayout);
-                turnoverVm.constructionListMore(1,areaVm.id,areaVm.city_id,0,0);
+                turnoverVm.constructionListMore(1,areaVm.id,areaVm.city_id);
             }
         });
         //滑动监听
@@ -212,7 +219,7 @@ public class TurnoverGroupFragment extends BaseLazyFragment {
 
     @Override
     protected void initDataFromService() {
-        turnoverVm.constructionList(1,areaVm.id,areaVm.city_id,0,0);
+        turnoverVm.constructionList(1,areaVm.id,areaVm.city_id);
     }
 
     @SuppressLint("NewApi")
@@ -279,7 +286,7 @@ public class TurnoverGroupFragment extends BaseLazyFragment {
                 rvGrounding.setAdapter(groundingAdapter);
                 groundingAdapter.setOnItemClickListener((adapter, view, position) -> {
                     turnoverVm.is_shelf=groundingList.get(position).getId();
-                    turnoverVm.constructionList(1,areaVm.id,areaVm.city_id,0,0);
+                    turnoverVm.constructionList(1,areaVm.id,areaVm.city_id);
                     btn_dialog.dismiss();
                     getDrawableRightView(tvGrounding,R.drawable.icon_pulldown_arrow,R.color.color_666666);
                 });
@@ -297,7 +304,7 @@ public class TurnoverGroupFragment extends BaseLazyFragment {
                 rvUseStatue.setAdapter(useStatueAdapter);
                 useStatueAdapter.setOnItemClickListener((adapter, view, position) -> {
                     turnoverVm.use_status=useStatueList.get(position).getId();
-                    turnoverVm.constructionList(1,areaVm.id,areaVm.city_id,0,0);
+                    turnoverVm.constructionList(1,areaVm.id,areaVm.city_id);
                     btn_dialog.dismiss();
                     getDrawableRightView(tvUseStatue,R.drawable.icon_pulldown_arrow,R.color.color_666666);
                 });
@@ -324,7 +331,7 @@ public class TurnoverGroupFragment extends BaseLazyFragment {
                     }else {
                         areaVm.id=0;
                         areaVm.city_id=0;
-                        turnoverVm.constructionList(1,areaVm.id,areaVm.city_id,0,0);
+                        turnoverVm.constructionList(1,areaVm.id,areaVm.city_id);
                         btn_dialog.dismiss();
                         getDrawableRightView(tvDepositingPlace,R.drawable.icon_pulldown_arrow,R.color.color_666666);
                     }
@@ -332,13 +339,13 @@ public class TurnoverGroupFragment extends BaseLazyFragment {
                 cityAdapter.setOnItemClickListener((adapter, view, position) -> {
                     if (cityList.get(position).getId()!=0){
                         areaVm.city_id = cityList.get(position).getId();
-                        turnoverVm.constructionList(1,areaVm.id,areaVm.city_id,0,0);
+                        turnoverVm.constructionList(1,areaVm.id,areaVm.city_id);
                         cityAdapter.setIsSelect(cityList.get(position).getId());
                         btn_dialog.dismiss();
                         getDrawableRightView(tvDepositingPlace,R.drawable.icon_pulldown_arrow,R.color.color_666666);
                     }else {
                         areaVm.city_id=0;
-                        turnoverVm.constructionList(1,areaVm.id,areaVm.city_id,0,0);
+                        turnoverVm.constructionList(1,areaVm.id,areaVm.city_id);
                         btn_dialog.dismiss();
                         getDrawableRightView(tvDepositingPlace,R.drawable.icon_pulldown_arrow,R.color.color_666666);
                     }
@@ -363,5 +370,30 @@ public class TurnoverGroupFragment extends BaseLazyFragment {
         drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
         textView.setCompoundDrawables(null, null, drawable, null);
         textView.setTextColor(getResources().getColor(color));
+    }
+
+    @Subscribe
+    public void onEventUpdateUserName(TurnoverEvent event) {
+        turnoverVm.category_id=event.company_id;
+        turnoverVm.constructionList(1,areaVm.id,areaVm.city_id);
+    }
+
+    //添加头部筛选布局view
+    private TextView getAddTopScreenView(String text,int background,int drawable_padding,int margin_left,int margin_right) {
+        TextView textView =new TextView(getActivity());
+        textView.setBackgroundResource(background);
+        textView.setText(text);
+        textView.setTextSize(12);
+        textView.setPadding(15,15,15,15);
+        textView.setCompoundDrawablePadding(drawable_padding);
+        getDrawableRightView(textView,R.drawable.icon_admin_screen_delete,R.color.color_888888);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        layoutParams.setMargins(margin_left, 30, margin_right, 10);
+        llAdminManageScreen.setLayoutParams(layoutParams);
+        textView.setOnClickListener(v -> {
+            turnoverVm.constructionList(1,areaVm.id,areaVm.city_id);
+            llAdminManageScreen.removeView(textView);
+        });
+        return textView;
     }
 }

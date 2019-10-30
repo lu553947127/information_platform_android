@@ -1,8 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+    android:orientation="vertical"
+    android:id="@+id/ll_admin_manage_screen"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/circular_background_white_5"
+            android:drawableRight="@drawable/icon_admin_screen_delete"
+            android:drawablePadding="6dp"
+            android:padding="6dp"
+            android:singleLine="true"
+            android:textColor="@color/color_888888"
+            android:textSize="12sp"
+            android:text="公路桥梁"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/circular_background_white_5"
+            android:drawableRight="@drawable/icon_admin_screen_delete"
+            android:layout_marginLeft="17dp"
+            android:drawablePadding="6dp"
+            android:padding="6dp"
+            android:singleLine="true"
+            android:textColor="@color/color_888888"
+            android:textSize="12sp"
+            android:text="公路桥梁"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/circular_background_white_5"
+            android:drawableRight="@drawable/icon_admin_screen_delete"
+            android:layout_marginLeft="17dp"
+            android:drawablePadding="6dp"
+            android:padding="6dp"
+            android:singleLine="true"
+            android:textColor="@color/color_888888"
+            android:textSize="12sp"
+            android:text="公路桥梁"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/circular_background_white_5"
+            android:drawableRight="@drawable/icon_admin_screen_delete"
+            android:layout_marginLeft="17dp"
+            android:drawablePadding="6dp"
+            android:padding="6dp"
+            android:singleLine="true"
+            android:textColor="@color/color_888888"
+            android:textSize="12sp"
+            android:text="公路桥梁"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/circular_background_white_5"
+            android:drawableRight="@drawable/icon_admin_screen_delete"
+            android:drawablePadding="6dp"
+            android:padding="6dp"
+            android:singleLine="true"
+            android:textColor="@color/color_888888"
+            android:textSize="12sp"
+            android:text="公路桥梁"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/circular_background_white_5"
+            android:drawableRight="@drawable/icon_admin_screen_delete"
+            android:layout_marginLeft="17dp"
+            android:drawablePadding="6dp"
+            android:padding="6dp"
+            android:singleLine="true"
+            android:textColor="@color/color_888888"
+            android:textSize="12sp"
+            android:text="公路桥梁"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="17dp"
+            android:drawableLeft="@drawable/icon_admin_reset"
+            android:drawablePadding="6dp"
+            android:textColor="@color/color_888888"
+            android:textSize="12sp"
+            android:text="重置"/>
+
+    </LinearLayout>
 
 </LinearLayout>

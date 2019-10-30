@@ -26,7 +26,7 @@
             android:paddingRight="12dp"
             android:layout_margin="16dp"
             style="@style/MessageHint"
-            android:inputType="text"
+            android:imeOptions="actionSearch"
             android:hint="请输入子公司名称"
             app:x_disableEmoji="false"
             tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry" />
@@ -118,7 +118,6 @@
                     android:layout_marginTop="10dp"
                     android:paddingLeft="20dp"
                     android:background="@color/colorFFF"
-                    android:overScrollMode="never"
                     android:nestedScrollingEnabled="false"
                     tools:ignore="UnusedAttribute" />
 
