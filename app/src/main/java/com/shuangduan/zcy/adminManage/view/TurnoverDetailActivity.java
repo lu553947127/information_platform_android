@@ -1,10 +1,17 @@
 package com.shuangduan.zcy.adminManage.view;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
+import androidx.appcompat.widget.AppCompatTextView;
+import androidx.appcompat.widget.Toolbar;
+
+import com.blankj.utilcode.util.BarUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
+
+import butterknife.BindView;
 
 /**
  * @ProjectName: information_platform_android
@@ -19,6 +26,13 @@ import com.shuangduan.zcy.base.BaseActivity;
  * @Version: 1.0
  */
 public class TurnoverDetailActivity extends BaseActivity {
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.tv_bar_title)
+    AppCompatTextView tvBarTitle;
+
+    private int constructionId;
+
     @Override
     protected int initLayoutRes() {
         return R.layout.activity_turnover_detail;
@@ -29,8 +43,13 @@ public class TurnoverDetailActivity extends BaseActivity {
         return false;
     }
 
+    @SuppressLint("NewApi")
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
-        int construction_id = getIntent().getIntExtra(CustomConfig.CONSTRUCTION_ID,0);
+        BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
+        tvBarTitle.setText(R.string.admin_turnover_material_details);
+
+        constructionId = getIntent().getIntExtra(CustomConfig.CONSTRUCTION_ID, 0);
+
     }
 }

@@ -352,6 +352,7 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
             bundle.putInt(CustomConfig.MATERIAL_ID, material_id);
             bundle.putInt(CustomConfig.SUPPLIER_ID, supplier_id);
             bundle.putInt(CustomConfig.IS_SHELF, materialDetail.getIsShelf());
+            bundle.putInt(CustomConfig.METHOD_TYPE, materialDetail.getMethod());
             DataHolder.getInstance().setData("list", list);
             ActivityUtils.startActivity(bundle, DepositingPlaceActivity.class);
         });

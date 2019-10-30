@@ -112,6 +112,8 @@ public class MaterialDetailActivity extends BaseActivity {
     private List<String> pics;
     int material_id, supplier_id;
 
+    private MaterialDetailBean materialDetail;
+
     @Override
     protected int initLayoutRes() {
         return R.layout.activity_material_detail;
@@ -133,6 +135,7 @@ public class MaterialDetailActivity extends BaseActivity {
         materialDetailVm.id = getIntent().getIntExtra(CustomConfig.MATERIAL_ID, 0);
         materialDetailVm.detailLiveData.observe(this, materialDetailBean -> {
             if (materialDetailBean == null) return;
+            this.materialDetail = materialDetailBean;
             pics = new ArrayList<>();
             ArrayList<String> titles = new ArrayList<>();
             for (MaterialDetailBean.ImagesBean bean : materialDetailBean.getImages()) {
@@ -271,6 +274,7 @@ public class MaterialDetailActivity extends BaseActivity {
             case R.id.tv_address_list:
                 bundle.putInt(CustomConfig.MATERIAL_ID, material_id);
                 bundle.putInt(CustomConfig.SUPPLIER_ID, supplier_id);
+                bundle.putInt(CustomConfig.METHOD_TYPE, materialDetail.getMethod());
                 ActivityUtils.startActivity(bundle, DepositingPlaceActivity.class);
                 break;
             case R.id.ll_collect:

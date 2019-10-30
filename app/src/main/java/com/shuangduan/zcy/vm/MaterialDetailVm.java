@@ -88,8 +88,8 @@ public class MaterialDetailVm extends BaseViewModel {
         new MaterialRepository().equipmentCancelCollection(collectLiveData, pageStateLiveData, userId, id);
     }
 
-    public void getAddressList(int isShelf) {
-        new MaterialRepository().getAddress(depositingPlaceBeanMutableLiveData, pageStateLiveData, userId, id, supplier_id, isShelf);
+    public void getAddressList(int isShelf,int method) {
+        new MaterialRepository().getAddress(depositingPlaceBeanMutableLiveData, pageStateLiveData, userId, id, supplier_id, isShelf,method);
     }
 
     public void getAddMaterial(int material_id, BigInteger num, int day, int type) {

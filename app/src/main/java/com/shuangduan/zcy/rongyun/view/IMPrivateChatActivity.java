@@ -273,7 +273,6 @@ public class IMPrivateChatActivity extends BaseActivity implements RongIM.Conver
                     ActivityUtils.startActivity(bundle, TransRecordDetailActivity.class); //交易记录详情
                     break;
                 case 24:// 物资订单状态有更新
-
                     //TODO 此处需要进行修改 物资订单有两种 周转材料  和 设备物资
                     bundle.putInt(CustomConfig.ORDER_ID, extraBean.data.orderId);
                     ActivityUtils.startActivity(bundle, MaterialOrderDetailActivity.class);//物资预定详情

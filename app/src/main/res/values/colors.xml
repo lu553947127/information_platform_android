@@ -72,4 +72,13 @@
     <color name="background">#FFFFFF</color>
     <color name="split_line">#00000000</color>
 
+
+    <!--  后台管理Color  -->
+    <color name="color_303741">#303741</color>
+    <color name="color_F6F7FB">#F6F7FB</color>
+    <color name="color_717986">#717986</color>
+    <color name="color_EAE9FE">#EAE9FE</color>
+    <color name="color_746DFE">#746DFE</color>
+
+
 </resources>

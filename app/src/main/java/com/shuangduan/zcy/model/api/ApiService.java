@@ -1292,7 +1292,8 @@ public interface ApiService {
             @Field("user_id") int user_id,
             @Field("material_id") int material_id,
             @Field("supplier_id") int supplier_id,
-            @Field("is_shelf") int isShelf
+            @Field("is_shelf") int isShelf,
+            @Field("method") int method
     );
 
     //基建物资---周转材料收藏列表
@@ -1408,6 +1409,7 @@ public interface ApiService {
             @Field("user_id") int userId,
             @Field("order_id") int orderId
     );
+
     //基建物资---设备物资预定订单删除
     @FormUrlEncoded
     @POST("api/Equipment/close")

@@ -110,7 +110,7 @@ public class DepositingPlaceActivity extends BaseActivity {
                     });
                 }
         );
-        materialDetailVm.getAddressList(getIntent().getIntExtra(CustomConfig.IS_SHELF, 0));
+        materialDetailVm.getAddressList(getIntent().getIntExtra(CustomConfig.IS_SHELF, 0), getIntent().getIntExtra(CustomConfig.METHOD_TYPE, 0));
     }
 
     @OnClick({R.id.iv_bar_back})
