@@ -78,12 +78,12 @@ public class MineEquipmentFragment extends BaseLazyFragment implements EmptyView
             MaterialOrderBean.ListBean listBean = adapter.getData().get(position);
             Bundle bundle = new Bundle();
             bundle.putInt(CustomConfig.ORDER_ID, listBean.orderId);
+            bundle.putInt(CustomConfig.MATERIALS_TYPE,CustomConfig.EQUIPMENT);
             ActivityUtils.startActivity(bundle, MaterialOrderDetailActivity.class);
-
         });
 
         materialVm = ViewModelProviders.of(mActivity).get(MaterialVm.class);
-        materialVm.orderLiveData.observe(this, materialBean -> {
+        materialVm.equipmentOrderLiveData.observe(this, materialBean -> {
 
             isInited = true;
             if (materialBean.getPage() == 1) {

@@ -42,6 +42,7 @@ public class MaterialCollectFragment extends BaseLazyFragment implements EmptyVi
     @BindView(R.id.refresh)
     SmartRefreshLayout refresh;
     private MineCollectionVm mineCollectionVm;
+    private int type;
 
     public static MaterialCollectFragment newInstance(int type) {
 
@@ -64,17 +65,18 @@ public class MaterialCollectFragment extends BaseLazyFragment implements EmptyVi
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
+        type = getArguments().getInt(CustomConfig.MATERIALS_TYPE, 0);
+
         View emptyView = createEmptyView(R.drawable.icon_empty_project, R.string.empty_material_collect_info, R.string.to_look_over, this);
         rv.setLayoutManager(new LinearLayoutManager(mContext));
         rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
-        MaterialCollectAdapter materialAdapter = new MaterialCollectAdapter(R.layout.item_material_list, null);
+        MaterialCollectAdapter materialAdapter = new MaterialCollectAdapter(R.layout.item_material_list, null,type);
         materialAdapter.setEmptyView(R.layout.layout_loading, rv);
         rv.setAdapter(materialAdapter);
         materialAdapter.setOnItemClickListener((adapter, view, position) -> {
             MaterialCollectBean.ListBean listBean = materialAdapter.getData().get(position);
             Bundle bundle = new Bundle();
             bundle.putInt(CustomConfig.MATERIAL_ID, listBean.id);
-            int type = getArguments().getInt(CustomConfig.MATERIALS_TYPE, 0);
             if (type == 1) {
                 ActivityUtils.startActivity(bundle, MaterialDetailActivity.class);
             } else {
@@ -97,19 +99,32 @@ public class MaterialCollectFragment extends BaseLazyFragment implements EmptyVi
         refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                mineCollectionVm.moreMaterialCollection();
+                if (type == CustomConfig.FRP) {
+                    mineCollectionVm.moreMaterialCollection();
+                } else if (type == CustomConfig.EQUIPMENT) {
+                    mineCollectionVm.moreMineEquipmentCollection();
+                }
+
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                mineCollectionVm.materialCollection();
+                if (type == CustomConfig.FRP) {
+                    mineCollectionVm.materialCollection();
+                } else if (type == CustomConfig.EQUIPMENT) {
+                    mineCollectionVm.mineEquipmentCollection();
+                }
             }
         });
     }
 
     @Override
     protected void initDataFromService() {
-        mineCollectionVm.materialCollection();
+        if (type == CustomConfig.FRP) {
+            mineCollectionVm.materialCollection();
+        } else if (type == CustomConfig.EQUIPMENT) {
+            mineCollectionVm.mineEquipmentCollection();
+        }
     }
 
     private void setNoMore(int page, int count) {

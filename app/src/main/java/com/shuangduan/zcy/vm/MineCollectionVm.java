@@ -33,6 +33,7 @@ public class MineCollectionVm extends BaseViewModel {
     public int projectPage;
     public int recruitPage;
     public int materialPage;
+    public int equipmentPage;
 
     public MineCollectionVm() {
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
@@ -66,7 +67,7 @@ public class MineCollectionVm extends BaseViewModel {
         new UserRepository().recruitCollection(recruitCollectLiveData, pageStateLiveData, userId, recruitPage);
     }
 
-
+    //我的收藏-周转材料
     public void materialCollection() {
         materialPage = 1;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
@@ -77,5 +78,18 @@ public class MineCollectionVm extends BaseViewModel {
         materialPage++;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
         new UserRepository().materialCollection(materialCollectLiveData, pageStateLiveData, userId, materialPage);
+    }
+
+    //我的收藏-设备物资
+    public void mineEquipmentCollection() {
+        equipmentPage = 1;
+        pageStateLiveData.postValue(PageState.PAGE_REFRESH);
+        new UserRepository().mineEquipmentCollection(materialCollectLiveData, pageStateLiveData, userId, equipmentPage);
+    }
+
+    public void moreMineEquipmentCollection() {
+        equipmentPage++;
+        pageStateLiveData.postValue(PageState.PAGE_REFRESH);
+        new UserRepository().mineEquipmentCollection(materialCollectLiveData, pageStateLiveData, userId, equipmentPage);
     }
 }

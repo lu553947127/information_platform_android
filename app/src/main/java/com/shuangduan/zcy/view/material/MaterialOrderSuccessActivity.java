@@ -51,17 +51,22 @@ public class MaterialOrderSuccessActivity extends BaseActivity {
         tvBarTitle.setText("确认预订单");
     }
 
-    @OnClick({R.id.iv_bar_back,R.id.tv_back, R.id.tv_done})
-    void onClick(View view){
-        switch (view.getId()){
+    @OnClick({R.id.iv_bar_back, R.id.tv_back, R.id.tv_done})
+    void onClick(View view) {
+        switch (view.getId()) {
             case R.id.iv_bar_back:
             case R.id.tv_back:
                 finish();
                 break;
             case R.id.tv_done:
+                int type = getIntent().getIntExtra(CustomConfig.MATERIALS_TYPE, 0);
+
+                if(type==0) return;
                 Bundle bundle = new Bundle();
                 bundle.putInt(CustomConfig.ORDER_ID, Integer.valueOf(Objects.requireNonNull(getIntent().getStringExtra("order_id"))));
+                bundle.putInt(CustomConfig.MATERIALS_TYPE,type);
                 ActivityUtils.startActivity(bundle, MaterialOrderDetailActivity.class);
+
                 finish();
                 break;
         }

@@ -118,13 +118,23 @@ public class MaterialRepository extends BaseRepository {
         request(apiService.getEquipmentOrder(userId, page, inside)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
-    //基建物资预定订单详情
+    //基建物资---周转材料预定订单详情
     public void materialOrderDetail(MutableLiveData<MaterialOrderBean.ListBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int orderId) {
         request(apiService.materialOrderDetail(userId, orderId)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
-    //取消物资预定
+    //基建物资---设备详情预定订单详情
+    public void equipmentOrderDetail(MutableLiveData<MaterialOrderBean.ListBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int orderId) {
+        request(apiService.equipmentOrderDetail(userId, orderId)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    //基建物资---周转材料取消物资预定
     public void materialOrderCancel(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int userId, int orderId) {
         request(apiService.cancelMaterialOrder(userId, orderId)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    //基建物资---设备物资取消物资预定
+    public void cancelEquipmentOrder(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int userId, int orderId) {
+        request(apiService.cancelEquipmentOrder(userId, orderId)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 }

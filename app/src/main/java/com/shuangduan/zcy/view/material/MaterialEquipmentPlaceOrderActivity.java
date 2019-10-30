@@ -183,6 +183,7 @@ public class MaterialEquipmentPlaceOrderActivity extends BaseActivity {
         materialDetailVm.mutableLiveAddOrder.observe(this, materialAddBean -> {
             Bundle bundle = new Bundle();
             bundle.putString("order_id", materialAddBean.getOrder_id());
+            bundle.putInt(CustomConfig.MATERIALS_TYPE,CustomConfig.EQUIPMENT);
             ActivityUtils.startActivity(bundle, MaterialOrderSuccessActivity.class);
             finish();
         });

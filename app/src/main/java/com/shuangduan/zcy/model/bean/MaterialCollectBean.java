@@ -49,6 +49,7 @@ public class MaterialCollectBean {
         public String images;
         //产品名称
         public String catname;
+        public String name;
         //分类名称
         public String category;
         //名称规格型号
@@ -58,13 +59,25 @@ public class MaterialCollectBean {
         //        方式 1 出租 2 售卖
         public int method;
         //        单价
-        @SerializedName("unit_price")
-        public String guidance_price;
+        @SerializedName("guidance_price")
+        public String guidancePrice;
         //单位
         public String unit;
         //库存
         public int stock;
         //状态 1可预订 0已失效
         public int status;
+
+        //是否合作过
+        @SerializedName("is_order")
+        public int isOrder;
+
+        //浏览人数
+        @SerializedName("browse_count")
+        public String browseCount;
+
+        //地址
+        public String address;
+
     }
 }

@@ -110,19 +110,31 @@ public class MaterialDetailVm extends BaseViewModel {
     //基建物资---设备物资预定订单
     public void getAddEquipmentOrder(int materialId, String realName, String tel, String company,
                                      int province, int city, String address, String remark, int method, int day, int num, int cateId) {
-        new MaterialRepository().getAddEquipmentOrder(mutableLiveAddOrder,pageStateLiveData,userId,materialId,realName,tel,company,province,city,address,remark,method,day,num,cateId);
+        new MaterialRepository().getAddEquipmentOrder(mutableLiveAddOrder, pageStateLiveData, userId, materialId, realName, tel, company, province, city, address, remark, method, day, num, cateId);
     }
 
 
-    //物资预定详情
+    //物资预定---周转材料详情
     public void materialOrderDetail(int orderId) {
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
         new MaterialRepository().materialOrderDetail(orderDetailLiveData, pageStateLiveData, userId, orderId);
     }
 
-    //取消物资预定
+    //物资预定---设备物资详情
+    public void equipmentOrderDetail(int orderId) {
+        pageStateLiveData.postValue(PageState.PAGE_REFRESH);
+        new MaterialRepository().equipmentOrderDetail(orderDetailLiveData, pageStateLiveData, userId, orderId);
+    }
+
+    //基建物资---周转材料取消物资预定
     public void materialOrderCancel(int orderId) {
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
         new MaterialRepository().materialOrderCancel(mutableLiveDataCancel, pageStateLiveData, userId, orderId);
+    }
+
+    //基建物资---设备物质取消物质预定
+    public void cancelEquipmentOrder(int orderId) {
+        pageStateLiveData.postValue(PageState.PAGE_REFRESH);
+        new MaterialRepository().cancelEquipmentOrder(mutableLiveDataCancel, pageStateLiveData, userId, orderId);
     }
 }

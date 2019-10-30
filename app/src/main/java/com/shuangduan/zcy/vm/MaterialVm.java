@@ -33,8 +33,10 @@ public class MaterialVm extends BaseViewModel {
     public MutableLiveData<String> pageStateLiveData;
     public MutableLiveData<List<MaterialCategoryBean>> categoryFirstLiveData;
     public MutableLiveData<List<MaterialCategoryBean>> categoryLiveData;
-    //物资预定列表数据
+    //物资预定---周转材料列表数据
     public MutableLiveData<MaterialOrderBean> orderLiveData;
+    //物资预定---设备物资列表数据
+    public MutableLiveData<MaterialOrderBean> equipmentOrderLiveData;
 
     //材料列表授权组
     public AuthGroupBean authGroup;
@@ -74,6 +76,7 @@ public class MaterialVm extends BaseViewModel {
         categoryFirstLiveData = new MutableLiveData<>();
         categoryLiveData = new MutableLiveData<>();
         orderLiveData = new MutableLiveData<>();
+        equipmentOrderLiveData = new MutableLiveData<>();
 
         authGroup = new AuthGroupBean();
         categoryFirstId = 0;
@@ -171,13 +174,13 @@ public class MaterialVm extends BaseViewModel {
     public void getEquipmentOrder() {
         equipmentPage = 1;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
-        new MaterialRepository().getEquipmentOrder(orderLiveData, pageStateLiveData, userId, equipmentPage, materialFlag);
+        new MaterialRepository().getEquipmentOrder(equipmentOrderLiveData, pageStateLiveData, userId, equipmentPage, materialFlag);
     }
 
     public void getMoreEquipmentOrder() {
         equipmentPage++;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
-        new MaterialRepository().getEquipmentOrder(orderLiveData, pageStateLiveData, userId, equipmentPage, materialFlag);
+        new MaterialRepository().getEquipmentOrder(equipmentOrderLiveData, pageStateLiveData, userId, equipmentPage, materialFlag);
     }
 
 

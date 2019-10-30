@@ -253,6 +253,7 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
         materialDetailVm.mutableLiveAddOrder.observe(this, materialAddBean -> {
             Bundle bundle = new Bundle();
             bundle.putString("order_id", materialAddBean.getOrder_id());
+            bundle.putInt(CustomConfig.MATERIALS_TYPE, CustomConfig.FRP);
             ActivityUtils.startActivity(bundle, MaterialOrderSuccessActivity.class);
             finish();
         });

@@ -78,6 +78,7 @@ public class MineMaterialsFragment extends BaseLazyFragment implements EmptyView
             MaterialOrderBean.ListBean listBean = adapter.getData().get(position);
             Bundle bundle = new Bundle();
             bundle.putInt(CustomConfig.ORDER_ID, listBean.orderId);
+            bundle.putInt(CustomConfig.MATERIALS_TYPE,CustomConfig.FRP);
             ActivityUtils.startActivity(bundle, MaterialOrderDetailActivity.class);
         });
 

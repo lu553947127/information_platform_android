@@ -738,8 +738,6 @@ public interface ApiService {
     );
 
 
-
-
     @FormUrlEncoded
     @POST("api/Material/getCategory")
     Flowable<BaseListResponse<MaterialCategoryBean>> getCategory(
@@ -1262,6 +1260,7 @@ public interface ApiService {
             @Field("user_id") int user_id,
             @Field("id") int id
     );
+
     //基建物资---设备物资收藏
     @FormUrlEncoded
     @POST("api/Equipment/setCollection")
@@ -1296,10 +1295,18 @@ public interface ApiService {
             @Field("is_shelf") int isShelf
     );
 
-    //基建物资收藏列表
+    //基建物资---周转材料收藏列表
     @FormUrlEncoded
     @POST("api/Userinfo/materialCollection")
     Flowable<BaseResponse<MaterialCollectBean>> materialCollection(
+            @Field("user_id") int userId,
+            @Field("page") int page
+    );
+
+    //基建物资---设备物资收藏列表
+    @FormUrlEncoded
+    @POST("api/Userinfo/equipmentCollection")
+    Flowable<BaseResponse<MaterialCollectBean>> mineEquipmentCollection(
             @Field("user_id") int userId,
             @Field("page") int page
     );
@@ -1313,6 +1320,7 @@ public interface ApiService {
             @Field("inside") int inside
     );
 
+
     //基建物资---设备物资预定列表
     @FormUrlEncoded
     @POST("api/Equipment/myEquipment")
@@ -1323,10 +1331,18 @@ public interface ApiService {
     );
 
 
-    //基建物质预定详情
+    //基建物质---周转材料预定详情
     @FormUrlEncoded
     @POST("api/Material/myMaterialDetail")
     Flowable<BaseResponse<MaterialOrderBean.ListBean>> materialOrderDetail(
+            @Field("user_id") int userId,
+            @Field("order_id") int orderId
+    );
+
+    //基建物资---设备物资预定详情
+    @FormUrlEncoded
+    @POST("api/Equipment/myEquipmentDetail")
+    Flowable<BaseResponse<MaterialOrderBean.ListBean>> equipmentOrderDetail(
             @Field("user_id") int userId,
             @Field("order_id") int orderId
     );
@@ -1365,6 +1381,7 @@ public interface ApiService {
             @Field("remark") String remark,
             @Field("science_num_id") String science_num_id
     );
+
     //基建物资---设备物资提交预定订单
     @FormUrlEncoded
     @POST("api/Equipment/order")
@@ -1384,13 +1401,21 @@ public interface ApiService {
             @Field("cate_id") int cateId
     );
 
-    //基建物质预定订单删除
+    //基建物资---周转材料预定订单删除
     @FormUrlEncoded
     @POST("api/Material/close")
     Flowable<BaseResponse> cancelMaterialOrder(
             @Field("user_id") int userId,
             @Field("order_id") int orderId
     );
+    //基建物资---设备物资预定订单删除
+    @FormUrlEncoded
+    @POST("api/Equipment/close")
+    Flowable<BaseResponse> cancelEquipmentOrder(
+            @Field("user_id") int userId,
+            @Field("order_id") int orderId
+    );
+
 
     //工程信息分享
     @FormUrlEncoded

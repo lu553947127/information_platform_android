@@ -85,6 +85,7 @@ public class MaterialOrderDetailActivity extends BaseActivity {
 
     private MaterialDetailVm materialVm;
     private int orderId;
+    private int type;
 
     @Override
     protected int initLayoutRes() {
@@ -158,7 +159,13 @@ public class MaterialOrderDetailActivity extends BaseActivity {
             tvCancel.setEnabled(false);
         });
 
-        materialVm.materialOrderDetail(orderId);
+
+        type = getIntent().getIntExtra(CustomConfig.MATERIALS_TYPE,0);
+        if(type ==CustomConfig.FRP){
+            materialVm.materialOrderDetail(orderId);
+        }else if(type == CustomConfig.EQUIPMENT){
+            materialVm.equipmentOrderDetail(orderId);
+        }
     }
 
     @OnClick({R.id.iv_bar_back, R.id.tv_replication, R.id.tv_cancel})
@@ -192,9 +199,12 @@ public class MaterialOrderDetailActivity extends BaseActivity {
     //取消预定订单
     private void cancelOrder() {
         MaterialOrderBean.ListBean order = materialVm.orderDetailLiveData.getValue();
-        materialVm.materialOrderCancel(order.id);
-        materialVm.detailLiveData.observe(this, item -> {
-            materialVm.materialOrderCancel(orderId);
-        });
+
+        if(type==CustomConfig.FRP){
+            materialVm.materialOrderCancel(order.id);
+        }else if(type == CustomConfig.EQUIPMENT){
+            materialVm.cancelEquipmentOrder(order.id);
+        }
+
     }
 }
