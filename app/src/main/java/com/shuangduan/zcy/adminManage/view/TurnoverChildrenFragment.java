@@ -27,6 +27,7 @@ import com.shuangduan.zcy.adminManage.adapter.SelectorAreaSecondAdapter;
 import com.shuangduan.zcy.adminManage.adapter.TurnoverAdapter;
 import com.shuangduan.zcy.adminManage.adapter.TurnoverCompanyAdapter;
 import com.shuangduan.zcy.adminManage.adapter.UseStatueAdapter;
+import com.shuangduan.zcy.adminManage.bean.TurnoverBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverCompanyBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverTypeBean;
 import com.shuangduan.zcy.adminManage.event.TurnoverEvent;
@@ -125,18 +126,11 @@ public class TurnoverChildrenFragment extends BaseLazyFragment {
             }
             setNoMore(turnoverBean.getPage(), turnoverBean.getCount());
         });
-        turnoverAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-            if (SPUtils.getInstance().getInt(CustomConfig.CONSTRUCTION_DETAIL,0)==1){
-
-            }
-        });
         turnoverAdapter.setOnItemClickListener((adapter, view, position) -> {
-            switch (view.getId()) {
-                case R.id.tv_edit://编辑
-                    break;
-                case R.id.tv_delete://删除
-                    break;
-            }
+            TurnoverBean.ListBean listBean = turnoverAdapter.getData().get(position);
+            Bundle bundle = new Bundle();
+            bundle.putInt(CustomConfig.CONSTRUCTION_ID,listBean.getId());
+            ActivityUtils.startActivity(bundle,TurnoverDetailActivity.class);
         });
 
         //获取子公司列表数据

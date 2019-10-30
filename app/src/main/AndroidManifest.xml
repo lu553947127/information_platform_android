@@ -336,6 +336,8 @@
         <activity android:name="com.shuangduan.zcy.adminManage.view.AdminManageActivity" android:theme="@style/BaseAppTheme" />
         <!-- 选择子公司/周转材料/设备 列表-->
         <activity android:name="com.shuangduan.zcy.adminManage.view.SelectTypeActivity" android:theme="@style/BaseAppTheme" />
+        <!-- 周转材料详情-->
+        <activity android:name="com.shuangduan.zcy.adminManage.view.TurnoverDetailActivity" android:theme="@style/BaseAppTheme" />
         <!--高德地图appKey-->
         <meta-data
             android:name="com.amap.api.v2.apikey"

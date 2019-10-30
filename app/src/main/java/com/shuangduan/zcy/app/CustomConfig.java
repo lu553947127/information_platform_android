@@ -171,5 +171,7 @@ public class CustomConfig {
     public static String ADMIN_MANAGE_TYPE = "ADMIN_MANAGE_TYPE";
     public static int ADMIN_MANAGE_CONSTRUCTION = 1;//选择周转材料
     public static int ADMIN_MANAGE_EQIPMENT = 2;//选择设备
+
+    public static String CONSTRUCTION_ID = "CONSTRUCTION_ID";
     //-------------------------------------------------------------------------------------------------------
 }

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.BarUtils;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adminManage.adapter.TurnoverFirstAdapter;
 import com.shuangduan.zcy.adminManage.adapter.TurnoverHistoryAdapter;
@@ -142,6 +143,11 @@ public class SelectTypeActivity extends BaseActivity {
         rvAll.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
         TurnoverSecondAdapter turnoverSecondAdapter = new TurnoverSecondAdapter(R.layout.adapter_turnover_second, null);
         rvAll.setAdapter(turnoverSecondAdapter);
+        turnoverSecondAdapter.setOnItemClickListener((adapter, view, position) -> {
+            TurnoverCategoryBean listBean = turnoverSecondAdapter.getData().get(position);
+            EventBus.getDefault().post(new TurnoverEvent(listBean.getId(),listBean.getCatname()));
+            finish();
+        });
 
         turnoverVm.turnoverSecondData.observe(this,turnoverCategoryBeans -> {
             turnoverSecondAdapter.setNewData(turnoverCategoryBeans);

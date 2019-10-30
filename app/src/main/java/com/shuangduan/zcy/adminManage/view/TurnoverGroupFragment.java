@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -25,6 +26,7 @@ import com.shuangduan.zcy.adminManage.adapter.SelectorAreaFirstAdapter;
 import com.shuangduan.zcy.adminManage.adapter.SelectorAreaSecondAdapter;
 import com.shuangduan.zcy.adminManage.adapter.TurnoverAdapter;
 import com.shuangduan.zcy.adminManage.adapter.UseStatueAdapter;
+import com.shuangduan.zcy.adminManage.bean.TurnoverBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverTypeBean;
 import com.shuangduan.zcy.adminManage.vm.TurnoverVm;
 import com.shuangduan.zcy.app.CustomConfig;
@@ -117,12 +119,15 @@ public class TurnoverGroupFragment extends BaseLazyFragment {
             }
             setNoMore(turnoverBean.getPage(), turnoverBean.getCount());
         });
-        turnoverAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+        turnoverAdapter.setOnItemClickListener((adapter, view, position) -> {
+            TurnoverBean.ListBean listBean = turnoverAdapter.getData().get(position);
             if (SPUtils.getInstance().getInt(CustomConfig.CONSTRUCTION_DETAIL,0)==1){
-
+                Bundle bundle = new Bundle();
+                bundle.putInt(CustomConfig.CONSTRUCTION_ID,listBean.getId());
+                ActivityUtils.startActivity(bundle,TurnoverDetailActivity.class);
             }
         });
-        turnoverAdapter.setOnItemClickListener((adapter, view, position) -> {
+        turnoverAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             switch (view.getId()) {
                 case R.id.tv_edit://编辑
                     break;
@@ -213,8 +218,11 @@ public class TurnoverGroupFragment extends BaseLazyFragment {
     @SuppressLint("NewApi")
     @OnClick({R.id.tv_name,R.id.tv_grounding,R.id.tv_use_statue,R.id.tv_depositing_place})
     void onClick(View view){
+        Bundle bundle = new Bundle();
         switch (view.getId()) {
             case R.id.tv_name://选择材料名称
+                bundle.putInt(CustomConfig.ADMIN_MANAGE_TYPE,CustomConfig.ADMIN_MANAGE_CONSTRUCTION);
+                ActivityUtils.startActivity(bundle,SelectTypeActivity.class);
                 break;
             case R.id.tv_grounding://是否上架
                 getBottomSheetDialog(R.layout.dialog_is_grounding,"grounding");
