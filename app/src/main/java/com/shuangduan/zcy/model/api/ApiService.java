@@ -2,6 +2,7 @@ package com.shuangduan.zcy.model.api;
 
 import com.shuangduan.zcy.adminManage.bean.TurnoverBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverCompanyBean;
+import com.shuangduan.zcy.adminManage.bean.TurnoverCategoryBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverHistoryBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverTypeBean;
 import com.shuangduan.zcy.base.TrackDateilBean;
@@ -1493,5 +1494,21 @@ public interface ApiService {
     @POST("api/Manage/getSupplierInfo")
     Flowable<BaseListResponse<TurnoverCompanyBean>> getSupplierInfo(
             @Field("user_id") int userId
+    );
+
+    //后台管理 --- 周转材料名称类别一级
+    @FormUrlEncoded
+    @POST("api/Manage/constructionCategoryParent")
+    Flowable<BaseListResponse<TurnoverCategoryBean>> constructionCategoryParent(
+            @Field("user_id") int userId
+    );
+
+    //后台管理 --- 周转材料名称类别二级
+    @FormUrlEncoded
+    @POST("api/Manage/constructionCategoryList")
+    Flowable<BaseListResponse<TurnoverCategoryBean>> constructionCategoryList(
+            @Field("user_id") int userId,
+            @Field("title") String title,
+            @Field("id") int id
     );
 }

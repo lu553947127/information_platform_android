@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.adminManage.bean.TurnoverBean;
+import com.shuangduan.zcy.adminManage.bean.TurnoverCategoryBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverCompanyBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverHistoryBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverTypeBean;
@@ -38,6 +39,8 @@ public class TurnoverVm extends BaseViewModel{
     public MutableLiveData<TurnoverTypeBean> turnoverTypeData;
     public MutableLiveData<List<TurnoverHistoryBean>> turnoverHistoryData;
     public MutableLiveData<List<TurnoverCompanyBean>> turnoverCompanyData;
+    public MutableLiveData<List<TurnoverCategoryBean>> turnoverFirstData;
+    public MutableLiveData<List<TurnoverCategoryBean>> turnoverSecondData;
     public MutableLiveData<String> pageStateLiveData;
 
     public TurnoverVm(){
@@ -46,6 +49,8 @@ public class TurnoverVm extends BaseViewModel{
         turnoverTypeData = new MutableLiveData<>();
         turnoverHistoryData = new MutableLiveData<>();
         turnoverCompanyData = new MutableLiveData<>();
+        turnoverFirstData = new MutableLiveData<>();
+        turnoverSecondData = new MutableLiveData<>();
         pageStateLiveData = new MutableLiveData<>();
         is_shelf = 0;
         use_status = 0;
@@ -78,5 +83,15 @@ public class TurnoverVm extends BaseViewModel{
     //后台管理 --- 子公司列表
     public void getSupplierInfo(){
         new TurnoverRepository().getSupplierInfo(turnoverCompanyData, pageStateLiveData, userId);
+    }
+
+    //后台管理 --- 周转材料名称类别一级
+    public void constructionCategoryParent(){
+        new TurnoverRepository().constructionCategoryParent(turnoverFirstData, pageStateLiveData, userId);
+    }
+
+    //后台管理 --- 周转材料名称类别二级
+    public void constructionCategoryList(String title,int id){
+        new TurnoverRepository().constructionCategoryList(turnoverSecondData, pageStateLiveData, userId,title,id);
     }
 }

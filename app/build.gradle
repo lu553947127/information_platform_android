@@ -81,6 +81,7 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+
     //noinspection GradleDependency
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
@@ -88,103 +89,134 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
-    /** 网络架包**/
+    /** 网络架包 **/
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
     //noinspection GradleDependency
     implementation 'androidx.recyclerview:recyclerview:1.1.0-beta01'
     implementation 'com.android.support:design:28.0.0'
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
+
     //noinspection GradleDependency
     implementation 'io.reactivex.rxjava2:rxjava:2.1.12'
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
+
     //Gson解析
+
     //noinspection GradleDependency
     implementation 'com.google.code.gson:gson:2.7'
+
     //多功能网络请求框架(方便上传附件)
     implementation 'com.lzy.net:okgo:3.0.4'
+
     //解决超过65546代码的问题
     implementation 'com.android.support:multidex:1.0.3'
+
     //下拉刷新 上拉加载
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-andx-15'
     implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-andx-15'
     implementation 'android.arch.lifecycle:extensions:1.1.1'
+
     //noinspection GradleDependency
     implementation 'androidx.appcompat:appcompat:1.1.0-alpha04'
+
     //图片加载——Glide
+
     //noinspection GradleDependency
     implementation 'com.github.bumptech.glide:glide:4.8.0'
     annotationProcessor "com.github.bumptech.glide:compiler:4.8.0"
     implementation 'com.blankj:utilcode:1.23.6'
     implementation 'com.github.chrisbanes:PhotoView:2.1.3'
     implementation 'org.greenrobot:eventbus:3.1.1'
+
     //知乎图片选择器
     implementation 'com.zhihu.android:matisse:0.5.2-beta2'
+
     //权限工具
     implementation 'com.github.tbruyelle:rxpermissions:0.10.2'
+
     //鲁班压缩
     implementation 'top.zibin:Luban:1.1.8'
     implementation 'com.kingja.loadsir:loadsir:1.3.6'
+
     //黄油刀
     implementation 'com.jakewharton:butterknife:10.1.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
     implementation 'com.github.tbruyelle:rxpermissions:0.10.2'
     implementation 'com.google.android:flexbox:1.1.0'
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.45-androidx'
+
     //轮播图
     implementation 'com.youth.banner:banner:1.4.10'
+
     //高德地图
+
     //noinspection GradleDependency
     implementation 'com.amap.api:3dmap:latest.integration'
     implementation 'com.amap.api:location:latest.integration'
+
     //noinspection GradleDependency
     implementation 'com.amap.api:search:latest.integration'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
     //支付宝支付
     implementation(name: 'alipaySdk-15.6.5-20190718211159-noUtdid', ext: 'aar')
+
     //微信支付
+
     //noinspection GradleDynamicVersion
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
+
     //带侧滑删除的列表
     implementation 'com.yanzhenjie.recyclerview:x:1.3.2'
+
     //app版本更新 后台通知下载
     implementation 'com.king.app:app-updater:1.0.4'
+
     //仿微信小视频拍照
     implementation 'cjt.library.wheel:camera:1.1.9'
+
     //支持手势放大、下拉关闭 查看图片框架
     implementation 'com.github.SherlockGougou:BigImageViewPager:v4_4.0.2'
+
     //带右下角计数的输入框
     implementation 'com.github.FJ917:FJEditTextCount:v1.0.3'
+
     //RecyclerView 流式布局
     implementation 'com.github.1002326270xc:LayoutManager-FlowLayout:v1.7'
+
     //极光推送
     implementation 'cn.jiguang.sdk:jpush:3.3.4'
+
     //noinspection GradleDependency
     api 'com.android.support:support-v4:26.0.0'
+
     //极光推送
     api 'cn.jiguang.sdk:jcore:2.1.2'
+
     //融云即时通讯
     api 'cn.rongcloud.sdk:im_kit:2.9.22'
+
     //im_kit必须依赖im_lib，所以需要加入对应依赖
     api 'cn.rongcloud.sdk:im_lib:2.9.22'
+
     //华为推送模块
     api 'com.huawei.android.hms:base:2.6.1.301'
     api 'com.huawei.android.hms:push:2.6.1.301'
 
-//    卡片View
-    implementation 'com.android.support:appcompat-v7:28.0.0'
-    implementation 'com.android.support:cardview-v7:28.0.0'
+    /** 本地架包 **/
 
-
-    /** 本地架包**/
     //qq和空间分享
     //noinspection GradlePath
     implementation files('libs\\open_sdk_r6019_lite.jar')
+
     //小米厂商通道
     //noinspection GradlePath
     implementation files('libs\\MiPush_SDK_Client_3_6_19.jar')
-//    oppo推送
+
+    //    oppo推送
     //noinspection GradlePath
     implementation files('libs\\com.coloros.mcssdk.jar')
 

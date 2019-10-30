@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.SPUtils;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
@@ -111,7 +110,7 @@ public class TurnoverChildrenFragment extends BaseLazyFragment {
         }
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         turnoverAdapter = new TurnoverAdapter(R.layout.item_turnover, null,SPUtils.getInstance().getInt(CustomConfig.CONSTRUCTION_EDIT,0)
-                , SPUtils.getInstance().getInt(CustomConfig.CONSTRUCTION_DELETE,0),0);
+                , SPUtils.getInstance().getInt(CustomConfig.CONSTRUCTION_DELETE,0),1);
         recyclerView.setAdapter(turnoverAdapter);
 
         turnoverVm = ViewModelProviders.of(this).get(TurnoverVm.class);

@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.shuangduan.zcy.adminManage.bean.TurnoverBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverCompanyBean;
+import com.shuangduan.zcy.adminManage.bean.TurnoverCategoryBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverHistoryBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverTypeBean;
 import com.shuangduan.zcy.model.api.repository.BaseRepository;
@@ -42,5 +43,15 @@ public class TurnoverRepository extends BaseRepository {
     //后台管理 --- 子公司列表
     public void getSupplierInfo(MutableLiveData<List<TurnoverCompanyBean>> liveData, MutableLiveData<String> pageState, int user_id){
         request(apiService.getSupplierInfo(user_id)).setDataList(liveData).setPageState(pageState).send();
+    }
+
+    //后台管理 --- 周转材料名称类别一级
+    public void constructionCategoryParent(MutableLiveData<List<TurnoverCategoryBean>> liveData, MutableLiveData<String> pageState, int user_id){
+        request(apiService.constructionCategoryParent(user_id)).setDataList(liveData).setPageState(pageState).send();
+    }
+
+    //后台管理 --- 周转材料名称类别二级
+    public void constructionCategoryList(MutableLiveData<List<TurnoverCategoryBean>> liveData, MutableLiveData<String> pageState, int user_id,String title,int id){
+        request(apiService.constructionCategoryList(user_id,title,id)).setDataList(liveData).setPageState(pageState).send();
     }
 }

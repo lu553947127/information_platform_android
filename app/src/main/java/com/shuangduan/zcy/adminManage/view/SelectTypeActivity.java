@@ -8,21 +8,27 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.BarUtils;
 import com.shuangduan.zcy.R;
+import com.shuangduan.zcy.adminManage.adapter.TurnoverFirstAdapter;
 import com.shuangduan.zcy.adminManage.adapter.TurnoverHistoryAdapter;
+import com.shuangduan.zcy.adminManage.adapter.TurnoverSecondAdapter;
+import com.shuangduan.zcy.adminManage.bean.TurnoverCategoryBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverHistoryBean;
 import com.shuangduan.zcy.adminManage.event.TurnoverEvent;
 import com.shuangduan.zcy.adminManage.vm.TurnoverVm;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
+import com.shuangduan.zcy.weight.DividerItemDecoration;
 import com.shuangduan.zcy.weight.XEditText;
 
 import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
+
 import static com.shuangduan.zcy.app.CustomConfig.ADMIN_MANAGE_CONSTRUCTION;
 import static com.shuangduan.zcy.app.CustomConfig.ADMIN_MANAGE_EQIPMENT;
 
@@ -90,6 +96,8 @@ public class SelectTypeActivity extends BaseActivity {
             tvAll.setText("全部材料");
             llType.setVisibility(View.VISIBLE);
             turnoverVm.constructionCategoryHistory();
+            turnoverVm.constructionCategoryParent();
+            turnoverVm.constructionCategoryList("",0);
         }else if (type==ADMIN_MANAGE_EQIPMENT){
             tvBarTitle.setText("选择子设备");
             tvHistory.setText("历史浏览设备");
@@ -116,5 +124,28 @@ public class SelectTypeActivity extends BaseActivity {
                 llHistory.setVisibility(View.GONE);
             }
         });
+
+        rvType.setLayoutManager(new GridLayoutManager(this, 4));
+        TurnoverFirstAdapter turnoverFirstAdapter = new TurnoverFirstAdapter(R.layout.adapter_turnover_first, null);
+        rvType.setAdapter(turnoverFirstAdapter);
+        turnoverFirstAdapter.setOnItemClickListener((adapter, view, position) -> {
+            TurnoverCategoryBean listBean = turnoverFirstAdapter.getData().get(position);
+            turnoverVm.constructionCategoryList("",listBean.getId());
+            tvAll.setText(listBean.getCatname());
+        });
+
+        turnoverVm.turnoverFirstData.observe(this,turnoverCategoryBeans -> {
+            turnoverFirstAdapter.setNewData(turnoverCategoryBeans);
+        });
+
+        rvAll.setLayoutManager(new LinearLayoutManager(this));
+        rvAll.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
+        TurnoverSecondAdapter turnoverSecondAdapter = new TurnoverSecondAdapter(R.layout.adapter_turnover_second, null);
+        rvAll.setAdapter(turnoverSecondAdapter);
+
+        turnoverVm.turnoverSecondData.observe(this,turnoverCategoryBeans -> {
+            turnoverSecondAdapter.setNewData(turnoverCategoryBeans);
+        });
+
     }
 }

@@ -3,6 +3,7 @@ package com.shuangduan.zcy.utils.image;
 import android.content.Context;
 import android.widget.ImageView;
 
+import com.shuangduan.zcy.R;
 import com.youth.banner.loader.ImageLoader;
 
 /**
@@ -32,6 +33,8 @@ public class GlideImageLoader extends ImageLoader {
             com.shuangduan.zcy.utils.image.ImageLoader.load(context, new ImageConfig.Builder()
                     .url((String) path)
                     .imageView(imageView)
+                    .errorPic(R.drawable.no_banner)
+                    .placeholder(R.drawable.no_banner)
                     .build());
         }
     }
