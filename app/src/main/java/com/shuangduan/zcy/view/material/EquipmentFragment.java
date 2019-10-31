@@ -77,6 +77,7 @@ public class EquipmentFragment extends BaseLazyFragment implements EmptyViewFact
             MaterialBean.ListBean listBean = adapter.getData().get(position);
             Bundle bundle = new Bundle();
             bundle.putInt(CustomConfig.MATERIAL_ID, listBean.getId());
+
             ActivityUtils.startActivity(bundle, MaterialEquipmentDetailActivity.class);
         });
 

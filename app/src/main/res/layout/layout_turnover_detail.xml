@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:background="@color/colorFFF"
+    android:paddingLeft="13dp"
+    android:paddingTop="20dp"
+    android:paddingBottom="20dp"
+    android:paddingRight="13dp"
+    tools:ignore="MissingConstraints">
+
+    <TextView
+        android:id="@+id/tv_detail"
+        style="@style/TurnoverDetailTextValueStyle"
+        android:text="详细信息"
+        android:textSize="15sp" />
+
+    <LinearLayout
+        android:id="@+id/ll_project"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/shape_f6f7fb_3"
+        android:orientation="vertical"
+        android:paddingLeft="6dp"
+        android:paddingTop="8dp"
+        android:paddingRight="6dp"
+        android:paddingBottom="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/ll_plan"
+        app:layout_constraintTop_toBottomOf="@id/tv_detail">
+
+        <TextView
+            style="@style/TurnoverDetailTextKeyStyle"
+            android:layout_marginTop="0dp"
+            android:text="@string/admin_material_project" />
+
+        <TextView
+            android:id="@+id/tv_project"
+            style="@style/TurnoverDetailTextValueStyle"
+            android:layout_marginTop="8dp"
+            android:text="项目1" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_plan"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="7dp"
+        android:background="@drawable/shape_f6f7fb_3"
+        android:orientation="vertical"
+        android:paddingLeft="6dp"
+        android:paddingTop="8dp"
+        android:paddingRight="6dp"
+        android:paddingBottom="8dp"
+        app:layout_constraintLeft_toRightOf="@id/ll_project"
+        app:layout_constraintRight_toLeftOf="@id/ll_num"
+        app:layout_constraintTop_toTopOf="@id/ll_project">
+
+        <TextView
+            style="@style/TurnoverDetailTextKeyStyle"
+            android:layout_marginTop="0dp"
+            android:text="@string/admin_material_plan" />
+
+        <TextView
+            android:id="@+id/tv_plan"
+            style="@style/TurnoverDetailTextValueStyle"
+            android:layout_marginTop="8dp"
+            android:text="一直使用" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_num"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="7dp"
+        android:background="@drawable/shape_f6f7fb_3"
+        android:orientation="vertical"
+        android:paddingLeft="6dp"
+        android:paddingTop="8dp"
+        android:paddingRight="6dp"
+        android:paddingBottom="8dp"
+        app:layout_constraintLeft_toRightOf="@id/ll_plan"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/ll_project">
+
+        <TextView
+            style="@style/TurnoverDetailTextKeyStyle"
+            android:layout_marginTop="0dp"
+            android:text="@string/admin_material_num" />
+
+        <TextView
+            android:id="@+id/tv_num"
+            style="@style/TurnoverDetailTextValueStyle"
+            android:layout_marginTop="8dp"
+            android:text="100吨" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_start_time"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        android:background="@drawable/shape_f6f7fb_3"
+        android:orientation="vertical"
+        android:paddingLeft="6dp"
+        android:paddingTop="8dp"
+        android:paddingRight="6dp"
+        android:paddingBottom="8dp"
+        app:layout_constraintLeft_toLeftOf="@id/ll_project"
+        app:layout_constraintRight_toRightOf="@id/ll_project"
+        app:layout_constraintTop_toBottomOf="@id/ll_project">
+
+        <TextView
+            style="@style/TurnoverDetailTextKeyStyle"
+            android:layout_marginTop="0dp"
+            android:text="@string/admin_material_start_time" />
+
+        <TextView
+            android:id="@+id/tv_start_time"
+            style="@style/TurnoverDetailTextValueStyle"
+            android:layout_marginTop="8dp"
+            android:textSize="13sp"
+            android:text="2019-01-12" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_enter_time"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/shape_f6f7fb_3"
+        android:orientation="vertical"
+        android:paddingLeft="6dp"
+        android:paddingTop="8dp"
+        android:paddingRight="6dp"
+        android:paddingBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="@id/ll_start_time"
+        app:layout_constraintLeft_toLeftOf="@id/ll_plan"
+        app:layout_constraintRight_toRightOf="@id/ll_plan"
+        app:layout_constraintTop_toTopOf="@id/ll_start_time">
+
+        <TextView
+            style="@style/TurnoverDetailTextKeyStyle"
+            android:layout_marginTop="0dp"
+            android:text="@string/admin_material_enter_time" />
+
+        <TextView
+            android:id="@+id/tv_enter_time"
+            style="@style/TurnoverDetailTextValueStyle"
+            android:layout_marginTop="8dp"
+            android:textSize="13sp"
+            android:text="2019-12-12" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_exit_time"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/shape_f6f7fb_3"
+        android:orientation="vertical"
+        android:paddingLeft="6dp"
+        android:paddingTop="8dp"
+        android:paddingRight="6dp"
+        android:paddingBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="@id/ll_start_time"
+        app:layout_constraintLeft_toLeftOf="@id/ll_num"
+        app:layout_constraintRight_toRightOf="@id/ll_num"
+        app:layout_constraintTop_toTopOf="@id/ll_start_time">
+
+        <TextView
+            style="@style/TurnoverDetailTextKeyStyle"
+            android:layout_marginTop="0dp"
+            android:text="@string/admin_material_exit_time" />
+
+        <TextView
+            android:id="@+id/tv_exit_time"
+            style="@style/TurnoverDetailTextValueStyle"
+            android:layout_marginTop="8dp"
+            android:text="项目完成后" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_amortize"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        android:background="@drawable/shape_f6f7fb_3"
+        android:orientation="vertical"
+        android:paddingLeft="6dp"
+        android:paddingTop="8dp"
+        android:paddingRight="6dp"
+        android:paddingBottom="8dp"
+        app:layout_constraintLeft_toLeftOf="@id/ll_project"
+        app:layout_constraintRight_toRightOf="@id/ll_project"
+        app:layout_constraintTop_toBottomOf="@id/ll_start_time">
+
+        <TextView
+            style="@style/TurnoverDetailTextKeyStyle"
+            android:layout_marginTop="0dp"
+            android:text="@string/admin_material_amortize" />
+
+        <TextView
+            android:id="@+id/tv_amortize"
+            style="@style/TurnoverDetailTextValueStyle"
+            android:layout_marginTop="8dp"
+            android:text="96" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_original"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/shape_f6f7fb_3"
+        android:orientation="vertical"
+        android:paddingLeft="6dp"
+        android:paddingTop="8dp"
+        android:paddingRight="6dp"
+        android:paddingBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="@id/ll_amortize"
+        app:layout_constraintLeft_toLeftOf="@id/ll_plan"
+        app:layout_constraintRight_toRightOf="@id/ll_plan"
+        app:layout_constraintTop_toTopOf="@id/ll_amortize">
+
+        <TextView
+            style="@style/TurnoverDetailTextKeyStyle"
+            android:layout_marginTop="0dp"
+            android:text="@string/admin_material_original" />
+
+        <TextView
+            android:id="@+id/tv_original"
+            style="@style/TurnoverDetailTextValueStyle"
+            android:layout_marginTop="8dp"
+            android:text="96" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_value"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/shape_f6f7fb_3"
+        android:orientation="vertical"
+        android:paddingLeft="6dp"
+        android:paddingTop="8dp"
+        android:paddingRight="6dp"
+        android:paddingBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="@id/ll_amortize"
+        app:layout_constraintLeft_toLeftOf="@id/ll_num"
+        app:layout_constraintRight_toRightOf="@id/ll_num"
+        app:layout_constraintTop_toTopOf="@id/ll_amortize">
+
+        <TextView
+            style="@style/TurnoverDetailTextKeyStyle"
+            android:layout_marginTop="0dp"
+            android:text="@string/admin_material_value" />
+
+        <TextView
+            android:id="@+id/tv_value"
+            style="@style/TurnoverDetailTextValueStyle"
+            android:layout_marginTop="8dp"
+            android:text="96" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_remark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        android:background="@drawable/shape_f6f7fb_3"
+        android:orientation="vertical"
+        android:paddingLeft="13dp"
+        android:paddingTop="8dp"
+        android:paddingRight="13dp"
+        android:paddingBottom="8dp"
+        app:layout_constraintTop_toBottomOf="@id/ll_amortize">
+
+        <TextView
+            style="@style/TurnoverDetailTextKeyStyle"
+            android:layout_marginTop="0dp"
+            android:text="@string/admin_material_remark" />
+
+        <TextView
+            android:id="@+id/tv_remark"
+            style="@style/TurnoverDetailTextValueStyle"
+            android:layout_marginTop="10dp"
+            android:text="周转材料不错，还可以用" />
+
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

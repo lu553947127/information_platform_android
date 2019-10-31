@@ -3,6 +3,7 @@ package com.shuangduan.zcy.model.api;
 import com.shuangduan.zcy.adminManage.bean.TurnoverBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverCompanyBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverCategoryBean;
+import com.shuangduan.zcy.adminManage.bean.TurnoverDetailBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverHistoryBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverTypeBean;
 import com.shuangduan.zcy.base.TrackDateilBean;
@@ -1296,6 +1297,16 @@ public interface ApiService {
             @Field("method") int method
     );
 
+    @POST("api/Material/addressList")
+    Flowable<BaseResponse<List<MaterialDepositingPlaceBean>>> addressList(
+            @Query("user_id") int user_id,
+            @Query("material_id") int material_id,
+            @Query("supplier_id") int supplier_id,
+            @Query("is_shelf") int isShelf,
+            @Query("method") int method,
+            @Body AuthGroupBean auth_group
+    );
+
     //基建物资---周转材料收藏列表
     @FormUrlEncoded
     @POST("api/Userinfo/materialCollection")
@@ -1536,6 +1547,13 @@ public interface ApiService {
     Flowable<BaseListResponse<TurnoverCategoryBean>> constructionCategoryList(
             @Field("user_id") int userId,
             @Field("title") String title,
+            @Field("id") int id
+    );
+    //后台管理 --- 周转材料详情接口
+    @FormUrlEncoded
+    @POST("api/Manage/constructionDetail")
+    Flowable<BaseResponse<TurnoverDetailBean>> getTurnoverDetail(
+            @Field("user_id") int userId,
             @Field("id") int id
     );
 }

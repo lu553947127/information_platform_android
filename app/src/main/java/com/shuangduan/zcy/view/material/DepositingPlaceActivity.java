@@ -18,7 +18,9 @@ import com.shuangduan.zcy.adapter.MaterialDepositingPlaceAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.bean.MaterialPlaceOrderBean;
+import com.shuangduan.zcy.model.bean.SupplierCliqueBean;
 import com.shuangduan.zcy.model.event.MaterialDetailEvent;
+import com.shuangduan.zcy.vm.HomeVm;
 import com.shuangduan.zcy.vm.MaterialDetailVm;
 import com.shuangduan.zcy.weight.DataHolder;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
@@ -56,6 +58,7 @@ public class DepositingPlaceActivity extends BaseActivity {
     SmartRefreshLayout refresh;
     private MaterialDetailVm materialDetailVm;
     List<MaterialPlaceOrderBean> list = new ArrayList<>();
+    private View empty;
 
     @Override
     protected int initLayoutRes() {
@@ -71,11 +74,27 @@ public class DepositingPlaceActivity extends BaseActivity {
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.material_depositing_place));
-        View empty = emptyViewFactory.createEmptyView(R.drawable.icon_empty_project, R.string.empty_depositing_place, 0, null);
+        empty = emptyViewFactory.createEmptyView(R.drawable.icon_empty_project, R.string.empty_depositing_place, 0, null);
         materialDetailVm = ViewModelProviders.of(this).get(MaterialDetailVm.class);
         materialDetailVm.id = getIntent().getIntExtra(CustomConfig.MATERIAL_ID, 0);
         materialDetailVm.supplier_id = getIntent().getIntExtra(CustomConfig.SUPPLIER_ID, 0);
         this.list = (List<MaterialPlaceOrderBean>) DataHolder.getInstance().getData("list");
+
+
+        //获取内定物资显示权限
+        HomeVm homeVm = ViewModelProviders.of(this).get(HomeVm.class);
+        homeVm.supplierCliqueLiveData.observe(this, supplierCliqueBean -> {
+            initViewAndData(supplierCliqueBean);
+        });
+        homeVm.getSupplierClique();
+
+    }
+
+    private void initViewAndData(SupplierCliqueBean supplierClique) {
+
+        for (SupplierCliqueBean.SupplierIdBean item : supplierClique.getSupplier_id()) {
+            materialDetailVm.authGroup.auth_group.add(item.getId());
+        }
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
@@ -110,7 +129,20 @@ public class DepositingPlaceActivity extends BaseActivity {
                     });
                 }
         );
-        materialDetailVm.getAddressList(getIntent().getIntExtra(CustomConfig.IS_SHELF, 0), getIntent().getIntExtra(CustomConfig.METHOD_TYPE, 0));
+
+        int isShelf = getIntent().getIntExtra(CustomConfig.IS_SHELF, 0);
+        int methodType = getIntent().getIntExtra(CustomConfig.METHOD_TYPE, 0);
+
+        if (isShelf == 1) {
+            materialDetailVm.getAddressList(isShelf, methodType);
+        } else if (isShelf == 3) {
+            if (methodType == CustomConfig.FRP) {  //内定物资 周转材料 传达 权限组
+                materialDetailVm.getAddressList(isShelf, methodType,  materialDetailVm.authGroup);
+            }
+//            else if (methodType == CustomConfig.EQUIPMENT) {
+//                materialDetailVm.getAddressList(isShelf, methodType);
+//            }
+        }
     }
 
     @OnClick({R.id.iv_bar_back})

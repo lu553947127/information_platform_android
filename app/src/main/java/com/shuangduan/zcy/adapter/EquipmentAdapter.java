@@ -41,11 +41,11 @@ public class EquipmentAdapter extends BaseQuickAdapter<MaterialBean.ListBean, Ba
             tvTitle.setText(item.getEquipmentName());
         }
 
-        helper.setText(R.id.tv_stock, "库存: " + item.getStock() + item.getUnit())
+        helper.setText(R.id.tv_stock, "库存: " + item.getStock())
                 .setText(R.id.tv_spec, "规格: " + item.getSpec())
                 .setText(R.id.tv_supplier, "供应商: " + item.getEquipmentSupplier())
                 .setText(R.id.tv_price, item.getMethod() == 2 ?
-                        String.format(mContext.getString(R.string.format_material_price), item.getGuidancePrice(), item.getUnit()) :
+                        String.format(mContext.getString(R.string.format_material_price_no_unit), item.getGuidancePrice()) :
                         String.format(mContext.getString(R.string.format_material_price), item.getGuidancePrice(), "天"))
                 .setText(R.id.tv_address, "存放地: " + item.getAddress())
                 .setText(R.id.tv_supply_method, item.getMethod() == 1 ? "出租" : "出售")

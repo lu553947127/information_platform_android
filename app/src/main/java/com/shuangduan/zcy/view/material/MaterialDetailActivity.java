@@ -275,6 +275,7 @@ public class MaterialDetailActivity extends BaseActivity {
                 bundle.putInt(CustomConfig.MATERIAL_ID, material_id);
                 bundle.putInt(CustomConfig.SUPPLIER_ID, supplier_id);
                 bundle.putInt(CustomConfig.METHOD_TYPE, materialDetail.getMethod());
+                bundle.putInt(CustomConfig.IS_SHELF, materialDetail.getIsShelf());
                 ActivityUtils.startActivity(bundle, DepositingPlaceActivity.class);
                 break;
             case R.id.ll_collect:

@@ -7,6 +7,7 @@ import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseViewModel;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.api.repository.MaterialRepository;
+import com.shuangduan.zcy.model.bean.AuthGroupBean;
 import com.shuangduan.zcy.model.bean.MaterialAddBean;
 import com.shuangduan.zcy.model.bean.MaterialDepositingPlaceBean;
 import com.shuangduan.zcy.model.bean.MaterialDetailBean;
@@ -44,6 +45,8 @@ public class MaterialDetailVm extends BaseViewModel {
     public MutableLiveData mutableLiveDataCancel;
     public int id, supplier_id;
 
+    public AuthGroupBean authGroup;
+
     public MaterialDetailVm() {
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
         detailLiveData = new MutableLiveData<>();
@@ -56,6 +59,8 @@ public class MaterialDetailVm extends BaseViewModel {
         mutableLiveAddOrder = new MutableLiveData<>();
         orderDetailLiveData = new MutableLiveData<>();
         mutableLiveDataCancel = new MutableLiveData();
+
+        authGroup = new AuthGroupBean();
     }
 
     //基建物资---周转材料详情
@@ -90,6 +95,10 @@ public class MaterialDetailVm extends BaseViewModel {
 
     public void getAddressList(int isShelf,int method) {
         new MaterialRepository().getAddress(depositingPlaceBeanMutableLiveData, pageStateLiveData, userId, id, supplier_id, isShelf,method);
+    }
+
+    public void getAddressList(int isShelf, int method, AuthGroupBean auth_group) {
+        new MaterialRepository().getAddress(depositingPlaceBeanMutableLiveData, pageStateLiveData, userId, id, supplier_id, isShelf,method,auth_group);
     }
 
     public void getAddMaterial(int material_id, BigInteger num, int day, int type) {

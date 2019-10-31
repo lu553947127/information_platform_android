@@ -2,6 +2,7 @@ package com.shuangduan.zcy.view.material;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -110,7 +111,7 @@ public class MaterialEquipmentDetailActivity extends BaseActivity {
     private String phone, is_collect, enclosure;
     private List<String> pics;
     int material_id, supplier_id;
-    private MaterialDetailBean materialDetail;
+
 
     @Override
     protected int initLayoutRes() {
@@ -128,12 +129,10 @@ public class MaterialEquipmentDetailActivity extends BaseActivity {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.product_detail));
 
-
         materialDetailVm = ViewModelProviders.of(this).get(MaterialDetailVm.class);
         materialDetailVm.id = getIntent().getIntExtra(CustomConfig.MATERIAL_ID, 0);
         materialDetailVm.detailLiveData.observe(this, materialDetailBean -> {
             if (materialDetailBean == null) return;
-            this.materialDetail = materialDetailBean;
             pics = new ArrayList<>();
             ArrayList<String> titles = new ArrayList<>();
             for (MaterialDetailBean.ImagesBean bean : materialDetailBean.getImages()) {
@@ -145,9 +144,9 @@ public class MaterialEquipmentDetailActivity extends BaseActivity {
 
             tvUnitPrice.setText(materialDetailBean.getMethod() == 1 ?
                     String.format(getString(R.string.format_material_price), String.valueOf(materialDetailBean.getGuidance_price()), "天") :
-                    String.format(getString(R.string.format_material_price), String.valueOf(materialDetailBean.getGuidance_price()), materialDetailBean.getUnit()));
+                    String.format(getString(R.string.format_material_price_no_unit), String.valueOf(materialDetailBean.getGuidance_price())));
 
-            tvStock.setText(String.format(getString(R.string.format_stock), materialDetailBean.getStock(), materialDetailBean.getUnit()));
+            tvStock.setText(String.format(getString(R.string.format_stock_no_unit), materialDetailBean.getStock()));
 
             tvSupplyMethod.setText(materialDetailBean.getMethod() == 1 ? "出租" : "出售");
 
@@ -155,6 +154,11 @@ public class MaterialEquipmentDetailActivity extends BaseActivity {
             tvSpec.setText(String.format(getString(R.string.format_spec), materialDetailBean.getSpec()));
             tvCompany.setText("供应商：" + materialDetailBean.getCompany());
             tvAddressList.setText(materialDetailBean.getAddress());
+
+            Drawable drawable = getResources().getDrawable(R.drawable.icon_address);
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            tvAddressList.setCompoundDrawables(drawable, null, null, null);
+
             tvCompanyName.setText(materialDetailBean.getCompany());
             tvSupplieAddress.setText(materialDetailBean.getSupplie_address());
             tvCompanyWebsite.setText(materialDetailBean.getCompany_website());
@@ -220,7 +224,7 @@ public class MaterialEquipmentDetailActivity extends BaseActivity {
         materialDetailVm.getEquipmentDetail(getIntent().getIntExtra(CustomConfig.MATERIAL_ID, 0));
     }
 
-    @OnClick({R.id.iv_bar_back, R.id.tv_enclosure, R.id.tv_tel, R.id.tv_address_list, R.id.ll_collect, R.id.tv_reserve})
+    @OnClick({R.id.iv_bar_back, R.id.tv_enclosure, R.id.tv_tel, R.id.ll_collect, R.id.tv_reserve})
     void onClick(View v) {
         Bundle bundle = new Bundle();
         switch (v.getId()) {
@@ -269,12 +273,13 @@ public class MaterialEquipmentDetailActivity extends BaseActivity {
                             }
                         }).showDialog();
                 break;
-            case R.id.tv_address_list:
-                bundle.putInt(CustomConfig.MATERIAL_ID, material_id);
-                bundle.putInt(CustomConfig.SUPPLIER_ID, supplier_id);
-                bundle.putInt(CustomConfig.METHOD_TYPE, materialDetail.getMethod());
-                ActivityUtils.startActivity(bundle, DepositingPlaceActivity.class);
-                break;
+//            case R.id.tv_address_list:
+//                bundle.putInt(CustomConfig.MATERIAL_ID, material_id);
+//                bundle.putInt(CustomConfig.SUPPLIER_ID, supplier_id);
+//                bundle.putInt(CustomConfig.METHOD_TYPE, materialDetail.getMethod());
+//                bundle.putInt(CustomConfig.IS_SHELF, materialDetail.getIsShelf());
+//                ActivityUtils.startActivity(bundle, DepositingPlaceActivity.class);
+//                break;
             case R.id.ll_collect:
                 llCollection.setClickable(false);
                 if (is_collect != null && is_collect.equals("1")) {

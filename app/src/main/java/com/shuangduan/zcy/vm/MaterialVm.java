@@ -38,7 +38,7 @@ public class MaterialVm extends BaseViewModel {
     //物资预定---设备物资列表数据
     public MutableLiveData<MaterialOrderBean> equipmentOrderLiveData;
 
-    //材料列表授权组
+    //授权组
     public AuthGroupBean authGroup;
 
     public int categoryFirstId;//一级分类id， 用于二级数据

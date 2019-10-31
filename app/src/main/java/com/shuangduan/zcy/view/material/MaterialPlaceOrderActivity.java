@@ -299,6 +299,12 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
                     ToastUtils.showShort("电话不能为空");
                     return;
                 }
+
+                if (TextUtils.isEmpty(etCompany.getText().toString())) {
+                    ToastUtils.showShort("公司名称不能为空");
+                    return;
+                }
+
                 if (city == 0) {
                     ToastUtils.showShort("收货省市不能为空");
                     return;

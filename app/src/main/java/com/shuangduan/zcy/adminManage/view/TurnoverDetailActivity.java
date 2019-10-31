@@ -2,16 +2,21 @@ package com.shuangduan.zcy.adminManage.view;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.BarUtils;
 import com.shuangduan.zcy.R;
+import com.shuangduan.zcy.adminManage.vm.TurnoverDetailVm;
+import com.shuangduan.zcy.adminManage.vm.TurnoverVm;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * @ProjectName: information_platform_android
@@ -32,6 +37,7 @@ public class TurnoverDetailActivity extends BaseActivity {
     AppCompatTextView tvBarTitle;
 
     private int constructionId;
+    private TurnoverDetailVm turnoverDetailVm;
 
     @Override
     protected int initLayoutRes() {
@@ -51,5 +57,21 @@ public class TurnoverDetailActivity extends BaseActivity {
 
         constructionId = getIntent().getIntExtra(CustomConfig.CONSTRUCTION_ID, 0);
 
+        turnoverDetailVm = ViewModelProviders.of(this).get(TurnoverDetailVm.class);
+
+        turnoverDetailVm.getTurnoverDetail(constructionId);
+
+        turnoverDetailVm.turnoverDetailLiveData.observe(this, turnoverBean -> {
+
+        });
+    }
+
+    @OnClick({R.id.iv_bar_back})
+    void OnClick(View view) {
+        switch (view.getId()) {
+            case R.id.iv_bar_back:
+                finish();
+                break;
+        }
     }
 }

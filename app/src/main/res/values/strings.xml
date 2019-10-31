@@ -440,6 +440,7 @@
     <string name="format_pay_price_project">查看这条工程信息和全部联系人需要支付%1$s紫金币</string>
     <string name="format_pay_price_sub">认购此工程请支付%1$s紫金币</string>
     <string name="format_stock">库存：%1$d%2$s</string>
+    <string name="format_stock_no_unit">库存：%1$d</string>
     <string name="format_enclosure">查看物资图纸</string>
     <string name="format_order_num">%1$d单</string>
     <string name="format_spec">规格：%1$s</string>

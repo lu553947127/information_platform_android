@@ -195,7 +195,14 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
+                        android:layout_marginLeft="15dp"
+                        android:text="*"
+                        android:textColor="@color/color_F83425"
+                        tools:ignore="HardcodedText,RtlHardcoded" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:text="@string/material_company"
                         android:textColor="@color/colorTv"
                         android:textSize="14sp" />
