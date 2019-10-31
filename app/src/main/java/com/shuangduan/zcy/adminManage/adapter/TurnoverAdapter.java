@@ -49,29 +49,38 @@ public class TurnoverAdapter extends BaseQuickAdapter<TurnoverBean.ListBean, Bas
         }else {
             tvUseStatus.setBackgroundResource(R.drawable.shape_red);
         }
-        helper.setText(R.id.tv_material, item.getMaterial_id())
-                .setText(R.id.tv_company ,"子公司："+item.getCompany())
-                .setText(R.id.tv_category ,"分类："+item.getCategory()+"      是否上架："+item.getIs_shelf())
-                .setText(R.id.tv_address ,"存放地点："+item.getAddress())
-                .addOnClickListener(R.id.tv_edit)
-                .addOnClickListener(R.id.tv_delete);
 
         LinearLayout linearLayout=helper.getView(R.id.ll_edit);
         TextView tvEdit=helper.getView(R.id.tv_edit);
         TextView tvDelete=helper.getView(R.id.tv_delete);
+        TextView tvSplit=helper.getView(R.id.tv_split);
         if (is_children==0){
             linearLayout.setVisibility(View.VISIBLE);
             if (construction_edit==0&&construction_delete==0){
                 linearLayout.setVisibility(View.GONE);
             }else if (construction_edit==1&&construction_delete==0){
                 tvEdit.setVisibility(View.VISIBLE);
+                tvSplit.setVisibility(View.VISIBLE);
                 tvDelete.setVisibility(View.GONE);
             }else if (construction_edit==0&&construction_delete==1){
                 tvEdit.setVisibility(View.GONE);
+                tvSplit.setVisibility(View.GONE);
                 tvDelete.setVisibility(View.VISIBLE);
             }
+            helper.setText(R.id.tv_material, item.getMaterial_id())
+                    .setText(R.id.tv_company ,"材料类别："+item.getCategory())
+                    .setText(R.id.tv_category ,"是否上架："+item.getIs_shelf()+"      库存数量："+item.getStock())
+                    .setText(R.id.tv_address ,"存放地点："+item.getAddress())
+                    .addOnClickListener(R.id.tv_edit)
+                    .addOnClickListener(R.id.tv_delete);
         }else {
             linearLayout.setVisibility(View.GONE);
+            helper.setText(R.id.tv_material, item.getMaterial_id())
+                    .setText(R.id.tv_company ,"子公司："+item.getCompany())
+                    .setText(R.id.tv_category ,"分类："+item.getCategory()+"      是否上架："+item.getIs_shelf())
+                    .setText(R.id.tv_address ,"存放地点："+item.getAddress())
+                    .addOnClickListener(R.id.tv_edit)
+                    .addOnClickListener(R.id.tv_delete);
         }
     }
 }

@@ -22,7 +22,8 @@ import com.shuangduan.zcy.adminManage.adapter.TurnoverHistoryAdapter;
 import com.shuangduan.zcy.adminManage.adapter.TurnoverSecondAdapter;
 import com.shuangduan.zcy.adminManage.bean.TurnoverCategoryBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverHistoryBean;
-import com.shuangduan.zcy.adminManage.event.TurnoverEvent;
+import com.shuangduan.zcy.adminManage.event.TurnoverChildrenEvent;
+import com.shuangduan.zcy.adminManage.event.TurnoverGroupEvent;
 import com.shuangduan.zcy.adminManage.vm.TurnoverVm;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
@@ -96,6 +97,7 @@ public class SelectTypeActivity extends BaseActivity {
         turnoverVm = ViewModelProviders.of(this).get(TurnoverVm.class);
 
         int type = getIntent().getIntExtra(CustomConfig.ADMIN_MANAGE_TYPE,0);
+        int select_type= getIntent().getIntExtra(CustomConfig.SELECT_TYPE,0);
         if (type==ADMIN_MANAGE_CONSTRUCTION){
             tvBarTitle.setText("选择材料");
             tvHistory.setText("历史浏览材料");
@@ -118,7 +120,14 @@ public class SelectTypeActivity extends BaseActivity {
         rvHistory.setAdapter(turnoverHistoryAdapter);
         turnoverHistoryAdapter.setOnItemClickListener((adapter, view, position) -> {
             TurnoverHistoryBean listBean = turnoverHistoryAdapter.getData().get(position);
-            EventBus.getDefault().post(new TurnoverEvent(listBean.getId(),listBean.getCatname()));
+            switch (select_type){
+                case 1://周转材料集团
+                    EventBus.getDefault().post(new TurnoverGroupEvent(listBean.getId(),listBean.getCatname()));
+                    break;
+                case 2://周转材料子公司
+                    EventBus.getDefault().post(new TurnoverChildrenEvent(listBean.getId(),listBean.getCatname()));
+                    break;
+            }
             finish();
         });
 
@@ -151,12 +160,19 @@ public class SelectTypeActivity extends BaseActivity {
         rvAll.setAdapter(turnoverSecondAdapter);
         turnoverSecondAdapter.setOnItemClickListener((adapter, view, position) -> {
             TurnoverCategoryBean listBean = turnoverSecondAdapter.getData().get(position);
-            EventBus.getDefault().post(new TurnoverEvent(listBean.getId(),listBean.getCatname()));
+            switch (select_type){
+                case 1://周转材料集团
+                    EventBus.getDefault().post(new TurnoverGroupEvent(listBean.getId(),listBean.getCatname()));
+                    break;
+                case 2://周转材料子公司
+                    EventBus.getDefault().post(new TurnoverChildrenEvent(listBean.getId(),listBean.getCatname()));
+                    break;
+            }
             finish();
         });
 
         turnoverVm.turnoverSecondData.observe(this,turnoverCategoryBeans -> {
-            if (turnoverCategoryBeans!=null&&turnoverCategoryBeans.size()!=0){
+            if (turnoverCategoryBeans.size()!=0){
                 turnoverSecondAdapter.setNewData(turnoverCategoryBeans);
                 turnoverSecondAdapter.setKeyword(Objects.requireNonNull(etSearch.getText()).toString());
             }else {

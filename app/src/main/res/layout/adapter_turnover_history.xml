@@ -4,6 +4,8 @@
     android:id="@+id/tv_title"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
+    android:singleLine="true"
+    android:maxLength="4"
     android:gravity="center_vertical"
     android:textColor="@color/color_666666"
     android:textSize="15sp">

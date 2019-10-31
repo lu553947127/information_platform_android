@@ -71,6 +71,15 @@ public class TurnoverBean {
         private String address;
         private String use_status;
         private String company;
+        private String stock;
+
+        public String getStock() {
+            return stock;
+        }
+
+        public void setStock(String stock) {
+            this.stock = stock;
+        }
 
         public int getId() {
             return id;

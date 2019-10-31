@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -30,7 +31,7 @@ import com.shuangduan.zcy.adminManage.adapter.UseStatueAdapter;
 import com.shuangduan.zcy.adminManage.bean.TurnoverBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverCompanyBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverTypeBean;
-import com.shuangduan.zcy.adminManage.event.TurnoverEvent;
+import com.shuangduan.zcy.adminManage.event.TurnoverChildrenEvent;
 import com.shuangduan.zcy.adminManage.vm.TurnoverVm;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseLazyFragment;
@@ -48,6 +49,8 @@ import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static com.shuangduan.zcy.app.CustomConfig.CHIILDREN;
 
 /**
  * @ProjectName: information_platform_android
@@ -79,6 +82,21 @@ public class TurnoverChildrenFragment extends BaseLazyFragment {
     RecyclerView recyclerView;
     @BindView(R.id.refresh)
     SmartRefreshLayout refresh;
+
+    @BindView(R.id.ll_admin_manage_screen)
+    LinearLayout llAdminManageScreen;
+    @BindView(R.id.tv_reset)
+    AppCompatTextView tvReset;
+    @BindView(R.id.tv_company_children)
+    AppCompatTextView tvCompanyChildren;
+    @BindView(R.id.tv_name_second)
+    AppCompatTextView tvNameSecond;
+    @BindView(R.id.tv_is_shelf)
+    AppCompatTextView tvIsShelf;
+    @BindView(R.id.tv_use_status)
+    AppCompatTextView tvUseStatus;
+    @BindView(R.id.tv_address)
+    AppCompatTextView tvAddress;
     private TurnoverVm turnoverVm;
     private MultiAreaVm areaVm;
     private TurnoverAdapter turnoverAdapter;
@@ -220,7 +238,8 @@ public class TurnoverChildrenFragment extends BaseLazyFragment {
     }
 
     @SuppressLint("NewApi")
-    @OnClick({R.id.tv_company,R.id.tv_name,R.id.tv_grounding,R.id.tv_use_statue,R.id.tv_depositing_place})
+    @OnClick({R.id.tv_company,R.id.tv_name,R.id.tv_grounding,R.id.tv_use_statue,R.id.tv_depositing_place
+            ,R.id.tv_reset,R.id.tv_company_children,R.id.tv_name_second,R.id.tv_is_shelf,R.id.tv_use_status,R.id.tv_address})
     void onClick(View view){
         Bundle bundle = new Bundle();
         switch (view.getId()) {
@@ -230,6 +249,7 @@ public class TurnoverChildrenFragment extends BaseLazyFragment {
                 break;
             case R.id.tv_name://选择材料名称
                 bundle.putInt(CustomConfig.ADMIN_MANAGE_TYPE,CustomConfig.ADMIN_MANAGE_CONSTRUCTION);
+                bundle.putInt(CustomConfig.SELECT_TYPE,CHIILDREN);
                 ActivityUtils.startActivity(bundle,SelectTypeActivity.class);
                 break;
             case R.id.tv_grounding://是否上架
@@ -243,6 +263,41 @@ public class TurnoverChildrenFragment extends BaseLazyFragment {
             case R.id.tv_depositing_place://存放地点
                 getBottomSheetDialog(R.layout.dialog_depositing_place,"depositing_place");
                 getDrawableRightView(tvDepositingPlace,R.drawable.icon_pullup_arrow,R.color.color_5C54F4);
+                break;
+            case R.id.tv_reset://重置按钮
+                llAdminManageScreen.setVisibility(View.GONE);
+                tvCompanyChildren.setVisibility(View.GONE);
+                tvNameSecond.setVisibility(View.GONE);
+                tvIsShelf.setVisibility(View.GONE);
+                tvUseStatus.setVisibility(View.GONE);
+                tvAddress.setVisibility(View.GONE);
+                turnoverVm.category_id=0;
+                turnoverVm.is_shelf=0;
+                turnoverVm.use_status=0;
+                areaVm.id=0;
+                areaVm.city_id=0;
+                turnoverVm.constructionList(2,areaVm.id,areaVm.city_id);
+                break;
+            case R.id.tv_company_children://子公司
+                turnoverVm.supplier_id=0;
+                getDeleteView(tvCompanyChildren,View.GONE);
+                break;
+            case R.id.tv_name_second://名称二级
+                turnoverVm.category_id=0;
+                getDeleteView(tvNameSecond,View.GONE);
+                break;
+            case R.id.tv_is_shelf://是否上架
+                turnoverVm.is_shelf=0;
+                getDeleteView(tvIsShelf,View.GONE);
+                break;
+            case R.id.tv_use_status://使用状态
+                turnoverVm.use_status=0;
+                getDeleteView(tvUseStatus,View.GONE);
+                break;
+            case R.id.tv_address://存放地点
+                areaVm.id=0;
+                areaVm.city_id=0;
+                getDeleteView(tvAddress,View.GONE);
                 break;
         }
     }
@@ -283,7 +338,7 @@ public class TurnoverChildrenFragment extends BaseLazyFragment {
         switch (type){
             case "company":
                 TextView tvCompany=btn_dialog.findViewById(R.id.tv_title);
-                Objects.requireNonNull(tvCompany).setText("子公司");
+                Objects.requireNonNull(tvCompany).setText("选择子公司");
                 RecyclerView rvCompany = btn_dialog.findViewById(R.id.rv);
                 Objects.requireNonNull(rvCompany).setLayoutManager(new LinearLayoutManager(getActivity()));
                 turnoverCompanyAdapter = new TurnoverCompanyAdapter(R.layout.adapter_selector_area_second, null);
@@ -293,6 +348,7 @@ public class TurnoverChildrenFragment extends BaseLazyFragment {
                     turnoverVm.constructionList(2,areaVm.id,areaVm.city_id);
                     btn_dialog.dismiss();
                     getDrawableRightView(tvCompany,R.drawable.icon_pulldown_arrow,R.color.color_666666);
+                    getAddTopScreenView(tvCompanyChildren,companyList.get(position).getCompany(),View.VISIBLE);
                 });
                 turnoverVm.getSupplierInfo();
                 if (turnoverVm.supplier_id!=0){
@@ -311,6 +367,7 @@ public class TurnoverChildrenFragment extends BaseLazyFragment {
                     turnoverVm.constructionList(2,areaVm.id,areaVm.city_id);
                     btn_dialog.dismiss();
                     getDrawableRightView(tvGrounding,R.drawable.icon_pulldown_arrow,R.color.color_666666);
+                    getAddTopScreenView(tvIsShelf,groundingList.get(position).getName(),View.VISIBLE);
                 });
                 turnoverVm.constructionSearch();
                 if (turnoverVm.is_shelf!=0){
@@ -329,6 +386,7 @@ public class TurnoverChildrenFragment extends BaseLazyFragment {
                     turnoverVm.constructionList(2,areaVm.id,areaVm.city_id);
                     btn_dialog.dismiss();
                     getDrawableRightView(tvUseStatue,R.drawable.icon_pulldown_arrow,R.color.color_666666);
+                    getAddTopScreenView(tvUseStatus,useStatueList.get(position).getName(),View.VISIBLE);
                 });
                 turnoverVm.constructionSearch();
                 if (turnoverVm.use_status!=0){
@@ -356,6 +414,7 @@ public class TurnoverChildrenFragment extends BaseLazyFragment {
                         turnoverVm.constructionList(2,areaVm.id,areaVm.city_id);
                         btn_dialog.dismiss();
                         getDrawableRightView(tvDepositingPlace,R.drawable.icon_pulldown_arrow,R.color.color_666666);
+                        getAddTopScreenView(tvAddress,provinceList.get(position).getName(),View.VISIBLE);
                     }
                 });
                 cityAdapter.setOnItemClickListener((adapter, view, position) -> {
@@ -365,11 +424,13 @@ public class TurnoverChildrenFragment extends BaseLazyFragment {
                         cityAdapter.setIsSelect(cityList.get(position).getId());
                         btn_dialog.dismiss();
                         getDrawableRightView(tvDepositingPlace,R.drawable.icon_pulldown_arrow,R.color.color_666666);
+                        getAddTopScreenView(tvAddress,cityList.get(position).getName(),View.VISIBLE);
                     }else {
                         areaVm.city_id=0;
                         turnoverVm.constructionList(2,areaVm.id,areaVm.city_id);
                         btn_dialog.dismiss();
                         getDrawableRightView(tvDepositingPlace,R.drawable.icon_pulldown_arrow,R.color.color_666666);
+                        getAddTopScreenView(tvAddress,areaVm.cityResult,View.VISIBLE);
                     }
                 });
                 areaVm.getProvince();
@@ -395,8 +456,27 @@ public class TurnoverChildrenFragment extends BaseLazyFragment {
     }
 
     @Subscribe
-    public void onEventUpdateUserName(TurnoverEvent event) {
-        turnoverVm.category_id=event.company_id;
+    public void onEventTurnoverChildren(TurnoverChildrenEvent event) {
+        turnoverVm.category_id=event.material_id;
+        turnoverVm.constructionList(2,areaVm.id,areaVm.city_id);
+        getAddTopScreenView(tvNameSecond,event.material_name,View.VISIBLE);
+    }
+
+    //添加头部筛选布局view
+    private void getAddTopScreenView(TextView textView,String text,int type) {
+        llAdminManageScreen.setVisibility(type);
+        tvReset.setVisibility(type);
+        textView.setVisibility(type);
+        textView.setText(text);
+    }
+
+    //关闭筛选条件
+    private void getDeleteView(TextView textView,int type) {
+        textView.setVisibility(type);
+        if (tvCompanyChildren.getVisibility()==View.GONE &&tvNameSecond.getVisibility()==View.GONE
+                &&tvIsShelf.getVisibility()==View.GONE &&tvUseStatus.getVisibility()==View.GONE &&tvAddress.getVisibility()==View.GONE){
+            llAdminManageScreen.setVisibility(type);
+        }
         turnoverVm.constructionList(2,areaVm.id,areaVm.city_id);
     }
 }

@@ -19,6 +19,8 @@
 
         <include android:id="@+id/search" layout="@layout/layout_admin_manage_child" />
 
+        <include layout="@layout/layout_admin_manage_screen"/>
+
         <include layout="@layout/layout_refresh_rv_new"/>
 
     </LinearLayout>

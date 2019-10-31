@@ -172,6 +172,10 @@ public class CustomConfig {
     public static int ADMIN_MANAGE_CONSTRUCTION = 1;//选择周转材料
     public static int ADMIN_MANAGE_EQIPMENT = 2;//选择设备
 
+    public static String SELECT_TYPE = "SELECT_TYPE";
+    public static int GROUP = 1;//集团
+    public static int CHIILDREN = 2;//子公司
+
     public static String CONSTRUCTION_ID = "CONSTRUCTION_ID";
     //-------------------------------------------------------------------------------------------------------
 }
