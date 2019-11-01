@@ -338,6 +338,8 @@
         <activity android:name="com.shuangduan.zcy.adminManage.view.SelectTypeActivity" android:theme="@style/BaseAppTheme" />
         <!-- 周转材料详情-->
         <activity android:name="com.shuangduan.zcy.adminManage.view.turnover.TurnoverDetailActivity" android:theme="@style/BaseAppTheme" />
+        <!-- 周转材料添加-->
+        <activity android:name="com.shuangduan.zcy.adminManage.view.turnover.TurnoverAddActivity" android:theme="@style/BaseAppTheme" />
         <!--高德地图appKey-->
         <meta-data
             android:name="com.amap.api.v2.apikey"

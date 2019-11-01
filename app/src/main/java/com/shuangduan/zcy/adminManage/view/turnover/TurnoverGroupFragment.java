@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
@@ -34,7 +36,9 @@ import com.shuangduan.zcy.adminManage.view.SelectTypeActivity;
 import com.shuangduan.zcy.adminManage.vm.TurnoverVm;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseLazyFragment;
+import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.BottomSheetDialogs;
+import com.shuangduan.zcy.dialog.CustomDialog;
 import com.shuangduan.zcy.model.bean.CityBean;
 import com.shuangduan.zcy.model.bean.ProvinceBean;
 import com.shuangduan.zcy.utils.AnimationUtils;
@@ -70,7 +74,7 @@ public class TurnoverGroupFragment extends BaseLazyFragment {
     @BindView(R.id.tv_grounding)
     AppCompatTextView tvGrounding;
     @BindView(R.id.tv_use_statue)
-    AppCompatTextView tvUseStatue;
+    AppCompatTextView tvUseStatueTop;
     @BindView(R.id.tv_depositing_place)
     AppCompatTextView tvDepositingPlace;
     @BindView(R.id.iv_add)
@@ -95,6 +99,7 @@ public class TurnoverGroupFragment extends BaseLazyFragment {
     private TurnoverVm turnoverVm;
     private MultiAreaVm areaVm;
     private TurnoverAdapter turnoverAdapter;
+    private List<TurnoverBean.ListBean> listTurnover=new ArrayList<>();
 
     public static TurnoverGroupFragment newInstance() {
         Bundle args = new Bundle();
@@ -131,6 +136,7 @@ public class TurnoverGroupFragment extends BaseLazyFragment {
 
         //获取周转材料列表数据
         turnoverVm.turnoverLiveData.observe(this,turnoverBean -> {
+            listTurnover=turnoverBean.getList();
             if (turnoverBean.getPage() == 1) {
                 turnoverAdapter.setNewData(turnoverBean.getList());
                 turnoverAdapter.setEmptyView(R.layout.layout_empty_admin, recyclerView);
@@ -148,14 +154,33 @@ public class TurnoverGroupFragment extends BaseLazyFragment {
             }
         });
         turnoverAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            TurnoverBean.ListBean listBean = turnoverAdapter.getData().get(position);
             switch (view.getId()) {
                 case R.id.tv_edit://编辑
                     break;
                 case R.id.tv_delete://删除
+                    new CustomDialog(Objects.requireNonNull(getActivity()))
+                            .setTip(getString(R.string.admin_turnover_delete))
+                            .setCallBack(new BaseDialog.CallBack() {
+                                @Override
+                                public void cancel() {
+                                }
+
+                                @Override
+                                public void ok(String s) {
+                                    turnoverVm.constructionDelete(listBean.getId());
+                                    turnoverAdapter.removeData(listTurnover,position);
+                                }
+                            }).showDialog();
                     break;
                 case R.id.tv_split://拆分
+                    getBottomSheetDialog(R.layout.dialog_turnover_split,"split",listBean.getId(),1);
                     break;
             }
+        });
+
+        turnoverVm.turnoverDeleteData.observe(this,item ->{
+            ToastUtils.showShort("删除成功");
         });
 
         //获取筛选条件列表数据
@@ -163,12 +188,10 @@ public class TurnoverGroupFragment extends BaseLazyFragment {
             switch (turnoverVm.type){
                 case "grounding":
                     groundingList=turnoverTypeBean.getIs_shelf();
-                    groundingList.add(0,new TurnoverTypeBean.IsShelfBean(0,"全部"));
                     groundingAdapter.setNewData(groundingList);
                     break;
                 case "use_statue":
                     useStatueList=turnoverTypeBean.getUse_status();
-                    useStatueList.add(0,new TurnoverTypeBean.UseStatusBean(0,"全部"));
                     useStatueAdapter.setNewData(useStatueList);
                     break;
             }
@@ -178,7 +201,6 @@ public class TurnoverGroupFragment extends BaseLazyFragment {
         areaVm = ViewModelProviders.of(this).get(MultiAreaVm.class);
         areaVm.provinceLiveData.observe(this, provinceBeans -> {
             provinceList = provinceBeans;
-            provinceList.add(0,new ProvinceBean(0,"全部"));
             provinceAdapter.setNewData(provinceList);
         });
         areaVm.cityLiveData.observe(this, cityBeans -> {
@@ -238,26 +260,29 @@ public class TurnoverGroupFragment extends BaseLazyFragment {
     }
 
     @SuppressLint("NewApi")
-    @OnClick({R.id.tv_name,R.id.tv_grounding,R.id.tv_use_statue,R.id.tv_depositing_place
+    @OnClick({R.id.iv_add,R.id.tv_name,R.id.tv_grounding,R.id.tv_use_statue,R.id.tv_depositing_place
             ,R.id.tv_reset,R.id.tv_name_second,R.id.tv_is_shelf,R.id.tv_use_status,R.id.tv_address})
     void onClick(View view){
         Bundle bundle = new Bundle();
         switch (view.getId()) {
+            case R.id.iv_add://添加
+                ActivityUtils.startActivity(bundle, TurnoverAddActivity.class);
+                break;
             case R.id.tv_name://选择材料名称
                 bundle.putInt(CustomConfig.ADMIN_MANAGE_TYPE,CustomConfig.ADMIN_MANAGE_CONSTRUCTION);
                 bundle.putInt(CustomConfig.SELECT_TYPE,GROUP);
                 ActivityUtils.startActivity(bundle, SelectTypeActivity.class);
                 break;
             case R.id.tv_grounding://是否上架
-                getBottomSheetDialog(R.layout.dialog_is_grounding,"grounding");
+                getBottomSheetDialog(R.layout.dialog_is_grounding,"grounding",0,1);
                 getDrawableRightView(tvGrounding,R.drawable.icon_pullup_arrow,R.color.color_5C54F4);
                 break;
             case R.id.tv_use_statue://使用状态
-                getBottomSheetDialog(R.layout.dialog_is_grounding,"use_statue");
-                getDrawableRightView(tvUseStatue,R.drawable.icon_pullup_arrow,R.color.color_5C54F4);
+                getBottomSheetDialog(R.layout.dialog_is_grounding,"use_statue",0,1);
+                getDrawableRightView(tvUseStatueTop,R.drawable.icon_pullup_arrow,R.color.color_5C54F4);
                 break;
             case R.id.tv_depositing_place://存放地点
-                getBottomSheetDialog(R.layout.dialog_depositing_place,"depositing_place");
+                getBottomSheetDialog(R.layout.dialog_depositing_place,"depositing_place",0,1);
                 getDrawableRightView(tvDepositingPlace,R.drawable.icon_pullup_arrow,R.color.color_5C54F4);
                 break;
             case R.id.tv_reset://重置按钮
@@ -301,10 +326,12 @@ public class TurnoverGroupFragment extends BaseLazyFragment {
     private List<TurnoverTypeBean.IsShelfBean> groundingList =new ArrayList<>();
     private UseStatueAdapter useStatueAdapter;
     private List<TurnoverTypeBean.UseStatusBean> useStatueList =new ArrayList<>();
+    private int splitUseStatue;
+    private TextView tvSplitUseStatue,tvSplitAddress;
     @SuppressLint("RestrictedApi,InflateParams")
-    private void getBottomSheetDialog(int layout, String type) {
+    private void getBottomSheetDialog(int layout, String type,int id,int use) {
         //底部滑动对话框
-        BottomSheetDialogs btn_dialog = new BottomSheetDialogs(Objects.requireNonNull(getActivity()));
+        BottomSheetDialogs btn_dialog =new BottomSheetDialogs(Objects.requireNonNull(getActivity()), R.style.BottomSheetStyle);
         //设置自定view
          View dialog_view = this.getLayoutInflater().inflate(layout, null);
         //把布局添加进去
@@ -320,11 +347,11 @@ public class TurnoverGroupFragment extends BaseLazyFragment {
         btn_dialog.setOnDismissListener(dialog -> {
             getDrawableRightView(tvDepositingPlace,R.drawable.icon_pulldown_arrow,R.color.color_666666);
             getDrawableRightView(tvGrounding,R.drawable.icon_pulldown_arrow,R.color.color_666666);
-            getDrawableRightView(tvUseStatue,R.drawable.icon_pulldown_arrow,R.color.color_666666);
+            getDrawableRightView(tvUseStatueTop,R.drawable.icon_pulldown_arrow,R.color.color_666666);
         });
         turnoverVm.type=type;
         switch (type){
-            case "grounding":
+            case "grounding"://是否上架弹窗
                 TextView tvGrounding=btn_dialog.findViewById(R.id.tv_title);
                 Objects.requireNonNull(tvGrounding).setText("是否上架");
                 RecyclerView rvGrounding = btn_dialog.findViewById(R.id.rv);
@@ -343,7 +370,7 @@ public class TurnoverGroupFragment extends BaseLazyFragment {
                     groundingAdapter.setIsSelect(turnoverVm.is_shelf);
                 }
                 break;
-            case "use_statue":
+            case "use_statue"://使用状态弹窗
                 TextView tvUseStatue=btn_dialog.findViewById(R.id.tv_title);
                 Objects.requireNonNull(tvUseStatue).setText("使用状态");
                 RecyclerView rvUseStatue = btn_dialog.findViewById(R.id.rv);
@@ -351,18 +378,24 @@ public class TurnoverGroupFragment extends BaseLazyFragment {
                 useStatueAdapter = new UseStatueAdapter(R.layout.adapter_selector_area_second, null);
                 rvUseStatue.setAdapter(useStatueAdapter);
                 useStatueAdapter.setOnItemClickListener((adapter, view, position) -> {
-                    turnoverVm.use_status=useStatueList.get(position).getId();
-                    turnoverVm.constructionList(1,areaVm.id,areaVm.city_id);
+                    if (use==1){
+                        turnoverVm.use_status=useStatueList.get(position).getId();
+                        turnoverVm.constructionList(1,areaVm.id,areaVm.city_id);
+                        getDrawableRightView(tvUseStatue,R.drawable.icon_pulldown_arrow,R.color.color_666666);
+                        getAddTopScreenView(tvUseStatus,useStatueList.get(position).getName(),View.VISIBLE);
+                    }else {
+                        splitUseStatue=useStatueList.get(position).getId();
+                        tvSplitUseStatue.setText(useStatueList.get(position).getName());
+                        tvSplitUseStatue.setTextColor(getResources().getColor(R.color.colorTv));
+                    }
                     btn_dialog.dismiss();
-                    getDrawableRightView(tvUseStatue,R.drawable.icon_pulldown_arrow,R.color.color_666666);
-                    getAddTopScreenView(tvUseStatus,useStatueList.get(position).getName(),View.VISIBLE);
                 });
                 turnoverVm.constructionSearch();
                 if (turnoverVm.use_status!=0){
                     useStatueAdapter.setIsSelect(turnoverVm.use_status);
                 }
                 break;
-            case "depositing_place":
+            case "depositing_place"://存放地点弹窗
                 RecyclerView rvProvince = btn_dialog.findViewById(R.id.rv_province);
                 RecyclerView rvCity = btn_dialog.findViewById(R.id.rv_city);
                 Objects.requireNonNull(rvProvince).setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -372,19 +405,10 @@ public class TurnoverGroupFragment extends BaseLazyFragment {
                 rvProvince.setAdapter(provinceAdapter);
                 rvCity.setAdapter(cityAdapter);
                 provinceAdapter.setOnItemClickListener((adapter, view, position) -> {
-                    if (provinceList.get(position).getId()!=0){
-                        areaVm.id = provinceList.get(position).getId();
-                        areaVm.cityResult = provinceList.get(position).getName();
-                        areaVm.getCity();
-                        provinceAdapter.setIsSelect(provinceList.get(position).getId());
-                    }else {
-                        areaVm.id=0;
-                        areaVm.city_id=0;
-                        turnoverVm.constructionList(1,areaVm.id,areaVm.city_id);
-                        btn_dialog.dismiss();
-                        getDrawableRightView(tvDepositingPlace,R.drawable.icon_pulldown_arrow,R.color.color_666666);
-                        getAddTopScreenView(tvAddress,provinceList.get(position).getName(),View.VISIBLE);
-                    }
+                    areaVm.id = provinceList.get(position).getId();
+                    areaVm.cityResult = provinceList.get(position).getName();
+                    areaVm.getCity();
+                    provinceAdapter.setIsSelect(provinceList.get(position).getId());
                 });
                 cityAdapter.setOnItemClickListener((adapter, view, position) -> {
                     if (cityList.get(position).getId()!=0){
@@ -410,6 +434,21 @@ public class TurnoverGroupFragment extends BaseLazyFragment {
                 if (areaVm.city_id!=0){
                     cityAdapter.setIsSelect(areaVm.city_id);
                 }
+                break;
+            case "split"://拆分弹窗
+                TextView tvSave=dialog_view.findViewById(R.id.tv_save);
+                EditText etNum=dialog_view.findViewById(R.id.et_num);
+                tvSplitUseStatue=dialog_view.findViewById(R.id.tv_use_statue);
+                tvSplitAddress=dialog_view.findViewById(R.id.tv_material_id);
+                tvSave.setOnClickListener(v -> {
+                    turnoverVm.constructionSplit(id,etNum.getText().toString(),splitUseStatue,0,0,"",0,0);
+                });
+                tvSplitUseStatue.setOnClickListener(v -> {
+                    getBottomSheetDialog(R.layout.dialog_is_grounding,"use_statue",0,2);
+                });
+                tvSplitAddress.setOnClickListener(v -> {
+
+                });
                 break;
         }
         btn_dialog.show();

@@ -64,4 +64,61 @@
         <item name="android:focusableInTouchMode">false</item>
     </style>
 
+    <!--分割线-->
+    <style name="DividingLine">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_marginRight">14dp</item>
+        <item name="android:layout_marginLeft">14dp</item>
+        <item name="android:background">@color/colorDivider</item>
+    </style>
+
+    <!--左侧必填红点-->
+    <style name="RedMustText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_marginLeft">14dp</item>
+        <item name="android:textColor">@color/color_F83425</item>
+        <item name="android:text">*</item>
+    </style>
+
+    <!--后台管理一级文字-->
+    <style name="AdminManageFirstText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">@color/colorTv</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <!--后台管理二级文字-->
+    <style name="AdminManageSecondText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:drawablePadding">9dp</item>
+        <item name="android:drawableRight">@drawable/icon_next</item>
+        <item name="android:paddingRight">15dp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:gravity">right|center_vertical</item>
+        <item name="android:textColor">@color/colorTvHint</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <!--后台管理二级输入框-->
+    <style name="AdminManageSecondHint">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@null</item>
+        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:paddingRight">30dp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:inputType">text</item>
+        <item name="android:gravity">right|center_vertical</item>
+        <item name="android:textColor">@color/colorTv</item>
+        <item name="android:textColorHint">@color/colorTvHint</item>
+        <item name="android:textSize">15sp</item>
+    </style>
 </resources>

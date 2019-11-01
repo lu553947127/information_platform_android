@@ -1556,4 +1556,27 @@ public interface ApiService {
             @Field("user_id") int userId,
             @Field("id") int id
     );
+
+    //后台管理 --- 周转材料删除
+    @FormUrlEncoded
+    @POST("api/Manage/constructionDelete")
+    Flowable<BaseResponse<String>> constructionDelete(
+            @Field("user_id") int userId,
+            @Field("id") int id
+    );
+
+    //后台管理 --- 周转材料拆分
+    @FormUrlEncoded
+    @POST("api/Manage/constructionSplit")
+    Flowable<BaseResponse<String>> constructionSplit(
+            @Field("user_id") int userId,
+            @Field("id") int id,
+            @Field("stock") String stock,
+            @Field("use_status") int use_status,
+            @Field("province") int province,
+            @Field("city") int city,
+            @Field("address") String address,
+            @Field("longitude") double longitude,
+            @Field("latitude") double latitude
+    );
 }

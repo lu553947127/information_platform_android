@@ -36,6 +36,7 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.Objects;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 import static com.shuangduan.zcy.app.CustomConfig.ADMIN_MANAGE_CONSTRUCTION;
 import static com.shuangduan.zcy.app.CustomConfig.ADMIN_MANAGE_EQIPMENT;
@@ -206,5 +207,10 @@ public class SelectTypeActivity extends BaseActivity {
                 turnoverVm.constructionCategoryList(Objects.requireNonNull(etSearch.getText()).toString(),0);
             }
         });
+    }
+
+    @OnClick(R.id.iv_bar_back)
+    void onClick() {
+        finish();
     }
 }

@@ -43,6 +43,8 @@ public class TurnoverVm extends BaseViewModel{
     public MutableLiveData<List<TurnoverCompanyBean>> turnoverCompanyData;
     public MutableLiveData<List<TurnoverCategoryBean>> turnoverFirstData;
     public MutableLiveData<List<TurnoverCategoryBean>> turnoverSecondData;
+    public MutableLiveData<String> turnoverDeleteData;
+    public MutableLiveData<String> turnoverSplitData;
     public MutableLiveData<String> pageStateLiveData;
 
     public TurnoverVm(){
@@ -53,6 +55,8 @@ public class TurnoverVm extends BaseViewModel{
         turnoverCompanyData = new MutableLiveData<>();
         turnoverFirstData = new MutableLiveData<>();
         turnoverSecondData = new MutableLiveData<>();
+        turnoverDeleteData = new MutableLiveData<>();
+        turnoverSplitData = new MutableLiveData<>();
         pageStateLiveData = new MutableLiveData<>();
         is_shelf = 0;
         use_status = 0;
@@ -97,5 +101,15 @@ public class TurnoverVm extends BaseViewModel{
     //后台管理 --- 周转材料名称类别二级
     public void constructionCategoryList(String title,int id){
         new TurnoverRepository().constructionCategoryList(turnoverSecondData, pageStateLiveData, userId,title,id);
+    }
+
+    //后台管理 --- 周转材料删除
+    public void constructionDelete(int id){
+        new TurnoverRepository().constructionDelete(turnoverDeleteData,userId,id);
+    }
+
+    //后台管理 --- 周转材料拆分
+    public void constructionSplit(int id,String stock,int use_status,int province,int city,String address,double longitude,double latitude){
+        new TurnoverRepository().constructionSplit(turnoverSplitData,userId,id,stock,use_status,province,city,address,longitude,latitude);
     }
 }

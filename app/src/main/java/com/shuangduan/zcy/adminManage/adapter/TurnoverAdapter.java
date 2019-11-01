@@ -35,6 +35,14 @@ public class TurnoverAdapter extends BaseQuickAdapter<TurnoverBean.ListBean, Bas
         this.is_children = is_children;
     }
 
+    //删除item
+    public void removeData(List<TurnoverBean.ListBean> data,int position) {
+        data.remove(position);
+        //删除动画
+        notifyItemRemoved(position);
+        notifyDataSetChanged();
+    }
+
     @Override
     protected void convert(BaseViewHolder helper, TurnoverBean.ListBean item) {
         String use_status=item.getUse_status();
@@ -72,15 +80,14 @@ public class TurnoverAdapter extends BaseQuickAdapter<TurnoverBean.ListBean, Bas
                     .setText(R.id.tv_category ,"是否上架："+item.getIs_shelf()+"      库存数量："+item.getStock())
                     .setText(R.id.tv_address ,"存放地点："+item.getAddress())
                     .addOnClickListener(R.id.tv_edit)
+                    .addOnClickListener(R.id.tv_split)
                     .addOnClickListener(R.id.tv_delete);
         }else {
             linearLayout.setVisibility(View.GONE);
             helper.setText(R.id.tv_material, item.getMaterial_id())
                     .setText(R.id.tv_company ,"子公司："+item.getCompany())
                     .setText(R.id.tv_category ,"分类："+item.getCategory()+"      是否上架："+item.getIs_shelf())
-                    .setText(R.id.tv_address ,"存放地点："+item.getAddress())
-                    .addOnClickListener(R.id.tv_edit)
-                    .addOnClickListener(R.id.tv_delete);
+                    .setText(R.id.tv_address ,"存放地点："+item.getAddress());
         }
     }
 }

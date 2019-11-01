@@ -60,4 +60,14 @@ public class TurnoverRepository extends BaseRepository {
     public void getTurnoverDetail(MutableLiveData<TurnoverDetailBean> liveData, MutableLiveData<String> pageState, int userId, int id) {
         request(apiService.getTurnoverDetail(userId, id)).setData(liveData).setPageState(pageState).send();
     }
+
+    //后台管理 --- 周转材料删除
+    public void constructionDelete(MutableLiveData<String> liveData, int userId,int id) {
+        request(apiService.constructionDelete(userId,id)).setData(liveData).send();
+    }
+
+    //后台管理 --- 周转材料拆分
+    public void constructionSplit(MutableLiveData<String> liveData, int userId,int id,String stock,int use_status,int province,int city,String address,double longitude,double latitude) {
+        request(apiService.constructionSplit(userId,id,stock,use_status,province,city,address,longitude,latitude)).setData(liveData).send();
+    }
 }

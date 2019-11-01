@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBgDark">
+
+    <include layout="@layout/toolbar" />
+
+    <com.shuangduan.zcy.utils.ElasticScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/colorFFF"
+                android:orientation="horizontal">
+                <TextView style="@style/RedMustText"/>
+                <TextView
+                    style="@style/AdminManageFirstText"
+                    android:text="@string/admin_turnover_add_category_material_id"/>
+                <TextView
+                    android:id="@+id/tv_category_material_id"
+                    style="@style/AdminManageSecondText"
+                    android:text="@string/admin_turnover_add_category_material_id_et" />
+            </LinearLayout>
+
+            <View style="@style/DividingLine"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/colorFFF"
+                android:orientation="horizontal">
+
+                <TextView style="@style/RedMustText"/>
+                <TextView
+                    style="@style/AdminManageFirstText"
+                    android:text="@string/admin_turnover_add_stock"/>
+                <com.shuangduan.zcy.weight.XEditText
+                    style="@style/AdminManageSecondHint"
+                    android:hint="@string/admin_turnover_add_stock_et"/>
+            </LinearLayout>
+
+            <View style="@style/DividingLine"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/colorFFF"
+                android:orientation="horizontal">
+
+                <TextView style="@style/RedMustText"/>
+                <TextView
+                    style="@style/AdminManageFirstText"
+                    android:text="@string/admin_turnover_add_unit_price"/>
+                <com.shuangduan.zcy.weight.XEditText
+                    style="@style/AdminManageSecondHint"
+                    android:hint="@string/admin_turnover_add_unit_price_et"/>
+            </LinearLayout>
+
+            <View style="@style/DividingLine"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/colorFFF"
+                android:orientation="horizontal">
+                <TextView style="@style/RedMustText"/>
+                <TextView
+                    style="@style/AdminManageFirstText"
+                    android:text="@string/admin_turnover_add_unit"/>
+                <TextView
+                    style="@style/AdminManageSecondText"
+                    android:text="@string/admin_turnover_add_unit_et" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </com.shuangduan.zcy.utils.ElasticScrollView>
+
+</RelativeLayout>

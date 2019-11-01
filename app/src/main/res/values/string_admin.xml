@@ -19,4 +19,14 @@
     <string name="admin_material_value">净值</string>
 
     <string name="admin_material_remark">备注</string>
+    <string name="admin_turnover_delete">确定删除吗？</string>
+    <string name="admin_turnover_material_add">周转材料添加</string>
+    <string name="admin_turnover_add_category_material_id">材料类别/名称</string>
+    <string name="admin_turnover_add_category_material_id_et">请选择材料类别</string>
+    <string name="admin_turnover_add_stock">库存数量</string>
+    <string name="admin_turnover_add_stock_et">请输入库存数量</string>
+    <string name="admin_turnover_add_unit_price">单价</string>
+    <string name="admin_turnover_add_unit_price_et">请输入单价</string>
+    <string name="admin_turnover_add_unit">单位</string>
+    <string name="admin_turnover_add_unit_et">请选择单位</string>
 </resources>
