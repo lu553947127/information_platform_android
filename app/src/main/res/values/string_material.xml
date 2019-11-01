@@ -10,7 +10,7 @@
     <string name="filter_supplier_method">供应方式</string>
 
     <string name="material_open">公开物资</string>
-    <string name="material_default">内定物资</string>
+    <string name="material_default">内部预定</string>
     <string name="material_tv_add">+添加数量、存放地</string>
     <string name="material_tv_lease_add">+添加数量、租期、存放地</string>
     <string name="material_add">+添加一项</string>

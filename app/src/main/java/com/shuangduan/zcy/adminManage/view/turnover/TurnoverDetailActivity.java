@@ -3,17 +3,31 @@ package com.shuangduan.zcy.adminManage.view.turnover;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.StringUtils;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.shuangduan.zcy.R;
+import com.shuangduan.zcy.adapter.LocusImageAdapter;
+import com.shuangduan.zcy.adminManage.adapter.TurnoverImageAdapter;
+import com.shuangduan.zcy.adminManage.bean.TurnoverDetailBean;
 import com.shuangduan.zcy.adminManage.vm.TurnoverDetailVm;
 import com.shuangduan.zcy.adminManage.vm.TurnoverVm;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
+import com.shuangduan.zcy.base.TrackDateilBean;
+import com.shuangduan.zcy.utils.image.PictureEnlargeUtils;
+import com.shuangduan.zcy.weight.DividerItemDecoration;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -30,14 +44,71 @@ import butterknife.OnClick;
  * @UpdateRemark: 更新说明
  * @Version: 1.0
  */
-public class TurnoverDetailActivity extends BaseActivity {
+public class TurnoverDetailActivity extends BaseActivity implements BaseQuickAdapter.OnItemChildClickListener {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
+    @BindView(R.id.tv_category)
+    TextView tvCategory;
+
+    @BindView(R.id.tv_stock_num)
+    TextView tvStockNum;
+    @BindView(R.id.tv_guide_price)
+    TextView tvGuidePrice;
+    @BindView(R.id.tv_spec)
+    TextView tvSpec;
+    @BindView(R.id.tv_use_status)
+    TextView tvUseStatus;
+    @BindView(R.id.tv_material_status)
+    TextView tvMaterialStatus;
+    @BindView(R.id.tv_put_address_value)
+    TextView tvPutAddress;
+    @BindView(R.id.tv_name_value)
+    TextView tvName;
+    @BindView(R.id.tv_tel_value)
+    TextView tvTel;
+    @BindView(R.id.tv_putaway_value)
+    TextView tvPutaway;
+    @BindView(R.id.tv_putaway_time_value)
+    TextView tvPutawayTime;
+    @BindView(R.id.tv_supply_method_value)
+    TextView tvSupplyMethod;
+    @BindView(R.id.rv_photo)
+    RecyclerView rvImage;
+    @BindView(R.id.tv_project)
+    TextView tvProject;
+    @BindView(R.id.tv_plan)
+    TextView tvPlan;
+    @BindView(R.id.tv_num)
+    TextView tvNum;
+    @BindView(R.id.tv_start_time)
+    TextView tvStartTime;
+    @BindView(R.id.tv_enter_time)
+    TextView tvEnterTime;
+    @BindView(R.id.tv_exit_time)
+    TextView tvExitTime;
+    @BindView(R.id.tv_amortize)
+    TextView tvAmortize;
+    @BindView(R.id.tv_original)
+    TextView tvOriginal;
+    @BindView(R.id.tv_value)
+    TextView tvValue;
+    @BindView(R.id.tv_remark)
+    TextView tvRemark;
+
+    @BindView(R.id.tv_material_photo)
+    TextView tvMaterialPhoto;
+    @BindView(R.id.tv_putaway_time_key)
+    TextView tvPutawayTimeKey;
+    @BindView(R.id.tv_supply_method_key)
+    TextView tvSupplyMethodKey;
 
     private int constructionId;
     private TurnoverDetailVm turnoverDetailVm;
+    private TurnoverDetailBean turnover;
 
     @Override
     protected int initLayoutRes() {
@@ -61,9 +132,61 @@ public class TurnoverDetailActivity extends BaseActivity {
 
         turnoverDetailVm.getTurnoverDetail(constructionId);
 
-        turnoverDetailVm.turnoverDetailLiveData.observe(this, turnoverBean -> {
+        turnoverDetailVm.turnoverDetailLiveData.observe(this, turnover -> {
+            this.turnover = turnover;
+            tvTitle.setText(turnover.materialIdName);
+            tvCategory.setText(turnover.categoryName);
+            tvStockNum.setText(getString(R.string.format_admin_ton, turnover.stock));
+            tvGuidePrice.setText(getString(R.string.format_admin_ton_other, turnover.guidancePrice));
+            tvSpec.setText(turnover.spec);
+            tvUseStatus.setVisibility(StringUtils.isTrimEmpty(turnover.useStatusName) ? View.GONE : View.VISIBLE);
+            tvMaterialStatus.setVisibility(StringUtils.isTrimEmpty(turnover.materialStatusName) ? View.GONE : View.VISIBLE);
+            tvUseStatus.setText(turnover.useStatusName);
+            tvMaterialStatus.setText(turnover.materialStatusName);
+            tvPutAddress.setText(turnover.provinceName + turnover.cityName + turnover.address);
+            tvName.setText(turnover.personLiable);
+            tvTel.setText(turnover.tel);
+            tvPutaway.setText(turnover.isShelfName);
+            String shelf = turnover.shelfType == 1 ? "到期自动公开" : "到期自动下架";
+            tvPutawayTime.setText(getString(R.string.format_admin_shelf_time, turnover.shelfStartTime, turnover.shelfEndTime, shelf));
+            tvSupplyMethod.setText(turnover.method == 1 ? "出租" : "售卖");
+            tvProject.setText(turnover.unitIdName);
+            tvPlan.setText(turnover.planName);
+            tvNum.setText(String.valueOf(turnover.useCount));
+            tvStartTime.setText(turnover.startDate);
+            tvEnterTime.setText(turnover.entryTime);
+            tvExitTime.setText(turnover.exitTime);
+            tvAmortize.setText(turnover.accumulatedAmortization);
+            tvOriginal.setText(turnover.originalPrice);
+            tvValue.setText(turnover.netWorth);
+            tvRemark.setText(turnover.remark);
 
+            if (turnover.images != null && turnover.images.size() > 0) {
+                tvMaterialPhoto.setVisibility(View.VISIBLE);
+                rvImage.setVisibility(View.VISIBLE);
+                rvImage.setLayoutManager(new GridLayoutManager(this, 3, RecyclerView.VERTICAL, false));
+                rvImage.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15_15));
+                TurnoverImageAdapter adapter = new TurnoverImageAdapter(R.layout.item_turnover_image, null);
+                adapter.setOnItemChildClickListener(this);
+                rvImage.setAdapter(adapter);
+                adapter.setNewData(turnover.images);
+            }
+
+
+            if (turnover.isShelfName.equals("未上架")) {
+                tvPutawayTimeKey.setVisibility(View.GONE);
+                tvPutawayTime.setVisibility(View.GONE);
+                tvSupplyMethodKey.setVisibility(View.GONE);
+                tvSupplyMethod.setVisibility(View.GONE);
+            }
+
+            if (turnover.isShelfName.equals("公开上架")) {
+                tvPutawayTimeKey.setVisibility(View.GONE);
+                tvPutawayTime.setVisibility(View.GONE);
+            }
         });
+
+
     }
 
     @OnClick({R.id.iv_bar_back})
@@ -74,4 +197,15 @@ public class TurnoverDetailActivity extends BaseActivity {
                 break;
         }
     }
+
+    @Override
+    public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+        List<String> images = new ArrayList<>();
+        for (TurnoverDetailBean.Images image : turnover.images) {
+            images.add(image.heade_url);
+        }
+        PictureEnlargeUtils.getPictureEnlargeList(this, images, position);
+    }
+
+
 }

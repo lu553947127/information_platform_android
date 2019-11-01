@@ -32,7 +32,7 @@ public class TurnoverDetailBean {
 
     //单价
     @SerializedName("unit_price")
-    public int unitPrice;
+    public String unitPrice;
 
     //单位描述
     @SerializedName("unit_name")

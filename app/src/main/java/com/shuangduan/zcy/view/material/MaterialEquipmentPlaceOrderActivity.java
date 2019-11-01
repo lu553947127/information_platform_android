@@ -302,6 +302,4 @@ public class MaterialEquipmentPlaceOrderActivity extends BaseActivity {
         materialId = event.material_id;
         material_name = event.material_name;
     }
-
-
 }

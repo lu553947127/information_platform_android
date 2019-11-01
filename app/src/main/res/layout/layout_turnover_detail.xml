@@ -41,8 +41,7 @@
         <TextView
             android:id="@+id/tv_project"
             style="@style/TurnoverDetailTextValueStyle"
-            android:layout_marginTop="8dp"
-            android:text="项目1" />
+            android:layout_marginTop="8dp" />
 
     </LinearLayout>
 
@@ -69,8 +68,7 @@
         <TextView
             android:id="@+id/tv_plan"
             style="@style/TurnoverDetailTextValueStyle"
-            android:layout_marginTop="8dp"
-            android:text="一直使用" />
+            android:layout_marginTop="8dp" />
 
 
     </LinearLayout>
@@ -98,8 +96,7 @@
         <TextView
             android:id="@+id/tv_num"
             style="@style/TurnoverDetailTextValueStyle"
-            android:layout_marginTop="8dp"
-            android:text="100吨" />
+            android:layout_marginTop="8dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -126,8 +123,7 @@
             android:id="@+id/tv_start_time"
             style="@style/TurnoverDetailTextValueStyle"
             android:layout_marginTop="8dp"
-            android:textSize="13sp"
-            android:text="2019-01-12" />
+            android:textSize="13sp" />
 
     </LinearLayout>
 
@@ -155,8 +151,7 @@
             android:id="@+id/tv_enter_time"
             style="@style/TurnoverDetailTextValueStyle"
             android:layout_marginTop="8dp"
-            android:textSize="13sp"
-            android:text="2019-12-12" />
+            android:textSize="13sp" />
 
 
     </LinearLayout>
@@ -184,8 +179,7 @@
         <TextView
             android:id="@+id/tv_exit_time"
             style="@style/TurnoverDetailTextValueStyle"
-            android:layout_marginTop="8dp"
-            android:text="项目完成后" />
+            android:layout_marginTop="8dp" />
     </LinearLayout>
 
 
@@ -212,8 +206,7 @@
         <TextView
             android:id="@+id/tv_amortize"
             style="@style/TurnoverDetailTextValueStyle"
-            android:layout_marginTop="8dp"
-            android:text="96" />
+            android:layout_marginTop="8dp"/>
 
     </LinearLayout>
 
@@ -240,8 +233,7 @@
         <TextView
             android:id="@+id/tv_original"
             style="@style/TurnoverDetailTextValueStyle"
-            android:layout_marginTop="8dp"
-            android:text="96" />
+            android:layout_marginTop="8dp" />
 
 
     </LinearLayout>
@@ -269,8 +261,7 @@
         <TextView
             android:id="@+id/tv_value"
             style="@style/TurnoverDetailTextValueStyle"
-            android:layout_marginTop="8dp"
-            android:text="96" />
+            android:layout_marginTop="8dp"/>
     </LinearLayout>
 
     <LinearLayout
@@ -294,9 +285,7 @@
         <TextView
             android:id="@+id/tv_remark"
             style="@style/TurnoverDetailTextValueStyle"
-            android:layout_marginTop="10dp"
-            android:text="周转材料不错，还可以用" />
-
+            android:layout_marginTop="10dp" />
 
     </LinearLayout>
 

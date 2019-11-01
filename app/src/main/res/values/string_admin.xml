@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <string name="format_admin_ton">%1$d吨</string>
+    <string name="format_admin_ton_other">%1$s/吨</string>
+    <string name="format_admin_shelf_time">%1$s至%2$s%3$s</string>
+
     <string name="admin_turnover_material_details">周转材料详情</string>
     <string name="admin_material_put_address">存放地点：</string>
     <string name="admin_material_duty_name">责&#160;&#160;任&#160;&#160;人：</string>
