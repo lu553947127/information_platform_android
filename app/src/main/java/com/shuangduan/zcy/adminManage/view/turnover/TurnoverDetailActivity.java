@@ -150,16 +150,17 @@ public class TurnoverDetailActivity extends BaseActivity implements BaseQuickAda
             String shelf = turnover.shelfType == 1 ? "到期自动公开" : "到期自动下架";
             tvPutawayTime.setText(getString(R.string.format_admin_shelf_time, turnover.shelfStartTime, turnover.shelfEndTime, shelf));
             tvSupplyMethod.setText(turnover.method == 1 ? "出租" : "售卖");
-            tvProject.setText(turnover.unitIdName);
-            tvPlan.setText(turnover.planName);
-            tvNum.setText(String.valueOf(turnover.useCount));
-            tvStartTime.setText(turnover.startDate);
-            tvEnterTime.setText(turnover.entryTime);
-            tvExitTime.setText(turnover.exitTime);
-            tvAmortize.setText(turnover.accumulatedAmortization);
-            tvOriginal.setText(turnover.originalPrice);
-            tvValue.setText(turnover.netWorth);
-            tvRemark.setText(turnover.remark);
+
+            tvProject.setText(StringUtils.isTrimEmpty(turnover.unitIdName) ? "-" : turnover.unitIdName);
+            tvPlan.setText(StringUtils.isTrimEmpty(turnover.planName) ? "-" : turnover.planName);
+            tvNum.setText(turnover.useCount == 0 ? "-" : String.valueOf(turnover.useCount));
+            tvStartTime.setText(StringUtils.isTrimEmpty(turnover.startDate) ? "-" : turnover.startDate);
+            tvEnterTime.setText(StringUtils.isTrimEmpty(turnover.entryTime) ? "-" : turnover.entryTime);
+            tvExitTime.setText(StringUtils.isTrimEmpty(turnover.exitTime) ? "-" : turnover.exitTime);
+            tvAmortize.setText(turnover.accumulatedAmortization.equals("0") ? "-" : turnover.accumulatedAmortization);
+            tvOriginal.setText(turnover.originalPrice.equals("0") ? "-" : turnover.originalPrice);
+            tvValue.setText(turnover.netWorth.equals("0") ? "-" : turnover.netWorth);
+            tvRemark.setText(StringUtils.isTrimEmpty(turnover.remark) ? "-" : turnover.remark);
 
             if (turnover.images != null && turnover.images.size() > 0) {
                 tvMaterialPhoto.setVisibility(View.VISIBLE);

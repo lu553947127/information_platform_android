@@ -148,7 +148,7 @@
                     style="@style/TurnoverDetailTextKeyStyle"
                     android:layout_marginTop="10dp"
                     android:text="@string/admin_material_duty_name"
-                    app:layout_constraintTop_toBottomOf="@id/tv_put_address_key" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_put_address_value" />
 
                 <TextView
                     android:id="@+id/tv_name_value"
