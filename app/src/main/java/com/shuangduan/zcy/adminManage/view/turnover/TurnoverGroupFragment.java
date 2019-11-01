@@ -3,6 +3,7 @@ package com.shuangduan.zcy.adminManage.view.turnover;
 import android.annotation.SuppressLint;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -41,7 +42,9 @@ import com.shuangduan.zcy.dialog.BottomSheetDialogs;
 import com.shuangduan.zcy.dialog.CustomDialog;
 import com.shuangduan.zcy.model.bean.CityBean;
 import com.shuangduan.zcy.model.bean.ProvinceBean;
+import com.shuangduan.zcy.model.event.LocationEvent;
 import com.shuangduan.zcy.utils.AnimationUtils;
+import com.shuangduan.zcy.view.release.ReleaseAreaSelectActivity;
 import com.shuangduan.zcy.vm.MultiAreaVm;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -181,6 +184,17 @@ public class TurnoverGroupFragment extends BaseLazyFragment {
 
         turnoverVm.turnoverDeleteData.observe(this,item ->{
             ToastUtils.showShort("删除成功");
+        });
+
+        turnoverVm.turnoverSplitData.observe(this,item ->{
+            ToastUtils.showShort("拆分成功");
+            turnoverVm.constructionList(1,areaVm.id,areaVm.city_id);
+            splitUseStatue=0;
+            splitProvince=0;
+            splitCity=0;
+            splitAddress="";
+            longitude=0;
+            latitude=0;
         });
 
         //获取筛选条件列表数据
@@ -326,7 +340,9 @@ public class TurnoverGroupFragment extends BaseLazyFragment {
     private List<TurnoverTypeBean.IsShelfBean> groundingList =new ArrayList<>();
     private UseStatueAdapter useStatueAdapter;
     private List<TurnoverTypeBean.UseStatusBean> useStatueList =new ArrayList<>();
-    private int splitUseStatue;
+    private int splitUseStatue,splitProvince,splitCity;
+    private String splitAddress;
+    private double latitude,longitude;
     private TextView tvSplitUseStatue,tvSplitAddress;
     @SuppressLint("RestrictedApi,InflateParams")
     private void getBottomSheetDialog(int layout, String type,int id,int use) {
@@ -345,6 +361,14 @@ public class TurnoverGroupFragment extends BaseLazyFragment {
             e.printStackTrace();
         }
         btn_dialog.setOnDismissListener(dialog -> {
+            if (type.equals("split")){
+                splitUseStatue=0;
+                splitProvince=0;
+                splitCity=0;
+                splitAddress="";
+                longitude=0;
+                latitude=0;
+            }
             getDrawableRightView(tvDepositingPlace,R.drawable.icon_pulldown_arrow,R.color.color_666666);
             getDrawableRightView(tvGrounding,R.drawable.icon_pulldown_arrow,R.color.color_666666);
             getDrawableRightView(tvUseStatueTop,R.drawable.icon_pulldown_arrow,R.color.color_666666);
@@ -441,13 +465,32 @@ public class TurnoverGroupFragment extends BaseLazyFragment {
                 tvSplitUseStatue=dialog_view.findViewById(R.id.tv_use_statue);
                 tvSplitAddress=dialog_view.findViewById(R.id.tv_material_id);
                 tvSave.setOnClickListener(v -> {
-                    turnoverVm.constructionSplit(id,etNum.getText().toString(),splitUseStatue,0,0,"",0,0);
+                    if (TextUtils.isEmpty(etNum.getText().toString())) {
+                        ToastUtils.showShort(getString(R.string.no_mun));
+                        return;
+                    }
+                    if (Integer.valueOf(etNum.getText().toString()) == 0) {
+                        ToastUtils.showShort("数量不能为0");
+                        return;
+                    }
+                    if (splitUseStatue==0) {
+                        ToastUtils.showShort("使用状态不能为空");
+                        return;
+                    }
+                    if (splitProvince==0&&splitCity==0&&TextUtils.isEmpty(splitAddress)) {
+                        ToastUtils.showShort("存放地不能为空");
+                        return;
+                    }
+                    turnoverVm.constructionSplit(id,etNum.getText().toString(),splitUseStatue,splitProvince,splitCity,splitAddress,longitude,latitude);
+                    btn_dialog.dismiss();
                 });
                 tvSplitUseStatue.setOnClickListener(v -> {
                     getBottomSheetDialog(R.layout.dialog_is_grounding,"use_statue",0,2);
                 });
                 tvSplitAddress.setOnClickListener(v -> {
-
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(CustomConfig.PROJECT_ADDRESS, 1);
+                    ActivityUtils.startActivity(bundle, ReleaseAreaSelectActivity.class);
                 });
                 break;
         }
@@ -468,6 +511,17 @@ public class TurnoverGroupFragment extends BaseLazyFragment {
         turnoverVm.category_id=event.material_id;
         turnoverVm.constructionList(1,areaVm.id,areaVm.city_id);
         getAddTopScreenView(tvNameSecond,event.material_name,View.VISIBLE);
+    }
+
+    @Subscribe
+    public void onEventLocationEvent(LocationEvent event){
+        splitProvince=event.getProvinceId();
+        splitCity=event.getCityId();
+        splitAddress=event.getAddress();
+        latitude=event.getLatitude();
+        longitude=event.getLongitude();
+        tvSplitAddress.setText(event.getAddress());
+        tvSplitAddress.setTextColor(getResources().getColor(R.color.colorTv));
     }
 
     //添加头部筛选布局view

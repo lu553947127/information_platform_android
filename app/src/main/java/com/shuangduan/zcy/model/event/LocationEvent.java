@@ -17,14 +17,16 @@ public class LocationEvent {
     private int cityId;
     private double latitude;
     private double longitude;
+    private String address;
 
-    public LocationEvent(String province, String city, int provinceId, int cityId, double latitude, double longitude) {
+    public LocationEvent(String province, String city, int provinceId, int cityId, double latitude, double longitude, String address) {
         this.province = province;
         this.city = city;
         this.provinceId = provinceId;
         this.cityId = cityId;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.address = address;
     }
 
     public String getProvince() {
@@ -49,5 +51,13 @@ public class LocationEvent {
 
     public double getLongitude() {
         return longitude;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

@@ -3,7 +3,6 @@ package com.shuangduan.zcy.view.release;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.view.View;
-import android.view.animation.Interpolator;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
@@ -22,6 +21,10 @@ import com.amap.api.services.core.AMapException;
 import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.district.DistrictSearch;
 import com.amap.api.services.district.DistrictSearchQuery;
+import com.amap.api.services.geocoder.GeocodeResult;
+import com.amap.api.services.geocoder.GeocodeSearch;
+import com.amap.api.services.geocoder.RegeocodeQuery;
+import com.amap.api.services.geocoder.RegeocodeResult;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.ConvertUtils;
@@ -59,7 +62,7 @@ public class LocationMapActivity extends BaseActivity {
     private PermissionVm permissionVm;
     MapView mMapView = null;
     AMap aMap = null;
-    private String cityName;
+    private String cityName,formatAddress;
     private Marker locationMarker;
     private LatLonPoint searchLatlonPoint;
 
@@ -124,6 +127,24 @@ public class LocationMapActivity extends BaseActivity {
                     startJumpAnimation();
                     searchLatlonPoint = new LatLonPoint(cameraPosition.target.latitude, cameraPosition.target.longitude);
                     LogUtils.i(searchLatlonPoint.getLatitude(), searchLatlonPoint.getLongitude());
+                    GeocodeSearch geocoderSearch = new GeocodeSearch(LocationMapActivity.this);
+                    geocoderSearch.setOnGeocodeSearchListener(new GeocodeSearch.OnGeocodeSearchListener(){
+
+                        @Override
+                        public void onGeocodeSearched(GeocodeResult result, int rCode) {
+                            // TODO Auto-generated method stub
+
+                        }
+
+                        @Override
+                        public void onRegeocodeSearched(RegeocodeResult result, int rCode) {
+                            formatAddress = result.getRegeocodeAddress().getFormatAddress();
+                            LogUtils.i(formatAddress);
+
+                        }});
+                    LatLonPoint lp = new LatLonPoint(searchLatlonPoint.getLatitude(),searchLatlonPoint.getLongitude());
+                    RegeocodeQuery query = new RegeocodeQuery(lp, 200,GeocodeSearch.AMAP);
+                    geocoderSearch.getFromLocationAsyn(query);
                 }
             });
 
@@ -184,15 +205,12 @@ public class LocationMapActivity extends BaseActivity {
                     .fromScreenLocation(point);
             //使用TranslateAnimation,填写一个需要移动的目标点
             Animation animation = new TranslateAnimation(target);
-            animation.setInterpolator(new Interpolator() {
-                @Override
-                public float getInterpolation(float input) {
-                    // 模拟重加速度的interpolator
-                    if(input <= 0.5) {
-                        return (float) (0.5f - 2 * (0.5 - input) * (0.5 - input));
-                    } else {
-                        return (float) (0.5f - Math.sqrt((input - 0.5f)*(1.5f - input)));
-                    }
+            animation.setInterpolator(input -> {
+                // 模拟重加速度的interpolator
+                if(input <= 0.5) {
+                    return (float) (0.5f - 2 * (0.5 - input) * (0.5 - input));
+                } else {
+                    return (float) (0.5f - Math.sqrt((input - 0.5f)*(1.5f - input)));
                 }
             });
             //整个移动所需要的时间
@@ -210,32 +228,28 @@ public class LocationMapActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         //在activity执行onDestroy时执行mMapView.onDestroy()，销毁地图
-        if (mMapView != null)
-            mMapView.onDestroy();
+        if (mMapView != null) mMapView.onDestroy();
         super.onDestroy();
     }
 
     @Override
     protected void onResume() {
         //在activity执行onResume时执行mMapView.onResume ()，重新绘制加载地图
-        if (mMapView != null)
-            mMapView.onResume();
+        if (mMapView != null)mMapView.onResume();
         super.onResume();
     }
 
     @Override
     protected void onPause() {
         //在activity执行onPause时执行mMapView.onPause ()，暂停地图的绘制
-        if (mMapView != null)
-            mMapView.onPause();
+        if (mMapView != null) mMapView.onPause();
         super.onPause();
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         //在activity执行onSaveInstanceState时执行mMapView.onSaveInstanceState (outState)，保存地图当前的状态
-        if (mMapView != null)
-            mMapView.onSaveInstanceState(outState);
+        if (mMapView != null)mMapView.onSaveInstanceState(outState);
         super.onSaveInstanceState(outState);
     }
 
@@ -253,7 +267,8 @@ public class LocationMapActivity extends BaseActivity {
                         getIntent().getIntExtra(CustomConfig.PROVINCE_ID, 0),
                         getIntent().getIntExtra(CustomConfig.CITY_ID, 0),
                         searchLatlonPoint.getLatitude(),
-                        searchLatlonPoint.getLongitude()
+                        searchLatlonPoint.getLongitude(),
+                        formatAddress
                 ));
                 ActivityUtils.finishActivity(ReleaseAreaSelectActivity.class);
                 finish();
