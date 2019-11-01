@@ -1,4 +1,4 @@
-package com.shuangduan.zcy.adminManage.view;
+package com.shuangduan.zcy.adminManage.view.turnover;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;

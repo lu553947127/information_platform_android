@@ -1,4 +1,4 @@
-package com.shuangduan.zcy.adminManage.view;
+package com.shuangduan.zcy.adminManage.view.order;
 
 import android.os.Bundle;
 
@@ -12,16 +12,16 @@ import butterknife.BindView;
 /**
  * @ProjectName: information_platform_android
  * @Package: com.shuangduan.zcy.adminManage.view
- * @ClassName: OrderTurnoverGroupFragment
- * @Description: 周转材料订单管理列表(集团)
+ * @ClassName: OrderTurnoverChildrenFragment
+ * @Description: 周转材料订单管理列表(子公司)
  * @Author: 鹿鸿祥
- * @CreateDate: 2019/10/25 14:42
+ * @CreateDate: 2019/10/25 14:44
  * @UpdateUser: 鹿鸿祥
- * @UpdateDate: 2019/10/25 14:42
+ * @UpdateDate: 2019/10/25 14:44
  * @UpdateRemark: 更新说明
  * @Version: 1.0
  */
-public class OrderTurnoverGroupFragment extends BaseLazyFragment {
+public class OrderTurnoverChildrenFragment extends BaseLazyFragment {
 
     @BindView(R.id.tv_name)
     AppCompatTextView tvName;
@@ -32,9 +32,9 @@ public class OrderTurnoverGroupFragment extends BaseLazyFragment {
     @BindView(R.id.tv_depositing_place)
     AppCompatTextView tvDepositingPlace;
 
-    public static OrderTurnoverGroupFragment newInstance() {
+    public static OrderTurnoverChildrenFragment newInstance() {
         Bundle args = new Bundle();
-        OrderTurnoverGroupFragment fragment = new OrderTurnoverGroupFragment();
+        OrderTurnoverChildrenFragment fragment = new OrderTurnoverChildrenFragment();
         fragment.setArguments(args);
         return fragment;
     }

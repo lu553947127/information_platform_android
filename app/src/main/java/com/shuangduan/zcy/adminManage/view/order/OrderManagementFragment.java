@@ -1,4 +1,4 @@
-package com.shuangduan.zcy.adminManage.view;
+package com.shuangduan.zcy.adminManage.view.order;
 
 import android.os.Bundle;
 import android.view.View;
