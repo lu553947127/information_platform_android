@@ -140,7 +140,9 @@
                 <TextView
                     android:id="@+id/tv_put_address_value"
                     style="@style/TurnoverDetailTextValueStyle"
+                    android:layout_width="0dp"
                     app:layout_constraintLeft_toRightOf="@id/tv_put_address_key"
+                    app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="@id/tv_put_address_key" />
 
                 <TextView
@@ -154,7 +156,8 @@
                     android:id="@+id/tv_name_value"
                     style="@style/TurnoverDetailTextValueStyle"
                     app:layout_constraintLeft_toRightOf="@id/tv_name_key"
-                    app:layout_constraintTop_toTopOf="@id/tv_name_key" />
+                    app:layout_constraintTop_toTopOf="@id/tv_name_key"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_name_key"/> >
 
                 <TextView
                     android:id="@+id/tv_tel_key"
