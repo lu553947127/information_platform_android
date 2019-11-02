@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -20,6 +21,7 @@ import com.shuangduan.zcy.adminManage.vm.TurnoverVm;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BottomSheetDialogs;
 import com.shuangduan.zcy.weight.RoundCheckBox;
+import com.shuangduan.zcy.weight.SwitchView;
 import com.shuangduan.zcy.weight.XEditText;
 
 import java.util.ArrayList;
@@ -27,6 +29,7 @@ import java.util.List;
 import java.util.Objects;
 
 import butterknife.BindView;
+import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 
 /**
@@ -89,6 +92,8 @@ public class TurnoverAddActivity extends BaseActivity {
     TextView tvGuidancePrice;
     @BindView(R.id.et_guidance_price)
     XEditText etGuidancePrice;
+    @BindView(R.id.sv_other_details)
+    SwitchView svOtherDetails;
     private TurnoverVm turnoverVm;
 
     @Override
@@ -120,6 +125,22 @@ public class TurnoverAddActivity extends BaseActivity {
                     break;
             }
         });
+
+        //详细信息开关隐藏
+        svOtherDetails.setOnStateChangedListener(new SwitchView.OnStateChangedListener() {
+            @Override
+            public void toggleToOn(SwitchView view) {
+
+            }
+
+            @Override
+            public void toggleToOff(SwitchView view) {
+
+            }
+        });
+        //设置选择按钮默认选中
+        cbShelfTypeOpen.setChecked(true);
+        cbLease.setChecked(true);
     }
 
     @OnClick({R.id.iv_bar_back,R.id.tv_category_material_id,R.id.tv_unit,R.id.tv_use_status,R.id.tv_material_status,R.id.tv_address,R.id.tv_is_shelf,R.id.tv_shelf_time_start,R.id.tv_shelf_time_end})
@@ -145,6 +166,46 @@ public class TurnoverAddActivity extends BaseActivity {
             case R.id.tv_shelf_time_start://选择开始时间
                 break;
             case R.id.tv_shelf_time_end://选择结束时间
+                break;
+        }
+    }
+
+    @OnCheckedChanged({R.id.cb_shelf_type_open,R.id.cb_shelf_type_close,R.id.cb_lease,R.id.cb_sell})
+    void OnOnCheckedChanged(CompoundButton view,boolean isChecked){
+        switch (view.getId()){
+            case R.id.cb_shelf_type_open://到期自动公开
+                if (isChecked){
+                    cbShelfTypeOpen.setChecked(true);
+                    cbShelfTypeClose.setChecked(false);
+                }else {
+                    if (!cbShelfTypeClose.isChecked())cbShelfTypeOpen.setChecked(true);
+                }
+                break;
+            case R.id.cb_shelf_type_close://到期自动下架
+                if (isChecked){
+                    cbShelfTypeOpen.setChecked(false);
+                    cbShelfTypeClose.setChecked(true);
+                }else {
+                    if (!cbShelfTypeOpen.isChecked())cbShelfTypeClose.setChecked(true);
+                }
+                break;
+            case R.id.cb_lease://出租
+                if (isChecked){
+                    cbLease.setChecked(true);
+                    cbSell.setChecked(false);
+                }else {
+                    if (!cbSell.isChecked())cbLease.setChecked(true);
+                }
+                tvGuidancePrice.setText(getString(R.string.admin_turnover_add_guidance_price_unit));
+                break;
+            case R.id.cb_sell://出售
+                if (isChecked){
+                    cbLease.setChecked(false);
+                    cbSell.setChecked(true);
+                }else {
+                    if (!cbLease.isChecked())cbSell.setChecked(true);
+                }
+                tvGuidancePrice.setText(getString(R.string.admin_turnover_add_guidance_price));
                 break;
         }
     }

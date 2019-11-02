@@ -330,7 +330,7 @@
                 <TextView
                     android:id="@+id/tv_guidance_price"
                     style="@style/AdminManageFirstText"
-                    android:text="@string/admin_turnover_add_guidance_price" />
+                    android:text="@string/admin_turnover_add_guidance_price_unit" />
                 <com.shuangduan.zcy.weight.XEditText
                     android:id="@+id/et_guidance_price"
                     style="@style/AdminManageSecondHint"
@@ -380,7 +380,7 @@
                     android:layout_centerVertical="true"
                     android:text="@string/admin_turnover_add_other_details" />
                 <com.shuangduan.zcy.weight.SwitchView
-                    android:id="@+id/sv"
+                    android:id="@+id/sv_other_details"
                     android:layout_width="44dp"
                     android:layout_height="24dp"
                     android:layout_centerVertical="true"
