@@ -8,7 +8,6 @@
 
     <include layout="@layout/toolbar"/>
 
-
     <FrameLayout
         android:id="@+id/activity_im_contact_fragment"
         android:layout_width="match_parent"

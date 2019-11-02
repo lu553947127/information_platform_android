@@ -209,37 +209,34 @@ public class IMPrivateChatActivity extends BaseActivity implements RongIM.Conver
 
     @Override
     public boolean onMessageClick(Context context, View view, Message message) {
-
         LogUtils.i(message);
         LogUtils.i(message.getContent());
+        //文字接收
         if (message.getContent() instanceof TextMessage) {
             LogUtils.i(((TextMessage) message.getContent()).getExtra());
         }
+        //定位接收
         if (message.getContent() instanceof LocationMessage) {
             LogUtils.i(((LocationMessage) message.getContent()).getLat());
             LogUtils.i(((LocationMessage) message.getContent()).getLng());
         }
+        //图片接收
         if (message.getContent() instanceof ImageMessage) {
             LogUtils.i(((ImageMessage) message.getContent()).getThumUri());
             LogUtils.i(((ImageMessage) message.getContent()).getLocalUri());
             LogUtils.i(((ImageMessage) message.getContent()).getRemoteUri());
 //            PictureEnlargeUtils.getPictureEnlarge(this, String.valueOf(((ImageMessage) message.getContent()).getRemoteUri()));
         }
-
+        //接收的系统消息 根据服务器返回的类型跳转对应的页面
         if (mConversationType == Conversation.ConversationType.SYSTEM) {
-
+            //系统消息的id固定为18
             if (Integer.valueOf(message.getTargetId()) != 18) return false;
-
+            //接收的数据转换成json
             String messageJson = new Gson().toJson(message.getContent());
             String extra = JsonUtils.getString(messageJson, "extra");
-
-
             if (StringUtils.isEmpty(extra)) return false;
-
             LogUtils.i(extra);
-
             RongExtraBean extraBean = new Gson().fromJson(extra, RongExtraBean.class);
-
             Bundle bundle = new Bundle();
             switch (extraBean.type) {
                 case 3: //工程信息：%s已通过审核
@@ -317,6 +314,4 @@ public class IMPrivateChatActivity extends BaseActivity implements RongIM.Conver
     public boolean onMessageLongClick(Context context, View view, Message message) {
         return false;
     }
-
-
 }

@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBgDark">
+    android:background="@color/colorBgDark"
+    android:fitsSystemWindows="true">
 
     <include layout="@layout/toolbar" />
 
@@ -11,75 +12,394 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
+            <!--类别-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@color/colorFFF"
                 android:orientation="horizontal">
-                <TextView style="@style/RedMustText"/>
+                <TextView style="@style/RedMustText" />
                 <TextView
                     style="@style/AdminManageFirstText"
-                    android:text="@string/admin_turnover_add_category_material_id"/>
+                    android:text="@string/admin_turnover_add_category_material_id" />
                 <TextView
                     android:id="@+id/tv_category_material_id"
                     style="@style/AdminManageSecondText"
                     android:text="@string/admin_turnover_add_category_material_id_et" />
             </LinearLayout>
 
-            <View style="@style/DividingLine"/>
+            <View style="@style/DividingLine" />
 
+            <!--库存数量-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@color/colorFFF"
                 android:orientation="horizontal">
-
-                <TextView style="@style/RedMustText"/>
+                <TextView style="@style/RedMustText" />
                 <TextView
                     style="@style/AdminManageFirstText"
-                    android:text="@string/admin_turnover_add_stock"/>
+                    android:text="@string/admin_turnover_add_stock" />
                 <com.shuangduan.zcy.weight.XEditText
+                    android:id="@+id/et_stock"
+                    android:inputType="number"
                     style="@style/AdminManageSecondHint"
-                    android:hint="@string/admin_turnover_add_stock_et"/>
+                    android:hint="@string/admin_turnover_add_stock_et" />
             </LinearLayout>
 
-            <View style="@style/DividingLine"/>
+            <View style="@style/DividingLine" />
 
+            <!--单价-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@color/colorFFF"
                 android:orientation="horizontal">
-
-                <TextView style="@style/RedMustText"/>
+                <TextView style="@style/RedMustText" />
                 <TextView
                     style="@style/AdminManageFirstText"
-                    android:text="@string/admin_turnover_add_unit_price"/>
+                    android:text="@string/admin_turnover_add_unit_price" />
                 <com.shuangduan.zcy.weight.XEditText
+                    android:id="@+id/et_unit_price"
+                    android:inputType="number"
                     style="@style/AdminManageSecondHint"
-                    android:hint="@string/admin_turnover_add_unit_price_et"/>
+                    android:hint="@string/admin_turnover_add_unit_price_et" />
             </LinearLayout>
 
-            <View style="@style/DividingLine"/>
+            <View style="@style/DividingLine" />
 
+            <!--单位-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@color/colorFFF"
                 android:orientation="horizontal">
-                <TextView style="@style/RedMustText"/>
+                <TextView style="@style/RedMustText" />
                 <TextView
                     style="@style/AdminManageFirstText"
-                    android:text="@string/admin_turnover_add_unit"/>
+                    android:text="@string/admin_turnover_add_unit" />
                 <TextView
+                    android:id="@+id/tv_unit"
                     style="@style/AdminManageSecondText"
                     android:text="@string/admin_turnover_add_unit_et" />
             </LinearLayout>
 
+            <View style="@style/DividingLine" />
+
+            <!--规格型号-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/colorFFF"
+                android:orientation="horizontal">
+                <TextView style="@style/RedMustText" />
+                <TextView
+                    style="@style/AdminManageFirstText"
+                    android:text="@string/admin_turnover_add_spec" />
+                <com.shuangduan.zcy.weight.XEditText
+                    android:id="@+id/et_spec"
+                    style="@style/AdminManageSecondHint"
+                    android:hint="@string/admin_turnover_add_spec_et" />
+            </LinearLayout>
+
+            <View style="@style/DividingLine" />
+
+            <!--使用状态-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/colorFFF"
+                android:orientation="horizontal">
+                <TextView style="@style/RedMustText" />
+                <TextView
+                    style="@style/AdminManageFirstText"
+                    android:text="@string/admin_turnover_add_use_status" />
+                <TextView
+                    android:id="@+id/tv_use_status"
+                    style="@style/AdminManageSecondText"
+                    android:text="@string/admin_turnover_add_use_status_et" />
+            </LinearLayout>
+
+            <View style="@style/DividingLine" />
+
+            <!--材料状态-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/colorFFF"
+                android:orientation="horizontal">
+                <TextView style="@style/RedMustText" />
+                <TextView
+                    style="@style/AdminManageFirstText"
+                    android:text="@string/admin_turnover_add_material_status" />
+                <TextView
+                    android:id="@+id/tv_material_status"
+                    style="@style/AdminManageSecondText"
+                    android:text="@string/admin_turnover_add_material_status_et" />
+            </LinearLayout>
+
+            <View style="@style/DividingLine" />
+
+            <!--存放地点-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/colorFFF"
+                android:orientation="horizontal">
+                <TextView style="@style/RedMustText" />
+                <TextView
+                    style="@style/AdminManageFirstText"
+                    android:text="@string/admin_turnover_add_address" />
+                <TextView
+                    android:id="@+id/tv_address"
+                    style="@style/AdminManageSecondText"
+                    android:text="@string/admin_turnover_add_address_et" />
+            </LinearLayout>
+
+            <View style="@style/DividingLine" />
+
+            <!--责任人-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/colorFFF"
+                android:orientation="horizontal">
+                <TextView style="@style/RedMustText" />
+                <TextView
+                    style="@style/AdminManageFirstText"
+                    android:text="@string/admin_turnover_add_person_liable" />
+                <com.shuangduan.zcy.weight.XEditText
+                    android:id="@+id/et_person_liable"
+                    style="@style/AdminManageSecondHint"
+                    android:hint="@string/admin_turnover_add_person_liable_et" />
+            </LinearLayout>
+
+            <View style="@style/DividingLine" />
+
+            <!--联系电话-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/colorFFF"
+                android:orientation="horizontal">
+                <TextView style="@style/RedMustText" />
+                <TextView
+                    style="@style/AdminManageFirstText"
+                    android:text="@string/admin_turnover_add_tel" />
+                <com.shuangduan.zcy.weight.XEditText
+                    android:id="@+id/et_tel"
+                    android:inputType="number"
+                    style="@style/AdminManageSecondHint"
+                    android:hint="@string/admin_turnover_add_tel_et" />
+            </LinearLayout>
+
+            <View style="@style/DividingLine" />
+
+            <!--是否上架-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/colorFFF"
+                android:orientation="horizontal">
+                <TextView style="@style/RedMustText" />
+                <TextView
+                    style="@style/AdminManageFirstText"
+                    android:text="@string/admin_turnover_add_is_shelf" />
+                <TextView
+                    android:id="@+id/tv_is_shelf"
+                    style="@style/AdminManageSecondText"
+                    android:text="@string/admin_turnover_add_is_shelf_et" />
+            </LinearLayout>
+
+            <!--内部上架布局-->
+            <LinearLayout
+                android:id="@+id/ll_inside_shelf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+                <View style="@style/DividingLine" />
+                <!--上架时间-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@color/colorFFF"
+                    android:orientation="horizontal">
+                    <TextView style="@style/RedMustText" />
+                    <TextView
+                        style="@style/AdminManageFirstText"
+                        android:text="@string/admin_turnover_add_shelf_time" />
+                    <!--开始时间-->
+                    <TextView
+                        android:id="@+id/tv_shelf_time_start"
+                        style="@style/AdminManageSecondText"
+                        android:text="@string/admin_turnover_add_shelf_time_start" />
+                </LinearLayout>
+                <!--结束时间-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@color/colorFFF"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/tv_shelf_time_end"
+                        style="@style/AdminManageSecondText"
+                        android:text="@string/admin_turnover_add_shelf_time_end" />
+                </LinearLayout>
+                <!--公开或上架选择-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@color/colorFFF">
+                    <com.shuangduan.zcy.weight.RoundCheckBox
+                        android:id="@+id/cb_shelf_type_open"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="14dp"
+                        android:layout_toLeftOf="@+id/cb_shelf_type_close"
+                        android:layout_marginRight="23dp"
+                        android:text="@string/admin_turnover_add_shelf_type_open"
+                        android:textSize="14sp"
+                        android:theme="@style/CheckBox_background" />
+                    <com.shuangduan.zcy.weight.RoundCheckBox
+                        android:id="@+id/cb_shelf_type_close"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="30dp"
+                        android:text="@string/admin_turnover_add_shelf_type_close"
+                        android:textSize="14sp"
+                        android:theme="@style/CheckBox_background" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <!--供应方式-->
+            <LinearLayout
+                android:id="@+id/ll_method"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/colorFFF"
+                android:orientation="horizontal"
+                android:visibility="gone">
+                <TextView style="@style/RedMustText" />
+                <TextView
+                    style="@style/AdminManageFirstText"
+                    android:text="@string/admin_turnover_add_method" />
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+                    <com.shuangduan.zcy.weight.RoundCheckBox
+                        android:id="@+id/cb_lease"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_toLeftOf="@+id/cb_sell"
+                        android:text="@string/admin_turnover_add_lease"
+                        android:textSize="14sp"
+                        android:theme="@style/CheckBox_background" />
+                    <com.shuangduan.zcy.weight.RoundCheckBox
+                        android:id="@+id/cb_sell"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginLeft="14dp"
+                        android:layout_marginRight="30dp"
+                        android:text="@string/admin_turnover_add_sell"
+                        android:textSize="14sp"
+                        android:theme="@style/CheckBox_background" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <!--指导价格-->
+            <LinearLayout
+                android:id="@+id/ll_guidance_price"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/colorFFF"
+                android:orientation="horizontal"
+                android:visibility="gone">
+                <TextView style="@style/RedMustText" />
+                <TextView
+                    android:id="@+id/tv_guidance_price"
+                    style="@style/AdminManageFirstText"
+                    android:text="@string/admin_turnover_add_guidance_price" />
+                <com.shuangduan.zcy.weight.XEditText
+                    android:id="@+id/et_guidance_price"
+                    style="@style/AdminManageSecondHint"
+                    android:hint="@string/admin_turnover_add_guidance_price_et" />
+            </LinearLayout>
+
+            <View style="@style/DividingLine" />
+
+            <!--上传照片-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                android:background="@color/colorFFF"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+                    <TextView style="@style/RedMustText" />
+                    <TextView
+                        style="@style/AdminManageFirstText"
+                        android:text="@string/admin_turnover_add_images" />
+                    <TextView
+                        style="@style/AdminManageFirstText"
+                        android:textColor="@color/colorTvHint"
+                        android:text="@string/admin_turnover_add_images_et" />
+                </LinearLayout>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="14dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/icon_admin_add_images"/>
+            </LinearLayout>
+
+            <View style="@style/DividingLine" />
+
+            <!--打开添加详细信息开关-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/colorFFF">
+                <TextView
+                    style="@style/AdminManageFirstText"
+                    android:layout_marginLeft="22dp"
+                    android:layout_centerVertical="true"
+                    android:text="@string/admin_turnover_add_other_details" />
+                <com.shuangduan.zcy.weight.SwitchView
+                    android:id="@+id/sv"
+                    android:layout_width="44dp"
+                    android:layout_height="24dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="15dp"/>
+            </RelativeLayout>
+
+            <!--详细信息-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorFFF"
+                android:orientation="vertical">
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="70dp"/>
         </LinearLayout>
     </com.shuangduan.zcy.utils.ElasticScrollView>
 
