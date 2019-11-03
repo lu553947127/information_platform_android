@@ -96,6 +96,10 @@ public class TurnoverDetailActivity extends BaseActivity implements BaseQuickAda
     TextView tvOriginal;
     @BindView(R.id.tv_value)
     TextView tvValue;
+
+    @BindView(R.id.tv_entry_person)
+    TextView tvEntryPerson;
+
     @BindView(R.id.tv_remark)
     TextView tvRemark;
 
@@ -149,7 +153,7 @@ public class TurnoverDetailActivity extends BaseActivity implements BaseQuickAda
             tvPutaway.setText(turnover.isShelfName);
             String shelf = turnover.shelfType == 1 ? "到期自动公开" : "到期自动下架";
             tvPutawayTime.setText(getString(R.string.format_admin_shelf_time, turnover.shelfStartTime, turnover.shelfEndTime, shelf));
-            tvSupplyMethod.setText(turnover.method == 1 ? "出租" : "售卖");
+            tvSupplyMethod.setText(turnover.method == 1 ? "出租" : "出售");
 
             tvProject.setText(StringUtils.isTrimEmpty(turnover.unitIdName) ? "-" : turnover.unitIdName);
             tvPlan.setText(StringUtils.isTrimEmpty(turnover.planName) ? "-" : turnover.planName);
@@ -160,12 +164,20 @@ public class TurnoverDetailActivity extends BaseActivity implements BaseQuickAda
             tvAmortize.setText(turnover.accumulatedAmortization.equals("0") ? "-" : turnover.accumulatedAmortization);
             tvOriginal.setText(turnover.originalPrice.equals("0") ? "-" : turnover.originalPrice);
             tvValue.setText(turnover.netWorth.equals("0") ? "-" : turnover.netWorth);
-            tvRemark.setText(StringUtils.isTrimEmpty(turnover.remark) ? "-" : turnover.remark);
+
+            tvEntryPerson.setText(StringUtils.isTrimEmpty(turnover.username) ? "-" : turnover.username);
+
+            tvRemark.setText(turnover.remark);
 
             if (turnover.images != null && turnover.images.size() > 0) {
                 tvMaterialPhoto.setVisibility(View.VISIBLE);
                 rvImage.setVisibility(View.VISIBLE);
-                rvImage.setLayoutManager(new GridLayoutManager(this, 3, RecyclerView.VERTICAL, false));
+                rvImage.setLayoutManager(new GridLayoutManager(this, 3, RecyclerView.VERTICAL, false) {
+                    @Override
+                    public boolean canScrollVertically() {
+                        return false;
+                    }
+                });
                 rvImage.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15_15));
                 TurnoverImageAdapter adapter = new TurnoverImageAdapter(R.layout.item_turnover_image, null);
                 adapter.setOnItemChildClickListener(this);

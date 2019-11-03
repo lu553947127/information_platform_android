@@ -47,8 +47,13 @@ public class SearchRepository extends BaseRepository {
         request(apiService.searchPost(user_id)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
-    //物资搜索
+    //物资搜索 --- 周转材料
     public void searchMaterial(MutableLiveData<List<SearchMaterialBean>> liveData, MutableLiveData<String> pageStateLiveData, int user_id, int type, String name) {
         request(apiService.searchMaterial(user_id, type, name)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    //物资搜索 --- 设备物资
+    public void searchEquipment(MutableLiveData<List<SearchMaterialBean>> liveData, MutableLiveData<String> pageStateLiveData, int user_id, int type, String name) {
+        request(apiService.searchEquipment(user_id, type, name)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 }

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorFFF"
+    android:orientation="vertical"
+    android:paddingTop="20dp"
+    tools:ignore="MissingConstraints">
+
+    <TextView
+        style="@style/TextSize15Style"
+        android:paddingLeft="15sp"
+        android:text="@string/admin_turnover_detail"
+        android:textColor="@color/color_303741" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="23dp"
+        android:orientation="horizontal">
+
+        <com.shuangduan.zcy.weight.TurnoverSelectView
+            android:id="@+id/ts_project"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/ts_plan"
+            app:title_text="@string/admin_material_project"
+            app:value_text="@string/admin_please_select" />
+
+        <com.shuangduan.zcy.weight.TurnoverSelectView
+            android:id="@+id/ts_plan"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.3"
+            app:title_text="@string/admin_material_plan"
+            app:value_text="@string/admin_please_select" />
+
+        <com.shuangduan.zcy.weight.TurnoverSelectView
+            android:id="@+id/ts_num"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:title_text="@string/admin_material_num"
+            app:value_text="@string/admin_please_select" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="23dp"
+        android:orientation="horizontal">
+
+        <com.shuangduan.zcy.weight.TurnoverSelectView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/ts_plan"
+            app:title_text="@string/admin_material_start_time"
+            app:value_text="@string/admin_please_select" />
+
+        <com.shuangduan.zcy.weight.TurnoverSelectView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.3"
+            app:title_text="@string/admin_material_enter_time"
+            app:value_text="@string/admin_please_select" />
+
+        <com.shuangduan.zcy.weight.TurnoverSelectView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:title_text="@string/admin_material_exit_time"
+            app:value_text="@string/admin_please_select" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="23dp"
+        android:orientation="horizontal">
+
+        <com.shuangduan.zcy.weight.TurnoverSelectView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/ts_plan"
+            app:title_text="@string/admin_material_amortize"
+            app:value_text="@string/admin_please_select" />
+
+        <com.shuangduan.zcy.weight.TurnoverSelectView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.3"
+            app:title_text="@string/admin_material_original"
+            app:value_text="@string/admin_please_select" />
+
+        <com.shuangduan.zcy.weight.TurnoverSelectView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:title_text="@string/admin_material_value"
+            app:value_text="@string/admin_please_select" />
+    </LinearLayout>
+
+    <TextView
+        style="@style/TextSize15Style"
+        android:layout_marginLeft="15sp"
+        android:layout_marginTop="33dp"
+        android:text="@string/admin_turnover_remark"
+        android:textColor="@color/colorTv" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginRight="15dp"
+        android:gravity="left"
+        android:hint="@string/admin_turnover_hint_input"
+        android:textSize="14sp"
+        android:padding="5dp"
+        android:minHeight="78dp"
+        android:textColor="@color/colorTv"
+        android:background="@drawable/shape_stroke_bfbfbf_2"/>
+
+</LinearLayout>

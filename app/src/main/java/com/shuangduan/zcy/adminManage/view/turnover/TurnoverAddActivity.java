@@ -94,6 +94,9 @@ public class TurnoverAddActivity extends BaseActivity {
     XEditText etGuidancePrice;
     @BindView(R.id.sv_other_details)
     SwitchView svOtherDetails;
+    @BindView(R.id.ll_turnover_detail)
+    LinearLayout llTurnoverDetail;
+
     private TurnoverVm turnoverVm;
 
     @Override
@@ -130,12 +133,14 @@ public class TurnoverAddActivity extends BaseActivity {
         svOtherDetails.setOnStateChangedListener(new SwitchView.OnStateChangedListener() {
             @Override
             public void toggleToOn(SwitchView view) {
-
+                svOtherDetails.setOpened(!view.isOpened());
+                llTurnoverDetail.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void toggleToOff(SwitchView view) {
-
+                svOtherDetails.setOpened(!view.isOpened());
+                llTurnoverDetail.setVisibility(View.GONE);
             }
         });
         //设置选择按钮默认选中

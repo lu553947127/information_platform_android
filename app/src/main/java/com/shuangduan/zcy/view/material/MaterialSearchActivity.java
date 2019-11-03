@@ -15,6 +15,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -59,7 +60,10 @@ public class MaterialSearchActivity extends BaseActivity {
 
     //物资或供应商列表Adapter
     private SearchMaterialAdapter searchAdapter;
-    private int type;
+    //搜索类型：1 基建物资，2 供应商
+    private int searchType;
+    //基建物资类型 1 周转材料 ，2 设备物资
+    private int materialsType;
 
     @Override
     protected int initLayoutRes() {
@@ -73,7 +77,8 @@ public class MaterialSearchActivity extends BaseActivity {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
-        type = getIntent().getIntExtra(CustomConfig.SEARCH_MATERIAL_TYPE, -1);
+        searchType = getIntent().getIntExtra(CustomConfig.SEARCH_MATERIAL_TYPE, -1);
+        materialsType = getIntent().getIntExtra(CustomConfig.MATERIALS_TYPE, 0);
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         SearchVm searchVm = ViewModelProviders.of(this).get(SearchVm.class);
         //初始化搜索框监听
@@ -91,10 +96,10 @@ public class MaterialSearchActivity extends BaseActivity {
                 searchAdapter.setOnItemClickListener((adapter, view, position) -> {
                     int id = searchAdapter.getData().get(position).id;
                     String s = searchAdapter.getData().get(position).name;
-                    if (type == CustomConfig.MATERIAL_TYPE) {
-                        EventBus.getDefault().post(new MaterialEvent(id,s));
-                    }else if(type == CustomConfig.SUPPLIER_TYPE){
-                        EventBus.getDefault().post(new SupplierEvent(id,s));
+                    if (searchType == CustomConfig.MATERIAL_TYPE) {
+                        EventBus.getDefault().post(new MaterialEvent(id, s));
+                    } else if (searchType == CustomConfig.SUPPLIER_TYPE) {
+                        EventBus.getDefault().post(new SupplierEvent(id, s));
                     }
                     finish();
                 });
@@ -116,7 +121,12 @@ public class MaterialSearchActivity extends BaseActivity {
                 // 搜索，进行自己要的操作...
                 ivClear.setVisibility(edtKeyword.getText().length() > 0 ? View.VISIBLE : View.INVISIBLE);
                 if (edtKeyword.getText().length() > 0) {
-                    searchVm.searchMaterial(type, edtKeyword.getText().toString());
+                    if (materialsType == CustomConfig.FRP) {
+                        searchVm.searchMaterial(searchType, edtKeyword.getText().toString());
+                    } else if (materialsType == CustomConfig.EQUIPMENT) {
+                        searchVm.searchEquipment(searchType, edtKeyword.getText().toString());
+                    }
+
                 }
                 return true;
             }
@@ -138,13 +148,17 @@ public class MaterialSearchActivity extends BaseActivity {
             @Override
             public void afterTextChanged(Editable editable) {
                 if (null != editable) {
-                    if (StringUtils.isTrimEmpty(editable.toString())){
+                    if (StringUtils.isTrimEmpty(editable.toString())) {
                         ToastUtils.showShort(getString(R.string.hint_keyword));
                         return;
                     }
                     ivClear.setVisibility(edtKeyword.getText().length() > 0 ? View.VISIBLE : View.INVISIBLE);
                     if (edtKeyword.getText().length() > 0) {
-                        searchVm.searchMaterial(type, edtKeyword.getText().toString());
+                        if (materialsType == CustomConfig.FRP) {
+                            searchVm.searchMaterial(searchType, edtKeyword.getText().toString());
+                        } else if (materialsType == CustomConfig.EQUIPMENT) {
+                            searchVm.searchEquipment(searchType, edtKeyword.getText().toString());
+                        }
                     }
                 }
             }
@@ -178,7 +192,11 @@ public class MaterialSearchActivity extends BaseActivity {
             public void afterTextChanged(Editable s) {
                 ivClear.setVisibility(s.length() > 0 ? View.VISIBLE : View.INVISIBLE);
                 if (s.length() > 0) {
-                    vm.searchMaterial(type, s.toString());
+                    if (materialsType == CustomConfig.FRP) {
+                        vm.searchMaterial(searchType, edtKeyword.getText().toString());
+                    } else if (materialsType == CustomConfig.EQUIPMENT) {
+                        vm.searchEquipment(searchType, edtKeyword.getText().toString());
+                    }
                 }
             }
         });

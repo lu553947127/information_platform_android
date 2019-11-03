@@ -67,7 +67,7 @@ public class TurnoverBean {
         private String material_id;
         private String is_shelf;
         private String province;
-        private int city;
+        private String city;
         private String address;
         private String use_status;
         private String company;
@@ -121,11 +121,11 @@ public class TurnoverBean {
             this.province = province;
         }
 
-        public int getCity() {
+        public String getCity() {
             return city;
         }
 
-        public void setCity(int city) {
+        public void setCity(String city) {
             this.city = city;
         }
 

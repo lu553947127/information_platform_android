@@ -27,8 +27,9 @@ import java.util.List;
  */
 public class TurnoverAdapter extends BaseQuickAdapter<TurnoverBean.ListBean, BaseViewHolder> {
 
-    private int construction_edit,construction_delete,is_children;
-    public TurnoverAdapter(int layoutResId, @Nullable List<TurnoverBean.ListBean> data,int construction_edit,int construction_delete,int is_children) {
+    private int construction_edit, construction_delete, is_children;
+
+    public TurnoverAdapter(int layoutResId, @Nullable List<TurnoverBean.ListBean> data, int construction_edit, int construction_delete, int is_children) {
         super(layoutResId, data);
         this.construction_edit = construction_edit;
         this.construction_delete = construction_delete;
@@ -36,7 +37,7 @@ public class TurnoverAdapter extends BaseQuickAdapter<TurnoverBean.ListBean, Bas
     }
 
     //删除item
-    public void removeData(List<TurnoverBean.ListBean> data,int position) {
+    public void removeData(List<TurnoverBean.ListBean> data, int position) {
         data.remove(position);
         //删除动画
         notifyItemRemoved(position);
@@ -45,49 +46,51 @@ public class TurnoverAdapter extends BaseQuickAdapter<TurnoverBean.ListBean, Bas
 
     @Override
     protected void convert(BaseViewHolder helper, TurnoverBean.ListBean item) {
-        String use_status=item.getUse_status();
-        TextView tvUseStatus=helper.getView(R.id.tv_use_status);
+        String use_status = item.getUse_status();
+        TextView tvUseStatus = helper.getView(R.id.tv_use_status);
         tvUseStatus.setText(use_status);
-        if (use_status.equals("在用")){
+        if (use_status.equals("在用")) {
             tvUseStatus.setBackgroundResource(R.drawable.shape_green);
-        }else if (use_status.equals("闲置")){
+        } else if (use_status.equals("闲置")) {
             tvUseStatus.setBackgroundResource(R.drawable.shape_gray);
-        }else if (use_status.equals("出租")){
+        } else if (use_status.equals("出租")) {
             tvUseStatus.setBackgroundResource(R.drawable.shape_yellow);
-        }else {
+        } else {
             tvUseStatus.setBackgroundResource(R.drawable.shape_red);
         }
 
-        LinearLayout linearLayout=helper.getView(R.id.ll_edit);
-        TextView tvEdit=helper.getView(R.id.tv_edit);
-        TextView tvDelete=helper.getView(R.id.tv_delete);
-        TextView tvSplit=helper.getView(R.id.tv_split);
-        if (is_children==0){
+        LinearLayout linearLayout = helper.getView(R.id.ll_edit);
+        TextView tvEdit = helper.getView(R.id.tv_edit);
+        TextView tvDelete = helper.getView(R.id.tv_delete);
+        TextView tvSplit = helper.getView(R.id.tv_split);
+        if (is_children == 0) {
             linearLayout.setVisibility(View.VISIBLE);
-            if (construction_edit==0&&construction_delete==0){
+            if (construction_edit == 0 && construction_delete == 0) {
                 linearLayout.setVisibility(View.GONE);
-            }else if (construction_edit==1&&construction_delete==0){
+            } else if (construction_edit == 1 && construction_delete == 0) {
                 tvEdit.setVisibility(View.VISIBLE);
                 tvSplit.setVisibility(View.VISIBLE);
                 tvDelete.setVisibility(View.GONE);
-            }else if (construction_edit==0&&construction_delete==1){
+            } else if (construction_edit == 0 && construction_delete == 1) {
                 tvEdit.setVisibility(View.GONE);
                 tvSplit.setVisibility(View.GONE);
                 tvDelete.setVisibility(View.VISIBLE);
             }
             helper.setText(R.id.tv_material, item.getMaterial_id())
-                    .setText(R.id.tv_company ,"材料类别："+item.getCategory())
-                    .setText(R.id.tv_category ,"是否上架："+item.getIs_shelf()+"      库存数量："+item.getStock())
-                    .setText(R.id.tv_address ,"存放地点："+item.getAddress())
+                    .setText(R.id.tv_company, "材料类别：" + item.getCategory())
+                    .setText(R.id.tv_category, "是否上架：" + item.getIs_shelf() + "      库存数量：" + item.getStock())
+                    //此处地址 需要 省 市 详细地址拼接
+                    .setText(R.id.tv_address, "存放地点：" + item.getProvince() + item.getCity() + item.getAddress())
                     .addOnClickListener(R.id.tv_edit)
                     .addOnClickListener(R.id.tv_split)
                     .addOnClickListener(R.id.tv_delete);
-        }else {
+        } else {
             linearLayout.setVisibility(View.GONE);
             helper.setText(R.id.tv_material, item.getMaterial_id())
-                    .setText(R.id.tv_company ,"子公司："+item.getCompany())
-                    .setText(R.id.tv_category ,"分类："+item.getCategory()+"      是否上架："+item.getIs_shelf())
-                    .setText(R.id.tv_address ,"存放地点："+item.getAddress());
+                    .setText(R.id.tv_company, "子公司：" + item.getCompany())
+                    .setText(R.id.tv_category, "分类：" + item.getCategory() + "      是否上架：" + item.getIs_shelf())
+                    //此处地址 需要 省 市 详细地址拼接
+                    .setText(R.id.tv_address, "存放地点：" + item.getProvince() + item.getCity() + item.getAddress());
         }
     }
 }

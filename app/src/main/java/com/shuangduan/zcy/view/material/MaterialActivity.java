@@ -162,6 +162,8 @@ public class MaterialActivity extends BaseActivity {
                     break;
             }
         });
+
+
     }
 
     @OnClick({R.id.iv_bar_back, R.id.iv_back, R.id.tv_open, R.id.tv_default, R.id.over, R.id.ll_name, R.id.ll_spec, R.id.ll_supplier, R.id.ll_supplier_method, R.id.tv_bar_right})
@@ -225,6 +227,7 @@ public class MaterialActivity extends BaseActivity {
                         tvMaterial.setOnClickListener(v -> {
                             Bundle bundle = new Bundle();
                             bundle.putInt(CustomConfig.SEARCH_MATERIAL_TYPE, CustomConfig.MATERIAL_TYPE);
+                            bundle.putInt(CustomConfig.MATERIALS_TYPE, vp.getCurrentItem()==0?CustomConfig.FRP:CustomConfig.EQUIPMENT);
                             ActivityUtils.startActivity(bundle, MaterialSearchActivity.class);
                         });
 
@@ -236,6 +239,7 @@ public class MaterialActivity extends BaseActivity {
                         tvSupplier.setOnClickListener(v -> {
                             Bundle bundle = new Bundle();
                             bundle.putInt(CustomConfig.SEARCH_MATERIAL_TYPE, CustomConfig.SUPPLIER_TYPE);
+                            bundle.putInt(CustomConfig.MATERIALS_TYPE, vp.getCurrentItem()==0?CustomConfig.FRP:CustomConfig.EQUIPMENT);
                             ActivityUtils.startActivity(bundle, MaterialSearchActivity.class);
                         });
 
@@ -286,6 +290,8 @@ public class MaterialActivity extends BaseActivity {
                     tvMaterial.setOnClickListener(v -> {
                         Bundle bundle = new Bundle();
                         bundle.putInt(CustomConfig.SEARCH_MATERIAL_TYPE, CustomConfig.MATERIAL_TYPE);
+                        bundle.putInt(CustomConfig.MATERIALS_TYPE, vp.getCurrentItem()==0?CustomConfig.FRP:CustomConfig.EQUIPMENT);
+
                         ActivityUtils.startActivity(bundle, MaterialSearchActivity.class);
                     });
                     //规格
@@ -296,6 +302,7 @@ public class MaterialActivity extends BaseActivity {
                     tvSupplier.setOnClickListener(v -> {
                         Bundle bundle = new Bundle();
                         bundle.putInt(CustomConfig.SEARCH_MATERIAL_TYPE, CustomConfig.SUPPLIER_TYPE);
+                        bundle.putInt(CustomConfig.MATERIALS_TYPE, vp.getCurrentItem()==0?CustomConfig.FRP:CustomConfig.EQUIPMENT);
                         ActivityUtils.startActivity(bundle, MaterialSearchActivity.class);
                     });
                     //供应方式

@@ -1,19 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="TurnoverDetailTextKeyStyle">
+    <style name="BaseWrapContentTextStyle">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/color_717986</item>
-        <item name="android:layout_marginTop">10dp</item>
+    </style>
+
+
+
+    <style name="TextSize12Style" parent="BaseWrapContentTextStyle">
         <item name="android:textSize">12sp</item>
     </style>
 
-    <style name="TurnoverDetailTextValueStyle">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/color_303741</item>
+    <style name="TextSize14Style" parent="BaseWrapContentTextStyle">
         <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="TextSize15Style" parent="BaseWrapContentTextStyle">
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="TurnoverDetailTextKeyStyle" parent="TextSize12Style">
+        <item name="android:textColor">@color/color_717986</item>
+    </style>
+
+    <style name="TurnoverDetailTextValueStyle" parent="TextSize14Style">
+        <item name="android:textColor">@color/color_303741</item>
     </style>
 
 </resources>

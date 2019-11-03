@@ -139,8 +139,14 @@ public class SearchVm extends BaseViewModel {
         new SearchRepository().searchPost(postLiveData, pageStateLiveData, userId);
     }
 
+    //基建物资搜索---周转材料
     public void searchMaterial(int type, String name) {
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
         new SearchRepository().searchMaterial(materialLiveData, pageStateLiveData, userId, type, name);
+    }
+    //基建物资搜索---设备物资
+    public void searchEquipment(int type ,String name){
+        pageStateLiveData.postValue(PageState.PAGE_REFRESH);
+        new SearchRepository().searchEquipment(materialLiveData, pageStateLiveData, userId, type, name);
     }
 }

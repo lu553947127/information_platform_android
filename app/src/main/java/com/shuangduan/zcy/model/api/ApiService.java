@@ -1245,10 +1245,19 @@ public interface ApiService {
             @Field("user_id") int userId
     );
 
-    //基建物资搜索
+    //基建物资搜索 --- 周转材料
     @FormUrlEncoded
     @POST("api/Material/search")
     Flowable<BaseResponse<List<SearchMaterialBean>>> searchMaterial(
+            @Field("user_id") int userId,
+            @Field("type") int type,
+            @Field("name") String name
+    );
+
+    //基建物资搜索 --- 设备物资
+    @FormUrlEncoded
+    @POST("api/Equipment/search")
+    Flowable<BaseResponse<List<SearchMaterialBean>>> searchEquipment(
             @Field("user_id") int userId,
             @Field("type") int type,
             @Field("name") String name

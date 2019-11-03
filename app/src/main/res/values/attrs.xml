@@ -11,32 +11,32 @@
     </declare-styleable>
 
     <declare-styleable name="Custom_Round_Image_View">
-        <attr name="radius" format="dimension"/>
-        <attr name="left_top_radius" format="dimension"/>
-        <attr name="right_top_radius" format="dimension"/>
-        <attr name="right_bottom_radius" format="dimension"/>
-        <attr name="left_bottom_radius" format="dimension"/>
+        <attr name="radius" format="dimension" />
+        <attr name="left_top_radius" format="dimension" />
+        <attr name="right_top_radius" format="dimension" />
+        <attr name="right_bottom_radius" format="dimension" />
+        <attr name="left_bottom_radius" format="dimension" />
     </declare-styleable>
 
     <declare-styleable name="ScoreView">
-        <attr name="sv_border_width" format="dimension"/>
-        <attr name="sv_border_color" format="color"/>
-        <attr name="sv_border_color_default" format="color"/>
-        <attr name="sv_fill_color" format="color"/>
-        <attr name="sv_textSize_score" format="dimension"/>
-        <attr name="sv_textSize_prompt" format="dimension"/>
-        <attr name="sv_textColor" format="color"/>
-        <attr name="sv_radius" format="dimension"/>
+        <attr name="sv_border_width" format="dimension" />
+        <attr name="sv_border_color" format="color" />
+        <attr name="sv_border_color_default" format="color" />
+        <attr name="sv_fill_color" format="color" />
+        <attr name="sv_textSize_score" format="dimension" />
+        <attr name="sv_textSize_prompt" format="dimension" />
+        <attr name="sv_textColor" format="color" />
+        <attr name="sv_radius" format="dimension" />
     </declare-styleable>
 
     <declare-styleable name="TimeCountDownView">
-        <attr name="tcd_border_width" format="dimension"/>
-        <attr name="tcd_border_color" format="color"/>
-        <attr name="tcd_border_color_default" format="color"/>
-        <attr name="tcd_fill_color" format="color"/>
-        <attr name="tcd_textSize" format="dimension"/>
-        <attr name="tcd_textColor" format="color"/>
-        <attr name="tcd_radius" format="dimension"/>
+        <attr name="tcd_border_width" format="dimension" />
+        <attr name="tcd_border_color" format="color" />
+        <attr name="tcd_border_color_default" format="color" />
+        <attr name="tcd_fill_color" format="color" />
+        <attr name="tcd_textSize" format="dimension" />
+        <attr name="tcd_textColor" format="color" />
+        <attr name="tcd_radius" format="dimension" />
     </declare-styleable>
 
     <declare-styleable name="DynamicSoreView">
@@ -52,112 +52,112 @@
 
     <declare-styleable name="BGANinePhotoLayout">
         <!-- Item 条目圆角尺寸，默认值为 0dp -->
-        <attr name="bga_npl_itemCornerRadius" format="dimension|reference"/>
+        <attr name="bga_npl_itemCornerRadius" format="dimension|reference" />
         <!-- 当只有一张图片时，是否显示成大图，默认值为 true -->
-        <attr name="bga_npl_showAsLargeWhenOnlyOne" format="boolean"/>
+        <attr name="bga_npl_showAsLargeWhenOnlyOne" format="boolean" />
         <!-- Item 间的水平和垂直间距，默认值为 4dp -->
-        <attr name="bga_npl_itemWhiteSpacing" format="dimension|reference"/>
+        <attr name="bga_npl_itemWhiteSpacing" format="dimension|reference" />
         <!-- 出去九宫格部分的空白区域的尺寸，默认值为 100dp -->
-        <attr name="bga_npl_otherWhiteSpacing" format="dimension|reference"/>
+        <attr name="bga_npl_otherWhiteSpacing" format="dimension|reference" />
         <!-- 占位图资源，默认值为 R.mipmap.bga_pp_ic_holder_light -->
-        <attr name="bga_npl_placeholderDrawable" format="reference"/>
+        <attr name="bga_npl_placeholderDrawable" format="reference" />
         <!-- item 的尺寸，优先级高于 bga_npl_otherWhiteSpacing，默认值为 0dp -->
-        <attr name="bga_npl_itemWidth" format="dimension|reference"/>
+        <attr name="bga_npl_itemWidth" format="dimension|reference" />
         <!-- 列数,默认值为 3，当该值大于 3 并且数据源里只有四张图片时不会显示成 2 列 -->
-        <attr name="bga_npl_itemSpanCount" format="integer"/>
+        <attr name="bga_npl_itemSpanCount" format="integer" />
     </declare-styleable>
 
     <declare-styleable name="BGAImageView">
         <!-- 默认图片资源，默认值为 null -->
-        <attr name="android:src"/>
+        <attr name="android:src" />
         <!-- 是否是圆形，默认值为 false -->
-        <attr name="bga_iv_circle" format="boolean"/>
+        <attr name="bga_iv_circle" format="boolean" />
         <!-- 圆角矩形的半径，默认值为 0dp -->
-        <attr name="bga_iv_cornerRadius" format="reference|dimension"/>
+        <attr name="bga_iv_cornerRadius" format="reference|dimension" />
         <!-- 是否是矩形，默认值为 false -->
-        <attr name="bga_iv_square" format="boolean"/>
+        <attr name="bga_iv_square" format="boolean" />
         <!-- 描边的宽度，默认值为 0dp -->
-        <attr name="bga_iv_borderWidth" format="reference|dimension"/>
+        <attr name="bga_iv_borderWidth" format="reference|dimension" />
         <!-- 描边的颜色，默认值为 Color.WHITE -->
-        <attr name="bga_iv_borderColor" format="reference|color"/>
+        <attr name="bga_iv_borderColor" format="reference|color" />
     </declare-styleable>
 
     <!--首页跑马灯文字属性设置-->
     <declare-styleable name="MarqueeView">
         <attr name="marqueeview_repet_type" format="enum">
-            <enum name="repet_oncetime" value="0"/><!-- 播放一次 -->
-            <enum name="repet_interval" value="1"/>  <!--连续播放 循环结束再继续下次循环-->
-            <enum name="repet_continuous" value="2"/>  <!--连续播放 到末尾直接继续下次循环-->
+            <enum name="repet_oncetime" value="0" /><!-- 播放一次 -->
+            <enum name="repet_interval" value="1" />  <!--连续播放 循环结束再继续下次循环-->
+            <enum name="repet_continuous" value="2" />  <!--连续播放 到末尾直接继续下次循环-->
         </attr><!--循环模式-->
-        <attr name="marqueeview_text_distance" format="integer"/><!--每个item之间的距离-->
-        <attr name="marqueeview_text_startlocationdistance" format="float"/><!--开始的起始位置 按距离控件左边的百分比 0~1之间 -->
-        <attr name="marqueeview_text_speed" format="float"/><!--播放速度 也就是文字滚动速度-->
-        <attr name="marqueeview_text_color" format="color|reference"/><!-- 文字颜色 -->
-        <attr name="marqueeview_text_size" format="float"/><!-- 文字大小 -->
-        <attr name="marqueeview_isclickalbe_stop" format="boolean"/><!--是否点击暂停-->
-        <attr name="marqueeview_is_resetLocation" format="boolean"/><!--重新改变内容的时候 ， 是否初始化 位置，默认为true，改变-->
+        <attr name="marqueeview_text_distance" format="integer" /><!--每个item之间的距离-->
+        <attr name="marqueeview_text_startlocationdistance" format="float" /><!--开始的起始位置 按距离控件左边的百分比 0~1之间 -->
+        <attr name="marqueeview_text_speed" format="float" /><!--播放速度 也就是文字滚动速度-->
+        <attr name="marqueeview_text_color" format="color|reference" /><!-- 文字颜色 -->
+        <attr name="marqueeview_text_size" format="float" /><!-- 文字大小 -->
+        <attr name="marqueeview_isclickalbe_stop" format="boolean" /><!--是否点击暂停-->
+        <attr name="marqueeview_is_resetLocation" format="boolean" /><!--重新改变内容的时候 ， 是否初始化 位置，默认为true，改变-->
     </declare-styleable>
 
     <declare-styleable name="PicContentView">
-        <attr name="maxSize" format="integer"/>
+        <attr name="maxSize" format="integer" />
     </declare-styleable>
 
     <!--仿苹果选择按钮-->
     <declare-styleable name="SwitchView">
-        <attr name="hasShadow" format="boolean"/>
-        <attr name="primaryColor" format="color"/>
-        <attr name="primaryColorDark" format="color"/>
-        <attr name="offColor" format="color"/>
-        <attr name="offColorDark" format="color"/>
-        <attr name="shadowColor" format="color"/>
-        <attr name="ratioAspect" format="float"/>
-        <attr name="isOpened" format="boolean"/>
+        <attr name="hasShadow" format="boolean" />
+        <attr name="primaryColor" format="color" />
+        <attr name="primaryColorDark" format="color" />
+        <attr name="offColor" format="color" />
+        <attr name="offColorDark" format="color" />
+        <attr name="shadowColor" format="color" />
+        <attr name="ratioAspect" format="float" />
+        <attr name="isOpened" format="boolean" />
     </declare-styleable>
 
     <!--滑动的tab栏设置属性参数-->
     <declare-styleable name="XTabItem">
-        <attr name="android:text"/>
-        <attr name="android:icon"/>
-        <attr name="android:layout"/>
+        <attr name="android:text" />
+        <attr name="android:icon" />
+        <attr name="android:layout" />
     </declare-styleable>
     <declare-styleable name="XTabLayout">
-        <attr name="x_tabIndicatorAnimation" format="boolean"/>
-        <attr name="x_tabIndicatorColor" format="color"/>
-        <attr name="x_tabIndicatorHeight" format="dimension"/>
-        <attr name="x_tabIndicatorWidth" format="dimension"/>
-        <attr name="x_tabContentStart" format="dimension"/>
-        <attr name="x_tabBackground" format="reference"/>
+        <attr name="x_tabIndicatorAnimation" format="boolean" />
+        <attr name="x_tabIndicatorColor" format="color" />
+        <attr name="x_tabIndicatorHeight" format="dimension" />
+        <attr name="x_tabIndicatorWidth" format="dimension" />
+        <attr name="x_tabContentStart" format="dimension" />
+        <attr name="x_tabBackground" format="reference" />
         <attr name="x_tabMode">
-            <enum name="scrollable" value="0"/>
-            <enum name="fixed" value="1"/>
+            <enum name="scrollable" value="0" />
+            <enum name="fixed" value="1" />
         </attr>
         <attr name="x_tabGravity">
-            <enum name="fill" value="0"/>
-            <enum name="center" value="1"/>
+            <enum name="fill" value="0" />
+            <enum name="center" value="1" />
         </attr>
-        <attr name="x_tabMinWidth" format="dimension"/>
-        <attr name="x_tabMaxWidth" format="dimension"/>
-        <attr name="x_tabTextAppearance" format="reference"/>
-        <attr name="x_tabTextColor" format="color"/>
-        <attr name="x_tabSelectedTextColor" format="color"/>
-        <attr name="x_tabPaddingStart" format="dimension"/>
-        <attr name="x_tabPaddingTop" format="dimension"/>
-        <attr name="x_tabPaddingEnd" format="dimension"/>
-        <attr name="x_tabPaddingBottom" format="dimension"/>
-        <attr name="x_tabPadding" format="dimension"/>
+        <attr name="x_tabMinWidth" format="dimension" />
+        <attr name="x_tabMaxWidth" format="dimension" />
+        <attr name="x_tabTextAppearance" format="reference" />
+        <attr name="x_tabTextColor" format="color" />
+        <attr name="x_tabSelectedTextColor" format="color" />
+        <attr name="x_tabPaddingStart" format="dimension" />
+        <attr name="x_tabPaddingTop" format="dimension" />
+        <attr name="x_tabPaddingEnd" format="dimension" />
+        <attr name="x_tabPaddingBottom" format="dimension" />
+        <attr name="x_tabPadding" format="dimension" />
         <attr name="x_indicatorMarginTop" format="dimension" />
     </declare-styleable>
 
     <!--自定义输入框属性设置-->
     <declare-styleable name="XEditText">
-        <attr name="x_separator" format="string"/>
-        <attr name="x_disableClear" format="boolean"/>
-        <attr name="x_clearDrawable" format="reference"/>
-        <attr name="x_showPwdDrawable" format="reference"/>
-        <attr name="x_hidePwdDrawable" format="reference"/>
-        <attr name="x_disableEmoji" format="boolean"/>
-        <attr name="x_togglePwdDrawableEnable" format="boolean"/>
-        <attr name="x_pattern" format="string"/>
+        <attr name="x_separator" format="string" />
+        <attr name="x_disableClear" format="boolean" />
+        <attr name="x_clearDrawable" format="reference" />
+        <attr name="x_showPwdDrawable" format="reference" />
+        <attr name="x_hidePwdDrawable" format="reference" />
+        <attr name="x_disableEmoji" format="boolean" />
+        <attr name="x_togglePwdDrawableEnable" format="boolean" />
+        <attr name="x_pattern" format="string" />
     </declare-styleable>
 
     <!--根据字母选择列表-->
@@ -174,4 +174,11 @@
         <attr name="tipFontColor" format="color" />
     </declare-styleable>
 
+
+    <!--    后台管理 添加周转材料详情 组合布局  -->
+    <declare-styleable name="TurnoverSelectView">
+        <attr name="title_text" format="string|reference"></attr>
+        <attr name="value_text" format="string|reference"></attr>
+        <attr name="line_show" format="boolean"></attr>
+    </declare-styleable>
 </resources>

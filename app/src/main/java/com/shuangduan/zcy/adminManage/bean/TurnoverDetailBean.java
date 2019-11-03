@@ -111,6 +111,8 @@ public class TurnoverDetailBean {
     @SerializedName("remark")
     public String remark;
 
+    public String username;
+
     public List<Images> images;
 
     public class Images {
