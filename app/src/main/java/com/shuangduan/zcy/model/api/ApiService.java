@@ -1588,4 +1588,42 @@ public interface ApiService {
             @Field("longitude") double longitude,
             @Field("latitude") double latitude
     );
+
+    //后台管理 --- 周转材料添加
+    @FormUrlEncoded
+    @POST("api/Manage/constructionAdd")
+    Flowable<BaseResponse<String>> constructionAdd(
+            @Field("user_id") int userId,
+            @Field("category") int category,
+            @Field("material_id") int material_id,
+            @Field("stock") String stock,
+            @Field("unit_price") String unit_price,
+            @Field("unit") int unit,
+            @Field("spec") String spec,
+            @Field("use_status") int use_status,
+            @Field("material_status") int material_status,
+            @Field("province") int province,
+            @Field("city") int city,
+            @Field("address") String address,
+            @Field("longitude") double longitude,
+            @Field("latitude") double latitude,
+            @Field("person_liable") String person_liable,
+            @Field("tel") String tel,
+            @Field("is_shelf") int is_shelf,
+            @Field("shelf_start_time") String shelf_start_time,
+            @Field("shelf_end_time") String shelf_end_time,
+            @Field("shelf_type") int shelf_type,
+            @Field("method") int method,
+            @Field("guidance_price") String guidance_price,
+            @Field("images") String images,
+            @Field("unit_id") int unit_id,
+            @Field("plan") int plan,
+            @Field("use_count") String use_count,
+            @Field("start_date") int start_date,
+            @Field("entry_time") int entry_time,
+            @Field("accumulated_amortization") String accumulated_amortization,
+            @Field("original_price") String original_price,
+            @Field("net_worth") String net_worth,
+            @Field("remark") String remark
+    );
 }

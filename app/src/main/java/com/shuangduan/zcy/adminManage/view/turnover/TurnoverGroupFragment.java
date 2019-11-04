@@ -513,6 +513,7 @@ public class TurnoverGroupFragment extends BaseLazyFragment {
         getAddTopScreenView(tvNameSecond,event.material_name,View.VISIBLE);
     }
 
+    @SuppressLint("SetTextI18n")
     @Subscribe
     public void onEventLocationEvent(LocationEvent event){
         splitProvince=event.getProvinceId();
@@ -520,7 +521,7 @@ public class TurnoverGroupFragment extends BaseLazyFragment {
         splitAddress=event.getAddress();
         latitude=event.getLatitude();
         longitude=event.getLongitude();
-        tvSplitAddress.setText(event.getAddress());
+        tvSplitAddress.setText(event.getProvince()+event.getCity()+event.getAddress());
         tvSplitAddress.setTextColor(getResources().getColor(R.color.colorTv));
     }
 

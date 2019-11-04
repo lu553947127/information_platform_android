@@ -58,10 +58,8 @@ public class LocationMapActivity extends BaseActivity {
     Toolbar toolbar;
     @BindView(R.id.tv_bar_right)
     AppCompatTextView tvBarRight;
-
-    private PermissionVm permissionVm;
-    MapView mMapView = null;
-    AMap aMap = null;
+    private MapView mMapView = null;
+    private AMap aMap = null;
     private String cityName,formatAddress;
     private Marker locationMarker;
     private LatLonPoint searchLatlonPoint;
@@ -84,10 +82,9 @@ public class LocationMapActivity extends BaseActivity {
 
         mMapView = (MapView) findViewById(R.id.map);
         mMapView.onCreate(savedInstanceState);// 此方法必须重写
-
         cityName = getIntent().getStringExtra(CustomConfig.CITY_NAME);
 
-        permissionVm = ViewModelProviders.of(this).get(PermissionVm.class);
+        PermissionVm permissionVm = ViewModelProviders.of(this).get(PermissionVm.class);
         permissionVm.getLiveData().observe(this, integer -> {
             if (integer == PermissionVm.PERMISSION_LOCATION){
                 init();
@@ -96,9 +93,7 @@ public class LocationMapActivity extends BaseActivity {
         permissionVm.getPermissionLocation(new RxPermissions(this));
     }
 
-    /**
-     * 初始化
-     */
+    //初始化
     private void init() {
         if (aMap == null) {
             aMap = mMapView.getMap();
@@ -115,7 +110,7 @@ public class LocationMapActivity extends BaseActivity {
                     }
                 }
             }.start();
-
+            //根据地图移动刷新经纬度
             aMap.setOnCameraChangeListener(new AMap.OnCameraChangeListener() {
                 @Override
                 public void onCameraChange(CameraPosition cameraPosition) {
@@ -127,24 +122,7 @@ public class LocationMapActivity extends BaseActivity {
                     startJumpAnimation();
                     searchLatlonPoint = new LatLonPoint(cameraPosition.target.latitude, cameraPosition.target.longitude);
                     LogUtils.i(searchLatlonPoint.getLatitude(), searchLatlonPoint.getLongitude());
-                    GeocodeSearch geocoderSearch = new GeocodeSearch(LocationMapActivity.this);
-                    geocoderSearch.setOnGeocodeSearchListener(new GeocodeSearch.OnGeocodeSearchListener(){
-
-                        @Override
-                        public void onGeocodeSearched(GeocodeResult result, int rCode) {
-                            // TODO Auto-generated method stub
-
-                        }
-
-                        @Override
-                        public void onRegeocodeSearched(RegeocodeResult result, int rCode) {
-                            formatAddress = result.getRegeocodeAddress().getFormatAddress();
-                            LogUtils.i(formatAddress);
-
-                        }});
-                    LatLonPoint lp = new LatLonPoint(searchLatlonPoint.getLatitude(),searchLatlonPoint.getLongitude());
-                    RegeocodeQuery query = new RegeocodeQuery(lp, 200,GeocodeSearch.AMAP);
-                    geocoderSearch.getFromLocationAsyn(query);
+                    getAddressChange(searchLatlonPoint.getLatitude(), searchLatlonPoint.getLongitude());
                 }
             });
 
@@ -152,9 +130,7 @@ public class LocationMapActivity extends BaseActivity {
         }
     }
 
-    /**
-     * 设置一些amap的属性
-     */
+    //设置一些aMap的属性
     private void setUpMap() {
         aMap.moveCamera(CameraUpdateFactory.zoomTo(15));
         aMap.setMyLocationEnabled(false);// 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
@@ -191,18 +167,14 @@ public class LocationMapActivity extends BaseActivity {
         locationMarker.setZIndex(1);
     }
 
-    /**
-     * 屏幕中心marker 跳动
-     */
+    //屏幕中心marker 跳动
     public void startJumpAnimation() {
-
         if (locationMarker != null ) {
             //根据屏幕距离计算需要移动的目标点
             final LatLng latLng = locationMarker.getPosition();
             Point point =  aMap.getProjection().toScreenLocation(latLng);
             point.y -= ConvertUtils.dp2px(50);
-            LatLng target = aMap.getProjection()
-                    .fromScreenLocation(point);
+            LatLng target = aMap.getProjection().fromScreenLocation(point);
             //使用TranslateAnimation,填写一个需要移动的目标点
             Animation animation = new TranslateAnimation(target);
             animation.setInterpolator(input -> {
@@ -219,10 +191,33 @@ public class LocationMapActivity extends BaseActivity {
             locationMarker.setAnimation(animation);
             //开始动画
             locationMarker.startAnimation();
-
         } else {
             LogUtils.i("ama","screenMarker is null");
         }
+    }
+
+    //根据经纬度转换地址
+    private void getAddressChange(double latitude,double longitude) {
+        GeocodeSearch geocodeSearch = new GeocodeSearch(LocationMapActivity.this);
+        geocodeSearch.setOnGeocodeSearchListener(new GeocodeSearch.OnGeocodeSearchListener(){
+
+            @Override
+            public void onGeocodeSearched(GeocodeResult result, int rCode) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void onRegeocodeSearched(RegeocodeResult result, int rCode) {
+                //去掉省市
+                String address = result.getRegeocodeAddress().getFormatAddress();
+                String area = result.getRegeocodeAddress().getProvince()+result.getRegeocodeAddress().getCity();
+                formatAddress = address.substring(area.length());
+                LogUtils.i("area"+area);
+                LogUtils.i("formatAddress"+formatAddress);
+            }});
+        LatLonPoint lp = new LatLonPoint(latitude,longitude);
+        RegeocodeQuery query = new RegeocodeQuery(lp, 200,GeocodeSearch.AMAP);
+        geocodeSearch.getFromLocationAsyn(query);
     }
 
     @Override

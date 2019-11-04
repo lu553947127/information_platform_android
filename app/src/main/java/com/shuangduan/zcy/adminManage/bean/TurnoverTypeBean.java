@@ -17,6 +17,9 @@ import java.util.List;
 public class TurnoverTypeBean {
     private List<IsShelfBean> is_shelf;
     private List<UseStatusBean> use_status;
+    private List<UnitBean> unit;
+    private List<MaterialStatusBean> material_status;
+    private List<PlanBean> plan;
 
     public List<IsShelfBean> getIs_shelf() {
         return is_shelf;
@@ -34,6 +37,30 @@ public class TurnoverTypeBean {
         this.use_status = use_status;
     }
 
+    public List<UnitBean> getUnit() {
+        return unit;
+    }
+
+    public void setUnit(List<UnitBean> unit) {
+        this.unit = unit;
+    }
+
+    public List<MaterialStatusBean> getMaterial_status() {
+        return material_status;
+    }
+
+    public void setMaterial_status(List<MaterialStatusBean> material_status) {
+        this.material_status = material_status;
+    }
+
+    public List<PlanBean> getPlan() {
+        return plan;
+    }
+
+    public void setPlan(List<PlanBean> plan) {
+        this.plan = plan;
+    }
+
     public static class IsShelfBean {
         /**
          * id : 1
@@ -42,11 +69,6 @@ public class TurnoverTypeBean {
 
         private int id;
         private String name;
-
-        public IsShelfBean(int id, String name) {
-            this.id = id;
-            this.name = name;
-        }
 
         public int getId() {
             return id;
@@ -74,10 +96,83 @@ public class TurnoverTypeBean {
         private int id;
         private String name;
 
-        public UseStatusBean(int id, String name) {
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
             this.id = id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
             this.name = name;
         }
+    }
+
+    public static class UnitBean {
+        /**
+         * id : 1
+         * name : 台
+         */
+
+        private int id;
+        private String name;
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+    }
+
+    public static class MaterialStatusBean {
+        /**
+         * id : 1
+         * name : 完好
+         */
+
+        private int id;
+        private String name;
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+    }
+
+    public static class PlanBean {
+        /**
+         * id : 1
+         * name : 一直使用
+         */
+
+        private int id;
+        private String name;
 
         public int getId() {
             return id;
