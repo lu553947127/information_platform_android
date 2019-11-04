@@ -5,6 +5,7 @@ import com.shuangduan.zcy.adminManage.bean.TurnoverCompanyBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverCategoryBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverDetailBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverHistoryBean;
+import com.shuangduan.zcy.adminManage.bean.TurnoverNameBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverTypeBean;
 import com.shuangduan.zcy.base.TrackDateilBean;
 import com.shuangduan.zcy.model.bean.AddTrackBean;
@@ -1625,5 +1626,12 @@ public interface ApiService {
             @Field("original_price") String original_price,
             @Field("net_worth") String net_worth,
             @Field("remark") String remark
+    );
+
+    //后台管理 --- 周转材料添加-选择项目
+    @FormUrlEncoded
+    @POST("api/Manage/constructionGetUnit")
+    Flowable<BaseListResponse<TurnoverNameBean>> projectListData(
+            @Field("user_id") int userId
     );
 }

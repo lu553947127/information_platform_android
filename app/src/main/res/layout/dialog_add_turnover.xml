@@ -1,25 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorFFF"
+    android:background="@drawable/circular_background_white_top"
     android:orientation="vertical"
-    android:paddingTop="20dp"
     tools:ignore="MissingConstraints">
-
-    <TextView
-        style="@style/TextSize15Style"
-        android:paddingLeft="15sp"
-        android:text="@string/admin_turnover_detail"
-        android:textColor="@color/color_303741" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="23dp"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal">
 
         <com.shuangduan.zcy.weight.TurnoverSelectView
@@ -50,7 +42,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="23dp"
+        android:layout_marginTop="30dp"
         android:orientation="horizontal">
 
         <com.shuangduan.zcy.weight.TurnoverSelectView
@@ -78,7 +70,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="23dp"
+        android:layout_marginTop="30dp"
         android:orientation="horizontal">
 
         <com.shuangduan.zcy.weight.TurnoverSelectView
@@ -103,25 +95,100 @@
             app:value_text="@string/admin_turnover_hint_input" />
     </LinearLayout>
 
-    <TextView
-        style="@style/TextSize15Style"
-        android:layout_marginLeft="15sp"
-        android:layout_marginTop="33dp"
-        android:text="@string/admin_turnover_remark"
-        android:textColor="@color/colorTv" />
-
-    <EditText
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="7dp"
-        android:layout_marginRight="15dp"
-        android:gravity="left"
-        android:hint="@string/admin_turnover_hint_input"
-        android:textSize="14sp"
-        android:padding="5dp"
-        android:minHeight="78dp"
-        android:textColor="@color/colorTv"
-        android:background="@drawable/shape_stroke_bfbfbf_2"/>
+        android:layout_height="10dp"
+        android:layout_marginTop="13dp"
+        android:background="@color/color_F6F7FB" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_dialog_item_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:padding="12dp"
+                    android:text="@string/admin_selector_project"
+                    android:textColor="@color/colorTv"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/tv_positive"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/tv_dialog_item_title"
+                    android:layout_alignBottom="@id/tv_dialog_item_title"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center"
+                    android:paddingLeft="15sp"
+                    android:paddingRight="15sp"
+                    android:text="@string/positive"
+                    android:textColor="@color/color_6a5ff8"
+                    android:textSize="15sp" />
+
+            </RelativeLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="13dp"
+                android:background="@color/color_E6E6E6" />
+
+        </LinearLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/ll_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <EditText
+                android:id="@+id/et_value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorFFF"
+                android:gravity="center"
+                android:hint="请输入"
+                android:paddingLeft="25dp"
+                android:paddingTop="12dp"
+                android:paddingRight="25dp"
+                android:paddingBottom="12dp"
+                android:textColor="@color/colorTv"
+                android:textColorHint="@color/colorTv"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tv_et_positive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/et_value"
+                android:layout_alignBottom="@id/et_value"
+                android:layout_alignParentRight="true"
+                android:gravity="center"
+                android:paddingLeft="15sp"
+                android:paddingRight="15sp"
+                android:text="@string/positive"
+                android:textColor="@color/color_6a5ff8"
+                android:textSize="15sp" />
+        </RelativeLayout>
+
+
+    </FrameLayout>
+
 
 </LinearLayout>

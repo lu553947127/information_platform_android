@@ -29,6 +29,8 @@ public class TurnoverSelectView extends ConstraintLayout {
     private boolean isShow;
     private String title;
     private String value;
+    private View line;
+    private TextView tvValue;
 
 
     public TurnoverSelectView(Context context) {
@@ -53,18 +55,29 @@ public class TurnoverSelectView extends ConstraintLayout {
         isShow = a.getBoolean(R.styleable.TurnoverSelectView_line_show, false);
         title = a.getString(R.styleable.TurnoverSelectView_title_text);
         value = a.getString(R.styleable.TurnoverSelectView_value_text);
-
     }
 
     public void initView(Context context) {
         LayoutInflater.from(context).inflate(R.layout.layout_turnover_group, this, true);
 
         TextView tvTitle = findViewById(R.id.tv_item_title);
-        TextView tvValue = findViewById(R.id.tv_item_value);
-        View line = findViewById(R.id.line);
+        tvValue = findViewById(R.id.tv_item_value);
+        line = findViewById(R.id.line);
 
         tvTitle.setText(title);
         tvValue.setText(value);
         line.setVisibility(isShow ? VISIBLE : GONE);
+    }
+
+    public void showLine(boolean show) {
+        line.setVisibility(isShow ? VISIBLE : GONE);
+    }
+
+    public void setValue(String value) {
+        tvValue.setText(value);
+    }
+
+    public void setValue(int valueRes) {
+        tvValue.setText(valueRes);
     }
 }

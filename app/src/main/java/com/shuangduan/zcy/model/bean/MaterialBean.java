@@ -102,7 +102,7 @@ public class MaterialBean {
         //地址
         private String address;
         //供应商
-        @SerializedName("material_supplie")
+        @SerializedName("material_supplier")
         private String materialSupplie;
         //供应商ID
         @SerializedName("supplier_id")
@@ -402,14 +402,13 @@ public class MaterialBean {
 
     public class Images {
         public String url;
-        @SerializedName("heade_url")
-        public String headeUrl;
+//        @SerializedName("heade_url")
+//        public String headeUrl;
 
         @Override
         public String toString() {
             return "Images{" +
                     "url='" + url + '\'' +
-                    ", headeUrl='" + headeUrl + '\'' +
                     '}';
         }
     }

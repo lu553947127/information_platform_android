@@ -52,7 +52,7 @@ public class EquipmentAdapter extends BaseQuickAdapter<MaterialBean.ListBean, Ba
                 .setText(R.id.tv_browse_num, String.format(mContext.getString(R.string.format_visitors_num), item.getBrowseCount()));
         ImageView ivIcon = helper.getView(R.id.iv_icon);
         try {
-            String thumb = item.getImages().get(0).headeUrl;
+            String thumb = item.getImages().get(0).url;
 
             ImageLoader.load(mContext, new ImageConfig.Builder()
                     .url(thumb)

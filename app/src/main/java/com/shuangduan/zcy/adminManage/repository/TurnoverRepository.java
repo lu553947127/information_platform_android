@@ -7,6 +7,7 @@ import com.shuangduan.zcy.adminManage.bean.TurnoverCompanyBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverCategoryBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverDetailBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverHistoryBean;
+import com.shuangduan.zcy.adminManage.bean.TurnoverNameBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverTypeBean;
 import com.shuangduan.zcy.model.api.repository.BaseRepository;
 
@@ -62,13 +63,18 @@ public class TurnoverRepository extends BaseRepository {
     }
 
     //后台管理 --- 周转材料删除
-    public void constructionDelete(MutableLiveData<String> liveData, int userId,int id) {
-        request(apiService.constructionDelete(userId,id)).setData(liveData).send();
+    public void constructionDelete(MutableLiveData<String> liveData, int userId, int id) {
+        request(apiService.constructionDelete(userId, id)).setData(liveData).send();
     }
 
     //后台管理 --- 周转材料拆分
-    public void constructionSplit(MutableLiveData<String> liveData, int userId,int id,String stock,int use_status,int province,int city,String address,double longitude,double latitude) {
-        request(apiService.constructionSplit(userId,id,stock,use_status,province,city,address,longitude,latitude)).setData(liveData).send();
+    public void constructionSplit(MutableLiveData<String> liveData, int userId, int id, String stock, int use_status, int province, int city, String address, double longitude, double latitude) {
+        request(apiService.constructionSplit(userId, id, stock, use_status, province, city, address, longitude, latitude)).setData(liveData).send();
+    }
+
+    //后台管理 --- 周转材料添加--选择项目
+    public void projectListData(MutableLiveData<List<TurnoverNameBean>> liveData, MutableLiveData<String> pageState, int userId) {
+        request(apiService.projectListData(userId)).setDataList(liveData).setPageState(pageState).send();
     }
 
     //后台管理 --- 周转材料添加

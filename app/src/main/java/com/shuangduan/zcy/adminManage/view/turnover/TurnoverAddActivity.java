@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
@@ -38,6 +39,7 @@ import com.shuangduan.zcy.adminManage.adapter.UnitAdapter;
 import com.shuangduan.zcy.adminManage.adapter.UseStatueAdapter;
 import com.shuangduan.zcy.adminManage.bean.TurnoverCategoryBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverTypeBean;
+import com.shuangduan.zcy.adminManage.view.turnover.dialog.TurnoverDialogControl;
 import com.shuangduan.zcy.adminManage.vm.TurnoverAddVm;
 import com.shuangduan.zcy.adminManage.vm.TurnoverVm;
 import com.shuangduan.zcy.app.CustomConfig;
@@ -143,6 +145,7 @@ public class TurnoverAddActivity extends BaseActivity {
     private TurnoverVm turnoverVm;
     private TurnoverAddVm turnoverAddVm;
     private UploadPhotoVm uploadPhotoVm;
+    private TurnoverDialogControl dialogControl;
     private List<String> picture_list=new ArrayList<>();
 
     @Override
@@ -180,6 +183,11 @@ public class TurnoverAddActivity extends BaseActivity {
             materialList=turnoverCategoryBeans;
             selectorMaterialSecondAdapter.setNewData(materialList);
         });
+
+        dialogControl = new TurnoverDialogControl(this, turnoverAddVm);
+
+        dialogControl.initView(R.string.admin_selector_project);
+
 
         //获取筛选条件列表数据
         turnoverVm.turnoverTypeData.observe(this,turnoverTypeBean -> {
@@ -239,7 +247,8 @@ public class TurnoverAddActivity extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.iv_bar_back,R.id.tv_category_material_id,R.id.tv_unit,R.id.tv_use_status,R.id.tv_material_status,R.id.tv_address,R.id.tv_is_shelf,R.id.tv_shelf_time_start,R.id.tv_shelf_time_end,R.id.iv_images})
+    @OnClick({R.id.iv_bar_back,R.id.tv_category_material_id,R.id.tv_unit,R.id.tv_use_status,R.id.tv_material_status,R.id.tv_address,
+            R.id.tv_is_shelf,R.id.tv_shelf_time_start,R.id.tv_shelf_time_end,R.id.iv_images,R.id.ts_project})
     void OnClick(View view) {
         Bundle bundle = new Bundle();
         switch (view.getId()) {

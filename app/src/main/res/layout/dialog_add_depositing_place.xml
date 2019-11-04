@@ -25,7 +25,6 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="20dp"
-                    android:text="添加数量、存放地"
                     android:textColor="@color/colorTv"
                     android:textSize="13sp" />
 

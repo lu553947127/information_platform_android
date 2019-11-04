@@ -3,12 +3,14 @@ package com.shuangduan.zcy.adminManage.vm;
 import androidx.lifecycle.MutableLiveData;
 
 import com.blankj.utilcode.util.SPUtils;
+import com.shuangduan.zcy.adminManage.bean.TurnoverNameBean;
 import com.shuangduan.zcy.adminManage.repository.TurnoverRepository;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseViewModel;
 import com.shuangduan.zcy.utils.DataUtils;
 
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * @ProjectName: information_platform_android
@@ -46,11 +48,15 @@ public class TurnoverAddVm extends BaseViewModel {
     public int unit_id;
     public MutableLiveData<String> turnoverAddData;
     public MutableLiveData<String> pageStateLiveData;
+    //基建物资-物资材料添加-选择项目
+    public MutableLiveData<List<TurnoverNameBean>> turnoverName;
 
     public TurnoverAddVm() {
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
         turnoverAddData = new MutableLiveData<>();
         pageStateLiveData = new MutableLiveData<>();
+        turnoverName = new MutableLiveData<>();
+
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH) + 1;
@@ -64,5 +70,10 @@ public class TurnoverAddVm extends BaseViewModel {
         new TurnoverRepository().constructionAdd(turnoverAddData,userId,category,material_id,stock,unit_price,unit,spec,use_status,material_status
                 ,province,city,address,longitude,latitude,person_liable,tel,is_shelf,shelf_start_time,shelf_end_time,shelf_type,method,guidance_price,images
                 ,unit_id,plan,use_count,start_date,entry_time,accumulated_amortization,original_price,net_worth,remark);
+    }
+
+    //后台管理 --- 物资材料添加-选择项目
+    public void projectListData(){
+        new TurnoverRepository().projectListData(turnoverName,pageStateLiveData,userId);
     }
 }

@@ -68,4 +68,5 @@
     <string name="admin_turnover_detail">详情信息</string>
     <string name="admin_turnover_remark">备注</string>
     <string name="admin_turnover_hint_input">请输入</string>
+    <string name="admin_selector_project">请选择所属项目</string>
 </resources>

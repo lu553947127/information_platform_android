@@ -205,6 +205,8 @@ dependencies {
     //华为推送模块
     api 'com.huawei.android.hms:base:2.6.1.301'
     api 'com.huawei.android.hms:push:2.6.1.301'
+    //条件选择器
+    implementation 'com.contrarywind:Android-PickerView:4.1.9'
 
     /** 本地架包 **/
 
