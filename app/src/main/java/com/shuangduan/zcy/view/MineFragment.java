@@ -288,61 +288,65 @@ public class MineFragment extends BaseFragment {
     private int construction,equipment,equipment_order,construction_order;
     //存储后台管理权限
     private void getAdminManagePermission(SupplierRoleBean bean) {
-        //判断是否有子公司
-        if (bean.getMenu().equals(CustomConfig.SON_LIST)){
-            SPUtils.getInstance().put(CustomConfig.SON_LIST,bean.getStatus());
-            //周转材料列表
-        }else if (bean.getMenu().equals(CustomConfig.CONSTRUCTION_LIST)){
-            SPUtils.getInstance().put(CustomConfig.CONSTRUCTION_LIST,bean.getStatus());
-            construction=bean.getStatus();
-            //周转材料详情
-        }else if (bean.getMenu().equals(CustomConfig.CONSTRUCTION_DETAIL)){
-            SPUtils.getInstance().put(CustomConfig.CONSTRUCTION_DETAIL,bean.getStatus());
-            //周转材料添加
-        }else if (bean.getMenu().equals(CustomConfig.CONSTRUCTION_ADD)){
-            SPUtils.getInstance().put(CustomConfig.CONSTRUCTION_ADD,bean.getStatus());
-            //周转材料修改
-        }else if (bean.getMenu().equals(CustomConfig.CONSTRUCTION_EDIT)){
-            SPUtils.getInstance().put(CustomConfig.CONSTRUCTION_EDIT,bean.getStatus());
-            //周转材料删除
-        }else if (bean.getMenu().equals(CustomConfig.CONSTRUCTION_DELETE)){
-            SPUtils.getInstance().put(CustomConfig.CONSTRUCTION_DELETE,bean.getStatus());
-            //设备列表
-        }else if (bean.getMenu().equals(CustomConfig.EQIPMENT_LIST)){
-            SPUtils.getInstance().put(CustomConfig.EQIPMENT_LIST,bean.getStatus());
-            equipment=bean.getStatus();
-            //设备详情
-        }else if (bean.getMenu().equals(CustomConfig.EQIPMENT_DETAIL)){
-            SPUtils.getInstance().put(CustomConfig.EQIPMENT_DETAIL,bean.getStatus());
-            //设备添加
-        }else if (bean.getMenu().equals(CustomConfig.EQIPMENT_ADD)){
-            SPUtils.getInstance().put(CustomConfig.EQIPMENT_ADD,bean.getStatus());
-            //设备修改
-        }else if (bean.getMenu().equals(CustomConfig.EQIPMENT_EDIT)){
-            SPUtils.getInstance().put(CustomConfig.EQIPMENT_EDIT,bean.getStatus());
-            //设备删除
-        }else if (bean.getMenu().equals(CustomConfig.EQIPMENT_DELETE)){
-            SPUtils.getInstance().put(CustomConfig.EQIPMENT_DELETE,bean.getStatus());
-            //设备订单列表
-        }else if (bean.getMenu().equals(CustomConfig.EQIPMENT_ORDER_LIST)){
-            SPUtils.getInstance().put(CustomConfig.EQIPMENT_ORDER_LIST,bean.getStatus());
-            equipment_order=bean.getStatus();
-            //设备订单详细
-        }else if (bean.getMenu().equals(CustomConfig.EQIPMENT_ORDER_DETAIL)){
-            SPUtils.getInstance().put(CustomConfig.EQIPMENT_ORDER_DETAIL,bean.getStatus());
-            //设备订单修改
-        }else if (bean.getMenu().equals(CustomConfig.EQIPMENT_ORDER_EDIT)){
-            SPUtils.getInstance().put(CustomConfig.EQIPMENT_ORDER_EDIT,bean.getStatus());
-            //周转材料订单列表
-        }else if (bean.getMenu().equals(CustomConfig.CONSTRUCTION_ORDER_LIST)){
-            SPUtils.getInstance().put(CustomConfig.CONSTRUCTION_ORDER_LIST,bean.getStatus());
-            construction_order=bean.getStatus();
-            //周转材料订单详情
-        }else if (bean.getMenu().equals(CustomConfig.CONSTRUCTION_ORDER_DETAIL)){
-            SPUtils.getInstance().put(CustomConfig.CONSTRUCTION_ORDER_DETAIL,bean.getStatus());
-            //周转材料订单修改
-        }else if (bean.getMenu().equals(CustomConfig.CONSTRUCTION_ORDER_EDIT)){
-            SPUtils.getInstance().put(CustomConfig.CONSTRUCTION_ORDER_EDIT,bean.getStatus());
+        switch (bean.getMenu()){
+            case CustomConfig.SON_LIST://判断是否有子公司
+                SPUtils.getInstance().put(CustomConfig.SON_LIST,bean.getStatus());
+                break;
+            case CustomConfig.INNER_SWITCH://内定权限
+                SPUtils.getInstance().put(CustomConfig.INNER_SWITCH,bean.getStatus());
+                break;
+            case CustomConfig.CONSTRUCTION_LIST://周转材料列表
+                SPUtils.getInstance().put(CustomConfig.CONSTRUCTION_LIST,bean.getStatus());
+                construction=bean.getStatus();
+                break;
+            case CustomConfig.CONSTRUCTION_DETAIL://周转材料详情
+                SPUtils.getInstance().put(CustomConfig.CONSTRUCTION_DETAIL,bean.getStatus());
+                break;
+            case CustomConfig.CONSTRUCTION_ADD://周转材料添加
+                SPUtils.getInstance().put(CustomConfig.CONSTRUCTION_ADD,bean.getStatus());
+                break;
+            case CustomConfig.CONSTRUCTION_EDIT://周转材料修改
+                SPUtils.getInstance().put(CustomConfig.CONSTRUCTION_EDIT,bean.getStatus());
+                break;
+            case CustomConfig.CONSTRUCTION_DELETE://周转材料删除
+                SPUtils.getInstance().put(CustomConfig.CONSTRUCTION_DELETE,bean.getStatus());
+                break;
+            case CustomConfig.EQIPMENT_LIST://设备列表
+                SPUtils.getInstance().put(CustomConfig.EQIPMENT_LIST,bean.getStatus());
+                equipment=bean.getStatus();
+                break;
+            case CustomConfig.EQIPMENT_DETAIL://设备详情
+                SPUtils.getInstance().put(CustomConfig.EQIPMENT_DETAIL,bean.getStatus());
+                break;
+            case CustomConfig.EQIPMENT_ADD://设备添加
+                SPUtils.getInstance().put(CustomConfig.EQIPMENT_ADD,bean.getStatus());
+                break;
+            case CustomConfig.EQIPMENT_EDIT://设备修改
+                SPUtils.getInstance().put(CustomConfig.EQIPMENT_EDIT,bean.getStatus());
+                break;
+            case CustomConfig.EQIPMENT_DELETE://设备删除
+                SPUtils.getInstance().put(CustomConfig.EQIPMENT_DELETE,bean.getStatus());
+                break;
+            case CustomConfig.EQIPMENT_ORDER_LIST://设备订单列表
+                SPUtils.getInstance().put(CustomConfig.EQIPMENT_ORDER_LIST,bean.getStatus());
+                equipment_order=bean.getStatus();
+                break;
+            case CustomConfig.EQIPMENT_ORDER_DETAIL://设备订单详情
+                SPUtils.getInstance().put(CustomConfig.EQIPMENT_ORDER_DETAIL,bean.getStatus());
+                break;
+            case CustomConfig.EQIPMENT_ORDER_EDIT://设备订单修改
+                SPUtils.getInstance().put(CustomConfig.EQIPMENT_ORDER_EDIT,bean.getStatus());
+                break;
+            case CustomConfig.CONSTRUCTION_ORDER_LIST://周转材料订单列表
+                SPUtils.getInstance().put(CustomConfig.CONSTRUCTION_ORDER_LIST,bean.getStatus());
+                construction_order=bean.getStatus();
+                break;
+            case CustomConfig.CONSTRUCTION_ORDER_DETAIL://周转材料订单详情
+                SPUtils.getInstance().put(CustomConfig.CONSTRUCTION_ORDER_DETAIL,bean.getStatus());
+                break;
+            case CustomConfig.CONSTRUCTION_ORDER_EDIT://周转材料订单详情
+                SPUtils.getInstance().put(CustomConfig.CONSTRUCTION_ORDER_EDIT,bean.getStatus());
+                break;
         }
         getAdminEntrance(construction,equipment,equipment_order,construction_order);
     }

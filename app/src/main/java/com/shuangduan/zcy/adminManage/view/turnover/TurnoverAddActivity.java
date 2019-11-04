@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.TimeUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
@@ -65,7 +66,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -143,6 +143,7 @@ public class TurnoverAddActivity extends BaseActivity {
     private TurnoverVm turnoverVm;
     private TurnoverAddVm turnoverAddVm;
     private UploadPhotoVm uploadPhotoVm;
+    private List<String> picture_list=new ArrayList<>();
 
     @Override
     protected int initLayoutRes() {
@@ -197,6 +198,7 @@ public class TurnoverAddActivity extends BaseActivity {
                     break;
                 case "grounding"://是否上架
                     groundingList=turnoverTypeBean.getIs_shelf();
+                    if (SPUtils.getInstance().getInt(CustomConfig.SON_LIST,0)!=1)groundingList.remove(1);
                     groundingAdapter.setNewData(groundingList);
                     break;
             }
@@ -222,22 +224,18 @@ public class TurnoverAddActivity extends BaseActivity {
 
         //图片上传转换返回地址
         uploadPhotoVm.uploadLiveData.observe(this, uploadBean -> {
-
-            List<String> picture_list=new ArrayList<>();
             picture_list.add(uploadBean.getSource());
-            //把添加的图片集合转换成String字符串
-            StringBuilder stringBuffer=new StringBuilder();
-            for(int i = 0; i < picture_list.size(); i++){
-                if (i==picture_list.size()-1){
-                    stringBuffer.append(picture_list.get(i));
-                }else {
-                    stringBuffer.append(picture_list.get(i)+",");
+            StringBuilder sb= new StringBuilder();
+            for (String str : picture_list) {
+                if (sb.length() > 0){
+                    sb.append(",");
                 }
+                sb.append(str);
             }
-            turnoverAddVm.images=stringBuffer.toString();
-            LogUtils.i(stringBuffer.toString());
+            turnoverAddVm.images=sb.toString();
+            LogUtils.i(sb.toString());
             //图片显示
-            getImageBitmap(picture_list);
+            getImageBitmap();
         });
     }
 
@@ -288,7 +286,11 @@ public class TurnoverAddActivity extends BaseActivity {
                 showTimeDialog("shelf_time_end",f.format(tomorrow));
                 break;
             case R.id.iv_images://上传图片
-                getPermissions();
+                if (picture_list!=null&&picture_list.size()<5){
+                    getPermissions();
+                }else {
+                    ToastUtils.showShort("最多上传5张照片哦");
+                }
                 break;
         }
     }
@@ -590,7 +592,6 @@ public class TurnoverAddActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         // 从相机返回的数据
         if (resultCode == 101) {
             String path = Objects.requireNonNull(data).getStringExtra("path");
@@ -601,7 +602,6 @@ public class TurnoverAddActivity extends BaseActivity {
         if (resultCode == 103) {
             ToastUtils.showShort("您没有打开相机权限");
         }
-
         //从相册返回的数据
         if (requestCode == PHOTO && resultCode == RESULT_OK) {
             LogUtils.i(Matisse.obtainPathResult(Objects.requireNonNull(data)).get(0));
@@ -610,25 +610,23 @@ public class TurnoverAddActivity extends BaseActivity {
     }
 
     //添加后的图片显示
-    private void getImageBitmap(List<String> list) {
-        if (list!=null){
-            if (list.size()!=0){
-                GridLayoutManager gridLayoutManager = new GridLayoutManager(this,1);
-                gridLayoutManager.setOrientation(GridLayoutManager.HORIZONTAL);
-                rvImages.setLayoutManager(gridLayoutManager);
-                ImagesAdapter imagesAdapter=new ImagesAdapter(R.layout.adapter_images,list);
-                rvImages.setAdapter(imagesAdapter);
-                imagesAdapter.setOnItemClickListener((adapter, view, position) -> {
-                    PictureEnlargeUtils.getPictureEnlargeList(this,list,position);
-                });
-                imagesAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-                    switch (view.getId()) {
-                        case R.id.iv_delete:
-                            imagesAdapter.removeData(list,position);
-                            break;
-                    }
-                });
-            }
+    private void getImageBitmap() {
+        if (picture_list!=null&&picture_list.size()!=0){
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(this,1);
+            gridLayoutManager.setOrientation(GridLayoutManager.HORIZONTAL);
+            rvImages.setLayoutManager(gridLayoutManager);
+            ImagesAdapter imagesAdapter=new ImagesAdapter(R.layout.adapter_images,picture_list);
+            rvImages.setAdapter(imagesAdapter);
+            imagesAdapter.setOnItemClickListener((adapter, view, position) -> {
+                PictureEnlargeUtils.getPictureEnlargeList(this,picture_list,position);
+            });
+            imagesAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+                switch (view.getId()) {
+                    case R.id.iv_delete:
+                        imagesAdapter.removeData(picture_list,position);
+                        break;
+                }
+            });
         }
     }
 }

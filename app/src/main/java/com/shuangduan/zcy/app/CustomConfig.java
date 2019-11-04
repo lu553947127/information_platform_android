@@ -151,6 +151,7 @@ public class CustomConfig {
 
     //------------------------------------基建物资 后台管理权限----------------------------------------------------
     public static final String SON_LIST = "son-list";//判断是否为集团 有无子公司
+    public static final String INNER_SWITCH = "inner-switch";//内定权限
     public static final String CONSTRUCTION_LIST = "construction-list";//周转材料列表
     public static final String CONSTRUCTION_DETAIL = "construction-detail";//周转材料详情
     public static final String CONSTRUCTION_ADD = "construction-add";//周转材料添加
