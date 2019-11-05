@@ -70,7 +70,7 @@ public class TurnoverSelectView extends ConstraintLayout {
     }
 
     public void showLine(boolean show) {
-        line.setVisibility(isShow ? VISIBLE : GONE);
+        line.setVisibility(show ? VISIBLE : GONE);
     }
 
     public void setValue(String value) {
