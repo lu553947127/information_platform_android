@@ -7,7 +7,6 @@ import com.shuangduan.zcy.adminManage.bean.TurnoverBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverCategoryBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverCompanyBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverHistoryBean;
-import com.shuangduan.zcy.adminManage.bean.TurnoverNameBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverTypeBean;
 import com.shuangduan.zcy.adminManage.repository.TurnoverRepository;
 import com.shuangduan.zcy.app.SpConfig;
@@ -44,9 +43,6 @@ public class TurnoverVm extends BaseViewModel{
     public MutableLiveData<List<TurnoverCompanyBean>> turnoverCompanyData;
     public MutableLiveData<List<TurnoverCategoryBean>> turnoverFirstData;
     public MutableLiveData<List<TurnoverCategoryBean>> turnoverSecondData;
-
-
-
     public MutableLiveData<String> turnoverDeleteData;
     public MutableLiveData<String> turnoverSplitData;
     public MutableLiveData<String> pageStateLiveData;
@@ -59,7 +55,6 @@ public class TurnoverVm extends BaseViewModel{
         turnoverCompanyData = new MutableLiveData<>();
         turnoverFirstData = new MutableLiveData<>();
         turnoverSecondData = new MutableLiveData<>();
-
         turnoverDeleteData = new MutableLiveData<>();
         turnoverSplitData = new MutableLiveData<>();
         pageStateLiveData = new MutableLiveData<>();
@@ -117,6 +112,4 @@ public class TurnoverVm extends BaseViewModel{
     public void constructionSplit(int id,String stock,int use_status,int province,int city,String address,double longitude,double latitude){
         new TurnoverRepository().constructionSplit(turnoverSplitData,userId,id,stock,use_status,province,city,address,longitude,latitude);
     }
-
-
 }

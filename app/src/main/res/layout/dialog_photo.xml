@@ -1,22 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/circular_background_white_top">
 
     <TextView
         android:id="@+id/tv_photo"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@drawable/selector_bg_custom"
+        android:background="@drawable/selector_bg_custom_new"
         android:gravity="center"
-        android:textColor="@color/color_666666"
-        android:textSize="14sp"
+        android:textColor="@color/colorTv"
+        android:textSize="15sp"
         android:text="@string/take_photo"/>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="#B1B1B1"/>
+        android:layout_height="1dp"
+        android:background="@color/colorDivider"/>
 
     <TextView
         android:id="@+id/tv_select_pic"
@@ -24,14 +27,14 @@
         android:layout_height="50dp"
         android:background="@drawable/selector_bg_custom"
         android:gravity="center"
-        android:textColor="@color/color_666666"
-        android:textSize="14sp"
+        android:textColor="@color/colorTv"
+        android:textSize="15sp"
         android:text="@string/select_from_photo"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="10dp"
-        android:background="#F0F2F5"/>
+        android:background="@color/colorBgDark"/>
 
     <TextView
         android:id="@+id/tv_cancel"
@@ -39,8 +42,8 @@
         android:layout_height="50dp"
         android:background="@drawable/selector_bg_custom"
         android:gravity="center"
-        android:textColor="@color/color_666666"
-        android:textSize="14sp"
+        android:textColor="@color/colorTv"
+        android:textSize="15sp"
         android:text="@string/cancel"/>
 
 </LinearLayout>
