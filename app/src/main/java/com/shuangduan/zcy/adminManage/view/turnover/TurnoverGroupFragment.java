@@ -207,6 +207,7 @@ public class TurnoverGroupFragment extends BaseLazyFragment {
             switch (turnoverVm.type){
                 case "grounding":
                     groundingList=turnoverTypeBean.getIs_shelf();
+                    if (SPUtils.getInstance().getInt(CustomConfig.SON_LIST, 0) != 1) groundingList.remove(1);
                     groundingAdapter.setNewData(groundingList);
                     break;
                 case "use_statue":

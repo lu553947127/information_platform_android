@@ -1,9 +1,17 @@
 package com.shuangduan.zcy.adminManage.view.device;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.AppCompatTextView;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.blankj.utilcode.util.SPUtils;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.shuangduan.zcy.R;
+import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseLazyFragment;
 
 import butterknife.BindView;
@@ -23,7 +31,19 @@ import butterknife.BindView;
 public class DeviceGroupFragment extends BaseLazyFragment {
 
     @BindView(R.id.tv_name)
-    TextView tvName;
+    AppCompatTextView tvName;
+    @BindView(R.id.tv_grounding)
+    AppCompatTextView tvGrounding;
+    @BindView(R.id.tv_use_statue)
+    AppCompatTextView tvUseStatueTop;
+    @BindView(R.id.tv_depositing_place)
+    AppCompatTextView tvDepositingPlace;
+    @BindView(R.id.iv_add)
+    ImageView ivAdd;
+    @BindView(R.id.rv)
+    RecyclerView recyclerView;
+    @BindView(R.id.refresh)
+    SmartRefreshLayout refresh;
 
     public static DeviceGroupFragment newInstance() {
         Bundle args = new Bundle();
@@ -45,6 +65,12 @@ public class DeviceGroupFragment extends BaseLazyFragment {
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         tvName.setText("设备名称");
+
+        if (SPUtils.getInstance().getInt(CustomConfig.CONSTRUCTION_ADD,0) ==1){
+            ivAdd.setVisibility(View.VISIBLE);
+        }else {
+            ivAdd.setVisibility(View.GONE);
+        }
     }
 
     @Override

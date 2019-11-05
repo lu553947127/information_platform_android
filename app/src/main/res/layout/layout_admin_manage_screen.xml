@@ -47,7 +47,6 @@
                 android:singleLine="true"
                 android:textColor="@color/color_888888"
                 android:textSize="12sp"
-                android:text="公路桥梁"
                 android:visibility="gone"/>
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -62,7 +61,6 @@
                 android:singleLine="true"
                 android:textColor="@color/color_888888"
                 android:textSize="12sp"
-                android:text="高位可搬"
                 android:visibility="gone"/>
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -77,7 +75,6 @@
                 android:singleLine="true"
                 android:textColor="@color/color_888888"
                 android:textSize="12sp"
-                android:text="不上架"
                 android:visibility="gone"/>
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -92,7 +89,6 @@
                 android:singleLine="true"
                 android:textColor="@color/color_888888"
                 android:textSize="12sp"
-                android:text="在用"
                 android:visibility="gone"/>
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -106,7 +102,6 @@
                 android:singleLine="true"
                 android:textColor="@color/color_888888"
                 android:textSize="12sp"
-                android:text="青岛市"
                 android:visibility="gone"/>
 
         </LinearLayout>
