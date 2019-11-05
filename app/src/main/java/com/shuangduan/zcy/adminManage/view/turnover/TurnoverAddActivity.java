@@ -679,7 +679,7 @@ public class TurnoverAddActivity extends BaseActivity {
         }
     }
 
-    //list转换成String
+    //list转换成String并用，拼接
     private String getListToString() {
         StringBuilder sb = new StringBuilder();
         for (String str : picture_list) {

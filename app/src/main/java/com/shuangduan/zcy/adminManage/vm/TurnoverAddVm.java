@@ -56,8 +56,9 @@ public class TurnoverAddVm extends BaseViewModel {
     public int unit_id;
     public int plan;
     public String use_count;
-    public int start_date;
-    public int entry_time;
+    public String start_date;
+    public String entry_time;
+    public String exit_time;
     public String accumulated_amortization;
     public String original_price;
     public String net_worth;
@@ -161,7 +162,7 @@ public class TurnoverAddVm extends BaseViewModel {
         }
         new TurnoverRepository().constructionAdd(turnoverAddData,userId,category,material_id,stock,unit_price,unit,spec,use_status,material_status
                 ,province,city,address,longitude,latitude,person_liable,tel,is_shelf,shelf_start_time,shelf_end_time,shelf_type,method,guidance_price,images
-                ,unit_id,plan,use_count,start_date,entry_time,accumulated_amortization,original_price,net_worth,remark);
+                ,unit_id,plan,use_count,start_date,entry_time,exit_time,accumulated_amortization,original_price,net_worth,remark);
     }
 
     //后台管理 --- 物资材料添加-选择项目
