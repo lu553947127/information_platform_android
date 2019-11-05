@@ -25,7 +25,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ActivityUtils;
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.TimeUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -140,13 +139,15 @@ public class TurnoverAddActivity extends BaseActivity {
     SwitchView svOtherDetails;
     @BindView(R.id.ll_turnover_detail)
     LinearLayout llTurnoverDetail;
+    @BindView(R.id.tv_image_red)
+    TextView tvImageRed;
     @BindView(R.id.rv_images)
     RecyclerView rvImages;
     private TurnoverVm turnoverVm;
     private TurnoverAddVm turnoverAddVm;
     private UploadPhotoVm uploadPhotoVm;
-    private TurnoverDialogControl dialogControl;
     private List<String> picture_list = new ArrayList<>();
+    private TurnoverDialogControl dialogControl;
 
     @Override
     protected int initLayoutRes() {
@@ -184,10 +185,9 @@ public class TurnoverAddActivity extends BaseActivity {
             selectorMaterialSecondAdapter.setNewData(materialList);
         });
 
+        //详细信息输入弹出框初始化
         dialogControl = new TurnoverDialogControl(this, turnoverAddVm);
-
         dialogControl.initView(R.string.admin_selector_project);
-
 
         //获取筛选条件列表数据
         turnoverVm.turnoverTypeData.observe(this, turnoverTypeBean -> {
@@ -206,8 +206,7 @@ public class TurnoverAddActivity extends BaseActivity {
                     break;
                 case "grounding"://是否上架
                     groundingList = turnoverTypeBean.getIs_shelf();
-                    if (SPUtils.getInstance().getInt(CustomConfig.SON_LIST, 0) != 1)
-                        groundingList.remove(1);
+                    if (SPUtils.getInstance().getInt(CustomConfig.SON_LIST, 0) != 1)groundingList.remove(1);
                     groundingAdapter.setNewData(groundingList);
                     break;
             }
@@ -234,22 +233,20 @@ public class TurnoverAddActivity extends BaseActivity {
         //图片上传转换返回地址
         uploadPhotoVm.uploadLiveData.observe(this, uploadBean -> {
             picture_list.add(uploadBean.getSource());
-            StringBuilder sb = new StringBuilder();
-            for (String str : picture_list) {
-                if (sb.length() > 0) {
-                    sb.append(",");
-                }
-                sb.append(str);
-            }
-            turnoverAddVm.images = sb.toString();
-            LogUtils.i(sb.toString());
+            turnoverAddVm.images = getListToString();
             //图片显示
             getImageBitmap();
+        });
+
+        //添加周转材料成功返回结果
+        turnoverAddVm.turnoverAddData.observe(this,item->{
+            ToastUtils.showShort("添加成功");
+            finish();
         });
     }
 
     @OnClick({R.id.iv_bar_back, R.id.tv_category_material_id, R.id.tv_unit, R.id.tv_use_status, R.id.tv_material_status, R.id.tv_address,
-            R.id.tv_is_shelf, R.id.tv_shelf_time_start, R.id.tv_shelf_time_end, R.id.iv_images, R.id.ts_project})
+            R.id.tv_is_shelf, R.id.tv_shelf_time_start, R.id.tv_shelf_time_end, R.id.iv_images, R.id.ts_project,R.id.tv_reserve})
     void OnClick(View view) {
         Bundle bundle = new Bundle();
         switch (view.getId()) {
@@ -302,8 +299,12 @@ public class TurnoverAddActivity extends BaseActivity {
                     ToastUtils.showShort("最多上传5张照片哦");
                 }
                 break;
-            case R.id.ts_project:
+            case R.id.ts_project://详细信息所属项目
                 dialogControl.show();
+                break;
+            case R.id.tv_reserve://提交
+                turnoverAddVm.constructionAdd(etStock.getText().toString(),etUnitPrice.getText().toString()
+                        ,etSpec.getText().toString(),etPersonLiable.getText().toString(),etTel.getText().toString(),etGuidancePrice.getText().toString());
                 break;
         }
     }
@@ -315,6 +316,7 @@ public class TurnoverAddActivity extends BaseActivity {
                 if (isChecked) {
                     cbShelfTypeOpen.setChecked(true);
                     cbShelfTypeClose.setChecked(false);
+                    turnoverAddVm.shelf_type=1;
                 } else {
                     if (!cbShelfTypeClose.isChecked()) cbShelfTypeOpen.setChecked(true);
                 }
@@ -323,6 +325,7 @@ public class TurnoverAddActivity extends BaseActivity {
                 if (isChecked) {
                     cbShelfTypeOpen.setChecked(false);
                     cbShelfTypeClose.setChecked(true);
+                    turnoverAddVm.shelf_type=2;
                 } else {
                     if (!cbShelfTypeOpen.isChecked()) cbShelfTypeClose.setChecked(true);
                 }
@@ -331,6 +334,7 @@ public class TurnoverAddActivity extends BaseActivity {
                 if (isChecked) {
                     cbLease.setChecked(true);
                     cbSell.setChecked(false);
+                    turnoverAddVm.method=1;
                 } else {
                     if (!cbSell.isChecked()) cbLease.setChecked(true);
                 }
@@ -340,6 +344,7 @@ public class TurnoverAddActivity extends BaseActivity {
                 if (isChecked) {
                     cbLease.setChecked(false);
                     cbSell.setChecked(true);
+                    turnoverAddVm.method=2;
                 } else {
                     if (!cbLease.isChecked()) cbSell.setChecked(true);
                 }
@@ -384,7 +389,7 @@ public class TurnoverAddActivity extends BaseActivity {
                 RecyclerView rvSecond = btn_dialog.findViewById(R.id.rv_city);
                 TextView tvFirst = btn_dialog.findViewById(R.id.tv_first);
                 TextView tvSecond = btn_dialog.findViewById(R.id.tv_second);
-                Objects.requireNonNull(tvFirst).setText("选择类型");
+                Objects.requireNonNull(tvFirst).setText("选择类别");
                 Objects.requireNonNull(tvSecond).setText("选择名称");
                 Objects.requireNonNull(rvFirst).setLayoutManager(new LinearLayoutManager(this));
                 Objects.requireNonNull(rvSecond).setLayoutManager(new LinearLayoutManager(this));
@@ -453,7 +458,7 @@ public class TurnoverAddActivity extends BaseActivity {
                     useStatueAdapter.setIsSelect(turnoverAddVm.use_status);
                 }
                 break;
-            case "material_status":
+            case "material_status"://材料状态弹窗
                 TextView tv_material_status = btn_dialog.findViewById(R.id.tv_title);
                 Objects.requireNonNull(tv_material_status).setText("材料状态");
                 RecyclerView rvMaterialStatus = btn_dialog.findViewById(R.id.rv);
@@ -490,16 +495,19 @@ public class TurnoverAddActivity extends BaseActivity {
                             llInsideShelf.setVisibility(View.GONE);
                             llMethod.setVisibility(View.GONE);
                             llGuidancePrice.setVisibility(View.GONE);
+                            tvImageRed.setVisibility(View.INVISIBLE);
                             break;
                         case "公开上架":
                             llInsideShelf.setVisibility(View.GONE);
                             llMethod.setVisibility(View.VISIBLE);
                             llGuidancePrice.setVisibility(View.VISIBLE);
+                            tvImageRed.setVisibility(View.VISIBLE);
                             break;
                         case "内部上架":
                             llInsideShelf.setVisibility(View.VISIBLE);
                             llMethod.setVisibility(View.VISIBLE);
                             llGuidancePrice.setVisibility(View.VISIBLE);
+                            tvImageRed.setVisibility(View.VISIBLE);
                             break;
                     }
                 });
@@ -566,8 +574,10 @@ public class TurnoverAddActivity extends BaseActivity {
                         turnoverAddVm.shelf_end_time = time;
                         if (time.equals(turnoverAddVm.todayTime)) {
                             tvShelfTimeEnd.setText(times);
+                            tvShelfTimeEnd.setTextColor(getResources().getColor(R.color.colorTv));
                         } else {
                             tvShelfTimeEnd.setText(time);
+                            tvShelfTimeEnd.setTextColor(getResources().getColor(R.color.colorTv));
                         }
                     } catch (ParseException e) {
                         e.printStackTrace();
@@ -582,7 +592,6 @@ public class TurnoverAddActivity extends BaseActivity {
     //获取权限
     public static final int CAMERA = 111;
     public static final int PHOTO = 222;
-
     private void getPermissions() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager
@@ -636,12 +645,24 @@ public class TurnoverAddActivity extends BaseActivity {
                 PictureEnlargeUtils.getPictureEnlargeList(this, picture_list, position);
             });
             imagesAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-                switch (view.getId()) {
-                    case R.id.iv_delete:
-                        imagesAdapter.removeData(picture_list, position);
-                        break;
+                if (view.getId() == R.id.iv_delete) {
+                    imagesAdapter.removeData(picture_list, position);
+                    turnoverAddVm.images = getListToString();
                 }
             });
         }
+    }
+
+    //list转换成String
+    private String getListToString() {
+        StringBuilder sb = new StringBuilder();
+        for (String str : picture_list) {
+            if (sb.length() > 0) {
+                sb.append(",");
+            }
+            sb.append(str);
+        }
+        LogUtils.i(sb.toString());
+        return sb.toString();
     }
 }

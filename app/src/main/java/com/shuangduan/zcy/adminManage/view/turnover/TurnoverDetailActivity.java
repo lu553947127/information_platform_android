@@ -16,14 +16,11 @@ import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.shuangduan.zcy.R;
-import com.shuangduan.zcy.adapter.LocusImageAdapter;
 import com.shuangduan.zcy.adminManage.adapter.TurnoverImageAdapter;
 import com.shuangduan.zcy.adminManage.bean.TurnoverDetailBean;
 import com.shuangduan.zcy.adminManage.vm.TurnoverDetailVm;
-import com.shuangduan.zcy.adminManage.vm.TurnoverVm;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
-import com.shuangduan.zcy.base.TrackDateilBean;
 import com.shuangduan.zcy.utils.image.PictureEnlargeUtils;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
@@ -220,10 +217,8 @@ public class TurnoverDetailActivity extends BaseActivity implements BaseQuickAda
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
         List<String> images = new ArrayList<>();
         for (TurnoverDetailBean.Images image : turnover.images) {
-            images.add(image.heade_url);
+            images.add(image.url);
         }
         PictureEnlargeUtils.getPictureEnlargeList(this, images, position);
     }
-
-
 }

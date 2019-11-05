@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBgDark"
@@ -56,6 +56,7 @@
                 <com.shuangduan.zcy.weight.XEditText
                     android:id="@+id/et_stock"
                     style="@style/AdminManageSecondHint"
+                    android:maxLength="15"
                     android:hint="@string/admin_turnover_add_stock_et"
                     android:inputType="number" />
             </LinearLayout>
@@ -78,6 +79,7 @@
                 <com.shuangduan.zcy.weight.XEditText
                     android:id="@+id/et_unit_price"
                     style="@style/AdminManageSecondHint"
+                    android:maxLength="15"
                     android:hint="@string/admin_turnover_add_unit_price_et"
                     android:inputType="number" />
             </LinearLayout>
@@ -226,6 +228,7 @@
                 <com.shuangduan.zcy.weight.XEditText
                     android:id="@+id/et_tel"
                     style="@style/AdminManageSecondHint"
+                    android:maxLength="11"
                     android:hint="@string/admin_turnover_add_tel_et"
                     android:inputType="number" />
             </LinearLayout>
@@ -382,6 +385,8 @@
                 <com.shuangduan.zcy.weight.XEditText
                     android:id="@+id/et_guidance_price"
                     style="@style/AdminManageSecondHint"
+                    android:maxLength="15"
+                    android:inputType="number"
                     android:hint="@string/admin_turnover_add_guidance_price_et" />
             </LinearLayout>
 
@@ -399,7 +404,8 @@
                     android:layout_height="50dp"
                     android:orientation="horizontal">
 
-                    <TextView style="@style/RedMustText" />
+                    <TextView android:id="@+id/tv_image_red" style="@style/RedMustText"
+                        android:visibility="invisible"/>
 
                     <TextView
                         style="@style/AdminManageFirstText"

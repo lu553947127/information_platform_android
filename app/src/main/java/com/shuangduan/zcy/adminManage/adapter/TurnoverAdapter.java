@@ -49,14 +49,19 @@ public class TurnoverAdapter extends BaseQuickAdapter<TurnoverBean.ListBean, Bas
         String use_status = item.getUse_status();
         TextView tvUseStatus = helper.getView(R.id.tv_use_status);
         tvUseStatus.setText(use_status);
-        if (use_status.equals("在用")) {
-            tvUseStatus.setBackgroundResource(R.drawable.shape_green);
-        } else if (use_status.equals("闲置")) {
-            tvUseStatus.setBackgroundResource(R.drawable.shape_gray);
-        } else if (use_status.equals("出租")) {
-            tvUseStatus.setBackgroundResource(R.drawable.shape_yellow);
-        } else {
-            tvUseStatus.setBackgroundResource(R.drawable.shape_red);
+        switch (use_status){
+            case "再用":
+                tvUseStatus.setBackgroundResource(R.drawable.shape_green);
+                break;
+            case "闲置":
+                tvUseStatus.setBackgroundResource(R.drawable.shape_gray);
+                break;
+            case "出租":
+                tvUseStatus.setBackgroundResource(R.drawable.shape_yellow);
+                break;
+            case "待报废":
+                tvUseStatus.setBackgroundResource(R.drawable.shape_red);
+                break;
         }
 
         LinearLayout linearLayout = helper.getView(R.id.ll_edit);
