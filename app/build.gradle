@@ -206,7 +206,7 @@ dependencies {
     api 'com.huawei.android.hms:base:2.6.1.301'
     api 'com.huawei.android.hms:push:2.6.1.301'
     //条件选择器
-    implementation 'com.contrarywind:Android-PickerView:4.1.9'
+    implementation 'com.contrarywind:wheelview:4.1.0'
 
     /** 本地架包 **/
 

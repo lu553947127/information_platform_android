@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.Group;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -110,6 +111,9 @@ public class TurnoverDetailActivity extends BaseActivity implements BaseQuickAda
     @BindView(R.id.tv_supply_method_key)
     TextView tvSupplyMethodKey;
 
+    @BindView(R.id.group)
+    Group group;
+
     private int constructionId;
     private TurnoverDetailVm turnoverDetailVm;
     private TurnoverDetailBean turnover;
@@ -191,6 +195,7 @@ public class TurnoverDetailActivity extends BaseActivity implements BaseQuickAda
                 tvPutawayTime.setVisibility(View.GONE);
                 tvSupplyMethodKey.setVisibility(View.GONE);
                 tvSupplyMethod.setVisibility(View.GONE);
+                group.setVisibility(View.GONE);
             }
 
             if (turnover.isShelfName.equals("公开上架")) {

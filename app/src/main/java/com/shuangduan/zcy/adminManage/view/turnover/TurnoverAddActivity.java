@@ -146,7 +146,7 @@ public class TurnoverAddActivity extends BaseActivity {
     private TurnoverAddVm turnoverAddVm;
     private UploadPhotoVm uploadPhotoVm;
     private TurnoverDialogControl dialogControl;
-    private List<String> picture_list=new ArrayList<>();
+    private List<String> picture_list = new ArrayList<>();
 
     @Override
     protected int initLayoutRes() {
@@ -167,20 +167,20 @@ public class TurnoverAddActivity extends BaseActivity {
         uploadPhotoVm = ViewModelProviders.of(this).get(UploadPhotoVm.class);
 
         //获取材料类别
-        turnoverVm.turnoverFirstData.observe(this,turnoverCategoryBeans -> {
-            categoryList=turnoverCategoryBeans;
+        turnoverVm.turnoverFirstData.observe(this, turnoverCategoryBeans -> {
+            categoryList = turnoverCategoryBeans;
             selectorCategoryFirstAdapter.setNewData(categoryList);
-            if (materialList.size()==0){
-                turnoverAddVm.category=categoryList.get(0).getId();
-                turnoverAddVm.categoryName=categoryList.get(0).getCatname();
+            if (materialList.size() == 0) {
+                turnoverAddVm.category = categoryList.get(0).getId();
+                turnoverAddVm.categoryName = categoryList.get(0).getCatname();
                 selectorCategoryFirstAdapter.setIsSelect(turnoverAddVm.category);
-                turnoverVm.constructionCategoryList("",turnoverAddVm.category);
+                turnoverVm.constructionCategoryList("", turnoverAddVm.category);
             }
         });
 
         //获取材料名称
-        turnoverVm.turnoverSecondData.observe(this,turnoverCategoryBeans -> {
-            materialList=turnoverCategoryBeans;
+        turnoverVm.turnoverSecondData.observe(this, turnoverCategoryBeans -> {
+            materialList = turnoverCategoryBeans;
             selectorMaterialSecondAdapter.setNewData(materialList);
         });
 
@@ -190,23 +190,24 @@ public class TurnoverAddActivity extends BaseActivity {
 
 
         //获取筛选条件列表数据
-        turnoverVm.turnoverTypeData.observe(this,turnoverTypeBean -> {
-            switch (turnoverVm.type){
+        turnoverVm.turnoverTypeData.observe(this, turnoverTypeBean -> {
+            switch (turnoverVm.type) {
                 case "unit"://单位
-                    unitList=turnoverTypeBean.getUnit();
+                    unitList = turnoverTypeBean.getUnit();
                     unitAdapter.setNewData(unitList);
                     break;
                 case "use_statue"://使用情况
-                    useStatueList=turnoverTypeBean.getUse_status();
+                    useStatueList = turnoverTypeBean.getUse_status();
                     useStatueAdapter.setNewData(useStatueList);
                     break;
                 case "material_status"://材料状态
-                    materialStatusList=turnoverTypeBean.getMaterial_status();
+                    materialStatusList = turnoverTypeBean.getMaterial_status();
                     materialStatusAdapter.setNewData(materialStatusList);
                     break;
                 case "grounding"://是否上架
-                    groundingList=turnoverTypeBean.getIs_shelf();
-                    if (SPUtils.getInstance().getInt(CustomConfig.SON_LIST,0)!=1)groundingList.remove(1);
+                    groundingList = turnoverTypeBean.getIs_shelf();
+                    if (SPUtils.getInstance().getInt(CustomConfig.SON_LIST, 0) != 1)
+                        groundingList.remove(1);
                     groundingAdapter.setNewData(groundingList);
                     break;
             }
@@ -233,22 +234,22 @@ public class TurnoverAddActivity extends BaseActivity {
         //图片上传转换返回地址
         uploadPhotoVm.uploadLiveData.observe(this, uploadBean -> {
             picture_list.add(uploadBean.getSource());
-            StringBuilder sb= new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             for (String str : picture_list) {
-                if (sb.length() > 0){
+                if (sb.length() > 0) {
                     sb.append(",");
                 }
                 sb.append(str);
             }
-            turnoverAddVm.images=sb.toString();
+            turnoverAddVm.images = sb.toString();
             LogUtils.i(sb.toString());
             //图片显示
             getImageBitmap();
         });
     }
 
-    @OnClick({R.id.iv_bar_back,R.id.tv_category_material_id,R.id.tv_unit,R.id.tv_use_status,R.id.tv_material_status,R.id.tv_address,
-            R.id.tv_is_shelf,R.id.tv_shelf_time_start,R.id.tv_shelf_time_end,R.id.iv_images,R.id.ts_project})
+    @OnClick({R.id.iv_bar_back, R.id.tv_category_material_id, R.id.tv_unit, R.id.tv_use_status, R.id.tv_material_status, R.id.tv_address,
+            R.id.tv_is_shelf, R.id.tv_shelf_time_start, R.id.tv_shelf_time_end, R.id.iv_images, R.id.ts_project})
     void OnClick(View view) {
         Bundle bundle = new Bundle();
         switch (view.getId()) {
@@ -256,29 +257,29 @@ public class TurnoverAddActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_category_material_id://选择材料类别/名称
-                getBottomSheetDialog(R.layout.dialog_depositing_place,"category_material_id");
+                getBottomSheetDialog(R.layout.dialog_depositing_place, "category_material_id");
                 break;
             case R.id.tv_unit://选择单位
-                getBottomSheetDialog(R.layout.dialog_is_grounding,"unit");
+                getBottomSheetDialog(R.layout.dialog_is_grounding, "unit");
                 break;
             case R.id.tv_use_status://选择使用状态
-                getBottomSheetDialog(R.layout.dialog_is_grounding,"use_statue");
+                getBottomSheetDialog(R.layout.dialog_is_grounding, "use_statue");
                 break;
             case R.id.tv_material_status://选择材料状态
-                getBottomSheetDialog(R.layout.dialog_is_grounding,"material_status");
+                getBottomSheetDialog(R.layout.dialog_is_grounding, "material_status");
                 break;
             case R.id.tv_address://选择存放地点
                 bundle.putInt(CustomConfig.PROJECT_ADDRESS, 1);
                 ActivityUtils.startActivity(bundle, ReleaseAreaSelectActivity.class);
                 break;
             case R.id.tv_is_shelf://选择是否上架
-                getBottomSheetDialog(R.layout.dialog_is_grounding,"grounding");
+                getBottomSheetDialog(R.layout.dialog_is_grounding, "grounding");
                 break;
             case R.id.tv_shelf_time_start://选择开始时间
-                showTimeDialog("shelf_time_start",turnoverAddVm.todayTime);
+                showTimeDialog("shelf_time_start", turnoverAddVm.todayTime);
                 break;
             case R.id.tv_shelf_time_end://选择结束时间
-                if (TextUtils.isEmpty(turnoverAddVm.shelf_start_time)){
+                if (TextUtils.isEmpty(turnoverAddVm.shelf_start_time)) {
                     ToastUtils.showShort("请先选择开始时间");
                     return;
                 }
@@ -292,52 +293,55 @@ public class TurnoverAddActivity extends BaseActivity {
                 c.add(Calendar.DAY_OF_MONTH, 1);
                 Date tomorrow = c.getTime();
                 f.format(tomorrow);
-                showTimeDialog("shelf_time_end",f.format(tomorrow));
+                showTimeDialog("shelf_time_end", f.format(tomorrow));
                 break;
             case R.id.iv_images://上传图片
-                if (picture_list!=null&&picture_list.size()<5){
+                if (picture_list != null && picture_list.size() < 5) {
                     getPermissions();
-                }else {
+                } else {
                     ToastUtils.showShort("最多上传5张照片哦");
                 }
+                break;
+            case R.id.ts_project:
+                dialogControl.show();
                 break;
         }
     }
 
-    @OnCheckedChanged({R.id.cb_shelf_type_open,R.id.cb_shelf_type_close,R.id.cb_lease,R.id.cb_sell})
-    void OnOnCheckedChanged(CompoundButton view,boolean isChecked){
-        switch (view.getId()){
+    @OnCheckedChanged({R.id.cb_shelf_type_open, R.id.cb_shelf_type_close, R.id.cb_lease, R.id.cb_sell})
+    void OnOnCheckedChanged(CompoundButton view, boolean isChecked) {
+        switch (view.getId()) {
             case R.id.cb_shelf_type_open://到期自动公开
-                if (isChecked){
+                if (isChecked) {
                     cbShelfTypeOpen.setChecked(true);
                     cbShelfTypeClose.setChecked(false);
-                }else {
-                    if (!cbShelfTypeClose.isChecked())cbShelfTypeOpen.setChecked(true);
+                } else {
+                    if (!cbShelfTypeClose.isChecked()) cbShelfTypeOpen.setChecked(true);
                 }
                 break;
             case R.id.cb_shelf_type_close://到期自动下架
-                if (isChecked){
+                if (isChecked) {
                     cbShelfTypeOpen.setChecked(false);
                     cbShelfTypeClose.setChecked(true);
-                }else {
-                    if (!cbShelfTypeOpen.isChecked())cbShelfTypeClose.setChecked(true);
+                } else {
+                    if (!cbShelfTypeOpen.isChecked()) cbShelfTypeClose.setChecked(true);
                 }
                 break;
             case R.id.cb_lease://出租
-                if (isChecked){
+                if (isChecked) {
                     cbLease.setChecked(true);
                     cbSell.setChecked(false);
-                }else {
-                    if (!cbSell.isChecked())cbLease.setChecked(true);
+                } else {
+                    if (!cbSell.isChecked()) cbLease.setChecked(true);
                 }
                 tvGuidancePrice.setText(getString(R.string.admin_turnover_add_guidance_price_unit));
                 break;
             case R.id.cb_sell://出售
-                if (isChecked){
+                if (isChecked) {
                     cbLease.setChecked(false);
                     cbSell.setChecked(true);
-                }else {
-                    if (!cbLease.isChecked())cbSell.setChecked(true);
+                } else {
+                    if (!cbLease.isChecked()) cbSell.setChecked(true);
                 }
                 tvGuidancePrice.setText(getString(R.string.admin_turnover_add_guidance_price));
                 break;
@@ -345,21 +349,22 @@ public class TurnoverAddActivity extends BaseActivity {
     }
 
     private SelectorCategoryFirstAdapter selectorCategoryFirstAdapter;
-    private List<TurnoverCategoryBean> categoryList =new ArrayList<>();
+    private List<TurnoverCategoryBean> categoryList = new ArrayList<>();
     private SelectorMaterialSecondAdapter selectorMaterialSecondAdapter;
-    private List<TurnoverCategoryBean> materialList =new ArrayList<>();
+    private List<TurnoverCategoryBean> materialList = new ArrayList<>();
     private UnitAdapter unitAdapter;
-    private List<TurnoverTypeBean.UnitBean> unitList =new ArrayList<>();
+    private List<TurnoverTypeBean.UnitBean> unitList = new ArrayList<>();
     private UseStatueAdapter useStatueAdapter;
-    private List<TurnoverTypeBean.UseStatusBean> useStatueList =new ArrayList<>();
+    private List<TurnoverTypeBean.UseStatusBean> useStatueList = new ArrayList<>();
     private MaterialStatusAdapter materialStatusAdapter;
-    private List<TurnoverTypeBean.MaterialStatusBean> materialStatusList =new ArrayList<>();
+    private List<TurnoverTypeBean.MaterialStatusBean> materialStatusList = new ArrayList<>();
     private GroundingAdapter groundingAdapter;
-    private List<TurnoverTypeBean.IsShelfBean> groundingList =new ArrayList<>();
+    private List<TurnoverTypeBean.IsShelfBean> groundingList = new ArrayList<>();
+
     @SuppressLint({"RestrictedApi,InflateParams", "SetTextI18n"})
-    private void getBottomSheetDialog(int layout, String type ) {
+    private void getBottomSheetDialog(int layout, String type) {
         //底部滑动对话框
-        BottomSheetDialogs btn_dialog =new BottomSheetDialogs(this, R.style.BottomSheetStyle);
+        BottomSheetDialogs btn_dialog = new BottomSheetDialogs(this, R.style.BottomSheetStyle);
         //设置自定view
         View dialog_view = this.getLayoutInflater().inflate(layout, null);
         //把布局添加进去
@@ -372,8 +377,8 @@ public class TurnoverAddActivity extends BaseActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        turnoverVm.type=type;
-        switch (type){
+        turnoverVm.type = type;
+        switch (type) {
             case "category_material_id"://选择材料类别/名称
                 RecyclerView rvFirst = btn_dialog.findViewById(R.id.rv_province);
                 RecyclerView rvSecond = btn_dialog.findViewById(R.id.rv_city);
@@ -389,98 +394,98 @@ public class TurnoverAddActivity extends BaseActivity {
                 rvSecond.setAdapter(selectorMaterialSecondAdapter);
                 selectorCategoryFirstAdapter.setOnItemClickListener((adapter, view, position) -> {
                     turnoverAddVm.category = categoryList.get(position).getId();
-                    turnoverVm.constructionCategoryList("",turnoverAddVm.category);
+                    turnoverVm.constructionCategoryList("", turnoverAddVm.category);
                     selectorCategoryFirstAdapter.setIsSelect(turnoverAddVm.category);
-                    turnoverAddVm.categoryName=categoryList.get(position).getCatname();
+                    turnoverAddVm.categoryName = categoryList.get(position).getCatname();
                 });
                 selectorMaterialSecondAdapter.setOnItemClickListener((adapter, view, position) -> {
                     turnoverAddVm.material_id = materialList.get(position).getId();
                     selectorMaterialSecondAdapter.setIsSelect(turnoverAddVm.material_id);
                     btn_dialog.dismiss();
-                    turnoverAddVm.materialName=materialList.get(position).getCatname();
-                    tvCategoryMaterial_id.setText(turnoverAddVm.categoryName+" - "+turnoverAddVm.materialName);
+                    turnoverAddVm.materialName = materialList.get(position).getCatname();
+                    tvCategoryMaterial_id.setText(turnoverAddVm.categoryName + " - " + turnoverAddVm.materialName);
                     tvCategoryMaterial_id.setTextColor(getResources().getColor(R.color.colorTv));
                 });
                 turnoverVm.constructionCategoryParent();
-                if (turnoverAddVm.category!=0){
-                    turnoverVm.constructionCategoryList("",turnoverAddVm.category);
+                if (turnoverAddVm.category != 0) {
+                    turnoverVm.constructionCategoryList("", turnoverAddVm.category);
                     selectorCategoryFirstAdapter.setIsSelect(turnoverAddVm.category);
                 }
-                if (turnoverAddVm.material_id!=0){
+                if (turnoverAddVm.material_id != 0) {
                     selectorMaterialSecondAdapter.setIsSelect(turnoverAddVm.material_id);
                 }
                 break;
             case "unit"://选择单位
-                TextView tvUnits=btn_dialog.findViewById(R.id.tv_title);
+                TextView tvUnits = btn_dialog.findViewById(R.id.tv_title);
                 Objects.requireNonNull(tvUnits).setText("选择单位");
                 RecyclerView rvUnit = btn_dialog.findViewById(R.id.rv);
                 Objects.requireNonNull(rvUnit).setLayoutManager(new LinearLayoutManager(this));
                 unitAdapter = new UnitAdapter(R.layout.adapter_selector_area_second, null);
                 rvUnit.setAdapter(unitAdapter);
                 unitAdapter.setOnItemClickListener((adapter, view, position) -> {
-                    turnoverAddVm.unit=unitList.get(position).getId();
+                    turnoverAddVm.unit = unitList.get(position).getId();
                     tvUnit.setText(unitList.get(position).getName());
                     tvUnit.setTextColor(getResources().getColor(R.color.colorTv));
                     unitAdapter.setIsSelect(turnoverAddVm.unit);
                     btn_dialog.dismiss();
                 });
                 turnoverVm.constructionSearch();
-                if (turnoverAddVm.unit!=0){
+                if (turnoverAddVm.unit != 0) {
                     unitAdapter.setIsSelect(turnoverAddVm.unit);
                 }
                 break;
             case "use_statue"://使用状态弹窗
-                TextView tvUseStatue=btn_dialog.findViewById(R.id.tv_title);
+                TextView tvUseStatue = btn_dialog.findViewById(R.id.tv_title);
                 Objects.requireNonNull(tvUseStatue).setText("使用状态");
                 RecyclerView rvUseStatue = btn_dialog.findViewById(R.id.rv);
                 Objects.requireNonNull(rvUseStatue).setLayoutManager(new LinearLayoutManager(this));
                 useStatueAdapter = new UseStatueAdapter(R.layout.adapter_selector_area_second, null);
                 rvUseStatue.setAdapter(useStatueAdapter);
                 useStatueAdapter.setOnItemClickListener((adapter, view, position) -> {
-                    turnoverAddVm.use_status=useStatueList.get(position).getId();
+                    turnoverAddVm.use_status = useStatueList.get(position).getId();
                     tvUseStatus.setText(useStatueList.get(position).getName());
                     tvUseStatus.setTextColor(getResources().getColor(R.color.colorTv));
                     useStatueAdapter.setIsSelect(turnoverAddVm.use_status);
                     btn_dialog.dismiss();
                 });
                 turnoverVm.constructionSearch();
-                if (turnoverAddVm.use_status!=0){
+                if (turnoverAddVm.use_status != 0) {
                     useStatueAdapter.setIsSelect(turnoverAddVm.use_status);
                 }
                 break;
             case "material_status":
-                TextView tv_material_status=btn_dialog.findViewById(R.id.tv_title);
+                TextView tv_material_status = btn_dialog.findViewById(R.id.tv_title);
                 Objects.requireNonNull(tv_material_status).setText("材料状态");
                 RecyclerView rvMaterialStatus = btn_dialog.findViewById(R.id.rv);
                 Objects.requireNonNull(rvMaterialStatus).setLayoutManager(new LinearLayoutManager(this));
                 materialStatusAdapter = new MaterialStatusAdapter(R.layout.adapter_selector_area_second, null);
                 rvMaterialStatus.setAdapter(materialStatusAdapter);
                 materialStatusAdapter.setOnItemClickListener((adapter, view, position) -> {
-                    turnoverAddVm.material_status=materialStatusList.get(position).getId();
+                    turnoverAddVm.material_status = materialStatusList.get(position).getId();
                     tvMaterialStatus.setText(materialStatusList.get(position).getName());
                     tvMaterialStatus.setTextColor(getResources().getColor(R.color.colorTv));
                     materialStatusAdapter.setIsSelect(turnoverAddVm.material_status);
                     btn_dialog.dismiss();
                 });
                 turnoverVm.constructionSearch();
-                if (turnoverAddVm.material_status!=0){
+                if (turnoverAddVm.material_status != 0) {
                     materialStatusAdapter.setIsSelect(turnoverAddVm.material_status);
                 }
                 break;
             case "grounding"://是否上架弹窗
-                TextView tvGrounding=btn_dialog.findViewById(R.id.tv_title);
+                TextView tvGrounding = btn_dialog.findViewById(R.id.tv_title);
                 Objects.requireNonNull(tvGrounding).setText("是否上架");
                 RecyclerView rvGrounding = btn_dialog.findViewById(R.id.rv);
                 Objects.requireNonNull(rvGrounding).setLayoutManager(new LinearLayoutManager(this));
                 groundingAdapter = new GroundingAdapter(R.layout.adapter_selector_area_second, null);
                 rvGrounding.setAdapter(groundingAdapter);
                 groundingAdapter.setOnItemClickListener((adapter, view, position) -> {
-                    turnoverAddVm.is_shelf=groundingList.get(position).getId();
+                    turnoverAddVm.is_shelf = groundingList.get(position).getId();
                     tvIsShelf.setText(groundingList.get(position).getName());
                     tvIsShelf.setTextColor(getResources().getColor(R.color.colorTv));
                     groundingAdapter.setIsSelect(turnoverAddVm.is_shelf);
                     btn_dialog.dismiss();
-                    switch (groundingList.get(position).getName()){
+                    switch (groundingList.get(position).getName()) {
                         case "未上架":
                             llInsideShelf.setVisibility(View.GONE);
                             llMethod.setVisibility(View.GONE);
@@ -499,7 +504,7 @@ public class TurnoverAddActivity extends BaseActivity {
                     }
                 });
                 turnoverVm.constructionSearch();
-                if (turnoverAddVm.is_shelf!=0){
+                if (turnoverAddVm.is_shelf != 0) {
                     groundingAdapter.setIsSelect(turnoverAddVm.is_shelf);
                 }
                 break;
@@ -530,23 +535,23 @@ public class TurnoverAddActivity extends BaseActivity {
 
     @SuppressLint("SetTextI18n")
     @Subscribe
-    public void onEventLocationEvent(LocationEvent event){
-        turnoverAddVm.province=event.getProvinceId();
-        turnoverAddVm.city=event.getCityId();
-        turnoverAddVm.address=event.getAddress();
-        turnoverAddVm.latitude=event.getLatitude();
-        turnoverAddVm.longitude=event.getLongitude();
-        tvAddress.setText(event.getProvince()+event.getCity()+event.getAddress());
+    public void onEventLocationEvent(LocationEvent event) {
+        turnoverAddVm.province = event.getProvinceId();
+        turnoverAddVm.city = event.getCityId();
+        turnoverAddVm.address = event.getAddress();
+        turnoverAddVm.latitude = event.getLatitude();
+        turnoverAddVm.longitude = event.getLongitude();
+        tvAddress.setText(event.getProvince() + event.getCity() + event.getAddress());
         tvAddress.setTextColor(getResources().getColor(R.color.colorTv));
     }
 
     //时间选择器
-    private void showTimeDialog(String type,String showTime){
+    private void showTimeDialog(String type, String showTime) {
 
         CustomDatePicker customDatePicker = new CustomDatePicker(this, time -> {
-            switch (type){
+            switch (type) {
                 case "shelf_time_start"://上架开始时间
-                    turnoverAddVm.shelf_start_time=time;
+                    turnoverAddVm.shelf_start_time = time;
                     tvShelfTimeStart.setText(time);
                     tvShelfTimeStart.setTextColor(getResources().getColor(R.color.colorTv));
                     break;
@@ -557,11 +562,11 @@ public class TurnoverAddActivity extends BaseActivity {
                         Calendar calendar = Calendar.getInstance();
                         calendar.setTime(dd);
                         calendar.add(Calendar.DAY_OF_MONTH, 1);//加一天
-                        String times=df.format(calendar.getTime());
+                        String times = df.format(calendar.getTime());
                         turnoverAddVm.shelf_end_time = time;
-                        if (time.equals(turnoverAddVm.todayTime)){
+                        if (time.equals(turnoverAddVm.todayTime)) {
                             tvShelfTimeEnd.setText(times);
-                        }else {
+                        } else {
                             tvShelfTimeEnd.setText(time);
                         }
                     } catch (ParseException e) {
@@ -577,6 +582,7 @@ public class TurnoverAddActivity extends BaseActivity {
     //获取权限
     public static final int CAMERA = 111;
     public static final int PHOTO = 222;
+
     private void getPermissions() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager
@@ -585,7 +591,7 @@ public class TurnoverAddActivity extends BaseActivity {
                             .PERMISSION_GRANTED &&
                     ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager
                             .PERMISSION_GRANTED) {
-                getBottomSheetDialog(R.layout.dialog_photo,"images");
+                getBottomSheetDialog(R.layout.dialog_photo, "images");
             } else {
                 //不具有获取权限，需要进行权限申请
                 ActivityCompat.requestPermissions(this, new String[]{
@@ -594,7 +600,7 @@ public class TurnoverAddActivity extends BaseActivity {
                         Manifest.permission.CAMERA}, CAMERA);
             }
         } else {
-            getBottomSheetDialog(R.layout.dialog_photo,"images");
+            getBottomSheetDialog(R.layout.dialog_photo, "images");
         }
     }
 
@@ -620,19 +626,19 @@ public class TurnoverAddActivity extends BaseActivity {
 
     //添加后的图片显示
     private void getImageBitmap() {
-        if (picture_list!=null&&picture_list.size()!=0){
-            GridLayoutManager gridLayoutManager = new GridLayoutManager(this,1);
+        if (picture_list != null && picture_list.size() != 0) {
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1);
             gridLayoutManager.setOrientation(GridLayoutManager.HORIZONTAL);
             rvImages.setLayoutManager(gridLayoutManager);
-            ImagesAdapter imagesAdapter=new ImagesAdapter(R.layout.adapter_images,picture_list);
+            ImagesAdapter imagesAdapter = new ImagesAdapter(R.layout.adapter_images, picture_list);
             rvImages.setAdapter(imagesAdapter);
             imagesAdapter.setOnItemClickListener((adapter, view, position) -> {
-                PictureEnlargeUtils.getPictureEnlargeList(this,picture_list,position);
+                PictureEnlargeUtils.getPictureEnlargeList(this, picture_list, position);
             });
             imagesAdapter.setOnItemChildClickListener((adapter, view, position) -> {
                 switch (view.getId()) {
                     case R.id.iv_delete:
-                        imagesAdapter.removeData(picture_list,position);
+                        imagesAdapter.removeData(picture_list, position);
                         break;
                 }
             });

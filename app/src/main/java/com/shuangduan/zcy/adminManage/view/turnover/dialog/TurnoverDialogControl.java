@@ -1,20 +1,18 @@
 package com.shuangduan.zcy.adminManage.view.turnover.dialog;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.LogUtils;
+import com.contrarywind.view.WheelView;
 import com.shuangduan.zcy.R;
+import com.shuangduan.zcy.adapter.ArrayWheelAdapter;
 import com.shuangduan.zcy.adminManage.bean.TurnoverNameBean;
 import com.shuangduan.zcy.adminManage.vm.TurnoverAddVm;
-import com.shuangduan.zcy.adminManage.vm.TurnoverVm;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BottomSheetDialogs;
-import com.shuangduan.zcy.utils.DensityUtil;
-import com.shuangduan.zcy.weight.datepicker.DatePickerView;
+import com.shuangduan.zcy.weight.WheelSlideView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +36,7 @@ public class TurnoverDialogControl {
     private List<String> projectList;
     //项目ID
     private List<Integer> projectIdList;
+    private List<TurnoverNameBean> turnoverName;
 
     public TurnoverDialogControl(BaseActivity context, TurnoverAddVm vm) {
         this.context = context;
@@ -74,7 +73,13 @@ public class TurnoverDialogControl {
 
     public void initView(int titleRes) {
         TextView tvTitle = view.findViewById(R.id.tv_dialog_item_title);
-
+        WheelSlideView wheelView = view.findViewById(R.id.wheel_view);
+        wheelView.setDividerColor(0x000000);
+        wheelView.setItemsVisibleCount(7);
+        wheelView.setCurrentItem(2);
+        wheelView.setCyclic(false);
+        wheelView.setLineSpacingMultiplier(2.0f);
+        wheelView.setAdapter(new ArrayWheelAdapter(projectList));
     }
 
     public void show() {
