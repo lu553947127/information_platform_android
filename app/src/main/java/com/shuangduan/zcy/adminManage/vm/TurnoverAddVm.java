@@ -64,7 +64,10 @@ public class TurnoverAddVm extends BaseViewModel {
     public String net_worth;
     public String remark;
 
+    public int editId;
+
     public MutableLiveData<String> turnoverAddData;
+    public MutableLiveData<String> turnoverEditData;
     public MutableLiveData<String> pageStateLiveData;
     //基建物资-物资材料添加-选择项目
     public MutableLiveData<List<TurnoverNameBean>> turnoverName;
@@ -72,6 +75,7 @@ public class TurnoverAddVm extends BaseViewModel {
     public TurnoverAddVm() {
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
         turnoverAddData = new MutableLiveData<>();
+        turnoverEditData = new MutableLiveData<>();
         pageStateLiveData = new MutableLiveData<>();
         turnoverName = new MutableLiveData<>();
 
@@ -86,8 +90,8 @@ public class TurnoverAddVm extends BaseViewModel {
         method = 1;
     }
 
-    //后台管理 --- 周转材料添加
-    public void constructionAdd(String stock,String unit_price,String spec,String person_liable,String tel,String guidance_price){
+    //后台管理 --- 周转材料添加/编辑
+    public void constructionAdd(String type,String stock,String unit_price,String spec,String person_liable,String tel,String guidance_price){
         if (category==0) {
             ToastUtils.showShort(getString(R.string.admin_selector_no_category));
             return;
@@ -160,9 +164,19 @@ public class TurnoverAddVm extends BaseViewModel {
             ToastUtils.showShort(getString(R.string.admin_selector_no_material_shelf_guidance_images));
             return;
         }
-        new TurnoverRepository().constructionAdd(turnoverAddData,userId,category,material_id,stock,unit_price,unit,spec,use_status,material_status
-                ,province,city,address,longitude,latitude,person_liable,tel,is_shelf,shelf_start_time,shelf_end_time,shelf_type,method,guidance_price,images
-                ,unit_id,plan,use_count,start_date,entry_time,exit_time,accumulated_amortization,original_price,net_worth,remark);
+
+        switch (type){
+            case "add"://添加周转材料
+                new TurnoverRepository().constructionAdd(turnoverAddData,userId,category,material_id,stock,unit_price,unit,spec,use_status,material_status
+                        ,province,city,address,longitude,latitude,person_liable,tel,is_shelf,shelf_start_time,shelf_end_time,shelf_type,method,guidance_price,images
+                        ,unit_id,plan,use_count,start_date,entry_time,exit_time,accumulated_amortization,original_price,net_worth,remark);
+                break;
+            case "edit"://编辑周转材料
+                new TurnoverRepository().constructionEdit(turnoverEditData,userId,editId,category,material_id,stock,unit_price,unit,spec,use_status,material_status
+                        ,province,city,address,longitude,latitude,person_liable,tel,is_shelf,shelf_start_time,shelf_end_time,shelf_type,method,guidance_price,images
+                        ,unit_id,plan,use_count,start_date,entry_time,exit_time,accumulated_amortization,original_price,net_worth,remark);
+                break;
+        }
     }
 
     //后台管理 --- 物资材料添加-选择项目

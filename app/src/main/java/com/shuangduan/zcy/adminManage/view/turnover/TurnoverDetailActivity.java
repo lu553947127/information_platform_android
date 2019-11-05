@@ -18,7 +18,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adminManage.adapter.TurnoverImageAdapter;
 import com.shuangduan.zcy.adminManage.bean.TurnoverDetailBean;
-import com.shuangduan.zcy.adminManage.vm.TurnoverDetailVm;
+import com.shuangduan.zcy.adminManage.vm.TurnoverVm;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.utils.image.PictureEnlargeUtils;
@@ -51,7 +51,6 @@ public class TurnoverDetailActivity extends BaseActivity implements BaseQuickAda
     TextView tvTitle;
     @BindView(R.id.tv_category)
     TextView tvCategory;
-
     @BindView(R.id.tv_stock_num)
     TextView tvStockNum;
     @BindView(R.id.tv_guide_price)
@@ -94,25 +93,18 @@ public class TurnoverDetailActivity extends BaseActivity implements BaseQuickAda
     TextView tvOriginal;
     @BindView(R.id.tv_value)
     TextView tvValue;
-
     @BindView(R.id.tv_entry_person)
     TextView tvEntryPerson;
-
     @BindView(R.id.tv_remark)
     TextView tvRemark;
-
     @BindView(R.id.tv_material_photo)
     TextView tvMaterialPhoto;
     @BindView(R.id.tv_putaway_time_key)
     TextView tvPutawayTimeKey;
     @BindView(R.id.tv_supply_method_key)
     TextView tvSupplyMethodKey;
-
     @BindView(R.id.group)
     Group group;
-
-    private int constructionId;
-    private TurnoverDetailVm turnoverDetailVm;
     private TurnoverDetailBean turnover;
 
     @Override
@@ -131,12 +123,10 @@ public class TurnoverDetailActivity extends BaseActivity implements BaseQuickAda
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(R.string.admin_turnover_material_details);
 
-        constructionId = getIntent().getIntExtra(CustomConfig.CONSTRUCTION_ID, 0);
+        int constructionId = getIntent().getIntExtra(CustomConfig.CONSTRUCTION_ID, 0);
 
-        turnoverDetailVm = ViewModelProviders.of(this).get(TurnoverDetailVm.class);
-
+        TurnoverVm turnoverDetailVm = ViewModelProviders.of(this).get(TurnoverVm.class);
         turnoverDetailVm.getTurnoverDetail(constructionId);
-
         turnoverDetailVm.turnoverDetailLiveData.observe(this, turnover -> {
             this.turnover = turnover;
             tvTitle.setText(turnover.materialIdName);
@@ -185,7 +175,6 @@ public class TurnoverDetailActivity extends BaseActivity implements BaseQuickAda
                 rvImage.setAdapter(adapter);
                 adapter.setNewData(turnover.images);
             }
-
 
             if (turnover.isShelfName.equals("未上架")) {
                 tvPutawayTimeKey.setVisibility(View.GONE);

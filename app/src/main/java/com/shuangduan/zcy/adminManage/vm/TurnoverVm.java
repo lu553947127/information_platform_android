@@ -6,6 +6,8 @@ import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.adminManage.bean.TurnoverBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverCategoryBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverCompanyBean;
+import com.shuangduan.zcy.adminManage.bean.TurnoverDetailBean;
+import com.shuangduan.zcy.adminManage.bean.TurnoverDetailEditBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverHistoryBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverTypeBean;
 import com.shuangduan.zcy.adminManage.repository.TurnoverRepository;
@@ -43,6 +45,8 @@ public class TurnoverVm extends BaseViewModel{
     public MutableLiveData<List<TurnoverCompanyBean>> turnoverCompanyData;
     public MutableLiveData<List<TurnoverCategoryBean>> turnoverFirstData;
     public MutableLiveData<List<TurnoverCategoryBean>> turnoverSecondData;
+    public MutableLiveData<TurnoverDetailBean> turnoverDetailLiveData;
+    public MutableLiveData<TurnoverDetailEditBean> turnoverDetailEditLiveData;
     public MutableLiveData<String> turnoverDeleteData;
     public MutableLiveData<String> turnoverSplitData;
     public MutableLiveData<String> pageStateLiveData;
@@ -57,6 +61,8 @@ public class TurnoverVm extends BaseViewModel{
         turnoverSecondData = new MutableLiveData<>();
         turnoverDeleteData = new MutableLiveData<>();
         turnoverSplitData = new MutableLiveData<>();
+        turnoverDetailLiveData = new MutableLiveData<>();
+        turnoverDetailEditLiveData = new MutableLiveData<>();
         pageStateLiveData = new MutableLiveData<>();
         is_shelf = 0;
         use_status = 0;
@@ -111,5 +117,15 @@ public class TurnoverVm extends BaseViewModel{
     //后台管理 --- 周转材料拆分
     public void constructionSplit(int id,String stock,int use_status,int province,int city,String address,double longitude,double latitude){
         new TurnoverRepository().constructionSplit(turnoverSplitData,userId,id,stock,use_status,province,city,address,longitude,latitude);
+    }
+
+    //后台管理 --- 周转材料详情
+    public void getTurnoverDetail(int id) {
+        new TurnoverRepository().getTurnoverDetail(turnoverDetailLiveData, pageStateLiveData, userId, id);
+    }
+
+    //后台管理 --- 周转材料编辑详情
+    public void constructionEditShow(int id) {
+        new TurnoverRepository().constructionEditShow(turnoverDetailEditLiveData, pageStateLiveData, userId, id);
     }
 }

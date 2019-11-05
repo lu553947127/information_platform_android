@@ -38,6 +38,7 @@ import com.shuangduan.zcy.adminManage.adapter.SelectorMaterialSecondAdapter;
 import com.shuangduan.zcy.adminManage.adapter.UnitAdapter;
 import com.shuangduan.zcy.adminManage.adapter.UseStatueAdapter;
 import com.shuangduan.zcy.adminManage.bean.TurnoverCategoryBean;
+import com.shuangduan.zcy.adminManage.bean.TurnoverDetailEditBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverTypeBean;
 import com.shuangduan.zcy.adminManage.view.turnover.dialog.TurnoverDialogControl;
 import com.shuangduan.zcy.adminManage.vm.TurnoverAddVm;
@@ -45,6 +46,7 @@ import com.shuangduan.zcy.adminManage.vm.TurnoverVm;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BottomSheetDialogs;
+import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.event.LocationEvent;
 import com.shuangduan.zcy.utils.image.PictureEnlargeUtils;
 import com.shuangduan.zcy.utils.matisse.Glide4Engine;
@@ -74,6 +76,9 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
+
+import static com.shuangduan.zcy.app.CustomConfig.ADD;
+import static com.shuangduan.zcy.app.CustomConfig.EDIT;
 
 /**
  * @ProjectName: information_platform_android
@@ -168,9 +173,19 @@ public class TurnoverAddActivity extends BaseActivity {
     protected void initDataAndEvent(Bundle savedInstanceState) {
         tvBarTitle.setText(R.string.admin_turnover_material_add);
 
+        int constructionId = getIntent().getIntExtra(CustomConfig.CONSTRUCTION_ID, 0);
         turnoverVm = ViewModelProviders.of(this).get(TurnoverVm.class);
         turnoverAddVm = ViewModelProviders.of(this).get(TurnoverAddVm.class);
         uploadPhotoVm = ViewModelProviders.of(this).get(UploadPhotoVm.class);
+
+        //判断时添加还是编辑
+        switch (getIntent().getIntExtra(CustomConfig.HANDLE_TYPE,0)){
+            case ADD://添加
+                break;
+            case EDIT://编辑
+                getEditDetail(constructionId);
+                break;
+        }
 
         //获取材料类别
         turnoverVm.turnoverFirstData.observe(this, turnoverCategoryBeans -> {
@@ -235,7 +250,6 @@ public class TurnoverAddActivity extends BaseActivity {
         uploadPhotoVm.uploadLiveData.observe(this, uploadBean -> {
             picture_list.add(uploadBean.getSource());
             turnoverAddVm.images = getListToString();
-            //图片显示
             getImageBitmap();
         });
 
@@ -245,7 +259,129 @@ public class TurnoverAddActivity extends BaseActivity {
             finish();
         });
 
+        turnoverVm.pageStateLiveData.observe(this, s -> {
+            switch (s) {
+                case PageState.PAGE_LOADING:
+                    showLoading();
+                    break;
+                default:
+                    hideLoading();
+                    break;
+            }
+        });
+
+        turnoverAddVm.pageStateLiveData.observe(this, s -> {
+            switch (s) {
+                case PageState.PAGE_LOADING:
+                    showLoading();
+                    break;
+                default:
+                    hideLoading();
+                    break;
+            }
+        });
+
         turnoverVm.constructionSearch();
+    }
+
+    //获取编辑详细数据显示
+    @SuppressLint("SetTextI18n")
+    private void getEditDetail(int id) {
+        turnoverAddVm.editId=id;
+        turnoverVm.constructionEditShow(id);
+        turnoverVm.turnoverDetailEditLiveData.observe(this,turnoverDetailEditBean -> {
+            turnoverAddVm.category=turnoverDetailEditBean.getCategory();
+            turnoverAddVm.material_id=turnoverDetailEditBean.getMaterial_id();
+            tvCategoryMaterial_id.setText(turnoverDetailEditBean.getCategory_name() + " - " + turnoverDetailEditBean.getMaterial_id_name());
+            tvCategoryMaterial_id.setTextColor(getResources().getColor(R.color.colorTv));
+            etStock.setText(turnoverDetailEditBean.getStock());
+            etUnitPrice.setText(turnoverDetailEditBean.getUnit_price());
+            turnoverAddVm.unit=turnoverDetailEditBean.getUnit();
+            tvUnit.setText(turnoverDetailEditBean.getUnit_name());
+            tvUnit.setTextColor(getResources().getColor(R.color.colorTv));
+            etSpec.setText(turnoverDetailEditBean.getSpec());
+            turnoverAddVm.use_status=turnoverDetailEditBean.getUse_status();
+            tvUseStatus.setText(turnoverDetailEditBean.getUse_status_name());
+            tvUseStatus.setTextColor(getResources().getColor(R.color.colorTv));
+            turnoverAddVm.material_status=turnoverDetailEditBean.getMaterial_status();
+            tvMaterialStatus.setText(turnoverDetailEditBean.getMaterial_status_name());
+            tvMaterialStatus.setTextColor(getResources().getColor(R.color.colorTv));
+            turnoverAddVm.province=turnoverDetailEditBean.getProvince();
+            turnoverAddVm.city=turnoverDetailEditBean.getCity();
+            turnoverAddVm.address=turnoverDetailEditBean.getAddress();
+            turnoverAddVm.latitude=turnoverDetailEditBean.getLatitude();
+            turnoverAddVm.longitude=turnoverDetailEditBean.getLongitude();
+            tvAddress.setText(turnoverDetailEditBean.getProvince_name()+turnoverDetailEditBean.getCity_name()+turnoverDetailEditBean.getAddress());
+            tvAddress.setTextColor(getResources().getColor(R.color.colorTv));
+            etPersonLiable.setText(turnoverDetailEditBean.getPerson_liable());
+            etTel.setText(turnoverDetailEditBean.getTel());
+            turnoverAddVm.is_shelf=turnoverDetailEditBean.getIs_shelf();
+            tvIsShelf.setText(turnoverDetailEditBean.getIs_shelf_name());
+            tvIsShelf.setTextColor(getResources().getColor(R.color.colorTv));
+            switch (turnoverAddVm.is_shelf) {
+                case 1://公开上架
+                    llInsideShelf.setVisibility(View.GONE);
+                    llMethod.setVisibility(View.VISIBLE);
+                    llGuidancePrice.setVisibility(View.VISIBLE);
+                    tvImageRed.setVisibility(View.VISIBLE);
+                    etGuidancePrice.setText(turnoverDetailEditBean.getGuidance_price());
+                    turnoverAddVm.method=turnoverDetailEditBean.getMethod();
+                    if (turnoverAddVm.method==1){
+                        cbLease.setChecked(true);
+                        cbSell.setChecked(false);
+                    }else {
+                        cbLease.setChecked(false);
+                        cbSell.setChecked(true);
+                    }
+                    break;
+                case 2://未上架
+                    llInsideShelf.setVisibility(View.GONE);
+                    llMethod.setVisibility(View.GONE);
+                    llGuidancePrice.setVisibility(View.GONE);
+                    tvImageRed.setVisibility(View.INVISIBLE);
+                    break;
+                case 3://内部上架
+                    llInsideShelf.setVisibility(View.VISIBLE);
+                    llMethod.setVisibility(View.VISIBLE);
+                    llGuidancePrice.setVisibility(View.VISIBLE);
+                    tvImageRed.setVisibility(View.VISIBLE);
+                    etGuidancePrice.setText(turnoverDetailEditBean.getGuidance_price());
+                    turnoverAddVm.shelf_start_time=turnoverDetailEditBean.getShelf_start_time();
+                    tvShelfTimeStart.setText(turnoverDetailEditBean.getShelf_start_time());
+                    tvShelfTimeStart.setTextColor(getResources().getColor(R.color.colorTv));
+                    turnoverAddVm.shelf_end_time=turnoverDetailEditBean.getShelf_end_time();
+                    tvShelfTimeEnd.setText(turnoverDetailEditBean.getShelf_end_time());
+                    tvShelfTimeEnd.setTextColor(getResources().getColor(R.color.colorTv));
+                    turnoverAddVm.shelf_type=turnoverDetailEditBean.getShelf_type();
+                    if (turnoverAddVm.shelf_type==1){
+                        cbShelfTypeOpen.setChecked(true);
+                        cbShelfTypeClose.setChecked(false);
+                    }else {
+                        cbShelfTypeOpen.setChecked(false);
+                        cbShelfTypeClose.setChecked(true);
+                    }
+                    turnoverAddVm.method=turnoverDetailEditBean.getMethod();
+                    if (turnoverAddVm.method==1){
+                        cbLease.setChecked(true);
+                        cbSell.setChecked(false);
+                    }else {
+                        cbLease.setChecked(false);
+                        cbSell.setChecked(true);
+                    }
+                    break;
+            }
+            for (TurnoverDetailEditBean.ImagesBean img : turnoverDetailEditBean.getImages()) {
+                picture_list.add(img.getUrl());
+            }
+            turnoverAddVm.images = getListToString();
+            getImageBitmap();
+        });
+
+        //编辑周转材料返回结果
+        turnoverAddVm.turnoverEditData.observe(this,item->{
+            ToastUtils.showShort("编辑成功");
+            finish();
+        });
     }
 
     @OnClick({R.id.iv_bar_back, R.id.tv_category_material_id, R.id.tv_unit, R.id.tv_use_status, R.id.tv_material_status
@@ -332,8 +468,16 @@ public class TurnoverAddActivity extends BaseActivity {
                 dialogControl.show(8, R.string.admin_material_value);
                 break;
             case R.id.tv_reserve://提交
-                turnoverAddVm.constructionAdd(etStock.getText().toString(), etUnitPrice.getText().toString()
-                        , etSpec.getText().toString(), etPersonLiable.getText().toString(), etTel.getText().toString(), etGuidancePrice.getText().toString());
+                switch (getIntent().getIntExtra(CustomConfig.HANDLE_TYPE,0)){
+                    case ADD://添加
+                        turnoverAddVm.constructionAdd("add",etStock.getText().toString(), etUnitPrice.getText().toString()
+                                , etSpec.getText().toString(), etPersonLiable.getText().toString(), etTel.getText().toString(), etGuidancePrice.getText().toString());
+                        break;
+                    case EDIT://编辑
+                        turnoverAddVm.constructionAdd("edit",etStock.getText().toString(), etUnitPrice.getText().toString()
+                                , etSpec.getText().toString(), etPersonLiable.getText().toString(), etTel.getText().toString(), etGuidancePrice.getText().toString());
+                        break;
+                }
                 break;
         }
     }

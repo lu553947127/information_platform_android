@@ -4,6 +4,7 @@ import com.shuangduan.zcy.adminManage.bean.TurnoverBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverCompanyBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverCategoryBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverDetailBean;
+import com.shuangduan.zcy.adminManage.bean.TurnoverDetailEditBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverHistoryBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverNameBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverTypeBean;
@@ -1629,10 +1630,58 @@ public interface ApiService {
             @Field("remark") String remark
     );
 
+    //后台管理 --- 周转材料编辑
+    @FormUrlEncoded
+    @POST("api/Manage/constructionEdit")
+    Flowable<BaseResponse<String>> constructionEdit(
+            @Field("user_id") int userId,
+            @Field("id") int id,
+            @Field("category") int category,
+            @Field("material_id") int material_id,
+            @Field("stock") String stock,
+            @Field("unit_price") String unit_price,
+            @Field("unit") int unit,
+            @Field("spec") String spec,
+            @Field("use_status") int use_status,
+            @Field("material_status") int material_status,
+            @Field("province") int province,
+            @Field("city") int city,
+            @Field("address") String address,
+            @Field("longitude") double longitude,
+            @Field("latitude") double latitude,
+            @Field("person_liable") String person_liable,
+            @Field("tel") String tel,
+            @Field("is_shelf") int is_shelf,
+            @Field("shelf_start_time") String shelf_start_time,
+            @Field("shelf_end_time") String shelf_end_time,
+            @Field("shelf_type") int shelf_type,
+            @Field("method") int method,
+            @Field("guidance_price") String guidance_price,
+            @Field("images") String images,
+            @Field("unit_id") int unit_id,
+            @Field("plan") int plan,
+            @Field("use_count") String use_count,
+            @Field("start_date") String start_date,
+            @Field("entry_time") String entry_time,
+            @Field("exit_time") String exit_time,
+            @Field("accumulated_amortization") String accumulated_amortization,
+            @Field("original_price") String original_price,
+            @Field("net_worth") String net_worth,
+            @Field("remark") String remark
+    );
+
     //后台管理 --- 周转材料添加-选择项目
     @FormUrlEncoded
     @POST("api/Manage/constructionGetUnit")
     Flowable<BaseListResponse<TurnoverNameBean>> projectListData(
             @Field("user_id") int userId
+    );
+
+    //后台管理 --- 周转材料编辑详情
+    @FormUrlEncoded
+    @POST("api/Manage/constructionEditShow")
+    Flowable<BaseResponse<TurnoverDetailEditBean>> constructionEditShow(
+            @Field("user_id") int userId,
+            @Field("id") int id
     );
 }

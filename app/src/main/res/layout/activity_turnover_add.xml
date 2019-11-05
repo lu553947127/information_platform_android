@@ -79,7 +79,7 @@
                 <com.shuangduan.zcy.weight.XEditText
                     android:id="@+id/et_unit_price"
                     style="@style/AdminManageSecondHint"
-                    android:maxLength="10"
+                    android:maxLength="8"
                     android:hint="@string/admin_turnover_add_unit_price_et"
                     android:inputType="number" />
             </LinearLayout>
@@ -385,7 +385,7 @@
                 <com.shuangduan.zcy.weight.XEditText
                     android:id="@+id/et_guidance_price"
                     style="@style/AdminManageSecondHint"
-                    android:maxLength="10"
+                    android:maxLength="8"
                     android:inputType="number"
                     android:hint="@string/admin_turnover_add_guidance_price_et" />
             </LinearLayout>

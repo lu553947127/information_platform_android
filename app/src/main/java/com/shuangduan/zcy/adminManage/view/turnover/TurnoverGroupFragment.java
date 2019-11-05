@@ -40,6 +40,7 @@ import com.shuangduan.zcy.base.BaseLazyFragment;
 import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.BottomSheetDialogs;
 import com.shuangduan.zcy.dialog.CustomDialog;
+import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.CityBean;
 import com.shuangduan.zcy.model.bean.ProvinceBean;
 import com.shuangduan.zcy.model.event.LocationEvent;
@@ -160,6 +161,10 @@ public class TurnoverGroupFragment extends BaseLazyFragment {
             TurnoverBean.ListBean listBean = turnoverAdapter.getData().get(position);
             switch (view.getId()) {
                 case R.id.tv_edit://编辑
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(CustomConfig.HANDLE_TYPE,CustomConfig.EDIT);
+                    bundle.putInt(CustomConfig.CONSTRUCTION_ID,listBean.getId());
+                    ActivityUtils.startActivity(bundle,TurnoverAddActivity.class);
                     break;
                 case R.id.tv_delete://删除
                     new CustomDialog(Objects.requireNonNull(getActivity()))
@@ -246,6 +251,17 @@ public class TurnoverGroupFragment extends BaseLazyFragment {
                 AnimationUtils.listScrollAnimation(ivAdd,dy);
             }
         });
+
+        turnoverVm.pageStateLiveData.observe(this, s -> {
+            switch (s) {
+                case PageState.PAGE_LOADING:
+                    showLoading();
+                    break;
+                default:
+                    hideLoading();
+                    break;
+            }
+        });
     }
 
     private void setNoMore(int page, int count) {
@@ -280,6 +296,7 @@ public class TurnoverGroupFragment extends BaseLazyFragment {
         Bundle bundle = new Bundle();
         switch (view.getId()) {
             case R.id.iv_add://添加
+                bundle.putInt(CustomConfig.HANDLE_TYPE,CustomConfig.ADD);
                 ActivityUtils.startActivity(bundle, TurnoverAddActivity.class);
                 break;
             case R.id.tv_name://选择材料名称

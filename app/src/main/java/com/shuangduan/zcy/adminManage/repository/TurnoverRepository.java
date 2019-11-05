@@ -6,6 +6,7 @@ import com.shuangduan.zcy.adminManage.bean.TurnoverBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverCompanyBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverCategoryBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverDetailBean;
+import com.shuangduan.zcy.adminManage.bean.TurnoverDetailEditBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverHistoryBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverNameBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverTypeBean;
@@ -85,5 +86,20 @@ public class TurnoverRepository extends BaseRepository {
         request(apiService.constructionAdd(userId,category,material_id,stock,unit_price,unit,spec,use_status,material_status
                 ,province,city,address,longitude,latitude,person_liable,tel,is_shelf,shelf_start_time,shelf_end_time,shelf_type,method,guidance_price,images
                 ,unit_id,plan,use_count,start_date,entry_time,exit_time,accumulated_amortization,original_price,net_worth,remark)).setData(liveData).send();
+    }
+
+    //后台管理 --- 周转材料编辑
+    public void constructionEdit(MutableLiveData<String> liveData, int userId,int id,int category,int material_id,String stock,String unit_price,int unit,String spec,int use_status,int material_status
+            ,int province,int city,String address,double longitude,double latitude,String person_liable,String tel,int is_shelf
+            ,String shelf_start_time,String shelf_end_time,int shelf_type,int method,String guidance_price,String images
+            ,int unit_id,int plan,String use_count,String start_date,String entry_time,String exit_time,String accumulated_amortization,String original_price,String net_worth, String remark) {
+        request(apiService.constructionEdit(userId,id,category,material_id,stock,unit_price,unit,spec,use_status,material_status
+                ,province,city,address,longitude,latitude,person_liable,tel,is_shelf,shelf_start_time,shelf_end_time,shelf_type,method,guidance_price,images
+                ,unit_id,plan,use_count,start_date,entry_time,exit_time,accumulated_amortization,original_price,net_worth,remark)).setData(liveData).send();
+    }
+
+    //后台管理 --- 周转材料编辑详情
+    public void constructionEditShow(MutableLiveData<TurnoverDetailEditBean> liveData, MutableLiveData<String> pageState, int userId, int id) {
+        request(apiService.constructionEditShow(userId, id)).setData(liveData).setPageState(pageState).send();
     }
 }

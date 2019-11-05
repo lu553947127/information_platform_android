@@ -178,5 +178,9 @@ public class CustomConfig {
     public static int CHIILDREN = 2;//子公司
 
     public static String CONSTRUCTION_ID = "CONSTRUCTION_ID";
+
+    public static final String HANDLE_TYPE = "HANDLE_TYPE";
+    public static final int ADD = 1;//添加
+    public static final int EDIT = 2;//编辑
     //-------------------------------------------------------------------------------------------------------
 }
