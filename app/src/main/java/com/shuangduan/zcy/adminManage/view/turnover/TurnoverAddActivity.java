@@ -209,6 +209,8 @@ public class TurnoverAddActivity extends BaseActivity {
                     if (SPUtils.getInstance().getInt(CustomConfig.SON_LIST, 0) != 1)groundingList.remove(1);
                     groundingAdapter.setNewData(groundingList);
                     break;
+                case "plan"://预计下步使用计划
+                    break;
             }
         });
 
@@ -300,6 +302,7 @@ public class TurnoverAddActivity extends BaseActivity {
                 }
                 break;
             case R.id.ts_project://详细信息所属项目
+                turnoverVm.type = "plan";
                 dialogControl.show();
                 break;
             case R.id.tv_reserve://提交
