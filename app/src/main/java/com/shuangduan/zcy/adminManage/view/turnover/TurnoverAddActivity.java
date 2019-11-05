@@ -38,7 +38,6 @@ import com.shuangduan.zcy.adminManage.adapter.SelectorMaterialSecondAdapter;
 import com.shuangduan.zcy.adminManage.adapter.UnitAdapter;
 import com.shuangduan.zcy.adminManage.adapter.UseStatueAdapter;
 import com.shuangduan.zcy.adminManage.bean.TurnoverCategoryBean;
-import com.shuangduan.zcy.adminManage.bean.TurnoverNameBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverTypeBean;
 import com.shuangduan.zcy.adminManage.view.turnover.dialog.TurnoverDialogControl;
 import com.shuangduan.zcy.adminManage.vm.TurnoverAddVm;
@@ -148,14 +147,11 @@ public class TurnoverAddActivity extends BaseActivity {
     @BindView(R.id.et_remark)
     EditText etRemark;
 
-
     private TurnoverVm turnoverVm;
     private TurnoverAddVm turnoverAddVm;
     private UploadPhotoVm uploadPhotoVm;
     private List<String> picture_list = new ArrayList<>();
     private TurnoverDialogControl dialogControl;
-
-
     private List<TurnoverTypeBean.PlanBean> planBeanList;
 
     @Override
@@ -171,7 +167,6 @@ public class TurnoverAddActivity extends BaseActivity {
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         tvBarTitle.setText(R.string.admin_turnover_material_add);
-
 
         turnoverVm = ViewModelProviders.of(this).get(TurnoverVm.class);
         turnoverAddVm = ViewModelProviders.of(this).get(TurnoverAddVm.class);
@@ -201,23 +196,21 @@ public class TurnoverAddActivity extends BaseActivity {
 
         //获取筛选条件列表数据
         turnoverVm.turnoverTypeData.observe(this, turnoverTypeBean -> {
+            //获取单位
             unitList = turnoverTypeBean.getUnit();
-//            unitAdapter.setNewData(unitList);
+            //获取使用状态
             useStatueList = turnoverTypeBean.getUse_status();
-//            useStatueAdapter.setNewData(useStatueList);
+            //获取材料状态
             materialStatusList = turnoverTypeBean.getMaterial_status();
-//            materialStatusAdapter.setNewData(materialStatusList);
+            //获取是否上架
             groundingList = turnoverTypeBean.getIs_shelf();
-            if (SPUtils.getInstance().getInt(CustomConfig.SON_LIST, 0) != 1)
-                groundingList.remove(1);
-//            groundingAdapter.setNewData(groundingList);
-
+            if (SPUtils.getInstance().getInt(CustomConfig.SON_LIST, 0) != 1) groundingList.remove(1);
+            //获取预计下步使用计划
             planBeanList = turnoverTypeBean.getPlan();
             for (TurnoverTypeBean.PlanBean item : planBeanList) {
                 dialogControl.getPlanList().add(item.getName());
                 dialogControl.getPlanIdList().add(item.getId());
             }
-
         });
 
         //详细信息开关隐藏
@@ -255,9 +248,10 @@ public class TurnoverAddActivity extends BaseActivity {
         turnoverVm.constructionSearch();
     }
 
-    @OnClick({R.id.iv_bar_back, R.id.tv_category_material_id, R.id.tv_unit, R.id.tv_use_status, R.id.tv_material_status, R.id.tv_address,
-            R.id.tv_is_shelf, R.id.tv_shelf_time_start, R.id.tv_shelf_time_end, R.id.iv_images, R.id.ts_project, R.id.ts_plan, R.id.ts_num,
-            R.id.ts_start_time, R.id.ts_enter_time, R.id.ts_exit_time, R.id.ts_amortize, R.id.ts_original, R.id.ts_value, R.id.tv_reserve})
+    @OnClick({R.id.iv_bar_back, R.id.tv_category_material_id, R.id.tv_unit, R.id.tv_use_status, R.id.tv_material_status
+            ,R.id.tv_address,R.id.tv_is_shelf, R.id.tv_shelf_time_start, R.id.tv_shelf_time_end, R.id.iv_images
+            , R.id.ts_project, R.id.ts_plan, R.id.ts_num,R.id.ts_start_time, R.id.ts_enter_time, R.id.ts_exit_time, R.id.ts_amortize, R.id.ts_original, R.id.ts_value
+            , R.id.tv_reserve})
     void OnClick(View view) {
         Bundle bundle = new Bundle();
         switch (view.getId()) {
@@ -310,32 +304,31 @@ public class TurnoverAddActivity extends BaseActivity {
                     ToastUtils.showShort("最多上传5张照片哦");
                 }
                 break;
-            case R.id.ts_project://详细信息所属项目
+            case R.id.ts_project://所属项目
                 dialogControl.show(0, R.string.admin_selector_project);
                 break;
-            case R.id.ts_plan:
-//                turnoverVm.type = "plan";
+            case R.id.ts_plan://预计下步使用计划
                 dialogControl.show(1, R.string.admin_material_plan);
                 break;
-            case R.id.ts_num:
+            case R.id.ts_num://在用数量
                 dialogControl.show(2, R.string.admin_material_num);
                 break;
-            case R.id.ts_start_time:
+            case R.id.ts_start_time://开始使用日期
                 dialogControl.show(3, R.string.admin_material_start_time);
                 break;
-            case R.id.ts_enter_time:
+            case R.id.ts_enter_time://材料进场时间
                 dialogControl.show(4, R.string.admin_material_enter_time);
                 break;
-            case R.id.ts_exit_time:
+            case R.id.ts_exit_time://材料退场时间
                 dialogControl.show(5, R.string.admin_material_exit_time);
                 break;
-            case R.id.ts_amortize:
+            case R.id.ts_amortize://累计摊销
                 dialogControl.show(6, R.string.admin_material_amortize);
                 break;
-            case R.id.ts_original:
+            case R.id.ts_original://周转材料原值
                 dialogControl.show(7, R.string.admin_material_original);
                 break;
-            case R.id.ts_value:
+            case R.id.ts_value://净值
                 dialogControl.show(8, R.string.admin_material_value);
                 break;
             case R.id.tv_reserve://提交
@@ -401,7 +394,6 @@ public class TurnoverAddActivity extends BaseActivity {
     private List<TurnoverTypeBean.MaterialStatusBean> materialStatusList = new ArrayList<>();
     private GroundingAdapter groundingAdapter;
     private List<TurnoverTypeBean.IsShelfBean> groundingList = new ArrayList<>();
-
     @SuppressLint({"RestrictedApi,InflateParams", "SetTextI18n"})
     private void getBottomSheetDialog(int layout, String type) {
         //底部滑动对话框
@@ -461,7 +453,7 @@ public class TurnoverAddActivity extends BaseActivity {
                 Objects.requireNonNull(tvUnits).setText("选择单位");
                 RecyclerView rvUnit = btn_dialog.findViewById(R.id.rv);
                 Objects.requireNonNull(rvUnit).setLayoutManager(new LinearLayoutManager(this));
-                unitAdapter = new UnitAdapter(R.layout.adapter_selector_area_second, null);
+                unitAdapter = new UnitAdapter(R.layout.adapter_selector_area_second, unitList);
                 rvUnit.setAdapter(unitAdapter);
                 unitAdapter.setOnItemClickListener((adapter, view, position) -> {
                     turnoverAddVm.unit = unitList.get(position).getId();
@@ -479,7 +471,7 @@ public class TurnoverAddActivity extends BaseActivity {
                 Objects.requireNonNull(tvUseStatue).setText("使用状态");
                 RecyclerView rvUseStatue = btn_dialog.findViewById(R.id.rv);
                 Objects.requireNonNull(rvUseStatue).setLayoutManager(new LinearLayoutManager(this));
-                useStatueAdapter = new UseStatueAdapter(R.layout.adapter_selector_area_second, null);
+                useStatueAdapter = new UseStatueAdapter(R.layout.adapter_selector_area_second, useStatueList);
                 rvUseStatue.setAdapter(useStatueAdapter);
                 useStatueAdapter.setOnItemClickListener((adapter, view, position) -> {
                     turnoverAddVm.use_status = useStatueList.get(position).getId();
@@ -498,7 +490,7 @@ public class TurnoverAddActivity extends BaseActivity {
                 Objects.requireNonNull(tv_material_status).setText("材料状态");
                 RecyclerView rvMaterialStatus = btn_dialog.findViewById(R.id.rv);
                 Objects.requireNonNull(rvMaterialStatus).setLayoutManager(new LinearLayoutManager(this));
-                materialStatusAdapter = new MaterialStatusAdapter(R.layout.adapter_selector_area_second, null);
+                materialStatusAdapter = new MaterialStatusAdapter(R.layout.adapter_selector_area_second, materialStatusList);
                 rvMaterialStatus.setAdapter(materialStatusAdapter);
                 materialStatusAdapter.setOnItemClickListener((adapter, view, position) -> {
                     turnoverAddVm.material_status = materialStatusList.get(position).getId();
@@ -517,7 +509,7 @@ public class TurnoverAddActivity extends BaseActivity {
                 Objects.requireNonNull(tvGrounding).setText("是否上架");
                 RecyclerView rvGrounding = btn_dialog.findViewById(R.id.rv);
                 Objects.requireNonNull(rvGrounding).setLayoutManager(new LinearLayoutManager(this));
-                groundingAdapter = new GroundingAdapter(R.layout.adapter_selector_area_second, null);
+                groundingAdapter = new GroundingAdapter(R.layout.adapter_selector_area_second, groundingList);
                 rvGrounding.setAdapter(groundingAdapter);
                 groundingAdapter.setOnItemClickListener((adapter, view, position) -> {
                     turnoverAddVm.is_shelf = groundingList.get(position).getId();
@@ -626,7 +618,6 @@ public class TurnoverAddActivity extends BaseActivity {
     //获取权限
     public static final int CAMERA = 111;
     public static final int PHOTO = 222;
-
     private void getPermissions() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager
