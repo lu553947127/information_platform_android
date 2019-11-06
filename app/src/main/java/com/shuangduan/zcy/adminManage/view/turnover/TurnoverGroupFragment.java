@@ -103,7 +103,6 @@ public class TurnoverGroupFragment extends BaseLazyFragment {
     private TurnoverVm turnoverVm;
     private MultiAreaVm areaVm;
     private TurnoverAdapter turnoverAdapter;
-    private List<TurnoverBean.ListBean> listTurnover=new ArrayList<>();
 
     public static TurnoverGroupFragment newInstance() {
         Bundle args = new Bundle();
@@ -140,7 +139,6 @@ public class TurnoverGroupFragment extends BaseLazyFragment {
 
         //获取周转材料列表数据
         turnoverVm.turnoverLiveData.observe(this,turnoverBean -> {
-            listTurnover=turnoverBean.getList();
             if (turnoverBean.getPage() == 1) {
                 turnoverAdapter.setNewData(turnoverBean.getList());
                 turnoverAdapter.setEmptyView(R.layout.layout_empty_admin, recyclerView);
@@ -176,9 +174,9 @@ public class TurnoverGroupFragment extends BaseLazyFragment {
 
                                 @Override
                                 public void ok(String s) {
+                                    turnoverAdapter.remove(position);
                                     turnoverVm.constructionDelete(listBean.getId());
-                                    turnoverAdapter.removeData(listTurnover,position);
-                                }
+                            }
                             }).showDialog();
                     break;
                 case R.id.tv_split://拆分

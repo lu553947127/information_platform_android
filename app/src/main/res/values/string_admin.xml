@@ -7,6 +7,7 @@
 
     <string name="admin_turnover_material_details">周转材料详情</string>
     <string name="admin_material_put_address">存放地点：</string>
+    <string name="admin_material_device_coding">设备编码：</string>
     <string name="admin_material_duty_name">责&#160;&#160;任&#160;&#160;人：</string>
     <string name="admin_material_tel">联系电话：</string>
     <string name="admin_material_putaway">是否上架：</string>
@@ -58,7 +59,7 @@
     <string name="admin_turnover_add_lease">出租</string>
     <string name="admin_turnover_add_sell">出售</string>
     <string name="admin_turnover_add_guidance_price">指导价格(元)</string>
-    <string name="admin_turnover_add_guidance_price_unit">指导价格(天/元)</string>
+    <string name="admin_turnover_add_guidance_price_unit">指导价格(元/天)</string>
     <string name="admin_turnover_add_guidance_price_et">请输入指导价格</string>
     <string name="admin_turnover_add_images">上传图片</string>
     <string name="admin_turnover_add_images_et">    (最多上传5张照片)</string>
@@ -94,4 +95,6 @@
     <string name="admin_selector_no_material_shelf_end_time">结束时间不能为空</string>
     <string name="admin_selector_no_material_shelf_guidance_price">指导价格不能为空</string>
     <string name="admin_selector_no_material_shelf_guidance_images">图片不能为空</string>
+
+    <string name="admin_device_material_details">设备物资详情</string>
 </resources>

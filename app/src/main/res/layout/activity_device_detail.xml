@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_F6F7FB"
+    android:orientation="vertical"
+    tools:ignore="MissingConstraints">
+
+    <include layout="@layout/toolbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:scrollbars="none">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorFFF"
+                android:paddingTop="25dp"
+                android:paddingLeft="15dp"
+                android:paddingBottom="8dp">
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_303741"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/tv_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:textSize="13sp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+                <TextView
+                    android:id="@+id/tv_stock"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="18dp"
+                    android:text="库存数量："
+                    android:textColor="@color/color_717986"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_category"
+                    app:layout_constraintLeft_toRightOf="@id/tv_category" />
+
+                <TextView
+                    android:id="@+id/tv_stock_num"
+                    style="@style/TurnoverDetailTextValueStyle"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_stock"
+                    app:layout_constraintLeft_toRightOf="@id/tv_stock"
+                    app:layout_constraintTop_toTopOf="@id/tv_stock" />
+
+                <TextView
+                    android:id="@+id/tv_flag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="¥"
+                    android:textColor="@color/color_303741"
+                    android:textSize="11sp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_category" />
+
+
+                <TextView
+                    android:id="@+id/tv_guide_price"
+                    style="@style/TurnoverDetailTextValueStyle"
+                    android:textSize="15sp"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_flag"
+                    app:layout_constraintLeft_toRightOf="@id/tv_flag" />
+
+                <androidx.constraintlayout.widget.Group
+                    android:id="@+id/group"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:constraint_referenced_ids="tv_flag,tv_guide_price"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/color_EDEDED" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorFFF"
+                android:paddingLeft="15dp"
+                android:paddingTop="9dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="15dp">
+
+                <TextView
+                    android:id="@+id/tv_spec"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_303741"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/tv_use_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/shape_eae9fe_3"
+                    android:paddingLeft="9.5dp"
+                    android:paddingTop="2.5dp"
+                    android:paddingRight="9.5dp"
+                    android:paddingBottom="2.5dp"
+                    android:textColor="@color/color_746DFE"
+                    android:textSize="12dp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_spec" />
+
+                <TextView
+                    android:id="@+id/tv_material_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/shape_eae9fe_3"
+                    android:paddingLeft="9.5dp"
+                    android:paddingTop="2.5dp"
+                    android:paddingRight="9.5dp"
+                    android:paddingBottom="2.5dp"
+                    android:textColor="@color/color_746DFE"
+                    android:textSize="12dp"
+                    app:layout_constraintLeft_toRightOf="@id/tv_use_status"
+                    app:layout_constraintTop_toBottomOf="@id/tv_spec" />
+
+                <TextView
+                    android:id="@+id/tv_device_coding"
+                    style="@style/TurnoverDetailTextKeyStyle"
+                    android:text="@string/admin_material_device_coding"
+                    android:layout_marginTop="13dp"
+                    android:paddingTop="1dp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_use_status" />
+
+                <TextView
+                    android:id="@+id/tv_device_coding_value"
+                    style="@style/TurnoverDetailTextValueStyle"
+                    android:layout_width="0dp"
+                    app:layout_constraintLeft_toRightOf="@id/tv_put_address_key"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tv_device_coding"/>
+
+                <TextView
+                    android:id="@+id/tv_put_address_key"
+                    style="@style/TurnoverDetailTextKeyStyle"
+                    android:text="@string/admin_material_put_address"
+                    android:layout_marginTop="13dp"
+                    android:paddingTop="1dp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_device_coding" />
+
+                <TextView
+                    android:id="@+id/tv_put_address_value"
+                    style="@style/TurnoverDetailTextValueStyle"
+                    android:layout_width="0dp"
+                    app:layout_constraintLeft_toRightOf="@id/tv_put_address_key"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tv_put_address_key"/>
+
+                <TextView
+                    android:id="@+id/tv_name_key"
+                    style="@style/TurnoverDetailTextKeyStyle"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/admin_material_duty_name"
+                    app:layout_constraintTop_toBottomOf="@id/tv_put_address_value" />
+
+                <TextView
+                    android:id="@+id/tv_name_value"
+                    style="@style/TurnoverDetailTextValueStyle"
+                    app:layout_constraintLeft_toRightOf="@id/tv_name_key"
+                    app:layout_constraintTop_toTopOf="@id/tv_name_key"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_name_key"/>
+
+                <TextView
+                    android:id="@+id/tv_tel_key"
+                    style="@style/TurnoverDetailTextKeyStyle"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/admin_material_tel"
+                    app:layout_constraintTop_toBottomOf="@id/tv_name_key" />
+
+                <TextView
+                    android:id="@+id/tv_tel_value"
+                    style="@style/TurnoverDetailTextValueStyle"
+                    app:layout_constraintLeft_toRightOf="@id/tv_tel_key"
+                    app:layout_constraintTop_toTopOf="@id/tv_tel_key"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_tel_key"/>
+
+                <TextView
+                    android:id="@+id/tv_putaway_key"
+                    style="@style/TurnoverDetailTextKeyStyle"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/admin_material_putaway"
+                    app:layout_constraintTop_toBottomOf="@id/tv_tel_key" />
+
+                <TextView
+                    android:id="@+id/tv_putaway_value"
+                    style="@style/TurnoverDetailTextValueStyle"
+                    app:layout_constraintLeft_toRightOf="@id/tv_putaway_key"
+                    app:layout_constraintTop_toTopOf="@id/tv_putaway_key"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_putaway_key"/>
+
+                <TextView
+                    android:id="@+id/tv_putaway_time_key"
+                    style="@style/TurnoverDetailTextKeyStyle"
+                    android:layout_marginTop="10dp"
+                    android:paddingTop="1dp"
+                    android:text="@string/admin_material_putaway_time"
+                    app:layout_constraintTop_toBottomOf="@id/tv_putaway_key" />
+
+                <TextView
+                    android:id="@+id/tv_putaway_time_value"
+                    style="@style/TurnoverDetailTextValueStyle"
+                    android:layout_width="0dp"
+                    app:layout_constraintLeft_toRightOf="@id/tv_putaway_time_key"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tv_putaway_time_key" />
+
+                <TextView
+                    android:id="@+id/tv_supply_method_key"
+                    style="@style/TurnoverDetailTextKeyStyle"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/admin_material_supply_method"
+                    app:layout_constraintTop_toBottomOf="@id/tv_putaway_time_value" />
+
+                <TextView
+                    android:id="@+id/tv_supply_method_value"
+                    style="@style/TurnoverDetailTextValueStyle"
+                    app:layout_constraintLeft_toRightOf="@id/tv_supply_method_key"
+                    app:layout_constraintTop_toTopOf="@id/tv_supply_method_key"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_supply_method_key"/>
+
+                <TextView
+                    android:id="@+id/tv_material_photo"
+                    style="@style/TurnoverDetailTextKeyStyle"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/admin_material_photo"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toBottomOf="@id/tv_supply_method_key" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_photo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toBottomOf="@id/tv_material_photo" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--            <include layout="@layout/layout_turnover_detail" />-->
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

@@ -57,6 +57,7 @@ public class DeviceVm extends BaseViewModel {
         deviceFirstData = new MutableLiveData<>();
         deviceSecondData = new MutableLiveData<>();
         deviceDeleteData = new MutableLiveData<>();
+        deviceDetailLiveData = new MutableLiveData<>();
         pageStateLiveData = new MutableLiveData<>();
         is_shelf = 0;
         use_status = 0;

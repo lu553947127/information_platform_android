@@ -36,14 +36,6 @@ public class TurnoverAdapter extends BaseQuickAdapter<TurnoverBean.ListBean, Bas
         this.is_children = is_children;
     }
 
-    //删除item
-    public void removeData(List<TurnoverBean.ListBean> data, int position) {
-        data.remove(position);
-        //删除动画
-        notifyItemRemoved(position);
-        notifyDataSetChanged();
-    }
-
     @Override
     protected void convert(BaseViewHolder helper, TurnoverBean.ListBean item) {
         String use_status = item.getUse_status();

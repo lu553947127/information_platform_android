@@ -36,14 +36,6 @@ public class DeviceAdapter extends BaseQuickAdapter<DeviceBean.ListBean, BaseVie
         this.is_children = is_children;
     }
 
-    //删除item
-    public void removeData(List<DeviceBean.ListBean> data, int position) {
-        data.remove(position);
-        //删除动画
-        notifyItemRemoved(position);
-        notifyDataSetChanged();
-    }
-
     @Override
     protected void convert(BaseViewHolder helper, DeviceBean.ListBean item) {
         String use_status = item.getUse_status();

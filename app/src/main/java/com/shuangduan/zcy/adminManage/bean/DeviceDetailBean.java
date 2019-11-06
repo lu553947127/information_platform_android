@@ -70,7 +70,7 @@ public class DeviceDetailBean {
     private String shelf_start_time;
     private String shelf_end_time;
     private int shelf_type;
-    private int guidance_price;
+    private String guidance_price;
     private String plan_name;
     private String brand;
     private String main_params;
@@ -231,11 +231,11 @@ public class DeviceDetailBean {
         this.shelf_type = shelf_type;
     }
 
-    public int getGuidance_price() {
+    public String getGuidance_price() {
         return guidance_price;
     }
 
-    public void setGuidance_price(int guidance_price) {
+    public void setGuidance_price(String guidance_price) {
         this.guidance_price = guidance_price;
     }
 

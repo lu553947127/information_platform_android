@@ -98,7 +98,6 @@ public class DeviceChildrenFragment extends BaseLazyFragment {
     private DeviceVm deviceVm;
     private MultiAreaVm areaVm;
     private DeviceAdapter deviceAdapter;
-    private List<DeviceBean.ListBean> deviceList = new ArrayList<>();
 
     public static DeviceChildrenFragment newInstance() {
         Bundle args = new Bundle();
@@ -129,14 +128,20 @@ public class DeviceChildrenFragment extends BaseLazyFragment {
         recyclerView.setAdapter(deviceAdapter);
 
         deviceVm.deviceLiveData.observe(this,deviceBean -> {
-            deviceList=deviceBean.getList();
             if (deviceBean.getPage() == 1) {
-                deviceAdapter.setNewData(deviceList);
+                deviceAdapter.setNewData(deviceBean.getList());
                 deviceAdapter.setEmptyView(R.layout.layout_empty_admin, recyclerView);
             } else {
-                deviceAdapter.addData(deviceAdapter.getData().size(), deviceList);
+                deviceAdapter.addData(deviceAdapter.getData().size(), deviceBean.getList());
             }
             setNoMore(deviceBean.getPage(), deviceBean.getCount());
+        });
+
+        deviceAdapter.setOnItemClickListener((adapter, view, position) -> {
+            DeviceBean.ListBean listBean = deviceAdapter.getData().get(position);
+            Bundle bundle = new Bundle();
+            bundle.putInt(CustomConfig.EQIPMENT_ID,listBean.getId());
+            ActivityUtils.startActivity(bundle,DeviceDetailActivity.class);
         });
 
         //获取子公司列表数据

@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.StringUtils;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adminManage.adapter.TurnoverImageAdapter;
 import com.shuangduan.zcy.adminManage.bean.TurnoverDetailBean;
@@ -42,7 +41,7 @@ import butterknife.OnClick;
  * @UpdateRemark: 更新说明
  * @Version: 1.0
  */
-public class TurnoverDetailActivity extends BaseActivity implements BaseQuickAdapter.OnItemChildClickListener {
+public class TurnoverDetailActivity extends BaseActivity{
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.tv_bar_title)
@@ -75,6 +74,7 @@ public class TurnoverDetailActivity extends BaseActivity implements BaseQuickAda
     TextView tvSupplyMethod;
     @BindView(R.id.rv_photo)
     RecyclerView rvImage;
+
     @BindView(R.id.tv_project)
     TextView tvProject;
     @BindView(R.id.tv_plan)
@@ -105,7 +105,6 @@ public class TurnoverDetailActivity extends BaseActivity implements BaseQuickAda
     TextView tvSupplyMethodKey;
     @BindView(R.id.group)
     Group group;
-    private TurnoverDetailBean turnover;
 
     @Override
     protected int initLayoutRes() {
@@ -117,7 +116,7 @@ public class TurnoverDetailActivity extends BaseActivity implements BaseQuickAda
         return false;
     }
 
-    @SuppressLint("NewApi")
+    @SuppressLint({"NewApi", "SetTextI18n"})
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
@@ -128,15 +127,14 @@ public class TurnoverDetailActivity extends BaseActivity implements BaseQuickAda
         TurnoverVm turnoverDetailVm = ViewModelProviders.of(this).get(TurnoverVm.class);
         turnoverDetailVm.getTurnoverDetail(constructionId);
         turnoverDetailVm.turnoverDetailLiveData.observe(this, turnover -> {
-            this.turnover = turnover;
             tvTitle.setText(turnover.materialIdName);
             tvCategory.setText(turnover.categoryName);
             tvStockNum.setText(getString(R.string.format_admin_ton, turnover.stock));
             tvGuidePrice.setText(getString(R.string.format_admin_ton_other, turnover.guidancePrice));
             tvSpec.setText(turnover.spec);
             tvUseStatus.setVisibility(StringUtils.isTrimEmpty(turnover.useStatusName) ? View.GONE : View.VISIBLE);
-            tvMaterialStatus.setVisibility(StringUtils.isTrimEmpty(turnover.materialStatusName) ? View.GONE : View.VISIBLE);
             tvUseStatus.setText(turnover.useStatusName);
+            tvMaterialStatus.setVisibility(StringUtils.isTrimEmpty(turnover.materialStatusName) ? View.GONE : View.VISIBLE);
             tvMaterialStatus.setText(turnover.materialStatusName);
             tvPutAddress.setText(turnover.provinceName + turnover.cityName + turnover.address);
             tvName.setText(turnover.personLiable);
@@ -171,7 +169,13 @@ public class TurnoverDetailActivity extends BaseActivity implements BaseQuickAda
                 });
                 rvImage.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15_15));
                 TurnoverImageAdapter adapter = new TurnoverImageAdapter(R.layout.item_turnover_image, null);
-                adapter.setOnItemChildClickListener(this);
+                adapter.setOnItemChildClickListener((adapter1, view, position) -> {
+                    List<String> images = new ArrayList<>();
+                    for (TurnoverDetailBean.Images image : turnover.images) {
+                        images.add(image.url);
+                    }
+                    PictureEnlargeUtils.getPictureEnlargeList(this, images, position);
+                });
                 rvImage.setAdapter(adapter);
                 adapter.setNewData(turnover.images);
             }
@@ -193,21 +197,8 @@ public class TurnoverDetailActivity extends BaseActivity implements BaseQuickAda
 
     }
 
-    @OnClick({R.id.iv_bar_back})
-    void OnClick(View view) {
-        switch (view.getId()) {
-            case R.id.iv_bar_back:
-                finish();
-                break;
-        }
-    }
-
-    @Override
-    public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-        List<String> images = new ArrayList<>();
-        for (TurnoverDetailBean.Images image : turnover.images) {
-            images.add(image.url);
-        }
-        PictureEnlargeUtils.getPictureEnlargeList(this, images, position);
+    @OnClick(R.id.iv_bar_back)
+    void onClick() {
+        finish();
     }
 }

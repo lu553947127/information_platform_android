@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
@@ -35,7 +36,9 @@ import com.shuangduan.zcy.adminManage.view.turnover.TurnoverAddActivity;
 import com.shuangduan.zcy.adminManage.vm.DeviceVm;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseLazyFragment;
+import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.BottomSheetDialogs;
+import com.shuangduan.zcy.dialog.CustomDialog;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.CityBean;
 import com.shuangduan.zcy.model.bean.ProvinceBean;
@@ -97,7 +100,6 @@ public class DeviceGroupFragment extends BaseLazyFragment {
     private DeviceVm deviceVm;
     private MultiAreaVm areaVm;
     private DeviceAdapter deviceAdapter;
-    private List<DeviceBean.ListBean> deviceList = new ArrayList<>();
 
     public static DeviceGroupFragment newInstance() {
         Bundle args = new Bundle();
@@ -133,13 +135,51 @@ public class DeviceGroupFragment extends BaseLazyFragment {
                 , SPUtils.getInstance().getInt(CustomConfig.CONSTRUCTION_DELETE,0),0);
         recyclerView.setAdapter(deviceAdapter);
 
+        deviceAdapter.setOnItemClickListener((adapter, view, position) -> {
+            DeviceBean.ListBean listBean = deviceAdapter.getData().get(position);
+            if (SPUtils.getInstance().getInt(CustomConfig.CONSTRUCTION_DETAIL,0)==1){
+                Bundle bundle = new Bundle();
+                bundle.putInt(CustomConfig.EQIPMENT_ID,listBean.getId());
+                ActivityUtils.startActivity(bundle,DeviceDetailActivity.class);
+            }
+        });
+        deviceAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            DeviceBean.ListBean listBean = deviceAdapter.getData().get(position);
+            switch (view.getId()) {
+                case R.id.tv_edit://编辑
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(CustomConfig.HANDLE_TYPE,CustomConfig.EDIT);
+                    bundle.putInt(CustomConfig.EQIPMENT_ID,listBean.getId());
+                    ActivityUtils.startActivity(bundle,DeviceAddActivity.class);
+                    break;
+                case R.id.tv_delete://删除
+                    new CustomDialog(Objects.requireNonNull(getActivity()))
+                            .setTip(getString(R.string.admin_turnover_delete))
+                            .setCallBack(new BaseDialog.CallBack() {
+                                @Override
+                                public void cancel() {
+                                }
+
+                                @Override
+                                public void ok(String s) {
+                                    deviceVm.equipmentDelete(listBean.getId());
+                                    deviceAdapter.remove(position);
+                                }
+                            }).showDialog();
+                    break;
+            }
+        });
+
+        deviceVm.deviceDeleteData.observe(this,item ->{
+            ToastUtils.showShort("删除成功");
+        });
+
         deviceVm.deviceLiveData.observe(this,deviceBean -> {
-            deviceList=deviceBean.getList();
             if (deviceBean.getPage() == 1) {
-                deviceAdapter.setNewData(deviceList);
+                deviceAdapter.setNewData(deviceBean.getList());
                 deviceAdapter.setEmptyView(R.layout.layout_empty_admin, recyclerView);
             } else {
-                deviceAdapter.addData(deviceAdapter.getData().size(), deviceList);
+                deviceAdapter.addData(deviceAdapter.getData().size(), deviceBean.getList());
             }
             setNoMore(deviceBean.getPage(), deviceBean.getCount());
         });
@@ -236,7 +276,7 @@ public class DeviceGroupFragment extends BaseLazyFragment {
         switch (view.getId()) {
             case R.id.iv_add://添加
                 bundle.putInt(CustomConfig.HANDLE_TYPE,CustomConfig.ADD);
-
+                ActivityUtils.startActivity(bundle, DeviceAddActivity.class);
                 break;
             case R.id.tv_name://选择设备名称
                 bundle.putInt(CustomConfig.ADMIN_MANAGE_TYPE,CustomConfig.ADMIN_MANAGE_EQIPMENT);
