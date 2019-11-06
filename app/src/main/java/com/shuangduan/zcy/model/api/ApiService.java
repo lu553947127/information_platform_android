@@ -1,5 +1,7 @@
 package com.shuangduan.zcy.model.api;
 
+import com.shuangduan.zcy.adminManage.bean.DeviceBean;
+import com.shuangduan.zcy.adminManage.bean.DeviceDetailBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverCompanyBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverCategoryBean;
@@ -1681,6 +1683,61 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("api/Manage/constructionEditShow")
     Flowable<BaseResponse<TurnoverDetailEditBean>> constructionEditShow(
+            @Field("user_id") int userId,
+            @Field("id") int id
+    );
+
+    //后台管理 --- 设备管理列表
+    @FormUrlEncoded
+    @POST("api/Manage/equipmentList")
+    Flowable<BaseResponse<DeviceBean>> equipmentList(
+            @Field("user_id") int userId,
+            @Field("page") int page,
+            @Field("type") int type,
+            @Field("is_shelf") int is_shelf,
+            @Field("use_status") int use_status,
+            @Field("province") int province,
+            @Field("city") int city,
+            @Field("p_category_id") int p_category_id,
+            @Field("category_id") int category_id,
+            @Field("supplier_id") int supplier_id
+    );
+
+    //后台管理 --- 设备管理选择条件历史列表
+    @FormUrlEncoded
+    @POST("api/Manage/equipmentCategoryHistory")
+    Flowable<BaseListResponse<TurnoverHistoryBean>> equipmentCategoryHistory(
+            @Field("user_id") int userId
+    );
+
+    //后台管理 --- 设备管理名称类别一级
+    @FormUrlEncoded
+    @POST("api/Manage/equipmentCategoryParent")
+    Flowable<BaseListResponse<TurnoverCategoryBean>> equipmentCategoryParent(
+            @Field("user_id") int userId
+    );
+
+    //后台管理 --- 设备管理名称类别二级
+    @FormUrlEncoded
+    @POST("api/Manage/equipmentCategoryList")
+    Flowable<BaseListResponse<TurnoverCategoryBean>> equipmentCategoryList(
+            @Field("user_id") int userId,
+            @Field("title") String title,
+            @Field("id") int id
+    );
+
+    //后台管理 --- 设备管理删除
+    @FormUrlEncoded
+    @POST("api/Manage/equipmentDelete")
+    Flowable<BaseResponse<String>> equipmentDelete(
+            @Field("user_id") int userId,
+            @Field("id") int id
+    );
+
+    //后台管理 --- 设备管理详情
+    @FormUrlEncoded
+    @POST("api/Manage/equipmentDetail")
+    Flowable<BaseResponse<DeviceDetailBean>> equipmentDetail(
             @Field("user_id") int userId,
             @Field("id") int id
     );

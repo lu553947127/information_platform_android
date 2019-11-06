@@ -1,20 +1,57 @@
 package com.shuangduan.zcy.adminManage.view.device;
 
+import android.annotation.SuppressLint;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.constant.RefreshState;
+import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 import com.shuangduan.zcy.R;
+import com.shuangduan.zcy.adminManage.adapter.DeviceAdapter;
+import com.shuangduan.zcy.adminManage.adapter.GroundingAdapter;
+import com.shuangduan.zcy.adminManage.adapter.SelectorAreaFirstAdapter;
+import com.shuangduan.zcy.adminManage.adapter.SelectorAreaSecondAdapter;
+import com.shuangduan.zcy.adminManage.adapter.UseStatueAdapter;
+import com.shuangduan.zcy.adminManage.bean.DeviceBean;
+import com.shuangduan.zcy.adminManage.bean.TurnoverTypeBean;
+import com.shuangduan.zcy.adminManage.event.TurnoverGroupEvent;
+import com.shuangduan.zcy.adminManage.view.SelectTypeActivity;
+import com.shuangduan.zcy.adminManage.view.turnover.TurnoverAddActivity;
+import com.shuangduan.zcy.adminManage.vm.DeviceVm;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseLazyFragment;
+import com.shuangduan.zcy.dialog.BottomSheetDialogs;
+import com.shuangduan.zcy.model.api.PageState;
+import com.shuangduan.zcy.model.bean.CityBean;
+import com.shuangduan.zcy.model.bean.ProvinceBean;
+import com.shuangduan.zcy.utils.AnimationUtils;
+import com.shuangduan.zcy.vm.MultiAreaVm;
+
+import org.greenrobot.eventbus.Subscribe;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
+import butterknife.OnClick;
+
+import static com.shuangduan.zcy.app.CustomConfig.GROUP;
 
 /**
  * @ProjectName: information_platform_android
@@ -45,6 +82,23 @@ public class DeviceGroupFragment extends BaseLazyFragment {
     @BindView(R.id.refresh)
     SmartRefreshLayout refresh;
 
+    @BindView(R.id.ll_admin_manage_screen)
+    LinearLayout llAdminManageScreen;
+    @BindView(R.id.tv_reset)
+    AppCompatTextView tvReset;
+    @BindView(R.id.tv_name_second)
+    AppCompatTextView tvNameSecond;
+    @BindView(R.id.tv_is_shelf)
+    AppCompatTextView tvIsShelf;
+    @BindView(R.id.tv_use_status)
+    AppCompatTextView tvUseStatus;
+    @BindView(R.id.tv_address)
+    AppCompatTextView tvAddress;
+    private DeviceVm deviceVm;
+    private MultiAreaVm areaVm;
+    private DeviceAdapter deviceAdapter;
+    private List<DeviceBean.ListBean> deviceList = new ArrayList<>();
+
     public static DeviceGroupFragment newInstance() {
         Bundle args = new Bundle();
         DeviceGroupFragment fragment = new DeviceGroupFragment();
@@ -66,15 +120,313 @@ public class DeviceGroupFragment extends BaseLazyFragment {
     protected void initDataAndEvent(Bundle savedInstanceState) {
         tvName.setText("设备名称");
 
+        deviceVm = ViewModelProviders.of(this).get(DeviceVm.class);
+
         if (SPUtils.getInstance().getInt(CustomConfig.CONSTRUCTION_ADD,0) ==1){
             ivAdd.setVisibility(View.VISIBLE);
         }else {
             ivAdd.setVisibility(View.GONE);
         }
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        deviceAdapter = new DeviceAdapter(R.layout.item_device, null,SPUtils.getInstance().getInt(CustomConfig.CONSTRUCTION_EDIT,0)
+                , SPUtils.getInstance().getInt(CustomConfig.CONSTRUCTION_DELETE,0),0);
+        recyclerView.setAdapter(deviceAdapter);
+
+        deviceVm.deviceLiveData.observe(this,deviceBean -> {
+            deviceList=deviceBean.getList();
+            if (deviceBean.getPage() == 1) {
+                deviceAdapter.setNewData(deviceList);
+                deviceAdapter.setEmptyView(R.layout.layout_empty_admin, recyclerView);
+            } else {
+                deviceAdapter.addData(deviceAdapter.getData().size(), deviceList);
+            }
+            setNoMore(deviceBean.getPage(), deviceBean.getCount());
+        });
+
+        //获取筛选条件列表数据
+        deviceVm.turnoverTypeData.observe(this,turnoverTypeBean -> {
+            //是否上架数据
+            groundingList=turnoverTypeBean.getIs_shelf();
+            if (SPUtils.getInstance().getInt(CustomConfig.SON_LIST, 0) != 1) groundingList.remove(1);
+            //使用状态数据
+            useStatueList=turnoverTypeBean.getUse_status();
+        });
+
+        //获取省市数据
+        areaVm = ViewModelProviders.of(this).get(MultiAreaVm.class);
+        areaVm.provinceLiveData.observe(this, provinceBeans -> {
+            provinceList = provinceBeans;
+            provinceAdapter.setNewData(provinceList);
+        });
+        areaVm.cityLiveData.observe(this, cityBeans -> {
+            cityList = cityBeans;
+            cityList.add(0,new CityBean(0,"全部"));
+            cityAdapter.setNewData(cityList);
+        });
+
+        //下拉刷新和上拉加载
+        refresh.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);
+        refresh.setOnMultiPurposeListener(new SimpleMultiPurposeListener(){
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                super.onRefresh(refreshLayout);
+                deviceVm.equipmentList(1,areaVm.id,areaVm.city_id);
+                deviceVm.constructionSearch();
+            }
+
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                super.onLoadMore(refreshLayout);
+                deviceVm.equipmentListMore(1,areaVm.id,areaVm.city_id);
+            }
+        });
+
+        //滑动监听
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                AnimationUtils.listScrollAnimation(ivAdd,dy);
+            }
+        });
+
+        deviceVm.pageStateLiveData.observe(this, s -> {
+            switch (s) {
+                case PageState.PAGE_LOADING:
+                    showLoading();
+                    break;
+                default:
+                    hideLoading();
+                    break;
+            }
+        });
     }
 
     @Override
     protected void initDataFromService() {
+        deviceVm.equipmentList(1,areaVm.id,areaVm.city_id);
+        deviceVm.constructionSearch();
+    }
 
+    private void setNoMore(int page, int count) {
+        if (page == 1) {
+            if (page * 10 >= count) {
+                if (refresh.getState() == RefreshState.None) {
+                    refresh.setNoMoreData(true);
+                } else {
+                    refresh.finishRefreshWithNoMoreData();
+                }
+            } else {
+                refresh.finishRefresh();
+            }
+        } else {
+            if (page * 10 >= count) {
+                refresh.finishLoadMoreWithNoMoreData();
+            } else {
+                refresh.finishLoadMore();
+            }
+        }
+    }
+
+    @OnClick({R.id.iv_add,R.id.tv_name,R.id.tv_grounding,R.id.tv_use_statue,R.id.tv_depositing_place
+            ,R.id.tv_reset,R.id.tv_name_second,R.id.tv_is_shelf,R.id.tv_use_status,R.id.tv_address})
+    void onClick(View view){
+        Bundle bundle = new Bundle();
+        switch (view.getId()) {
+            case R.id.iv_add://添加
+                bundle.putInt(CustomConfig.HANDLE_TYPE,CustomConfig.ADD);
+                ActivityUtils.startActivity(bundle, TurnoverAddActivity.class);
+                break;
+            case R.id.tv_name://选择材料名称
+                bundle.putInt(CustomConfig.ADMIN_MANAGE_TYPE,CustomConfig.ADMIN_MANAGE_EQIPMENT);
+                bundle.putInt(CustomConfig.SELECT_TYPE,GROUP);
+                ActivityUtils.startActivity(bundle, SelectTypeActivity.class);
+                break;
+            case R.id.tv_grounding://是否上架
+                getBottomSheetDialog(R.layout.dialog_is_grounding,"grounding");
+                getDrawableRightView(tvGrounding,R.drawable.icon_pullup_arrow,R.color.color_5C54F4);
+                break;
+            case R.id.tv_use_statue://使用状态
+                getBottomSheetDialog(R.layout.dialog_is_grounding,"use_statue");
+                getDrawableRightView(tvUseStatueTop,R.drawable.icon_pullup_arrow,R.color.color_5C54F4);
+                break;
+            case R.id.tv_depositing_place://存放地点
+                getBottomSheetDialog(R.layout.dialog_depositing_place,"depositing_place");
+                getDrawableRightView(tvDepositingPlace,R.drawable.icon_pullup_arrow,R.color.color_5C54F4);
+                break;
+            case R.id.tv_reset://重置按钮
+                llAdminManageScreen.setVisibility(View.GONE);
+                tvNameSecond.setVisibility(View.GONE);
+                tvIsShelf.setVisibility(View.GONE);
+                tvUseStatus.setVisibility(View.GONE);
+                tvAddress.setVisibility(View.GONE);
+                deviceVm.category_id=0;
+                deviceVm.is_shelf=0;
+                deviceVm.use_status=0;
+                areaVm.id=0;
+                areaVm.city_id=0;
+                deviceVm.equipmentList(1,areaVm.id,areaVm.city_id);
+                break;
+            case R.id.tv_name_second://名称二级
+                deviceVm.category_id=0;
+                getDeleteView(tvNameSecond,View.GONE);
+                break;
+            case R.id.tv_is_shelf://是否上架
+                deviceVm.is_shelf=0;
+                getDeleteView(tvIsShelf,View.GONE);
+                break;
+            case R.id.tv_use_status://使用状态
+                deviceVm.use_status=0;
+                getDeleteView(tvUseStatus,View.GONE);
+                break;
+            case R.id.tv_address://存放地点
+                areaVm.id=0;
+                areaVm.city_id=0;
+                getDeleteView(tvAddress,View.GONE);
+                break;
+        }
+    }
+
+    private SelectorAreaFirstAdapter provinceAdapter;
+    private SelectorAreaSecondAdapter cityAdapter;
+    private List<ProvinceBean> provinceList = new ArrayList<>();
+    private List<CityBean> cityList = new ArrayList<>();
+    private List<TurnoverTypeBean.IsShelfBean> groundingList =new ArrayList<>();
+    private List<TurnoverTypeBean.UseStatusBean> useStatueList =new ArrayList<>();
+    @SuppressLint("RestrictedApi,InflateParams")
+    private void getBottomSheetDialog(int layout, String type) {
+        //底部滑动对话框
+        BottomSheetDialogs btn_dialog =new BottomSheetDialogs(Objects.requireNonNull(getActivity()), R.style.BottomSheetStyle);
+        //设置自定view
+        View dialog_view = this.getLayoutInflater().inflate(layout, null);
+        //把布局添加进去
+        btn_dialog.setContentView(dialog_view);
+        //去除系统默认的背景色
+        try {
+            // hack bg color of the BottomSheetDialog
+            ViewGroup parent = (ViewGroup) dialog_view.getParent();
+            parent.setBackgroundResource(android.R.color.transparent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        btn_dialog.setOnDismissListener(dialog -> {
+            getDrawableRightView(tvDepositingPlace,R.drawable.icon_pulldown_arrow,R.color.color_666666);
+            getDrawableRightView(tvGrounding,R.drawable.icon_pulldown_arrow,R.color.color_666666);
+            getDrawableRightView(tvUseStatueTop,R.drawable.icon_pulldown_arrow,R.color.color_666666);
+        });
+        deviceVm.type=type;
+        switch (type){
+            case "grounding"://是否上架弹窗
+                TextView tvGrounding=btn_dialog.findViewById(R.id.tv_title);
+                Objects.requireNonNull(tvGrounding).setText("是否上架");
+                RecyclerView rvGrounding = btn_dialog.findViewById(R.id.rv);
+                Objects.requireNonNull(rvGrounding).setLayoutManager(new LinearLayoutManager(getActivity()));
+                GroundingAdapter groundingAdapter = new GroundingAdapter(R.layout.adapter_selector_area_second, groundingList);
+                rvGrounding.setAdapter(groundingAdapter);
+                groundingAdapter.setOnItemClickListener((adapter, view, position) -> {
+                    deviceVm.is_shelf=groundingList.get(position).getId();
+                    deviceVm.equipmentList(1,areaVm.id,areaVm.city_id);
+                    btn_dialog.dismiss();
+                    getDrawableRightView(tvGrounding,R.drawable.icon_pulldown_arrow,R.color.color_666666);
+                    getAddTopScreenView(tvIsShelf,groundingList.get(position).getName(),View.VISIBLE);
+                });
+                if (deviceVm.is_shelf!=0){
+                    groundingAdapter.setIsSelect(deviceVm.is_shelf);
+                }
+                break;
+            case "use_statue"://使用状态弹窗
+                TextView tvUseStatue=btn_dialog.findViewById(R.id.tv_title);
+                Objects.requireNonNull(tvUseStatue).setText("使用状态");
+                RecyclerView rvUseStatue = btn_dialog.findViewById(R.id.rv);
+                Objects.requireNonNull(rvUseStatue).setLayoutManager(new LinearLayoutManager(getActivity()));
+                UseStatueAdapter useStatueAdapter = new UseStatueAdapter(R.layout.adapter_selector_area_second, useStatueList);
+                rvUseStatue.setAdapter(useStatueAdapter);
+                useStatueAdapter.setOnItemClickListener((adapter, view, position) -> {
+                    deviceVm.use_status=useStatueList.get(position).getId();
+                    deviceVm.equipmentList(1,areaVm.id,areaVm.city_id);
+                    getDrawableRightView(tvUseStatue,R.drawable.icon_pulldown_arrow,R.color.color_666666);
+                    getAddTopScreenView(tvUseStatus,useStatueList.get(position).getName(),View.VISIBLE);
+                    btn_dialog.dismiss();
+                });
+                if (deviceVm.use_status!=0){
+                    useStatueAdapter.setIsSelect(deviceVm.use_status);
+                }
+                break;
+            case "depositing_place"://存放地点弹窗
+                RecyclerView rvProvince = btn_dialog.findViewById(R.id.rv_province);
+                RecyclerView rvCity = btn_dialog.findViewById(R.id.rv_city);
+                Objects.requireNonNull(rvProvince).setLayoutManager(new LinearLayoutManager(getActivity()));
+                Objects.requireNonNull(rvCity).setLayoutManager(new LinearLayoutManager(getActivity()));
+                provinceAdapter = new SelectorAreaFirstAdapter(R.layout.adapter_selector_area_first, null);
+                cityAdapter = new SelectorAreaSecondAdapter(R.layout.adapter_selector_area_second, null);
+                rvProvince.setAdapter(provinceAdapter);
+                rvCity.setAdapter(cityAdapter);
+                provinceAdapter.setOnItemClickListener((adapter, view, position) -> {
+                    areaVm.id = provinceList.get(position).getId();
+                    areaVm.cityResult = provinceList.get(position).getName();
+                    areaVm.getCity();
+                    provinceAdapter.setIsSelect(provinceList.get(position).getId());
+                });
+                cityAdapter.setOnItemClickListener((adapter, view, position) -> {
+                    if (cityList.get(position).getId()!=0){
+                        areaVm.city_id = cityList.get(position).getId();
+                        deviceVm.equipmentList(1,areaVm.id,areaVm.city_id);
+                        cityAdapter.setIsSelect(cityList.get(position).getId());
+                        btn_dialog.dismiss();
+                        getDrawableRightView(tvDepositingPlace,R.drawable.icon_pulldown_arrow,R.color.color_666666);
+                        getAddTopScreenView(tvAddress,cityList.get(position).getName(),View.VISIBLE);
+                    }else {
+                        areaVm.city_id=0;
+                        deviceVm.equipmentList(1,areaVm.id,areaVm.city_id);
+                        btn_dialog.dismiss();
+                        getDrawableRightView(tvDepositingPlace,R.drawable.icon_pulldown_arrow,R.color.color_666666);
+                        getAddTopScreenView(tvAddress,areaVm.cityResult,View.VISIBLE);
+                    }
+                });
+                areaVm.getProvince();
+                if (areaVm.id!=0){
+                    provinceAdapter.setIsSelect(areaVm.id);
+                    areaVm.getCity();
+                }
+                if (areaVm.city_id!=0){
+                    cityAdapter.setIsSelect(areaVm.city_id);
+                }
+                break;
+        }
+        btn_dialog.show();
+    }
+
+    //给textView设置drawableRight图片
+    private void getDrawableRightView(TextView textView,int icon,int color) {
+        Drawable drawable = mContext.getResources().getDrawable(icon);
+        // 这一步必须要做,否则不会显示.
+        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+        textView.setCompoundDrawables(null, null, drawable, null);
+        textView.setTextColor(getResources().getColor(color));
+    }
+
+    @Subscribe
+    public void onEventTurnoverGroup(TurnoverGroupEvent event) {
+        deviceVm.category_id=event.material_id;
+        deviceVm.equipmentList(1,areaVm.id,areaVm.city_id);
+        getAddTopScreenView(tvNameSecond,event.material_name,View.VISIBLE);
+    }
+
+    //添加头部筛选布局view
+    private void getAddTopScreenView(TextView textView,String text,int type) {
+        llAdminManageScreen.setVisibility(type);
+        tvReset.setVisibility(type);
+        textView.setVisibility(type);
+        textView.setText(text);
+    }
+
+    //关闭筛选条件
+    private void getDeleteView(TextView textView,int type) {
+        textView.setVisibility(type);
+        if (tvNameSecond.getVisibility()==View.GONE&&tvIsShelf.getVisibility()==View.GONE&&tvUseStatus.getVisibility()==View.GONE&&tvAddress.getVisibility()==View.GONE){
+            llAdminManageScreen.setVisibility(type);
+        }
+        deviceVm.equipmentList(1,areaVm.id,areaVm.city_id);
     }
 }

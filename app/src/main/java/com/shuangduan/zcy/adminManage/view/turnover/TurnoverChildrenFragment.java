@@ -151,17 +151,11 @@ public class TurnoverChildrenFragment extends BaseLazyFragment {
 
         //获取筛选条件列表数据
         turnoverVm.turnoverTypeData.observe(this,turnoverTypeBean -> {
-            switch (turnoverVm.type){
-                case "grounding":
-                    groundingList=turnoverTypeBean.getIs_shelf();
-                    if (SPUtils.getInstance().getInt(CustomConfig.SON_LIST, 0) != 1) groundingList.remove(1);
-                    groundingAdapter.setNewData(groundingList);
-                    break;
-                case "use_statue":
-                    useStatueList=turnoverTypeBean.getUse_status();
-                    useStatueAdapter.setNewData(useStatueList);
-                    break;
-            }
+            //是否上架数据
+            groundingList=turnoverTypeBean.getIs_shelf();
+            if (SPUtils.getInstance().getInt(CustomConfig.SON_LIST, 0) != 1) groundingList.remove(1);
+            //使用状态数据
+            useStatueList=turnoverTypeBean.getUse_status();
         });
 
         //获取省市数据
@@ -183,6 +177,7 @@ public class TurnoverChildrenFragment extends BaseLazyFragment {
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 super.onRefresh(refreshLayout);
                 turnoverVm.constructionList(2,areaVm.id,areaVm.city_id);
+                turnoverVm.constructionSearch();
             }
 
             @Override
@@ -216,6 +211,7 @@ public class TurnoverChildrenFragment extends BaseLazyFragment {
     @Override
     protected void initDataFromService() {
         turnoverVm.constructionList(2,areaVm.id,areaVm.city_id);
+        turnoverVm.constructionSearch();
     }
 
     @SuppressLint("NewApi")
@@ -287,9 +283,7 @@ public class TurnoverChildrenFragment extends BaseLazyFragment {
     private SelectorAreaSecondAdapter cityAdapter;
     private List<ProvinceBean> provinceList = new ArrayList<>();
     private List<CityBean> cityList = new ArrayList<>();
-    private GroundingAdapter groundingAdapter;
     private List<TurnoverTypeBean.IsShelfBean> groundingList = new ArrayList<>();
-    private UseStatueAdapter useStatueAdapter;
     private List<TurnoverTypeBean.UseStatusBean> useStatueList = new ArrayList<>();
     private TurnoverCompanyAdapter turnoverCompanyAdapter;
     private List<TurnoverCompanyBean> companyList = new ArrayList<>();
@@ -341,7 +335,7 @@ public class TurnoverChildrenFragment extends BaseLazyFragment {
                 Objects.requireNonNull(tvGrounding).setText("是否上架");
                 RecyclerView rvGrounding = btn_dialog.findViewById(R.id.rv);
                 Objects.requireNonNull(rvGrounding).setLayoutManager(new LinearLayoutManager(getActivity()));
-                groundingAdapter = new GroundingAdapter(R.layout.adapter_selector_area_second, null);
+                GroundingAdapter groundingAdapter = new GroundingAdapter(R.layout.adapter_selector_area_second, groundingList);
                 rvGrounding.setAdapter(groundingAdapter);
                 groundingAdapter.setOnItemClickListener((adapter, view, position) -> {
                     turnoverVm.is_shelf=groundingList.get(position).getId();
@@ -350,7 +344,6 @@ public class TurnoverChildrenFragment extends BaseLazyFragment {
                     getDrawableRightView(tvGrounding,R.drawable.icon_pulldown_arrow,R.color.color_666666);
                     getAddTopScreenView(tvIsShelf,groundingList.get(position).getName(),View.VISIBLE);
                 });
-                turnoverVm.constructionSearch();
                 if (turnoverVm.is_shelf!=0){
                     groundingAdapter.setIsSelect(turnoverVm.is_shelf);
                 }
@@ -360,7 +353,7 @@ public class TurnoverChildrenFragment extends BaseLazyFragment {
                 Objects.requireNonNull(tvUseStatue).setText("使用状态");
                 RecyclerView rvUseStatue = btn_dialog.findViewById(R.id.rv);
                 Objects.requireNonNull(rvUseStatue).setLayoutManager(new LinearLayoutManager(getActivity()));
-                useStatueAdapter = new UseStatueAdapter(R.layout.adapter_selector_area_second, null);
+                UseStatueAdapter useStatueAdapter = new UseStatueAdapter(R.layout.adapter_selector_area_second, useStatueList);
                 rvUseStatue.setAdapter(useStatueAdapter);
                 useStatueAdapter.setOnItemClickListener((adapter, view, position) -> {
                     turnoverVm.use_status=useStatueList.get(position).getId();
@@ -369,7 +362,6 @@ public class TurnoverChildrenFragment extends BaseLazyFragment {
                     getDrawableRightView(tvUseStatue,R.drawable.icon_pulldown_arrow,R.color.color_666666);
                     getAddTopScreenView(tvUseStatus,useStatueList.get(position).getName(),View.VISIBLE);
                 });
-                turnoverVm.constructionSearch();
                 if (turnoverVm.use_status!=0){
                     useStatueAdapter.setIsSelect(turnoverVm.use_status);
                 }

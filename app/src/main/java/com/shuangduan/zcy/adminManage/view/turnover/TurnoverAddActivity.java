@@ -49,6 +49,7 @@ import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BottomSheetDialogs;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.event.LocationEvent;
+import com.shuangduan.zcy.utils.KeyboardUtil;
 import com.shuangduan.zcy.utils.image.PictureEnlargeUtils;
 import com.shuangduan.zcy.utils.matisse.Glide4Engine;
 import com.shuangduan.zcy.view.photo.CameraActivity;
@@ -493,11 +494,11 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
                 switch (getIntent().getIntExtra(CustomConfig.HANDLE_TYPE, 0)) {
                     case ADD://添加
                         turnoverAddVm.constructionAdd("add", etStock.getText().toString(), etUnitPrice.getText().toString()
-                                , etSpec.getText().toString(), etPersonLiable.getText().toString(), etTel.getText().toString(), etGuidancePrice.getText().toString());
+                                , etSpec.getText().toString(), etPersonLiable.getText().toString(), etTel.getText().toString(), etGuidancePrice.getText().toString(),etRemark.getText().toString());
                         break;
                     case EDIT://编辑
                         turnoverAddVm.constructionAdd("edit", etStock.getText().toString(), etUnitPrice.getText().toString()
-                                , etSpec.getText().toString(), etPersonLiable.getText().toString(), etTel.getText().toString(), etGuidancePrice.getText().toString());
+                                , etSpec.getText().toString(), etPersonLiable.getText().toString(), etTel.getText().toString(), etGuidancePrice.getText().toString(),etRemark.getText().toString());
                         break;
                 }
                 break;
@@ -902,5 +903,7 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
         if(!StringUtils.isTrimEmpty(net_worth)){
             tsValue.setValue(net_worth);
         }
+        // 隐藏键盘
+        KeyboardUtil.hideKeyboard(this);
     }
 }

@@ -9,10 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.TimeUtils;
-import com.contrarywind.listener.OnItemSelectedListener;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ArrayWheelAdapter;
 import com.shuangduan.zcy.adminManage.bean.TurnoverNameBean;
@@ -29,7 +26,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;

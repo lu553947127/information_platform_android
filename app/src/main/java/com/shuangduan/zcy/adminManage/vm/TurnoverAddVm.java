@@ -62,7 +62,6 @@ public class TurnoverAddVm extends BaseViewModel {
     public String accumulated_amortization;
     public String original_price;
     public String net_worth;
-    public String remark;
 
     public int editId;
 
@@ -89,7 +88,7 @@ public class TurnoverAddVm extends BaseViewModel {
     }
 
     //后台管理 --- 周转材料添加/编辑
-    public void constructionAdd(String type,String stock,String unit_price,String spec,String person_liable,String tel,String guidance_price){
+    public void constructionAdd(String type,String stock,String unit_price,String spec,String person_liable,String tel,String guidance_price,String remark){
         if (category==0) {
             ToastUtils.showShort(getString(R.string.admin_selector_no_category));
             return;

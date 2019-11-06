@@ -95,14 +95,14 @@ public class TurnoverVm extends BaseViewModel{
         new TurnoverRepository().constructionSearch(turnoverTypeData, pageStateLiveData, userId);
     }
 
-    //后台管理 --- 选择条件历史列表
-    public void constructionCategoryHistory(){
-        new TurnoverRepository().constructionCategoryHistory(turnoverHistoryData, pageStateLiveData, userId);
-    }
-
     //后台管理 --- 子公司列表
     public void getSupplierInfo(){
         new TurnoverRepository().getSupplierInfo(turnoverCompanyData, pageStateLiveData, userId);
+    }
+
+    //后台管理 --- 选择条件历史列表
+    public void constructionCategoryHistory(){
+        new TurnoverRepository().constructionCategoryHistory(turnoverHistoryData, pageStateLiveData, userId);
     }
 
     //后台管理 --- 周转材料名称类别一级
