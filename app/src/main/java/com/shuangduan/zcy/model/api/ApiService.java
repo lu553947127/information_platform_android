@@ -1378,8 +1378,9 @@ public interface ApiService {
             @Field("user_id") int userId,
             @Field("material_id") int material_id,
             @Field("num") BigInteger num,
-            @Field("day") int day,
-            @Field("type") int type
+            @Field("type") int type,
+            @Field("lease_start_time") String leaseStartTime,
+            @Field("lease_end_time") String leaseEndTime
     );
 
     //基建物资提交预订单 删除存放地

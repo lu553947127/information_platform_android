@@ -11,7 +11,7 @@ import com.shuangduan.zcy.base.BaseViewModel;
 import com.shuangduan.zcy.model.api.repository.DemandRepository;
 import com.shuangduan.zcy.model.bean.DemandReleaseBean;
 import com.shuangduan.zcy.model.bean.RelationshipOrderBean;
-import com.shuangduan.zcy.utils.DataUtils;
+import com.shuangduan.zcy.utils.DateUtils;
 
 import java.util.Calendar;
 
@@ -47,7 +47,7 @@ public class DemandReleaseVm extends BaseViewModel {
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH) + 1;
         int day = calendar.get(Calendar.DAY_OF_MONTH);
-        startTime = DataUtils.formatTime(year, month, day);
+        startTime = DateUtils.formatTime(year, month, day);
     }
 
     public void releaseRelationShip(String title, String intro, String price){

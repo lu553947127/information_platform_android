@@ -69,6 +69,8 @@ public class MaterialOrderBean {
         public String orderNumber;
         //订单状态
         public String status;
+        //订单阶段
+        public String phases;
         //缩略图
         public String images;
 

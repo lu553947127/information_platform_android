@@ -7,14 +7,12 @@ import androidx.lifecycle.MutableLiveData;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
-import com.shuangduan.zcy.adminManage.bean.TurnoverNameBean;
 import com.shuangduan.zcy.adminManage.repository.TurnoverRepository;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseViewModel;
-import com.shuangduan.zcy.utils.DataUtils;
+import com.shuangduan.zcy.utils.DateUtils;
 
 import java.util.Calendar;
-import java.util.List;
 
 import static com.blankj.utilcode.util.StringUtils.getString;
 
@@ -81,7 +79,7 @@ public class TurnoverAddVm extends BaseViewModel {
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH) + 1;
         int day = calendar.get(Calendar.DAY_OF_MONTH);
-        todayTime = DataUtils.formatTime(year, month, day);
+        todayTime = DateUtils.formatTime(year, month, day);
 
         shelf_type = 1;
         method = 1;

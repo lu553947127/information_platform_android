@@ -60,7 +60,14 @@ public class MaterialOrderAdapter extends BaseQuickAdapter<MaterialOrderBean.Lis
                 .setText(R.id.tv_supplier, "供应商:" + item.supplier)
                 .setText(R.id.tv_order_num, "订单号:" + item.orderSn)
                 .setText(R.id.tv_supply_method, item.method == 1 ? "出租" : "出售");
-        helper.setText(R.id.tv_state, item.status);
+
+        if (item.status.equals("驳回")){
+            helper.setTextColor(R.id.tv_state,mContext.getResources().getColor(R.color.text2));
+            helper.setText(R.id.tv_state, item.status);
+        }else {
+            helper.setTextColor(R.id.tv_state,mContext.getResources().getColor(R.color.text1));
+            helper.setText(R.id.tv_state, item.phases);
+        }
     }
 
 }

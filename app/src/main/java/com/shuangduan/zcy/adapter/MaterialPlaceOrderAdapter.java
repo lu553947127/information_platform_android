@@ -55,9 +55,8 @@ public class MaterialPlaceOrderAdapter extends SwipeRecyclerView.Adapter<Materia
         holder.tv_num.setText(String.valueOf(list.get(position).getNum()));
         holder.tv_name.setText(list.get(position).getMaterial_name());
         holder.itemView.setTag(position);
-
-        holder.ll_day.setVisibility(method == 1 ? View.VISIBLE : View.GONE);
-        holder.tv_day.setText(list.get(position).getDay() + "天");
+//        holder.ll_day.setVisibility(method == 1 ? View.VISIBLE : View.GONE);
+//        holder.tv_day.setText(list.get(position).getDay() + "天");
     }
 
     @Override
@@ -71,9 +70,9 @@ public class MaterialPlaceOrderAdapter extends SwipeRecyclerView.Adapter<Materia
     }
 
     // 添加数据
-    public void addData(int position, int num, int id, int materialId, String material_name, String day) {
+    public void addData(int position, int num, int id, int materialId, String material_name) {
         //在list中添加数据，并通知条目加入一条
-        list.add(position, new MaterialPlaceOrderBean(num, id, materialId, material_name, day));
+        list.add(position, new MaterialPlaceOrderBean(num, id, materialId, material_name));
         //添加动画
         notifyItemInserted(position);
     }

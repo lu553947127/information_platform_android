@@ -3,7 +3,6 @@ package com.shuangduan.zcy.view.material;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.text.Html;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -22,7 +21,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.StringUtils;
+import com.blankj.utilcode.util.TimeUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.huawei.android.hms.agent.common.UIUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.MaterialPlaceOrderAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
@@ -32,6 +34,7 @@ import com.shuangduan.zcy.model.bean.MaterialDetailBean;
 import com.shuangduan.zcy.model.bean.MaterialPlaceOrderBean;
 import com.shuangduan.zcy.model.event.AddressEvent;
 import com.shuangduan.zcy.model.event.MaterialDetailEvent;
+import com.shuangduan.zcy.utils.DateUtils;
 import com.shuangduan.zcy.utils.DensityUtil;
 import com.shuangduan.zcy.utils.KeyboardUtil;
 import com.shuangduan.zcy.utils.image.ImageConfig;
@@ -40,6 +43,7 @@ import com.shuangduan.zcy.view.release.ReleaseAreaSelectActivity;
 import com.shuangduan.zcy.vm.MaterialDetailVm;
 import com.shuangduan.zcy.weight.DataHolder;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
+import com.shuangduan.zcy.weight.datepicker.CustomDatePicker;
 import com.yanzhenjie.recyclerview.OnItemMenuClickListener;
 import com.yanzhenjie.recyclerview.SwipeMenu;
 import com.yanzhenjie.recyclerview.SwipeMenuBridge;
@@ -115,16 +119,24 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
     @BindView(R.id.tv_supply_method)
     TextView tvSupplyMethod;
 
+    @BindView(R.id.tv_time_start)
+    TextView tvTimeStart;
+    @BindView(R.id.tv_time_end)
+    TextView tvTimeEnd;
+
 
     private MaterialDetailVm materialDetailVm;
     private BottomSheetDialogs btn_dialog;
-    int province, city, material_id, materialId, guidance_price, adapterPosition, supplier_id, day, days;
+    int province, city, material_id, materialId, guidance_price, adapterPosition, supplier_id, day;
     String material_name, unit, science_num_id;
     List<MaterialPlaceOrderBean> list = new ArrayList<>();
     private List<String> list_address = new ArrayList<>();
     MaterialPlaceOrderAdapter materialDepositingPlaceAdapter;
     private long num, price;
     private MaterialDetailBean materialDetail;
+    //租期开始时间  ,租期结束时间
+    private String leaseStartTime, leaseEndTime;
+
 
     @Override
     protected int initLayoutRes() {
@@ -169,11 +181,12 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
             tvCompany.setText("供应商：" + materialDetailBean.getCompany());
             material_id = materialDetailBean.getMaterial_id();
             supplier_id = materialDetailBean.getSupplier_id();
-            tvAdd.setText(materialDetailBean.getMethod() == 1 ? R.string.material_tv_lease_add : R.string.material_tv_add);
+            tvAdd.setText(R.string.material_tv_add);
 
             materialDepositingPlaceAdapter = new MaterialPlaceOrderAdapter(this, list, materialDetail.getMethod());
 
             recyclerView.setAdapter(materialDepositingPlaceAdapter);
+
         });
 
         //数量、存放地保存成功返回结果
@@ -181,9 +194,8 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
             try {
                 num = num + Integer.valueOf(et_num.getText().toString());
                 if (materialDetail.getMethod() == 1) {
-                    days = days + Integer.valueOf(et_lease.getText().toString());
-                    price = price + Integer.valueOf(et_num.getText().toString()) * Integer.valueOf(et_lease.getText().toString()) * guidance_price;
-                    tvNumber.setText("共租赁" + days + "天，共计");
+                    price = price + Integer.valueOf(et_num.getText().toString()) * day * guidance_price;
+                    tvNumber.setText("共租赁" + day + "天，共计");
                     tvPrice.setText(String.valueOf(price));
                 } else {
                     price = price + Integer.valueOf(et_num.getText().toString()) * guidance_price;
@@ -194,8 +206,7 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
                 materialDepositingPlaceAdapter.addData(list.size(),
                         Integer.valueOf(et_num.getText().toString()),
                         Integer.valueOf(materialAddBean.getId()),
-                        materialId, material_name,
-                        et_lease.getText().toString());
+                        materialId, material_name);
 
                 for (int i = 0; i < list.size(); i++) {
                     list_address.add(String.valueOf(list.get(i).getId()));
@@ -220,8 +231,7 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
             try {
                 num = num - list.get(adapterPosition).getNum();
                 if (materialDetail.getMethod() == 1) {
-                    days = days - Integer.valueOf(list.get(adapterPosition).getDay());
-                    price = price - list.get(adapterPosition).getNum() * Integer.valueOf(list.get(adapterPosition).getDay()) * guidance_price;
+                    price = price - list.get(adapterPosition).getNum() * Integer.valueOf(day) * guidance_price;
                     tvNumber.setText("共租赁" + num + "天，共计");
                     tvPrice.setText(String.valueOf(price));
                 } else {
@@ -276,7 +286,8 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
         return list;
     }
 
-    @OnClick({R.id.iv_bar_back, R.id.tv_province, R.id.tv_add, R.id.tv_submission})
+
+    @OnClick({R.id.iv_bar_back, R.id.tv_province, R.id.tv_add, R.id.tv_submission, R.id.tv_time_start, R.id.tv_time_end})
     void onClick(View view) {
         Bundle bundle = new Bundle();
         switch (view.getId()) {
@@ -288,6 +299,19 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
                 ActivityUtils.startActivity(bundle, ReleaseAreaSelectActivity.class);
                 break;
             case R.id.tv_add://添加存放地
+                if (StringUtils.isTrimEmpty(leaseStartTime)) {
+                    ToastUtils.showShort("请选择租赁开始时间");
+                    return;
+                }
+                if (StringUtils.isTrimEmpty(leaseEndTime)) {
+                    ToastUtils.showShort("请选择租赁结束时间");
+                    return;
+                }
+
+                if (day <= 0) {
+                    ToastUtils.showShort("开始时间必须小于结束时间");
+                    return;
+                }
                 getAddDialog();
                 break;
             case R.id.tv_submission://提交预订单
@@ -320,13 +344,18 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
                 materialDetailVm.getAddMaterialOrder(material_id, etRealName.getText().toString(), etTel.getText().toString()
                         , etCompany.getText().toString(), province, city, etAddress.getText().toString(), etRemark.getText(), science_num_id);
                 break;
+            case R.id.tv_time_start:
+                showTimeDialog(tvTimeStart, 0);
+                break;
+            case R.id.tv_time_end:
+                showTimeDialog(tvTimeEnd, 1);
+                break;
         }
     }
 
     //添加存放地弹窗
     TextView tv_material_id;
     EditText et_num;
-    EditText et_lease;
 
     private void getAddDialog() {
         //底部滑动对话框
@@ -344,14 +373,15 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
             e.printStackTrace();
         }
 
-        dialog_view.findViewById(R.id.ll_lease).setVisibility(materialDetail.getMethod() == 1 ? View.VISIBLE : View.GONE);
+//        dialog_view.findViewById(R.id.ll_lease).setVisibility(materialDetail.getMethod() == 1 ? View.VISIBLE : View.GONE);
 
         TextView tv_title = dialog_view.findViewById(R.id.tv_dialog_title);
-        tv_title.setText(materialDetail.getMethod() == 1 ? "添加数量、租期、存放地" : "添加数量、存放地");
+        tv_title.setText("添加数量、存放地");
 
         TextView tv_save = dialog_view.findViewById(R.id.tv_save);
         et_num = dialog_view.findViewById(R.id.et_num);
-        et_lease = dialog_view.findViewById(R.id.et_lease);
+
+
         tv_material_id = dialog_view.findViewById(R.id.tv_material_id);
         tv_material_id.setOnClickListener(v -> {
             Bundle bundle = new Bundle();
@@ -386,22 +416,42 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
             }
 
             if (materialDetail.getMethod() == 1) {
-                if (TextUtils.isEmpty(et_lease.getText().toString())) {
-                    ToastUtils.showShort(getString(R.string.no_mun));
-                    return;
-                }
 
-                if (Integer.valueOf(et_lease.getText().toString()) == 0) {
-                    ToastUtils.showShort("租赁天数不能为0");
-                    return;
-                }
-                day = Integer.valueOf(et_lease.getText().toString());
+
+//                if (Integer.valueOf(et_lease.getText().toString()) == 0) {
+//                    ToastUtils.showShort("租赁天数不能为0");
+//                    return;
+//                }
+//                day = Integer.valueOf(et_lease.getText().toString());
             }
 
             BigInteger number = new BigInteger(et_num.getText().toString());
-            materialDetailVm.getAddMaterial(materialId, number, day, materialDetail.getMethod());
+            materialDetailVm.getAddMaterial(materialId, number, materialDetail.getMethod(), leaseStartTime, leaseEndTime);
         });
         btn_dialog.show();
+    }
+
+    /**
+     * 时间选择器
+     */
+    private void showTimeDialog(TextView tv, int type) {
+        CustomDatePicker customDatePicker = new CustomDatePicker(this, time -> {
+            tv.setText(time);
+            if (type == 0) leaseStartTime = time;
+            else leaseEndTime = time;
+
+            if (!StringUtils.isTrimEmpty(leaseStartTime) && !StringUtils.isTrimEmpty(leaseEndTime)) {
+                day = DateUtils.getGapCount(leaseStartTime, leaseEndTime);
+
+                price = day*num*guidance_price;
+                if (materialDetail.getMethod() == 1) {
+                    tvNumber.setText("共租赁" + day + "天，共计");
+                    tvPrice.setText(String.valueOf(price));
+                }
+            }
+        }, "yyyy-MM-dd", "2010-01-01", "2040-12-31");
+        customDatePicker.showSpecificTime(false);
+        customDatePicker.show(TimeUtils.getNowString());
     }
 
     @SuppressLint("SetTextI18n")

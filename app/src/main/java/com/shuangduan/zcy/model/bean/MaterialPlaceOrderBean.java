@@ -14,24 +14,19 @@ package com.shuangduan.zcy.model.bean;
  */
 public class MaterialPlaceOrderBean {
 
-    private String day;
     private int num;
     private int id;
     private int materialId;
     private String material_name;
 
-    public MaterialPlaceOrderBean(int num, int id, int materialId, String material_name, String day) {
+    public MaterialPlaceOrderBean(int num, int id, int materialId, String material_name) {
         this.num = num;
         this.id = id;
         this.materialId = materialId;
         this.material_name = material_name;
-        this.day = day;
     }
 
 
-    public String getDay() {
-        return day;
-    }
 
     public int getMaterialId() {
         return materialId;

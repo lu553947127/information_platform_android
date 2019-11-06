@@ -107,6 +107,7 @@ public class MaterialEquipmentDetailActivity extends BaseActivity {
     @BindView(R.id.tv_supply_method)
     TextView tvSupplyMethod;
 
+
     private MaterialDetailVm materialDetailVm;
     private String phone, is_collect, enclosure;
     private List<String> pics;
@@ -128,6 +129,7 @@ public class MaterialEquipmentDetailActivity extends BaseActivity {
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.product_detail));
+        tvEnclosure.setVisibility(View.INVISIBLE);
 
         materialDetailVm = ViewModelProviders.of(this).get(MaterialDetailVm.class);
         materialDetailVm.id = getIntent().getIntExtra(CustomConfig.MATERIAL_ID, 0);

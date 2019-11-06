@@ -45,7 +45,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
         android:orientation="horizontal"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <TextView
             android:layout_width="wrap_content"
@@ -61,17 +61,34 @@
             android:textColor="@color/colorTv"
             android:textSize="14sp" />
 
-        <EditText
-            android:id="@+id/et_day"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/tv_time_start"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="48dp"
-            android:background="@color/colorFFF"
-            android:hint="请输入(天)"
-            android:inputType="number"
+            android:hint="@string/time_start"
             android:textColor="@color/color_666666"
-            android:textSize="14sp"
-            tools:ignore="RtlHardcoded" />
+            android:textColorHint="@color/color_999999"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="41dp"
+            android:layout_marginRight="32dp"
+            android:text="至"
+            android:textColor="@color/color_666666"
+            android:textSize="14sp" />
+
+
+        <TextView
+            android:id="@+id/tv_time_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/time_end"
+            android:textColor="@color/color_666666"
+            android:textColorHint="@color/color_999999"
+            android:textSize="14sp" />
     </LinearLayout>
 
     <LinearLayout

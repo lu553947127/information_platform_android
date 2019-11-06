@@ -20,6 +20,7 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.StringUtils;
+import com.blankj.utilcode.util.TimeUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
@@ -30,11 +31,13 @@ import com.shuangduan.zcy.model.bean.MaterialDetailBean;
 import com.shuangduan.zcy.model.bean.MaterialPlaceOrderBean;
 import com.shuangduan.zcy.model.event.AddressEvent;
 import com.shuangduan.zcy.model.event.MaterialDetailEvent;
+import com.shuangduan.zcy.utils.DateUtils;
 import com.shuangduan.zcy.utils.image.ImageConfig;
 import com.shuangduan.zcy.utils.image.ImageLoader;
 import com.shuangduan.zcy.view.release.ReleaseAreaSelectActivity;
 import com.shuangduan.zcy.vm.MaterialDetailVm;
 import com.shuangduan.zcy.weight.DataHolder;
+import com.shuangduan.zcy.weight.datepicker.CustomDatePicker;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -109,8 +112,12 @@ public class MaterialEquipmentPlaceOrderActivity extends BaseActivity {
     EditText etNum;
     @BindView(R.id.ll_day)
     LinearLayout llDay;
-    @BindView(R.id.et_day)
-    EditText etDay;
+
+    @BindView(R.id.tv_time_start)
+    TextView tvTimeStart;
+    @BindView(R.id.tv_time_end)
+    TextView tvTimeEnd;
+
 
     private MaterialDetailVm materialDetailVm;
     private BottomSheetDialogs btn_dialog;
@@ -120,6 +127,10 @@ public class MaterialEquipmentPlaceOrderActivity extends BaseActivity {
 
     private int num, price;
     private MaterialDetailBean materialDetail;
+
+    //租期开始时间  ,租期结束时间
+    private String leaseStartTime, leaseEndTime;
+
 
     @Override
     protected int initLayoutRes() {
@@ -137,6 +148,7 @@ public class MaterialEquipmentPlaceOrderActivity extends BaseActivity {
         tvBarTitle.setText(getString(R.string.material_place_order));
 
         tvAddressStar.setVisibility(View.INVISIBLE);
+        tvUnit.setVisibility(View.INVISIBLE);
 
         materialDetailVm = ViewModelProviders.of(this).get(MaterialDetailVm.class);
         materialDetailVm.id = getIntent().getIntExtra(CustomConfig.MATERIAL_ID, 0);
@@ -196,29 +208,7 @@ public class MaterialEquipmentPlaceOrderActivity extends BaseActivity {
                     num = 0;
                     return;
                 }
-
                 num = Integer.valueOf(s.toString());
-                if (materialDetail.getMethod() == 1) {
-                    price = num * day * guidance_price;
-                    tvNumber.setText("共租赁" + day + "天，共计");
-                    tvPrice.setText(String.valueOf(price));
-                } else {
-                    price = num * guidance_price;
-                    tvNumber.setText("共采购" + num + "套，共计");
-                    tvPrice.setText(String.valueOf(price));
-                }
-            }
-        });
-
-        etDay.addTextChangedListener(new TextWatcherWrapper() {
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (StringUtils.isTrimEmpty(s.toString())) {
-                    day = 0;
-                    return;
-                }
-
-                day = Integer.valueOf(s.toString());
                 if (materialDetail.getMethod() == 1) {
                     price = num * day * guidance_price;
                     tvNumber.setText("共租赁" + day + "天，共计");
@@ -236,7 +226,7 @@ public class MaterialEquipmentPlaceOrderActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.iv_bar_back, R.id.tv_province, R.id.tv_submission})
+    @OnClick({R.id.iv_bar_back, R.id.tv_province, R.id.tv_submission,R.id.tv_time_start,R.id.tv_time_end})
     void onClick(View view) {
         Bundle bundle = new Bundle();
         switch (view.getId()) {
@@ -275,18 +265,61 @@ public class MaterialEquipmentPlaceOrderActivity extends BaseActivity {
                     ToastUtils.showShort("数量不能为0");
                     return;
                 }
-                if (materialDetail.getMethod() == 1 && day == 0) {
-                    ToastUtils.showShort("租赁天数不能为0");
+
+
+                if (materialDetail.getMethod() == 1 &&StringUtils.isTrimEmpty(leaseStartTime)) {
+                    ToastUtils.showShort("请选择租赁开始时间");
+                    return;
+                }
+                if (materialDetail.getMethod() == 1 &&StringUtils.isTrimEmpty(leaseEndTime)) {
+                    ToastUtils.showShort("请选择租赁结束时间");
                     return;
                 }
 
+                if (materialDetail.getMethod() == 1 &&day <= 0) {
+                    ToastUtils.showShort("开始时间必须小于结束时间");
+                    return;
+                }
+                
                 materialDetailVm.getAddEquipmentOrder(materialDetail.getId(), etRealName.getText().toString(), etTel.getText().toString()
                         , etCompany.getText().toString(), province, city, etAddress.getText().toString(), etRemark.getText(),
                         materialDetail.getMethod(), day, num, materialDetail.getCategory());
                 break;
+            case R.id.tv_time_start:
+                showTimeDialog(tvTimeStart, 0);
+                break;
+            case R.id.tv_time_end:
+                showTimeDialog(tvTimeEnd, 1);
+                break;
         }
     }
 
+    /**
+     * 时间选择器
+     */
+    private void showTimeDialog(TextView tv, int type) {
+        CustomDatePicker customDatePicker = new CustomDatePicker(this, time -> {
+            tv.setText(time);
+            if (type == 0) leaseStartTime = time;
+            else leaseEndTime = time;
+
+            if (!StringUtils.isTrimEmpty(leaseStartTime) && !StringUtils.isTrimEmpty(leaseEndTime)) {
+                day = DateUtils.getGapCount(leaseStartTime, leaseEndTime);
+
+                if (materialDetail.getMethod() == 1) {
+                    price = num * day * guidance_price;
+                    tvNumber.setText("共租赁" + day + "天，共计");
+                    tvPrice.setText(String.valueOf(price));
+                } else {
+                    price = num * guidance_price;
+                    tvNumber.setText("共采购" + num + "套，共计");
+                    tvPrice.setText(String.valueOf(price));
+                }
+            }
+        }, "yyyy-MM-dd", "2010-01-01", "2040-12-31");
+        customDatePicker.showSpecificTime(false);
+        customDatePicker.show(TimeUtils.getNowString());
+    }
 
     @SuppressLint("SetTextI18n")
     @Subscribe

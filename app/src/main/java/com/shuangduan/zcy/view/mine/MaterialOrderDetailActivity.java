@@ -83,6 +83,9 @@ public class MaterialOrderDetailActivity extends BaseActivity {
     @BindView(R.id.tv_supply_method)
     TextView tvSupplyMethod;
 
+    @BindView(R.id.iv_overrule)
+    ImageView ivOverrule;
+
     private MaterialDetailVm materialVm;
     private int orderId;
     private int type;
@@ -103,6 +106,10 @@ public class MaterialOrderDetailActivity extends BaseActivity {
         orderId = getIntent().getIntExtra(CustomConfig.ORDER_ID, 0);
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(R.string.my_material);
+
+        type = getIntent().getIntExtra(CustomConfig.MATERIALS_TYPE, 0);
+
+        tvUnit.setVisibility(type == CustomConfig.EQUIPMENT ? View.INVISIBLE : View.VISIBLE);
 
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
@@ -143,7 +150,7 @@ public class MaterialOrderDetailActivity extends BaseActivity {
             tvCompanyNameValue.setText(item.company);
             tvOrderAddressValue.setText(item.address);
             tvIntroduceValue.setText(item.remark);
-            tvState.setText("状态：" + item.status);
+            tvState.setText("状态：" + item.phases);
             if (item.isClose == 0) {
                 tvCancel.setEnabled(false);
             } else {
@@ -152,6 +159,8 @@ public class MaterialOrderDetailActivity extends BaseActivity {
             tvSupplyMethod.setText(item.method == 1 ? "出租" : "出售");
 
             ivDefault.setVisibility(item.inside == 3 ? View.VISIBLE : View.GONE);
+            ivOverrule.setVisibility(item.status.equals("驳回") ? View.VISIBLE : View.INVISIBLE);
+
         });
 
         materialVm.mutableLiveDataCancel.observe(this, item -> {
@@ -160,10 +169,9 @@ public class MaterialOrderDetailActivity extends BaseActivity {
         });
 
 
-        type = getIntent().getIntExtra(CustomConfig.MATERIALS_TYPE,0);
-        if(type ==CustomConfig.FRP){
+        if (type == CustomConfig.FRP) {
             materialVm.materialOrderDetail(orderId);
-        }else if(type == CustomConfig.EQUIPMENT){
+        } else if (type == CustomConfig.EQUIPMENT) {
             materialVm.equipmentOrderDetail(orderId);
         }
     }
@@ -200,9 +208,9 @@ public class MaterialOrderDetailActivity extends BaseActivity {
     private void cancelOrder() {
         MaterialOrderBean.ListBean order = materialVm.orderDetailLiveData.getValue();
 
-        if(type==CustomConfig.FRP){
+        if (type == CustomConfig.FRP) {
             materialVm.materialOrderCancel(order.id);
-        }else if(type == CustomConfig.EQUIPMENT){
+        } else if (type == CustomConfig.EQUIPMENT) {
             materialVm.cancelEquipmentOrder(order.id);
         }
 
