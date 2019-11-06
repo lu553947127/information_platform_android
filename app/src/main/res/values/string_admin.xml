@@ -68,7 +68,15 @@
     <string name="admin_turnover_detail">详情信息</string>
     <string name="admin_turnover_remark">备注</string>
     <string name="admin_turnover_hint_input">请输入</string>
-    <string name="admin_selector_project">请选择所属项目</string>
+    <string name="admin_selector_material_project">请选择所属项目</string>
+    <string name="admin_selector_material_plan">请选择预计下步使用计划</string>
+    <string name="admin_input_material_num">请输入再用数量</string>
+    <string name="admin_selector_material_start_time">请选择开始使用日期</string>
+    <string name="admin_selector_material_enter_time">请选择材料进场时间</string>
+    <string name="admin_selector_material_exit_time">请选择材料退场时间</string>
+    <string name="admin_input_material_amortize">请输入累计摊销</string>
+    <string name="admin_input_material_original">请输入周转材料原值</string>
+    <string name="admin_input_material_value">请输入净值</string>
 
     <string name="admin_selector_no_category">材料类别不能为空</string>
     <string name="admin_selector_no_material_id">材料名称不能为空</string>

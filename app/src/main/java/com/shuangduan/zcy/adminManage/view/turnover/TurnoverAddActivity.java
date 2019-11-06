@@ -27,6 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.TimeUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
@@ -55,6 +56,7 @@ import com.shuangduan.zcy.view.release.ReleaseAreaSelectActivity;
 import com.shuangduan.zcy.vm.UploadPhotoVm;
 import com.shuangduan.zcy.weight.RoundCheckBox;
 import com.shuangduan.zcy.weight.SwitchView;
+import com.shuangduan.zcy.weight.TurnoverSelectView;
 import com.shuangduan.zcy.weight.XEditText;
 import com.shuangduan.zcy.weight.datepicker.CustomDatePicker;
 import com.zhihu.matisse.Matisse;
@@ -93,7 +95,7 @@ import static com.shuangduan.zcy.app.CustomConfig.EDIT;
  * @Version: 1.0
  */
 @SuppressLint("SimpleDateFormat,UseSparseArrays")
-public class TurnoverAddActivity extends BaseActivity {
+public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogControl.TurnoverDetailListening {
 
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
@@ -149,6 +151,25 @@ public class TurnoverAddActivity extends BaseActivity {
     TextView tvImageRed;
     @BindView(R.id.rv_images)
     RecyclerView rvImages;
+
+    @BindView(R.id.ts_project)
+    TurnoverSelectView tsProject;
+    @BindView(R.id.ts_plan)
+    TurnoverSelectView tsPlan;
+    @BindView(R.id.ts_num)
+    TurnoverSelectView tsNum;
+    @BindView(R.id.ts_start_time)
+    TurnoverSelectView tsStartTime;
+    @BindView(R.id.ts_enter_time)
+    TurnoverSelectView tsEnterTime;
+    @BindView(R.id.ts_exit_time)
+    TurnoverSelectView tsExitTime;
+    @BindView(R.id.ts_amortize)
+    TurnoverSelectView tsAmortize;
+    @BindView(R.id.ts_original)
+    TurnoverSelectView tsOriginal;
+    @BindView(R.id.ts_value)
+    TurnoverSelectView tsValue;
     @BindView(R.id.et_remark)
     EditText etRemark;
 
@@ -179,7 +200,7 @@ public class TurnoverAddActivity extends BaseActivity {
         uploadPhotoVm = ViewModelProviders.of(this).get(UploadPhotoVm.class);
 
         //判断时添加还是编辑
-        switch (getIntent().getIntExtra(CustomConfig.HANDLE_TYPE,0)){
+        switch (getIntent().getIntExtra(CustomConfig.HANDLE_TYPE, 0)) {
             case ADD://添加
                 break;
             case EDIT://编辑
@@ -206,7 +227,7 @@ public class TurnoverAddActivity extends BaseActivity {
         });
 
         //详细信息输入弹出框初始化
-        dialogControl = new TurnoverDialogControl(this, turnoverAddVm);
+        dialogControl = new TurnoverDialogControl(this, turnoverVm, this);
         dialogControl.initView();
 
         //获取筛选条件列表数据
@@ -219,7 +240,8 @@ public class TurnoverAddActivity extends BaseActivity {
             materialStatusList = turnoverTypeBean.getMaterial_status();
             //获取是否上架
             groundingList = turnoverTypeBean.getIs_shelf();
-            if (SPUtils.getInstance().getInt(CustomConfig.SON_LIST, 0) != 1) groundingList.remove(1);
+            if (SPUtils.getInstance().getInt(CustomConfig.SON_LIST, 0) != 1)
+                groundingList.remove(1);
             //获取预计下步使用计划
             planBeanList = turnoverTypeBean.getPlan();
             for (TurnoverTypeBean.PlanBean item : planBeanList) {
@@ -287,35 +309,35 @@ public class TurnoverAddActivity extends BaseActivity {
     //获取编辑详细数据显示
     @SuppressLint("SetTextI18n")
     private void getEditDetail(int id) {
-        turnoverAddVm.editId=id;
+        turnoverAddVm.editId = id;
         turnoverVm.constructionEditShow(id);
-        turnoverVm.turnoverDetailEditLiveData.observe(this,turnoverDetailEditBean -> {
-            turnoverAddVm.category=turnoverDetailEditBean.getCategory();
-            turnoverAddVm.material_id=turnoverDetailEditBean.getMaterial_id();
+        turnoverVm.turnoverDetailEditLiveData.observe(this, turnoverDetailEditBean -> {
+            turnoverAddVm.category = turnoverDetailEditBean.getCategory();
+            turnoverAddVm.material_id = turnoverDetailEditBean.getMaterial_id();
             tvCategoryMaterial_id.setText(turnoverDetailEditBean.getCategory_name() + " - " + turnoverDetailEditBean.getMaterial_id_name());
             tvCategoryMaterial_id.setTextColor(getResources().getColor(R.color.colorTv));
             etStock.setText(turnoverDetailEditBean.getStock());
             etUnitPrice.setText(turnoverDetailEditBean.getUnit_price());
-            turnoverAddVm.unit=turnoverDetailEditBean.getUnit();
+            turnoverAddVm.unit = turnoverDetailEditBean.getUnit();
             tvUnit.setText(turnoverDetailEditBean.getUnit_name());
             tvUnit.setTextColor(getResources().getColor(R.color.colorTv));
             etSpec.setText(turnoverDetailEditBean.getSpec());
-            turnoverAddVm.use_status=turnoverDetailEditBean.getUse_status();
+            turnoverAddVm.use_status = turnoverDetailEditBean.getUse_status();
             tvUseStatus.setText(turnoverDetailEditBean.getUse_status_name());
             tvUseStatus.setTextColor(getResources().getColor(R.color.colorTv));
-            turnoverAddVm.material_status=turnoverDetailEditBean.getMaterial_status();
+            turnoverAddVm.material_status = turnoverDetailEditBean.getMaterial_status();
             tvMaterialStatus.setText(turnoverDetailEditBean.getMaterial_status_name());
             tvMaterialStatus.setTextColor(getResources().getColor(R.color.colorTv));
-            turnoverAddVm.province=turnoverDetailEditBean.getProvince();
-            turnoverAddVm.city=turnoverDetailEditBean.getCity();
-            turnoverAddVm.address=turnoverDetailEditBean.getAddress();
-            turnoverAddVm.latitude=turnoverDetailEditBean.getLatitude();
-            turnoverAddVm.longitude=turnoverDetailEditBean.getLongitude();
-            tvAddress.setText(turnoverDetailEditBean.getProvince_name()+turnoverDetailEditBean.getCity_name()+turnoverDetailEditBean.getAddress());
+            turnoverAddVm.province = turnoverDetailEditBean.getProvince();
+            turnoverAddVm.city = turnoverDetailEditBean.getCity();
+            turnoverAddVm.address = turnoverDetailEditBean.getAddress();
+            turnoverAddVm.latitude = turnoverDetailEditBean.getLatitude();
+            turnoverAddVm.longitude = turnoverDetailEditBean.getLongitude();
+            tvAddress.setText(turnoverDetailEditBean.getProvince_name() + turnoverDetailEditBean.getCity_name() + turnoverDetailEditBean.getAddress());
             tvAddress.setTextColor(getResources().getColor(R.color.colorTv));
             etPersonLiable.setText(turnoverDetailEditBean.getPerson_liable());
             etTel.setText(turnoverDetailEditBean.getTel());
-            turnoverAddVm.is_shelf=turnoverDetailEditBean.getIs_shelf();
+            turnoverAddVm.is_shelf = turnoverDetailEditBean.getIs_shelf();
             tvIsShelf.setText(turnoverDetailEditBean.getIs_shelf_name());
             tvIsShelf.setTextColor(getResources().getColor(R.color.colorTv));
             switch (turnoverAddVm.is_shelf) {
@@ -325,11 +347,11 @@ public class TurnoverAddActivity extends BaseActivity {
                     llGuidancePrice.setVisibility(View.VISIBLE);
                     tvImageRed.setVisibility(View.VISIBLE);
                     etGuidancePrice.setText(turnoverDetailEditBean.getGuidance_price());
-                    turnoverAddVm.method=turnoverDetailEditBean.getMethod();
-                    if (turnoverAddVm.method==1){
+                    turnoverAddVm.method = turnoverDetailEditBean.getMethod();
+                    if (turnoverAddVm.method == 1) {
                         cbLease.setChecked(true);
                         cbSell.setChecked(false);
-                    }else {
+                    } else {
                         cbLease.setChecked(false);
                         cbSell.setChecked(true);
                     }
@@ -346,25 +368,25 @@ public class TurnoverAddActivity extends BaseActivity {
                     llGuidancePrice.setVisibility(View.VISIBLE);
                     tvImageRed.setVisibility(View.VISIBLE);
                     etGuidancePrice.setText(turnoverDetailEditBean.getGuidance_price());
-                    turnoverAddVm.shelf_start_time=turnoverDetailEditBean.getShelf_start_time();
+                    turnoverAddVm.shelf_start_time = turnoverDetailEditBean.getShelf_start_time();
                     tvShelfTimeStart.setText(turnoverDetailEditBean.getShelf_start_time());
                     tvShelfTimeStart.setTextColor(getResources().getColor(R.color.colorTv));
-                    turnoverAddVm.shelf_end_time=turnoverDetailEditBean.getShelf_end_time();
+                    turnoverAddVm.shelf_end_time = turnoverDetailEditBean.getShelf_end_time();
                     tvShelfTimeEnd.setText(turnoverDetailEditBean.getShelf_end_time());
                     tvShelfTimeEnd.setTextColor(getResources().getColor(R.color.colorTv));
-                    turnoverAddVm.shelf_type=turnoverDetailEditBean.getShelf_type();
-                    if (turnoverAddVm.shelf_type==1){
+                    turnoverAddVm.shelf_type = turnoverDetailEditBean.getShelf_type();
+                    if (turnoverAddVm.shelf_type == 1) {
                         cbShelfTypeOpen.setChecked(true);
                         cbShelfTypeClose.setChecked(false);
-                    }else {
+                    } else {
                         cbShelfTypeOpen.setChecked(false);
                         cbShelfTypeClose.setChecked(true);
                     }
-                    turnoverAddVm.method=turnoverDetailEditBean.getMethod();
-                    if (turnoverAddVm.method==1){
+                    turnoverAddVm.method = turnoverDetailEditBean.getMethod();
+                    if (turnoverAddVm.method == 1) {
                         cbLease.setChecked(true);
                         cbSell.setChecked(false);
-                    }else {
+                    } else {
                         cbLease.setChecked(false);
                         cbSell.setChecked(true);
                     }
@@ -378,15 +400,15 @@ public class TurnoverAddActivity extends BaseActivity {
         });
 
         //编辑周转材料返回结果
-        turnoverAddVm.turnoverEditData.observe(this,item->{
+        turnoverAddVm.turnoverEditData.observe(this, item -> {
             ToastUtils.showShort("编辑成功");
             finish();
         });
     }
 
     @OnClick({R.id.iv_bar_back, R.id.tv_category_material_id, R.id.tv_unit, R.id.tv_use_status, R.id.tv_material_status
-            ,R.id.tv_address,R.id.tv_is_shelf, R.id.tv_shelf_time_start, R.id.tv_shelf_time_end, R.id.iv_images
-            , R.id.ts_project, R.id.ts_plan, R.id.ts_num,R.id.ts_start_time, R.id.ts_enter_time, R.id.ts_exit_time, R.id.ts_amortize, R.id.ts_original, R.id.ts_value
+            , R.id.tv_address, R.id.tv_is_shelf, R.id.tv_shelf_time_start, R.id.tv_shelf_time_end, R.id.iv_images
+            , R.id.ts_project, R.id.ts_plan, R.id.ts_num, R.id.ts_start_time, R.id.ts_enter_time, R.id.ts_exit_time, R.id.ts_amortize, R.id.ts_original, R.id.ts_value
             , R.id.tv_reserve})
     void OnClick(View view) {
         Bundle bundle = new Bundle();
@@ -441,40 +463,40 @@ public class TurnoverAddActivity extends BaseActivity {
                 }
                 break;
             case R.id.ts_project://所属项目
-                dialogControl.show(0, R.string.admin_selector_project);
+                dialogControl.showDialog(0, R.string.admin_selector_material_project);
                 break;
             case R.id.ts_plan://预计下步使用计划
-                dialogControl.show(1, R.string.admin_material_plan);
+                dialogControl.showDialog(1, R.string.admin_selector_material_plan);
                 break;
             case R.id.ts_num://在用数量
-                dialogControl.show(2, R.string.admin_material_num);
+                dialogControl.showDialog(2, R.string.admin_input_material_num);
                 break;
             case R.id.ts_start_time://开始使用日期
-                dialogControl.show(3, R.string.admin_material_start_time);
+                dialogControl.showDialog(3, R.string.admin_selector_material_start_time);
                 break;
             case R.id.ts_enter_time://材料进场时间
-                dialogControl.show(4, R.string.admin_material_enter_time);
+                dialogControl.showDialog(4, R.string.admin_selector_material_enter_time);
                 break;
             case R.id.ts_exit_time://材料退场时间
-                dialogControl.show(5, R.string.admin_material_exit_time);
+                dialogControl.showDialog(5, R.string.admin_selector_material_exit_time);
                 break;
             case R.id.ts_amortize://累计摊销
-                dialogControl.show(6, R.string.admin_material_amortize);
+                dialogControl.showDialog(6, R.string.admin_input_material_amortize);
                 break;
             case R.id.ts_original://周转材料原值
-                dialogControl.show(7, R.string.admin_material_original);
+                dialogControl.showDialog(7, R.string.admin_input_material_original);
                 break;
             case R.id.ts_value://净值
-                dialogControl.show(8, R.string.admin_material_value);
+                dialogControl.showDialog(8, R.string.admin_input_material_value);
                 break;
             case R.id.tv_reserve://提交
-                switch (getIntent().getIntExtra(CustomConfig.HANDLE_TYPE,0)){
+                switch (getIntent().getIntExtra(CustomConfig.HANDLE_TYPE, 0)) {
                     case ADD://添加
-                        turnoverAddVm.constructionAdd("add",etStock.getText().toString(), etUnitPrice.getText().toString()
+                        turnoverAddVm.constructionAdd("add", etStock.getText().toString(), etUnitPrice.getText().toString()
                                 , etSpec.getText().toString(), etPersonLiable.getText().toString(), etTel.getText().toString(), etGuidancePrice.getText().toString());
                         break;
                     case EDIT://编辑
-                        turnoverAddVm.constructionAdd("edit",etStock.getText().toString(), etUnitPrice.getText().toString()
+                        turnoverAddVm.constructionAdd("edit", etStock.getText().toString(), etUnitPrice.getText().toString()
                                 , etSpec.getText().toString(), etPersonLiable.getText().toString(), etTel.getText().toString(), etGuidancePrice.getText().toString());
                         break;
                 }
@@ -538,6 +560,7 @@ public class TurnoverAddActivity extends BaseActivity {
     private List<TurnoverTypeBean.MaterialStatusBean> materialStatusList = new ArrayList<>();
     private GroundingAdapter groundingAdapter;
     private List<TurnoverTypeBean.IsShelfBean> groundingList = new ArrayList<>();
+
     @SuppressLint({"RestrictedApi,InflateParams", "SetTextI18n"})
     private void getBottomSheetDialog(int layout, String type) {
         //底部滑动对话框
@@ -762,6 +785,7 @@ public class TurnoverAddActivity extends BaseActivity {
     //获取权限
     public static final int CAMERA = 111;
     public static final int PHOTO = 222;
+
     private void getPermissions() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager
@@ -834,5 +858,49 @@ public class TurnoverAddActivity extends BaseActivity {
         }
         LogUtils.i(sb.toString());
         return sb.toString();
+    }
+
+
+    @Override
+    public void callInfo(int unit_id, String unit, int plan, String planStr, String use_count, String start_date, String entry_time, String exit_time,
+                         String accumulated_amortization, String original_price, String net_worth) {
+        turnoverAddVm.unit_id = unit_id;
+        turnoverAddVm.plan = plan;
+        turnoverAddVm.use_count = use_count;
+        turnoverAddVm.start_date = start_date;
+        turnoverAddVm.entry_time = entry_time;
+        turnoverAddVm.exit_time = exit_time;
+        turnoverAddVm.accumulated_amortization = accumulated_amortization;
+        turnoverAddVm.original_price = original_price;
+        turnoverAddVm.net_worth = net_worth;
+
+        if(!StringUtils.isTrimEmpty(unit)){
+            tsProject.setValue(unit);
+        }
+        if(!StringUtils.isTrimEmpty(planStr)){
+            tsPlan.setValue(planStr);
+        }
+
+        if(!StringUtils.isTrimEmpty(use_count)){
+            tsNum.setValue(use_count);
+        }
+        if(!StringUtils.isTrimEmpty(start_date)){
+            tsStartTime.setValue(start_date);
+        }
+        if(!StringUtils.isTrimEmpty(entry_time)){
+            tsEnterTime.setValue(entry_time);
+        }
+        if(!StringUtils.isTrimEmpty(exit_time)){
+            tsExitTime.setValue(exit_time);
+        }
+        if(!StringUtils.isTrimEmpty(accumulated_amortization)){
+            tsAmortize.setValue(accumulated_amortization);
+        }
+        if(!StringUtils.isTrimEmpty(original_price)){
+            tsOriginal.setValue(original_price);
+        }
+        if(!StringUtils.isTrimEmpty(net_worth)){
+            tsValue.setValue(net_worth);
+        }
     }
 }

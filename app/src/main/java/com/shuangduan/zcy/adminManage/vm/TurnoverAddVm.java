@@ -69,15 +69,13 @@ public class TurnoverAddVm extends BaseViewModel {
     public MutableLiveData<String> turnoverAddData;
     public MutableLiveData<String> turnoverEditData;
     public MutableLiveData<String> pageStateLiveData;
-    //基建物资-物资材料添加-选择项目
-    public MutableLiveData<List<TurnoverNameBean>> turnoverName;
+
 
     public TurnoverAddVm() {
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
         turnoverAddData = new MutableLiveData<>();
         turnoverEditData = new MutableLiveData<>();
         pageStateLiveData = new MutableLiveData<>();
-        turnoverName = new MutableLiveData<>();
 
         //设置时间为今天
         Calendar calendar = Calendar.getInstance();
@@ -179,8 +177,5 @@ public class TurnoverAddVm extends BaseViewModel {
         }
     }
 
-    //后台管理 --- 物资材料添加-选择项目
-    public void projectListData(){
-        new TurnoverRepository().projectListData(turnoverName,pageStateLiveData,userId);
-    }
+
 }

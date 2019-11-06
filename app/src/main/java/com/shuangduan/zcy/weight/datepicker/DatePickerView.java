@@ -335,7 +335,10 @@ public class DatePickerView extends View {
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
-        return canScroll && super.dispatchTouchEvent(event);
+        //请求所有父控件及祖宗控件不要拦截事件
+        getParent().requestDisallowInterceptTouchEvent(true);
+        return super.dispatchTouchEvent(event);
+
     }
 
     /**

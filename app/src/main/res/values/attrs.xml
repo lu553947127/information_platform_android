@@ -179,6 +179,8 @@
     <declare-styleable name="TurnoverSelectView">
         <attr name="title_text" format="string|reference"></attr>
         <attr name="value_text" format="string|reference"></attr>
+        <attr name="hind_value_text" format="string|reference"></attr>
         <attr name="line_show" format="boolean"></attr>
+        <attr name="edit_show" format="boolean"></attr>
     </declare-styleable>
 </resources>

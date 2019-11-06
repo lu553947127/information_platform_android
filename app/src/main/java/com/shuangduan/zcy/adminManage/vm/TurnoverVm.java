@@ -9,6 +9,7 @@ import com.shuangduan.zcy.adminManage.bean.TurnoverCompanyBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverDetailBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverDetailEditBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverHistoryBean;
+import com.shuangduan.zcy.adminManage.bean.TurnoverNameBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverTypeBean;
 import com.shuangduan.zcy.adminManage.repository.TurnoverRepository;
 import com.shuangduan.zcy.app.SpConfig;
@@ -47,6 +48,10 @@ public class TurnoverVm extends BaseViewModel{
     public MutableLiveData<List<TurnoverCategoryBean>> turnoverSecondData;
     public MutableLiveData<TurnoverDetailBean> turnoverDetailLiveData;
     public MutableLiveData<TurnoverDetailEditBean> turnoverDetailEditLiveData;
+
+    //基建物资-物资材料添加-选择项目
+    public MutableLiveData<List<TurnoverNameBean>> turnoverName;
+
     public MutableLiveData<String> turnoverDeleteData;
     public MutableLiveData<String> turnoverSplitData;
     public MutableLiveData<String> pageStateLiveData;
@@ -64,6 +69,7 @@ public class TurnoverVm extends BaseViewModel{
         turnoverDetailLiveData = new MutableLiveData<>();
         turnoverDetailEditLiveData = new MutableLiveData<>();
         pageStateLiveData = new MutableLiveData<>();
+        turnoverName = new MutableLiveData<>();
         is_shelf = 0;
         use_status = 0;
         supplier_id = 0;
@@ -127,5 +133,10 @@ public class TurnoverVm extends BaseViewModel{
     //后台管理 --- 周转材料编辑详情
     public void constructionEditShow(int id) {
         new TurnoverRepository().constructionEditShow(turnoverDetailEditLiveData, pageStateLiveData, userId, id);
+    }
+
+    //后台管理 --- 物资材料添加-选择项目
+    public void projectListData(){
+        new TurnoverRepository().projectListData(turnoverName,pageStateLiveData,userId);
     }
 }

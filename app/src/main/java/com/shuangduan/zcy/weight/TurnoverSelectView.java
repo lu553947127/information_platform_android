@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -31,6 +32,9 @@ public class TurnoverSelectView extends ConstraintLayout {
     private String value;
     private View line;
     private TextView tvValue;
+    private EditText etValue;
+    private boolean editShow;
+    private String hindValue;
 
 
     public TurnoverSelectView(Context context) {
@@ -55,6 +59,8 @@ public class TurnoverSelectView extends ConstraintLayout {
         isShow = a.getBoolean(R.styleable.TurnoverSelectView_line_show, false);
         title = a.getString(R.styleable.TurnoverSelectView_title_text);
         value = a.getString(R.styleable.TurnoverSelectView_value_text);
+        hindValue = a.getString(R.styleable.TurnoverSelectView_hind_value_text);
+        editShow = a.getBoolean(R.styleable.TurnoverSelectView_edit_show, true);
     }
 
     public void initView(Context context) {
@@ -62,11 +68,15 @@ public class TurnoverSelectView extends ConstraintLayout {
 
         TextView tvTitle = findViewById(R.id.tv_item_title);
         tvValue = findViewById(R.id.tv_item_value);
+        etValue = findViewById(R.id.et_item_value);
         line = findViewById(R.id.line);
 
         tvTitle.setText(title);
         tvValue.setText(value);
+        tvValue.setHint(hindValue);
         line.setVisibility(isShow ? VISIBLE : GONE);
+        etValue.setVisibility(editShow ? VISIBLE : GONE);
+        tvValue.setVisibility(editShow ? INVISIBLE : VISIBLE);
     }
 
     public void showLine(boolean show) {
@@ -79,5 +89,14 @@ public class TurnoverSelectView extends ConstraintLayout {
 
     public void setValue(int valueRes) {
         tvValue.setText(valueRes);
+    }
+
+    public String getValue() {
+        return etValue.getText().toString();
+    }
+
+
+    public EditText getEditText() {
+        return etValue;
     }
 }

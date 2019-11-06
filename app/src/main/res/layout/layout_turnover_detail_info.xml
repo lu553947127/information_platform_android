@@ -27,24 +27,27 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            app:edit_show="false"
             app:title_text="@string/admin_material_project"
-            app:value_text="@string/admin_please_select" />
+            app:hind_value_text="@string/admin_please_select" />
 
         <com.shuangduan.zcy.weight.TurnoverSelectView
             android:id="@+id/ts_plan"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1.3"
+            app:edit_show="false"
             app:title_text="@string/admin_material_plan"
-            app:value_text="@string/admin_please_select" />
+            app:hind_value_text="@string/admin_please_select" />
 
         <com.shuangduan.zcy.weight.TurnoverSelectView
             android:id="@+id/ts_num"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            app:edit_show="false"
             app:title_text="@string/admin_material_num"
-            app:value_text="@string/admin_turnover_hint_input" />
+            app:hind_value_text="@string/admin_turnover_hint_input" />
     </LinearLayout>
 
     <LinearLayout
@@ -58,16 +61,18 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            app:edit_show="false"
             app:title_text="@string/admin_material_start_time"
-            app:value_text="@string/admin_please_select" />
+            app:hind_value_text="@string/admin_please_select" />
 
         <com.shuangduan.zcy.weight.TurnoverSelectView
             android:id="@+id/ts_enter_time"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1.3"
+            app:edit_show="false"
             app:title_text="@string/admin_material_enter_time"
-            app:value_text="@string/admin_please_select" />
+            app:hind_value_text="@string/admin_please_select" />
 
         <com.shuangduan.zcy.weight.TurnoverSelectView
             android:id="@+id/ts_exit_time"
@@ -75,7 +80,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             app:title_text="@string/admin_material_exit_time"
-            app:value_text="@string/admin_please_select" />
+            app:edit_show="false"
+            app:hind_value_text="@string/admin_please_select" />
     </LinearLayout>
 
     <LinearLayout
@@ -89,24 +95,27 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            app:edit_show="false"
             app:title_text="@string/admin_material_amortize"
-            app:value_text="@string/admin_turnover_hint_input" />
+            app:hind_value_text="@string/admin_turnover_hint_input" />
 
         <com.shuangduan.zcy.weight.TurnoverSelectView
             android:id="@+id/ts_original"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1.3"
+            app:edit_show="false"
             app:title_text="@string/admin_material_original"
-            app:value_text="@string/admin_turnover_hint_input" />
+            app:hind_value_text="@string/admin_turnover_hint_input" />
 
         <com.shuangduan.zcy.weight.TurnoverSelectView
             android:id="@+id/ts_value"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            app:edit_show="false"
             app:title_text="@string/admin_material_value"
-            app:value_text="@string/admin_turnover_hint_input" />
+            app:hind_value_text="@string/admin_turnover_hint_input" />
     </LinearLayout>
 
     <TextView

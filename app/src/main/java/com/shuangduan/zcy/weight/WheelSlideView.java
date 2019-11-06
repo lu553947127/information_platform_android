@@ -1,6 +1,7 @@
 package com.shuangduan.zcy.weight;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
@@ -25,6 +26,11 @@ public class WheelSlideView extends WheelView {
         super(context, attrs);
     }
 
+    @Override
+    public void setItemsVisibleCount(int visibleCount) {
+        super.setItemsVisibleCount(visibleCount);
+        invalidate();
+    }
 
     //事件分发
     @Override

@@ -29,7 +29,24 @@
         android:layout_width="wrap_content"
         android:gravity="center_horizontal"
         android:layout_marginTop="8dp"
-        android:textColor="@color/text2"
+        android:textColor="@color/colorTv"
+        android:textColorHint="@color/text2"
+        android:hint="@string/admin_please_select"
+        app:layout_constraintLeft_toLeftOf="@id/tv_item_title"
+        app:layout_constraintRight_toRightOf="@id/tv_item_title"
+        app:layout_constraintTop_toBottomOf="@id/tv_item_title" />
+
+    <EditText
+        android:id="@+id/et_item_value"
+        style="@style/TextSize14Style"
+        android:layout_width="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/colorTv"
+        android:textColorHint="@color/text2"
+        android:background="@color/colorFFF"
+        android:hint="@string/admin_turnover_hint_input"
+        android:inputType="number"
         app:layout_constraintLeft_toLeftOf="@id/tv_item_title"
         app:layout_constraintRight_toRightOf="@id/tv_item_title"
         app:layout_constraintTop_toBottomOf="@id/tv_item_title" />
