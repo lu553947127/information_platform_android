@@ -229,6 +229,31 @@ public class TurnoverDialogControl implements DialogInterface.OnDismissListener,
         });
     }
 
+    //获取编辑详情数据
+    public void setDetail(int unit_id, String unit, int plan, String planStr, String use_count, String start_date, String entry_time, String exit_time,
+                          String accumulated_amortization, String original_price, String net_worth){
+        this.unit_id=unit_id;
+        this.unit=unit;
+        this.plan=plan;
+        this.planStr=planStr;
+        this.use_count=use_count;
+        this.start_date=start_date;
+        this.entry_time=entry_time;
+        this.exit_time=exit_time;
+        this.accumulated_amortization=accumulated_amortization;
+        this.original_price=original_price;
+        this.net_worth=net_worth;
+
+        tsProject.setValue(unit);
+        tsPlan.setValue(planStr);
+        tsNum.getEditText().setText(use_count);
+        tsStartTime.setValue(start_date);
+        tsEnterTime.setValue(entry_time);
+        tsExitTime.setValue(exit_time);
+        tsAmortize.getEditText().setText(accumulated_amortization);
+        tsOriginal.getEditText().setText(original_price);
+        tsValue.getEditText().setText(net_worth);
+    }
 
     @Override
     public void onClick(View v) {
@@ -329,15 +354,15 @@ public class TurnoverDialogControl implements DialogInterface.OnDismissListener,
         switch (position) {
             case 0:
                 wheelView.setItemsVisibleCount(7);
-                wheelView.setCurrentItem(2);
-                selectorIndex = 2;
+//                wheelView.setCurrentItem(2);
+//                selectorIndex = 1;
                 wheelView.setAdapter(projectAdapter);
                 break;
             case 1:
                 wheelView.setItemsVisibleCount(5);
-                wheelView.setCurrentItem(1);
+//                wheelView.setCurrentItem(1);
                 tsPlan.showLine(true);
-                selectorIndex = 1;
+//                selectorIndex = 1;
                 wheelView.setAdapter(lineAdapter);
                 break;
         }

@@ -241,7 +241,7 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
             materialStatusList = turnoverTypeBean.getMaterial_status();
             //获取是否上架
             groundingList = turnoverTypeBean.getIs_shelf();
-            if (SPUtils.getInstance().getInt(CustomConfig.SON_LIST, 0) != 1)
+            if (SPUtils.getInstance().getInt(CustomConfig.INNER_SWITCH, 0) != 1) groundingList.remove(1);
                 groundingList.remove(1);
             //获取预计下步使用计划
             planBeanList = turnoverTypeBean.getPlan();
@@ -305,106 +305,6 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
         });
 
         turnoverVm.constructionSearch();
-    }
-
-    //获取编辑详细数据显示
-    @SuppressLint("SetTextI18n")
-    private void getEditDetail(int id) {
-        turnoverAddVm.editId = id;
-        turnoverVm.constructionEditShow(id);
-        turnoverVm.turnoverDetailEditLiveData.observe(this, turnoverDetailEditBean -> {
-            turnoverAddVm.category = turnoverDetailEditBean.getCategory();
-            turnoverAddVm.material_id = turnoverDetailEditBean.getMaterial_id();
-            tvCategoryMaterial_id.setText(turnoverDetailEditBean.getCategory_name() + " - " + turnoverDetailEditBean.getMaterial_id_name());
-            tvCategoryMaterial_id.setTextColor(getResources().getColor(R.color.colorTv));
-            etStock.setText(turnoverDetailEditBean.getStock());
-            etUnitPrice.setText(turnoverDetailEditBean.getUnit_price());
-            turnoverAddVm.unit = turnoverDetailEditBean.getUnit();
-            tvUnit.setText(turnoverDetailEditBean.getUnit_name());
-            tvUnit.setTextColor(getResources().getColor(R.color.colorTv));
-            etSpec.setText(turnoverDetailEditBean.getSpec());
-            turnoverAddVm.use_status = turnoverDetailEditBean.getUse_status();
-            tvUseStatus.setText(turnoverDetailEditBean.getUse_status_name());
-            tvUseStatus.setTextColor(getResources().getColor(R.color.colorTv));
-            turnoverAddVm.material_status = turnoverDetailEditBean.getMaterial_status();
-            tvMaterialStatus.setText(turnoverDetailEditBean.getMaterial_status_name());
-            tvMaterialStatus.setTextColor(getResources().getColor(R.color.colorTv));
-            turnoverAddVm.province = turnoverDetailEditBean.getProvince();
-            turnoverAddVm.city = turnoverDetailEditBean.getCity();
-            turnoverAddVm.address = turnoverDetailEditBean.getAddress();
-            turnoverAddVm.latitude = turnoverDetailEditBean.getLatitude();
-            turnoverAddVm.longitude = turnoverDetailEditBean.getLongitude();
-            tvAddress.setText(turnoverDetailEditBean.getProvince_name() + turnoverDetailEditBean.getCity_name() + turnoverDetailEditBean.getAddress());
-            tvAddress.setTextColor(getResources().getColor(R.color.colorTv));
-            etPersonLiable.setText(turnoverDetailEditBean.getPerson_liable());
-            etTel.setText(turnoverDetailEditBean.getTel());
-            turnoverAddVm.is_shelf = turnoverDetailEditBean.getIs_shelf();
-            tvIsShelf.setText(turnoverDetailEditBean.getIs_shelf_name());
-            tvIsShelf.setTextColor(getResources().getColor(R.color.colorTv));
-            switch (turnoverAddVm.is_shelf) {
-                case 1://公开上架
-                    llInsideShelf.setVisibility(View.GONE);
-                    llMethod.setVisibility(View.VISIBLE);
-                    llGuidancePrice.setVisibility(View.VISIBLE);
-                    tvImageRed.setVisibility(View.VISIBLE);
-                    etGuidancePrice.setText(turnoverDetailEditBean.getGuidance_price());
-                    turnoverAddVm.method = turnoverDetailEditBean.getMethod();
-                    if (turnoverAddVm.method == 1) {
-                        cbLease.setChecked(true);
-                        cbSell.setChecked(false);
-                    } else {
-                        cbLease.setChecked(false);
-                        cbSell.setChecked(true);
-                    }
-                    break;
-                case 2://未上架
-                    llInsideShelf.setVisibility(View.GONE);
-                    llMethod.setVisibility(View.GONE);
-                    llGuidancePrice.setVisibility(View.GONE);
-                    tvImageRed.setVisibility(View.INVISIBLE);
-                    break;
-                case 3://内部上架
-                    llInsideShelf.setVisibility(View.VISIBLE);
-                    llMethod.setVisibility(View.VISIBLE);
-                    llGuidancePrice.setVisibility(View.VISIBLE);
-                    tvImageRed.setVisibility(View.VISIBLE);
-                    etGuidancePrice.setText(turnoverDetailEditBean.getGuidance_price());
-                    turnoverAddVm.shelf_start_time = turnoverDetailEditBean.getShelf_start_time();
-                    tvShelfTimeStart.setText(turnoverDetailEditBean.getShelf_start_time());
-                    tvShelfTimeStart.setTextColor(getResources().getColor(R.color.colorTv));
-                    turnoverAddVm.shelf_end_time = turnoverDetailEditBean.getShelf_end_time();
-                    tvShelfTimeEnd.setText(turnoverDetailEditBean.getShelf_end_time());
-                    tvShelfTimeEnd.setTextColor(getResources().getColor(R.color.colorTv));
-                    turnoverAddVm.shelf_type = turnoverDetailEditBean.getShelf_type();
-                    if (turnoverAddVm.shelf_type == 1) {
-                        cbShelfTypeOpen.setChecked(true);
-                        cbShelfTypeClose.setChecked(false);
-                    } else {
-                        cbShelfTypeOpen.setChecked(false);
-                        cbShelfTypeClose.setChecked(true);
-                    }
-                    turnoverAddVm.method = turnoverDetailEditBean.getMethod();
-                    if (turnoverAddVm.method == 1) {
-                        cbLease.setChecked(true);
-                        cbSell.setChecked(false);
-                    } else {
-                        cbLease.setChecked(false);
-                        cbSell.setChecked(true);
-                    }
-                    break;
-            }
-            for (TurnoverDetailEditBean.ImagesBean img : turnoverDetailEditBean.getImages()) {
-                picture_list.add(img.getUrl());
-            }
-            turnoverAddVm.images = getListToString();
-            getImageBitmap();
-        });
-
-        //编辑周转材料返回结果
-        turnoverAddVm.turnoverEditData.observe(this, item -> {
-            ToastUtils.showShort("编辑成功");
-            finish();
-        });
     }
 
     @OnClick({R.id.iv_bar_back, R.id.tv_category_material_id, R.id.tv_unit, R.id.tv_use_status, R.id.tv_material_status
@@ -861,10 +761,10 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
         return sb.toString();
     }
 
-
     @Override
     public void callInfo(int unit_id, String unit, int plan, String planStr, String use_count, String start_date, String entry_time, String exit_time,
                          String accumulated_amortization, String original_price, String net_worth) {
+
         turnoverAddVm.unit_id = unit_id;
         turnoverAddVm.plan = plan;
         turnoverAddVm.use_count = use_count;
@@ -905,5 +805,138 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
         }
         // 隐藏键盘
         KeyboardUtil.hideKeyboard(this);
+    }
+
+    //获取编辑详细数据显示
+    @SuppressLint("SetTextI18n")
+    private void getEditDetail(int id) {
+        turnoverAddVm.editId = id;
+        turnoverVm.constructionEditShow(id);
+        turnoverVm.turnoverDetailEditLiveData.observe(this, turnoverDetailEditBean -> {
+            turnoverAddVm.category = turnoverDetailEditBean.getCategory();
+            turnoverAddVm.material_id = turnoverDetailEditBean.getMaterial_id();
+            tvCategoryMaterial_id.setText(turnoverDetailEditBean.getCategory_name() + " - " + turnoverDetailEditBean.getMaterial_id_name());
+            tvCategoryMaterial_id.setTextColor(getResources().getColor(R.color.colorTv));
+            etStock.setText(turnoverDetailEditBean.getStock());
+            etUnitPrice.setText(turnoverDetailEditBean.getUnit_price());
+            turnoverAddVm.unit = turnoverDetailEditBean.getUnit();
+            tvUnit.setText(turnoverDetailEditBean.getUnit_name());
+            tvUnit.setTextColor(getResources().getColor(R.color.colorTv));
+            etSpec.setText(turnoverDetailEditBean.getSpec());
+            turnoverAddVm.use_status = turnoverDetailEditBean.getUse_status();
+            tvUseStatus.setText(turnoverDetailEditBean.getUse_status_name());
+            tvUseStatus.setTextColor(getResources().getColor(R.color.colorTv));
+            turnoverAddVm.material_status = turnoverDetailEditBean.getMaterial_status();
+            tvMaterialStatus.setText(turnoverDetailEditBean.getMaterial_status_name());
+            tvMaterialStatus.setTextColor(getResources().getColor(R.color.colorTv));
+            turnoverAddVm.province = turnoverDetailEditBean.getProvince();
+            turnoverAddVm.city = turnoverDetailEditBean.getCity();
+            turnoverAddVm.address = turnoverDetailEditBean.getAddress();
+            turnoverAddVm.latitude = turnoverDetailEditBean.getLatitude();
+            turnoverAddVm.longitude = turnoverDetailEditBean.getLongitude();
+            tvAddress.setText(turnoverDetailEditBean.getProvince_name() + turnoverDetailEditBean.getCity_name() + turnoverDetailEditBean.getAddress());
+            tvAddress.setTextColor(getResources().getColor(R.color.colorTv));
+            etPersonLiable.setText(turnoverDetailEditBean.getPerson_liable());
+            etTel.setText(turnoverDetailEditBean.getTel());
+            turnoverAddVm.is_shelf = turnoverDetailEditBean.getIs_shelf();
+            tvIsShelf.setText(turnoverDetailEditBean.getIs_shelf_name());
+            tvIsShelf.setTextColor(getResources().getColor(R.color.colorTv));
+            switch (turnoverAddVm.is_shelf) {
+                case 1://公开上架
+                    llInsideShelf.setVisibility(View.GONE);
+                    llMethod.setVisibility(View.VISIBLE);
+                    llGuidancePrice.setVisibility(View.VISIBLE);
+                    tvImageRed.setVisibility(View.VISIBLE);
+                    etGuidancePrice.setText(turnoverDetailEditBean.getGuidance_price());
+                    turnoverAddVm.method = turnoverDetailEditBean.getMethod();
+                    if (turnoverAddVm.method == 1) {
+                        cbLease.setChecked(true);
+                        cbSell.setChecked(false);
+                    } else {
+                        cbLease.setChecked(false);
+                        cbSell.setChecked(true);
+                    }
+                    break;
+                case 2://未上架
+                    llInsideShelf.setVisibility(View.GONE);
+                    llMethod.setVisibility(View.GONE);
+                    llGuidancePrice.setVisibility(View.GONE);
+                    tvImageRed.setVisibility(View.INVISIBLE);
+                    break;
+                case 3://内部上架
+                    llInsideShelf.setVisibility(View.VISIBLE);
+                    llMethod.setVisibility(View.VISIBLE);
+                    llGuidancePrice.setVisibility(View.VISIBLE);
+                    tvImageRed.setVisibility(View.VISIBLE);
+                    etGuidancePrice.setText(turnoverDetailEditBean.getGuidance_price());
+                    turnoverAddVm.shelf_start_time = turnoverDetailEditBean.getShelf_start_time();
+                    tvShelfTimeStart.setText(turnoverDetailEditBean.getShelf_start_time());
+                    tvShelfTimeStart.setTextColor(getResources().getColor(R.color.colorTv));
+                    turnoverAddVm.shelf_end_time = turnoverDetailEditBean.getShelf_end_time();
+                    tvShelfTimeEnd.setText(turnoverDetailEditBean.getShelf_end_time());
+                    tvShelfTimeEnd.setTextColor(getResources().getColor(R.color.colorTv));
+                    turnoverAddVm.shelf_type = turnoverDetailEditBean.getShelf_type();
+                    if (turnoverAddVm.shelf_type == 1) {
+                        cbShelfTypeOpen.setChecked(true);
+                        cbShelfTypeClose.setChecked(false);
+                    } else {
+                        cbShelfTypeOpen.setChecked(false);
+                        cbShelfTypeClose.setChecked(true);
+                    }
+                    turnoverAddVm.method = turnoverDetailEditBean.getMethod();
+                    if (turnoverAddVm.method == 1) {
+                        cbLease.setChecked(true);
+                        cbSell.setChecked(false);
+                    } else {
+                        cbLease.setChecked(false);
+                        cbSell.setChecked(true);
+                    }
+                    break;
+            }
+            for (TurnoverDetailEditBean.ImagesBean img : turnoverDetailEditBean.getImages()) {
+                picture_list.add(img.getUrl());
+            }
+            turnoverAddVm.images = getListToString();
+            getImageBitmap();
+
+            turnoverAddVm.unit_id = turnoverDetailEditBean.getUnit_id();
+            tsProject.setValue(turnoverDetailEditBean.getUnit_id_name());
+            turnoverAddVm.plan = turnoverDetailEditBean.getPlan();
+            tsPlan.setValue(turnoverDetailEditBean.getPlan_name());
+            turnoverAddVm.use_count = turnoverDetailEditBean.getUse_count();
+            tsNum.setValue(turnoverDetailEditBean.getUse_count());
+            turnoverAddVm.start_date = turnoverDetailEditBean.getStart_date();
+            tsStartTime.setValue(turnoverDetailEditBean.getStart_date());
+            turnoverAddVm.entry_time = turnoverDetailEditBean.getEntry_time();
+            tsEnterTime.setValue(turnoverDetailEditBean.getEntry_time());
+            turnoverAddVm.exit_time = turnoverDetailEditBean.getExit_time();
+            tsExitTime.setValue(turnoverDetailEditBean.getExit_time());
+            turnoverAddVm.accumulated_amortization = turnoverDetailEditBean.getAccumulated_amortization();
+            tsAmortize.setValue(turnoverDetailEditBean.getAccumulated_amortization());
+            turnoverAddVm.original_price = turnoverDetailEditBean.getOriginal_price();
+            tsOriginal.setValue(turnoverDetailEditBean.getOriginal_price());
+            turnoverAddVm.net_worth = turnoverDetailEditBean.getNet_worth();
+            tsValue.setValue(turnoverDetailEditBean.getNet_worth());
+
+            dialogControl.setDetail(turnoverDetailEditBean.getUnit_id(),turnoverDetailEditBean.getUnit_id_name(),turnoverDetailEditBean.getPlan(),turnoverDetailEditBean.getPlan_name()
+                    ,turnoverDetailEditBean.getUse_count(),turnoverDetailEditBean.getStart_date(),turnoverDetailEditBean.getEntry_time(),turnoverDetailEditBean.getExit_time()
+                    ,turnoverDetailEditBean.getAccumulated_amortization(),turnoverDetailEditBean.getOriginal_price(),turnoverDetailEditBean.getNet_worth());
+
+            etRemark.setText(turnoverDetailEditBean.getRemark());
+
+            if(turnoverAddVm.unit_id!=0||turnoverAddVm.plan!=0||!StringUtils.isTrimEmpty(turnoverAddVm.use_count)
+                    ||!StringUtils.isTrimEmpty(turnoverAddVm.start_date) ||!StringUtils.isTrimEmpty(turnoverAddVm.entry_time)
+                    ||!StringUtils.isTrimEmpty(turnoverAddVm.exit_time) ||!StringUtils.isTrimEmpty(turnoverAddVm.accumulated_amortization)
+                    ||!StringUtils.isTrimEmpty(turnoverAddVm.original_price)||!StringUtils.isTrimEmpty(turnoverAddVm.net_worth)){
+                svOtherDetails.setOpened(true);
+                llTurnoverDetail.setVisibility(View.VISIBLE);
+            }
+        });
+
+        //编辑周转材料返回结果
+        turnoverAddVm.turnoverEditData.observe(this, item -> {
+            ToastUtils.showShort("编辑成功");
+            finish();
+        });
     }
 }

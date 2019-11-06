@@ -21,9 +21,11 @@ import com.shuangduan.zcy.adminManage.adapter.TurnoverFirstAdapter;
 import com.shuangduan.zcy.adminManage.adapter.TurnoverHistoryAdapter;
 import com.shuangduan.zcy.adminManage.adapter.TurnoverSecondAdapter;
 import com.shuangduan.zcy.adminManage.bean.TurnoverCategoryBean;
-import com.shuangduan.zcy.adminManage.bean.TurnoverHistoryBean;
+import com.shuangduan.zcy.adminManage.event.DeviceChildrenEvent;
+import com.shuangduan.zcy.adminManage.event.DeviceGroupEvent;
 import com.shuangduan.zcy.adminManage.event.TurnoverChildrenEvent;
 import com.shuangduan.zcy.adminManage.event.TurnoverGroupEvent;
+import com.shuangduan.zcy.adminManage.vm.DeviceVm;
 import com.shuangduan.zcy.adminManage.vm.TurnoverVm;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
@@ -80,6 +82,10 @@ public class SelectTypeActivity extends BaseActivity {
     @BindView(R.id.rv_all)
     RecyclerView rvAll;
     private TurnoverVm turnoverVm;
+    private DeviceVm deviceVm;
+    private TurnoverHistoryAdapter turnoverHistoryAdapter;
+    private TurnoverFirstAdapter turnoverFirstAdapter;
+    private TurnoverSecondAdapter turnoverSecondAdapter;
 
     @Override
     protected int initLayoutRes() {
@@ -95,42 +101,131 @@ public class SelectTypeActivity extends BaseActivity {
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
 
-        turnoverVm = ViewModelProviders.of(this).get(TurnoverVm.class);
-
+        //判断周转材料还是设备
         int type = getIntent().getIntExtra(CustomConfig.ADMIN_MANAGE_TYPE,0);
+        //判断是集团还是子公司
         int select_type= getIntent().getIntExtra(CustomConfig.SELECT_TYPE,0);
         if (type==ADMIN_MANAGE_CONSTRUCTION){
-            tvBarTitle.setText("选择材料");
-            tvHistory.setText("历史浏览材料");
-            tvType.setText("材料分类");
-            tvAll.setText("全部材料");
-            llType.setVisibility(View.VISIBLE);
-            turnoverVm.constructionCategoryHistory();
-            turnoverVm.constructionCategoryParent();
-            turnoverVm.constructionCategoryList("",0);
+            getTurnoverData();
         }else if (type==ADMIN_MANAGE_EQIPMENT){
-            tvBarTitle.setText("选择子设备");
-            tvHistory.setText("历史浏览设备");
-            tvType.setText("设备分类");
-            tvAll.setText("全部设备");
-            llType.setVisibility(View.VISIBLE);
+            getDevice();
         }
 
+        //历史浏览
         rvHistory.setLayoutManager(new GridLayoutManager(this, 4));
-        TurnoverHistoryAdapter turnoverHistoryAdapter = new TurnoverHistoryAdapter(R.layout.adapter_turnover_history, null);
+        turnoverHistoryAdapter = new TurnoverHistoryAdapter(R.layout.adapter_turnover_history, null);
         rvHistory.setAdapter(turnoverHistoryAdapter);
         turnoverHistoryAdapter.setOnItemClickListener((adapter, view, position) -> {
-            TurnoverHistoryBean listBean = turnoverHistoryAdapter.getData().get(position);
+            TurnoverCategoryBean listBean = turnoverHistoryAdapter.getData().get(position);
             switch (select_type){
-                case 1://周转材料集团
-                    EventBus.getDefault().post(new TurnoverGroupEvent(listBean.getId(),listBean.getCatname()));
+                case 1://集团
+                    if (type==ADMIN_MANAGE_CONSTRUCTION){
+                        EventBus.getDefault().post(new TurnoverGroupEvent(listBean.getId(),listBean.getCatname()));
+                    }else if (type==ADMIN_MANAGE_EQIPMENT){
+                        EventBus.getDefault().post(new DeviceGroupEvent(listBean.getId(),listBean.getCatname()));
+                    }
                     break;
-                case 2://周转材料子公司
-                    EventBus.getDefault().post(new TurnoverChildrenEvent(listBean.getId(),listBean.getCatname()));
+                case 2://子公司
+                    if (type==ADMIN_MANAGE_CONSTRUCTION){
+                        EventBus.getDefault().post(new TurnoverChildrenEvent(listBean.getId(),listBean.getCatname()));
+                    }else if (type==ADMIN_MANAGE_EQIPMENT){
+                        EventBus.getDefault().post(new DeviceChildrenEvent(listBean.getId(),listBean.getCatname()));
+                    }
                     break;
             }
             finish();
         });
+
+        //分类
+        rvType.setLayoutManager(new GridLayoutManager(this, 4));
+        turnoverFirstAdapter = new TurnoverFirstAdapter(R.layout.adapter_turnover_first, null);
+        rvType.setAdapter(turnoverFirstAdapter);
+        turnoverFirstAdapter.setOnItemClickListener((adapter, view, position) -> {
+            TurnoverCategoryBean listBean = turnoverFirstAdapter.getData().get(position);
+            if (type==ADMIN_MANAGE_CONSTRUCTION){
+                turnoverVm.constructionCategoryList("",listBean.getId());
+            }else if (type==ADMIN_MANAGE_EQIPMENT){
+                deviceVm.equipmentCategoryList("",listBean.getId());
+            }
+            tvAll.setText(listBean.getCatname());
+        });
+
+        //全部
+        rvAll.setLayoutManager(new LinearLayoutManager(this));
+        rvAll.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
+        turnoverSecondAdapter = new TurnoverSecondAdapter(R.layout.adapter_turnover_second, null);
+        rvAll.setAdapter(turnoverSecondAdapter);
+        turnoverSecondAdapter.setOnItemClickListener((adapter, view, position) -> {
+            TurnoverCategoryBean listBean = turnoverSecondAdapter.getData().get(position);
+            switch (select_type){
+                case 1://集团
+                    if (type==ADMIN_MANAGE_CONSTRUCTION){
+                        EventBus.getDefault().post(new TurnoverGroupEvent(listBean.getId(),listBean.getCatname()));
+                    }else if (type==ADMIN_MANAGE_EQIPMENT){
+                        EventBus.getDefault().post(new DeviceGroupEvent(listBean.getId(),listBean.getCatname()));
+                    }
+                    break;
+                case 2://子公司
+                    if (type==ADMIN_MANAGE_CONSTRUCTION){
+                        EventBus.getDefault().post(new TurnoverChildrenEvent(listBean.getId(),listBean.getCatname()));
+                    }else if (type==ADMIN_MANAGE_EQIPMENT){
+                        EventBus.getDefault().post(new DeviceChildrenEvent(listBean.getId(),listBean.getCatname()));
+                    }
+                    break;
+            }
+            finish();
+        });
+
+        //键盘搜索键
+        etSearch.setOnEditorActionListener((textView, i, keyEvent) -> {
+            if (i == EditorInfo.IME_ACTION_SEARCH) {
+                // 先隐藏键盘
+                ((InputMethodManager) Objects.requireNonNull(etSearch.getContext()
+                        .getSystemService(Context.INPUT_METHOD_SERVICE)))
+                        .hideSoftInputFromWindow(Objects.requireNonNull(SelectTypeActivity.this.getCurrentFocus()).getWindowToken(),
+                                InputMethodManager.HIDE_NOT_ALWAYS);
+                // 搜索，进行自己要的操作...
+                if (type==ADMIN_MANAGE_CONSTRUCTION){
+                    turnoverVm.constructionCategoryList(Objects.requireNonNull(etSearch.getText()).toString(),0);
+                }else if (type==ADMIN_MANAGE_EQIPMENT){
+                    deviceVm.equipmentCategoryList(Objects.requireNonNull(etSearch.getText()).toString(),0);
+                }
+                return true;
+            }
+            return false;
+        });
+
+        //搜索框监听
+        etSearch.addTextChangedListener(new TextWatcherWrapper(){
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length()!=0){
+                    llHistory.setVisibility(View.GONE);
+                    llType.setVisibility(View.GONE);
+                }else {
+                    llHistory.setVisibility(View.VISIBLE);
+                    llType.setVisibility(View.VISIBLE);
+                }
+                if (type==ADMIN_MANAGE_CONSTRUCTION){
+                    turnoverVm.constructionCategoryList(Objects.requireNonNull(etSearch.getText()).toString(),0);
+                }else if (type==ADMIN_MANAGE_EQIPMENT){
+                    deviceVm.equipmentCategoryList(Objects.requireNonNull(etSearch.getText()).toString(),0);
+                }
+            }
+        });
+    }
+
+    //周转材料名称
+    private void getTurnoverData() {
+        tvBarTitle.setText("选择材料");
+        tvHistory.setText("历史浏览材料");
+        tvType.setText("材料分类");
+        tvAll.setText("全部材料");
+        llType.setVisibility(View.VISIBLE);
+        turnoverVm = ViewModelProviders.of(this).get(TurnoverVm.class);
+        turnoverVm.constructionCategoryHistory();
+        turnoverVm.constructionCategoryParent();
+        turnoverVm.constructionCategoryList("",0);
 
         //周转材料历史列表数据
         turnoverVm.turnoverHistoryData.observe(this,turnoverHistoryBeans -> {
@@ -142,36 +237,13 @@ public class SelectTypeActivity extends BaseActivity {
             }
         });
 
-        rvType.setLayoutManager(new GridLayoutManager(this, 4));
-        TurnoverFirstAdapter turnoverFirstAdapter = new TurnoverFirstAdapter(R.layout.adapter_turnover_first, null);
-        rvType.setAdapter(turnoverFirstAdapter);
-        turnoverFirstAdapter.setOnItemClickListener((adapter, view, position) -> {
-            TurnoverCategoryBean listBean = turnoverFirstAdapter.getData().get(position);
-            turnoverVm.constructionCategoryList("",listBean.getId());
-            tvAll.setText(listBean.getCatname());
-        });
-
+        //周转材料名称一级列表数据
         turnoverVm.turnoverFirstData.observe(this,turnoverCategoryBeans -> {
             turnoverFirstAdapter.setNewData(turnoverCategoryBeans);
+            turnoverFirstAdapter.setIsType("turnover");
         });
 
-        rvAll.setLayoutManager(new LinearLayoutManager(this));
-        rvAll.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
-        TurnoverSecondAdapter turnoverSecondAdapter = new TurnoverSecondAdapter(R.layout.adapter_turnover_second, null);
-        rvAll.setAdapter(turnoverSecondAdapter);
-        turnoverSecondAdapter.setOnItemClickListener((adapter, view, position) -> {
-            TurnoverCategoryBean listBean = turnoverSecondAdapter.getData().get(position);
-            switch (select_type){
-                case 1://周转材料集团
-                    EventBus.getDefault().post(new TurnoverGroupEvent(listBean.getId(),listBean.getCatname()));
-                    break;
-                case 2://周转材料子公司
-                    EventBus.getDefault().post(new TurnoverChildrenEvent(listBean.getId(),listBean.getCatname()));
-                    break;
-            }
-            finish();
-        });
-
+        //周转材料名称二级列表数据
         turnoverVm.turnoverSecondData.observe(this,turnoverCategoryBeans -> {
             if (turnoverCategoryBeans.size()!=0){
                 turnoverSecondAdapter.setNewData(turnoverCategoryBeans);
@@ -180,31 +252,43 @@ public class SelectTypeActivity extends BaseActivity {
                 turnoverSecondAdapter.setEmptyView(R.layout.layout_empty_admin, rvAll);
             }
         });
+    }
 
-        etSearch.setOnEditorActionListener((textView, i, keyEvent) -> {
-            if (i == EditorInfo.IME_ACTION_SEARCH) {
-                // 先隐藏键盘
-                ((InputMethodManager) Objects.requireNonNull(etSearch.getContext()
-                        .getSystemService(Context.INPUT_METHOD_SERVICE)))
-                        .hideSoftInputFromWindow(Objects.requireNonNull(SelectTypeActivity.this.getCurrentFocus()).getWindowToken(),
-                                InputMethodManager.HIDE_NOT_ALWAYS);
-                // 搜索，进行自己要的操作...
-                turnoverVm.constructionCategoryList(Objects.requireNonNull(etSearch.getText()).toString(),0);
-                return true;
+    //设备名称
+    private void getDevice() {
+        tvBarTitle.setText("选择设备");
+        tvHistory.setText("历史浏览设备");
+        tvType.setText("设备分类");
+        tvAll.setText("全部设备");
+        llType.setVisibility(View.VISIBLE);
+        deviceVm = ViewModelProviders.of(this).get(DeviceVm.class);
+        deviceVm.equipmentCategoryHistory();
+        deviceVm.equipmentCategoryParent();
+        deviceVm.equipmentCategoryList("",0);
+
+        //设备历史列表数据
+        deviceVm.deviceHistoryData.observe(this,turnoverHistoryBeans -> {
+            if (turnoverHistoryBeans.size()!=0){
+                llHistory.setVisibility(View.VISIBLE);
+                turnoverHistoryAdapter.setNewData(turnoverHistoryBeans);
+            }else {
+                llHistory.setVisibility(View.GONE);
             }
-            return false;
         });
-        etSearch.addTextChangedListener(new TextWatcherWrapper(){
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (s.length()!=0){
-                    llHistory.setVisibility(View.GONE);
-                    llType.setVisibility(View.GONE);
-                }else {
-                    llHistory.setVisibility(View.VISIBLE);
-                    llType.setVisibility(View.VISIBLE);
-                }
-                turnoverVm.constructionCategoryList(Objects.requireNonNull(etSearch.getText()).toString(),0);
+
+        //设备名称一级列表数据
+        deviceVm.deviceFirstData.observe(this,turnoverCategoryBeans -> {
+            turnoverFirstAdapter.setNewData(turnoverCategoryBeans);
+            turnoverFirstAdapter.setIsType("device");
+        });
+
+        //设备名称二级列表数据
+        deviceVm.deviceSecondData.observe(this,turnoverCategoryBeans -> {
+            if (turnoverCategoryBeans.size()!=0){
+                turnoverSecondAdapter.setNewData(turnoverCategoryBeans);
+                turnoverSecondAdapter.setKeyword(Objects.requireNonNull(etSearch.getText()).toString());
+            }else {
+                turnoverSecondAdapter.setEmptyView(R.layout.layout_empty_admin, rvAll);
             }
         });
     }

@@ -7,7 +7,6 @@ import com.shuangduan.zcy.adminManage.bean.TurnoverCompanyBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverCategoryBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverDetailBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverDetailEditBean;
-import com.shuangduan.zcy.adminManage.bean.TurnoverHistoryBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverNameBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverTypeBean;
 import com.shuangduan.zcy.base.TrackDateilBean;
@@ -1536,7 +1535,7 @@ public interface ApiService {
     //后台管理 --- 选择条件历史列表
     @FormUrlEncoded
     @POST("api/Manage/constructionCategoryHistory")
-    Flowable<BaseListResponse<TurnoverHistoryBean>> constructionCategoryHistory(
+    Flowable<BaseListResponse<TurnoverCategoryBean>> constructionCategoryHistory(
             @Field("user_id") int userId
     );
 
@@ -1706,7 +1705,7 @@ public interface ApiService {
     //后台管理 --- 设备管理选择条件历史列表
     @FormUrlEncoded
     @POST("api/Manage/equipmentCategoryHistory")
-    Flowable<BaseListResponse<TurnoverHistoryBean>> equipmentCategoryHistory(
+    Flowable<BaseListResponse<TurnoverCategoryBean>> equipmentCategoryHistory(
             @Field("user_id") int userId
     );
 

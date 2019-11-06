@@ -29,7 +29,7 @@ import com.shuangduan.zcy.adminManage.adapter.SelectorAreaSecondAdapter;
 import com.shuangduan.zcy.adminManage.adapter.UseStatueAdapter;
 import com.shuangduan.zcy.adminManage.bean.DeviceBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverTypeBean;
-import com.shuangduan.zcy.adminManage.event.TurnoverGroupEvent;
+import com.shuangduan.zcy.adminManage.event.DeviceGroupEvent;
 import com.shuangduan.zcy.adminManage.view.SelectTypeActivity;
 import com.shuangduan.zcy.adminManage.view.turnover.TurnoverAddActivity;
 import com.shuangduan.zcy.adminManage.vm.DeviceVm;
@@ -113,7 +113,7 @@ public class DeviceGroupFragment extends BaseLazyFragment {
 
     @Override
     public boolean isUseEventBus() {
-        return false;
+        return true;
     }
 
     @Override
@@ -148,7 +148,7 @@ public class DeviceGroupFragment extends BaseLazyFragment {
         deviceVm.turnoverTypeData.observe(this,turnoverTypeBean -> {
             //是否上架数据
             groundingList=turnoverTypeBean.getIs_shelf();
-            if (SPUtils.getInstance().getInt(CustomConfig.SON_LIST, 0) != 1) groundingList.remove(1);
+            if (SPUtils.getInstance().getInt(CustomConfig.INNER_SWITCH, 0) != 1) groundingList.remove(1);
             //使用状态数据
             useStatueList=turnoverTypeBean.getUse_status();
         });
@@ -236,9 +236,9 @@ public class DeviceGroupFragment extends BaseLazyFragment {
         switch (view.getId()) {
             case R.id.iv_add://添加
                 bundle.putInt(CustomConfig.HANDLE_TYPE,CustomConfig.ADD);
-                ActivityUtils.startActivity(bundle, TurnoverAddActivity.class);
+
                 break;
-            case R.id.tv_name://选择材料名称
+            case R.id.tv_name://选择设备名称
                 bundle.putInt(CustomConfig.ADMIN_MANAGE_TYPE,CustomConfig.ADMIN_MANAGE_EQIPMENT);
                 bundle.putInt(CustomConfig.SELECT_TYPE,GROUP);
                 ActivityUtils.startActivity(bundle, SelectTypeActivity.class);
@@ -407,7 +407,7 @@ public class DeviceGroupFragment extends BaseLazyFragment {
     }
 
     @Subscribe
-    public void onEventTurnoverGroup(TurnoverGroupEvent event) {
+    public void onEventDeviceGroup(DeviceGroupEvent event) {
         deviceVm.category_id=event.material_id;
         deviceVm.equipmentList(1,areaVm.id,areaVm.city_id);
         getAddTopScreenView(tvNameSecond,event.material_name,View.VISIBLE);

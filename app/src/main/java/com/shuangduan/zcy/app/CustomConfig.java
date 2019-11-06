@@ -170,8 +170,8 @@ public class CustomConfig {
     public static final String CONSTRUCTION_ORDER_EDIT = "construction-order-edit"; //周转材料订单修改
 
     public static String ADMIN_MANAGE_TYPE = "ADMIN_MANAGE_TYPE";
-    public static int ADMIN_MANAGE_CONSTRUCTION = 1;//选择周转材料
-    public static int ADMIN_MANAGE_EQIPMENT = 2;//选择设备
+    public static final int ADMIN_MANAGE_CONSTRUCTION = 1;//选择周转材料
+    public static final int ADMIN_MANAGE_EQIPMENT = 2;//选择设备
 
     public static String SELECT_TYPE = "SELECT_TYPE";
     public static int GROUP = 1;//集团

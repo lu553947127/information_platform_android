@@ -7,7 +7,6 @@ import com.shuangduan.zcy.adminManage.bean.TurnoverCompanyBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverCategoryBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverDetailBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverDetailEditBean;
-import com.shuangduan.zcy.adminManage.bean.TurnoverHistoryBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverNameBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverTypeBean;
 import com.shuangduan.zcy.model.api.repository.BaseRepository;
@@ -39,7 +38,7 @@ public class TurnoverRepository extends BaseRepository {
     }
 
     //后台管理 --- 选择条件历史列表
-    public void constructionCategoryHistory(MutableLiveData<List<TurnoverHistoryBean>> liveData, MutableLiveData<String> pageState, int user_id) {
+    public void constructionCategoryHistory(MutableLiveData<List<TurnoverCategoryBean>> liveData, MutableLiveData<String> pageState, int user_id) {
         request(apiService.constructionCategoryHistory(user_id)).setDataList(liveData).setPageState(pageState).send();
     }
 

@@ -146,19 +146,19 @@ public class TurnoverDetailActivity extends BaseActivity implements BaseQuickAda
             tvPutawayTime.setText(getString(R.string.format_admin_shelf_time, turnover.shelfStartTime, turnover.shelfEndTime, shelf));
             tvSupplyMethod.setText(turnover.method == 1 ? "出租" : "出售");
 
-            tvProject.setText(StringUtils.isTrimEmpty(turnover.unitIdName) ? "-" : turnover.unitIdName);
-            tvPlan.setText(StringUtils.isTrimEmpty(turnover.planName) ? "-" : turnover.planName);
-            tvNum.setText(turnover.useCount == 0 ? "-" : String.valueOf(turnover.useCount));
-            tvStartTime.setText(StringUtils.isTrimEmpty(turnover.startDate) ? "-" : turnover.startDate);
-            tvEnterTime.setText(StringUtils.isTrimEmpty(turnover.entryTime) ? "-" : turnover.entryTime);
-            tvExitTime.setText(StringUtils.isTrimEmpty(turnover.exitTime) ? "-" : turnover.exitTime);
-            tvAmortize.setText(turnover.accumulatedAmortization.equals("0") ? "-" : turnover.accumulatedAmortization);
-            tvOriginal.setText(turnover.originalPrice.equals("0") ? "-" : turnover.originalPrice);
-            tvValue.setText(turnover.netWorth.equals("0") ? "-" : turnover.netWorth);
+            tvProject.setText(StringUtils.isTrimEmpty(turnover.unitIdName) ? "—" : turnover.unitIdName);
+            tvPlan.setText(StringUtils.isTrimEmpty(turnover.planName) ? "—" : turnover.planName);
+            tvNum.setText(turnover.useCount == 0 ? "—" : String.valueOf(turnover.useCount));
+            tvStartTime.setText(StringUtils.isTrimEmpty(turnover.startDate) ? "—" : turnover.startDate);
+            tvEnterTime.setText(StringUtils.isTrimEmpty(turnover.entryTime) ? "—" : turnover.entryTime);
+            tvExitTime.setText(StringUtils.isTrimEmpty(turnover.exitTime) ? "—" : turnover.exitTime);
+            tvAmortize.setText(turnover.accumulatedAmortization.equals("0") ? "—" : turnover.accumulatedAmortization);
+            tvOriginal.setText(turnover.originalPrice.equals("0") ? "—" : turnover.originalPrice);
+            tvValue.setText(turnover.netWorth.equals("0") ? "—" : turnover.netWorth);
 
-            tvEntryPerson.setText(StringUtils.isTrimEmpty(turnover.username) ? "-" : turnover.username);
+            tvEntryPerson.setText(StringUtils.isTrimEmpty(turnover.username) ? "—" : turnover.username);
 
-            tvRemark.setText(turnover.remark);
+            tvRemark.setText(StringUtils.isTrimEmpty(turnover.remark) ? "—" :turnover.remark);
 
             if (turnover.images != null && turnover.images.size() > 0) {
                 tvMaterialPhoto.setVisibility(View.VISIBLE);

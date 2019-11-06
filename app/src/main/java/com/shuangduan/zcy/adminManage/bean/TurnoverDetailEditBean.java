@@ -93,13 +93,13 @@ public class TurnoverDetailEditBean {
     private String guidance_price;
     private int plan;
     private String plan_name;
-    private int use_count;
+    private String use_count;
     private String start_date;
     private String entry_time;
     private String exit_time;
-    private int accumulated_amortization;
-    private int original_price;
-    private int net_worth;
+    private String accumulated_amortization;
+    private String original_price;
+    private String net_worth;
     private String remark;
     private List<ImagesBean> images;
 
@@ -367,11 +367,11 @@ public class TurnoverDetailEditBean {
         this.plan_name = plan_name;
     }
 
-    public int getUse_count() {
+    public String getUse_count() {
         return use_count;
     }
 
-    public void setUse_count(int use_count) {
+    public void setUse_count(String use_count) {
         this.use_count = use_count;
     }
 
@@ -399,27 +399,27 @@ public class TurnoverDetailEditBean {
         this.exit_time = exit_time;
     }
 
-    public int getAccumulated_amortization() {
+    public String getAccumulated_amortization() {
         return accumulated_amortization;
     }
 
-    public void setAccumulated_amortization(int accumulated_amortization) {
+    public void setAccumulated_amortization(String accumulated_amortization) {
         this.accumulated_amortization = accumulated_amortization;
     }
 
-    public int getOriginal_price() {
+    public String getOriginal_price() {
         return original_price;
     }
 
-    public void setOriginal_price(int original_price) {
+    public void setOriginal_price(String original_price) {
         this.original_price = original_price;
     }
 
-    public int getNet_worth() {
+    public String getNet_worth() {
         return net_worth;
     }
 
-    public void setNet_worth(int net_worth) {
+    public void setNet_worth(String net_worth) {
         this.net_worth = net_worth;
     }
 

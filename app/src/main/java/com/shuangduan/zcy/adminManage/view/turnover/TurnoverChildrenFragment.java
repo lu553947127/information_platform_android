@@ -153,7 +153,7 @@ public class TurnoverChildrenFragment extends BaseLazyFragment {
         turnoverVm.turnoverTypeData.observe(this,turnoverTypeBean -> {
             //是否上架数据
             groundingList=turnoverTypeBean.getIs_shelf();
-            if (SPUtils.getInstance().getInt(CustomConfig.SON_LIST, 0) != 1) groundingList.remove(1);
+            if (SPUtils.getInstance().getInt(CustomConfig.INNER_SWITCH, 0) != 1) groundingList.remove(1);
             //使用状态数据
             useStatueList=turnoverTypeBean.getUse_status();
         });

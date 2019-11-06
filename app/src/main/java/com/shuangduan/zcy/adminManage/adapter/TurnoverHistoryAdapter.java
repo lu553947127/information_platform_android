@@ -5,7 +5,7 @@ import androidx.annotation.Nullable;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.shuangduan.zcy.R;
-import com.shuangduan.zcy.adminManage.bean.TurnoverHistoryBean;
+import com.shuangduan.zcy.adminManage.bean.TurnoverCategoryBean;
 
 import java.util.List;
 
@@ -21,13 +21,13 @@ import java.util.List;
  * @UpdateRemark: 更新说明
  * @Version: 1.0
  */
-public class TurnoverHistoryAdapter extends BaseQuickAdapter<TurnoverHistoryBean, BaseViewHolder> {
-    public TurnoverHistoryAdapter(int layoutResId, @Nullable List<TurnoverHistoryBean> data) {
+public class TurnoverHistoryAdapter extends BaseQuickAdapter<TurnoverCategoryBean, BaseViewHolder> {
+    public TurnoverHistoryAdapter(int layoutResId, @Nullable List<TurnoverCategoryBean> data) {
         super(layoutResId, data);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, TurnoverHistoryBean item) {
+    protected void convert(BaseViewHolder helper, TurnoverCategoryBean item) {
         helper.setText(R.id.tv_title,item.getCatname());
     }
 }

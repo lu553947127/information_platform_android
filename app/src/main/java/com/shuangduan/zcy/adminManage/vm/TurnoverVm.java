@@ -8,7 +8,6 @@ import com.shuangduan.zcy.adminManage.bean.TurnoverCategoryBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverCompanyBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverDetailBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverDetailEditBean;
-import com.shuangduan.zcy.adminManage.bean.TurnoverHistoryBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverNameBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverTypeBean;
 import com.shuangduan.zcy.adminManage.repository.TurnoverRepository;
@@ -42,7 +41,7 @@ public class TurnoverVm extends BaseViewModel{
     public int category_id;
     public MutableLiveData<TurnoverBean> turnoverLiveData;
     public MutableLiveData<TurnoverTypeBean> turnoverTypeData;
-    public MutableLiveData<List<TurnoverHistoryBean>> turnoverHistoryData;
+    public MutableLiveData<List<TurnoverCategoryBean>> turnoverHistoryData;
     public MutableLiveData<List<TurnoverCompanyBean>> turnoverCompanyData;
     public MutableLiveData<List<TurnoverCategoryBean>> turnoverFirstData;
     public MutableLiveData<List<TurnoverCategoryBean>> turnoverSecondData;
