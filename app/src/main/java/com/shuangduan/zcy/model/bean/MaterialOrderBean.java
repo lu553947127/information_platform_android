@@ -109,6 +109,10 @@ public class MaterialOrderBean {
         public int method;
         //物资订单来源类型 1公开物资 3内购物资
         public int inside;
+        @SerializedName("lease_start_time")
+        public String leaseStartTime;
+        @SerializedName("lease_end_time")
+        public String leaseEndTime;
 
         @Override
         public String toString() {

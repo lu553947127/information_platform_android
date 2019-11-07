@@ -110,14 +110,14 @@ public class MaterialEquipmentPlaceOrderActivity extends BaseActivity {
 
     @BindView(R.id.et_num)
     EditText etNum;
-    @BindView(R.id.ll_day)
-    LinearLayout llDay;
 
     @BindView(R.id.tv_time_start)
     TextView tvTimeStart;
     @BindView(R.id.tv_time_end)
     TextView tvTimeEnd;
 
+    @BindView(R.id.ll_lease)
+    LinearLayout llLease;
 
     private MaterialDetailVm materialDetailVm;
     private BottomSheetDialogs btn_dialog;
@@ -183,9 +183,9 @@ public class MaterialEquipmentPlaceOrderActivity extends BaseActivity {
             tvMaterialId.setText(materialDetail.getAddress());
 
             if (materialDetail.getMethod() == 1) {
-                llDay.setVisibility(View.VISIBLE);
+                llLease.setVisibility(View.VISIBLE);
             } else {
-                llDay.setVisibility(View.GONE);
+                llLease.setVisibility(View.GONE);
             }
 
         });
@@ -283,7 +283,7 @@ public class MaterialEquipmentPlaceOrderActivity extends BaseActivity {
                 
                 materialDetailVm.getAddEquipmentOrder(materialDetail.getId(), etRealName.getText().toString(), etTel.getText().toString()
                         , etCompany.getText().toString(), province, city, etAddress.getText().toString(), etRemark.getText(),
-                        materialDetail.getMethod(), day, num, materialDetail.getCategory());
+                        materialDetail.getMethod(),  num, materialDetail.getCategory(),leaseStartTime,leaseEndTime);
                 break;
             case R.id.tv_time_start:
                 showTimeDialog(tvTimeStart, 0);

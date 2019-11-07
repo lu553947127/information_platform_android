@@ -85,6 +85,8 @@ public class MaterialOrderDetailActivity extends BaseActivity {
 
     @BindView(R.id.iv_overrule)
     ImageView ivOverrule;
+    @BindView(R.id.tv_lease_time)
+    TextView tvLeaseTime;
 
     private MaterialDetailVm materialVm;
     private int orderId;
@@ -161,6 +163,8 @@ public class MaterialOrderDetailActivity extends BaseActivity {
             ivDefault.setVisibility(item.inside == 3 ? View.VISIBLE : View.GONE);
             ivOverrule.setVisibility(item.status.equals("驳回") ? View.VISIBLE : View.INVISIBLE);
 
+            tvLeaseTime.setVisibility(item.method == 1 ? View.VISIBLE : View.GONE);
+            tvLeaseTime.setText(String.format(getResources().getString(R.string.format_material_lease_time), item.leaseStartTime, item.leaseEndTime));
         });
 
         materialVm.mutableLiveDataCancel.observe(this, item -> {

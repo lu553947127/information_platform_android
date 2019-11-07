@@ -1421,9 +1421,10 @@ public interface ApiService {
             @Field("address") String address,
             @Field("remark") String remark,
             @Field("method") int method,
-            @Field("day") int day,
             @Field("num") int num,
-            @Field("cate_id") int cateId
+            @Field("cate_id") int cateId,
+            @Field("lease_start_time") String leaseStartTime,
+            @Field("lease_end_time") String leaseEndTime
     );
 
     //基建物资---周转材料预定订单删除
@@ -1562,6 +1563,7 @@ public interface ApiService {
             @Field("title") String title,
             @Field("id") int id
     );
+
     //后台管理 --- 周转材料详情接口
     @FormUrlEncoded
     @POST("api/Manage/constructionDetail")

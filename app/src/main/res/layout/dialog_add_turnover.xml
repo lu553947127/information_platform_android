@@ -37,6 +37,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            app:edit_show="false"
+            app:hind_value_text="@string/admin_turnover_hint_input"
             app:title_text="@string/admin_material_num" />
     </LinearLayout>
 
@@ -85,6 +87,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            app:edit_show="false"
+            app:hind_value_text="@string/admin_turnover_hint_input"
             app:title_text="@string/admin_material_amortize" />
 
         <com.shuangduan.zcy.weight.TurnoverSelectView
@@ -93,13 +97,16 @@
             android:layout_height="match_parent"
             android:layout_weight="1.3"
             app:title_text="@string/admin_material_original"
-            app:value_text="@string/admin_turnover_hint_input" />
+            app:edit_show="false"
+            app:hind_value_text="@string/admin_turnover_hint_input" />
 
         <com.shuangduan.zcy.weight.TurnoverSelectView
             android:id="@+id/tv_value"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            app:edit_show="false"
+            app:hind_value_text="@string/admin_turnover_hint_input"
             app:title_text="@string/admin_material_value" />
     </LinearLayout>
 

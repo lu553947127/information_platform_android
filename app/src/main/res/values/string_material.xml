@@ -3,6 +3,7 @@
     <string name="format_material_price">¥%1$s/%2$s</string>
     <string name="format_material_price_no_unit">¥%1$s</string>
     <string name="format_visitors_num">%1$s人浏览</string>
+    <string name="format_material_lease_time">租赁时间:%1$s至%2$s</string>
 
     <string name="filter_name">商品名称</string>
     <string name="filter_spec">规格</string>
@@ -14,6 +15,7 @@
     <string name="material_tv_add">+添加数量、存放地</string>
     <string name="material_tv_lease_add">+添加数量、租期、存放地</string>
     <string name="material_add">+添加一项</string>
+
 
     <string name="empty_material_intro"><![CDATA[您还不是供应商没有权限查看内部物资哦！建议您加入我们<font color="#6a5ff8">成为优质供应商，</font>查看更多内部物资供需信息。]]></string>
 

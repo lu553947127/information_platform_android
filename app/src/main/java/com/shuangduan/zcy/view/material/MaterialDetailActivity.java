@@ -257,7 +257,7 @@ public class MaterialDetailActivity extends BaseActivity {
                     return;
                 }
                 new CustomDialog(this)
-                        .setTip(phone)
+                        .setTip("联系电话: " + phone)
                         .setOk("打电话")
                         .setCallBack(new BaseDialog.CallBack() {
                             @Override

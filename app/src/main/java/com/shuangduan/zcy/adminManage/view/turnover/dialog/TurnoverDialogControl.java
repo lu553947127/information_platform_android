@@ -9,6 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.TimeUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ArrayWheelAdapter;
@@ -17,6 +20,7 @@ import com.shuangduan.zcy.adminManage.vm.TurnoverVm;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BottomSheetDialogs;
 import com.shuangduan.zcy.listener.TextWatcherWrapper;
+import com.shuangduan.zcy.utils.KeyboardUtil;
 import com.shuangduan.zcy.weight.TurnoverSelectView;
 import com.shuangduan.zcy.weight.WheelSlideView;
 import com.shuangduan.zcy.weight.datepicker.CustomDatePicker;
@@ -194,27 +198,32 @@ public class TurnoverDialogControl implements DialogInterface.OnDismissListener,
         tsNum.getEditText().addTextChangedListener(new TextWatcherWrapper() {
             @Override
             public void afterTextChanged(Editable s) {
-                use_count = s.toString();
+                use_count = s.length() > 0 ? s.toString() : "";
+                tsNum.setValue(use_count);
             }
         });
         tsAmortize.getEditText().addTextChangedListener(new TextWatcherWrapper() {
             @Override
             public void afterTextChanged(Editable s) {
-                accumulated_amortization = s.toString();
+                accumulated_amortization = s.length() > 0 ? s.toString() : "";
+                tsAmortize.setValue(accumulated_amortization);
             }
         });
         tsOriginal.getEditText().addTextChangedListener(new TextWatcherWrapper() {
             @Override
             public void afterTextChanged(Editable s) {
-                original_price = s.toString();
+                original_price = s.length() > 0 ? s.toString() : "";
+                tsOriginal.setValue(original_price);
             }
         });
         tsValue.getEditText().addTextChangedListener(new TextWatcherWrapper() {
             @Override
             public void afterTextChanged(Editable s) {
-                net_worth = s.toString();
+                net_worth = s.length() > 0 ? s.toString() : "";
+                tsValue.setValue(net_worth);
             }
         });
+
 
         showSpecificTime(false);
         show(TimeUtils.getNowString());
@@ -231,18 +240,18 @@ public class TurnoverDialogControl implements DialogInterface.OnDismissListener,
 
     //获取编辑详情数据
     public void setDetail(int unit_id, String unit, int plan, String planStr, String use_count, String start_date, String entry_time, String exit_time,
-                          String accumulated_amortization, String original_price, String net_worth){
-        this.unit_id=unit_id;
-        this.unit=unit;
-        this.plan=plan;
-        this.planStr=planStr;
-        this.use_count=use_count;
-        this.start_date=start_date;
-        this.entry_time=entry_time;
-        this.exit_time=exit_time;
-        this.accumulated_amortization=accumulated_amortization;
-        this.original_price=original_price;
-        this.net_worth=net_worth;
+                          String accumulated_amortization, String original_price, String net_worth) {
+        this.unit_id = unit_id;
+        this.unit = unit;
+        this.plan = plan;
+        this.planStr = planStr;
+        this.use_count = use_count;
+        this.start_date = start_date;
+        this.entry_time = entry_time;
+        this.exit_time = exit_time;
+        this.accumulated_amortization = accumulated_amortization;
+        this.original_price = original_price;
+        this.net_worth = net_worth;
 
         tsProject.setValue(unit);
         tsPlan.setValue(planStr);
@@ -311,8 +320,8 @@ public class TurnoverDialogControl implements DialogInterface.OnDismissListener,
                 showView(2, R.string.admin_input_material_num);
                 break;
             case 3:
-                use_count = tsNum.getValue();
-                tsNum.setValue(use_count);
+//                use_count = tsNum.getValue();
+//                tsNum.setValue(use_count);
                 showView(3, R.string.admin_selector_material_start_time);
                 break;
             case 4:
@@ -331,18 +340,18 @@ public class TurnoverDialogControl implements DialogInterface.OnDismissListener,
                 showView(6, R.string.admin_input_material_amortize);
                 break;
             case 7:
-                accumulated_amortization = tsAmortize.getValue();
-                tsAmortize.setValue(accumulated_amortization);
+//                accumulated_amortization = tsAmortize.getValue();
+//                tsAmortize.setValue(accumulated_amortization);
                 showView(7, R.string.admin_input_material_original);
                 break;
             case 8:
-                original_price = tsOriginal.getValue();
-                tsOriginal.setValue(original_price);
+//                original_price = tsOriginal.getValue();
+//                tsOriginal.setValue(original_price);
                 showView(8, R.string.admin_input_material_value);
                 break;
             case 9:
-                net_worth = tsValue.getValue();
-                tsValue.setValue(net_worth);
+//                net_worth = tsValue.getValue();
+//                tsValue.setValue(net_worth);
                 dialog.dismiss();
                 break;
         }
@@ -351,21 +360,53 @@ public class TurnoverDialogControl implements DialogInterface.OnDismissListener,
 
     private void showView(int position, int titleRes) {
         this.currentPosition = position;
+
+        tsNum.getEditText().setVisibility(position == 2 ? View.VISIBLE : View.GONE);
+        tsAmortize.getEditText().setVisibility(position == 6 ? View.VISIBLE : View.GONE);
+        tsOriginal.getEditText().setVisibility(position == 7 ? View.VISIBLE : View.GONE);
+        tsValue.getEditText().setVisibility(position == 8 ? View.VISIBLE : View.GONE);
+
         switch (position) {
             case 0:
+                if (KeyboardUtil.isSoftShowing(context)) {
+                    KeyboardUtil.showORhideSoftKeyboard(context);
+                }
                 wheelView.setItemsVisibleCount(7);
 //                wheelView.setCurrentItem(2);
 //                selectorIndex = 1;
                 wheelView.setAdapter(projectAdapter);
                 break;
             case 1:
+                if (KeyboardUtil.isSoftShowing(context)) {
+                    KeyboardUtil.showORhideSoftKeyboard(context);
+                }
                 wheelView.setItemsVisibleCount(5);
 //                wheelView.setCurrentItem(1);
                 tsPlan.showLine(true);
 //                selectorIndex = 1;
                 wheelView.setAdapter(lineAdapter);
                 break;
+            case 3:
+            case 4:
+            case 5:
+                if (KeyboardUtil.isSoftShowing(context)) {
+                    KeyboardUtil.showORhideSoftKeyboard(context);
+                }
+                break;
+            case 2:
+                KeyboardUtil.showSoftInputFromWindow(context, tsNum.getEditText());
+                break;
+            case 6:
+                KeyboardUtil.showSoftInputFromWindow(context, tsAmortize.getEditText());
+                break;
+            case 7:
+                KeyboardUtil.showSoftInputFromWindow(context, tsOriginal.getEditText());
+                break;
+            case 8:
+                KeyboardUtil.showSoftInputFromWindow(context, tsValue.getEditText());
+                break;
         }
+
         tvTitle.setText(titleRes);
         bottomView(position);
         showLine(position);
@@ -406,6 +447,9 @@ public class TurnoverDialogControl implements DialogInterface.OnDismissListener,
 
     @Override
     public void onDismiss(DialogInterface dialog) {
+        if (KeyboardUtil.isSoftShowing(context)) {
+            KeyboardUtil.showORhideSoftKeyboard(context);
+        }
         listening.callInfo(unit_id, unit, plan, planStr, use_count, start_date, entry_time, exit_time, accumulated_amortization, original_price, net_worth);
     }
 

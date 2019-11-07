@@ -82,18 +82,18 @@ public class MaterialRepository extends BaseRepository {
     }
 
 
-    public void getAddress(MutableLiveData<List<MaterialDepositingPlaceBean>> liveData, MutableLiveData<String> pageStateLiveData, int userId, int id, int supplier_id, int isShelf,int method) {
-        request(apiService.addressList(userId, id, supplier_id, isShelf,method)).setData(liveData).setPageState(pageStateLiveData).send();
+    public void getAddress(MutableLiveData<List<MaterialDepositingPlaceBean>> liveData, MutableLiveData<String> pageStateLiveData, int userId, int id, int supplier_id, int isShelf, int method) {
+        request(apiService.addressList(userId, id, supplier_id, isShelf, method)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
     public void getAddress(MutableLiveData<List<MaterialDepositingPlaceBean>> liveData, MutableLiveData<String> pageStateLiveData, int userId,
-                           int id, int supplier_id, int isShelf,int method,AuthGroupBean auth_group) {
-        request(apiService.addressList(userId, id, supplier_id, isShelf,method,auth_group)).setData(liveData).setPageState(pageStateLiveData).send();
+                           int id, int supplier_id, int isShelf, int method, AuthGroupBean auth_group) {
+        request(apiService.addressList(userId, id, supplier_id, isShelf, method, auth_group)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
-    public void getAddMaterial(MutableLiveData<MaterialAddBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int material_id, BigInteger num,  int type,
+    public void getAddMaterial(MutableLiveData<MaterialAddBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int material_id, BigInteger num, int type,
                                String leaseStartTime, String leaseEndTime) {
-        request(apiService.getAddMaterial(userId, material_id, num, type,leaseStartTime,leaseEndTime)).setData(liveData).setPageState(pageStateLiveData).send();
+        request(apiService.getAddMaterial(userId, material_id, num, type, leaseStartTime, leaseEndTime)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
     public void getDelMaterial(MutableLiveData<MaterialAddBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int material_id) {
@@ -109,8 +109,9 @@ public class MaterialRepository extends BaseRepository {
     //基建物质---设备物资预定订单
     public void getAddEquipmentOrder(MutableLiveData<MaterialAddBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int materialId,
                                      String realName, String tel, String company, int province, int city, String address, String remark,
-                                     int method, int day, int num, int cateId) {
-        request(apiService.getAddEquipmentOrder(userId, materialId, realName, tel, company, province, city, address, remark, method, day, num, cateId)).
+                                     int method, int num, int cateId, String leaseStartTime, String leaseEndTime) {
+        request(apiService.getAddEquipmentOrder(userId, materialId, realName, tel, company, province, city, address,
+                remark, method, num, cateId, leaseStartTime, leaseEndTime)).
                 setData(liveData).setPageState(pageStateLiveData).send();
     }
 

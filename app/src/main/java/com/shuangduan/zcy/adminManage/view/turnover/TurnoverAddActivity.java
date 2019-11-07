@@ -241,7 +241,8 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
             materialStatusList = turnoverTypeBean.getMaterial_status();
             //获取是否上架
             groundingList = turnoverTypeBean.getIs_shelf();
-            if (SPUtils.getInstance().getInt(CustomConfig.INNER_SWITCH, 0) != 1) groundingList.remove(1);
+            if (SPUtils.getInstance().getInt(CustomConfig.INNER_SWITCH, 0) != 1)
+                groundingList.remove(1);
             //获取预计下步使用计划
             planBeanList = turnoverTypeBean.getPlan();
             for (TurnoverTypeBean.PlanBean item : planBeanList) {
@@ -393,11 +394,11 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
                 switch (getIntent().getIntExtra(CustomConfig.HANDLE_TYPE, 0)) {
                     case ADD://添加
                         turnoverAddVm.constructionAdd("add", etStock.getText().toString(), etUnitPrice.getText().toString()
-                                , etSpec.getText().toString(), etPersonLiable.getText().toString(), etTel.getText().toString(), etGuidancePrice.getText().toString(),etRemark.getText().toString());
+                                , etSpec.getText().toString(), etPersonLiable.getText().toString(), etTel.getText().toString(), etGuidancePrice.getText().toString(), etRemark.getText().toString());
                         break;
                     case EDIT://编辑
                         turnoverAddVm.constructionAdd("edit", etStock.getText().toString(), etUnitPrice.getText().toString()
-                                , etSpec.getText().toString(), etPersonLiable.getText().toString(), etTel.getText().toString(), etGuidancePrice.getText().toString(),etRemark.getText().toString());
+                                , etSpec.getText().toString(), etPersonLiable.getText().toString(), etTel.getText().toString(), etGuidancePrice.getText().toString(), etRemark.getText().toString());
                         break;
                 }
                 break;
@@ -685,6 +686,7 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
     //获取权限
     public static final int CAMERA = 111;
     public static final int PHOTO = 222;
+
     private void getPermissions() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager
@@ -773,34 +775,33 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
         turnoverAddVm.original_price = original_price;
         turnoverAddVm.net_worth = net_worth;
 
-        if(!StringUtils.isTrimEmpty(unit)){
+        if (!StringUtils.isTrimEmpty(unit)) {
             tsProject.setValue(unit);
         }
-        if(!StringUtils.isTrimEmpty(planStr)){
+        if (!StringUtils.isTrimEmpty(planStr)) {
             tsPlan.setValue(planStr);
         }
 
-        if(!StringUtils.isTrimEmpty(use_count)){
-            tsNum.setValue(use_count);
-        }
-        if(!StringUtils.isTrimEmpty(start_date)){
+        tsNum.setValue(use_count);
+
+        if (!StringUtils.isTrimEmpty(start_date)) {
             tsStartTime.setValue(start_date);
         }
-        if(!StringUtils.isTrimEmpty(entry_time)){
+        if (!StringUtils.isTrimEmpty(entry_time)) {
             tsEnterTime.setValue(entry_time);
         }
-        if(!StringUtils.isTrimEmpty(exit_time)){
+        if (!StringUtils.isTrimEmpty(exit_time)) {
             tsExitTime.setValue(exit_time);
         }
-        if(!StringUtils.isTrimEmpty(accumulated_amortization)){
-            tsAmortize.setValue(accumulated_amortization);
-        }
-        if(!StringUtils.isTrimEmpty(original_price)){
-            tsOriginal.setValue(original_price);
-        }
-        if(!StringUtils.isTrimEmpty(net_worth)){
-            tsValue.setValue(net_worth);
-        }
+
+        tsAmortize.setValue(accumulated_amortization);
+
+
+        tsOriginal.setValue(original_price);
+
+
+        tsValue.setValue(net_worth);
+
         // 隐藏键盘
         KeyboardUtil.hideKeyboard(this);
     }
@@ -916,16 +917,16 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
             turnoverAddVm.net_worth = turnoverDetailEditBean.getNet_worth();
             tsValue.setValue(turnoverDetailEditBean.getNet_worth());
 
-            dialogControl.setDetail(turnoverDetailEditBean.getUnit_id(),turnoverDetailEditBean.getUnit_id_name(),turnoverDetailEditBean.getPlan(),turnoverDetailEditBean.getPlan_name()
-                    ,turnoverDetailEditBean.getUse_count(),turnoverDetailEditBean.getStart_date(),turnoverDetailEditBean.getEntry_time(),turnoverDetailEditBean.getExit_time()
-                    ,turnoverDetailEditBean.getAccumulated_amortization(),turnoverDetailEditBean.getOriginal_price(),turnoverDetailEditBean.getNet_worth());
+            dialogControl.setDetail(turnoverDetailEditBean.getUnit_id(), turnoverDetailEditBean.getUnit_id_name(), turnoverDetailEditBean.getPlan(), turnoverDetailEditBean.getPlan_name()
+                    , turnoverDetailEditBean.getUse_count(), turnoverDetailEditBean.getStart_date(), turnoverDetailEditBean.getEntry_time(), turnoverDetailEditBean.getExit_time()
+                    , turnoverDetailEditBean.getAccumulated_amortization(), turnoverDetailEditBean.getOriginal_price(), turnoverDetailEditBean.getNet_worth());
 
             etRemark.setText(turnoverDetailEditBean.getRemark());
 
-            if(turnoverAddVm.unit_id!=0||turnoverAddVm.plan!=0||!StringUtils.isTrimEmpty(turnoverAddVm.use_count)
-                    ||!StringUtils.isTrimEmpty(turnoverAddVm.start_date) ||!StringUtils.isTrimEmpty(turnoverAddVm.entry_time)
-                    ||!StringUtils.isTrimEmpty(turnoverAddVm.exit_time) ||!StringUtils.isTrimEmpty(turnoverAddVm.accumulated_amortization)
-                    ||!StringUtils.isTrimEmpty(turnoverAddVm.original_price)||!StringUtils.isTrimEmpty(turnoverAddVm.net_worth)){
+            if (turnoverAddVm.unit_id != 0 || turnoverAddVm.plan != 0 || !StringUtils.isTrimEmpty(turnoverAddVm.use_count)
+                    || !StringUtils.isTrimEmpty(turnoverAddVm.start_date) || !StringUtils.isTrimEmpty(turnoverAddVm.entry_time)
+                    || !StringUtils.isTrimEmpty(turnoverAddVm.exit_time) || !StringUtils.isTrimEmpty(turnoverAddVm.accumulated_amortization)
+                    || !StringUtils.isTrimEmpty(turnoverAddVm.original_price) || !StringUtils.isTrimEmpty(turnoverAddVm.net_worth)) {
                 svOtherDetails.setOpened(true);
                 llTurnoverDetail.setVisibility(View.VISIBLE);
             }

@@ -124,6 +124,8 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
     @BindView(R.id.tv_time_end)
     TextView tvTimeEnd;
 
+    @BindView(R.id.ll_lease)
+    LinearLayout llLease;
 
     private MaterialDetailVm materialDetailVm;
     private BottomSheetDialogs btn_dialog;
@@ -166,6 +168,9 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
                             .build());
                 }
             }
+
+            llLease.setVisibility(materialDetail.getMethod()==1?View.VISIBLE:View.GONE);
+
             tvMaterialCategory.setText(materialDetailBean.getMaterial_category());
             tvSupplyMethod.setText(materialDetailBean.getMethod() == 1 ? "出租" : "出售");
 
@@ -273,7 +278,6 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
 
-
         materialDetailVm.getDetail(getIntent().getIntExtra(CustomConfig.MATERIAL_ID, 0));
     }
 
@@ -299,19 +303,23 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
                 ActivityUtils.startActivity(bundle, ReleaseAreaSelectActivity.class);
                 break;
             case R.id.tv_add://添加存放地
-                if (StringUtils.isTrimEmpty(leaseStartTime)) {
-                    ToastUtils.showShort("请选择租赁开始时间");
-                    return;
-                }
-                if (StringUtils.isTrimEmpty(leaseEndTime)) {
-                    ToastUtils.showShort("请选择租赁结束时间");
-                    return;
+
+                if(materialDetail.getMethod()==1){
+                    if (StringUtils.isTrimEmpty(leaseStartTime)) {
+                        ToastUtils.showShort("请选择租赁开始时间");
+                        return;
+                    }
+                    if (StringUtils.isTrimEmpty(leaseEndTime)) {
+                        ToastUtils.showShort("请选择租赁结束时间");
+                        return;
+                    }
+
+                    if (day <= 0) {
+                        ToastUtils.showShort("开始时间必须小于结束时间");
+                        return;
+                    }
                 }
 
-                if (day <= 0) {
-                    ToastUtils.showShort("开始时间必须小于结束时间");
-                    return;
-                }
                 getAddDialog();
                 break;
             case R.id.tv_submission://提交预订单
@@ -443,7 +451,7 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
             if (!StringUtils.isTrimEmpty(leaseStartTime) && !StringUtils.isTrimEmpty(leaseEndTime)) {
                 day = DateUtils.getGapCount(leaseStartTime, leaseEndTime);
 
-                price = day*num*guidance_price;
+                price = day * num * guidance_price;
                 if (materialDetail.getMethod() == 1) {
                     tvNumber.setText("共租赁" + day + "天，共计");
                     tvPrice.setText(String.valueOf(price));
