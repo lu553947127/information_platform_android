@@ -242,7 +242,6 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
             //获取是否上架
             groundingList = turnoverTypeBean.getIs_shelf();
             if (SPUtils.getInstance().getInt(CustomConfig.INNER_SWITCH, 0) != 1) groundingList.remove(1);
-                groundingList.remove(1);
             //获取预计下步使用计划
             planBeanList = turnoverTypeBean.getPlan();
             for (TurnoverTypeBean.PlanBean item : planBeanList) {
@@ -330,7 +329,7 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
                 getBottomSheetDialog(R.layout.dialog_is_grounding, "material_status");
                 break;
             case R.id.tv_address://选择存放地点
-                bundle.putInt(CustomConfig.PROJECT_ADDRESS, 1);
+                bundle.putInt(CustomConfig.PROJECT_ADDRESS, 3);
                 ActivityUtils.startActivity(bundle, ReleaseAreaSelectActivity.class);
                 break;
             case R.id.tv_is_shelf://选择是否上架
@@ -686,7 +685,6 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
     //获取权限
     public static final int CAMERA = 111;
     public static final int PHOTO = 222;
-
     private void getPermissions() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager

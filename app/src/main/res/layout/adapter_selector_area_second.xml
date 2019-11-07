@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
@@ -10,19 +11,20 @@
         android:id="@+id/tv_city"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
+        android:layout_centerVertical="true"
         android:singleLine="true"
         android:textColor="@color/color_666666"
-        android:textSize="14sp"
-        android:text="济南市"/>
+        android:textSize="14sp" />
 
     <ImageView
         android:id="@+id/iv_select"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
+        android:layout_centerVertical="true"
         android:src="@drawable/icon_select_yes"
-        android:layout_marginLeft="135dp"
-        android:visibility="gone"/>
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dp"
+        android:visibility="gone"
+        tools:ignore="RtlHardcoded" />
 
-</LinearLayout>
+</RelativeLayout>

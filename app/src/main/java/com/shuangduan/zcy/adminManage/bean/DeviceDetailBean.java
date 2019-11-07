@@ -54,7 +54,7 @@ public class DeviceDetailBean {
 
     private String category_name;
     private String material_id_name;
-    private Object unit_id_name;
+    private String unit_id_name;
     private int stock;
     private String unit_name;
     private String spec;
@@ -74,8 +74,8 @@ public class DeviceDetailBean {
     private String plan_name;
     private String brand;
     private String main_params;
-    private int power;
-    private int original_price;
+    private String power;
+    private String original_price;
     private String start_date;
     private String entry_time;
     private String exit_time;
@@ -85,7 +85,25 @@ public class DeviceDetailBean {
     private String equipment_time;
     private String operator_name;
     private String username;
+    private String encoding;
+    private String use_month_count;
     private List<ImagesBean> images;
+
+    public String getUse_month_count() {
+        return use_month_count;
+    }
+
+    public void setUse_month_count(String use_month_count) {
+        this.use_month_count = use_month_count;
+    }
+
+    public String getEncoding() {
+        return encoding;
+    }
+
+    public void setEncoding(String encoding) {
+        this.encoding = encoding;
+    }
 
     public String getCategory_name() {
         return category_name;
@@ -103,11 +121,11 @@ public class DeviceDetailBean {
         this.material_id_name = material_id_name;
     }
 
-    public Object getUnit_id_name() {
+    public String getUnit_id_name() {
         return unit_id_name;
     }
 
-    public void setUnit_id_name(Object unit_id_name) {
+    public void setUnit_id_name(String unit_id_name) {
         this.unit_id_name = unit_id_name;
     }
 
@@ -263,19 +281,19 @@ public class DeviceDetailBean {
         this.main_params = main_params;
     }
 
-    public int getPower() {
+    public String getPower() {
         return power;
     }
 
-    public void setPower(int power) {
+    public void setPower(String power) {
         this.power = power;
     }
 
-    public int getOriginal_price() {
+    public String getOriginal_price() {
         return original_price;
     }
 
-    public void setOriginal_price(int original_price) {
+    public void setOriginal_price(String original_price) {
         this.original_price = original_price;
     }
 

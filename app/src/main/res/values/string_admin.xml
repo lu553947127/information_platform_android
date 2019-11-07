@@ -25,6 +25,26 @@
     <string name="admin_material_value">净值</string>
     <string name="admin_entry_person">录入人</string>
 
+    <string name="admin_device_material_add">设备添加</string>
+    <string name="admin_material_brand">品牌</string>
+    <string name="admin_material_main_params">主要参数</string>
+    <string name="admin_material_power">功率</string>
+    <string name="admin_material_original_price">设备原值(元)</string>
+    <string name="admin_device_material_entry_time">设备进场时间</string>
+    <string name="admin_device_material_exit_time">设备退场时间</string>
+    <string name="admin_device_material_material_status_name">设备状况</string>
+    <string name="admin_device_material_technology_detail">技术状态详细说明</string>
+    <string name="admin_device_material_use_month_count">连续本使用状态月数</string>
+    <string name="admin_device_material_equipment_time">维修设备何时完好</string>
+    <string name="admin_device_material_operator_name">操作手姓名</string>
+    <string name="admin_device_add_category_material_id">设备类别/名称</string>
+    <string name="admin_device_add_category_material_id_et">请选择设备类别/名称</string>
+    <string name="admin_device_add_encoding">设备编码</string>
+    <string name="admin_device_add_encoding_et">请输入设备编码</string>
+    <string name="admin_selector_no_encoding">设备编码不能为空</string>
+    <string name="admin_selector_device_no_category">设备类别不能为空</string>
+    <string name="admin_selector_area">存放地点</string>
+
     <string name="admin_material_remark">备注</string>
     <string name="admin_turnover_delete">确定删除吗？</string>
     <string name="admin_turnover_material_add">周转材料添加</string>

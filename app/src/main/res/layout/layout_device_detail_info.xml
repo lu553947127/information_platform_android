@@ -117,26 +117,4 @@
             app:hind_value_text="@string/admin_turnover_hint_input" />
     </LinearLayout>
 
-    <TextView
-        style="@style/TextSize15Style"
-        android:layout_marginLeft="15sp"
-        android:layout_marginTop="33dp"
-        android:text="@string/admin_turnover_remark"
-        android:textColor="@color/colorTv" />
-
-    <EditText
-        android:id="@+id/et_remark"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="7dp"
-        android:layout_marginRight="15dp"
-        android:gravity="left"
-        android:hint="@string/admin_turnover_hint_input"
-        android:textSize="14sp"
-        android:padding="5dp"
-        android:minHeight="78dp"
-        android:textColor="@color/colorTv"
-        android:background="@drawable/shape_stroke_bfbfbf_2"/>
-
 </LinearLayout>

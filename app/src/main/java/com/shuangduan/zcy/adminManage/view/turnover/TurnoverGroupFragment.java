@@ -496,7 +496,7 @@ public class TurnoverGroupFragment extends BaseLazyFragment {
                 });
                 tvSplitAddress.setOnClickListener(v -> {
                     Bundle bundle = new Bundle();
-                    bundle.putInt(CustomConfig.PROJECT_ADDRESS, 1);
+                    bundle.putInt(CustomConfig.PROJECT_ADDRESS, 3);
                     ActivityUtils.startActivity(bundle, ReleaseAreaSelectActivity.class);
                 });
                 break;

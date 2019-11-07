@@ -1741,4 +1741,89 @@ public interface ApiService {
             @Field("user_id") int userId,
             @Field("id") int id
     );
+
+    //后台管理 --- 设备添加
+    @FormUrlEncoded
+    @POST("api/Manage/equipmentAdd")
+    Flowable<BaseResponse<String>> equipmentAdd(
+            @Field("user_id") int userId,
+            @Field("category") int category,
+            @Field("material_id") int material_id,
+            @Field("encoding") String encoding,
+            @Field("stock") String stock,
+            @Field("unit") int unit,
+            @Field("spec") String spec,
+            @Field("use_status") int use_status,
+            @Field("province") int province,
+            @Field("city") int city,
+            @Field("address") String address,
+            @Field("longitude") double longitude,
+            @Field("latitude") double latitude,
+            @Field("person_liable") String person_liable,
+            @Field("tel") String tel,
+            @Field("is_shelf") int is_shelf,
+            @Field("shelf_start_time") String shelf_start_time,
+            @Field("shelf_end_time") String shelf_end_time,
+            @Field("shelf_type") int shelf_type,
+            @Field("method") int method,
+            @Field("guidance_price") String guidance_price,
+            @Field("images") String images,
+            @Field("unit_id") int unit_id,
+            @Field("start_date") String start_date,
+            @Field("brand") String brand,
+            @Field("original_price") String original_price,
+            @Field("main_params") String main_params,
+            @Field("power") String power,
+            @Field("entry_time") String entry_time,
+            @Field("exit_time") String exit_time,
+            @Field("operator_name") String operator_name,
+            @Field("material_status") int material_status,
+            @Field("use_month_count") String use_month_count,
+            @Field("plan") int plan,
+            @Field("technology_detail") String technology_detail,
+            @Field("equipment_time") String equipment_time
+    );
+
+    //后台管理 --- 设备编辑
+    @FormUrlEncoded
+    @POST("api/Manage/equipmentEdit")
+    Flowable<BaseResponse<String>> equipmentEdit(
+            @Field("user_id") int userId,
+            @Field("id") int id,
+            @Field("category") int category,
+            @Field("material_id") int material_id,
+            @Field("encoding") String encoding,
+            @Field("stock") String stock,
+            @Field("unit") int unit,
+            @Field("spec") String spec,
+            @Field("use_status") int use_status,
+            @Field("province") int province,
+            @Field("city") int city,
+            @Field("address") String address,
+            @Field("longitude") double longitude,
+            @Field("latitude") double latitude,
+            @Field("person_liable") String person_liable,
+            @Field("tel") String tel,
+            @Field("is_shelf") int is_shelf,
+            @Field("shelf_start_time") String shelf_start_time,
+            @Field("shelf_end_time") String shelf_end_time,
+            @Field("shelf_type") int shelf_type,
+            @Field("method") int method,
+            @Field("guidance_price") String guidance_price,
+            @Field("images") String images,
+            @Field("unit_id") int unit_id,
+            @Field("start_date") String start_date,
+            @Field("brand") String brand,
+            @Field("original_price") String original_price,
+            @Field("main_params") String main_params,
+            @Field("power") String power,
+            @Field("entry_time") String entry_time,
+            @Field("exit_time") String exit_time,
+            @Field("operator_name") String operator_name,
+            @Field("material_status") int material_status,
+            @Field("use_month_count") String use_month_count,
+            @Field("plan") int plan,
+            @Field("technology_detail") String technology_detail,
+            @Field("equipment_time") String equipment_time
+    );
 }

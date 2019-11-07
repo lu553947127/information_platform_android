@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
-import com.shuangduan.zcy.adminManage.repository.TurnoverRepository;
+import com.shuangduan.zcy.adminManage.repository.DeviceRepository;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseViewModel;
 import com.shuangduan.zcy.utils.DateUtils;
@@ -19,16 +19,16 @@ import static com.blankj.utilcode.util.StringUtils.getString;
 /**
  * @ProjectName: information_platform_android
  * @Package: com.shuangduan.zcy.adminManage.vm
- * @ClassName: TurnoverAddVm
+ * @ClassName: DeviceAddVm
  * @Description: java类作用描述
  * @Author: 鹿鸿祥
- * @CreateDate: 2019/11/4 10:54
+ * @CreateDate: 2019/11/7 14:41
  * @UpdateUser: 鹿鸿祥
- * @UpdateDate: 2019/11/4 10:54
+ * @UpdateDate: 2019/11/7 14:41
  * @UpdateRemark: 更新说明
  * @Version: 1.0
  */
-public class TurnoverAddVm extends BaseViewModel {
+public class DeviceAddVm extends BaseViewModel {
 
     private int userId;
     public int category;
@@ -37,7 +37,6 @@ public class TurnoverAddVm extends BaseViewModel {
     public String materialName;
     public int unit;
     public int use_status;
-    public int material_status;
     public int province;
     public int city;
     public String address;
@@ -52,26 +51,30 @@ public class TurnoverAddVm extends BaseViewModel {
     public String images;
 
     public int unit_id;
-    public int plan;
-    public String use_count;
     public String start_date;
+    public String brand;
+    public String original_price;
+    public String main_params;
+    public String power;
     public String entry_time;
     public String exit_time;
-    public String accumulated_amortization;
-    public String original_price;
-    public String net_worth;
+    public String operator_name;
+    public int material_status;
+    public String use_month_count;
+    public int plan;
+    public String technology_detail;
+    public String equipment_time;
 
     public int editId;
 
-    public MutableLiveData<String> turnoverAddData;
-    public MutableLiveData<String> turnoverEditData;
+    public MutableLiveData<String> deviceAddData;
+    public MutableLiveData<String> deviceEditData;
     public MutableLiveData<String> pageStateLiveData;
 
-
-    public TurnoverAddVm() {
+    public DeviceAddVm() {
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
-        turnoverAddData = new MutableLiveData<>();
-        turnoverEditData = new MutableLiveData<>();
+        deviceAddData = new MutableLiveData<>();
+        deviceEditData = new MutableLiveData<>();
         pageStateLiveData = new MutableLiveData<>();
 
         //设置时间为今天
@@ -80,27 +83,24 @@ public class TurnoverAddVm extends BaseViewModel {
         int month = calendar.get(Calendar.MONTH) + 1;
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         todayTime = DateUtils.formatTime(year, month, day);
-
-        shelf_type = 1;
-        method = 1;
     }
 
-    //后台管理 --- 周转材料添加/编辑
-    public void constructionAdd(String type,String stock,String unit_price,String spec,String person_liable,String tel,String guidance_price,String remark){
+    //后台管理 --- 设备添加/编辑
+    public void equipmentAdd(String type,String encoding,String stock,String spec,String person_liable,String tel,String guidance_price){
         if (category==0) {
-            ToastUtils.showShort(getString(R.string.admin_selector_no_category));
+            ToastUtils.showShort(getString(R.string.admin_selector_device_no_category));
             return;
         }
         if (material_id==0) {
             ToastUtils.showShort(getString(R.string.admin_selector_no_material_id));
             return;
         }
-        if (TextUtils.isEmpty(stock)){
-            ToastUtils.showShort(getString(R.string.admin_selector_no_stock));
+        if (TextUtils.isEmpty(encoding)){
+            ToastUtils.showShort(getString(R.string.admin_selector_no_encoding));
             return;
         }
-        if (TextUtils.isEmpty(unit_price)){
-            ToastUtils.showShort(getString(R.string.admin_selector_no_unit_price));
+        if (TextUtils.isEmpty(stock)){
+            ToastUtils.showShort(getString(R.string.admin_selector_no_stock));
             return;
         }
         if (unit==0) {
@@ -113,10 +113,6 @@ public class TurnoverAddVm extends BaseViewModel {
         }
         if (use_status==0) {
             ToastUtils.showShort(getString(R.string.admin_selector_no_use_status));
-            return;
-        }
-        if (material_status==0) {
-            ToastUtils.showShort(getString(R.string.admin_selector_no_material_status));
             return;
         }
         if (province==0) {
@@ -161,15 +157,15 @@ public class TurnoverAddVm extends BaseViewModel {
         }
 
         switch (type){
-            case "add"://添加周转材料
-                new TurnoverRepository().constructionAdd(turnoverAddData,userId,category,material_id,stock,unit_price,unit,spec,use_status,material_status
+            case "add"://添加设备
+                new DeviceRepository().equipmentAdd(deviceAddData,userId,category,material_id,encoding,stock,unit,spec,use_status
                         ,province,city,address,longitude,latitude,person_liable,tel,is_shelf,shelf_start_time,shelf_end_time,shelf_type,method,guidance_price,images
-                        ,unit_id,plan,use_count,start_date,entry_time,exit_time,accumulated_amortization,original_price,net_worth,remark);
+                        ,unit_id,start_date,brand,original_price,main_params,power,entry_time,exit_time,operator_name,material_status,use_month_count,plan,technology_detail,equipment_time);
                 break;
-            case "edit"://编辑周转材料
-                new TurnoverRepository().constructionEdit(turnoverEditData,userId,editId,category,material_id,stock,unit_price,unit,spec,use_status,material_status
+            case "edit"://编辑设备
+                new DeviceRepository().equipmentEdit(deviceEditData,userId,editId,category,material_id,encoding,stock,unit,spec,use_status
                         ,province,city,address,longitude,latitude,person_liable,tel,is_shelf,shelf_start_time,shelf_end_time,shelf_type,method,guidance_price,images
-                        ,unit_id,plan,use_count,start_date,entry_time,exit_time,accumulated_amortization,original_price,net_worth,remark);
+                        ,unit_id,start_date,brand,original_price,main_params,power,entry_time,exit_time,operator_name,material_status,use_month_count,plan,technology_detail,equipment_time);
                 break;
         }
     }

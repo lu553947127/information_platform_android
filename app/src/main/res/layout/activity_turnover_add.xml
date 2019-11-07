@@ -465,7 +465,6 @@
                     android:layout_marginRight="15dp" />
             </RelativeLayout>
 
-
             <!--详细信息-->
             <LinearLayout
                 android:id="@+id/ll_turnover_detail"
@@ -479,7 +478,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="10dp"
                     android:background="@color/color_F6F7FB" />
-
 
                 <include layout="@layout/layout_turnover_detail_info" />
 

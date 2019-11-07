@@ -85,6 +85,37 @@ public class DeviceDetailActivity extends BaseActivity {
     @BindView(R.id.rv_photo)
     RecyclerView rvImage;
 
+    @BindView(R.id.tv_project)
+    TextView tvProject;
+    @BindView(R.id.tv_plan)
+    TextView tvPlan;
+    @BindView(R.id.tv_brand)
+    TextView tvBrand;
+    @BindView(R.id.tv_main_params)
+    TextView tvMainParams;
+    @BindView(R.id.tv_power)
+    TextView tvPower;
+    @BindView(R.id.tv_original_price)
+    TextView tvOriginalPrice;
+    @BindView(R.id.tv_start_time)
+    TextView tvStartTime;
+    @BindView(R.id.tv_enter_time)
+    TextView tvEnterTime;
+    @BindView(R.id.tv_exit_time)
+    TextView tvExitTime;
+    @BindView(R.id.tv_material_status_name)
+    TextView tvMaterialStatusName;
+    @BindView(R.id.tv_entry_person)
+    TextView tvEntryPerson;
+    @BindView(R.id.tv_use_month_count)
+    TextView tvUseMonthCount;
+    @BindView(R.id.tv_technology_detail)
+    TextView tvTechnologyDetail;
+    @BindView(R.id.tv_equipment_time)
+    TextView tvEquipmentTime;
+    @BindView(R.id.tv_operator_name)
+    TextView tvOperatorName;
+
     @Override
     protected int initLayoutRes() {
         return R.layout.activity_device_detail;
@@ -113,7 +144,7 @@ public class DeviceDetailActivity extends BaseActivity {
             tvUseStatus.setText(deviceDetailBean.getUse_status_name());
             tvMaterialStatus.setVisibility(StringUtils.isTrimEmpty(deviceDetailBean.getMaterial_status_name()) ? View.GONE : View.VISIBLE);
             tvMaterialStatus.setText(deviceDetailBean.getMaterial_status_name());
-            tvDeviceCoding.setText("000");
+            tvDeviceCoding.setText(deviceDetailBean.getEncoding());
             tvPutAddress.setText(deviceDetailBean.getProvince_name() + deviceDetailBean.getCity_name() + deviceDetailBean.getAddress());
             tvName.setText(deviceDetailBean.getPerson_liable());
             tvTel.setText(deviceDetailBean.getTel());
@@ -156,6 +187,22 @@ public class DeviceDetailActivity extends BaseActivity {
                 tvPutawayTimeKey.setVisibility(View.GONE);
                 tvPutawayTime.setVisibility(View.GONE);
             }
+
+             tvProject.setText(StringUtils.isTrimEmpty(deviceDetailBean.getUnit_id_name()) ? "—" : deviceDetailBean.getUnit_id_name());
+             tvPlan.setText(StringUtils.isTrimEmpty(deviceDetailBean.getPlan_name()) ? "—" : deviceDetailBean.getPlan_name());
+             tvBrand.setText(StringUtils.isTrimEmpty(deviceDetailBean.getBrand()) ? "—" : deviceDetailBean.getBrand());
+             tvMainParams.setText(StringUtils.isTrimEmpty(deviceDetailBean.getMain_params()) ? "—" : deviceDetailBean.getMain_params());
+             tvPower.setText(StringUtils.isTrimEmpty(deviceDetailBean.getPower()) ? "—" : deviceDetailBean.getPower());
+             tvOriginalPrice.setText(StringUtils.isTrimEmpty(deviceDetailBean.getOriginal_price()) ? "—" : deviceDetailBean.getOriginal_price());
+             tvStartTime.setText(StringUtils.isTrimEmpty(deviceDetailBean.getStart_date()) ? "—" : deviceDetailBean.getStart_date());
+             tvEnterTime.setText(StringUtils.isTrimEmpty(deviceDetailBean.getEntry_time()) ? "—" : deviceDetailBean.getEntry_time());
+             tvExitTime.setText(StringUtils.isTrimEmpty(deviceDetailBean.getExit_time()) ? "—" : deviceDetailBean.getExit_time());
+             tvMaterialStatusName.setText(StringUtils.isTrimEmpty(deviceDetailBean.getMaterial_status_name()) ? "—" : deviceDetailBean.getMaterial_status_name());
+             tvEntryPerson.setText(StringUtils.isTrimEmpty(deviceDetailBean.getUsername()) ? "—" : deviceDetailBean.getUsername());
+             tvUseMonthCount.setText(StringUtils.isTrimEmpty(deviceDetailBean.getUse_month_count()) ? "—" : deviceDetailBean.getUse_month_count());
+             tvTechnologyDetail.setText(StringUtils.isTrimEmpty(deviceDetailBean.getTechnology_detail()) ? "—" : deviceDetailBean.getTechnology_detail());
+             tvEquipmentTime.setText(StringUtils.isTrimEmpty(deviceDetailBean.getEquipment_time()) ? "—" : deviceDetailBean.getEquipment_time());
+            tvOperatorName.setText(StringUtils.isTrimEmpty(deviceDetailBean.getOperator_name()) ? "—" : deviceDetailBean.getOperator_name());
         });
     }
 

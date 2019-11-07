@@ -70,11 +70,20 @@ public class ReleaseAreaSelectActivity extends BaseActivity {
     protected void initDataAndEvent(Bundle savedInstanceState) {
         int projectType = getIntent().getIntExtra(CustomConfig.PROJECT_ADDRESS, 0);
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
-        if (projectType == 2) {
-            tvBarTitle.setText(getString(R.string.receiving_area));
-        } else {
-            tvBarTitle.setText(getString(R.string.business_area));
+
+        switch (projectType){
+            case 0:
+            case 1:
+                tvBarTitle.setText(getString(R.string.business_area));
+                break;
+            case 2:
+                tvBarTitle.setText(getString(R.string.receiving_area));
+                break;
+            case 3:
+                tvBarTitle.setText(getString(R.string.admin_selector_area));
+                break;
         }
+
         if (getIntent().getIntExtra(CustomConfig.PROJECT_ADDRESS, 0)==1){
             tvBarRight.setText(getString(R.string.next));
         }else {
