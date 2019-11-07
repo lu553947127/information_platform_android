@@ -50,7 +50,9 @@
     <string name="email">邮箱</string>
     <string name="company">公司</string>
     <string name="office">职位</string>
+    <string name="project_area">项目地址</string>
     <string name="business_area">业务地区</string>
+    <string name="people_area">联系人地址</string>
     <string name="receiving_area">收货地区</string>
     <string name="business_exp">业务经验</string>
     <string name="product">经营产品</string>

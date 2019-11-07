@@ -134,7 +134,6 @@ public class CustomConfig {
 
     public static final int AREA_REQUEST_CODE = 1001;
 
-
     public static String DEMAND_TYPE = "DEMAND_TYPE";
 
     //找关系

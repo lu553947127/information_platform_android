@@ -241,10 +241,6 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
                         case R.id.iv_del:
                             releaseVm.delContact(position);
                             break;
-//                        case R.id.tv_type:
-//                            releaseVm.editContactTypePos = position;
-//                            ActivityUtils.startActivity(ContactTypeActivity.class);
-//                            break;
                         case R.id.tv_address:
                             releaseVm.editContactAddressPos = position;
                             Bundle bundle = new Bundle();
@@ -259,12 +255,10 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
         });
 
         releaseVm.releaseProjectLiveData.observe(this, o -> {
-//            EventBus.getDefault().post(new LocusRefreshEvent());
             ToastUtils.showShort(getString(R.string.release_success));
             finish();
         });
         releaseVm.releaseLocusLiveData.observe(this, o -> {
-//            EventBus.getDefault().post(new LocusRefreshEvent());
             ToastUtils.showShort(getString(R.string.release_success));
             finish();
         });
@@ -538,8 +532,6 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
         tvProjectTypes.setText(event.getName());
     }
 
-
-
     @Subscribe
     public void onEventContactEvent(ContactTypeEvent event){
         List<ContactBean> list = releaseVm.contactLiveData.getValue();
@@ -569,7 +561,6 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-
         return super.onTouchEvent(event);
     }
 
@@ -604,7 +595,6 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
         if(scrollDifference == 0) {
             return false;
         }
-
         return (scrollY > 0) || (scrollY < scrollDifference - 1);
     }
 

@@ -5,12 +5,10 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
@@ -18,17 +16,14 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.TimeUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
-import com.shuangduan.zcy.dialog.BottomSheetDialogs;
 import com.shuangduan.zcy.listener.TextWatcherWrapper;
 import com.shuangduan.zcy.model.bean.MaterialDetailBean;
-import com.shuangduan.zcy.model.bean.MaterialPlaceOrderBean;
 import com.shuangduan.zcy.model.event.AddressEvent;
 import com.shuangduan.zcy.model.event.MaterialDetailEvent;
 import com.shuangduan.zcy.utils.DateUtils;
@@ -36,15 +31,9 @@ import com.shuangduan.zcy.utils.image.ImageConfig;
 import com.shuangduan.zcy.utils.image.ImageLoader;
 import com.shuangduan.zcy.view.release.ReleaseAreaSelectActivity;
 import com.shuangduan.zcy.vm.MaterialDetailVm;
-import com.shuangduan.zcy.weight.DataHolder;
 import com.shuangduan.zcy.weight.datepicker.CustomDatePicker;
 
 import org.greenrobot.eventbus.Subscribe;
-
-import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 import fj.edittextcount.lib.FJEditTextCount;
@@ -92,8 +81,6 @@ public class MaterialEquipmentPlaceOrderActivity extends BaseActivity {
     EditText etAddress;
     @BindView(R.id.et_remark)
     FJEditTextCount etRemark;
-
-
     @BindView(R.id.tv_number)
     TextView tvNumber;
     @BindView(R.id.tv_price)
@@ -102,35 +89,26 @@ public class MaterialEquipmentPlaceOrderActivity extends BaseActivity {
     TextView tvSubmission;
     @BindView(R.id.tv_supply_method)
     TextView tvSupplyMethod;
-
     @BindView(R.id.tv_address_star)
     TextView tvAddressStar;
     @BindView(R.id.tv_material_id)
     TextView tvMaterialId;
-
     @BindView(R.id.et_num)
     EditText etNum;
-
     @BindView(R.id.tv_time_start)
     TextView tvTimeStart;
     @BindView(R.id.tv_time_end)
     TextView tvTimeEnd;
-
     @BindView(R.id.ll_lease)
     LinearLayout llLease;
 
     private MaterialDetailVm materialDetailVm;
-    private BottomSheetDialogs btn_dialog;
     int province, city, material_id, materialId, guidance_price, supplier_id, day;
     String material_name, unit;
-
-
     private int num, price;
     private MaterialDetailBean materialDetail;
-
     //租期开始时间  ,租期结束时间
     private String leaseStartTime, leaseEndTime;
-
 
     @Override
     protected int initLayoutRes() {
@@ -190,7 +168,6 @@ public class MaterialEquipmentPlaceOrderActivity extends BaseActivity {
 
         });
 
-
         //预定订单提交成功返回结果
         materialDetailVm.mutableLiveAddOrder.observe(this, materialAddBean -> {
             Bundle bundle = new Bundle();
@@ -220,7 +197,6 @@ public class MaterialEquipmentPlaceOrderActivity extends BaseActivity {
                 }
             }
         });
-
 
         materialDetailVm.getEquipmentDetail(getIntent().getIntExtra(CustomConfig.MATERIAL_ID, 0));
     }
@@ -265,7 +241,6 @@ public class MaterialEquipmentPlaceOrderActivity extends BaseActivity {
                     ToastUtils.showShort("数量不能为0");
                     return;
                 }
-
 
                 if (materialDetail.getMethod() == 1 &&StringUtils.isTrimEmpty(leaseStartTime)) {
                     ToastUtils.showShort("请选择租赁开始时间");

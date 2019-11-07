@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
@@ -161,15 +162,12 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
             SPUtils.getInstance().put(SpConfig.MOBILE, userInfoBean.getTel(),true);
             tvName.setText(userInfoBean.getUsername());
             tvMobile.setText(userInfoBean.getTel());
-            if (!TextUtils.isEmpty(userInfoBean.getIdentity_card())){
-                tvIdCard.setText(userInfoBean.getIdentity_card());
-            }else {
-                tvIdCard.setText("请申请实名认证");
-            }
+
+            tvIdCard.setText(StringUtils.isTrimEmpty(userInfoBean.getIdentity_card()) ? "请申请实名认证" : userInfoBean.getIdentity_card());
             tvEmail.setText(userInfoBean.getEmail());
             tvCompany.setText(userInfoBean.getCompany());
             tvOffice.setText(userInfoBean.getPosition());
-            tvBusinessArea.setText(userInfoBean.getBusiness_city());
+            tvBusinessArea.setText(StringUtils.isTrimEmpty(userInfoBean.getBusiness_city()) ? "请选择业务地区" : userInfoBean.getBusiness_city());
 
             //用户认证标识状态显示
             ivSgs.setVisibility(userInfoBean.getCardStatus() == 2 ? View.VISIBLE : View.INVISIBLE);

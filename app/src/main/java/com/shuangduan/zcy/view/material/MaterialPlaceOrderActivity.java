@@ -24,7 +24,6 @@ import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.TimeUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.huawei.android.hms.agent.common.UIUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.MaterialPlaceOrderAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
@@ -138,7 +137,6 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
     private MaterialDetailBean materialDetail;
     //租期开始时间  ,租期结束时间
     private String leaseStartTime, leaseEndTime;
-
 
     @Override
     protected int initLayoutRes() {
@@ -319,7 +317,6 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
                         return;
                     }
                 }
-
                 getAddDialog();
                 break;
             case R.id.tv_submission://提交预订单
@@ -364,7 +361,6 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
     //添加存放地弹窗
     TextView tv_material_id;
     EditText et_num;
-
     private void getAddDialog() {
         //底部滑动对话框
         btn_dialog = new BottomSheetDialogs(this, R.style.BottomSheetStyle);
@@ -424,7 +420,6 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
             }
 
             if (materialDetail.getMethod() == 1) {
-
 
 //                if (Integer.valueOf(et_lease.getText().toString()) == 0) {
 //                    ToastUtils.showShort("租赁天数不能为0");

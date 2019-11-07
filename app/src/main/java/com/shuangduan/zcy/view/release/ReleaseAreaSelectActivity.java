@@ -68,28 +68,26 @@ public class ReleaseAreaSelectActivity extends BaseActivity {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
-        int projectType = getIntent().getIntExtra(CustomConfig.PROJECT_ADDRESS, 0);
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
 
-        switch (projectType){
+        switch (getIntent().getIntExtra(CustomConfig.PROJECT_ADDRESS, 0)){
             case 0:
+                tvBarTitle.setText(getString(R.string.people_area));
+                tvBarRight.setText(getString(R.string.save));
+                break;
             case 1:
-                tvBarTitle.setText(getString(R.string.business_area));
+                tvBarTitle.setText(getString(R.string.project_area));
+                tvBarRight.setText(getString(R.string.next));
                 break;
             case 2:
                 tvBarTitle.setText(getString(R.string.receiving_area));
+                tvBarRight.setText(getString(R.string.save));
                 break;
             case 3:
                 tvBarTitle.setText(getString(R.string.admin_selector_area));
+                tvBarRight.setText(getString(R.string.next));
                 break;
         }
-
-        if (getIntent().getIntExtra(CustomConfig.PROJECT_ADDRESS, 0)==1){
-            tvBarRight.setText(getString(R.string.next));
-        }else {
-            tvBarRight.setText(getString(R.string.save));
-        }
-
         LinearLayoutManager managerProvence = new LinearLayoutManager(this);
         rvProvince.setLayoutManager(managerProvence);
         rvProvince.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_province));
@@ -157,12 +155,13 @@ public class ReleaseAreaSelectActivity extends BaseActivity {
                                 city = citys.get(i).getName();
                                 cityId = citys.get(i).getId();
                                 switch (getIntent().getIntExtra(CustomConfig.PROJECT_ADDRESS, 0)) {
-                                    case 0:
+                                    case 0://只选择省市区
                                     case 2:
                                         EventBus.getDefault().post(new AddressEvent(province, city, provinceId, cityId));
                                         finish();
                                         break;
-                                    case 1:
+                                    case 1://选择省市区并选择地图定位
+                                    case 3:
                                         Bundle bundle = new Bundle();
                                         bundle.putString(CustomConfig.PROVINCE_NAME, province);
                                         bundle.putInt(CustomConfig.PROVINCE_ID, provinceId);
