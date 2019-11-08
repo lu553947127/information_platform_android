@@ -41,7 +41,7 @@ import com.shuangduan.zcy.adminManage.adapter.UseStatueAdapter;
 import com.shuangduan.zcy.adminManage.bean.TurnoverCategoryBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverDetailEditBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverTypeBean;
-import com.shuangduan.zcy.adminManage.view.turnover.dialog.TurnoverDialogControl;
+import com.shuangduan.zcy.adminManage.dialog.TurnoverDialogControl;
 import com.shuangduan.zcy.adminManage.vm.TurnoverAddVm;
 import com.shuangduan.zcy.adminManage.vm.TurnoverVm;
 import com.shuangduan.zcy.app.CustomConfig;
@@ -49,7 +49,6 @@ import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BottomSheetDialogs;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.event.LocationEvent;
-import com.shuangduan.zcy.utils.KeyboardUtil;
 import com.shuangduan.zcy.utils.image.PictureEnlargeUtils;
 import com.shuangduan.zcy.utils.matisse.Glide4Engine;
 import com.shuangduan.zcy.view.photo.CameraActivity;
@@ -759,51 +758,6 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
         return sb.toString();
     }
 
-    @Override
-    public void callInfo(int unit_id, String unit, int plan, String planStr, String use_count, String start_date, String entry_time, String exit_time,
-                         String accumulated_amortization, String original_price, String net_worth) {
-
-        turnoverAddVm.unit_id = unit_id;
-        turnoverAddVm.plan = plan;
-        turnoverAddVm.use_count = use_count;
-        turnoverAddVm.start_date = start_date;
-        turnoverAddVm.entry_time = entry_time;
-        turnoverAddVm.exit_time = exit_time;
-        turnoverAddVm.accumulated_amortization = accumulated_amortization;
-        turnoverAddVm.original_price = original_price;
-        turnoverAddVm.net_worth = net_worth;
-
-        if (!StringUtils.isTrimEmpty(unit)) {
-            tsProject.setValue(unit);
-        }
-        if (!StringUtils.isTrimEmpty(planStr)) {
-            tsPlan.setValue(planStr);
-        }
-
-        tsNum.setValue(use_count);
-
-        if (!StringUtils.isTrimEmpty(start_date)) {
-            tsStartTime.setValue(start_date);
-        }
-        if (!StringUtils.isTrimEmpty(entry_time)) {
-            tsEnterTime.setValue(entry_time);
-        }
-        if (!StringUtils.isTrimEmpty(exit_time)) {
-            tsExitTime.setValue(exit_time);
-        }
-
-        tsAmortize.setValue(accumulated_amortization);
-
-
-        tsOriginal.setValue(original_price);
-
-
-        tsValue.setValue(net_worth);
-
-        // 隐藏键盘
-        KeyboardUtil.hideKeyboard(this);
-    }
-
     //获取编辑详细数据显示
     @SuppressLint("SetTextI18n")
     private void getEditDetail(int id) {
@@ -935,5 +889,40 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
             ToastUtils.showShort("编辑成功");
             finish();
         });
+    }
+
+    @Override
+    public void callInfo(int unit_id, String unit, int plan, String planStr, String use_count, String start_date, String entry_time, String exit_time,
+                         String accumulated_amortization, String original_price, String net_worth) {
+
+        turnoverAddVm.unit_id = unit_id;
+        turnoverAddVm.plan = plan;
+        turnoverAddVm.use_count = use_count;
+        turnoverAddVm.start_date = start_date;
+        turnoverAddVm.entry_time = entry_time;
+        turnoverAddVm.exit_time = exit_time;
+        turnoverAddVm.accumulated_amortization = accumulated_amortization;
+        turnoverAddVm.original_price = original_price;
+        turnoverAddVm.net_worth = net_worth;
+
+        if (!StringUtils.isTrimEmpty(unit)) {
+            tsProject.setValue(unit);
+        }
+        if (!StringUtils.isTrimEmpty(planStr)) {
+            tsPlan.setValue(planStr);
+        }
+        tsNum.setValue(use_count);
+        if (!StringUtils.isTrimEmpty(start_date)) {
+            tsStartTime.setValue(start_date);
+        }
+        if (!StringUtils.isTrimEmpty(entry_time)) {
+            tsEnterTime.setValue(entry_time);
+        }
+        if (!StringUtils.isTrimEmpty(exit_time)) {
+            tsExitTime.setValue(exit_time);
+        }
+        tsAmortize.setValue(accumulated_amortization);
+        tsOriginal.setValue(original_price);
+        tsValue.setValue(net_worth);
     }
 }

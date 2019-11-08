@@ -1,4 +1,4 @@
-package com.shuangduan.zcy.adminManage.view.turnover.dialog;
+package com.shuangduan.zcy.adminManage.dialog;
 
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
@@ -59,13 +59,9 @@ public abstract class BaseAddInfoDialog {
     private TextView hour_text, minute_text;
     public TextView tvPositive;
 
-
-
     //时间样式
     private String timeStyle = "yyyy-MM-dd";
     public Calendar selectedCalender, startCalendar, endCalendar;
-
-
 
     public SimpleDateFormat sdf;
 
@@ -75,7 +71,6 @@ public abstract class BaseAddInfoDialog {
     public List<Integer> projectIdList;
 
     public abstract int layoutId();
-
 
     public BaseAddInfoDialog(BaseActivity context, TurnoverVm vm) {
         this.context = context;
@@ -114,7 +109,6 @@ public abstract class BaseAddInfoDialog {
         vm.projectListData();
     }
 
-
     //初始化日历
     private void initCalendar() {
         selectedCalender = Calendar.getInstance();
@@ -129,7 +123,6 @@ public abstract class BaseAddInfoDialog {
         }
     }
 
-
     public void showLine(int position) {
         tsItemOne.showLine(position == 0);
         tsItemTwo.showLine(position == 1);
@@ -141,7 +134,6 @@ public abstract class BaseAddInfoDialog {
         tsItemEight.showLine(position == 7);
         tsItemNine.showLine(position == 8);
     }
-
 
     private int scrollUnits = CustomDatePicker.SCROLL_TYPE.HOUR.value + CustomDatePicker.SCROLL_TYPE.MINUTE.value;
 
@@ -204,14 +196,12 @@ public abstract class BaseAddInfoDialog {
         public int value;
     }
 
-
     public void show(String time) {
         initParameter();
         initTimer();
         addListener();
         setSelectedTime(time);
     }
-
 
     /**
      * 设置日期控件默认选中的时间
@@ -314,7 +304,6 @@ public abstract class BaseAddInfoDialog {
         executeScroll();
 
     }
-
 
     private void initTimer() {
         initArrayList();
@@ -678,5 +667,4 @@ public abstract class BaseAddInfoDialog {
         }
         return convertSuccess;
     }
-
 }

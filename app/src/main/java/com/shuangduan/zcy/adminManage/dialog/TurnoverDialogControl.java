@@ -1,4 +1,4 @@
-package com.shuangduan.zcy.adminManage.view.turnover.dialog;
+package com.shuangduan.zcy.adminManage.dialog;
 
 import android.content.DialogInterface;
 import android.text.Editable;
@@ -6,7 +6,6 @@ import android.view.View;
 
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ArrayWheelAdapter;
-import com.shuangduan.zcy.adminManage.bean.TurnoverNameBean;
 import com.shuangduan.zcy.adminManage.vm.TurnoverVm;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.listener.TextWatcherWrapper;
@@ -27,15 +26,11 @@ import java.util.List;
 public class TurnoverDialogControl extends BaseAddInfoDialog implements DialogInterface.OnDismissListener, View.OnClickListener {
 
     private final TurnoverDetailListening listening;
-
-
-
     //使用计划ID
     private List<Integer> planIdList;
 
     //使用计划名称
     private List<String> planList;
-
 
     private int currentPosition;
     private ArrayWheelAdapter projectAdapter;
@@ -45,7 +40,6 @@ public class TurnoverDialogControl extends BaseAddInfoDialog implements DialogIn
 
     private int unit_id, plan;
     private String use_count, start_date, entry_time, exit_time, accumulated_amortization, original_price, net_worth, unit, planStr;
-
 
     public TurnoverDialogControl(BaseActivity context, TurnoverVm vm, TurnoverDetailListening listening) {
         super(context,vm);
@@ -230,7 +224,6 @@ public class TurnoverDialogControl extends BaseAddInfoDialog implements DialogIn
         }
     }
 
-
     private void showView(int position, int titleRes) {
         this.currentPosition = position;
 
@@ -288,7 +281,6 @@ public class TurnoverDialogControl extends BaseAddInfoDialog implements DialogIn
         showLine(position);
     }
 
-
     public void showDialog(int position, int titleRes) {
         showView(position, titleRes);
         dialog.show();
@@ -300,7 +292,6 @@ public class TurnoverDialogControl extends BaseAddInfoDialog implements DialogIn
         //时间选择器显示隐藏
         rlDate.setVisibility(position == 3 || position == 4 || position == 5 ? View.VISIBLE : View.GONE);
     }
-
 
     public List<Integer> getPlanIdList() {
         return planIdList;
@@ -322,6 +313,4 @@ public class TurnoverDialogControl extends BaseAddInfoDialog implements DialogIn
         void callInfo(int unit_id, String unit, int plan, String planStr, String use_count, String start_date, String entry_time,
                       String exit_time, String accumulated_amortization, String original_price, String net_worth);
     }
-
-
 }

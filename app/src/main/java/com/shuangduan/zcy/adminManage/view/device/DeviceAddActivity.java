@@ -41,8 +41,7 @@ import com.shuangduan.zcy.adminManage.adapter.UseStatueAdapter;
 import com.shuangduan.zcy.adminManage.bean.DeviceDetailEditBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverCategoryBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverTypeBean;
-import com.shuangduan.zcy.adminManage.view.device.dialog.DeviceDialogControl;
-import com.shuangduan.zcy.adminManage.view.turnover.dialog.TurnoverDialogControl;
+import com.shuangduan.zcy.adminManage.dialog.DeviceDialogControl;
 import com.shuangduan.zcy.adminManage.vm.DeviceAddVm;
 import com.shuangduan.zcy.adminManage.vm.DeviceVm;
 import com.shuangduan.zcy.adminManage.vm.TurnoverVm;
@@ -715,7 +714,6 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
     //获取权限
     public static final int CAMERA = 111;
     public static final int PHOTO = 222;
-
     private void getPermissions() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager
@@ -812,8 +810,8 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
             deviceAddVm.province = deviceDetailEditBean.getProvince();
             deviceAddVm.city = deviceDetailEditBean.getCity();
             deviceAddVm.address = deviceDetailEditBean.getAddress();
-//            deviceAddVm.latitude = deviceDetailEditBean.getLatitude();
-//            deviceAddVm.longitude = deviceDetailEditBean.getLongitude();
+            deviceAddVm.latitude = deviceDetailEditBean.getLatitude();
+            deviceAddVm.longitude = deviceDetailEditBean.getLongitude();
             tvAddress.setText(deviceDetailEditBean.getProvince_name() + deviceDetailEditBean.getCity_name() + deviceDetailEditBean.getAddress());
             tvAddress.setTextColor(getResources().getColor(R.color.colorTv));
             etPersonLiable.setText(deviceDetailEditBean.getPerson_liable());
@@ -898,6 +896,10 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
             deviceAddVm.operator_name = deviceDetailEditBean.getOperator_name();
             tsOperatorName.setValue(deviceDetailEditBean.getOperator_name());
 
+            dialogControl.setDetail(deviceDetailEditBean.getUnit_id(),deviceDetailEditBean.getUnit_id_name(),deviceDetailEditBean.getStart_date()
+                    ,deviceDetailEditBean.getBrand(),deviceDetailEditBean.getOriginal_price(),deviceDetailEditBean.getMain_params(),deviceDetailEditBean.getPower()
+                    ,deviceDetailEditBean.getEntry_time(),deviceDetailEditBean.getExit_time(),deviceDetailEditBean.getOperator_name());
+
             if (deviceDetailEditBean.getUnit_id() != 0 || !StringUtils.isTrimEmpty(deviceDetailEditBean.getUnit_id_name())
                     || !StringUtils.isTrimEmpty(deviceDetailEditBean.getStart_date()) || !StringUtils.isTrimEmpty(deviceDetailEditBean.getBrand())
                     || !StringUtils.isTrimEmpty(deviceDetailEditBean.getOriginal_price()) || !StringUtils.isTrimEmpty(deviceDetailEditBean.getMain_params())
@@ -947,6 +949,5 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
         tsEntryTime.setValue(entry_time);
         tsExitTime.setValue(exit_time);
         tsOperatorName.setValue(operator_name);
-
     }
 }

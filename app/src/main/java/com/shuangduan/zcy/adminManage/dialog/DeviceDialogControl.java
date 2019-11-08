@@ -1,4 +1,4 @@
-package com.shuangduan.zcy.adminManage.view.device.dialog;
+package com.shuangduan.zcy.adminManage.dialog;
 
 import android.content.DialogInterface;
 import android.text.Editable;
@@ -7,14 +7,10 @@ import android.view.View;
 
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ArrayWheelAdapter;
-import com.shuangduan.zcy.adminManage.view.turnover.dialog.BaseAddInfoDialog;
 import com.shuangduan.zcy.adminManage.vm.TurnoverVm;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.listener.TextWatcherWrapper;
 import com.shuangduan.zcy.utils.KeyboardUtil;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author xuyu
@@ -29,7 +25,6 @@ public class DeviceDialogControl extends BaseAddInfoDialog implements DialogInte
 
     private final DeviceDetailListening listening;
 
-
     private int currentPosition;
     private ArrayWheelAdapter projectAdapter;
     //当前滑动的角标值
@@ -37,7 +32,6 @@ public class DeviceDialogControl extends BaseAddInfoDialog implements DialogInte
 
     private int unit_id;
     private String start_date, brand, original_price, main_params, power, entry_time, exit_time, operator_name, unit;
-
 
     @Override
     public int layoutId() {
@@ -303,5 +297,4 @@ public class DeviceDialogControl extends BaseAddInfoDialog implements DialogInte
         void callInfo(int unit_id, String unit, String start_date, String brand, String original_price, String main_params,
                       String power, String entry_time, String exit_time, String operator_name);
     }
-
 }
