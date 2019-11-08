@@ -385,7 +385,7 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
                 dialogControl.showDialog(6, R.string.admin_input_material_amortize);
                 break;
             case R.id.ts_original://周转材料原值
-                dialogControl.showDialog(7, R.string.admin_input_material_original);
+                dialogControl.showDialog(7,R.string.admin_input_material_original);
                 break;
             case R.id.ts_value://净值
                 dialogControl.showDialog(8, R.string.admin_input_material_value);

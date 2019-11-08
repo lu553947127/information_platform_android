@@ -35,6 +35,7 @@ public class TurnoverSelectView extends ConstraintLayout {
     private EditText etValue;
     private boolean editShow;
     private String hindValue;
+    private TextView tvTitle;
 
 
     public TurnoverSelectView(Context context) {
@@ -66,7 +67,7 @@ public class TurnoverSelectView extends ConstraintLayout {
     public void initView(Context context) {
         LayoutInflater.from(context).inflate(R.layout.layout_turnover_group, this, true);
 
-        TextView tvTitle = findViewById(R.id.tv_item_title);
+        tvTitle = findViewById(R.id.tv_item_title);
         tvValue = findViewById(R.id.tv_item_value);
         etValue = findViewById(R.id.et_item_value);
         line = findViewById(R.id.line);
@@ -98,5 +99,17 @@ public class TurnoverSelectView extends ConstraintLayout {
 
     public EditText getEditText() {
         return etValue;
+    }
+
+    public void setTitle(String title) {
+        tvTitle.setText(title);
+    }
+
+    public void setTitle(int res) {
+        tvTitle.setText(res);
+    }
+
+    public void setHint(int res) {
+        tvValue.setHint(res);
     }
 }

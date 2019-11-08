@@ -41,8 +41,11 @@ import com.shuangduan.zcy.adminManage.adapter.UseStatueAdapter;
 import com.shuangduan.zcy.adminManage.bean.DeviceDetailEditBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverCategoryBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverTypeBean;
+import com.shuangduan.zcy.adminManage.view.device.dialog.DeviceDialogControl;
+import com.shuangduan.zcy.adminManage.view.turnover.dialog.TurnoverDialogControl;
 import com.shuangduan.zcy.adminManage.vm.DeviceAddVm;
 import com.shuangduan.zcy.adminManage.vm.DeviceVm;
+import com.shuangduan.zcy.adminManage.vm.TurnoverVm;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BottomSheetDialogs;
@@ -94,7 +97,7 @@ import static com.shuangduan.zcy.app.CustomConfig.EDIT;
  * @Version: 1.0
  */
 @SuppressLint("SimpleDateFormat,UseSparseArrays")
-public class DeviceAddActivity extends BaseActivity {
+public class DeviceAddActivity extends BaseActivity implements DeviceDialogControl.DeviceDetailListening {
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
     @BindView(R.id.tv_category_material_id)
@@ -182,6 +185,7 @@ public class DeviceAddActivity extends BaseActivity {
     private DeviceAddVm deviceAddVm;
     private UploadPhotoVm uploadPhotoVm;
     private List<String> picture_list = new ArrayList<>();
+    private DeviceDialogControl dialogControl;
 
     @Override
     protected int initLayoutRes() {
@@ -198,6 +202,10 @@ public class DeviceAddActivity extends BaseActivity {
         tvBarTitle.setText(R.string.admin_device_material_add);
 
         int eqipmentId = getIntent().getIntExtra(CustomConfig.EQIPMENT_ID, 0);
+
+        TurnoverVm turnoverVm = ViewModelProviders.of(this).get(TurnoverVm.class);
+
+
         deviceVm = ViewModelProviders.of(this).get(DeviceVm.class);
         deviceAddVm = ViewModelProviders.of(this).get(DeviceAddVm.class);
         uploadPhotoVm = ViewModelProviders.of(this).get(UploadPhotoVm.class);
@@ -210,6 +218,9 @@ public class DeviceAddActivity extends BaseActivity {
                 getEditDetail(eqipmentId);
                 break;
         }
+        //详细信息输入弹出框初始化
+        dialogControl = new DeviceDialogControl(this, turnoverVm, this);
+        dialogControl.initView();
 
         //获取材料类别
         deviceVm.deviceFirstData.observe(this, turnoverCategoryBeans -> {
@@ -237,7 +248,8 @@ public class DeviceAddActivity extends BaseActivity {
             useStatueList = turnoverTypeBean.getUse_status();
             //获取是否上架
             groundingList = turnoverTypeBean.getIs_shelf();
-            if (SPUtils.getInstance().getInt(CustomConfig.INNER_SWITCH, 0) != 1) groundingList.remove(1);
+            if (SPUtils.getInstance().getInt(CustomConfig.INNER_SWITCH, 0) != 1)
+                groundingList.remove(1);
             //获取设备状况
             materialStatusList = turnoverTypeBean.getMaterial_status();
             //预计下步使用计划
@@ -302,8 +314,8 @@ public class DeviceAddActivity extends BaseActivity {
 
     @OnClick({R.id.iv_bar_back, R.id.tv_category_material_id, R.id.tv_unit, R.id.tv_use_status
             , R.id.tv_address, R.id.tv_is_shelf, R.id.tv_shelf_time_start, R.id.tv_shelf_time_end, R.id.iv_images
-            ,R.id.ts_project,R.id.ts_start_time,R.id.ts_brand,R.id.ts_original_price,R.id.ts_main_params,R.id.ts_power,R.id.ts_entry_time,R.id.ts_exit_time,R.id.ts_operator_name
-            ,R.id.tv_material_status,R.id.tv_plan, R.id.tv_reserve})
+            , R.id.ts_project, R.id.ts_start_time, R.id.ts_brand, R.id.ts_original_price, R.id.ts_main_params, R.id.ts_power, R.id.ts_entry_time, R.id.ts_exit_time, R.id.ts_operator_name
+            , R.id.tv_material_status, R.id.tv_plan, R.id.tv_reserve})
     void OnClick(View view) {
         Bundle bundle = new Bundle();
         switch (view.getId()) {
@@ -354,22 +366,31 @@ public class DeviceAddActivity extends BaseActivity {
                 }
                 break;
             case R.id.ts_project://所属项目
+                dialogControl.showDialog(0,  R.string.admin_selector_material_project);
                 break;
             case R.id.ts_start_time://开始使用日期
+                dialogControl.showDialog(1,  R.string.admin_selector_material_start_time);
                 break;
             case R.id.ts_brand://品牌
+                dialogControl.showDialog(2,  R.string.admin_input_material_brand);
                 break;
             case R.id.ts_original_price://设备原值
+                dialogControl.showDialog(3, R.string.admin_input_material_original_price);
                 break;
             case R.id.ts_main_params://主要参数
+                dialogControl.showDialog(4, R.string.admin_input_material_main_params);
                 break;
             case R.id.ts_power://功率
+                dialogControl.showDialog(5,  R.string.admin_input_material_power);
                 break;
             case R.id.ts_entry_time://设备进场时间
+                dialogControl.showDialog(6,  R.string.admin_input_device_material_entry_time);
                 break;
             case R.id.ts_exit_time://设备退场时间
+                dialogControl.showDialog(7, R.string.admin_input_device_material_exit_time);
                 break;
             case R.id.ts_operator_name://操作上姓名
+                dialogControl.showDialog(8,R.string.admin_input_device_material_operator_name);
                 break;
             case R.id.tv_material_status://设备状况
                 getBottomSheetDialog(R.layout.dialog_is_grounding, "material_status");
@@ -382,12 +403,12 @@ public class DeviceAddActivity extends BaseActivity {
                     case ADD://添加
                         deviceAddVm.equipmentAdd("add", etEncoding.getText().toString(), etStock.getText().toString()
                                 , etSpec.getText().toString(), etPersonLiable.getText().toString(), etTel.getText().toString(), etGuidancePrice.getText().toString()
-                                ,etUseMonthCount.getText().toString(),etTechnologyDetail.getText().toString(),etEquipmentTime.getText().toString());
+                                , etUseMonthCount.getText().toString(), etTechnologyDetail.getText().toString(), etEquipmentTime.getText().toString());
                         break;
                     case EDIT://编辑
                         deviceAddVm.equipmentAdd("edit", etEncoding.getText().toString(), etStock.getText().toString()
                                 , etSpec.getText().toString(), etPersonLiable.getText().toString(), etTel.getText().toString(), etGuidancePrice.getText().toString()
-                                ,etUseMonthCount.getText().toString(),etTechnologyDetail.getText().toString(),etEquipmentTime.getText().toString());
+                                , etUseMonthCount.getText().toString(), etTechnologyDetail.getText().toString(), etEquipmentTime.getText().toString());
                         break;
                 }
                 break;
@@ -452,6 +473,7 @@ public class DeviceAddActivity extends BaseActivity {
     private List<TurnoverTypeBean.MaterialStatusBean> materialStatusList = new ArrayList<>();
     private PlanAdapter planAdapter;
     private List<TurnoverTypeBean.PlanBean> planList = new ArrayList<>();
+
     @SuppressLint({"RestrictedApi,InflateParams", "SetTextI18n"})
     private void getBottomSheetDialog(int layout, String type) {
         //底部滑动对话框
@@ -693,6 +715,7 @@ public class DeviceAddActivity extends BaseActivity {
     //获取权限
     public static final int CAMERA = 111;
     public static final int PHOTO = 222;
+
     private void getPermissions() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager
@@ -900,5 +923,30 @@ public class DeviceAddActivity extends BaseActivity {
             ToastUtils.showShort("编辑成功");
             finish();
         });
+    }
+
+    @Override
+    public void callInfo(int unit_id, String unit, String start_date, String brand, String original_price,
+                         String main_params, String power, String entry_time, String exit_time, String operator_name) {
+        deviceAddVm.unit_id = unit_id;
+        deviceAddVm.start_date = start_date;
+        deviceAddVm.brand = brand;
+        deviceAddVm.original_price = original_price;
+        deviceAddVm.main_params = main_params;
+        deviceAddVm.power = power;
+        deviceAddVm.entry_time = entry_time;
+        deviceAddVm.exit_time = exit_time;
+        deviceAddVm.operator_name = operator_name;
+
+        tsProject.setValue(unit);
+        tsStartTime.setValue(start_date);
+        tsBrand.setValue(brand);
+        tsOriginalPrice.setValue(original_price);
+        tsMainParams.setValue(main_params);
+        tsPower.setValue(power);
+        tsEntryTime.setValue(entry_time);
+        tsExitTime.setValue(exit_time);
+        tsOperatorName.setValue(operator_name);
+
     }
 }
