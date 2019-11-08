@@ -136,12 +136,7 @@ public class DepositingPlaceActivity extends BaseActivity {
         if (isShelf == 1) {
             materialDetailVm.getAddressList(isShelf, methodType);
         } else if (isShelf == 3) {
-            if (methodType == CustomConfig.FRP) {  //内定物资 周转材料 传达 权限组
-                materialDetailVm.getAddressList(isShelf, methodType,  materialDetailVm.authGroup);
-            }
-//            else if (methodType == CustomConfig.EQUIPMENT) {
-//                materialDetailVm.getAddressList(isShelf, methodType);
-//            }
+            materialDetailVm.getAddressList(isShelf, methodType,  materialDetailVm.authGroup);
         }
     }
 

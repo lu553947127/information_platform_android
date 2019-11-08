@@ -320,8 +320,6 @@ public class TurnoverDialogControl implements DialogInterface.OnDismissListener,
                 showView(2, R.string.admin_input_material_num);
                 break;
             case 3:
-//                use_count = tsNum.getValue();
-//                tsNum.setValue(use_count);
                 showView(3, R.string.admin_selector_material_start_time);
                 break;
             case 4:
@@ -340,18 +338,12 @@ public class TurnoverDialogControl implements DialogInterface.OnDismissListener,
                 showView(6, R.string.admin_input_material_amortize);
                 break;
             case 7:
-//                accumulated_amortization = tsAmortize.getValue();
-//                tsAmortize.setValue(accumulated_amortization);
                 showView(7, R.string.admin_input_material_original);
                 break;
             case 8:
-//                original_price = tsOriginal.getValue();
-//                tsOriginal.setValue(original_price);
                 showView(8, R.string.admin_input_material_value);
                 break;
             case 9:
-//                net_worth = tsValue.getValue();
-//                tsValue.setValue(net_worth);
                 dialog.dismiss();
                 break;
         }

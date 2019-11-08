@@ -53,9 +53,14 @@ import com.yanzhenjie.recyclerview.SwipeRecyclerView;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.math.BigInteger;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import butterknife.BindView;
@@ -167,7 +172,7 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
                 }
             }
 
-            llLease.setVisibility(materialDetail.getMethod()==1?View.VISIBLE:View.GONE);
+            llLease.setVisibility(materialDetail.getMethod() == 1 ? View.VISIBLE : View.GONE);
 
             tvMaterialCategory.setText(materialDetailBean.getMaterial_category());
             tvSupplyMethod.setText(materialDetailBean.getMethod() == 1 ? "出租" : "出售");
@@ -302,7 +307,7 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
                 break;
             case R.id.tv_add://添加存放地
 
-                if(materialDetail.getMethod()==1){
+                if (materialDetail.getMethod() == 1) {
                     if (StringUtils.isTrimEmpty(leaseStartTime)) {
                         ToastUtils.showShort("请选择租赁开始时间");
                         return;
@@ -361,6 +366,7 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
     //添加存放地弹窗
     TextView tv_material_id;
     EditText et_num;
+
     private void getAddDialog() {
         //底部滑动对话框
         btn_dialog = new BottomSheetDialogs(this, R.style.BottomSheetStyle);
@@ -419,14 +425,6 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
                 return;
             }
 
-            if (materialDetail.getMethod() == 1) {
-
-//                if (Integer.valueOf(et_lease.getText().toString()) == 0) {
-//                    ToastUtils.showShort("租赁天数不能为0");
-//                    return;
-//                }
-//                day = Integer.valueOf(et_lease.getText().toString());
-            }
 
             BigInteger number = new BigInteger(et_num.getText().toString());
             materialDetailVm.getAddMaterial(materialId, number, materialDetail.getMethod(), leaseStartTime, leaseEndTime);
@@ -437,7 +435,22 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
     /**
      * 时间选择器
      */
+    private SimpleDateFormat sdf;
+    private Calendar c;
     private void showTimeDialog(TextView tv, int type) {
+
+
+        try {
+            if (sdf == null || c==null) {
+                sdf = new SimpleDateFormat("yyyy-MM-dd");
+                c = Calendar.getInstance();
+            }
+            c.setTime(Objects.requireNonNull(sdf.parse(leaseStartTime)));
+            c.add(Calendar.DAY_OF_MONTH, 1);
+        } catch (ParseException | NullPointerException e) {
+            e.printStackTrace();
+        }
+
         CustomDatePicker customDatePicker = new CustomDatePicker(this, time -> {
             tv.setText(time);
             if (type == 0) leaseStartTime = time;
@@ -446,15 +459,24 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
             if (!StringUtils.isTrimEmpty(leaseStartTime) && !StringUtils.isTrimEmpty(leaseEndTime)) {
                 day = DateUtils.getGapCount(leaseStartTime, leaseEndTime);
 
+                if (day <= 0) {
+                    ToastUtils.showShort("租赁结束时间不能小于开始时间");
+                    tv.setText("");
+                    return;
+                }
                 price = day * num * guidance_price;
                 if (materialDetail.getMethod() == 1) {
                     tvNumber.setText("共租赁" + day + "天，共计");
                     tvPrice.setText(String.valueOf(price));
                 }
             }
-        }, "yyyy-MM-dd", "2010-01-01", "2040-12-31");
+        }, "yyyy-MM-dd", TimeUtils.getNowString(), "2040-12-31");
         customDatePicker.showSpecificTime(false);
-        customDatePicker.show(TimeUtils.getNowString());
+        if (type == 0 || StringUtils.isTrimEmpty(leaseStartTime)) {
+            customDatePicker.show(TimeUtils.getNowString());
+        } else {
+            customDatePicker.show(sdf.format(c.getTime()));
+        }
     }
 
     @SuppressLint("SetTextI18n")

@@ -241,7 +241,6 @@ public class MaterialDetailActivity extends BaseActivity {
                         .setCallBack(new BaseDialog.CallBack() {
                             @Override
                             public void cancel() {
-
                             }
 
                             @Override

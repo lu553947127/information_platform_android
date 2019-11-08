@@ -44,7 +44,6 @@ public class KeyboardUtil {
      * @param activity
      */
     public static void closeKeyboard(Activity activity) {
-
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm.isActive() && activity.getCurrentFocus() != null) {
             if (activity.getCurrentFocus().getWindowToken() != null) {
@@ -59,7 +58,6 @@ public class KeyboardUtil {
      * @param activity
      * @return
      */
-
     public static boolean isSoftShowing(Activity activity) {
         //获取当屏幕内容的高度
         int screenHeight = activity.getWindow().getDecorView().getHeight();

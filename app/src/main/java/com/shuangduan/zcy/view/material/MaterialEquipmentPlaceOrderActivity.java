@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
@@ -34,6 +35,12 @@ import com.shuangduan.zcy.vm.MaterialDetailVm;
 import com.shuangduan.zcy.weight.datepicker.CustomDatePicker;
 
 import org.greenrobot.eventbus.Subscribe;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Objects;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import fj.edittextcount.lib.FJEditTextCount;
@@ -110,6 +117,7 @@ public class MaterialEquipmentPlaceOrderActivity extends BaseActivity {
     //租期开始时间  ,租期结束时间
     private String leaseStartTime, leaseEndTime;
 
+
     @Override
     protected int initLayoutRes() {
         return R.layout.activity_equipment_material_place_order;
@@ -172,7 +180,7 @@ public class MaterialEquipmentPlaceOrderActivity extends BaseActivity {
         materialDetailVm.mutableLiveAddOrder.observe(this, materialAddBean -> {
             Bundle bundle = new Bundle();
             bundle.putString("order_id", materialAddBean.getOrder_id());
-            bundle.putInt(CustomConfig.MATERIALS_TYPE,CustomConfig.EQUIPMENT);
+            bundle.putInt(CustomConfig.MATERIALS_TYPE, CustomConfig.EQUIPMENT);
             ActivityUtils.startActivity(bundle, MaterialOrderSuccessActivity.class);
             finish();
         });
@@ -202,7 +210,7 @@ public class MaterialEquipmentPlaceOrderActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.iv_bar_back, R.id.tv_province, R.id.tv_submission,R.id.tv_time_start,R.id.tv_time_end})
+    @OnClick({R.id.iv_bar_back, R.id.tv_province, R.id.tv_submission, R.id.tv_time_start, R.id.tv_time_end})
     void onClick(View view) {
         Bundle bundle = new Bundle();
         switch (view.getId()) {
@@ -242,23 +250,23 @@ public class MaterialEquipmentPlaceOrderActivity extends BaseActivity {
                     return;
                 }
 
-                if (materialDetail.getMethod() == 1 &&StringUtils.isTrimEmpty(leaseStartTime)) {
+                if (materialDetail.getMethod() == 1 && StringUtils.isTrimEmpty(leaseStartTime)) {
                     ToastUtils.showShort("请选择租赁开始时间");
                     return;
                 }
-                if (materialDetail.getMethod() == 1 &&StringUtils.isTrimEmpty(leaseEndTime)) {
+                if (materialDetail.getMethod() == 1 && StringUtils.isTrimEmpty(leaseEndTime)) {
                     ToastUtils.showShort("请选择租赁结束时间");
                     return;
                 }
 
-                if (materialDetail.getMethod() == 1 &&day <= 0) {
+                if (materialDetail.getMethod() == 1 && day <= 0) {
                     ToastUtils.showShort("开始时间必须小于结束时间");
                     return;
                 }
-                
+
                 materialDetailVm.getAddEquipmentOrder(materialDetail.getId(), etRealName.getText().toString(), etTel.getText().toString()
                         , etCompany.getText().toString(), province, city, etAddress.getText().toString(), etRemark.getText(),
-                        materialDetail.getMethod(),  num, materialDetail.getCategory(),leaseStartTime,leaseEndTime);
+                        materialDetail.getMethod(), num, materialDetail.getCategory(), leaseStartTime, leaseEndTime);
                 break;
             case R.id.tv_time_start:
                 showTimeDialog(tvTimeStart, 0);
@@ -272,7 +280,23 @@ public class MaterialEquipmentPlaceOrderActivity extends BaseActivity {
     /**
      * 时间选择器
      */
+    private SimpleDateFormat sdf;
+    private Calendar c;
+
     private void showTimeDialog(TextView tv, int type) {
+
+        try {
+            if (sdf == null || c==null) {
+                sdf = new SimpleDateFormat("yyyy-MM-dd");
+                c = Calendar.getInstance();
+            }
+            c.setTime(Objects.requireNonNull(sdf.parse(leaseStartTime)));
+            c.add(Calendar.DAY_OF_MONTH, 1);
+        } catch (ParseException | NullPointerException e) {
+            e.printStackTrace();
+        }
+
+
         CustomDatePicker customDatePicker = new CustomDatePicker(this, time -> {
             tv.setText(time);
             if (type == 0) leaseStartTime = time;
@@ -281,19 +305,26 @@ public class MaterialEquipmentPlaceOrderActivity extends BaseActivity {
             if (!StringUtils.isTrimEmpty(leaseStartTime) && !StringUtils.isTrimEmpty(leaseEndTime)) {
                 day = DateUtils.getGapCount(leaseStartTime, leaseEndTime);
 
+                if (day <= 0) {
+                    ToastUtils.showShort("租赁结束时间不能小于开始时间");
+                    tv.setText("");
+                    return;
+                }
+
                 if (materialDetail.getMethod() == 1) {
                     price = num * day * guidance_price;
                     tvNumber.setText("共租赁" + day + "天，共计");
                     tvPrice.setText(String.valueOf(price));
-                } else {
-                    price = num * guidance_price;
-                    tvNumber.setText("共采购" + num + "套，共计");
-                    tvPrice.setText(String.valueOf(price));
                 }
             }
-        }, "yyyy-MM-dd", "2010-01-01", "2040-12-31");
+        }, "yyyy-MM-dd", TimeUtils.getNowString(), "2040-12-31");
         customDatePicker.showSpecificTime(false);
-        customDatePicker.show(TimeUtils.getNowString());
+
+        if (type == 0 || StringUtils.isTrimEmpty(leaseStartTime)) {
+            customDatePicker.show(TimeUtils.getNowString());
+        } else {
+            customDatePicker.show(sdf.format(c.getTime()));
+        }
     }
 
     @SuppressLint("SetTextI18n")
