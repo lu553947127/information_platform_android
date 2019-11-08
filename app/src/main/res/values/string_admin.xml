@@ -106,8 +106,8 @@
     <string name="admin_input_material_original_price">请输入设备原值(元)</string>
     <string name="admin_input_material_main_params">请输入主要参数</string>
     <string name="admin_input_material_power">请输入功率</string>
-    <string name="admin_input_device_material_entry_time">请输入设备进场时间</string>
-    <string name="admin_input_device_material_exit_time">请输入设备退场时间</string>
+    <string name="admin_input_device_material_entry_time">请选择设备进场时间</string>
+    <string name="admin_input_device_material_exit_time">请选择设备退场时间</string>
     <string name="admin_input_device_material_operator_name">请输入操作手姓名</string>
 
 

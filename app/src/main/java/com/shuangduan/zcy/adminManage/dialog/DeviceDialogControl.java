@@ -5,6 +5,7 @@ import android.text.Editable;
 import android.text.InputType;
 import android.view.View;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ArrayWheelAdapter;
 import com.shuangduan.zcy.adminManage.vm.TurnoverVm;
@@ -141,31 +142,31 @@ public class DeviceDialogControl extends BaseAddInfoDialog implements DialogInte
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ts_item_one:
-                showView(0,  R.string.admin_selector_material_project);
+                showView(0, R.string.admin_selector_material_project);
                 break;
             case R.id.ts_item_two:
-                showView(1,R.string.admin_selector_material_plan);
+                showView(1, R.string.admin_selector_material_start_time);
                 break;
             case R.id.ts_item_three:
-                showView(2,  R.string.admin_input_material_num);
+                showView(2, R.string.admin_input_material_brand);
                 break;
             case R.id.ts_item_four:
-                showView(3,  R.string.admin_selector_material_start_time);
+                showView(3, R.string.admin_input_material_original_price);
                 break;
             case R.id.ts_item_five:
-                showView(4,  R.string.admin_selector_material_enter_time);
+                showView(4, R.string.admin_input_material_main_params);
                 break;
             case R.id.ts_item_six:
-                showView(5,  R.string.admin_selector_material_exit_time);
+                showView(5, R.string.admin_input_material_power);
                 break;
             case R.id.ts_item_seven:
-                showView(6,  R.string.admin_input_material_amortize);
+                showView(6, R.string.admin_input_device_material_entry_time);
                 break;
             case R.id.ts_item_eight:
-                showView(7, R.string.admin_input_material_original);
+                showView(7, R.string.admin_input_device_material_exit_time);
                 break;
             case R.id.tv_item_nine:
-                showView(8,  R.string.admin_input_material_value);
+                showView(8, R.string.admin_input_device_material_operator_name);
                 break;
             case R.id.tv_positive:
                 if (currentPosition < 9) {
@@ -192,16 +193,16 @@ public class DeviceDialogControl extends BaseAddInfoDialog implements DialogInte
                 showView(2, R.string.admin_input_material_brand);
                 break;
             case 3:
-                showView(3,  R.string.admin_input_material_original_price);
+                showView(3, R.string.admin_input_material_original_price);
                 break;
             case 4:
-                showView(4,R.string.admin_input_material_main_params);
+                showView(4, R.string.admin_input_material_main_params);
                 break;
             case 5:
                 showView(5, R.string.admin_input_material_power);
                 break;
             case 6:
-                showView(6,  R.string.admin_input_device_material_entry_time);
+                showView(6, R.string.admin_input_device_material_entry_time);
                 break;
             case 7:
                 entry_time = sdf.format(selectedCalender.getTime());
@@ -210,8 +211,8 @@ public class DeviceDialogControl extends BaseAddInfoDialog implements DialogInte
                 break;
             case 8:
                 exit_time = sdf.format(selectedCalender.getTime());
-                tsItemEight.setValue(entry_time);
-                showView(8,  R.string.admin_input_device_material_operator_name);
+                tsItemEight.setValue(exit_time);
+                showView(8, R.string.admin_input_device_material_operator_name);
                 break;
             case 9:
                 dialog.dismiss();
