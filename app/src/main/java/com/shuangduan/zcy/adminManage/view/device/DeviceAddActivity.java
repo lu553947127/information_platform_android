@@ -225,7 +225,7 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
         deviceVm.deviceFirstData.observe(this, turnoverCategoryBeans -> {
             categoryList = turnoverCategoryBeans;
             selectorCategoryFirstAdapter.setNewData(categoryList);
-            if (materialList.size() == 0) {
+            if (getIntent().getIntExtra(CustomConfig.HANDLE_TYPE, 0)==ADD&&materialList.size() == 0) {
                 deviceAddVm.category = categoryList.get(0).getId();
                 deviceAddVm.categoryName = categoryList.get(0).getCatname();
                 selectorCategoryFirstAdapter.setIsSelect(deviceAddVm.category);

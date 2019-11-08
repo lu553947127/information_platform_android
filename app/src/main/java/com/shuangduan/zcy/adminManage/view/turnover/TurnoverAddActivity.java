@@ -49,6 +49,7 @@ import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BottomSheetDialogs;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.event.LocationEvent;
+import com.shuangduan.zcy.utils.KeyboardUtil;
 import com.shuangduan.zcy.utils.image.PictureEnlargeUtils;
 import com.shuangduan.zcy.utils.matisse.Glide4Engine;
 import com.shuangduan.zcy.view.photo.CameraActivity;
@@ -212,7 +213,7 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
         turnoverVm.turnoverFirstData.observe(this, turnoverCategoryBeans -> {
             categoryList = turnoverCategoryBeans;
             selectorCategoryFirstAdapter.setNewData(categoryList);
-            if (materialList.size() == 0) {
+            if (getIntent().getIntExtra(CustomConfig.HANDLE_TYPE, 0)==ADD&&materialList.size() == 0) {
                 turnoverAddVm.category = categoryList.get(0).getId();
                 turnoverAddVm.categoryName = categoryList.get(0).getCatname();
                 selectorCategoryFirstAdapter.setIsSelect(turnoverAddVm.category);

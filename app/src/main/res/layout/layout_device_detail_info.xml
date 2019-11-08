@@ -162,9 +162,7 @@
         <com.shuangduan.zcy.weight.XEditText
             android:id="@+id/et_use_month_count"
             style="@style/AdminManageSecondHint"
-            android:maxLength="11"
-            android:hint="@string/admin_device_material_use_month_count_et"
-            android:inputType="number" />
+            android:hint="@string/admin_device_material_use_month_count_et" />
     </LinearLayout>
 
     <View style="@style/DividingLine" />
@@ -206,9 +204,7 @@
         <com.shuangduan.zcy.weight.XEditText
             android:id="@+id/et_technology_detail"
             style="@style/AdminManageSecondHint"
-            android:maxLength="11"
-            android:hint="@string/admin_device_material_technology_detail_et"
-            android:inputType="number" />
+            android:hint="@string/admin_device_material_technology_detail_et" />
     </LinearLayout>
 
     <View style="@style/DividingLine" />
@@ -229,9 +225,7 @@
         <com.shuangduan.zcy.weight.XEditText
             android:id="@+id/et_equipment_time"
             style="@style/AdminManageSecondHint"
-            android:maxLength="11"
-            android:hint="@string/admin_device_material_equipment_time_et"
-            android:inputType="number" />
+            android:hint="@string/admin_device_material_equipment_time_et" />
     </LinearLayout>
 
 </LinearLayout>
