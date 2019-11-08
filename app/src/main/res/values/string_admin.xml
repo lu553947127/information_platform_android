@@ -33,9 +33,13 @@
     <string name="admin_device_material_entry_time">设备进场时间</string>
     <string name="admin_device_material_exit_time">设备退场时间</string>
     <string name="admin_device_material_material_status_name">设备状况</string>
+    <string name="admin_device_material_material_status_name_et">请选择设备状况</string>
     <string name="admin_device_material_technology_detail">技术状态详细说明</string>
+    <string name="admin_device_material_technology_detail_et">请输入技术状态详细说明</string>
     <string name="admin_device_material_use_month_count">连续本使用状态月数</string>
+    <string name="admin_device_material_use_month_count_et">请输入连续本使用状态月数</string>
     <string name="admin_device_material_equipment_time">维修设备何时完好</string>
+    <string name="admin_device_material_equipment_time_et">请输入维修设备何时完好</string>
     <string name="admin_device_material_operator_name">操作手姓名</string>
     <string name="admin_device_add_category_material_id">设备类别/名称</string>
     <string name="admin_device_add_category_material_id_et">请选择设备类别/名称</string>

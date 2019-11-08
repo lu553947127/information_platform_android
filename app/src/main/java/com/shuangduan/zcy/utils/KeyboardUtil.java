@@ -11,7 +11,6 @@ import android.text.InputFilter;
 import android.text.InputType;
 import android.util.DisplayMetrics;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
@@ -103,8 +102,6 @@ public class KeyboardUtil {
         imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
-
-
     /**
      * 打开键盘
      *
@@ -115,7 +112,7 @@ public class KeyboardUtil {
         if (manager != null) manager.showSoftInput(view, 0);
     }
 
-
+    //打开键盘
     public static void showSoftInputFromWindow(BaseActivity activity, EditText editText) {
         editText.setFocusable(true);
         editText.setFocusableInTouchMode(true);
@@ -165,6 +162,7 @@ public class KeyboardUtil {
         return stringBuffer.toString();
     }
 
+    //复制
     public static void copyString(Context context, String str) {
         //获取剪贴板管理器：
         ClipboardManager cm = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);

@@ -2,6 +2,7 @@ package com.shuangduan.zcy.model.api;
 
 import com.shuangduan.zcy.adminManage.bean.DeviceBean;
 import com.shuangduan.zcy.adminManage.bean.DeviceDetailBean;
+import com.shuangduan.zcy.adminManage.bean.DeviceDetailEditBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverCompanyBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverCategoryBean;
@@ -1827,5 +1828,13 @@ public interface ApiService {
             @Field("plan") int plan,
             @Field("technology_detail") String technology_detail,
             @Field("equipment_time") String equipment_time
+    );
+
+    //后台管理 --- 设备管理编辑详情
+    @FormUrlEncoded
+    @POST("api/Manage/equipmentEditShow")
+    Flowable<BaseResponse<DeviceDetailEditBean>> equipmentEditShow(
+            @Field("user_id") int userId,
+            @Field("id") int id
     );
 }

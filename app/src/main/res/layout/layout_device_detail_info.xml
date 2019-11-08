@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -31,31 +32,6 @@
             app:hind_value_text="@string/admin_please_select" />
 
         <com.shuangduan.zcy.weight.TurnoverSelectView
-            android:id="@+id/ts_plan"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1.3"
-            app:edit_show="false"
-            app:title_text="@string/admin_material_plan"
-            app:hind_value_text="@string/admin_please_select" />
-
-        <com.shuangduan.zcy.weight.TurnoverSelectView
-            android:id="@+id/ts_num"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            app:edit_show="false"
-            app:title_text="@string/admin_material_num"
-            app:hind_value_text="@string/admin_turnover_hint_input" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="23dp"
-        android:orientation="horizontal">
-
-        <com.shuangduan.zcy.weight.TurnoverSelectView
             android:id="@+id/ts_start_time"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -64,23 +40,15 @@
             app:title_text="@string/admin_material_start_time"
             app:hind_value_text="@string/admin_please_select" />
 
-        <com.shuangduan.zcy.weight.TurnoverSelectView
-            android:id="@+id/ts_enter_time"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1.3"
-            app:edit_show="false"
-            app:title_text="@string/admin_material_enter_time"
-            app:hind_value_text="@string/admin_please_select" />
 
         <com.shuangduan.zcy.weight.TurnoverSelectView
-            android:id="@+id/ts_exit_time"
+            android:id="@+id/ts_brand"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            app:title_text="@string/admin_material_exit_time"
             app:edit_show="false"
-            app:hind_value_text="@string/admin_please_select" />
+            app:title_text="@string/admin_material_brand"
+            app:hind_value_text="@string/admin_turnover_hint_input" />
     </LinearLayout>
 
     <LinearLayout
@@ -90,31 +58,180 @@
         android:orientation="horizontal">
 
         <com.shuangduan.zcy.weight.TurnoverSelectView
-            android:id="@+id/ts_amortize"
+            android:id="@+id/ts_original_price"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             app:edit_show="false"
-            app:title_text="@string/admin_material_amortize"
+            app:title_text="@string/admin_material_original_price"
             app:hind_value_text="@string/admin_turnover_hint_input" />
 
         <com.shuangduan.zcy.weight.TurnoverSelectView
-            android:id="@+id/ts_original"
+            android:id="@+id/ts_main_params"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:edit_show="false"
+            app:title_text="@string/admin_material_main_params"
+            app:hind_value_text="@string/admin_turnover_hint_input" />
+
+        <com.shuangduan.zcy.weight.TurnoverSelectView
+            android:id="@+id/ts_power"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:title_text="@string/admin_material_power"
+            app:edit_show="false"
+            app:hind_value_text="@string/admin_turnover_hint_input" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="23dp"
+        android:orientation="horizontal">
+
+        <com.shuangduan.zcy.weight.TurnoverSelectView
+            android:id="@+id/ts_entry_time"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:edit_show="false"
+            app:title_text="@string/admin_device_material_entry_time"
+            app:hind_value_text="@string/admin_please_select" />
+
+        <com.shuangduan.zcy.weight.TurnoverSelectView
+            android:id="@+id/ts_exit_time"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1.3"
             app:edit_show="false"
-            app:title_text="@string/admin_material_original"
-            app:hind_value_text="@string/admin_turnover_hint_input" />
+            app:title_text="@string/admin_device_material_exit_time"
+            app:hind_value_text="@string/admin_please_select" />
 
         <com.shuangduan.zcy.weight.TurnoverSelectView
-            android:id="@+id/ts_value"
+            android:id="@+id/ts_operator_name"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             app:edit_show="false"
-            app:title_text="@string/admin_material_value"
+            app:title_text="@string/admin_device_material_operator_name"
             app:hind_value_text="@string/admin_turnover_hint_input" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/colorBgDark"
+        android:layout_marginTop="40dp"/>
+
+    <!--设备状况-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorFFF"
+        android:orientation="horizontal">
+
+        <TextView style="@style/RedMustText" android:visibility="invisible" />
+
+        <TextView
+            style="@style/AdminManageFirstText"
+            android:text="@string/admin_device_material_material_status_name" />
+
+        <TextView
+            android:id="@+id/tv_material_status"
+            style="@style/AdminManageSecondText"
+            android:text="@string/admin_device_material_material_status_name_et" />
+    </LinearLayout>
+
+    <View style="@style/DividingLine" />
+
+    <!--联系本使用状态月数-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorFFF"
+        android:orientation="horizontal">
+
+        <TextView style="@style/RedMustText" android:visibility="invisible" />
+
+        <TextView
+            style="@style/AdminManageFirstText"
+            android:text="@string/admin_device_material_use_month_count" />
+
+        <com.shuangduan.zcy.weight.XEditText
+            android:id="@+id/et_use_month_count"
+            style="@style/AdminManageSecondHint"
+            android:maxLength="11"
+            android:hint="@string/admin_device_material_use_month_count_et"
+            android:inputType="number" />
+    </LinearLayout>
+
+    <View style="@style/DividingLine" />
+
+    <!--预计下步使用计划-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorFFF"
+        android:orientation="horizontal">
+
+        <TextView style="@style/RedMustText" android:visibility="invisible" />
+
+        <TextView
+            style="@style/AdminManageFirstText"
+            android:text="@string/admin_material_plan" />
+
+        <TextView
+            android:id="@+id/tv_plan"
+            style="@style/AdminManageSecondText"
+            android:text="@string/admin_selector_material_plan" />
+    </LinearLayout>
+
+    <View style="@style/DividingLine" />
+
+    <!--技术状态详细说明-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorFFF"
+        android:orientation="horizontal">
+
+        <TextView style="@style/RedMustText" android:visibility="invisible" />
+
+        <TextView
+            style="@style/AdminManageFirstText"
+            android:text="@string/admin_device_material_technology_detail" />
+
+        <com.shuangduan.zcy.weight.XEditText
+            android:id="@+id/et_technology_detail"
+            style="@style/AdminManageSecondHint"
+            android:maxLength="11"
+            android:hint="@string/admin_device_material_technology_detail_et"
+            android:inputType="number" />
+    </LinearLayout>
+
+    <View style="@style/DividingLine" />
+
+    <!--维修设备何时完好-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorFFF"
+        android:orientation="horizontal">
+
+        <TextView style="@style/RedMustText" android:visibility="invisible" />
+
+        <TextView
+            style="@style/AdminManageFirstText"
+            android:text="@string/admin_device_material_equipment_time" />
+
+        <com.shuangduan.zcy.weight.XEditText
+            android:id="@+id/et_equipment_time"
+            style="@style/AdminManageSecondHint"
+            android:maxLength="11"
+            android:hint="@string/admin_device_material_equipment_time_et"
+            android:inputType="number" />
     </LinearLayout>
 
 </LinearLayout>

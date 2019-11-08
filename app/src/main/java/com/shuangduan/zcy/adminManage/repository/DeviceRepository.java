@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.shuangduan.zcy.adminManage.bean.DeviceBean;
 import com.shuangduan.zcy.adminManage.bean.DeviceDetailBean;
+import com.shuangduan.zcy.adminManage.bean.DeviceDetailEditBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverCategoryBean;
 import com.shuangduan.zcy.model.api.repository.BaseRepository;
 
@@ -51,6 +52,11 @@ public class DeviceRepository extends BaseRepository {
     //后台管理 --- 设备管理详情
     public void equipmentDetail(MutableLiveData<DeviceDetailBean> liveData, MutableLiveData<String> pageState, int userId, int id) {
         request(apiService.equipmentDetail(userId, id)).setData(liveData).setPageState(pageState).send();
+    }
+
+    //后台管理 --- 设备管理编辑详情
+    public void equipmentEditShow(MutableLiveData<DeviceDetailEditBean> liveData, MutableLiveData<String> pageState, int userId, int id) {
+        request(apiService.equipmentEditShow(userId, id)).setData(liveData).setPageState(pageState).send();
     }
 
     //后台管理 --- 设备添加

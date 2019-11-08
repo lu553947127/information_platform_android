@@ -59,12 +59,9 @@ public class DeviceAddVm extends BaseViewModel {
     public String entry_time;
     public String exit_time;
     public String operator_name;
-    public int material_status;
-    public String use_month_count;
-    public int plan;
-    public String technology_detail;
-    public String equipment_time;
 
+    public int material_status;
+    public int plan;
     public int editId;
 
     public MutableLiveData<String> deviceAddData;
@@ -86,7 +83,8 @@ public class DeviceAddVm extends BaseViewModel {
     }
 
     //后台管理 --- 设备添加/编辑
-    public void equipmentAdd(String type,String encoding,String stock,String spec,String person_liable,String tel,String guidance_price){
+    public void equipmentAdd(String type,String encoding,String stock,String spec,String person_liable,String tel,String guidance_price
+            ,String use_month_count,String technology_detail,String equipment_time){
         if (category==0) {
             ToastUtils.showShort(getString(R.string.admin_selector_device_no_category));
             return;

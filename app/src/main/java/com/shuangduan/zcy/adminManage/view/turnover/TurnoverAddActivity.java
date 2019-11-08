@@ -461,7 +461,6 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
     private List<TurnoverTypeBean.MaterialStatusBean> materialStatusList = new ArrayList<>();
     private GroundingAdapter groundingAdapter;
     private List<TurnoverTypeBean.IsShelfBean> groundingList = new ArrayList<>();
-
     @SuppressLint({"RestrictedApi,InflateParams", "SetTextI18n"})
     private void getBottomSheetDialog(int layout, String type) {
         //底部滑动对话框
@@ -686,7 +685,6 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
     //获取权限
     public static final int CAMERA = 111;
     public static final int PHOTO = 222;
-
     private void getPermissions() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager

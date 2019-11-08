@@ -26,15 +26,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.TimeUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adminManage.adapter.GroundingAdapter;
 import com.shuangduan.zcy.adminManage.adapter.ImagesAdapter;
+import com.shuangduan.zcy.adminManage.adapter.MaterialStatusAdapter;
+import com.shuangduan.zcy.adminManage.adapter.PlanAdapter;
 import com.shuangduan.zcy.adminManage.adapter.SelectorCategoryFirstAdapter;
 import com.shuangduan.zcy.adminManage.adapter.SelectorMaterialSecondAdapter;
 import com.shuangduan.zcy.adminManage.adapter.UnitAdapter;
 import com.shuangduan.zcy.adminManage.adapter.UseStatueAdapter;
+import com.shuangduan.zcy.adminManage.bean.DeviceDetailEditBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverCategoryBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverTypeBean;
 import com.shuangduan.zcy.adminManage.vm.DeviceAddVm;
@@ -51,6 +55,7 @@ import com.shuangduan.zcy.view.release.ReleaseAreaSelectActivity;
 import com.shuangduan.zcy.vm.UploadPhotoVm;
 import com.shuangduan.zcy.weight.RoundCheckBox;
 import com.shuangduan.zcy.weight.SwitchView;
+import com.shuangduan.zcy.weight.TurnoverSelectView;
 import com.shuangduan.zcy.weight.XEditText;
 import com.shuangduan.zcy.weight.datepicker.CustomDatePicker;
 import com.zhihu.matisse.Matisse;
@@ -143,6 +148,36 @@ public class DeviceAddActivity extends BaseActivity {
     @BindView(R.id.rv_images)
     RecyclerView rvImages;
 
+    @BindView(R.id.ts_project)
+    TurnoverSelectView tsProject;
+    @BindView(R.id.ts_start_time)
+    TurnoverSelectView tsStartTime;
+    @BindView(R.id.ts_brand)
+    TurnoverSelectView tsBrand;
+    @BindView(R.id.ts_original_price)
+    TurnoverSelectView tsOriginalPrice;
+    @BindView(R.id.ts_main_params)
+    TurnoverSelectView tsMainParams;
+    @BindView(R.id.ts_power)
+    TurnoverSelectView tsPower;
+    @BindView(R.id.ts_entry_time)
+    TurnoverSelectView tsEntryTime;
+    @BindView(R.id.ts_exit_time)
+    TurnoverSelectView tsExitTime;
+    @BindView(R.id.ts_operator_name)
+    TurnoverSelectView tsOperatorName;
+
+    @BindView(R.id.tv_material_status)
+    TextView tvMaterialStatus;
+    @BindView(R.id.et_use_month_count)
+    XEditText etUseMonthCount;
+    @BindView(R.id.tv_plan)
+    TextView tvPlan;
+    @BindView(R.id.et_technology_detail)
+    XEditText etTechnologyDetail;
+    @BindView(R.id.et_equipment_time)
+    XEditText etEquipmentTime;
+
     private DeviceVm deviceVm;
     private DeviceAddVm deviceAddVm;
     private UploadPhotoVm uploadPhotoVm;
@@ -162,9 +197,19 @@ public class DeviceAddActivity extends BaseActivity {
     protected void initDataAndEvent(Bundle savedInstanceState) {
         tvBarTitle.setText(R.string.admin_device_material_add);
 
+        int eqipmentId = getIntent().getIntExtra(CustomConfig.EQIPMENT_ID, 0);
         deviceVm = ViewModelProviders.of(this).get(DeviceVm.class);
         deviceAddVm = ViewModelProviders.of(this).get(DeviceAddVm.class);
         uploadPhotoVm = ViewModelProviders.of(this).get(UploadPhotoVm.class);
+
+        //判断时添加还是编辑
+        switch (getIntent().getIntExtra(CustomConfig.HANDLE_TYPE, 0)) {
+            case ADD://添加
+                break;
+            case EDIT://编辑
+                getEditDetail(eqipmentId);
+                break;
+        }
 
         //获取材料类别
         deviceVm.deviceFirstData.observe(this, turnoverCategoryBeans -> {
@@ -193,6 +238,10 @@ public class DeviceAddActivity extends BaseActivity {
             //获取是否上架
             groundingList = turnoverTypeBean.getIs_shelf();
             if (SPUtils.getInstance().getInt(CustomConfig.INNER_SWITCH, 0) != 1) groundingList.remove(1);
+            //获取设备状况
+            materialStatusList = turnoverTypeBean.getMaterial_status();
+            //预计下步使用计划
+            planList = turnoverTypeBean.getPlan();
         });
 
         //详细信息开关隐藏
@@ -253,7 +302,8 @@ public class DeviceAddActivity extends BaseActivity {
 
     @OnClick({R.id.iv_bar_back, R.id.tv_category_material_id, R.id.tv_unit, R.id.tv_use_status
             , R.id.tv_address, R.id.tv_is_shelf, R.id.tv_shelf_time_start, R.id.tv_shelf_time_end, R.id.iv_images
-            , R.id.tv_reserve})
+            ,R.id.ts_project,R.id.ts_start_time,R.id.ts_brand,R.id.ts_original_price,R.id.ts_main_params,R.id.ts_power,R.id.ts_entry_time,R.id.ts_exit_time,R.id.ts_operator_name
+            ,R.id.tv_material_status,R.id.tv_plan, R.id.tv_reserve})
     void OnClick(View view) {
         Bundle bundle = new Bundle();
         switch (view.getId()) {
@@ -303,15 +353,41 @@ public class DeviceAddActivity extends BaseActivity {
                     ToastUtils.showShort("最多上传5张照片哦");
                 }
                 break;
+            case R.id.ts_project://所属项目
+                break;
+            case R.id.ts_start_time://开始使用日期
+                break;
+            case R.id.ts_brand://品牌
+                break;
+            case R.id.ts_original_price://设备原值
+                break;
+            case R.id.ts_main_params://主要参数
+                break;
+            case R.id.ts_power://功率
+                break;
+            case R.id.ts_entry_time://设备进场时间
+                break;
+            case R.id.ts_exit_time://设备退场时间
+                break;
+            case R.id.ts_operator_name://操作上姓名
+                break;
+            case R.id.tv_material_status://设备状况
+                getBottomSheetDialog(R.layout.dialog_is_grounding, "material_status");
+                break;
+            case R.id.tv_plan://预计下步使用计划
+                getBottomSheetDialog(R.layout.dialog_is_grounding, "plan");
+                break;
             case R.id.tv_reserve://提交
                 switch (getIntent().getIntExtra(CustomConfig.HANDLE_TYPE, 0)) {
                     case ADD://添加
                         deviceAddVm.equipmentAdd("add", etEncoding.getText().toString(), etStock.getText().toString()
-                                , etSpec.getText().toString(), etPersonLiable.getText().toString(), etTel.getText().toString(), etGuidancePrice.getText().toString());
+                                , etSpec.getText().toString(), etPersonLiable.getText().toString(), etTel.getText().toString(), etGuidancePrice.getText().toString()
+                                ,etUseMonthCount.getText().toString(),etTechnologyDetail.getText().toString(),etEquipmentTime.getText().toString());
                         break;
                     case EDIT://编辑
                         deviceAddVm.equipmentAdd("edit", etEncoding.getText().toString(), etStock.getText().toString()
-                                , etSpec.getText().toString(), etPersonLiable.getText().toString(), etTel.getText().toString(), etGuidancePrice.getText().toString());
+                                , etSpec.getText().toString(), etPersonLiable.getText().toString(), etTel.getText().toString(), etGuidancePrice.getText().toString()
+                                ,etUseMonthCount.getText().toString(),etTechnologyDetail.getText().toString(),etEquipmentTime.getText().toString());
                         break;
                 }
                 break;
@@ -372,7 +448,10 @@ public class DeviceAddActivity extends BaseActivity {
     private List<TurnoverTypeBean.UseStatusBean> useStatueList = new ArrayList<>();
     private GroundingAdapter groundingAdapter;
     private List<TurnoverTypeBean.IsShelfBean> groundingList = new ArrayList<>();
-
+    private MaterialStatusAdapter materialStatusAdapter;
+    private List<TurnoverTypeBean.MaterialStatusBean> materialStatusList = new ArrayList<>();
+    private PlanAdapter planAdapter;
+    private List<TurnoverTypeBean.PlanBean> planList = new ArrayList<>();
     @SuppressLint({"RestrictedApi,InflateParams", "SetTextI18n"})
     private void getBottomSheetDialog(int layout, String type) {
         //底部滑动对话框
@@ -523,6 +602,42 @@ public class DeviceAddActivity extends BaseActivity {
                     btn_dialog.cancel();
                 });
                 break;
+            case "material_status"://设备状况
+                TextView tv_material_status = btn_dialog.findViewById(R.id.tv_title);
+                Objects.requireNonNull(tv_material_status).setText("设备状况");
+                RecyclerView rvMaterialStatus = btn_dialog.findViewById(R.id.rv);
+                Objects.requireNonNull(rvMaterialStatus).setLayoutManager(new LinearLayoutManager(this));
+                materialStatusAdapter = new MaterialStatusAdapter(R.layout.adapter_selector_area_second, materialStatusList);
+                rvMaterialStatus.setAdapter(materialStatusAdapter);
+                materialStatusAdapter.setOnItemClickListener((adapter, view, position) -> {
+                    deviceAddVm.material_status = materialStatusList.get(position).getId();
+                    tvMaterialStatus.setText(materialStatusList.get(position).getName());
+                    tvMaterialStatus.setTextColor(getResources().getColor(R.color.colorTv));
+                    materialStatusAdapter.setIsSelect(deviceAddVm.material_status);
+                    btn_dialog.dismiss();
+                });
+                if (deviceAddVm.material_status != 0) {
+                    materialStatusAdapter.setIsSelect(deviceAddVm.material_status);
+                }
+                break;
+            case "plan"://预计下步使用计划
+                TextView tv_plan = btn_dialog.findViewById(R.id.tv_title);
+                Objects.requireNonNull(tv_plan).setText("预计下步使用计划");
+                RecyclerView rvPlan = btn_dialog.findViewById(R.id.rv);
+                Objects.requireNonNull(rvPlan).setLayoutManager(new LinearLayoutManager(this));
+                planAdapter = new PlanAdapter(R.layout.adapter_selector_area_second, planList);
+                rvPlan.setAdapter(planAdapter);
+                planAdapter.setOnItemClickListener((adapter, view, position) -> {
+                    deviceAddVm.plan = planList.get(position).getId();
+                    tvPlan.setText(planList.get(position).getName());
+                    tvPlan.setTextColor(getResources().getColor(R.color.colorTv));
+                    planAdapter.setIsSelect(deviceAddVm.plan);
+                    btn_dialog.dismiss();
+                });
+                if (deviceAddVm.plan != 0) {
+                    planAdapter.setIsSelect(deviceAddVm.plan);
+                }
+                break;
         }
         btn_dialog.show();
     }
@@ -650,5 +765,140 @@ public class DeviceAddActivity extends BaseActivity {
         }
         LogUtils.i(sb.toString());
         return sb.toString();
+    }
+
+    //获取编辑详细数据显示
+    @SuppressLint("SetTextI18n")
+    private void getEditDetail(int id) {
+        deviceAddVm.editId = id;
+        deviceVm.equipmentEditShow(id);
+        deviceVm.deviceDetailEditLiveData.observe(this, deviceDetailEditBean -> {
+            deviceAddVm.category = deviceDetailEditBean.getCategory();
+            deviceAddVm.material_id = deviceDetailEditBean.getMaterial_id();
+            tvCategoryMaterial_id.setText(deviceDetailEditBean.getCategory_name() + " - " + deviceDetailEditBean.getMaterial_id_name());
+            tvCategoryMaterial_id.setTextColor(getResources().getColor(R.color.colorTv));
+            etEncoding.setText(deviceDetailEditBean.getEncoding());
+            etStock.setText(deviceDetailEditBean.getStock());
+            deviceAddVm.unit = deviceDetailEditBean.getUnit();
+            tvUnit.setText(deviceDetailEditBean.getUnit_name());
+            tvUnit.setTextColor(getResources().getColor(R.color.colorTv));
+            etSpec.setText(deviceDetailEditBean.getSpec());
+            deviceAddVm.use_status = deviceDetailEditBean.getUse_status();
+            tvUseStatus.setText(deviceDetailEditBean.getUse_status_name());
+            tvUseStatus.setTextColor(getResources().getColor(R.color.colorTv));
+            deviceAddVm.province = deviceDetailEditBean.getProvince();
+            deviceAddVm.city = deviceDetailEditBean.getCity();
+            deviceAddVm.address = deviceDetailEditBean.getAddress();
+            deviceAddVm.latitude = deviceDetailEditBean.getLatitude();
+            deviceAddVm.longitude = deviceDetailEditBean.getLongitude();
+            tvAddress.setText(deviceDetailEditBean.getProvince_name() + deviceDetailEditBean.getCity_name() + deviceDetailEditBean.getAddress());
+            tvAddress.setTextColor(getResources().getColor(R.color.colorTv));
+            etPersonLiable.setText(deviceDetailEditBean.getPerson_liable());
+            etTel.setText(deviceDetailEditBean.getTel());
+            deviceAddVm.is_shelf = deviceDetailEditBean.getIs_shelf();
+            tvIsShelf.setText(deviceDetailEditBean.getIs_shelf_name());
+            tvIsShelf.setTextColor(getResources().getColor(R.color.colorTv));
+            switch (deviceAddVm.is_shelf) {
+                case 1://公开上架
+                    llInsideShelf.setVisibility(View.GONE);
+                    llMethod.setVisibility(View.VISIBLE);
+                    llGuidancePrice.setVisibility(View.VISIBLE);
+                    tvImageRed.setVisibility(View.VISIBLE);
+                    etGuidancePrice.setText(deviceDetailEditBean.getGuidance_price());
+                    deviceAddVm.method = deviceDetailEditBean.getMethod();
+                    if (deviceAddVm.method == 1) {
+                        cbLease.setChecked(true);
+                        cbSell.setChecked(false);
+                    } else {
+                        cbLease.setChecked(false);
+                        cbSell.setChecked(true);
+                    }
+                    break;
+                case 2://未上架
+                    llInsideShelf.setVisibility(View.GONE);
+                    llMethod.setVisibility(View.GONE);
+                    llGuidancePrice.setVisibility(View.GONE);
+                    tvImageRed.setVisibility(View.INVISIBLE);
+                    break;
+                case 3://内部上架
+                    llInsideShelf.setVisibility(View.VISIBLE);
+                    llMethod.setVisibility(View.VISIBLE);
+                    llGuidancePrice.setVisibility(View.VISIBLE);
+                    tvImageRed.setVisibility(View.VISIBLE);
+                    etGuidancePrice.setText(deviceDetailEditBean.getGuidance_price());
+                    deviceAddVm.shelf_start_time = deviceDetailEditBean.getShelf_start_time();
+                    tvShelfTimeStart.setText(deviceDetailEditBean.getShelf_start_time());
+                    tvShelfTimeStart.setTextColor(getResources().getColor(R.color.colorTv));
+                    deviceAddVm.shelf_end_time = deviceDetailEditBean.getShelf_end_time();
+                    tvShelfTimeEnd.setText(deviceDetailEditBean.getShelf_end_time());
+                    tvShelfTimeEnd.setTextColor(getResources().getColor(R.color.colorTv));
+                    deviceAddVm.shelf_type = deviceDetailEditBean.getShelf_type();
+                    if (deviceAddVm.shelf_type == 1) {
+                        cbShelfTypeOpen.setChecked(true);
+                        cbShelfTypeClose.setChecked(false);
+                    } else {
+                        cbShelfTypeOpen.setChecked(false);
+                        cbShelfTypeClose.setChecked(true);
+                    }
+                    deviceAddVm.method = deviceDetailEditBean.getMethod();
+                    if (deviceAddVm.method == 1) {
+                        cbLease.setChecked(true);
+                        cbSell.setChecked(false);
+                    } else {
+                        cbLease.setChecked(false);
+                        cbSell.setChecked(true);
+                    }
+                    break;
+            }
+            for (DeviceDetailEditBean.ImagesBean img : deviceDetailEditBean.getImages()) {
+                picture_list.add(img.getUrl());
+            }
+            deviceAddVm.images = getListToString();
+            getImageBitmap();
+
+            deviceAddVm.unit_id = deviceDetailEditBean.getUnit_id();
+            tsProject.setValue(deviceDetailEditBean.getUnit_id_name());
+            deviceAddVm.start_date = deviceDetailEditBean.getStart_date();
+            tsStartTime.setValue(deviceDetailEditBean.getStart_date());
+            deviceAddVm.brand = deviceDetailEditBean.getBrand();
+            tsBrand.setValue(deviceDetailEditBean.getBrand());
+            deviceAddVm.original_price = deviceDetailEditBean.getOriginal_price();
+            tsOriginalPrice.setValue(deviceDetailEditBean.getOriginal_price());
+            deviceAddVm.main_params = deviceDetailEditBean.getMain_params();
+            tsMainParams.setValue(deviceDetailEditBean.getMain_params());
+            deviceAddVm.power = deviceDetailEditBean.getPower();
+            tsPower.setValue(deviceDetailEditBean.getPower());
+            deviceAddVm.entry_time = deviceDetailEditBean.getEntry_time();
+            tsEntryTime.setValue(deviceDetailEditBean.getEntry_time());
+            deviceAddVm.exit_time = deviceDetailEditBean.getExit_time();
+            tsExitTime.setValue(deviceDetailEditBean.getExit_time());
+            deviceAddVm.operator_name = deviceDetailEditBean.getOperator_name();
+            tsOperatorName.setValue(deviceDetailEditBean.getOperator_name());
+
+            if (deviceDetailEditBean.getUnit_id() != 0 || !StringUtils.isTrimEmpty(deviceDetailEditBean.getUnit_id_name())
+                    || !StringUtils.isTrimEmpty(deviceDetailEditBean.getStart_date()) || !StringUtils.isTrimEmpty(deviceDetailEditBean.getBrand())
+                    || !StringUtils.isTrimEmpty(deviceDetailEditBean.getOriginal_price()) || !StringUtils.isTrimEmpty(deviceDetailEditBean.getMain_params())
+                    || !StringUtils.isTrimEmpty(deviceDetailEditBean.getPower()) || !StringUtils.isTrimEmpty(deviceDetailEditBean.getEntry_time())
+                    || !StringUtils.isTrimEmpty(deviceDetailEditBean.getExit_time()) || !StringUtils.isTrimEmpty(deviceDetailEditBean.getOperator_name())) {
+                svOtherDetails.setOpened(true);
+                llTurnoverDetail.setVisibility(View.VISIBLE);
+            }
+
+            deviceAddVm.material_status = deviceDetailEditBean.getMaterial_status();
+            tvMaterialStatus.setText(deviceDetailEditBean.getMaterial_status_name());
+            tvMaterialStatus.setTextColor(getResources().getColor(R.color.colorTv));
+            etUseMonthCount.setText(deviceDetailEditBean.getUse_month_count());
+            deviceAddVm.plan = deviceDetailEditBean.getPlan();
+            tvPlan.setText(deviceDetailEditBean.getPlan_name());
+            tvPlan.setTextColor(getResources().getColor(R.color.colorTv));
+            etTechnologyDetail.setText(deviceDetailEditBean.getTechnology_detail());
+            etEquipmentTime.setText(deviceDetailEditBean.getEquipment_time());
+        });
+
+        //编辑周转材料返回结果
+        deviceAddVm.deviceEditData.observe(this, item -> {
+            ToastUtils.showShort("编辑成功");
+            finish();
+        });
     }
 }

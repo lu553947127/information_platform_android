@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.adminManage.bean.DeviceBean;
 import com.shuangduan.zcy.adminManage.bean.DeviceDetailBean;
+import com.shuangduan.zcy.adminManage.bean.DeviceDetailEditBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverCategoryBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverCompanyBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverTypeBean;
@@ -46,6 +47,7 @@ public class DeviceVm extends BaseViewModel {
     public MutableLiveData<List<TurnoverCategoryBean>> deviceSecondData;
     public MutableLiveData<String> deviceDeleteData;
     public MutableLiveData<DeviceDetailBean> deviceDetailLiveData;
+    public MutableLiveData<DeviceDetailEditBean> deviceDetailEditLiveData;
     public MutableLiveData<String> pageStateLiveData;
 
     public DeviceVm(){
@@ -58,6 +60,7 @@ public class DeviceVm extends BaseViewModel {
         deviceSecondData = new MutableLiveData<>();
         deviceDeleteData = new MutableLiveData<>();
         deviceDetailLiveData = new MutableLiveData<>();
+        deviceDetailEditLiveData = new MutableLiveData<>();
         pageStateLiveData = new MutableLiveData<>();
         is_shelf = 0;
         use_status = 0;
@@ -112,5 +115,10 @@ public class DeviceVm extends BaseViewModel {
     //后台管理 --- 设备管理详情
     public void equipmentDetail(int id){
         new DeviceRepository().equipmentDetail(deviceDetailLiveData, pageStateLiveData, userId,id);
+    }
+
+    //后台管理 --- 设备管理编辑详情
+    public void equipmentEditShow(int id) {
+        new DeviceRepository().equipmentEditShow(deviceDetailEditLiveData, pageStateLiveData, userId, id);
     }
 }
