@@ -789,8 +789,8 @@ public class DeviceAddActivity extends BaseActivity {
             deviceAddVm.province = deviceDetailEditBean.getProvince();
             deviceAddVm.city = deviceDetailEditBean.getCity();
             deviceAddVm.address = deviceDetailEditBean.getAddress();
-            deviceAddVm.latitude = deviceDetailEditBean.getLatitude();
-            deviceAddVm.longitude = deviceDetailEditBean.getLongitude();
+//            deviceAddVm.latitude = deviceDetailEditBean.getLatitude();
+//            deviceAddVm.longitude = deviceDetailEditBean.getLongitude();
             tvAddress.setText(deviceDetailEditBean.getProvince_name() + deviceDetailEditBean.getCity_name() + deviceDetailEditBean.getAddress());
             tvAddress.setTextColor(getResources().getColor(R.color.colorTv));
             etPersonLiable.setText(deviceDetailEditBean.getPerson_liable());

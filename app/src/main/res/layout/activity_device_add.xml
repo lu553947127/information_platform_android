@@ -57,8 +57,7 @@
                     android:id="@+id/et_encoding"
                     style="@style/AdminManageSecondHint"
                     android:maxLength="10"
-                    android:hint="@string/admin_device_add_encoding_et"
-                    android:inputType="number" />
+                    android:hint="@string/admin_device_add_encoding_et" />
             </LinearLayout>
 
             <View style="@style/DividingLine" />

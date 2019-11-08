@@ -68,7 +68,7 @@ public class DeviceDetailEditBean {
     private String encoding;
     private int unit_id;
     private String unit_id_name;
-    private int stock;
+    private String stock;
     private int unit;
     private String unit_name;
     private String spec;
@@ -91,7 +91,7 @@ public class DeviceDetailEditBean {
     private String shelf_start_time;
     private String shelf_end_time;
     private int shelf_type;
-    private int guidance_price;
+    private String guidance_price;
     private int plan;
     private String plan_name;
     private String brand;
@@ -101,7 +101,7 @@ public class DeviceDetailEditBean {
     private String start_date;
     private String entry_time;
     private String exit_time;
-    private int use_month_count;
+    private String use_month_count;
     private String technology_detail;
     private String equipment_time;
     private String operator_name;
@@ -163,11 +163,11 @@ public class DeviceDetailEditBean {
         this.unit_id_name = unit_id_name;
     }
 
-    public int getStock() {
+    public String getStock() {
         return stock;
     }
 
-    public void setStock(int stock) {
+    public void setStock(String stock) {
         this.stock = stock;
     }
 
@@ -347,11 +347,11 @@ public class DeviceDetailEditBean {
         this.shelf_type = shelf_type;
     }
 
-    public int getGuidance_price() {
+    public String getGuidance_price() {
         return guidance_price;
     }
 
-    public void setGuidance_price(int guidance_price) {
+    public void setGuidance_price(String guidance_price) {
         this.guidance_price = guidance_price;
     }
 
@@ -427,11 +427,11 @@ public class DeviceDetailEditBean {
         this.exit_time = exit_time;
     }
 
-    public int getUse_month_count() {
+    public String getUse_month_count() {
         return use_month_count;
     }
 
-    public void setUse_month_count(int use_month_count) {
+    public void setUse_month_count(String use_month_count) {
         this.use_month_count = use_month_count;
     }
 
