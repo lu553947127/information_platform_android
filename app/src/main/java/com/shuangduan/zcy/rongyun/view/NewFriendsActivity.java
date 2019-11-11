@@ -120,13 +120,12 @@ public class NewFriendsActivity extends BaseActivity implements EmptyViewFactory
         refresh.setOnRefreshLoadMoreListener(new SimpleMultiPurposeListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                refreshLayout.finishRefresh(1000);
+                refreshLayout.finishRefresh(500);
                 imAddVm.imFriendApplyList();
             }
         });
 
         imAddVm.applyListLiveData.observe(this, item -> {
-            LogUtils.e(item);
             newFriendAdapter.setEmptyView(emptyView);
             newFriendAdapter.setNewData(item.getList());
         });
@@ -146,8 +145,6 @@ public class NewFriendsActivity extends BaseActivity implements EmptyViewFactory
                     break;
             }
         });
-
-        imAddVm.imFriendApplyList();
     }
 
 
@@ -159,5 +156,11 @@ public class NewFriendsActivity extends BaseActivity implements EmptyViewFactory
     @Override
     public void onEmptyClick() {
         ActivityUtils.startActivity(ProjectInfoListActivity.class);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        imAddVm.imFriendApplyList();
     }
 }

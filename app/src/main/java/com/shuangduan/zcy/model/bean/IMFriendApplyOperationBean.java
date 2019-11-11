@@ -11,13 +11,13 @@ package com.shuangduan.zcy.model.bean;
  * @class describe
  */
 public class IMFriendApplyOperationBean {
-    private int apply_user_id;
+    private String apply_user_id;
 
-    public int getApply_user_id() {
+    public String getApply_user_id() {
         return apply_user_id;
     }
 
-    public void setApply_user_id(int apply_user_id) {
+    public void setApply_user_id(String apply_user_id) {
         this.apply_user_id = apply_user_id;
     }
 }

@@ -3,7 +3,6 @@ package com.shuangduan.zcy.model.api.repository;
 import androidx.lifecycle.MutableLiveData;
 
 import com.shuangduan.zcy.model.bean.IMFriendApplyCountBean;
-import com.shuangduan.zcy.model.bean.IMFriendApplyDetailBean;
 import com.shuangduan.zcy.model.bean.IMFriendApplyListBean;
 import com.shuangduan.zcy.model.bean.IMFriendApplyOperationBean;
 import com.shuangduan.zcy.model.bean.IMFriendListBean;
