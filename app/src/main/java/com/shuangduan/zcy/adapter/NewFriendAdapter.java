@@ -26,14 +26,14 @@ import java.util.List;
  * @chang time
  * @class describe
  */
-public class NewFriendAdapter extends BaseQuickAdapter<IMFriendApplyListBean.DataBean.ListBean, BaseViewHolder> {
-    public NewFriendAdapter(int layoutResId, @Nullable List<IMFriendApplyListBean.DataBean.ListBean> data) {
+public class NewFriendAdapter extends BaseQuickAdapter<IMFriendApplyListBean.ListBean, BaseViewHolder> {
+    public NewFriendAdapter(int layoutResId, @Nullable List<IMFriendApplyListBean.ListBean> data) {
         super(layoutResId, data);
     }
 
     @SuppressLint("NewApi")
     @Override
-    protected void convert(BaseViewHolder helper, IMFriendApplyListBean.DataBean.ListBean item) {
+    protected void convert(BaseViewHolder helper, IMFriendApplyListBean.ListBean item) {
         helper.setText(R.id.tv_name, item.getUsername())
                 .setText(R.id.tv_time, item.getCreate_time())
                 .setText(R.id.tv_msg, item.getApply_user_msg())

@@ -1272,8 +1272,7 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("api/Friend/applyList")
     Flowable<BaseResponse<IMFriendApplyListBean>> imFriendApplyList(
-            @Field("user_id") int user_id,
-            @Field("page") int page
+            @Field("user_id") int user_id
     );
 
     //工程圈 好友添加验证

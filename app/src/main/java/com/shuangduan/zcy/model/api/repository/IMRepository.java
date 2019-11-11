@@ -41,8 +41,8 @@ public class IMRepository extends BaseRepository {
         request(apiService.applyCount(userId)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
-    public void imFriendApplyList(MutableLiveData<IMFriendApplyListBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int page){
-        request(apiService.imFriendApplyList(userId, page)).setData(liveData).setPageState(pageStateLiveData).send();
+    public void imFriendApplyList(MutableLiveData<IMFriendApplyListBean> liveData, MutableLiveData<String> pageStateLiveData, int userId){
+        request(apiService.imFriendApplyList(userId)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
     //工程圈 好友添加验证

@@ -32,6 +32,7 @@ import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
 import com.shuangduan.zcy.model.bean.CoinPayResultBean;
 import com.shuangduan.zcy.model.bean.IMFriendApplyCountBean;
 import com.shuangduan.zcy.model.bean.IMFriendApplyListBean;
+import com.shuangduan.zcy.model.bean.IMGroupInfoBean;
 import com.shuangduan.zcy.model.bean.ProjectSubConfirmBean;
 import com.shuangduan.zcy.model.event.WarrantSuccessEvent;
 import com.shuangduan.zcy.utils.LoginUtils;
@@ -230,7 +231,7 @@ public class SubOrderActivity extends BaseActivity {
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
                         LogUtils.json(response.body());
                         try {
-                            IMFriendApplyListBean bean=new Gson().fromJson(response.body(), IMFriendApplyListBean.class);
+                            IMGroupInfoBean bean=new Gson().fromJson(response.body(), IMGroupInfoBean.class);
                             if (bean.getCode().equals("200")){
                                 ToastUtils.showShort(getString(R.string.pay_success));
                                 EventBus.getDefault().post(new WarrantSuccessEvent());
