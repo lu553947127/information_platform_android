@@ -1,8 +1,6 @@
-package com.shuangduan.zcy.rongyun;
+package com.shuangduan.zcy.rongyun.bean;
 
 import com.google.gson.annotations.SerializedName;
-
-import retrofit2.http.POST;
 
 /**
  * @author xuyu

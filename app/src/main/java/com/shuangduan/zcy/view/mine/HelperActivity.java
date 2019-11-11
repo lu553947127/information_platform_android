@@ -1,36 +1,23 @@
 package com.shuangduan.zcy.view.mine;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.Html;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.BarUtils;
-import com.blankj.utilcode.util.LogUtils;
-import com.blankj.utilcode.util.SPUtils;
-import com.blankj.utilcode.util.ToastUtils;
-import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
-import com.lzy.okgo.OkGo;
-import com.lzy.okgo.model.Response;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.HelpAdapter;
-import com.shuangduan.zcy.app.Common;
-import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
-import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
-import com.shuangduan.zcy.model.bean.HelpBean;
-import com.shuangduan.zcy.utils.LoginUtils;
+import com.shuangduan.zcy.model.api.PageState;
+import com.shuangduan.zcy.vm.HomeVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -57,8 +44,6 @@ public class HelperActivity extends BaseActivity {
     RecyclerView recyclerView;
     @BindView(R.id.refresh)
     SmartRefreshLayout refresh;
-    HelpAdapter adapter;
-    List<HelpBean.DataBean.ListBean> list=new ArrayList<>();
 
     @Override
     protected int initLayoutRes() {
@@ -77,57 +62,29 @@ public class HelperActivity extends BaseActivity {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
-        adapter = new HelpAdapter(HelperActivity.this,R.layout.item_help, list);
+        HelpAdapter adapter = new HelpAdapter(HelperActivity.this,R.layout.item_help, null);
         adapter.setEmptyView(R.layout.layout_loading, recyclerView);
         recyclerView.setAdapter(adapter);
         refresh.setEnableLoadMore(false);
         refresh.setEnableRefresh(false);
-        getHelp();
-    }
 
-    //帮助
-    private void getHelp() {
-
-        OkGo.<String>post(RetrofitHelper.BASE_TEST_URL+ Common.USER_INFO_HELP)
-                .tag(this)
-                .headers("token", SPUtils.getInstance().getString(SpConfig.TOKEN))//请求头
-                .params("user_id", SPUtils.getInstance().getInt(SpConfig.USER_ID))//用户编号
-                .execute(new com.lzy.okgo.callback.StringCallback() {//返回值
-
-                    @Override
-                    public void onError(Response<String> response) {
-                        super.onError(response);
-                        LogUtils.json(response.body());
-                    }
-
-                    @SuppressLint("SetTextI18n")
-                    @Override
-                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-                        LogUtils.json(response.body());
-                        try {
-                            HelpBean bean=new Gson().fromJson(response.body(), HelpBean.class);
-                            if (bean.getCode().equals("200")){
-                                list.clear();
-                                list.addAll(bean.getData().getList());
-                                if (list!=null&&list.size()!=0){
-                                    adapter.notifyDataSetChanged();
-                                }else {
-                                    adapter.setEmptyView(R.layout.layout_empty, recyclerView);
-                                }
-                                String str="关于易基建平台的<font color=\"#6a5ff8\">"+bean.getData().getCount()+"</font>个问题";
-                                textView.setText(Html.fromHtml(str));
-                            }else if (bean.getCode().equals("-1")){
-                                ToastUtils.showShort(bean.getMsg());
-                                LoginUtils.getExitLogin();
-                            }else {
-                                adapter.setEmptyView(R.layout.layout_empty, recyclerView);
-                                list.clear();
-                            }
-                        }catch (JsonSyntaxException | IllegalStateException ignored){
-                            ToastUtils.showShort(getString(R.string.request_error));
-                        }
-                    }
-                });
+        HomeVm homeVm = ViewModelProviders.of(this).get(HomeVm.class);
+        homeVm.helpLiveData.observe(this,helpBean -> {
+            adapter.setNewData(helpBean.getList());
+            String str="关于易基建平台的<font color=\"#6a5ff8\">"+helpBean.getCount()+"</font>个问题";
+            textView.setText(Html.fromHtml(str));
+        });
+        homeVm.pageStateLiveData.observe(this, s -> {
+            switch (s) {
+                case PageState.PAGE_LOADING:
+                    showLoading();
+                    break;
+                default:
+                    hideLoading();
+                    break;
+            }
+        });
+        homeVm.help();
     }
 
     @OnClick({R.id.iv_bar_back})

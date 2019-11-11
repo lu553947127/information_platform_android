@@ -26,6 +26,7 @@ import com.shuangduan.zcy.model.bean.VersionUpgradesBean;
  * @UpdateRemark: 更新说明
  * @Version: 1.0
  */
+@SuppressLint({"CutPasteId", "InflateParams", "SetTextI18n"})
 public class UpdateManager {
 
     private String apk_url;
@@ -35,12 +36,11 @@ public class UpdateManager {
 
     public UpdateManager(Context context,VersionUpgradesBean versionBean ) {
         this.mContext = context;
-        this.apk_url = versionBean.getData().getDownload_url();
+        this.apk_url = versionBean.getDownload_url();
         this.versionBean=versionBean;
     }
 
     // 显示软件更新对话框
-    @SuppressLint({"CutPasteId", "InflateParams", "SetTextI18n"})
     public void showNoticeDialog() {
         LogUtils.i(apk_url);
         dialog = new Dialog(mContext, R.style.custom_dialog);
@@ -50,8 +50,8 @@ public class UpdateManager {
         TextView tv_content=view.findViewById(R.id.tv_content);
         TextView tv_version_update=view.findViewById(R.id.tv_version_update);
         TextView tv_version_cancel=view.findViewById(R.id.tv_version_cancel);
-        tv_code.setText("V"+versionBean.getData().getVersion());
-        tv_content.setText(versionBean.getData().getContent());
+        tv_code.setText("V"+versionBean.getVersion());
+        tv_content.setText(versionBean.getContent());
         tv_version_update.setOnClickListener(v -> {
             dialog.dismiss();
             //开始更新
@@ -66,5 +66,4 @@ public class UpdateManager {
         dialog.setContentView(view, new ViewGroup.MarginLayoutParams(displayMetrics.widthPixels,ViewGroup.MarginLayoutParams.MATCH_PARENT));
         dialog.show();
     }
-
 }

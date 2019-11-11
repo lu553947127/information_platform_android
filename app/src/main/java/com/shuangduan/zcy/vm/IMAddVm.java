@@ -30,7 +30,6 @@ public class IMAddVm extends BaseViewModel {
     public MutableLiveData<IMFriendApplyOperationBean> applyOperateLiveData;
     public MutableLiveData applyLiveData;
     public MutableLiveData<String> pageStateLiveData;
-    private int pageSearch;
     public String searchName;
     public int receiverId;
     private int pageNewFriend;
@@ -45,16 +44,9 @@ public class IMAddVm extends BaseViewModel {
         pageStateLiveData = new MutableLiveData<>();
     }
 
-    public void search(){
-        pageSearch = 1;
-        pageStateLiveData.postValue(PageState.PAGE_REFRESH);
-        new IMRepository().imFriendSearch(searchLiveData, pageStateLiveData, userId, searchName, pageSearch);
-    }
-
-    public void searchMore(){
-        pageSearch ++;
-        pageStateLiveData.postValue(PageState.PAGE_REFRESH);
-        new IMRepository().imFriendSearch(searchLiveData, pageStateLiveData, userId, searchName, pageSearch);
+    //好友群组搜索列表
+    public void search(String name){
+        new IMRepository().imFriendSearch(searchLiveData, pageStateLiveData, userId, name);
     }
 
     public void apply(String msg){

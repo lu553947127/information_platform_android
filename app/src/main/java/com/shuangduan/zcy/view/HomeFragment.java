@@ -46,14 +46,12 @@ import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
 import com.shuangduan.zcy.model.bean.DemandBuyerBean;
 import com.shuangduan.zcy.model.bean.DemandRelationshipBean;
 import com.shuangduan.zcy.model.bean.DemandSubstanceBean;
-import com.shuangduan.zcy.model.bean.VersionUpgradesBean;
 import com.shuangduan.zcy.model.bean.ClassifyBean;
 import com.shuangduan.zcy.model.bean.HomeBannerBean;
 import com.shuangduan.zcy.model.bean.HomeListBean;
 import com.shuangduan.zcy.model.bean.HomePushBean;
 import com.shuangduan.zcy.model.bean.IMFriendApplyCountBean;
 import com.shuangduan.zcy.utils.DensityUtil;
-import com.shuangduan.zcy.utils.VersionUtils;
 import com.shuangduan.zcy.utils.image.GlideImageLoader;
 import com.shuangduan.zcy.view.demand.DemandActivity;
 import com.shuangduan.zcy.view.demand.DemandReleaseActivity;
@@ -203,8 +201,7 @@ public class HomeFragment extends BaseFragment {
         refresh.setEnableRefresh(true);
         refresh.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);
         refresh.setOnRefreshListener(refreshLayout -> {
-            homeVm.getInit();
-            getAndroidVersionUpgrades();
+            homeVm.getInit(getActivity());
             refreshLayout.finishRefresh(1000);
         });
         refresh.setEnableOverScrollDrag(true);
@@ -280,7 +277,15 @@ public class HomeFragment extends BaseFragment {
                 headlinesAdapter.setNewData(homeListBean.getHeadlines());
             }
         });
-        homeVm.getInit();
+
+        //版本升级返回数据
+        homeVm.versionUpgradesLiveData.observe(this,versionUpgradesBean -> {
+            if (versionUpgradesBean.getStatus().equals("1")){
+                //版本更新弹出框显示
+                UpdateManager manager = new UpdateManager(getActivity(), versionUpgradesBean);
+                manager.showNoticeDialog();
+            }
+        });
         getBadgeViewInitView();
         getNeedData();
     }
@@ -568,56 +573,14 @@ public class HomeFragment extends BaseFragment {
                 });
     }
 
-    //版本升级
-    private void getAndroidVersionUpgrades() {
-
-        OkGo.<String>post(RetrofitHelper.BASE_TEST_URL+ Common.VERSION_UPGRADE)
-                .tag(this)
-                .headers("token", SPUtils.getInstance().getString(SpConfig.TOKEN))//请求头
-                .params("version", VersionUtils.getVerName(Objects.requireNonNull(getActivity())))//版本号
-//                .params("version", "1")//版本号
-                .params("type", "1")//升级类型：1 安卓，2 ios
-                .execute(new com.lzy.okgo.callback.StringCallback() {//返回值
-
-                    @Override
-                    public void onError(Response<String> response) {
-                        super.onError(response);
-                        LogUtils.json(response.body());
-                    }
-
-                    @Override
-                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-                        LogUtils.json(response.body());
-                        try {
-                            VersionUpgradesBean bean=new Gson().fromJson(response.body(), VersionUpgradesBean.class);
-                            if (bean.getCode().equals("200")){
-                                if (bean.getData().getStatus().equals("1")){
-                                    //版本更新弹出框显示
-                                    UpdateManager manager = new UpdateManager(getActivity(), bean);
-                                    manager.showNoticeDialog();
-                                }
-                            }
-                        }catch (JsonSyntaxException | IllegalStateException ignored){
-                            ToastUtils.showShort(getString(R.string.request_error));
-                        }
-                    }
-                });
-    }
-
     @Override
-    public void onResume() {
-        super.onResume();
+    protected void initDataFromService() {
         RongIM.getInstance().addUnReadMessageCountChangedObserver(i -> {
             LogUtils.i(i);
             // i 是未读数量
             getFriendApplyCount(i);
         }, Conversation.ConversationType.PRIVATE,Conversation.ConversationType.GROUP,Conversation.ConversationType.SYSTEM);
-        getAndroidVersionUpgrades();
-    }
-
-    @Override
-    protected void initDataFromService() {
-
+        homeVm.getInit(getActivity());
     }
 }
 

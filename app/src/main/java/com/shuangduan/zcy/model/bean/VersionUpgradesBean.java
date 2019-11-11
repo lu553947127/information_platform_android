@@ -14,132 +14,86 @@ package com.shuangduan.zcy.model.bean;
  */
 public class VersionUpgradesBean {
     /**
-     * code : 200
-     * msg :
-     * time : 1568943077
-     * data : {"id":1,"type":1,"version":"1.0.0","download_url":"http://www.baidu.com","content":"紫菜云信息平台：","create_time":"2019-08-22 10:09:15","status":0,"update_time":"2019-09-17 19:56:18"}
+     * id : 1
+     * type : 1
+     * version : 1.0.0
+     * download_url : http://www.baidu.com
+     * content : 紫菜云信息平台：
+     * create_time : 2019-08-22 10:09:15
+     * status : 0
+     * update_time : 2019-09-17 19:56:18
      */
 
-    private String code;
-    private String msg;
-    private int time;
-    private DataBean data;
+    private int id;
+    private int type;
+    private String version;
+    private String download_url;
+    private String content;
+    private String create_time;
+    private String status;
+    private String update_time;
 
-    public String getCode() {
-        return code;
+    public int getId() {
+        return id;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getMsg() {
-        return msg;
+    public int getType() {
+        return type;
     }
 
-    public void setMsg(String msg) {
-        this.msg = msg;
+    public void setType(int type) {
+        this.type = type;
     }
 
-    public int getTime() {
-        return time;
+    public String getVersion() {
+        return version;
     }
 
-    public void setTime(int time) {
-        this.time = time;
+    public void setVersion(String version) {
+        this.version = version;
     }
 
-    public DataBean getData() {
-        return data;
+    public String getDownload_url() {
+        return download_url;
     }
 
-    public void setData(DataBean data) {
-        this.data = data;
+    public void setDownload_url(String download_url) {
+        this.download_url = download_url;
     }
 
-    public static class DataBean {
-        /**
-         * id : 1
-         * type : 1
-         * version : 1.0.0
-         * download_url : http://www.baidu.com
-         * content : 紫菜云信息平台：
-         * create_time : 2019-08-22 10:09:15
-         * status : 0
-         * update_time : 2019-09-17 19:56:18
-         */
+    public String getContent() {
+        return content;
+    }
 
-        private int id;
-        private int type;
-        private String version;
-        private String download_url;
-        private String content;
-        private String create_time;
-        private String status;
-        private String update_time;
+    public void setContent(String content) {
+        this.content = content;
+    }
 
-        public int getId() {
-            return id;
-        }
+    public String getCreate_time() {
+        return create_time;
+    }
 
-        public void setId(int id) {
-            this.id = id;
-        }
+    public void setCreate_time(String create_time) {
+        this.create_time = create_time;
+    }
 
-        public int getType() {
-            return type;
-        }
+    public String getStatus() {
+        return status;
+    }
 
-        public void setType(int type) {
-            this.type = type;
-        }
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
-        public String getVersion() {
-            return version;
-        }
+    public String getUpdate_time() {
+        return update_time;
+    }
 
-        public void setVersion(String version) {
-            this.version = version;
-        }
-
-        public String getDownload_url() {
-            return download_url;
-        }
-
-        public void setDownload_url(String download_url) {
-            this.download_url = download_url;
-        }
-
-        public String getContent() {
-            return content;
-        }
-
-        public void setContent(String content) {
-            this.content = content;
-        }
-
-        public String getCreate_time() {
-            return create_time;
-        }
-
-        public void setCreate_time(String create_time) {
-            this.create_time = create_time;
-        }
-
-        public String getStatus() {
-            return status;
-        }
-
-        public void setStatus(String status) {
-            this.status = status;
-        }
-
-        public String getUpdate_time() {
-            return update_time;
-        }
-
-        public void setUpdate_time(String update_time) {
-            this.update_time = update_time;
-        }
+    public void setUpdate_time(String update_time) {
+        this.update_time = update_time;
     }
 }

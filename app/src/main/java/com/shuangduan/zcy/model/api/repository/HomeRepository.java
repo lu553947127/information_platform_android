@@ -5,11 +5,13 @@ import androidx.lifecycle.MutableLiveData;
 import com.shuangduan.zcy.model.bean.ExplainDetailBean;
 import com.shuangduan.zcy.model.bean.HeadlinesBean;
 import com.shuangduan.zcy.model.bean.HeadlinesDetailBean;
+import com.shuangduan.zcy.model.bean.HelpBean;
 import com.shuangduan.zcy.model.bean.HomeBannerBean;
 import com.shuangduan.zcy.model.bean.HomeListBean;
 import com.shuangduan.zcy.model.bean.SupplierCliqueBean;
 import com.shuangduan.zcy.model.bean.HomePushBean;
 import com.shuangduan.zcy.model.bean.SupplierRoleBean;
+import com.shuangduan.zcy.model.bean.VersionUpgradesBean;
 
 import java.util.List;
 
@@ -54,5 +56,13 @@ public class HomeRepository extends BaseRepository {
 
     public void getSupplierRole(MutableLiveData<List<SupplierRoleBean>> liveData, int userId){
         request(apiService.getSupplierRole(userId)).setDataList(liveData).send();
+    }
+
+    public void help(MutableLiveData<HelpBean> liveData, MutableLiveData<String> pageStateLiveData, int userId){
+        request(apiService.help(userId)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    public void versionUpgrade(MutableLiveData<VersionUpgradesBean> liveData, MutableLiveData<String> pageStateLiveData, int userId,String version,int type){
+        request(apiService.versionUpgrade(userId,version,type)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 }

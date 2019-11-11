@@ -294,6 +294,13 @@ public interface ApiService {
             @Field("uid") int uid
     );
 
+    //帮助列表
+    @FormUrlEncoded
+    @POST("api/Userinfo/help")
+    Flowable<BaseResponse<HelpBean>> help(
+            @Field("user_id") int user_id
+    );
+
     @Multipart
     @POST("api/Upload/uploadImage")
     Flowable<BaseResponse<UploadBean>> upload(
@@ -750,14 +757,6 @@ public interface ApiService {
             @Field("category_id") int category_id
     );
 
-//    @FormUrlEncoded
-//    @POST("api/Material/order")
-//    Flowable<BaseResponse> materialOrder(
-//            @Field("user_id") int user_id,
-//            @Field("id") int id,
-//            @Field("buy_stock") int buy_stock
-//    );
-
     @FormUrlEncoded
     @POST("api/supplier/supplierList")
     Flowable<BaseResponse<SupplierBean>> supplierList(
@@ -1202,9 +1201,18 @@ public interface ApiService {
             @Field("user_id") int user_id
     );
 
+    //好友群组搜索列表
     @FormUrlEncoded
     @POST("api/Friend/search")
     Flowable<BaseResponse<IMFriendSearchBean>> imFriendSearch(
+            @Field("user_id") int user_id,
+            @Field("name") String name
+    );
+
+    //搜索 更多好友列表
+    @FormUrlEncoded
+    @POST("api/Friend/searchFriend")
+    Flowable<BaseResponse<IMFriendSearchBean>> searchFriend(
             @Field("user_id") int user_id,
             @Field("name") String name,
             @Field("page") int page
@@ -1225,6 +1233,14 @@ public interface ApiService {
             @Field("id") int id
     );
 
+    //工程圈 好友申请数量
+    @FormUrlEncoded
+    @POST("api/Friend/applyCount")
+    Flowable<BaseResponse<IMFriendApplyDetailBean>> applyCount(
+            @Field("user_id") int user_id
+    );
+
+    //工程圈 新的好友列表
     @FormUrlEncoded
     @POST("api/Friend/applyList")
     Flowable<BaseResponse<IMFriendApplyListBean>> imFriendApplyList(
@@ -1232,6 +1248,7 @@ public interface ApiService {
             @Field("page") int page
     );
 
+    //工程圈 好友添加验证
     @FormUrlEncoded
     @POST("api/Friend/operation")
     Flowable<BaseResponse<IMFriendApplyOperationBean>> imFriendApplyOperation(
@@ -1240,7 +1257,6 @@ public interface ApiService {
             @Field("status") int status,
             @Field("msg") String msg
     );
-
 
     //搜索职位
     @FormUrlEncoded
@@ -1476,6 +1492,14 @@ public interface ApiService {
             @Field("id") int id
     );
 
+    //版本升级
+    @FormUrlEncoded
+    @POST("api/Passport/versionUpgrade")
+    Flowable<BaseResponse<VersionUpgradesBean>> versionUpgrade(
+            @Field("user_id") int userId,
+            @Field("version") String version,
+            @Field("type") int type
+    );
 
     //微信登录验证
     @FormUrlEncoded

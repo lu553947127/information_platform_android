@@ -31,15 +31,15 @@ import java.util.List;
  * @chang time
  * @class describe
  */
-public class IMSearchAdapter extends BaseQuickAdapter<IMFriendSearchBean.DataBean.FriendBean, BaseViewHolder> {
+public class IMSearchAdapter extends BaseQuickAdapter<IMFriendSearchBean.FriendBean, BaseViewHolder> {
     private String keyword;
 
-    public IMSearchAdapter(int layoutResId, @Nullable List<IMFriendSearchBean.DataBean.FriendBean> data) {
+    public IMSearchAdapter(int layoutResId, @Nullable List<IMFriendSearchBean.FriendBean> data) {
         super(layoutResId, data);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, IMFriendSearchBean.DataBean.FriendBean item) {
+    protected void convert(BaseViewHolder helper, IMFriendSearchBean.FriendBean item) {
         helper.setText(R.id.tv_name, setSpan(item.getName()));
         helper.setVisible(R.id.iv_sgs, item.getCardStatus() == 2);
         CircleImageView ivHead = helper.getView(R.id.iv_header);

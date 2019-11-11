@@ -1,13 +1,10 @@
 package com.shuangduan.zcy.view.supplier;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
@@ -19,23 +16,14 @@ import android.widget.TextView;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.LogUtils;
-import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
-import com.lzy.okgo.OkGo;
-import com.lzy.okgo.model.Response;
 import com.shuangduan.zcy.R;
-import com.shuangduan.zcy.app.Common;
 import com.shuangduan.zcy.app.CustomConfig;
-import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.BottomSheetDialogs;
@@ -43,11 +31,8 @@ import com.shuangduan.zcy.dialog.CustomDialog;
 import com.shuangduan.zcy.dialog.PhotoDialog;
 import com.shuangduan.zcy.dialog.ScaleDialog;
 import com.shuangduan.zcy.model.api.PageState;
-import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
-import com.shuangduan.zcy.model.bean.FileUploadBean;
 import com.shuangduan.zcy.model.event.AddressEvent;
 import com.shuangduan.zcy.model.event.MultiAreaEvent;
-import com.shuangduan.zcy.utils.LoginUtils;
 import com.shuangduan.zcy.utils.image.PictureEnlargeUtils;
 import com.shuangduan.zcy.utils.matisse.Glide4Engine;
 import com.shuangduan.zcy.utils.matisse.MatisseCamera;
@@ -67,7 +52,6 @@ import org.greenrobot.eventbus.Subscribe;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -114,19 +98,16 @@ public class SupplierJoinActivity extends BaseActivity implements BaseDialog.Pho
     @BindView(R.id.iv_logo)
     ImageView ivLogo;
 
-
     @BindView(R.id.tv_pic_content)
     TextView tvPicContent;
     @BindView(R.id.tv_logo)
     TextView tvLogo;
-
 
     private PermissionVm permissionVm;
     private UploadPhotoVm uploadPhotoVm;
     private RxPermissions rxPermissions;
     private SupplierVm supplierVm;
 
-    public static final int CAMERA = 111;
     public static final int PHOTO = 222;
     private int scale = 0;
     private String type, authorization, logo;
@@ -173,27 +154,67 @@ public class SupplierJoinActivity extends BaseActivity implements BaseDialog.Pho
         permissionVm = ViewModelProviders.of(this).get(PermissionVm.class);
         permissionVm.getLiveData().observe(this, integer -> {
             if (integer == PermissionVm.PERMISSION_CAMERA) {
-                MatisseCamera.from(this)
-                        .forResult(PermissionVm.REQUEST_CODE_HEAD, "com.shuangduan.zcy.fileprovider");
+                switch (type){
+                    case "images"://营业执照
+                        MatisseCamera.from(this)
+                                .forResult(PermissionVm.REQUEST_CODE_HEAD, "com.shuangduan.zcy.fileprovider");
+                        break;
+                    case "authorization"://授权申请
+                    case "logo"://公司logo
+                        startActivityForResult(new Intent(this, CameraActivity.class), 100);
+                        btn_dialog.cancel();
+                        break;
+                }
             } else if (integer == PermissionVm.PERMISSION_STORAGE) {
-                Matisse.from(this)
-                        .choose(MimeType.ofImage())
-                        .showSingleMediaType(true)
-                        .countable(true)
-                        .maxSelectable(1)
-                        .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
-                        .thumbnailScale(0.85f)
-                        .theme(R.style.Matisse_Dracula)
-                        .captureStrategy(new CaptureStrategy(true, "com.shuangduan.zcy.fileprovider"))
-                        .imageEngine(new Glide4Engine())
-                        .forResult(PermissionVm.REQUEST_CODE_CHOOSE_HEAD);
+                switch (type){
+                    case "images"://营业执照
+                        Matisse.from(this)
+                                .choose(MimeType.ofImage())
+                                .showSingleMediaType(true)
+                                .countable(true)
+                                .maxSelectable(1)
+                                .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
+                                .thumbnailScale(0.85f)
+                                .theme(R.style.Matisse_Dracula)
+                                .captureStrategy(new CaptureStrategy(true, "com.shuangduan.zcy.fileprovider"))
+                                .imageEngine(new Glide4Engine())
+                                .forResult(PermissionVm.REQUEST_CODE_CHOOSE_HEAD);
+                        break;
+                    case "authorization"://授权申请
+                    case "logo"://公司logo
+                        Matisse.from(this)
+                                .choose(MimeType.ofImage())
+                                .showSingleMediaType(true)
+                                .countable(true)
+                                .maxSelectable(1)
+                                .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
+                                .thumbnailScale(0.85f)
+                                .theme(R.style.Matisse_Dracula)
+                                .captureStrategy(new CaptureStrategy(true, "com.shuangduan.zcy.fileprovider"))
+                                .imageEngine(new Glide4Engine())
+                                .forResult(PHOTO);
+                        btn_dialog.cancel();
+                        break;
+                }
             }
         });
         uploadPhotoVm = ViewModelProviders.of(this).get(UploadPhotoVm.class);
 
         uploadPhotoVm.uploadLiveData.observe(this, uploadBean -> {
-            supplierVm.addImage(uploadBean.getImage_id());
-            tvPicContent.setVisibility(View.GONE);
+            switch (type){
+                case "images"://营业执照
+                    supplierVm.addImage(uploadBean.getImage_id());
+                    tvPicContent.setVisibility(View.GONE);
+                    break;
+                case "authorization"://授权申请
+                    authorization = uploadBean.getSource();
+                    tvAuthorization.setVisibility(View.INVISIBLE);
+                    break;
+                case "logo"://公司logo
+                    logo = uploadBean.getSource();
+                    tvLogo.setVisibility(View.INVISIBLE);
+                    break;
+            }
         });
 
         uploadPhotoVm.mPageStateLiveData.observe(this, s -> {
@@ -239,11 +260,7 @@ public class SupplierJoinActivity extends BaseActivity implements BaseDialog.Pho
                 supplierVm.delImage(pos);
                 LogUtils.i("supplierVm"+pos);
                 //显示提示语句
-                if (pos == 0) {
-                    tvPicContent.setVisibility(View.VISIBLE);
-                }else {
-
-                }
+                if (pos == 0)tvPicContent.setVisibility(View.VISIBLE);
             }
         });
     }
@@ -275,14 +292,18 @@ public class SupplierJoinActivity extends BaseActivity implements BaseDialog.Pho
         // 从相机返回的数据
         if (resultCode == 101) {
             String path = data.getStringExtra("path");
-            if (type.equals("authorization")) {
-                ivAuthorization.setImageBitmap(BitmapFactory.decodeFile(path));
-            } else {
-                ivLogo.setImageBitmap(BitmapFactory.decodeFile(path));
+            switch (type){
+                case "images"://营业执照
+                    break;
+                case "authorization"://授权申请
+                    ivAuthorization.setImageBitmap(BitmapFactory.decodeFile(path));
+                    uploadPhotoVm.upload(path);
+                    break;
+                case "logo"://公司logo
+                    ivLogo.setImageBitmap(BitmapFactory.decodeFile(path));
+                    uploadPhotoVm.upload(path);
+                    break;
             }
-            File file = new File(Objects.requireNonNull(path));
-            LogUtils.i(file);
-            getFileUpload(file);
         }
         if (resultCode == 103) {
             ToastUtils.showShort("您没有打开相机权限");
@@ -291,23 +312,30 @@ public class SupplierJoinActivity extends BaseActivity implements BaseDialog.Pho
         //从相册返回的数据
         if (requestCode == PHOTO && resultCode == RESULT_OK) {
             LogUtils.i(Matisse.obtainPathResult(data).get(0));
-            if (type.equals("authorization")) {
-                ivAuthorization.setImageBitmap(BitmapFactory.decodeFile(Matisse.obtainPathResult(data).get(0)));
-            } else {
-                ivLogo.setImageBitmap(BitmapFactory.decodeFile(Matisse.obtainPathResult(data).get(0)));
+            switch (type){
+                case "images"://营业执照
+                    break;
+                case "authorization"://授权申请
+                    ivAuthorization.setImageBitmap(BitmapFactory.decodeFile(Matisse.obtainPathResult(data).get(0)));
+                    uploadPhotoVm.upload(Matisse.obtainPathResult(data).get(0));
+                    break;
+                case "logo"://公司logo
+                    ivLogo.setImageBitmap(BitmapFactory.decodeFile(Matisse.obtainPathResult(data).get(0)));
+                    uploadPhotoVm.upload(Matisse.obtainPathResult(data).get(0));
+                    break;
             }
-            File file = new File(Objects.requireNonNull(Matisse.obtainPathResult(data).get(0)));
-            getFileUpload(file);
         }
     }
 
     @Override
     public void camera() {
+        type = "images";
         permissionVm.getPermissionCamera(rxPermissions);
     }
 
     @Override
     public void album() {
+        type = "images";
         permissionVm.getPermissionAlbum(rxPermissions);
     }
 
@@ -323,9 +351,6 @@ public class SupplierJoinActivity extends BaseActivity implements BaseDialog.Pho
                         , scale, edtCompanyWebsite.getText().toString(), authorization, logo);
                 break;
             case R.id.tv_scale:
-//                Bundle bundle = new Bundle();
-//                bundle.putInt(CustomConfig.PROJECT_ADDRESS, 0);
-//                ActivityUtils.startActivity(bundle, ReleaseAreaSelectActivity.class);
                 new ScaleDialog(this).setSelected(0).setSingleCallBack((item, position) -> {
                     scale = position + 1;
                     tvScale.setText(item + "人");
@@ -336,11 +361,11 @@ public class SupplierJoinActivity extends BaseActivity implements BaseDialog.Pho
                 break;
             case R.id.iv_authorization:
                 type = "authorization";
-                getPermissions();
+                getUploadPicture();
                 break;
             case R.id.iv_logo:
                 type = "logo";
-                getPermissions();
+                getUploadPicture();
                 break;
             case R.id.tv_authorization:
                 new CustomDialog(this)
@@ -380,30 +405,6 @@ public class SupplierJoinActivity extends BaseActivity implements BaseDialog.Pho
         tvServiceArea.setText(event.getStringResult());
     }
 
-    //获取权限
-    private void getPermissions() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager
-                    .PERMISSION_GRANTED &&
-                    ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) == PackageManager
-                            .PERMISSION_GRANTED &&
-                    ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager
-                            .PERMISSION_GRANTED) {
-                getUploadPicture();
-                btn_dialog.show();
-            } else {
-                //不具有获取权限，需要进行权限申请
-                ActivityCompat.requestPermissions(this, new String[]{
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.RECORD_AUDIO,
-                        Manifest.permission.CAMERA}, CAMERA);
-            }
-        } else {
-            getUploadPicture();
-            btn_dialog.show();
-        }
-    }
-
     //上传图片底部弹出框
     @SuppressLint("RestrictedApi")
     private void getUploadPicture() {
@@ -423,66 +424,8 @@ public class SupplierJoinActivity extends BaseActivity implements BaseDialog.Pho
         }
         ((ViewGroup.MarginLayoutParams) dialog_view.findViewById(R.id.tv_cancel).getLayoutParams()).bottomMargin = 60;
         dialog_view.findViewById(R.id.tv_cancel).setOnClickListener(view -> btn_dialog.cancel());
-        dialog_view.findViewById(R.id.tv_photo).setOnClickListener(view -> {
-            startActivityForResult(new Intent(this, CameraActivity.class), 100);
-            btn_dialog.cancel();
-        });
-        dialog_view.findViewById(R.id.tv_select_pic).setOnClickListener(view -> {
-            Matisse.from(this)
-                    .choose(MimeType.ofImage())
-                    .showSingleMediaType(true)
-                    .countable(true)
-                    .maxSelectable(1)
-                    .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
-                    .thumbnailScale(0.85f)
-                    .theme(R.style.Matisse_Dracula)
-                    .captureStrategy(new CaptureStrategy(true, "com.shuangduan.zcy.fileprovider"))
-                    .imageEngine(new Glide4Engine())
-                    .forResult(PHOTO);
-            btn_dialog.cancel();
-        });
-    }
-
-    //上传附件
-    private void getFileUpload(File file) {
-
-        OkGo.<String>post(RetrofitHelper.BASE_TEST_URL + Common.UPLOAD_IMAGE)
-                .tag(this)
-                .headers("token", SPUtils.getInstance().getString(SpConfig.TOKEN))//请求头
-                .params("user_id", SPUtils.getInstance().getInt(SpConfig.USER_ID))//用户编号
-                .params("file", file)//文件流
-                .execute(new com.lzy.okgo.callback.StringCallback() {
-
-                    @Override
-                    public void onError(Response<String> response) {
-                        super.onError(response);
-                        LogUtils.json(response.body());
-                        ToastUtils.showShort("上传图片失败");
-                    }
-
-                    @Override
-                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-                        LogUtils.json(response.body());
-                        try {
-                            FileUploadBean bean = new Gson().fromJson(response.body(), FileUploadBean.class);
-                            if (bean.getCode().equals("200")) {
-                                if (type.equals("authorization")) {
-                                    authorization = bean.getData().getSource();
-                                    tvAuthorization.setVisibility(View.INVISIBLE);
-                                } else {
-                                    logo = bean.getData().getSource();
-                                    tvLogo.setVisibility(View.INVISIBLE);
-                                }
-                            } else if (bean.getCode().equals("-1")) {
-                                ToastUtils.showShort(bean.getMsg());
-                                LoginUtils.getExitLogin();
-                            } else {
-                                ToastUtils.showShort(bean.getMsg());
-                            }
-                        } catch (JsonSyntaxException | IllegalStateException ignored) {
-                            ToastUtils.showShort(getString(R.string.request_error));
-                        }
-                    }
-                });
+        dialog_view.findViewById(R.id.tv_photo).setOnClickListener(view -> permissionVm.getPermissionCamera(rxPermissions));
+        dialog_view.findViewById(R.id.tv_select_pic).setOnClickListener(view -> permissionVm.getPermissionAlbum(rxPermissions));
+        btn_dialog.show();
     }
 }

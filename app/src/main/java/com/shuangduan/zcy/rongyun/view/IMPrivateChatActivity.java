@@ -28,7 +28,7 @@ import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
 import com.shuangduan.zcy.model.bean.IMWechatUserInfoBean;
-import com.shuangduan.zcy.rongyun.RongExtraBean;
+import com.shuangduan.zcy.rongyun.bean.RongExtraBean;
 import com.shuangduan.zcy.view.demand.FindBuyerDetailActivity;
 import com.shuangduan.zcy.view.demand.FindRelationshipReleaseDetailActivity;
 import com.shuangduan.zcy.view.demand.FindSubstanceDetailActivity;
@@ -37,7 +37,6 @@ import com.shuangduan.zcy.view.mine.TransRecordDetailActivity;
 import com.shuangduan.zcy.view.mine.UserInfoActivity;
 import com.shuangduan.zcy.view.projectinfo.ProjectDetailActivity;
 import com.shuangduan.zcy.view.recruit.RecruitDetailActivity;
-import com.shuangduan.zcy.view.supplier.SupplierDetailActivity;
 
 import java.util.Locale;
 import java.util.Objects;

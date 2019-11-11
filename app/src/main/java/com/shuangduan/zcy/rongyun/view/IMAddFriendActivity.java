@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.LogUtils;
@@ -26,6 +27,7 @@ import com.shuangduan.zcy.model.bean.IMFriendOperationBean;
 import com.shuangduan.zcy.utils.LoginUtils;
 import com.shuangduan.zcy.utils.image.ImageConfig;
 import com.shuangduan.zcy.utils.image.ImageLoader;
+import com.shuangduan.zcy.vm.IMAddVm;
 import com.shuangduan.zcy.weight.CircleImageView;
 
 import butterknife.BindView;
@@ -59,6 +61,7 @@ public class IMAddFriendActivity extends BaseActivity {
     EditText edtMsg;
     int friend_data;
     private String id,name,msg,image;
+    private IMAddVm imAddVm;
 
     @Override
     protected int initLayoutRes() {
@@ -79,6 +82,8 @@ public class IMAddFriendActivity extends BaseActivity {
         }else {
             tvBarTitle.setText(getString(R.string.add_friends));
         }
+
+        imAddVm = ViewModelProviders.of(this).get(IMAddVm.class);
 
         Bundle bundle=getIntent().getExtras();
         id=bundle.getString("id");

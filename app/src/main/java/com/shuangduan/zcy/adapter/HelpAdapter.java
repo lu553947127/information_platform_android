@@ -25,17 +25,17 @@ import java.util.List;
  * @UpdateRemark: 更新说明
  * @Version: 1.0
  */
-public class HelpAdapter extends BaseQuickAdapter<HelpBean.DataBean.ListBean, BaseViewHolder> {
+public class HelpAdapter extends BaseQuickAdapter<HelpBean.ListBean, BaseViewHolder> {
 
     private Context context;
 
-    public HelpAdapter(Context context,int layoutResId,@Nullable List<HelpBean.DataBean.ListBean> data) {
+    public HelpAdapter(Context context,int layoutResId,@Nullable List<HelpBean.ListBean> data) {
         super(layoutResId, data);
         this.context = context;
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, HelpBean.DataBean.ListBean item) {
+    protected void convert(BaseViewHolder helper, HelpBean.ListBean item) {
         helper.setText(R.id.tv_ask, item.getTitle());
         TextView tvContent = helper.getView(R.id.tv_answer);
         tvContent.setText(Html.fromHtml(item.getContent(), null, null));

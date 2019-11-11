@@ -23,8 +23,8 @@ public class IMRepository extends BaseRepository {
         request(apiService.getIMToken(userId)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
-    public void imFriendSearch(MutableLiveData<IMFriendSearchBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, String name, int page){
-        request(apiService.imFriendSearch(userId, name, page)).setData(liveData).setPageState(pageStateLiveData).send();
+    public void imFriendSearch(MutableLiveData<IMFriendSearchBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, String name){
+        request(apiService.imFriendSearch(userId, name)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
     public void imFriendApply(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int userId, int receive_user_id, String msg){

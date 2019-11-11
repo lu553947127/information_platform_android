@@ -21,14 +21,14 @@ import com.shuangduan.zcy.rongyun.view.IMGroupDetailsActivity;
 
 import java.util.List;
 
-public class IMSearchGroupAdapter extends BaseQuickAdapter<IMFriendSearchBean.DataBean.GroupBean, BaseViewHolder> {
+public class IMSearchGroupAdapter extends BaseQuickAdapter<IMFriendSearchBean.GroupBean, BaseViewHolder> {
     private String keyword;
-    public IMSearchGroupAdapter(int layoutResId, @Nullable List<IMFriendSearchBean.DataBean.GroupBean> data) {
+    public IMSearchGroupAdapter(int layoutResId, @Nullable List<IMFriendSearchBean.GroupBean> data) {
         super(layoutResId, data);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, IMFriendSearchBean.DataBean.GroupBean item) {
+    protected void convert(BaseViewHolder helper, IMFriendSearchBean.GroupBean item) {
         helper.setText(R.id.tv_name, setSpan(item.getGroup_name()));
         TextView avatar_tv= helper.getView(R.id.iv_avatar_tv);
         RelativeLayout relativeLayout=helper.getView(R.id.rl);
