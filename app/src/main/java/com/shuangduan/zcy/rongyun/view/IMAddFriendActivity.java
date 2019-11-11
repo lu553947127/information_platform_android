@@ -99,85 +99,9 @@ public class IMAddFriendActivity extends BaseActivity {
                 .placeholder(R.drawable.default_head)
                 .errorPic(R.drawable.default_head)
                 .build());
-
     }
 
-    //好友添加/拒绝验证
-    private void getFriendOperation(String user_id,String status,String msg) {
 
-        OkGo.<String>post(RetrofitHelper.BASE_TEST_URL+ Common.FRIEND_OPERATION)
-                .tag(this)
-                .headers("token", SPUtils.getInstance().getString(SpConfig.TOKEN))//请求头
-                .params("user_id", SPUtils.getInstance().getInt(SpConfig.USER_ID))//用户编号
-                .params("id",user_id)//接受/拒绝用户编号
-                .params("status",status)//接受/拒绝
-                .params("msg",msg)//接受/拒绝原因
-                .execute(new com.lzy.okgo.callback.StringCallback() {//返回值
-
-                    @Override
-                    public void onError(Response<String> response) {
-                        super.onError(response);
-                        LogUtils.json(response.body());
-                    }
-
-                    @Override
-                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-                        LogUtils.json(response.body());
-                        try {
-                            IMFriendOperationBean bean=new Gson().fromJson(response.body(), IMFriendOperationBean.class);
-                            if (bean.getCode().equals("200")){
-                                finish();
-                            }else if (bean.getCode().equals("-1")){
-                                ToastUtils.showShort(bean.getMsg());
-                                LoginUtils.getExitLogin();
-                            }else {
-                                ToastUtils.showShort(bean.getMsg());
-                            }
-                        }catch (JsonSyntaxException | IllegalStateException ignored){
-                            ToastUtils.showShort(getString(R.string.request_error));
-                        }
-                    }
-                });
-    }
-
-    //好友添加/拒绝验证
-    private void getFriendApply(String user_id,String msg) {
-
-        OkGo.<String>post(RetrofitHelper.BASE_TEST_URL+ Common.FRIEND_APPLY)
-                .tag(this)
-                .headers("token", SPUtils.getInstance().getString(SpConfig.TOKEN))//请求头
-                .params("user_id", SPUtils.getInstance().getInt(SpConfig.USER_ID))//用户编号
-                .params("receive_user_id",user_id)//接受/拒绝用户编号
-                .params("msg",msg)//接受/拒绝原因
-                .execute(new com.lzy.okgo.callback.StringCallback() {//返回值
-
-                    @Override
-                    public void onError(Response<String> response) {
-                        super.onError(response);
-                        LogUtils.json(response.body());
-                        ToastUtils.showShort(getString(R.string.request_error));
-                    }
-
-                    @Override
-                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-                        LogUtils.json(response.body());
-                        try {
-                            IMFriendOperationBean bean=new Gson().fromJson(response.body(), IMFriendOperationBean.class);
-                            if (bean.getCode().equals("200")){
-                                ToastUtils.showShort(bean.getMsg());
-                                finish();
-                            }else if (bean.getCode().equals("-1")){
-                                ToastUtils.showShort(bean.getMsg());
-                                LoginUtils.getExitLogin();
-                            }else {
-                                ToastUtils.showShort(bean.getMsg());
-                            }
-                        }catch (JsonSyntaxException | IllegalStateException ignored){
-                            ToastUtils.showShort(getString(R.string.request_error));
-                        }
-                    }
-                });
-    }
 
     @OnClick({R.id.iv_bar_back, R.id.tv_confirm})
     void onClick(View view){
@@ -187,9 +111,9 @@ public class IMAddFriendActivity extends BaseActivity {
                 break;
             case R.id.tv_confirm:
                 if (friend_data==3){
-                    getFriendOperation(id,"3",edtMsg.getText().toString());
+                    imAddVm.imFriendApplyOperation(Integer.parseInt(id),3,edtMsg.getText().toString());
                 }else {
-                    getFriendApply(id,edtMsg.getText().toString());
+                    imAddVm.imFriendApply(Integer.parseInt(id),edtMsg.getText().toString());
                 }
                 break;
         }

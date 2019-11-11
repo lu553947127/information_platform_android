@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBgDark">
+    android:background="@color/colorBgDark"
+    android:orientation="vertical">
 
-    <include layout="@layout/toolbar"/>
+    <include layout="@layout/toolbar" />
 
     <com.shuangduan.zcy.utils.ElasticScrollView
         android:layout_width="match_parent"
@@ -23,8 +23,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="@color/colorFFF">
+                android:background="@color/colorFFF"
+                android:orientation="vertical">
 
                 <com.youth.banner.Banner
                     android:id="@+id/banner"
@@ -34,12 +34,13 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
                     <TextView
                         android:id="@+id/tv_material_category"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="17dp"
                         android:layout_marginLeft="14dp"
+                        android:layout_marginTop="17dp"
                         android:textColor="@color/colorTv"
                         android:textSize="15sp" />
 
@@ -47,12 +48,12 @@
                         android:id="@+id/iv_purchased_goods"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toRightOf="@+id/tv_material_category"
-                        android:layout_marginTop="9dp"
                         android:layout_marginLeft="3dp"
+                        android:layout_marginTop="9dp"
+                        android:layout_toRightOf="@+id/tv_material_category"
                         android:scaleType="centerCrop"
                         android:src="@drawable/icon_mine_default_material"
-                        android:visibility="gone"/>
+                        android:visibility="gone" />
 
                     <TextView
                         android:id="@+id/tv_unit_price"
@@ -82,36 +83,36 @@
                         android:id="@+id/tv_supply_method"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/tv_stock"
+                        android:layout_alignBottom="@id/tv_stock"
                         android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@id/tv_stock"
                         android:background="@drawable/shape_supply_method_3"
                         android:paddingLeft="5dp"
                         android:paddingRight="5dp"
-                        android:layout_toRightOf="@id/tv_stock"
-                        android:layout_alignTop="@id/tv_stock"
-                        android:layout_alignBottom="@id/tv_stock"
-                        android:textColor="@color/color_EF583E"/>
+                        android:textColor="@color/color_EF583E" />
 
                     <TextView
                         android:id="@+id/tv_enclosure"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:layout_marginRight="15dp"
                         android:layout_marginTop="11dp"
+                        android:layout_marginRight="15dp"
+                        android:text="@string/format_enclosure"
                         android:textColor="@color/color_EF583E"
-                        android:textSize="13sp"
-                        android:text="@string/format_enclosure"/>
+                        android:textSize="13sp" />
 
                     <TextView
                         android:id="@+id/tv_sales_volume"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:layout_marginRight="15dp"
                         android:layout_marginTop="11dp"
+                        android:layout_marginRight="15dp"
                         android:textColor="@color/color_666666"
                         android:textSize="13sp"
-                        android:visibility="gone"/>
+                        android:visibility="gone" />
                 </RelativeLayout>
 
                 <TextView
@@ -127,6 +128,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
+
                     <TextView
                         android:id="@+id/tv_company"
                         android:layout_width="wrap_content"
@@ -140,45 +142,67 @@
                         android:id="@+id/tv_tel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/selector_bg_custom"
                         android:layout_marginLeft="25dp"
                         android:layout_marginTop="11dp"
+                        android:background="@drawable/selector_bg_custom"
                         android:drawableLeft="@drawable/icon_tel"
                         android:drawablePadding="5dp"
+                        android:text="@string/format_tel"
                         android:textColor="@color/colorStatusBar"
-                        android:textSize="12sp"
-                        android:text="@string/format_tel"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="14dp"
-                        android:layout_marginTop="11dp"
-                        android:textColor="@color/color_666666"
-                        android:textSize="13sp"
-                        android:text="@string/format_address_list"/>
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_address_list"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/selector_bg_custom"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginRight="14dp"
-                        android:layout_marginTop="11dp"
-                        android:drawableLeft="@drawable/icon_address"
-                        android:drawablePadding="5dp"
-                        android:drawableRight="@drawable/icon_next"
-                        android:textColor="@color/color_666666"
                         android:textSize="12sp" />
 
                 </LinearLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="11dp"
+                    tools:ignore="MissingConstraints">
+
+                    <TextView
+                        android:id="@+id/tv_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="14dp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:text="@string/format_address_list"
+                        android:textColor="@color/color_666666"
+                        android:textSize="13sp" />
+
+                    <ImageView
+                        android:id="@+id/iv_address"
+                        android:layout_width="11dp"
+                        android:layout_height="14dp"
+                        app:layout_constraintLeft_toRightOf="@id/tv_address"
+                        app:layout_constraintTop_toTopOf="@id/tv_address"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_address"
+                        android:src="@drawable/icon_address" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_address_list"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="2dp"
+                        app:layout_constraintLeft_toRightOf="@id/iv_address"
+                        app:layout_constraintRight_toLeftOf="@id/iv_next"
+                        android:background="@drawable/selector_bg_custom"
+                        android:textColor="@color/color_666666"
+                        app:layout_goneMarginRight="14dp"
+                        android:textSize="12sp" />
+
+                    <ImageView
+                        android:id="@+id/iv_next"
+                        android:layout_width="6dp"
+                        android:layout_height="13dp"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintLeft_toRightOf="@id/tv_address_list"
+                        app:layout_constraintTop_toTopOf="@id/iv_address"
+                        app:layout_constraintBottom_toBottomOf="@id/iv_address"
+                        android:layout_marginRight="14dp"
+                        android:layout_marginLeft="5dp"
+                        android:src="@drawable/icon_next" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <!--浏览人列表和浏览人数-->
                 <RelativeLayout
@@ -192,19 +216,19 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="15dp"/>
+                        android:layout_marginLeft="15dp" />
 
                     <TextView
                         android:id="@+id/tv_browse_people"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
+                        android:layout_marginRight="12dp"
                         android:drawableLeft="@drawable/icon_browse_people"
                         android:drawablePadding="3dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="12dp"
-                        android:textSize="12sp"
                         android:textColor="@color/color_868686"
+                        android:textSize="12sp"
                         tools:ignore="RtlHardcoded" />
                 </RelativeLayout>
 
@@ -217,29 +241,29 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:background="@color/colorFFF"
+                android:orientation="vertical"
                 android:paddingBottom="25dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginTop="35dp"
                     android:drawableLeft="@drawable/shape_mark"
                     android:drawablePadding="5dp"
-                    android:layout_marginTop="35dp"
-                    android:layout_marginLeft="14dp"
+                    android:text="@string/format_company_info"
                     android:textColor="@color/colorTv"
-                    android:textSize="14sp"
-                    android:text="@string/format_company_info"/>
+                    android:textSize="14sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="14dp"
                     android:layout_marginTop="24dp"
+                    android:text="@string/format_company_name"
                     android:textColor="@color/colorTv"
-                    android:textSize="14sp"
-                    android:text="@string/format_company_name"/>
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/tv_company_name"
@@ -255,9 +279,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="14dp"
                     android:layout_marginTop="24dp"
+                    android:text="@string/format_supplie_address"
                     android:textColor="@color/colorTv"
-                    android:textSize="14sp"
-                    android:text="@string/format_supplie_address"/>
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/tv_supplie_address"
@@ -267,14 +291,15 @@
                     android:layout_marginTop="7dp"
                     android:textColor="@color/color_666666"
                     android:textSize="14sp" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="14dp"
                     android:layout_marginTop="24dp"
+                    android:text="@string/format_company_website"
                     android:textColor="@color/colorTv"
-                    android:textSize="14sp"
-                    android:text="@string/format_company_website"/>
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/tv_company_website"
@@ -284,14 +309,15 @@
                     android:layout_marginTop="7dp"
                     android:textColor="@color/color_666666"
                     android:textSize="14sp" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="14dp"
                     android:layout_marginTop="24dp"
+                    android:text="@string/format_serve_address"
                     android:textColor="@color/colorTv"
-                    android:textSize="14sp"
-                    android:text="@string/format_serve_address"/>
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/tv_serve_address"
@@ -307,9 +333,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="14dp"
                     android:layout_marginTop="24dp"
+                    android:text="@string/format_product"
                     android:textColor="@color/colorTv"
-                    android:textSize="14sp"
-                    android:text="@string/format_product"/>
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/tv_product"
@@ -328,12 +354,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="64dp"
-        android:orientation="vertical"
-        android:background="@color/colorFFF">
+        android:background="@color/colorFFF"
+        android:orientation="vertical">
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/colorDivider"/>
+            android:background="@color/colorDivider" />
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -342,9 +370,9 @@
                 android:id="@+id/ll_collect"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/selector_bg_custom"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="15dp">
+                android:layout_marginLeft="15dp"
+                android:background="@drawable/selector_bg_custom">
 
                 <ImageView
                     android:id="@+id/iv_collect"
@@ -356,23 +384,23 @@
                     android:id="@+id/tv_collect"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5dp"
+                    android:text="@string/collection"
                     android:textColor="@color/colorStatusBar"
-                    android:textSize="15sp"
-                    android:text="@string/collection"/>
+                    android:textSize="15sp" />
 
             </LinearLayout>
 
             <TextView
                 android:id="@+id/tv_reserve"
-                android:layout_width="match_parent"
                 style="@style/BtnConfirm"
-                android:layout_toRightOf="@+id/ll_collect"
+                android:layout_width="match_parent"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="14dp"
-                android:text="@string/format_reserve"/>
+                android:layout_toRightOf="@+id/ll_collect"
+                android:text="@string/format_reserve" />
         </RelativeLayout>
     </LinearLayout>
 

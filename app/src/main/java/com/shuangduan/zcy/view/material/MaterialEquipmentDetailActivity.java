@@ -104,6 +104,9 @@ public class MaterialEquipmentDetailActivity extends BaseActivity {
     @BindView(R.id.tv_browse_people)
     TextView tvBrowsePeople;
 
+    @BindView(R.id.iv_next)
+    ImageView ivNext;
+
     @BindView(R.id.tv_supply_method)
     TextView tvSupplyMethod;
 
@@ -157,9 +160,10 @@ public class MaterialEquipmentDetailActivity extends BaseActivity {
             tvCompany.setText("供应商：" + materialDetailBean.getCompany());
             tvAddressList.setText(materialDetailBean.getAddress());
 
-            Drawable drawable = getResources().getDrawable(R.drawable.icon_address);
-            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-            tvAddressList.setCompoundDrawables(drawable, null, null, null);
+            ivNext.setVisibility(View.GONE);
+//            Drawable drawable = getResources().getDrawable(R.drawable.icon_address);
+//            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+//            tvAddressList.setCompoundDrawables(drawable, null, null, null);
 
             tvCompanyName.setText(materialDetailBean.getCompany());
             tvSupplieAddress.setText(materialDetailBean.getSupplie_address());

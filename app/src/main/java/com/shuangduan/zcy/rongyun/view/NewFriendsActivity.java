@@ -6,6 +6,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -34,6 +35,7 @@ import com.shuangduan.zcy.model.bean.IMFriendApplyListBean;
 import com.shuangduan.zcy.model.bean.IMFriendOperationBean;
 import com.shuangduan.zcy.utils.LoginUtils;
 import com.shuangduan.zcy.view.projectinfo.ProjectInfoListActivity;
+import com.shuangduan.zcy.vm.IMAddVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
 import java.util.ArrayList;
@@ -65,6 +67,7 @@ public class NewFriendsActivity extends BaseActivity implements EmptyViewFactory
     IMFriendApplyListBean imFriendApplyListBean;
     List<IMFriendApplyListBean.DataBean.ListBean> list = new ArrayList<>();
     private View emptyView;
+    private IMAddVm imAddVm;
 
     @Override
     protected int initLayoutRes() {
@@ -84,6 +87,7 @@ public class NewFriendsActivity extends BaseActivity implements EmptyViewFactory
 
         tvBarTitle.setText(getString(R.string.friends_new_notice));
 
+        imAddVm = ViewModelProviders.of(this).get(IMAddVm.class);
 
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
@@ -93,7 +97,8 @@ public class NewFriendsActivity extends BaseActivity implements EmptyViewFactory
         newFriendAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             switch (view.getId()) {
                 case R.id.tv_accept://接受
-                    getFriendOperation(imFriendApplyListBean.getData().getList().get(position).getId(), "2", "");
+                    int id = Integer.parseInt(imFriendApplyListBean.getData().getList().get(position).getId());
+                    imAddVm.imFriendApplyOperation(id, 2, "");
                     break;
                 case R.id.tv_refuse://拒绝
                     Bundle bundle = new Bundle();
@@ -164,43 +169,7 @@ public class NewFriendsActivity extends BaseActivity implements EmptyViewFactory
                 });
     }
 
-    //好友添加/拒绝验证
-    private void getFriendOperation(String user_id, String status, String msg) {
 
-        OkGo.<String>post(RetrofitHelper.BASE_TEST_URL + Common.FRIEND_OPERATION)
-                .tag(this)
-                .headers("token", SPUtils.getInstance().getString(SpConfig.TOKEN))//请求头
-                .params("user_id", SPUtils.getInstance().getInt(SpConfig.USER_ID))//用户编号
-                .params("id", user_id)//接受/拒绝用户编号
-                .params("status", status)//接受/拒绝
-                .params("msg", msg)//接受/拒绝原因
-                .execute(new com.lzy.okgo.callback.StringCallback() {//返回值
-
-                    @Override
-                    public void onError(Response<String> response) {
-                        super.onError(response);
-                        LogUtils.json(response.body());
-                    }
-
-                    @Override
-                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-                        LogUtils.json(response.body());
-                        try {
-                            IMFriendOperationBean bean = new Gson().fromJson(response.body(), IMFriendOperationBean.class);
-                            if (bean.getCode().equals("200")) {
-                                getNewFriendList();
-                            } else if (bean.getCode().equals("-1")) {
-                                ToastUtils.showShort(bean.getMsg());
-                                LoginUtils.getExitLogin();
-                            } else {
-                                ToastUtils.showShort(bean.getMsg());
-                            }
-                        } catch (JsonSyntaxException | IllegalStateException ignored) {
-                            ToastUtils.showShort(getString(R.string.request_error));
-                        }
-                    }
-                });
-    }
 
     private void setNoMore(int page, int count) {
         if (page == 1) {

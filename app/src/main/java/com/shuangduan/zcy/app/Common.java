@@ -10,8 +10,7 @@ public class Common {
     public static final String WECHAT_GROUP_INFO="/api/wechat/groupInfo";
     //群聊详情
     public static final String WECHAT_GROUP="/api/Wechat/groupList";
-    //好友添加验证
-    public static final String FRIEND_APPLY="/api/Friend/apply";
+
     //群聊退出
     public static final String WECHAT_QUIT_GROUP="/api/Wechat/quitGroup";
     //群聊加入
@@ -25,8 +24,6 @@ public class Common {
     public static final String FRIEND_APPLY_COUNT="/api/Friend/applyCount";
     //通讯录 新的好友列表
     public static final String FRIEND_APPLY_LIST="/api/Friend/applyList";
-    //通讯录 好友添加验证
-    public static final String FRIEND_OPERATION="/api/Friend/operation";
 
 
     //注册 隐私协议

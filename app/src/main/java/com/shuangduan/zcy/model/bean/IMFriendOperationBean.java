@@ -10,6 +10,7 @@ package com.shuangduan.zcy.model.bean;
  * @chang time
  * @class describe
  */
+@Deprecated
 public class IMFriendOperationBean {
     /**
      * code : 200

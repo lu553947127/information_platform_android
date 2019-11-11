@@ -33,7 +33,6 @@ public class IMAddVm extends BaseViewModel {
     public MutableLiveData<IMFriendListBean> friendListLiveData;
     public MutableLiveData applyLiveData;
     public MutableLiveData<String> pageStateLiveData;
-    public int receiverId;
     private int page;
 
     public IMAddVm() {
@@ -53,7 +52,7 @@ public class IMAddVm extends BaseViewModel {
         new IMRepository().imFriendSearch(searchLiveData, pageStateLiveData, userId, name);
     }
 
-    public void apply(String msg){
+    public void imFriendApply(int receiverId,String msg){
         new IMRepository().imFriendApply(applyLiveData, pageStateLiveData, userId, receiverId, msg);
     }
 
@@ -69,8 +68,8 @@ public class IMAddVm extends BaseViewModel {
         new IMRepository().imFriendApplyList(applyListLiveData, pageStateLiveData, userId, page);
     }
 
-    public void operateNewFriend(int id, int status){
-        new IMRepository().imFriendApplyOperation(applyOperateLiveData, pageStateLiveData, userId, id, status, "");
+    public void imFriendApplyOperation(int id, int status,String msg){
+        new IMRepository().imFriendApplyOperation(applyOperateLiveData, pageStateLiveData, userId, id, status, msg);
     }
 
     //搜索 更多好友列表
