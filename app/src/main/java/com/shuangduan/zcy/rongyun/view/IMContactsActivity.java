@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,11 +30,13 @@ import com.shuangduan.zcy.adapter.IMGroupListAdapter;
 import com.shuangduan.zcy.app.Common;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
+import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
 import com.shuangduan.zcy.model.bean.IMFriendApplyCountBean;
 import com.shuangduan.zcy.model.bean.IMFriendListBean;
 import com.shuangduan.zcy.model.bean.IMGroupListBean;
 import com.shuangduan.zcy.utils.LoginUtils;
+import com.shuangduan.zcy.vm.IMAddVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
 import java.util.ArrayList;
@@ -88,9 +91,7 @@ public class IMContactsActivity extends BaseActivity {
     IMGroupListAdapter imGroupListAdapter;
     List<IMGroupListBean.DataBean.ListBean> listGroup=new ArrayList<>();
     IMGroupListBean imGroupListBean;
-    IMFriendListAdapter imFriendListAdapter;
-    List<IMFriendListBean.DataBean.ListBean> listFriend=new ArrayList<>();
-    IMFriendListBean imFriendListBean;
+    IMAddVm imAddVm;
 
     @Override
     protected int initLayoutRes() {
@@ -108,6 +109,8 @@ public class IMContactsActivity extends BaseActivity {
         setBackgroundData(rvGroup,ivGroup,llGroup);
         setBackgroundData(rvFriend,ivFriend,llFriend);
 
+        imAddVm = ViewModelProviders.of(this).get(IMAddVm.class);
+
         rvGroup.setLayoutManager(new LinearLayoutManager(this));
         rvGroup.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
         imGroupListAdapter = new IMGroupListAdapter(R.layout.item_im_group_list, listGroup);
@@ -119,22 +122,43 @@ public class IMContactsActivity extends BaseActivity {
 
         rvFriend.setLayoutManager(new LinearLayoutManager(this));
         rvFriend.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
-        imFriendListAdapter = new IMFriendListAdapter(R.layout.item_im_friend_list, listFriend);
+        IMFriendListAdapter imFriendListAdapter = new IMFriendListAdapter(R.layout.item_im_friend_list, null);
         imFriendListAdapter.setEmptyView(R.layout.layout_loading, rvFriend);
         rvFriend.setAdapter(imFriendListAdapter);
 
         imFriendListAdapter.setOnItemClickListener((adapter, view, position) -> {
-            if (imFriendListBean.getData().getList().get(position).getUserId().equals("18")){
-                RongIM.getInstance().startConversation(IMContactsActivity.this,Conversation.ConversationType.SYSTEM, imFriendListBean.getData().getList().get(position).getUserId()
-                        , imFriendListBean.getData().getList().get(position).getName());
+            IMFriendListBean.ListBean listBean = imFriendListAdapter.getData().get(position);
+            if (listBean.getUserId().equals("18")){
+                RongIM.getInstance().startConversation(IMContactsActivity.this, Conversation.ConversationType.SYSTEM, listBean.getUserId(), listBean.getName());
             }else {
-                RongIM.getInstance().startPrivateChat(IMContactsActivity.this, imFriendListBean.getData().getList().get(position).getUserId()
-                        , imFriendListBean.getData().getList().get(position).getName());
+                RongIM.getInstance().startPrivateChat(IMContactsActivity.this, listBean.getUserId(), listBean.getName());
             }
         });
-
-
-
+        imAddVm.friendListLiveData.observe(this,imFriendListBean ->{
+            imFriendListAdapter.setNewData(imFriendListBean.getList());
+            if(imFriendListBean.getList().size()!=0){
+                rlMyFriend.setClickable(true);
+                rvFriend.setVisibility(View.VISIBLE);
+                if (imFriendListBean.getList().size()>3){
+                    tvFriend.setVisibility(View.VISIBLE);
+                }else {
+                    tvFriend.setVisibility(View.GONE);
+                }
+            }else {
+                rlMyFriend.setClickable(false);
+                rvFriend.setVisibility(View.GONE);
+            }
+        });
+        imAddVm.pageStateLiveData.observe(this, s -> {
+            switch (s) {
+                case PageState.PAGE_LOADING:
+                    showLoading();
+                    break;
+                default:
+                    hideLoading();
+                    break;
+            }
+        });
     }
 
     //我的群组列表
@@ -179,53 +203,6 @@ public class IMContactsActivity extends BaseActivity {
                             }else {
                                 imGroupListAdapter.setEmptyView(R.layout.layout_empty, rvGroup);
                                 listGroup.clear();
-                            }
-                        }catch (JsonSyntaxException | IllegalStateException ignored){
-                            ToastUtils.showShort(getString(R.string.request_error));
-                        }
-                    }
-                });
-    }
-
-    //我的好友列表
-    private void getFriendList() {
-
-        OkGo.<String>post(RetrofitHelper.BASE_TEST_URL+ Common.WECHAT_MY_FRIEND)
-                .tag(this)
-                .headers("token", SPUtils.getInstance().getString(SpConfig.TOKEN))//请求头
-                .params("user_id", SPUtils.getInstance().getInt(SpConfig.USER_ID))//用户编号
-                .execute(new com.lzy.okgo.callback.StringCallback() {//返回值
-
-                    @Override
-                    public void onError(Response<String> response) {
-                        super.onError(response);
-                        LogUtils.json(response.body());
-                    }
-
-                    @Override
-                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-                        LogUtils.json(response.body());
-                        try {
-                            imFriendListBean=new Gson().fromJson(response.body(), IMFriendListBean.class);
-                            if (imFriendListBean.getCode().equals("200")){
-                                listFriend.clear();
-                                listFriend.addAll(imFriendListBean.getData().getList());
-                                if(listFriend!=null&&listFriend.size()!=0){
-                                    rlMyFriend.setClickable(true);
-                                    rvFriend.setVisibility(View.VISIBLE);
-                                    imFriendListAdapter.notifyDataSetChanged();
-                                    if (listFriend.size()>3){
-                                        tvFriend.setVisibility(View.VISIBLE);
-                                    }else {
-                                        tvFriend.setVisibility(View.GONE);
-                                    }
-                                }else {
-                                    rlMyFriend.setClickable(false);
-                                    rvFriend.setVisibility(View.GONE);
-                                }
-                            }else {
-                                imFriendListAdapter.setEmptyView(R.layout.layout_empty, rvFriend);
-                                listFriend.clear();
                             }
                         }catch (JsonSyntaxException | IllegalStateException ignored){
                             ToastUtils.showShort(getString(R.string.request_error));
@@ -318,6 +295,6 @@ public class IMContactsActivity extends BaseActivity {
         super.onResume();
         getFriendApplyCount();
         getGroupList();
-        getFriendList();
+        imAddVm.friendList();
     }
 }

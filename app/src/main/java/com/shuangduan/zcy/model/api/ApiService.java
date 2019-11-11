@@ -1212,9 +1212,17 @@ public interface ApiService {
     //搜索 更多好友列表
     @FormUrlEncoded
     @POST("api/Friend/searchFriend")
-    Flowable<BaseResponse<IMFriendSearchBean>> searchFriend(
+    Flowable<BaseResponse<IMFriendListBean>> searchFriend(
             @Field("user_id") int user_id,
             @Field("name") String name,
+            @Field("page") int page
+    );
+
+    //通讯录 好友列表
+    @FormUrlEncoded
+    @POST("api/Friend/friendList")
+    Flowable<BaseResponse<IMFriendListBean>> friendList(
+            @Field("user_id") int user_id,
             @Field("page") int page
     );
 

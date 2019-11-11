@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.shuangduan.zcy.model.bean.IMFriendApplyDetailBean;
 import com.shuangduan.zcy.model.bean.IMFriendApplyListBean;
 import com.shuangduan.zcy.model.bean.IMFriendApplyOperationBean;
+import com.shuangduan.zcy.model.bean.IMFriendListBean;
 import com.shuangduan.zcy.model.bean.IMFriendSearchBean;
 import com.shuangduan.zcy.model.bean.IMTokenBean;
 
@@ -41,5 +42,15 @@ public class IMRepository extends BaseRepository {
 
     public void imFriendApplyOperation(MutableLiveData<IMFriendApplyOperationBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int id, int status, String msg){
         request(apiService.imFriendApplyOperation(userId, id, status, msg)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    //搜索 更多好友列表
+    public void searchFriend(MutableLiveData<IMFriendListBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, String name, int page){
+        request(apiService.searchFriend(userId, name, page)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    //通讯录 好友列表
+    public void friendList(MutableLiveData<IMFriendListBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int page){
+        request(apiService.friendList(userId, page)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 }

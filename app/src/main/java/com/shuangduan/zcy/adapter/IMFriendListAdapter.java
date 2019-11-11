@@ -27,14 +27,14 @@ import java.util.List;
  * @chang time
  * @class describe
  */
-public class IMFriendListAdapter extends BaseQuickAdapter<IMFriendListBean.DataBean.ListBean, BaseViewHolder> {
+public class IMFriendListAdapter extends BaseQuickAdapter<IMFriendListBean.ListBean, BaseViewHolder> {
 
-    public IMFriendListAdapter(int layoutResId, @Nullable List<IMFriendListBean.DataBean.ListBean> data) {
+    public IMFriendListAdapter(int layoutResId, @Nullable List<IMFriendListBean.ListBean> data) {
         super(layoutResId, data);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, IMFriendListBean.DataBean.ListBean item) {
+    protected void convert(BaseViewHolder helper, IMFriendListBean.ListBean item) {
         helper.setText(R.id.tv_name, item.getName());
         helper.setText(R.id.tv_type, item.getCompany());
         helper.setVisible(R.id.iv_sgs, item.getCardStatus() == 2);
