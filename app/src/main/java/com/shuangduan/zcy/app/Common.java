@@ -2,8 +2,6 @@ package com.shuangduan.zcy.app;
 
 public class Common {
 
-    //搜索 更多群聊列表
-    public static final String SEARCH_GROUP="/api/Friend/searchGroup";
     //会话列表人员头像名称显示
     public static final String WECHAT_USER_INFO="/api/Wechat/userInfo";
     //会话列表群组头像名称显示
@@ -18,10 +16,6 @@ public class Common {
     //查询是否加群
     public static final String WECHAT_MEMBERS_STATUS="/api/Wechat/membersStatus";
 
-    //通讯录 群组列表
-    public static final String WECHAT_MY_GROUP="/api/wechat/myGroup";
-    //通讯录 好友申请数量
-    public static final String FRIEND_APPLY_COUNT="/api/Friend/applyCount";
     //通讯录 新的好友列表
     public static final String FRIEND_APPLY_LIST="/api/Friend/applyList";
 

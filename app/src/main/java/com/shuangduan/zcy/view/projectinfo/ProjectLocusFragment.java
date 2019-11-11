@@ -31,6 +31,7 @@ import com.shuangduan.zcy.dialog.PayDialog;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
 import com.shuangduan.zcy.model.bean.IMFriendApplyCountBean;
+import com.shuangduan.zcy.model.bean.IMFriendApplyListBean;
 import com.shuangduan.zcy.model.bean.TrackBean;
 import com.shuangduan.zcy.model.event.RefreshViewLocusEvent;
 import com.shuangduan.zcy.utils.LoginUtils;
@@ -327,7 +328,7 @@ public class ProjectLocusFragment extends BaseLazyFragment {
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
                         LogUtils.json(response.body());
                         try {
-                            IMFriendApplyCountBean bean = new Gson().fromJson(response.body(), IMFriendApplyCountBean.class);
+                            IMFriendApplyListBean bean = new Gson().fromJson(response.body(), IMFriendApplyListBean.class);
                             if (bean.getCode().equals("200")) {
                                 ToastUtils.showShort(getString(R.string.buy_success));
                                 projectDetailVm.getTrack();

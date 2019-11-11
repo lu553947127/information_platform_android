@@ -18,15 +18,9 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
-import com.blankj.utilcode.util.SPUtils;
-import com.blankj.utilcode.util.ToastUtils;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
-import com.lzy.okgo.OkGo;
-import com.lzy.okgo.model.Response;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
@@ -37,12 +31,9 @@ import com.shuangduan.zcy.adapter.FindRelationshipAdapter;
 import com.shuangduan.zcy.adapter.FindSubstanceAdapter;
 import com.shuangduan.zcy.adapter.HomeHeadlinesAdapter;
 import com.shuangduan.zcy.adapter.XTabLayoutAdapter;
-import com.shuangduan.zcy.app.Common;
 import com.shuangduan.zcy.app.CustomConfig;
-import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseFragment;
 import com.shuangduan.zcy.dialog.UpdateManager;
-import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
 import com.shuangduan.zcy.model.bean.DemandBuyerBean;
 import com.shuangduan.zcy.model.bean.DemandRelationshipBean;
 import com.shuangduan.zcy.model.bean.DemandSubstanceBean;
@@ -50,7 +41,6 @@ import com.shuangduan.zcy.model.bean.ClassifyBean;
 import com.shuangduan.zcy.model.bean.HomeBannerBean;
 import com.shuangduan.zcy.model.bean.HomeListBean;
 import com.shuangduan.zcy.model.bean.HomePushBean;
-import com.shuangduan.zcy.model.bean.IMFriendApplyCountBean;
 import com.shuangduan.zcy.utils.DensityUtil;
 import com.shuangduan.zcy.utils.image.GlideImageLoader;
 import com.shuangduan.zcy.view.demand.DemandActivity;
@@ -71,6 +61,7 @@ import com.shuangduan.zcy.vm.DemandBuyerVm;
 import com.shuangduan.zcy.vm.DemandRelationshipVm;
 import com.shuangduan.zcy.vm.DemandSubstanceVm;
 import com.shuangduan.zcy.vm.HomeVm;
+import com.shuangduan.zcy.vm.IMAddVm;
 import com.shuangduan.zcy.weight.AdaptationScrollView;
 import com.shuangduan.zcy.weight.AutoScrollRecyclerView;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
@@ -140,7 +131,7 @@ public class HomeFragment extends BaseFragment {
     private HomeHeadlinesAdapter headlinesAdapter;
     private RelativeLayout relativeLayout;
     private TextView number;
-    private int count = 0;
+    private IMAddVm imAddVm;
     private HomeVm homeVm;
 
     public static HomeFragment newInstance() {
@@ -284,6 +275,23 @@ public class HomeFragment extends BaseFragment {
                 //版本更新弹出框显示
                 UpdateManager manager = new UpdateManager(getActivity(), versionUpgradesBean);
                 manager.showNoticeDialog();
+            }
+        });
+
+        imAddVm = ViewModelProviders.of(this).get(IMAddVm.class);
+        imAddVm.applyCountData.observe(this,friendApplyCountBean -> {
+            //设置底部标签数量
+            int counts=imAddVm.count+friendApplyCountBean.getCount();
+            if (counts < 1) {
+                relativeLayout.setVisibility(View.GONE);
+            } else if (counts < 100) {
+                number.setTextSize(11);
+                relativeLayout.setVisibility(View.VISIBLE);
+                number.setText(" " + counts + " ");
+            } else {
+                relativeLayout.setVisibility(View.VISIBLE);
+                number.setTextSize(9);
+                number.setText("99+");
             }
         });
         getBadgeViewInitView();
@@ -529,56 +537,13 @@ public class HomeFragment extends BaseFragment {
         number=badge.findViewById(R.id.number);
     }
 
-    //好友申请数量
-    private void getFriendApplyCount(int i) {
-
-        OkGo.<String>post(RetrofitHelper.BASE_TEST_URL+ Common.FRIEND_APPLY_COUNT)
-                .tag(this)
-                .headers("token", SPUtils.getInstance().getString(SpConfig.TOKEN))//请求头
-                .params("user_id", SPUtils.getInstance().getInt(SpConfig.USER_ID))//用户编号
-                .execute(new com.lzy.okgo.callback.StringCallback() {//返回值
-
-                    @Override
-                    public void onError(Response<String> response) {
-                        super.onError(response);
-                        LogUtils.json(response.body());
-                    }
-
-                    @SuppressLint("SetTextI18n")
-                    @Override
-                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-                        LogUtils.json(response.body());
-                        try {
-                            IMFriendApplyCountBean bean=new Gson().fromJson(response.body(), IMFriendApplyCountBean.class);
-                            if (bean.getCode().equals("200")){
-                                count=bean.getData().getCount();
-                                //设置底部标签数量
-                                int counts=i+count;
-                                if (counts < 1) {
-                                    relativeLayout.setVisibility(View.GONE);
-                                } else if (counts < 100) {
-                                    relativeLayout.setVisibility(View.VISIBLE);
-                                    number.setText(" " + counts + " ");
-                                    number.setTextSize(11);
-                                } else {
-                                    relativeLayout.setVisibility(View.VISIBLE);
-                                    number.setText("99+");
-                                    number.setTextSize(9);
-                                }
-                            }
-                        }catch (JsonSyntaxException | IllegalStateException ignored){
-                            ToastUtils.showShort(getString(R.string.request_error));
-                        }
-                    }
-                });
-    }
-
     @Override
     protected void initDataFromService() {
         RongIM.getInstance().addUnReadMessageCountChangedObserver(i -> {
             LogUtils.i(i);
             // i 是未读数量
-            getFriendApplyCount(i);
+            imAddVm.count=i;
+            imAddVm.applyCount();
         }, Conversation.ConversationType.PRIVATE,Conversation.ConversationType.GROUP,Conversation.ConversationType.SYSTEM);
         homeVm.getInit(getActivity());
     }

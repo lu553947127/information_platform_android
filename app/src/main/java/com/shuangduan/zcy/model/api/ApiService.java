@@ -1218,14 +1218,34 @@ public interface ApiService {
             @Field("page") int page
     );
 
+    //搜索 更多群聊列表
+    @FormUrlEncoded
+    @POST("api/Friend/searchGroup")
+    Flowable<BaseResponse<IMGroupListBean>> searchGroup(
+            @Field("user_id") int user_id,
+            @Field("name") String name,
+            @Field("page") int page
+    );
+
     //通讯录 好友列表
     @FormUrlEncoded
     @POST("api/Friend/friendList")
     Flowable<BaseResponse<IMFriendListBean>> friendList(
             @Field("user_id") int user_id,
-            @Field("page") int page
+            @Field("page") int page,
+            @Field("pageSize") int pageSize
     );
 
+    //通讯录 群组列表
+    @FormUrlEncoded
+    @POST("api/wechat/myGroup")
+    Flowable<BaseResponse<IMGroupListBean>> myGroup(
+            @Field("user_id") int user_id,
+            @Field("page") int page,
+            @Field("pageSize") int pageSize
+    );
+
+    //通讯录 好友申请操作
     @FormUrlEncoded
     @POST("api/Friend/apply")
     Flowable<BaseResponse> imFriendApply(
@@ -1244,7 +1264,7 @@ public interface ApiService {
     //工程圈 好友申请数量
     @FormUrlEncoded
     @POST("api/Friend/applyCount")
-    Flowable<BaseResponse<IMFriendApplyDetailBean>> applyCount(
+    Flowable<BaseResponse<IMFriendApplyCountBean>> applyCount(
             @Field("user_id") int user_id
     );
 

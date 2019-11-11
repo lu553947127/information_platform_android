@@ -7,11 +7,13 @@ import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseViewModel;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.api.repository.IMRepository;
+import com.shuangduan.zcy.model.bean.IMFriendApplyCountBean;
 import com.shuangduan.zcy.model.bean.IMFriendApplyDetailBean;
 import com.shuangduan.zcy.model.bean.IMFriendApplyListBean;
 import com.shuangduan.zcy.model.bean.IMFriendApplyOperationBean;
 import com.shuangduan.zcy.model.bean.IMFriendListBean;
 import com.shuangduan.zcy.model.bean.IMFriendSearchBean;
+import com.shuangduan.zcy.model.bean.IMGroupListBean;
 
 /**
  * @author 徐玉 QQ:876885613
@@ -31,9 +33,13 @@ public class IMAddVm extends BaseViewModel {
     public MutableLiveData<IMFriendApplyOperationBean> applyOperateLiveData;
     public MutableLiveData<IMFriendListBean> imFriendListLiveData;
     public MutableLiveData<IMFriendListBean> friendListLiveData;
+    public MutableLiveData<IMGroupListBean> imGroupListData;
+    public MutableLiveData<IMGroupListBean> groupListData;
+    public MutableLiveData<IMFriendApplyCountBean> applyCountData;
     public MutableLiveData applyLiveData;
     public MutableLiveData<String> pageStateLiveData;
     private int page;
+    public int count;
 
     public IMAddVm() {
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
@@ -43,6 +49,9 @@ public class IMAddVm extends BaseViewModel {
         applyOperateLiveData = new MutableLiveData<>();
         imFriendListLiveData = new MutableLiveData<>();
         friendListLiveData = new MutableLiveData<>();
+        imGroupListData = new MutableLiveData<>();
+        groupListData = new MutableLiveData<>();
+        applyCountData = new MutableLiveData<>();
         applyLiveData = new MutableLiveData();
         pageStateLiveData = new MutableLiveData<>();
     }
@@ -52,6 +61,7 @@ public class IMAddVm extends BaseViewModel {
         new IMRepository().imFriendSearch(searchLiveData, pageStateLiveData, userId, name);
     }
 
+    //通讯录 好友申请操作
     public void imFriendApply(int receiverId,String msg){
         new IMRepository().imFriendApply(applyLiveData, pageStateLiveData, userId, receiverId, msg);
     }
@@ -68,6 +78,7 @@ public class IMAddVm extends BaseViewModel {
         new IMRepository().imFriendApplyList(applyListLiveData, pageStateLiveData, userId, page);
     }
 
+    //工程圈 好友添加验证
     public void imFriendApplyOperation(int id, int status,String msg){
         new IMRepository().imFriendApplyOperation(applyOperateLiveData, pageStateLiveData, userId, id, status, msg);
     }
@@ -85,14 +96,43 @@ public class IMAddVm extends BaseViewModel {
     }
 
     //搜索 更多好友列表
-    public void friendList(){
+    public void friendList(int pageSize){
         page = 1;
-        new IMRepository().friendList(friendListLiveData, pageStateLiveData, userId,page);
+        new IMRepository().friendList(friendListLiveData, pageStateLiveData, userId,page,pageSize);
     }
 
     //搜索 更多好友列表
     public void friendListMore(){
         page ++;
-        new IMRepository().friendList(friendListLiveData, pageStateLiveData, userId,page);
+        new IMRepository().friendList(friendListLiveData, pageStateLiveData, userId,page,10);
+    }
+
+    //搜索 更多群聊列表
+    public void searchGroup(String name){
+        page = 1;
+        new IMRepository().searchGroup(imGroupListData, pageStateLiveData, userId, name,page);
+    }
+
+    //搜索 更多群聊列表
+    public void searchGroupMore(String name){
+        page ++;
+        new IMRepository().searchGroup(imGroupListData, pageStateLiveData, userId, name,page);
+    }
+
+    //通讯录 群组列表
+    public void myGroup(int pageSize){
+        page = 1;
+        new IMRepository().myGroup(groupListData, pageStateLiveData, userId,page,pageSize);
+    }
+
+    //通讯录 群组列表
+    public void myGroupMore(){
+        page ++;
+        new IMRepository().myGroup(groupListData, pageStateLiveData, userId,page,10);
+    }
+
+    //通讯录 好友申请数量
+    public void applyCount(){
+        new IMRepository().applyCount(applyCountData, pageStateLiveData, userId);
     }
 }

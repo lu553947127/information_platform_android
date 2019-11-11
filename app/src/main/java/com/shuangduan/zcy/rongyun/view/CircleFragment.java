@@ -27,15 +27,14 @@ import com.lzy.okgo.model.Response;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.Common;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.MyApplication;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseFragment;
-import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
-import com.shuangduan.zcy.model.bean.IMFriendApplyCountBean;
 import com.shuangduan.zcy.model.bean.IMWechatGroupInfoBean;
 import com.shuangduan.zcy.model.bean.IMWechatUserInfoBean;
 import com.shuangduan.zcy.model.event.AvatarEvent;
@@ -43,6 +42,7 @@ import com.shuangduan.zcy.utils.BarUtils;
 import com.shuangduan.zcy.utils.image.ImageConfig;
 import com.shuangduan.zcy.utils.image.ImageLoader;
 import com.shuangduan.zcy.view.mine.UserInfoActivity;
+import com.shuangduan.zcy.vm.IMAddVm;
 import com.shuangduan.zcy.vm.UserInfoVm;
 import com.shuangduan.zcy.weight.CircleImageView;
 import com.shuangduan.zcy.weight.NoScrollViewPager;
@@ -88,7 +88,7 @@ public class CircleFragment extends BaseFragment {
     private NoScrollViewPager viewPager;
     private RelativeLayout relativeLayout;
     private TextView number;
-    private int count=0;
+    private IMAddVm imAddVm;
 
     public static CircleFragment newInstance() {
         Bundle args = new Bundle();
@@ -107,7 +107,7 @@ public class CircleFragment extends BaseFragment {
         return true;
     }
 
-    @SuppressLint("CutPasteId")
+    @SuppressLint({"CutPasteId", "SetTextI18n"})
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState,View view) {
         BarUtils.setStatusBarColorRes(fakeStatusBar, getResources().getColor(R.color.colorPrimary));
@@ -135,14 +135,30 @@ public class CircleFragment extends BaseFragment {
                     .imageView(iv_header)
                     .build());
         });
-        userInfoVm.pageStateLiveData.observe(this, s -> {
-            switch (s){
-                case PageState.PAGE_LOADING:
-//                    showLoading();
-                    break;
-                default:
-                    hideLoading();
-                    break;
+
+        imAddVm = ViewModelProviders.of(this).get(IMAddVm.class);
+        imAddVm.applyCountData.observe(this,friendApplyCountBean -> {
+            if (friendApplyCountBean.getCount() == 0) {
+                tvNumber.setVisibility(View.INVISIBLE);
+            } else if (friendApplyCountBean.getCount() > 0 && friendApplyCountBean.getCount() < 100) {
+                tvNumber.setVisibility(View.VISIBLE);
+                tvNumber.setText(String.valueOf(friendApplyCountBean.getCount()));
+            } else {
+                tvNumber.setVisibility(View.VISIBLE);
+                tvNumber.setText(R.string.im_no_read_message);
+            }
+            //设置底部标签数量
+            int counts=imAddVm.count+friendApplyCountBean.getCount();
+            if (counts < 1) {
+                relativeLayout.setVisibility(View.GONE);
+            } else if (counts < 100) {
+                number.setTextSize(11);
+                relativeLayout.setVisibility(View.VISIBLE);
+                number.setText(" " + counts + " ");
+            } else {
+                relativeLayout.setVisibility(View.VISIBLE);
+                number.setTextSize(9);
+                number.setText("99+");
             }
         });
 
@@ -155,18 +171,14 @@ public class CircleFragment extends BaseFragment {
 
         refresh.setEnableLoadMore(false);
         refresh.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);
-        refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
-            @Override
-            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-
-            }
-
+        refresh.setOnRefreshLoadMoreListener(new SimpleMultiPurposeListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 RongIM.getInstance().addUnReadMessageCountChangedObserver(i -> {
                     LogUtils.i(i);
                     // i 是未读数量
-                    getFriendApplyCount(i);
+                    imAddVm.count=i;
+                    imAddVm.applyCount();
                 }, Conversation.ConversationType.PRIVATE,Conversation.ConversationType.GROUP,Conversation.ConversationType.SYSTEM);
                 refreshLayout.finishRefresh(1000);
             }
@@ -181,7 +193,8 @@ public class CircleFragment extends BaseFragment {
         RongIM.getInstance().addUnReadMessageCountChangedObserver(i -> {
             LogUtils.i(i);
             // i 是未读数量
-            getFriendApplyCount(i);
+            imAddVm.count=i;
+            imAddVm.applyCount();
         }, Conversation.ConversationType.PRIVATE,Conversation.ConversationType.GROUP,Conversation.ConversationType.SYSTEM);
         //设置会话列表头像点击监听
         adapterEx.setOnPortraitItemClick(new ConversationListAdapter.OnPortraitItemClick() {
@@ -258,12 +271,10 @@ public class CircleFragment extends BaseFragment {
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-//                        LogUtils.json(response.body());
                     }
 
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-//                        LogUtils.json(response.body());
                         try {
                             IMWechatUserInfoBean bean=new Gson().fromJson(response.body(),IMWechatUserInfoBean.class);
                             if (bean.getCode().equals("200")){
@@ -294,12 +305,10 @@ public class CircleFragment extends BaseFragment {
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-//                        LogUtils.json(response.body());
                     }
 
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-//                        LogUtils.json(response.body());
                         try {
                             IMWechatGroupInfoBean bean=new Gson().fromJson(response.body(),IMWechatGroupInfoBean.class);
                             if (bean.getCode().equals("200")){
@@ -316,61 +325,6 @@ public class CircleFragment extends BaseFragment {
                     }
                 });
         return null;
-    }
-
-    //好友申请数量
-    private void getFriendApplyCount(int i) {
-
-        OkGo.<String>post(RetrofitHelper.BASE_TEST_URL+ Common.FRIEND_APPLY_COUNT)
-                .tag(this)
-                .headers("token", SPUtils.getInstance().getString(SpConfig.TOKEN))//请求头
-                .params("user_id", SPUtils.getInstance().getInt(SpConfig.USER_ID))//用户编号
-                .execute(new com.lzy.okgo.callback.StringCallback() {//返回值
-
-                    @Override
-                    public void onError(Response<String> response) {
-                        super.onError(response);
-//                        LogUtils.json(response.body());
-                    }
-
-                    @SuppressLint("SetTextI18n")
-                    @Override
-                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-//                        LogUtils.json(response.body());
-                        try {
-                            IMFriendApplyCountBean bean=new Gson().fromJson(response.body(), IMFriendApplyCountBean.class);
-                            if (bean.getCode().equals("200")){
-                                count=bean.getData().getCount();
-                                if (count == 0) {
-                                    tvNumber.setVisibility(View.INVISIBLE);
-                                } else if (count > 0 && count < 100) {
-                                    tvNumber.setVisibility(View.VISIBLE);
-                                    tvNumber.setText(String.valueOf(count));
-                                } else {
-                                    tvNumber.setVisibility(View.VISIBLE);
-                                    tvNumber.setText(R.string.im_no_read_message);
-                                }
-                                //设置底部标签数量
-                                int counts=i+count;
-                                if (counts < 1) {
-                                    relativeLayout.setVisibility(View.GONE);
-                                } else if (counts < 100) {
-                                    number.setTextSize(11);
-                                    relativeLayout.setVisibility(View.VISIBLE);
-                                    number.setText(" " + counts + " ");
-                                } else {
-                                    relativeLayout.setVisibility(View.VISIBLE);
-                                    number.setTextSize(9);
-                                    number.setText("99+");
-                                }
-                            }else {
-                                tvNumber.setVisibility(View.INVISIBLE);
-                            }
-                        }catch (JsonSyntaxException | IllegalStateException ignored){
-                            ToastUtils.showShort(getString(R.string.request_error));
-                        }
-                    }
-                });
     }
 
     @Override

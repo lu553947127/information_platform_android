@@ -26,14 +26,14 @@ import java.util.List;
  * @chang time
  * @class describe
  */
-public class IMGroupListAdapter extends BaseQuickAdapter<IMGroupListBean.DataBean.ListBean, BaseViewHolder> {
+public class IMGroupListAdapter extends BaseQuickAdapter<IMGroupListBean.ListBean, BaseViewHolder> {
 
-    public IMGroupListAdapter(int layoutResId, @Nullable List<IMGroupListBean.DataBean.ListBean> data) {
+    public IMGroupListAdapter(int layoutResId, @Nullable List<IMGroupListBean.ListBean> data) {
         super(layoutResId, data);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, IMGroupListBean.DataBean.ListBean item) {
+    protected void convert(BaseViewHolder helper, IMGroupListBean.ListBean item) {
         helper.setText(R.id.tv_name, item.getGroup_name());
         helper.setText(R.id.tv_type, item.getProvince()+item.getCity());
         TextView avatar_tv= helper.getView(R.id.iv_avatar_tv);

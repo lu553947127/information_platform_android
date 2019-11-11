@@ -16,31 +16,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
-import com.blankj.utilcode.util.LogUtils;
-import com.blankj.utilcode.util.SPUtils;
-import com.blankj.utilcode.util.ToastUtils;
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
-import com.lzy.okgo.OkGo;
-import com.lzy.okgo.model.Response;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.IMFriendListAdapter;
 import com.shuangduan.zcy.adapter.IMGroupListAdapter;
-import com.shuangduan.zcy.app.Common;
-import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.PageState;
-import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
-import com.shuangduan.zcy.model.bean.IMFriendApplyCountBean;
 import com.shuangduan.zcy.model.bean.IMFriendListBean;
 import com.shuangduan.zcy.model.bean.IMGroupListBean;
-import com.shuangduan.zcy.utils.LoginUtils;
 import com.shuangduan.zcy.vm.IMAddVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -88,9 +72,6 @@ public class IMContactsActivity extends BaseActivity {
     LinearLayout llGroup;
     @BindView(R.id.ll_friend)
     LinearLayout llFriend;
-    IMGroupListAdapter imGroupListAdapter;
-    List<IMGroupListBean.DataBean.ListBean> listGroup=new ArrayList<>();
-    IMGroupListBean imGroupListBean;
     IMAddVm imAddVm;
 
     @Override
@@ -113,18 +94,20 @@ public class IMContactsActivity extends BaseActivity {
 
         rvGroup.setLayoutManager(new LinearLayoutManager(this));
         rvGroup.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
-        imGroupListAdapter = new IMGroupListAdapter(R.layout.item_im_group_list, listGroup);
+        IMGroupListAdapter imGroupListAdapter = new IMGroupListAdapter(R.layout.item_im_group_list, null);
         imGroupListAdapter.setEmptyView(R.layout.layout_loading, rvGroup);
         rvGroup.setAdapter(imGroupListAdapter);
-        imGroupListAdapter.setOnItemClickListener((adapter, view, position) -> RongIM.getInstance().startGroupChat(IMContactsActivity.this
-                , imGroupListBean.getData().getList().get(position).getGroup_id()
-                , imGroupListBean.getData().getList().get(position).getGroup_name()));
 
         rvFriend.setLayoutManager(new LinearLayoutManager(this));
         rvFriend.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
         IMFriendListAdapter imFriendListAdapter = new IMFriendListAdapter(R.layout.item_im_friend_list, null);
         imFriendListAdapter.setEmptyView(R.layout.layout_loading, rvFriend);
         rvFriend.setAdapter(imFriendListAdapter);
+
+        imGroupListAdapter.setOnItemClickListener((adapter, view, position) -> {
+            IMGroupListBean.ListBean listBean = imGroupListAdapter.getData().get(position);
+            RongIM.getInstance().startGroupChat(IMContactsActivity.this,listBean.getGroup_id(),listBean.getGroup_name());
+        });
 
         imFriendListAdapter.setOnItemClickListener((adapter, view, position) -> {
             IMFriendListBean.ListBean listBean = imFriendListAdapter.getData().get(position);
@@ -134,6 +117,24 @@ public class IMContactsActivity extends BaseActivity {
                 RongIM.getInstance().startPrivateChat(IMContactsActivity.this, listBean.getUserId(), listBean.getName());
             }
         });
+
+        imAddVm.groupListData.observe(this,imGroupListBean -> {
+            imGroupListAdapter.setNewData(imGroupListBean.getList());
+            if(imGroupListBean.getList().size()!=0){
+                rlMyGroup.setClickable(true);
+                rvGroup.setVisibility(View.VISIBLE);
+                if (imGroupListBean.getList().size()>3){
+                    tvGroup.setVisibility(View.VISIBLE);
+                }else {
+                    tvGroup.setVisibility(View.GONE);
+                }
+                imGroupListAdapter.notifyDataSetChanged();
+            }else {
+                rlMyGroup.setClickable(false);
+                rvGroup.setVisibility(View.GONE);
+            }
+        });
+
         imAddVm.friendListLiveData.observe(this,imFriendListBean ->{
             imFriendListAdapter.setNewData(imFriendListBean.getList());
             if(imFriendListBean.getList().size()!=0){
@@ -149,6 +150,16 @@ public class IMContactsActivity extends BaseActivity {
                 rvFriend.setVisibility(View.GONE);
             }
         });
+
+        imAddVm.applyCountData.observe(this,friendApplyCountBean -> {
+            if (friendApplyCountBean.getCount()!=0){
+                tvNumber.setVisibility(View.VISIBLE);
+                tvNumber.setText(String.valueOf(friendApplyCountBean.getCount()));
+            }else {
+                tvNumber.setVisibility(View.GONE);
+            }
+        });
+
         imAddVm.pageStateLiveData.observe(this, s -> {
             switch (s) {
                 case PageState.PAGE_LOADING:
@@ -159,93 +170,6 @@ public class IMContactsActivity extends BaseActivity {
                     break;
             }
         });
-    }
-
-    //我的群组列表
-    private void getGroupList() {
-
-        OkGo.<String>post(RetrofitHelper.BASE_TEST_URL+ Common.WECHAT_MY_GROUP)
-                .tag(this)
-                .headers("token", SPUtils.getInstance().getString(SpConfig.TOKEN))//请求头
-                .params("user_id", SPUtils.getInstance().getInt(SpConfig.USER_ID))//用户编号
-                .execute(new com.lzy.okgo.callback.StringCallback() {//返回值
-
-                    @Override
-                    public void onError(Response<String> response) {
-                        super.onError(response);
-                        LogUtils.json(response.body());
-                    }
-
-                    @Override
-                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-                        LogUtils.json(response.body());
-                        try {
-                             imGroupListBean=new Gson().fromJson(response.body(), IMGroupListBean.class);
-                            if (imGroupListBean.getCode().equals("200")){
-                                listGroup.clear();
-                                listGroup.addAll(imGroupListBean.getData().getList());
-                                if(listGroup!=null&&listGroup.size()!=0){
-                                    rlMyGroup.setClickable(true);
-                                    rvGroup.setVisibility(View.VISIBLE);
-                                    if (listGroup.size()>3){
-                                        tvGroup.setVisibility(View.VISIBLE);
-                                    }else {
-                                        tvGroup.setVisibility(View.GONE);
-                                    }
-                                    imGroupListAdapter.notifyDataSetChanged();
-                                }else {
-                                    rlMyGroup.setClickable(false);
-                                    rvGroup.setVisibility(View.GONE);
-                                }
-                            }else if (imGroupListBean.getCode().equals("-1")){
-                                ToastUtils.showShort(imGroupListBean.getMsg());
-                                LoginUtils.getExitLogin();
-                            }else {
-                                imGroupListAdapter.setEmptyView(R.layout.layout_empty, rvGroup);
-                                listGroup.clear();
-                            }
-                        }catch (JsonSyntaxException | IllegalStateException ignored){
-                            ToastUtils.showShort(getString(R.string.request_error));
-                        }
-                    }
-                });
-    }
-
-    //好友申请数量
-    private void getFriendApplyCount() {
-
-        OkGo.<String>post(RetrofitHelper.BASE_TEST_URL+ Common.FRIEND_APPLY_COUNT)
-                .tag(this)
-                .headers("token", SPUtils.getInstance().getString(SpConfig.TOKEN))//请求头
-                .params("user_id", SPUtils.getInstance().getInt(SpConfig.USER_ID))//用户编号
-                .execute(new com.lzy.okgo.callback.StringCallback() {//返回值
-
-                    @Override
-                    public void onError(Response<String> response) {
-                        super.onError(response);
-                        LogUtils.json(response.body());
-                    }
-
-                    @Override
-                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-                        LogUtils.json(response.body());
-                        try {
-                            IMFriendApplyCountBean bean=new Gson().fromJson(response.body(), IMFriendApplyCountBean.class);
-                            if (bean.getCode().equals("200")){
-                                if (bean.getData().getCount()!=0){
-                                    tvNumber.setText(String.valueOf(bean.getData().getCount()));
-                                    tvNumber.setVisibility(View.VISIBLE);
-                                }else {
-                                    tvNumber.setVisibility(View.GONE);
-                                }
-                            }else {
-                                tvNumber.setVisibility(View.GONE);
-                            }
-                        }catch (JsonSyntaxException | IllegalStateException ignored){
-                            ToastUtils.showShort(getString(R.string.request_error));
-                        }
-                    }
-                });
     }
 
     @OnClick({R.id.iv_bar_back,R.id.rl_new_friend,R.id.rl_my_group,R.id.rl_my_friend,R.id.tv_bar_title,R.id.tv_more_group,R.id.tv_more_friend})
@@ -293,8 +217,8 @@ public class IMContactsActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        getFriendApplyCount();
-        getGroupList();
-        imAddVm.friendList();
+        imAddVm.applyCount();
+        imAddVm.myGroup(10);
+        imAddVm.friendList(10);
     }
 }

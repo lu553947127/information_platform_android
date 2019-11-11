@@ -14,35 +14,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
-import com.blankj.utilcode.util.LogUtils;
-import com.blankj.utilcode.util.SPUtils;
-import com.blankj.utilcode.util.ToastUtils;
-import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
-import com.lzy.okgo.OkGo;
-import com.lzy.okgo.callback.StringCallback;
-import com.lzy.okgo.model.Response;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
-import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.IMFriendListAdapter;
-import com.shuangduan.zcy.app.Common;
-import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.factory.EmptyViewFactory;
 import com.shuangduan.zcy.model.api.PageState;
-import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
 import com.shuangduan.zcy.model.bean.IMFriendListBean;
-import com.shuangduan.zcy.utils.LoginUtils;
 import com.shuangduan.zcy.view.projectinfo.ProjectInfoListActivity;
 import com.shuangduan.zcy.vm.IMAddVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -110,6 +94,7 @@ public class IMFriendMoreActivity extends BaseActivity implements EmptyViewFacto
                 RongIM.getInstance().startPrivateChat(IMFriendMoreActivity.this, listBean.getUserId(), listBean.getName());
             }
         });
+
         imAddVm.imFriendListLiveData.observe(this,imFriendListBean ->{
             if (imFriendListBean.getPage() == 1) {
                 imFriendListAdapter.setNewData(imFriendListBean.getList());
@@ -182,7 +167,7 @@ public class IMFriendMoreActivity extends BaseActivity implements EmptyViewFacto
         if (name != null) {
             imAddVm.searchFriend(name);
         } else {
-            imAddVm.friendList();
+            imAddVm.friendList(20);
         }
     }
 
