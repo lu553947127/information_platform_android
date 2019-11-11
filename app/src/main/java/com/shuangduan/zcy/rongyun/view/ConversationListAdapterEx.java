@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.gson.Gson;
@@ -20,7 +19,6 @@ import com.shuangduan.zcy.model.bean.IMWechatUserInfoBean;
 import io.rong.imkit.model.UIConversation;
 import io.rong.imkit.widget.adapter.ConversationListAdapter;
 import io.rong.imlib.model.Conversation;
-import io.rong.imlib.model.UserInfo;
 
 /**
  * @ProjectName: information_platform_android
@@ -58,7 +56,7 @@ public class ConversationListAdapterEx extends ConversationListAdapter {
     }
 
     //会话列表头像名称显示
-    private UserInfo getFriendData(String userId,View v) {
+    private void getFriendData(String userId, View v) {
 
         OkGo.<String>post(RetrofitHelper.BASE_TEST_URL+ Common.WECHAT_USER_INFO)
                 .tag(this)
@@ -70,14 +68,12 @@ public class ConversationListAdapterEx extends ConversationListAdapter {
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-//                        LogUtils.json(response.body());
                     }
 
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
                         try {
                             IMWechatUserInfoBean bean=new Gson().fromJson(response.body(),IMWechatUserInfoBean.class);
-//                            LogUtils.json(response.body());
                             if (bean.getCode().equals("200")){
                                 if (bean.getData()!=null){
                                     if (bean.getData().getCard_status().equals("2")){
@@ -96,6 +92,5 @@ public class ConversationListAdapterEx extends ConversationListAdapter {
                         }
                     }
                 });
-        return null;
     }
 }

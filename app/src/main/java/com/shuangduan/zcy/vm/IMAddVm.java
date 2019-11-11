@@ -66,11 +66,11 @@ public class IMAddVm extends BaseViewModel {
         new IMRepository().imFriendApply(applyLiveData, pageStateLiveData, userId, receiverId, msg);
     }
 
+    //工程圈 新的好友列表
     public void imFriendApplyList(){
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
         new IMRepository().imFriendApplyList(applyListLiveData, pageStateLiveData, userId);
     }
-
 
     //工程圈 好友添加验证
     public void imFriendApplyOperation(int id, int status,String msg){

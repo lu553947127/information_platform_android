@@ -143,6 +143,7 @@ public class IMSearchActivity extends BaseActivity {
                 imAddVm.search(edtKeyword.getText().toString());
             }
         });
+
         edtKeyword.setOnEditorActionListener((textView, i, keyEvent) -> {
             if (i == EditorInfo.IME_ACTION_SEARCH) {
                 // 先隐藏键盘

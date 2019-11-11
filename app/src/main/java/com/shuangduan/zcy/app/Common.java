@@ -2,7 +2,6 @@ package com.shuangduan.zcy.app;
 
 public class Common {
 
-
     //会话列表人员头像名称显示
     public static final String WECHAT_USER_INFO="/api/Wechat/userInfo";
     //会话列表群组头像名称显示
@@ -14,10 +13,6 @@ public class Common {
     public static final String WECHAT_QUIT_GROUP="/api/Wechat/quitGroup";
     //群聊加入
     public static final String WECHAT_JOIN_GROUP="/api/wechat/joinGroup";
-    //查询是否加群
-    public static final String WECHAT_MEMBERS_STATUS="/api/Wechat/membersStatus";
-
-
 
 
     //注册 隐私协议

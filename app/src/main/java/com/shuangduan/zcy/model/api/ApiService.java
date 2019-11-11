@@ -428,6 +428,14 @@ public interface ApiService {
             @Field("content") String content
     );
 
+    //查询是否可以进入讨论组
+    @FormUrlEncoded
+    @POST("api/Wechat/membersStatus")
+    Flowable<BaseResponse<ProjectMembersStatusBean>> membersStatus(
+            @Field("user_id") int user_id,
+            @Field("project_id") int project_id
+    );
+
     @FormUrlEncoded
     @POST("api/Userinfo/myProject")
     Flowable<BaseResponse<ProjectMineBean>> myProject(

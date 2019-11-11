@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.shuangduan.zcy.base.TrackDateilBean;
 import com.shuangduan.zcy.model.bean.ConsumeBean;
 import com.shuangduan.zcy.model.bean.ProjectDetailBean;
+import com.shuangduan.zcy.model.bean.ProjectMembersStatusBean;
 import com.shuangduan.zcy.model.bean.TrackBean;
 
 import java.util.List;
@@ -90,4 +91,10 @@ public class ProjectDetailRepository extends BaseRepository {
         request(apiService.correction(user_id, id, content)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
+    /**
+     * 查询是否可以进入讨论组
+     */
+    public void membersStatus(MutableLiveData<ProjectMembersStatusBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, int project_id) {
+        request(apiService.membersStatus(user_id, project_id)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
 }

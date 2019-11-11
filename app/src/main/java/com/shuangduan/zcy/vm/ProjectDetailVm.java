@@ -11,6 +11,7 @@ import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.api.repository.ProjectDetailRepository;
 import com.shuangduan.zcy.model.bean.ConsumeBean;
 import com.shuangduan.zcy.model.bean.ProjectDetailBean;
+import com.shuangduan.zcy.model.bean.ProjectMembersStatusBean;
 import com.shuangduan.zcy.model.bean.TrackBean;
 
 import java.util.List;
@@ -49,6 +50,7 @@ public class ProjectDetailVm extends BaseViewModel {
     public MutableLiveData collectLiveData;
     public MutableLiveData cancelCollectLiveData;
     public MutableLiveData errorLiveData;
+    public MutableLiveData<ProjectMembersStatusBean> projectMembersStatusData;
     public int pageTrack = 1;
     public int pageViewTrack = 1;
     public int pageConsume = 1;
@@ -75,8 +77,8 @@ public class ProjectDetailVm extends BaseViewModel {
         cancelCollectLiveData = new MutableLiveData();
         collectLiveData = new MutableLiveData();
         errorLiveData = new MutableLiveData();
-
         trackDateilLiveDate = new MutableLiveData<>();
+        projectMembersStatusData = new MutableLiveData<>();
     }
 
     private ProjectDetailRepository repositoryDetail;
@@ -162,4 +164,8 @@ public class ProjectDetailVm extends BaseViewModel {
         new ProjectDetailRepository().error(errorLiveData, pageStateLiveData, userId, id, error);
     }
 
+    //查询是否可以进入讨论组
+    public void membersStatus(int project_id) {
+        new ProjectDetailRepository().membersStatus(projectMembersStatusData, pageStateLiveData, userId, project_id);
+    }
 }

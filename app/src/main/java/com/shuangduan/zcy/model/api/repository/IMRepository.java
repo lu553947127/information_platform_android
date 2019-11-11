@@ -21,6 +21,7 @@ import com.shuangduan.zcy.model.bean.IMTokenBean;
  * @class describe
  */
 public class IMRepository extends BaseRepository {
+    //融云获取token
     public void getIMToken(MutableLiveData<IMTokenBean> liveData, MutableLiveData<String> pageStateLiveData, int userId){
         request(apiService.getIMToken(userId)).setData(liveData).setPageState(pageStateLiveData).send();
     }
@@ -40,6 +41,7 @@ public class IMRepository extends BaseRepository {
         request(apiService.applyCount(userId)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
+    //工程圈 新的好友列表
     public void imFriendApplyList(MutableLiveData<IMFriendApplyListBean> liveData, MutableLiveData<String> pageStateLiveData, int userId){
         request(apiService.imFriendApplyList(userId)).setData(liveData).setPageState(pageStateLiveData).send();
     }

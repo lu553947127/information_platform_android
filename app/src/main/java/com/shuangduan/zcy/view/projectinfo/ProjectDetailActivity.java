@@ -28,26 +28,15 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.LogUtils;
-import com.blankj.utilcode.util.SPUtils;
-import com.blankj.utilcode.util.ToastUtils;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.tabs.TabLayout;
-import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
-import com.lzy.okgo.OkGo;
-import com.lzy.okgo.model.Response;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ViewPagerAdapter;
-import com.shuangduan.zcy.app.Common;
 import com.shuangduan.zcy.app.CustomConfig;
-import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.manage.ShareManage;
-import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
-import com.shuangduan.zcy.model.bean.ProjectMembersStatusBean;
 import com.shuangduan.zcy.model.event.LocusRefreshEvent;
 import com.shuangduan.zcy.model.event.WarrantSuccessEvent;
-import com.shuangduan.zcy.utils.LoginUtils;
 import com.shuangduan.zcy.view.release.ReleaseProjectActivity;
 import com.shuangduan.zcy.vm.PermissionVm;
 import com.shuangduan.zcy.vm.ProjectDetailVm;
@@ -105,12 +94,8 @@ public class ProjectDetailActivity extends BaseActivity {
     LinearLayout flRelease;
     @BindView(R.id.ll_operate)
     LinearLayout llOperate;
-
-    private Fragment[] fragments;
-    AMap aMap = null;
-    private PermissionVm permissionVm;
+    private AMap aMap = null;
     private ProjectDetailVm projectDetailVm;
-
     //分享管理
     private ShareManage shareManage;
 
@@ -127,7 +112,6 @@ public class ProjectDetailActivity extends BaseActivity {
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         mapView.onCreate(savedInstanceState);// 此方法必须重写
-
 
         //初始化分享功能
         shareManage = ShareManage.newInstance(getApplicationContext());
@@ -153,7 +137,12 @@ public class ProjectDetailActivity extends BaseActivity {
             aMap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(s.latitude, s.longitude)));
         });
 
-        fragments = new Fragment[4];
+        //查询是否可以进入讨论组返回结果
+        projectDetailVm.projectMembersStatusData.observe(this,projectMembersStatusBean -> {
+            RongIM.getInstance().startGroupChat(ProjectDetailActivity.this,projectMembersStatusBean.getGroupId(),projectMembersStatusBean.getGroupName());
+        });
+
+        Fragment[] fragments = new Fragment[4];
         fragments[0] = ProjectContentFragment.newInstance(getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0));
         fragments[1] = ProjectLocusFragment.newInstance(getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0));
         fragments[2] = ProjectReadFragment.newInstance();
@@ -200,7 +189,7 @@ public class ProjectDetailActivity extends BaseActivity {
             }
         });
 
-        permissionVm = ViewModelProviders.of(this).get(PermissionVm.class);
+        PermissionVm permissionVm = ViewModelProviders.of(this).get(PermissionVm.class);
         permissionVm.getLiveData().observe(this, integer -> {
             if (integer == PermissionVm.PERMISSION_LOCATION) {
                 init();
@@ -213,9 +202,7 @@ public class ProjectDetailActivity extends BaseActivity {
             vp.setCurrentItem(position);
             tabLayout.getTabAt(position).select();
         }
-
     }
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -243,10 +230,10 @@ public class ProjectDetailActivity extends BaseActivity {
             case R.id.iv_bar_back:
                 finish();
                 break;
-            case R.id.iv_bar_right:
+            case R.id.iv_bar_right://分享
                 shareManage.showDialog();
                 break;
-            case R.id.fl_collect:
+            case R.id.fl_collect://收藏
                 projectDetailVm.collect();
                 if (projectDetailVm.collectLiveData != null) {
                     projectDetailVm.collectLiveData.observe(this, o -> {
@@ -259,14 +246,14 @@ public class ProjectDetailActivity extends BaseActivity {
                     });
                 }
                 break;
-            case R.id.fl_error:
+            case R.id.fl_error://纠错
                 bundle.putInt(CustomConfig.PROJECT_ID, getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0));
                 ActivityUtils.startActivity(bundle, ProjectErrorActivity.class);
                 break;
-            case R.id.ll_chat:
-                getMembersStatus();
+            case R.id.ll_chat://进入讨论组
+                projectDetailVm.membersStatus(getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0));
                 break;
-            case R.id.fl_subscription:
+            case R.id.fl_subscription://认购
                 switch (projectDetailVm.subscribeLiveData.getValue()) {
                     case 1:
                         bundle.putInt(CustomConfig.PROJECT_ID, getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0));
@@ -278,7 +265,7 @@ public class ProjectDetailActivity extends BaseActivity {
                         break;
                 }
                 break;
-            case R.id.fl_release:
+            case R.id.fl_release://发布动态
                 bundle.putInt(CustomConfig.RELEASE_TYPE, 2);
                 bundle.putInt(CustomConfig.PROJECT_ID, getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0));
                 bundle.putString(CustomConfig.PROJECT_NAME, tvTitle.getText().toString());
@@ -287,47 +274,7 @@ public class ProjectDetailActivity extends BaseActivity {
         }
     }
 
-    //查询当前登陆人在选择工程是否有讨论组
-    private void getMembersStatus() {
-
-        OkGo.<String>post(RetrofitHelper.BASE_TEST_URL + Common.WECHAT_MEMBERS_STATUS)
-                .tag(this)
-                .headers("token", SPUtils.getInstance().getString(SpConfig.TOKEN))//请求头
-                .params("user_id", SPUtils.getInstance().getInt(SpConfig.USER_ID))//用户编号
-                .params("project_id", getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0))
-                .execute(new com.lzy.okgo.callback.StringCallback() {//返回值
-
-                    @Override
-                    public void onError(Response<String> response) {
-                        super.onError(response);
-                        LogUtils.json(response.body());
-                    }
-
-                    @Override
-                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-                        LogUtils.json(response.body());
-                        try {
-                            ProjectMembersStatusBean bean = new Gson().fromJson(response.body(), ProjectMembersStatusBean.class);
-                            if (bean.getCode().equals("200")) {
-                                RongIM.getInstance().startGroupChat(ProjectDetailActivity.this
-                                        , bean.getData().getGroupId()
-                                        , bean.getData().getGroupName());
-                            } else if (bean.getCode().equals("-1")) {
-                                ToastUtils.showShort(bean.getMsg());
-                                LoginUtils.getExitLogin();
-                            } else {
-                                ToastUtils.showShort(bean.getMsg());
-                            }
-                        } catch (JsonSyntaxException | IllegalStateException ignored) {
-                            ToastUtils.showShort(getString(R.string.request_error));
-                        }
-                    }
-                });
-    }
-
-    /**
-     * 初始化
-     */
+    //初始化
     private void init() {
         if (aMap == null) {
             aMap = mapView.getMap();
@@ -362,7 +309,7 @@ public class ProjectDetailActivity extends BaseActivity {
     }
 
     /**
-     * 设置一些amap的属性
+     * 设置一些aMap的属性
      */
     private void setUpMap() {
         aMap.moveCamera(CameraUpdateFactory.zoomTo(12));
