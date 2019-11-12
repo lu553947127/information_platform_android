@@ -56,34 +56,41 @@ public class DeviceAdapter extends BaseQuickAdapter<DeviceBean.ListBean, BaseVie
                 break;
         }
 
+        helper.setText(R.id.tv_material, item.getMaterial_id())
+                .setText(R.id.tv_category, "设备分类：" + item.getCategory())
+                .setText(R.id.tv_is_shelf, "是否上架：" + item.getIs_shelf() + "      库存数量：" + item.getStock())
+                .setText(R.id.tv_company, "下属公司：" + item.getCompany())
+                .setText(R.id.tv_project, "项目名称：" + item.getProject())
+                .setText(R.id.tv_address, "存放地点：" + item.getProvince() + item.getCity() + item.getAddress())
+                .addOnClickListener(R.id.tv_edit)
+                .addOnClickListener(R.id.tv_delete);
+
         LinearLayout linearLayout = helper.getView(R.id.ll_edit);
         TextView tvEdit = helper.getView(R.id.tv_edit);
         TextView tvDelete = helper.getView(R.id.tv_delete);
-        if (is_children == 0) {
-            linearLayout.setVisibility(View.VISIBLE);
-            if (construction_edit == 0 && construction_delete == 0) {
-                linearLayout.setVisibility(View.GONE);
-            } else if (construction_edit == 1 && construction_delete == 0) {
+        switch (is_children){
+            case 1://普通供应商
+            case 2://子公司
+                linearLayout.setVisibility(View.VISIBLE);
                 tvEdit.setVisibility(View.VISIBLE);
-                tvDelete.setVisibility(View.GONE);
-            } else if (construction_edit == 0 && construction_delete == 1) {
-                tvEdit.setVisibility(View.GONE);
                 tvDelete.setVisibility(View.VISIBLE);
-            }
-            helper.setText(R.id.tv_material, item.getMaterial_id())
-                    .setText(R.id.tv_company, "分类：" + item.getCategory())
-                    .setText(R.id.tv_category, "是否上架：" + item.getIs_shelf())
-                    //此处地址 需要 省 市 详细地址拼接
-                    .setText(R.id.tv_address, "存放地点：" + item.getProvince() + item.getCity() + item.getAddress())
-                    .addOnClickListener(R.id.tv_edit)
-                    .addOnClickListener(R.id.tv_delete);
-        } else {
-            linearLayout.setVisibility(View.GONE);
-            helper.setText(R.id.tv_material, item.getMaterial_id())
-                    .setText(R.id.tv_company, "子公司：" + item.getCompany())
-                    .setText(R.id.tv_category, "分类：" + item.getCategory() + "      是否上架：" + item.getIs_shelf())
-                    //此处地址 需要 省 市 详细地址拼接
-                    .setText(R.id.tv_address, "存放地点：" + item.getProvince() + item.getCity() + item.getAddress());
+                break;
+            case 3://集团
+                linearLayout.setVisibility(View.GONE);
+                break;
+            case 4://子账号
+                if (construction_edit == 0 && construction_delete == 0) {
+                    linearLayout.setVisibility(View.GONE);
+                } else if (construction_edit == 1 && construction_delete == 0) {
+                    linearLayout.setVisibility(View.VISIBLE);
+                    tvEdit.setVisibility(View.VISIBLE);
+                    tvDelete.setVisibility(View.GONE);
+                } else if (construction_edit == 0 && construction_delete == 1) {
+                    linearLayout.setVisibility(View.VISIBLE);
+                    tvEdit.setVisibility(View.GONE);
+                    tvDelete.setVisibility(View.VISIBLE);
+                }
+                break;
         }
     }
 }

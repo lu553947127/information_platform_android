@@ -41,7 +41,7 @@
             android:text="挂篮"/>
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_company"
+            android:id="@+id/tv_category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="9dp"
@@ -52,7 +52,7 @@
             android:text="材料类别：模板"/>
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_category"
+            android:id="@+id/tv_is_shelf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="7dp"
@@ -61,6 +61,30 @@
             android:textColor="@color/color_666666"
             android:textSize="13sp"
             android:text="是否上架： 大客户打开手铐"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_company"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:singleLine="true"
+            android:textColor="@color/color_666666"
+            android:textSize="13sp"
+            android:text="子公司 ：ask还打算快点哈看啥看"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_project"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:singleLine="true"
+            android:textColor="@color/color_666666"
+            android:textSize="13sp"
+            android:text="项目名称 ：ask还打算快点哈看啥看"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_address"

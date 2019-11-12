@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="45dp"
     android:orientation="horizontal"
     android:background="@color/colorFFF"
     android:paddingRight="25dp"
     android:layout_below="@+id/divider">
+
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_company"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
@@ -17,15 +18,14 @@
         android:gravity="center"
         android:textColor="@color/color_666666"
         android:textSize="13sp"
-        android:text="子公司"/>
+        android:text="公司/项目"/>
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_name"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:drawableRight="@drawable/icon_pulldown_arrow"
-        android:drawablePadding="-10dp"
+        android:drawablePadding="-20dp"
         android:background="@drawable/selector_bg_custom"
         android:gravity="center"
         android:textColor="@color/color_666666"
@@ -33,41 +33,26 @@
         android:text="材料名称"/>
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_grounding"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:drawableRight="@drawable/icon_pulldown_arrow"
-        android:drawablePadding="-10dp"
+        android:drawablePadding="-20dp"
         android:background="@drawable/selector_bg_custom"
         android:gravity="center"
         android:textColor="@color/color_666666"
         android:textSize="13sp"
-        android:text="是否上架"/>
+        android:text="订单管理"/>
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_use_statue"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:drawableRight="@drawable/icon_pulldown_arrow"
-        android:drawablePadding="-10dp"
+        android:drawablePadding="-20dp"
         android:background="@drawable/selector_bg_custom"
         android:gravity="center"
         android:textColor="@color/color_666666"
         android:textSize="13sp"
-        android:text="使用状态"/>
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_depositing_place"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:drawableRight="@drawable/icon_pulldown_arrow"
-        android:drawablePadding="-10dp"
-        android:background="@drawable/selector_bg_custom"
-        android:gravity="center"
-        android:textColor="@color/color_666666"
-        android:textSize="13sp"
-        android:text="存放地点"/>
+        android:text="订单类型"/>
 </LinearLayout>

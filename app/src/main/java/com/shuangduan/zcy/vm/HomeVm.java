@@ -39,7 +39,7 @@ public class HomeVm extends BaseViewModel {
     public MutableLiveData<List<HomeBannerBean>> bannerLiveData;
     public MutableLiveData<HomeListBean> listLiveData;
     public MutableLiveData<SupplierCliqueBean> supplierCliqueLiveData;
-    public MutableLiveData<List<SupplierRoleBean>> supplierRoleLiveData;
+    public MutableLiveData<SupplierRoleBean> supplierRoleLiveData;
     public MutableLiveData<HelpBean> helpLiveData;
     public MutableLiveData<VersionUpgradesBean> versionUpgradesLiveData;
     public MutableLiveData<String> pageStateLiveData;

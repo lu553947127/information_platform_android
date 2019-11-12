@@ -1,13 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorFFF">
+    android:background="@color/colorBgDark">
 
     <include layout="@layout/toolbar" />
 
-    <include layout="@layout/layout_tab_no_scroll_vp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:orientation="vertical"
+        android:layout_marginBottom="60dp">
 
-</LinearLayout>
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/color_DDDDDD" />
+
+        <include android:id="@+id/search" layout="@layout/layout_admin_manage_screen_data" />
+
+        <include layout="@layout/layout_admin_manage_screen"/>
+
+        <include layout="@layout/layout_refresh_rv_new"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="65dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/icon_admin_add"/>
+
+</RelativeLayout>

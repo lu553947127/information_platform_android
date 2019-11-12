@@ -54,8 +54,8 @@ public class HomeRepository extends BaseRepository {
         request(apiService.getSupplierClique(userId)).setData(liveData).send();
     }
 
-    public void getSupplierRole(MutableLiveData<List<SupplierRoleBean>> liveData, int userId){
-        request(apiService.getSupplierRole(userId)).setDataList(liveData).send();
+    public void getSupplierRole(MutableLiveData<SupplierRoleBean> liveData, int userId){
+        request(apiService.getSupplierRole(userId)).setData(liveData).send();
     }
 
     public void help(MutableLiveData<HelpBean> liveData, MutableLiveData<String> pageStateLiveData, int userId){

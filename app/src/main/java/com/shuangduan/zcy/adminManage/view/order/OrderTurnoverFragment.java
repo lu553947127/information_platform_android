@@ -1,19 +1,8 @@
 package com.shuangduan.zcy.adminManage.view.order;
 
 import android.os.Bundle;
-import android.view.View;
-
-import androidx.fragment.app.Fragment;
-
-import com.blankj.utilcode.util.SPUtils;
-import com.google.android.material.tabs.TabLayout;
 import com.shuangduan.zcy.R;
-import com.shuangduan.zcy.adapter.ViewPagerAdapter;
-import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseLazyFragment;
-import com.shuangduan.zcy.weight.NoScrollViewPager;
-
-import butterknife.BindView;
 
 /**
  * @ProjectName: information_platform_android
@@ -29,10 +18,6 @@ import butterknife.BindView;
  */
 public class OrderTurnoverFragment extends BaseLazyFragment {
 
-    @BindView(R.id.tab_layout)
-    TabLayout tabLayout;
-    @BindView(R.id.vp)
-    NoScrollViewPager vp;
 
     public static OrderTurnoverFragment newInstance() {
         Bundle args = new Bundle();
@@ -53,29 +38,10 @@ public class OrderTurnoverFragment extends BaseLazyFragment {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
-        Fragment[] fragments = {OrderTurnoverGroupFragment.newInstance(),
-                OrderTurnoverChildrenFragment.newInstance()};
-        tabLayout.addTab(tabLayout.newTab());
-        tabLayout.addTab(tabLayout.newTab());
-        vp.setAdapter(new ViewPagerAdapter(getChildFragmentManager(), fragments, getResources().getStringArray(R.array.turnover_material)));
-        tabLayout.setupWithViewPager(vp);
     }
 
     @Override
     protected void initDataFromService() {
 
-    }
-
-    //后台管理权限判断
-    private void getAdminEntrance(int son) {
-        if (son==0){
-            tabLayout.setVisibility(View.GONE);
-        }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        getAdminEntrance(SPUtils.getInstance().getInt(CustomConfig.SON_LIST,0));
     }
 }

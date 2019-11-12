@@ -75,6 +75,7 @@ public class DeviceBean {
         private String address;
         private String use_status;
         private String company;
+        private String project;
 
         public int getId() {
             return id;
@@ -162,6 +163,14 @@ public class DeviceBean {
 
         public void setCompany(String company) {
             this.company = company;
+        }
+
+        public String getProject() {
+            return project;
+        }
+
+        public void setProject(String project) {
+            this.project = project;
         }
     }
 }

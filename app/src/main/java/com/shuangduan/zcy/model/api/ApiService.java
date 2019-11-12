@@ -1028,7 +1028,7 @@ public interface ApiService {
     //基建物资 管理权限
     @FormUrlEncoded
     @POST("api/Manage/getSupplierRole")
-    Flowable<BaseListResponse<SupplierRoleBean>> getSupplierRole(
+    Flowable<BaseResponse<SupplierRoleBean>> getSupplierRole(
             @Field("user_id") int user_id
     );
 
@@ -1603,7 +1603,7 @@ public interface ApiService {
     Flowable<BaseResponse<TurnoverBean>> constructionList(
             @Field("user_id") int userId,
             @Field("page") int page,
-            @Field("type") int type,
+            @Field("unit_id") int unit_id,
             @Field("is_shelf") int is_shelf,
             @Field("use_status") int use_status,
             @Field("province") int province,
@@ -1781,7 +1781,7 @@ public interface ApiService {
     Flowable<BaseResponse<DeviceBean>> equipmentList(
             @Field("user_id") int userId,
             @Field("page") int page,
-            @Field("type") int type,
+            @Field("unit_id") int unit_id,
             @Field("is_shelf") int is_shelf,
             @Field("use_status") int use_status,
             @Field("province") int province,

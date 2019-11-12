@@ -72,6 +72,7 @@ public class TurnoverBean {
         private String use_status;
         private String company;
         private String stock;
+        private String project;
 
         public String getStock() {
             return stock;
@@ -151,6 +152,14 @@ public class TurnoverBean {
 
         public void setCompany(String company) {
             this.company = company;
+        }
+
+        public String getProject() {
+            return project;
+        }
+
+        public void setProject(String project) {
+            this.project = project;
         }
     }
 }

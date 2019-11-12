@@ -131,8 +131,11 @@ public class MineFragment extends BaseFragment {
         //获取后台管理权限
         homeVm = ViewModelProviders.of(mActivity).get(HomeVm.class);
         homeVm.supplierRoleLiveData.observe(this, supplierRoleBean -> {
-            for (SupplierRoleBean bean : supplierRoleBean) {
-                getAdminManagePermission(bean);
+            //获取用户身份 0普通用户 1普通供应商 2子公司 3集团 4子账号
+            SPUtils.getInstance().put(CustomConfig.MANAGE_STATUS,supplierRoleBean.getManage_status());
+            //获取子节点权限
+            for (SupplierRoleBean.RoleBean bean : supplierRoleBean.getRole()) {
+                getAdminManagePermission(bean,supplierRoleBean.getManage_status());
             }
         });
 
@@ -277,14 +280,8 @@ public class MineFragment extends BaseFragment {
 
     private int construction,equipment,equipment_order,construction_order;
     //存储后台管理权限
-    private void getAdminManagePermission(SupplierRoleBean bean) {
+    private void getAdminManagePermission(SupplierRoleBean.RoleBean bean,int manage_status) {
         switch (bean.getMenu()){
-            case CustomConfig.SON_LIST://判断是否有子公司
-                SPUtils.getInstance().put(CustomConfig.SON_LIST,bean.getStatus());
-                break;
-            case CustomConfig.INNER_SWITCH://内定权限
-                SPUtils.getInstance().put(CustomConfig.INNER_SWITCH,bean.getStatus());
-                break;
             case CustomConfig.CONSTRUCTION_LIST://周转材料列表
                 SPUtils.getInstance().put(CustomConfig.CONSTRUCTION_LIST,bean.getStatus());
                 construction=bean.getStatus();
@@ -338,30 +335,46 @@ public class MineFragment extends BaseFragment {
                 SPUtils.getInstance().put(CustomConfig.CONSTRUCTION_ORDER_EDIT,bean.getStatus());
                 break;
         }
-        getAdminEntrance(construction,equipment,equipment_order,construction_order);
+        getAdminEntrance(construction,equipment,equipment_order,construction_order,manage_status);
     }
 
     //后台管理入口判断显示
-    private void getAdminEntrance(int construction,int equipment,int equipment_order,int construction_order) {
-        if (construction==0&&equipment==0&&equipment_order==0&&construction_order==0){
-            llAdminManage.setVisibility(View.GONE);
-        }else {
-            llAdminManage.setVisibility(View.VISIBLE);
-            if (construction==1){
-                tvTurnoverMaterial.setVisibility(View.VISIBLE);
-            }else {
-                tvTurnoverMaterial.setVisibility(View.GONE);
-            }
-            if (equipment==1){
-                tvDeviceManagement.setVisibility(View.VISIBLE);
-            }else {
-                tvDeviceManagement.setVisibility(View.GONE);
-            }
-            if (equipment_order==1||construction_order==1){
-                tvOrderManagement.setVisibility(View.VISIBLE);
-            }else {
-                tvOrderManagement.setVisibility(View.GONE);
-            }
+    private void getAdminEntrance(int construction,int equipment,int equipment_order,int construction_order,int manage_status) {
+        switch (manage_status){
+            case 0://普通用户
+                llAdminManage.setVisibility(View.GONE);
+                break;
+            case 1://普通供应商
+                llAdminManage.setVisibility(View.VISIBLE);
+                break;
+            case 2://子公司
+            case 3://集团
+                llAdminManage.setVisibility(View.VISIBLE);
+                SPUtils.getInstance().put(CustomConfig.INNER_SWITCH,1);
+                break;
+            case 4://子账号
+                SPUtils.getInstance().put(CustomConfig.INNER_SWITCH,1);
+                if (construction==0&&equipment==0&&equipment_order==0&&construction_order==0){
+                    llAdminManage.setVisibility(View.GONE);
+                }else {
+                    llAdminManage.setVisibility(View.VISIBLE);
+                    if (construction==1){
+                        tvTurnoverMaterial.setVisibility(View.VISIBLE);
+                    }else {
+                        tvTurnoverMaterial.setVisibility(View.GONE);
+                    }
+                    if (equipment==1){
+                        tvDeviceManagement.setVisibility(View.VISIBLE);
+                    }else {
+                        tvDeviceManagement.setVisibility(View.GONE);
+                    }
+                    if (equipment_order==1||construction_order==1){
+                        tvOrderManagement.setVisibility(View.VISIBLE);
+                    }else {
+                        tvOrderManagement.setVisibility(View.GONE);
+                    }
+                }
+                break;
         }
     }
 }

@@ -1,6 +1,8 @@
 package com.shuangduan.zcy.model.bean;
 
 
+import java.util.List;
+
 /**
  * @ProjectName: information_platform_android
  * @Package: com.shuangduan.zcy.model.bean
@@ -14,28 +16,53 @@ package com.shuangduan.zcy.model.bean;
  * @Version: 1.0
  */
 public class SupplierRoleBean {
-
     /**
-     * menu : son-list
-     * status : 1
+     * manage_status : 3
+     * role : [{"menu":"construction-list","status":1},{"menu":"construction-detail","status":1},{"menu":"construction-add","status":1},{"menu":"construction-edit","status":1},{"menu":"construction-delete","status":1},{"menu":"equipment-list","status":1},{"menu":"equipment-detail","status":1},{"menu":"equipment-add","status":1},{"menu":"equipment-edit","status":1},{"menu":"equipment-delete","status":1},{"menu":"equipment-order-list","status":1},{"menu":"equipment-order-detail","status":1},{"menu":"equipment-order-edit","status":1},{"menu":"construction-order-list","status":1},{"menu":"construction-order-detail","status":1},{"menu":"construction-order-edit","status":1}]
      */
 
-    private String menu;
-    private int status;
+    private int manage_status;
+    private List<RoleBean> role;
 
-    public String getMenu() {
-        return menu;
+    public int getManage_status() {
+        return manage_status;
     }
 
-    public void setMenu(String menu) {
-        this.menu = menu;
+    public void setManage_status(int manage_status) {
+        this.manage_status = manage_status;
     }
 
-    public int getStatus() {
-        return status;
+    public List<RoleBean> getRole() {
+        return role;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    public void setRole(List<RoleBean> role) {
+        this.role = role;
+    }
+
+    public static class RoleBean {
+        /**
+         * menu : construction-list
+         * status : 1
+         */
+
+        private String menu;
+        private int status;
+
+        public String getMenu() {
+            return menu;
+        }
+
+        public void setMenu(String menu) {
+            this.menu = menu;
+        }
+
+        public int getStatus() {
+            return status;
+        }
+
+        public void setStatus(int status) {
+            this.status = status;
+        }
     }
 }

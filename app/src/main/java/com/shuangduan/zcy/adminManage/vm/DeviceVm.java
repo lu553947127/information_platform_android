@@ -34,6 +34,7 @@ public class DeviceVm extends BaseViewModel {
     private int userId;
     private int page = 1;
     public String type;
+    public int unit_id;
     public int is_shelf;
     public int use_status;
     public int supplier_id;
@@ -70,16 +71,16 @@ public class DeviceVm extends BaseViewModel {
     }
 
     //后台管理 --- 设备管理列表
-    public void equipmentList(int type,int province,int city){
+    public void equipmentList(int province,int city){
         page = 1;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
-        new DeviceRepository().equipmentList(deviceLiveData, pageStateLiveData, userId,page,type,is_shelf,use_status,province,city,p_category_id,category_id,supplier_id);
+        new DeviceRepository().equipmentList(deviceLiveData, pageStateLiveData, userId,page,unit_id,is_shelf,use_status,province,city,p_category_id,category_id,supplier_id);
     }
 
-    public void equipmentListMore(int type,int province,int city){
+    public void equipmentListMore(int province,int city){
         page ++;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
-        new DeviceRepository().equipmentList(deviceLiveData, pageStateLiveData, userId,page,type,is_shelf,use_status,province,city,p_category_id,category_id,supplier_id);
+        new DeviceRepository().equipmentList(deviceLiveData, pageStateLiveData, userId,page,unit_id,is_shelf,use_status,province,city,p_category_id,category_id,supplier_id);
     }
 
     //后台管理 --- 筛选条件列表

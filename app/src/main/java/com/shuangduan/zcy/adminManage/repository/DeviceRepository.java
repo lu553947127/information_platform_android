@@ -25,8 +25,8 @@ import java.util.List;
 public class DeviceRepository extends BaseRepository {
 
     //后台管理 --- 设备管理列表
-    public void equipmentList(MutableLiveData<DeviceBean> liveData, MutableLiveData<String> pageState, int user_id, int page, int type, int is_shelf, int use_status, int province, int city, int p_category_id, int category_id, int supplier_id) {
-        request(apiService.equipmentList(user_id, page, type, is_shelf, use_status, province, city, p_category_id, category_id, supplier_id)).setData(liveData).setPageState(pageState).send();
+    public void equipmentList(MutableLiveData<DeviceBean> liveData, MutableLiveData<String> pageState, int user_id, int page, int unit_id, int is_shelf, int use_status, int province, int city, int p_category_id, int category_id, int supplier_id) {
+        request(apiService.equipmentList(user_id, page, unit_id, is_shelf, use_status, province, city, p_category_id, category_id, supplier_id)).setData(liveData).setPageState(pageState).send();
     }
 
     //后台管理 --- 设备管理选择条件历史列表

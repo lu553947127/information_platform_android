@@ -28,8 +28,8 @@ import java.util.List;
 public class TurnoverRepository extends BaseRepository {
 
     //后台管理 --- 周转材料列表
-    public void constructionList(MutableLiveData<TurnoverBean> liveData, MutableLiveData<String> pageState, int user_id, int page, int type, int is_shelf, int use_status, int province, int city, int p_category_id, int category_id, int supplier_id) {
-        request(apiService.constructionList(user_id, page, type, is_shelf, use_status, province, city, p_category_id, category_id, supplier_id)).setData(liveData).setPageState(pageState).send();
+    public void constructionList(MutableLiveData<TurnoverBean> liveData, MutableLiveData<String> pageState, int user_id, int page, int unit_id, int is_shelf, int use_status, int province, int city, int p_category_id, int category_id, int supplier_id) {
+        request(apiService.constructionList(user_id, page, unit_id, is_shelf, use_status, province, city, p_category_id, category_id, supplier_id)).setData(liveData).setPageState(pageState).send();
     }
 
     //后台管理 --- 筛选条件列表
