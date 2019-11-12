@@ -5,6 +5,7 @@
     <string name="format_project_valuation">工程造价：%1$s</string>
     <string name="format_project_content">概况</string>
 
+
     <string name="format_project_name"><![CDATA[项目名称：<font color="#6a5ff8">%1$s</font>]]></string>
 
     <string name="format_release_time">发布时间：%1$s</string>
@@ -30,5 +31,7 @@
     <string name="audit">审核中</string>
     <string name="pass">通过</string>
     <string name="reject">驳回</string>
+
+    <string name="project_dynamics">动态</string>
 
 </resources>

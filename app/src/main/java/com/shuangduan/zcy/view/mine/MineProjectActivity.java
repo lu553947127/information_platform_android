@@ -79,6 +79,11 @@ public class MineProjectActivity extends BaseActivity implements CompoundButton.
     @BindView(R.id.ll_material)
     LinearLayout llMaterial;
 
+    @BindView(R.id.ll_reject)
+    LinearLayout llReject;
+    @BindView(R.id.tv_reject_intro)
+    TextView tvRejectIntro;
+
     private ProjectDetailVm projectDetailVm;
 
     private ContactAdapter contactAdapter;
@@ -154,6 +159,13 @@ public class MineProjectActivity extends BaseActivity implements CompoundButton.
             } else {
                 cbLoad.setVisibility(View.GONE);
             }
+
+            //驳回原因
+            if (!StringUtils.isTrimEmpty(detail.getRemark())) {
+                llReject.setVisibility(View.VISIBLE);
+                tvRejectIntro.setText(detail.getRemark());
+            }
+
         });
 
         projectDetailVm.getMyProjectDateil();

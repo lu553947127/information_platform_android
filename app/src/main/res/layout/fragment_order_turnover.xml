@@ -4,10 +4,13 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorFFF">
+    android:background="@color/colorBgDark">
 
     <include android:id="@+id/search" layout="@layout/layout_admin_manage_order" />
 
     <include layout="@layout/layout_admin_manage_screen"/>
+
+    <include layout="@layout/layout_refresh_rv_new"/>
+
 
 </LinearLayout>

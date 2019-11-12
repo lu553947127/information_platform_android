@@ -1,5 +1,6 @@
 package com.shuangduan.zcy.model.api;
 
+import com.shuangduan.zcy.adminManage.bean.AdminOrderBean;
 import com.shuangduan.zcy.adminManage.bean.DeviceBean;
 import com.shuangduan.zcy.adminManage.bean.DeviceDetailBean;
 import com.shuangduan.zcy.adminManage.bean.DeviceDetailEditBean;
@@ -1929,5 +1930,19 @@ public interface ApiService {
     Flowable<BaseResponse<DeviceDetailEditBean>> equipmentEditShow(
             @Field("user_id") int userId,
             @Field("id") int id
+    );
+
+    //后台管理 --- 周转材料订单管理
+    @FormUrlEncoded
+    @POST("api/Manage/constructionOrderList")
+    Flowable<BaseResponse<AdminOrderBean>> orderListData(
+            @Field("user_id") int userId,
+            @Field("type") int type,
+            @Field("p_category_id") int pCategoryId,
+            @Field("category_id") int categoryId,
+            @Field("phases") int phases,
+            @Field("inside") int inside,
+            @Field("order_number") String orderNumber,
+            @Field("page") int page
     );
 }

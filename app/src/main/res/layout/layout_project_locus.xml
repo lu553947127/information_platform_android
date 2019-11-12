@@ -2,6 +2,8 @@
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/colorFFF"
     android:overScrollMode="never"
     android:scrollbars="none">
@@ -10,6 +12,45 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="18dp"
+            android:background="@color/colorFFF"
+            tools:ignore="MissingConstraints">
+
+            <TextView
+                android:id="@+id/tv_content"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/project_dynamics"
+                android:textSize="14sp"
+                android:textColor="@color/colorTv"
+                app:layout_constraintLeft_toLeftOf="@id/divider"
+                app:layout_constraintRight_toRightOf="@id/divider" />
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="32dp"
+                android:layout_height="3dp"
+                android:layout_marginLeft="14dp"
+                android:layout_marginTop="3dp"
+                android:background="@color/color_6a5ff8"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_content" />
+
+            <ImageView
+                android:id="@+id/iv_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_content"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"

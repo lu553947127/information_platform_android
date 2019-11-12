@@ -86,6 +86,18 @@ public class ProjectDetailBean {
         // 0待审核 1审核成功 2审核失败
         private int status;
 
+        //驳回原因
+        private String remark;
+
+
+        public String getRemark() {
+            return remark;
+        }
+
+        public void setRemark(String remark) {
+            this.remark = remark;
+        }
+
         public int getStatus() {
             return status;
         }
