@@ -1634,6 +1634,14 @@ public interface ApiService {
             @Field("user_id") int userId
     );
 
+    //后台管理 --- 周转材料列表 筛选项目
+    @FormUrlEncoded
+    @POST("api/Manage/getUnitInfo")
+    Flowable<BaseListResponse<TurnoverNameBean>> getUnitInfo(
+            @Field("user_id") int userId,
+            @Field("supplier_id") int supplier_id
+    );
+
     //后台管理 --- 周转材料名称类别一级
     @FormUrlEncoded
     @POST("api/Manage/constructionCategoryParent")

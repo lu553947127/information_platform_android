@@ -13,6 +13,11 @@ public class TurnoverNameBean {
     public int id;
     public String name;
 
+    public TurnoverNameBean(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     @Override
     public String toString() {
         return "TurnoverNameBean{" +

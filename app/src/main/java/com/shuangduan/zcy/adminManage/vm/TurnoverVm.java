@@ -38,6 +38,7 @@ public class TurnoverVm extends BaseViewModel{
     public int is_shelf;
     public int use_status;
     public int supplier_id;
+    public String supplier_name;
     public int p_category_id;
     public int category_id;
     public MutableLiveData<TurnoverBean> turnoverLiveData;
@@ -51,7 +52,7 @@ public class TurnoverVm extends BaseViewModel{
 
     //基建物资-物资材料添加-选择项目
     public MutableLiveData<List<TurnoverNameBean>> turnoverName;
-
+    public MutableLiveData<List<TurnoverNameBean>> turnoverProject;
     public MutableLiveData<String> turnoverDeleteData;
     public MutableLiveData<String> turnoverSplitData;
     public MutableLiveData<String> pageStateLiveData;
@@ -70,6 +71,8 @@ public class TurnoverVm extends BaseViewModel{
         turnoverDetailEditLiveData = new MutableLiveData<>();
         pageStateLiveData = new MutableLiveData<>();
         turnoverName = new MutableLiveData<>();
+        turnoverProject = new MutableLiveData<>();
+
         is_shelf = 0;
         use_status = 0;
         supplier_id = 0;
@@ -138,5 +141,10 @@ public class TurnoverVm extends BaseViewModel{
     //后台管理 --- 物资材料添加-选择项目
     public void projectListData(){
         new TurnoverRepository().projectListData(turnoverName,pageStateLiveData,userId);
+    }
+
+    //后台管理 --- 周转材料列表 筛选项目
+    public void getUnitInfo(){
+        new TurnoverRepository().getUnitInfo(turnoverProject,pageStateLiveData,userId,supplier_id);
     }
 }

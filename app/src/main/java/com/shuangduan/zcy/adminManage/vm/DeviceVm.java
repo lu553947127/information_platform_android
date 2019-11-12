@@ -8,6 +8,7 @@ import com.shuangduan.zcy.adminManage.bean.DeviceDetailBean;
 import com.shuangduan.zcy.adminManage.bean.DeviceDetailEditBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverCategoryBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverCompanyBean;
+import com.shuangduan.zcy.adminManage.bean.TurnoverNameBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverTypeBean;
 import com.shuangduan.zcy.adminManage.repository.DeviceRepository;
 import com.shuangduan.zcy.adminManage.repository.TurnoverRepository;
@@ -38,6 +39,7 @@ public class DeviceVm extends BaseViewModel {
     public int is_shelf;
     public int use_status;
     public int supplier_id;
+    public String supplier_name;
     public int p_category_id;
     public int category_id;
     public MutableLiveData<DeviceBean> deviceLiveData;
@@ -49,6 +51,7 @@ public class DeviceVm extends BaseViewModel {
     public MutableLiveData<String> deviceDeleteData;
     public MutableLiveData<DeviceDetailBean> deviceDetailLiveData;
     public MutableLiveData<DeviceDetailEditBean> deviceDetailEditLiveData;
+    public MutableLiveData<List<TurnoverNameBean>> turnoverProject;
     public MutableLiveData<String> pageStateLiveData;
 
     public DeviceVm(){
@@ -62,7 +65,9 @@ public class DeviceVm extends BaseViewModel {
         deviceDeleteData = new MutableLiveData<>();
         deviceDetailLiveData = new MutableLiveData<>();
         deviceDetailEditLiveData = new MutableLiveData<>();
+        turnoverProject = new MutableLiveData<>();
         pageStateLiveData = new MutableLiveData<>();
+
         is_shelf = 0;
         use_status = 0;
         supplier_id = 0;
@@ -121,5 +126,10 @@ public class DeviceVm extends BaseViewModel {
     //后台管理 --- 设备管理编辑详情
     public void equipmentEditShow(int id) {
         new DeviceRepository().equipmentEditShow(deviceDetailEditLiveData, pageStateLiveData, userId, id);
+    }
+
+    //后台管理 --- 周转材料列表 筛选项目
+    public void getUnitInfo(){
+        new TurnoverRepository().getUnitInfo(turnoverProject,pageStateLiveData,userId,supplier_id);
     }
 }

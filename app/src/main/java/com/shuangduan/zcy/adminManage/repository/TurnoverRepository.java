@@ -101,4 +101,9 @@ public class TurnoverRepository extends BaseRepository {
     public void constructionEditShow(MutableLiveData<TurnoverDetailEditBean> liveData, MutableLiveData<String> pageState, int userId, int id) {
         request(apiService.constructionEditShow(userId, id)).setData(liveData).setPageState(pageState).send();
     }
+
+    //后台管理 --- 周转材料列表 筛选项目
+    public void getUnitInfo(MutableLiveData<List<TurnoverNameBean>> liveData, MutableLiveData<String> pageState, int userId,int supplier_id) {
+        request(apiService.getUnitInfo(userId,supplier_id)).setDataList(liveData).setPageState(pageState).send();
+    }
 }

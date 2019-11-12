@@ -1,8 +1,5 @@
 package com.shuangduan.zcy.adminManage.adapter;
 
-import android.view.View;
-import android.widget.ImageView;
-
 import androidx.annotation.Nullable;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -37,21 +34,17 @@ public class TurnoverCompanyAdapter extends BaseQuickAdapter<TurnoverCompanyBean
 
     @Override
     protected void convert(BaseViewHolder helper, TurnoverCompanyBean item) {
-        ImageView ivSelect=helper.getView(R.id.iv_select);
         if (is_select!=0){
             if (is_select==item.getSupplier_id()){
-                helper.setText(R.id.tv_city, item.getCompany())
-                        .setTextColor(R.id.tv_city,mContext.getResources().getColor(R.color.color_5C54F4));
-                ivSelect.setVisibility(View.VISIBLE);
+                helper.setText(R.id.tv_province, item.getCompany())
+                        .setTextColor(R.id.tv_province,mContext.getResources().getColor(R.color.color_5C54F4));
             }else {
-                helper.setText(R.id.tv_city, item.getCompany())
-                        .setTextColor(R.id.tv_city,mContext.getResources().getColor(R.color.color_666666));
-                ivSelect.setVisibility(View.GONE);
+                helper.setText(R.id.tv_province, item.getCompany())
+                        .setTextColor(R.id.tv_province,mContext.getResources().getColor(R.color.color_666666));
             }
         }else {
-            helper.setText(R.id.tv_city, item.getCompany())
-                    .setTextColor(R.id.tv_city,mContext.getResources().getColor(R.color.color_666666));
-            ivSelect.setVisibility(View.GONE);
+            helper.setText(R.id.tv_province, item.getCompany())
+                    .setTextColor(R.id.tv_province,mContext.getResources().getColor(R.color.color_666666));
         }
     }
 }

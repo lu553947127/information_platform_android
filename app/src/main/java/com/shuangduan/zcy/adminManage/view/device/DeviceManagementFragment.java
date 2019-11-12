@@ -30,9 +30,11 @@ import com.shuangduan.zcy.adminManage.adapter.GroundingAdapter;
 import com.shuangduan.zcy.adminManage.adapter.SelectorAreaFirstAdapter;
 import com.shuangduan.zcy.adminManage.adapter.SelectorAreaSecondAdapter;
 import com.shuangduan.zcy.adminManage.adapter.TurnoverCompanyAdapter;
+import com.shuangduan.zcy.adminManage.adapter.TurnoverProjectAdapter;
 import com.shuangduan.zcy.adminManage.adapter.UseStatueAdapter;
 import com.shuangduan.zcy.adminManage.bean.DeviceBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverCompanyBean;
+import com.shuangduan.zcy.adminManage.bean.TurnoverNameBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverTypeBean;
 import com.shuangduan.zcy.adminManage.event.DeviceChildrenEvent;
 import com.shuangduan.zcy.adminManage.view.SelectTypeActivity;
@@ -209,6 +211,19 @@ public class DeviceManagementFragment extends BaseLazyFragment {
         deviceVm.turnoverCompanyData.observe(this,turnoverCompanyBeans -> {
             companyList=turnoverCompanyBeans;
             turnoverCompanyAdapter.setNewData(companyList);
+            if (deviceVm.supplier_id==0){
+                deviceVm.supplier_id=companyList.get(0).getSupplier_id();
+                deviceVm.supplier_name = companyList.get(0).getCompany();
+                turnoverCompanyAdapter.setIsSelect(deviceVm.supplier_id);
+                deviceVm.getUnitInfo();
+            }
+        });
+
+        //获取项目列表数据
+        deviceVm.turnoverProject.observe(this,turnoverNameBeans -> {
+            projectList = turnoverNameBeans;
+            if (SPUtils.getInstance().getInt(CustomConfig.MANAGE_STATUS,0)==3)projectList.add(0,new TurnoverNameBean(0,"全部"));
+            turnoverProjectAdapter.setNewData(projectList);
         });
 
         //获取筛选条件列表数据
@@ -225,6 +240,12 @@ public class DeviceManagementFragment extends BaseLazyFragment {
         areaVm.provinceLiveData.observe(this, provinceBeans -> {
             provinceList = provinceBeans;
             provinceAdapter.setNewData(provinceList);
+            if (areaVm.id==0){
+                areaVm.id=provinceList.get(0).getId();
+                areaVm.cityResult = provinceList.get(0).getName();
+                provinceAdapter.setIsSelect(areaVm.id);
+                areaVm.getCity();
+            }
         });
         areaVm.cityLiveData.observe(this, cityBeans -> {
             cityList = cityBeans;
@@ -310,9 +331,9 @@ public class DeviceManagementFragment extends BaseLazyFragment {
                 break;
             case R.id.tv_company://选择子公司
                 if (SPUtils.getInstance().getInt(CustomConfig.MANAGE_STATUS,0)==3){
-                    getBottomSheetDialog(R.layout.dialog_is_grounding,"company");
+                    getBottomSheetDialog(R.layout.dialog_depositing_place,"company");
                 }else {
-
+                    getBottomSheetDialog(R.layout.dialog_is_grounding,"project");
                 }
                 getDrawableRightView(tvCompany,R.drawable.icon_pullup_arrow,R.color.color_5C54F4);
                 break;
@@ -340,6 +361,8 @@ public class DeviceManagementFragment extends BaseLazyFragment {
                 tvIsShelf.setVisibility(View.GONE);
                 tvUseStatus.setVisibility(View.GONE);
                 tvAddress.setVisibility(View.GONE);
+                deviceVm.supplier_id=0;
+                deviceVm.unit_id=0;
                 deviceVm.category_id=0;
                 deviceVm.is_shelf=0;
                 deviceVm.use_status=0;
@@ -349,6 +372,7 @@ public class DeviceManagementFragment extends BaseLazyFragment {
                 break;
             case R.id.tv_company_children://子公司
                 deviceVm.supplier_id=0;
+                deviceVm.unit_id=0;
                 getDeleteView(tvCompanyChildren,View.GONE);
                 break;
             case R.id.tv_name_second://名称二级
@@ -379,6 +403,8 @@ public class DeviceManagementFragment extends BaseLazyFragment {
     private List<TurnoverTypeBean.UseStatusBean> useStatueList = new ArrayList<>();
     private TurnoverCompanyAdapter turnoverCompanyAdapter;
     private List<TurnoverCompanyBean> companyList = new ArrayList<>();
+    private TurnoverProjectAdapter turnoverProjectAdapter;
+    private List<TurnoverNameBean> projectList = new ArrayList<>();
     @SuppressLint("RestrictedApi,InflateParams")
     private void getBottomSheetDialog(int layout, String type) {
         //底部滑动对话框
@@ -404,22 +430,67 @@ public class DeviceManagementFragment extends BaseLazyFragment {
         deviceVm.type=type;
         switch (type){
             case "company":
-                TextView tvCompany=btn_dialog.findViewById(R.id.tv_title);
-                Objects.requireNonNull(tvCompany).setText("选择子公司");
-                RecyclerView rvCompany = btn_dialog.findViewById(R.id.rv);
+                TextView tvFirst = btn_dialog.findViewById(R.id.tv_first);
+                TextView tvSecond = btn_dialog.findViewById(R.id.tv_second);
+                RecyclerView rvCompany = btn_dialog.findViewById(R.id.rv_province);
+                RecyclerView rvProjectGroup = btn_dialog.findViewById(R.id.rv_city);
+                Objects.requireNonNull(tvFirst).setText("选择下属公司");
+                Objects.requireNonNull(tvSecond).setText("选择项目");
                 Objects.requireNonNull(rvCompany).setLayoutManager(new LinearLayoutManager(getActivity()));
-                turnoverCompanyAdapter = new TurnoverCompanyAdapter(R.layout.adapter_selector_area_second, null);
+                Objects.requireNonNull(rvProjectGroup).setLayoutManager(new LinearLayoutManager(getActivity()));
+                turnoverCompanyAdapter = new TurnoverCompanyAdapter(R.layout.adapter_selector_area_first, null);
+                turnoverProjectAdapter = new TurnoverProjectAdapter(R.layout.adapter_selector_area_second, null);
                 rvCompany.setAdapter(turnoverCompanyAdapter);
+                rvProjectGroup.setAdapter(turnoverProjectAdapter);
                 turnoverCompanyAdapter.setOnItemClickListener((adapter, view, position) -> {
-                    deviceVm.supplier_id=companyList.get(position).getSupplier_id();
-                    deviceVm.equipmentList(areaVm.id,areaVm.city_id);
-                    btn_dialog.dismiss();
-                    getDrawableRightView(tvCompany,R.drawable.icon_pulldown_arrow,R.color.color_666666);
-                    getAddTopScreenView(tvCompanyChildren,companyList.get(position).getCompany(),View.VISIBLE);
+                    deviceVm.supplier_id = companyList.get(position).getSupplier_id();
+                    deviceVm.supplier_name = companyList.get(position).getCompany();
+                    deviceVm.getUnitInfo();
+                    turnoverCompanyAdapter.setIsSelect(companyList.get(position).getSupplier_id());
+                });
+                turnoverProjectAdapter.setOnItemClickListener((adapter, view, position) -> {
+                    if (projectList.get(position).id!=0){
+                        deviceVm.unit_id = projectList.get(position).id;
+                        deviceVm.equipmentList(areaVm.id,areaVm.city_id);
+                        turnoverProjectAdapter.setIsSelect(projectList.get(position).id);
+                        btn_dialog.dismiss();
+                        getDrawableRightView(tvCompany,R.drawable.icon_pulldown_arrow,R.color.color_666666);
+                        getAddTopScreenView(tvCompanyChildren,projectList.get(position).name,View.VISIBLE);
+                    }else {
+                        deviceVm.unit_id=0;
+                        deviceVm.equipmentList(areaVm.id,areaVm.city_id);
+                        btn_dialog.dismiss();
+                        getDrawableRightView(tvCompany,R.drawable.icon_pulldown_arrow,R.color.color_666666);
+                        getAddTopScreenView(tvCompanyChildren,deviceVm.supplier_name,View.VISIBLE);
+                    }
                 });
                 deviceVm.getSupplierInfo();
                 if (deviceVm.supplier_id!=0){
                     turnoverCompanyAdapter.setIsSelect(deviceVm.supplier_id);
+                    deviceVm.getUnitInfo();
+                }
+                if (deviceVm.unit_id!=0){
+                    turnoverProjectAdapter.setIsSelect(deviceVm.unit_id);
+                }
+                break;
+            case "project":
+                TextView tvProject=btn_dialog.findViewById(R.id.tv_title);
+                Objects.requireNonNull(tvProject).setText("选择项目");
+                RecyclerView rvProject = btn_dialog.findViewById(R.id.rv);
+                Objects.requireNonNull(rvProject).setLayoutManager(new LinearLayoutManager(getActivity()));
+                turnoverProjectAdapter = new TurnoverProjectAdapter(R.layout.adapter_selector_area_second, null);
+                rvProject.setAdapter(turnoverProjectAdapter);
+                turnoverProjectAdapter.setOnItemClickListener((adapter, view, position) -> {
+                    deviceVm.unit_id = projectList.get(position).id;
+                    deviceVm.equipmentList(areaVm.id,areaVm.city_id);
+                    turnoverProjectAdapter.setIsSelect(projectList.get(position).id);
+                    btn_dialog.dismiss();
+                    getDrawableRightView(tvCompany,R.drawable.icon_pulldown_arrow,R.color.color_666666);
+                    getAddTopScreenView(tvCompanyChildren,projectList.get(position).name,View.VISIBLE);
+                });
+                deviceVm.getUnitInfo();
+                if (deviceVm.unit_id!=0){
+                    turnoverProjectAdapter.setIsSelect(deviceVm.unit_id);
                 }
                 break;
             case "grounding":
