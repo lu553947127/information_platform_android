@@ -97,4 +97,11 @@ public class ProjectDetailRepository extends BaseRepository {
     public void membersStatus(MutableLiveData<ProjectMembersStatusBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, int project_id) {
         request(apiService.membersStatus(user_id, project_id)).setData(liveData).setPageState(pageStateLiveData).send();
     }
+
+    /**
+     * 加入群聊
+     */
+    public void joinGroup(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int user_id, int id) {
+        request(apiService.joinGroup(user_id, id)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
 }

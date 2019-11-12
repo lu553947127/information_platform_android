@@ -13,6 +13,7 @@ import com.shuangduan.zcy.model.bean.IMFriendApplyListBean;
 import com.shuangduan.zcy.model.bean.IMFriendApplyOperationBean;
 import com.shuangduan.zcy.model.bean.IMFriendListBean;
 import com.shuangduan.zcy.model.bean.IMFriendSearchBean;
+import com.shuangduan.zcy.model.bean.IMGroupInfoBean;
 import com.shuangduan.zcy.model.bean.IMGroupListBean;
 
 /**
@@ -37,6 +38,8 @@ public class IMAddVm extends BaseViewModel {
     public MutableLiveData<IMGroupListBean> groupListData;
     public MutableLiveData<IMFriendApplyCountBean> applyCountData;
     public MutableLiveData applyLiveData;
+    public MutableLiveData quitGroupLiveData;
+    public MutableLiveData<IMGroupInfoBean> imGroupInfoLiveData;
     public MutableLiveData<String> pageStateLiveData;
     private int page;
     public int count;
@@ -53,6 +56,8 @@ public class IMAddVm extends BaseViewModel {
         groupListData = new MutableLiveData<>();
         applyCountData = new MutableLiveData<>();
         applyLiveData = new MutableLiveData();
+        quitGroupLiveData = new MutableLiveData();
+        imGroupInfoLiveData = new MutableLiveData<>();
         pageStateLiveData = new MutableLiveData<>();
     }
 
@@ -128,5 +133,22 @@ public class IMAddVm extends BaseViewModel {
     //通讯录 好友申请数量
     public void applyCount(){
         new IMRepository().applyCount(applyCountData, pageStateLiveData, userId);
+    }
+
+    //退出群聊
+    public void quitGroup(String group_id){
+        new IMRepository().quitGroup(quitGroupLiveData, pageStateLiveData, userId,group_id);
+    }
+
+    //群聊详情
+    public void groupList(String group_id,int pageSize){
+        page = 1;
+        new IMRepository().groupList(imGroupInfoLiveData, pageStateLiveData, userId,group_id,page,pageSize);
+    }
+
+    //群聊详情
+    public void groupListMore(String group_id){
+        page ++;
+        new IMRepository().groupList(imGroupInfoLiveData, pageStateLiveData, userId,group_id,page,10);
     }
 }

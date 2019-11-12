@@ -436,6 +436,32 @@ public interface ApiService {
             @Field("project_id") int project_id
     );
 
+    //加入群聊
+    @FormUrlEncoded
+    @POST("api/wechat/joinGroup")
+    Flowable<BaseResponse> joinGroup(
+            @Field("user_id") int user_id,
+            @Field("id") int id
+    );
+
+    //退出群聊
+    @FormUrlEncoded
+    @POST("api/Wechat/quitGroup")
+    Flowable<BaseResponse> quitGroup(
+            @Field("user_id") int user_id,
+            @Field("group_id") String group_id
+    );
+
+    //群聊详情
+    @FormUrlEncoded
+    @POST("api/Wechat/groupList")
+    Flowable<BaseResponse<IMGroupInfoBean>> groupList(
+            @Field("user_id") int user_id,
+            @Field("group_id") String group_id,
+            @Field("page") int page,
+            @Field("pageSize") int pageSize
+    );
+
     @FormUrlEncoded
     @POST("api/Userinfo/myProject")
     Flowable<BaseResponse<ProjectMineBean>> myProject(

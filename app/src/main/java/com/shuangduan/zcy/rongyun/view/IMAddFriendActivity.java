@@ -19,6 +19,8 @@ import com.shuangduan.zcy.utils.image.ImageLoader;
 import com.shuangduan.zcy.vm.IMAddVm;
 import com.shuangduan.zcy.weight.CircleImageView;
 
+import java.util.Objects;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -49,7 +51,7 @@ public class IMAddFriendActivity extends BaseActivity {
     @BindView(R.id.edt_msg)
     EditText edtMsg;
     int friend_data;
-    private String id, name, msg, image;
+    private String id;
     private IMAddVm imAddVm;
 
     @Override
@@ -75,10 +77,10 @@ public class IMAddFriendActivity extends BaseActivity {
         imAddVm = ViewModelProviders.of(this).get(IMAddVm.class);
 
         Bundle bundle = getIntent().getExtras();
-        id = bundle.getString("id");
-        name = bundle.getString("name");
-        msg = bundle.getString("msg");
-        image = bundle.getString("image");
+        id = Objects.requireNonNull(bundle).getString("id");
+        String name = bundle.getString("name");
+        String msg = bundle.getString("msg");
+        String image = bundle.getString("image");
 
         tvName.setText(name);
         tvContent.setText(msg);
@@ -101,7 +103,6 @@ public class IMAddFriendActivity extends BaseActivity {
             }
             finish();
         });
-
     }
 
     @OnClick({R.id.iv_bar_back, R.id.tv_confirm})

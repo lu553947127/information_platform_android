@@ -48,7 +48,6 @@ public class NewFriendsActivity extends BaseActivity implements EmptyViewFactory
     RecyclerView rv;
     @BindView(R.id.refresh)
     SmartRefreshLayout refresh;
-    NewFriendAdapter newFriendAdapter;
     private View emptyView;
     private IMAddVm imAddVm;
 
@@ -74,7 +73,7 @@ public class NewFriendsActivity extends BaseActivity implements EmptyViewFactory
 
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
-        newFriendAdapter = new NewFriendAdapter(R.layout.item_friends_new, null);
+        NewFriendAdapter newFriendAdapter = new NewFriendAdapter(R.layout.item_friends_new, null);
         newFriendAdapter.setEmptyView(R.layout.layout_loading, rv);
         rv.setAdapter(newFriendAdapter);
         newFriendAdapter.setOnItemChildClickListener((adapter, view, position) -> {

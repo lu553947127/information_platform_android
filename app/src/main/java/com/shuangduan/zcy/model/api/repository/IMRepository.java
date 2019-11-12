@@ -7,6 +7,7 @@ import com.shuangduan.zcy.model.bean.IMFriendApplyListBean;
 import com.shuangduan.zcy.model.bean.IMFriendApplyOperationBean;
 import com.shuangduan.zcy.model.bean.IMFriendListBean;
 import com.shuangduan.zcy.model.bean.IMFriendSearchBean;
+import com.shuangduan.zcy.model.bean.IMGroupInfoBean;
 import com.shuangduan.zcy.model.bean.IMGroupListBean;
 import com.shuangduan.zcy.model.bean.IMTokenBean;
 
@@ -69,5 +70,15 @@ public class IMRepository extends BaseRepository {
     //通讯录 群组列表
     public void myGroup(MutableLiveData<IMGroupListBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int page,int pageSize){
         request(apiService.myGroup(userId, page,pageSize)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    //退出群聊
+    public void quitGroup(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int userId, String group_id){
+        request(apiService.quitGroup(userId, group_id)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    //群聊详情
+    public void groupList(MutableLiveData<IMGroupInfoBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, String group_id,int page,int pageSize){
+        request(apiService.groupList(userId, group_id,page,pageSize)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 }

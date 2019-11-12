@@ -22,14 +22,14 @@ import java.util.List;
  * @chang time
  * @class describe
  */
-public class IMGroupInfoAdapter extends BaseQuickAdapter<IMGroupInfoBean.DataBean.ListBean, BaseViewHolder> {
+public class IMGroupInfoAdapter extends BaseQuickAdapter<IMGroupInfoBean.ListBean, BaseViewHolder> {
 
-    public IMGroupInfoAdapter(int layoutResId,@Nullable List<IMGroupInfoBean.DataBean.ListBean> data) {
+    public IMGroupInfoAdapter(int layoutResId,@Nullable List<IMGroupInfoBean.ListBean> data) {
         super(layoutResId, data);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, IMGroupInfoBean.DataBean.ListBean item) {
+    protected void convert(BaseViewHolder helper, IMGroupInfoBean.ListBean item) {
         if (item.getUsername()!=null){
             helper.setText(R.id.tv_name, item.getUsername());
             helper.setVisible(R.id.iv_sgs, item.getCard_status() == 2);

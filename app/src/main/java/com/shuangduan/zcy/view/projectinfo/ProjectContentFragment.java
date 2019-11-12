@@ -18,18 +18,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.amap.api.maps.model.LatLng;
 import com.blankj.utilcode.util.ActivityUtils;
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
-import com.lzy.okgo.OkGo;
-import com.lzy.okgo.model.Response;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ContactAdapter;
-import com.shuangduan.zcy.app.Common;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseFragment;
@@ -37,12 +31,7 @@ import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.CustomDialog;
 import com.shuangduan.zcy.dialog.PayDialog;
 import com.shuangduan.zcy.model.api.PageState;
-import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
-import com.shuangduan.zcy.model.bean.IMFriendApplyCountBean;
-import com.shuangduan.zcy.model.bean.IMFriendApplyListBean;
-import com.shuangduan.zcy.model.bean.IMGroupInfoBean;
 import com.shuangduan.zcy.model.bean.ProjectDetailBean;
-import com.shuangduan.zcy.utils.LoginUtils;
 import com.shuangduan.zcy.view.mine.SetPwdPayActivity;
 import com.shuangduan.zcy.view.recharge.RechargeActivity;
 import com.shuangduan.zcy.vm.CoinPayVm;
@@ -86,7 +75,6 @@ public class ProjectContentFragment extends BaseFragment implements BaseQuickAda
     TextView tvReadDetail;
     @BindView(R.id.ll_material)
     LinearLayout llMaterial;
-
     @BindView(R.id.iv_attn)
     ImageView ivAttn;
 
@@ -146,8 +134,6 @@ public class ProjectContentFragment extends BaseFragment implements BaseQuickAda
                     String.format(getString(R.string.format_acreage), detail.getAcreage()));
 
             tvPrice.setText(String.format(getString(R.string.format_valuation), detail.getValuation()));
-//            tvDetail.setGlide(Glide.with(this));
-
 
             String introStr = detail.getIntro().trim();
             String materialStr = detail.getMaterials().trim();
@@ -175,14 +161,16 @@ public class ProjectContentFragment extends BaseFragment implements BaseQuickAda
 
             llMaterial.setVisibility(StringUtils.isTrimEmpty(detail.getMaterials()) ? View.GONE : View.VISIBLE);
 
-
-//            tvReadDetail.setVisibility(detail.getIs_pay() == 1 ? View.GONE : View.VISIBLE);
-
             setEmpty();
             contactAdapter.setIsPay(detail.getIs_pay());
             contactAdapter.setNewData(projectDetailBean.getContact());
         });
 
+        //加入群聊返回结果
+        projectDetailVm.joinGroupData.observe(this,item ->{
+            ToastUtils.showShort(getString(R.string.buy_success));
+            projectDetailVm.getDetail();
+        });
         initPay();
     }
 
@@ -192,14 +180,11 @@ public class ProjectContentFragment extends BaseFragment implements BaseQuickAda
     }
 
     private void setEmpty() {
-
         View empty = LayoutInflater.from(mContext).inflate(R.layout.layout_empty_top, null);
         TextView tvTip = empty.findViewById(R.id.tv_tip);
         tvTip.setText(getString(R.string.empty_contact));
         contactAdapter.setEmptyView(empty);
-
     }
-
 
     @OnClick({R.id.tv_read_detail})
     void onClick(View view) {
@@ -238,7 +223,7 @@ public class ProjectContentFragment extends BaseFragment implements BaseQuickAda
         coinPayVm.contentPayLiveData.observe(this, coinPayResultBean -> {
             if (coinPayResultBean.getPay_status() == 1) {
                 //加入工程圈讨论组（群聊）
-                getJoinGroup();
+                projectDetailVm.joinGroup(project_id);
             } else {
                 //余额不足
                 addDialog(new CustomDialog(mActivity)
@@ -270,43 +255,6 @@ public class ProjectContentFragment extends BaseFragment implements BaseQuickAda
         });
     }
 
-    //加入讨论组
-    private void getJoinGroup() {
-
-        OkGo.<String>post(RetrofitHelper.BASE_TEST_URL + Common.WECHAT_JOIN_GROUP)
-                .tag(this)
-                .headers("token", SPUtils.getInstance().getString(SpConfig.TOKEN))//请求头
-                .params("user_id", SPUtils.getInstance().getInt(SpConfig.USER_ID))//用户编号
-                .params("id", project_id)
-                .execute(new com.lzy.okgo.callback.StringCallback() {//返回值
-
-                    @Override
-                    public void onError(Response<String> response) {
-                        super.onError(response);
-                        LogUtils.json(response.body());
-                    }
-
-                    @Override
-                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-                        LogUtils.json(response.body());
-                        try {
-                            IMGroupInfoBean bean = new Gson().fromJson(response.body(), IMGroupInfoBean.class);
-                            if (bean.getCode().equals("200")) {
-                                ToastUtils.showShort(getString(R.string.buy_success));
-                                projectDetailVm.getDetail();
-                            } else if (bean.getCode().equals("-1")) {
-                                ToastUtils.showShort(bean.getMsg());
-                                LoginUtils.getExitLogin();
-                            } else {
-                                ToastUtils.showShort(bean.getMsg());
-                            }
-                        } catch (JsonSyntaxException | IllegalStateException ignored) {
-                            ToastUtils.showShort(getString(R.string.request_error));
-                        }
-                    }
-                });
-    }
-
     /**
      * 去支付
      */
@@ -326,7 +274,6 @@ public class ProjectContentFragment extends BaseFragment implements BaseQuickAda
                 break;
         }
     }
-
 
     private void addPayDialog() {
         addDialog(new CustomDialog(mActivity)
@@ -349,7 +296,6 @@ public class ProjectContentFragment extends BaseFragment implements BaseQuickAda
                 })
                 .showDialog());
     }
-
 
     /**
      * 查看详情的点击事件
@@ -375,7 +321,5 @@ public class ProjectContentFragment extends BaseFragment implements BaseQuickAda
         public void updateDrawState(TextPaint ds) {
             ds.setColor(getResources().getColor(R.color.color_6a5ff8));
         }//可点击文字的颜色
-
     }
-
 }

@@ -21,7 +21,6 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseFragment;
-import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.SupplierRoleBean;
 import com.shuangduan.zcy.model.event.AvatarEvent;
 import com.shuangduan.zcy.model.event.RechargeSuccessEvent;
@@ -94,6 +93,7 @@ public class MineFragment extends BaseFragment {
     AppCompatTextView tvDeviceManagement;
     @BindView(R.id.tv_order_management)
     AppCompatTextView tvOrderManagement;
+
     private UserInfoVm userInfoVm;
     private HomeVm homeVm;
 
@@ -126,16 +126,6 @@ public class MineFragment extends BaseFragment {
                     .errorPic(R.drawable.default_head)
                     .imageView(ivUser)
                     .build());
-        });
-        userInfoVm.pageStateLiveData.observe(this, s -> {
-            switch (s) {
-                case PageState.PAGE_LOADING:
-//                    showLoading();
-                    break;
-                default:
-                    hideLoading();
-                    break;
-            }
         });
 
         //获取后台管理权限

@@ -51,6 +51,7 @@ public class ProjectDetailVm extends BaseViewModel {
     public MutableLiveData cancelCollectLiveData;
     public MutableLiveData errorLiveData;
     public MutableLiveData<ProjectMembersStatusBean> projectMembersStatusData;
+    public MutableLiveData joinGroupData;
     public int pageTrack = 1;
     public int pageViewTrack = 1;
     public int pageConsume = 1;
@@ -79,6 +80,7 @@ public class ProjectDetailVm extends BaseViewModel {
         errorLiveData = new MutableLiveData();
         trackDateilLiveDate = new MutableLiveData<>();
         projectMembersStatusData = new MutableLiveData<>();
+        joinGroupData = new MutableLiveData();
     }
 
     private ProjectDetailRepository repositoryDetail;
@@ -167,5 +169,10 @@ public class ProjectDetailVm extends BaseViewModel {
     //查询是否可以进入讨论组
     public void membersStatus(int project_id) {
         new ProjectDetailRepository().membersStatus(projectMembersStatusData, pageStateLiveData, userId, project_id);
+    }
+
+    //加入群聊
+    public void joinGroup(int id) {
+        new ProjectDetailRepository().joinGroup(joinGroupData, pageStateLiveData, userId, id);
     }
 }

@@ -51,6 +51,9 @@ public class NewFriendAdapter extends BaseQuickAdapter<IMFriendApplyListBean.Lis
             case 1:
                 helper.addOnClickListener(R.id.tv_accept)
                         .addOnClickListener(R.id.tv_refuse);
+                tvAccept.setText("接受");
+                tvAccept.setBackground(mContext.getDrawable(R.drawable.selector_btn_confirm));
+                tvAccept.setTextColor(ContextCompat.getColor(mContext, R.color.colorFFF));
                 break;
             case 2:
                 tvAccept.setText("已接受");

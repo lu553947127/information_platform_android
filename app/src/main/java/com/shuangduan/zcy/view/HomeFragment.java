@@ -151,7 +151,7 @@ public class HomeFragment extends BaseFragment {
         return false;
     }
 
-    @SuppressLint("NewApi")
+    @SuppressLint({"NewApi", "SetTextI18n"})
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState, View v) {
 //        BarUtils.setStatusBarColorRes(fakeStatusBar, getResources().getColor(R.color.colorPrimary));

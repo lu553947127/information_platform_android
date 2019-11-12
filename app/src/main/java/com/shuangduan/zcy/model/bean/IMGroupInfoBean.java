@@ -14,187 +14,141 @@ import java.util.List;
  */
 public class IMGroupInfoBean {
     /**
-     * code : 200
-     * msg : 成功
-     * time : 1568186639
-     * data : {"info":{"id":8,"group_name":"陕西合阳至铜川、吴起至华池高速公路PPP（HTTJ-04标）李","province":"陕西省","city":""},"page":"1","count":3,"list":[{"id":85,"image":"http://information-api.oss-cn-qingdao.aliyuncs.com/eaab08e3c8d8a86ffd97814a905ec4fc.jpeg","username":"鹿鸿祥"},{"id":33,"image":"http://information-api.oss-cn-qingdao.aliyuncs.com/5adb0e33d685223bfe79a51fee17431f.png","username":"哒哒哒哈"},{"id":55,"image":"http://information-api.oss-cn-qingdao.aliyuncs.com/accdf4f9ffb831d42eafe7614cb9560d.jpg","username":"vhh1"}]}
+     * info : {"id":8,"group_name":"陕西合阳至铜川、吴起至华池高速公路PPP（HTTJ-04标）李","province":"陕西省","city":""}
+     * page : 1
+     * count : 3
+     * list : [{"id":85,"image":"http://information-api.oss-cn-qingdao.aliyuncs.com/eaab08e3c8d8a86ffd97814a905ec4fc.jpeg","username":"鹿鸿祥"},{"id":33,"image":"http://information-api.oss-cn-qingdao.aliyuncs.com/5adb0e33d685223bfe79a51fee17431f.png","username":"哒哒哒哈"},{"id":55,"image":"http://information-api.oss-cn-qingdao.aliyuncs.com/accdf4f9ffb831d42eafe7614cb9560d.jpg","username":"vhh1"}]
      */
 
-    private String code;
-    private String msg;
-    private int time;
-    private DataBean data;
+    private InfoBean info;
+    private int page;
+    private int count;
+    private List<ListBean> list;
 
-    public String getCode() {
-        return code;
+    public InfoBean getInfo() {
+        return info;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setInfo(InfoBean info) {
+        this.info = info;
     }
 
-    public String getMsg() {
-        return msg;
+    public int getPage() {
+        return page;
     }
 
-    public void setMsg(String msg) {
-        this.msg = msg;
+    public void setPage(int page) {
+        this.page = page;
     }
 
-    public int getTime() {
-        return time;
+    public int getCount() {
+        return count;
     }
 
-    public void setTime(int time) {
-        this.time = time;
+    public void setCount(int count) {
+        this.count = count;
     }
 
-    public DataBean getData() {
-        return data;
+    public List<ListBean> getList() {
+        return list;
     }
 
-    public void setData(DataBean data) {
-        this.data = data;
+    public void setList(List<ListBean> list) {
+        this.list = list;
     }
 
-    public static class DataBean {
+    public static class InfoBean {
         /**
-         * info : {"id":8,"group_name":"陕西合阳至铜川、吴起至华池高速公路PPP（HTTJ-04标）李","province":"陕西省","city":""}
-         * page : 1
-         * count : 3
-         * list : [{"id":85,"image":"http://information-api.oss-cn-qingdao.aliyuncs.com/eaab08e3c8d8a86ffd97814a905ec4fc.jpeg","username":"鹿鸿祥"},{"id":33,"image":"http://information-api.oss-cn-qingdao.aliyuncs.com/5adb0e33d685223bfe79a51fee17431f.png","username":"哒哒哒哈"},{"id":55,"image":"http://information-api.oss-cn-qingdao.aliyuncs.com/accdf4f9ffb831d42eafe7614cb9560d.jpg","username":"vhh1"}]
+         * id : 8
+         * group_name : 陕西合阳至铜川、吴起至华池高速公路PPP（HTTJ-04标）李
+         * province : 陕西省
+         * city :
          */
 
-        private InfoBean info;
-        private int page;
-        private int count;
-        private List<ListBean> list;
+        private int id;
+        private String group_name;
+        private String province;
+        private String city;
 
-        public InfoBean getInfo() {
-            return info;
+        public int getId() {
+            return id;
         }
 
-        public void setInfo(InfoBean info) {
-            this.info = info;
+        public void setId(int id) {
+            this.id = id;
         }
 
-        public int getPage() {
-            return page;
+        public String getGroup_name() {
+            return group_name;
         }
 
-        public void setPage(int page) {
-            this.page = page;
+        public void setGroup_name(String group_name) {
+            this.group_name = group_name;
         }
 
-        public int getCount() {
-            return count;
+        public String getProvince() {
+            return province;
         }
 
-        public void setCount(int count) {
-            this.count = count;
+        public void setProvince(String province) {
+            this.province = province;
         }
 
-        public List<ListBean> getList() {
-            return list;
+        public String getCity() {
+            return city;
         }
 
-        public void setList(List<ListBean> list) {
-            this.list = list;
+        public void setCity(String city) {
+            this.city = city;
+        }
+    }
+
+    public static class ListBean {
+        /**
+         * id : 85
+         * image : http://information-api.oss-cn-qingdao.aliyuncs.com/eaab08e3c8d8a86ffd97814a905ec4fc.jpeg
+         * username : 鹿鸿祥
+         */
+
+        private int id;
+        private String image;
+        private String username;
+        private int card_status;
+
+        public ListBean(String username) {
+            this.username = username;
         }
 
-        public static class InfoBean {
-            /**
-             * id : 8
-             * group_name : 陕西合阳至铜川、吴起至华池高速公路PPP（HTTJ-04标）李
-             * province : 陕西省
-             * city :
-             */
-
-            private int id;
-            private String group_name;
-            private String province;
-            private String city;
-
-            public int getId() {
-                return id;
-            }
-
-            public void setId(int id) {
-                this.id = id;
-            }
-
-            public String getGroup_name() {
-                return group_name;
-            }
-
-            public void setGroup_name(String group_name) {
-                this.group_name = group_name;
-            }
-
-            public String getProvince() {
-                return province;
-            }
-
-            public void setProvince(String province) {
-                this.province = province;
-            }
-
-            public String getCity() {
-                return city;
-            }
-
-            public void setCity(String city) {
-                this.city = city;
-            }
+        public int getId() {
+            return id;
         }
 
-        public static class ListBean {
-            /**
-             * id : 85
-             * image : http://information-api.oss-cn-qingdao.aliyuncs.com/eaab08e3c8d8a86ffd97814a905ec4fc.jpeg
-             * username : 鹿鸿祥
-             */
+        public void setId(int id) {
+            this.id = id;
+        }
 
-            private int id;
-            private String image;
-            private String username;
-            private int card_status;
+        public String getImage() {
+            return image;
+        }
 
-            public ListBean(String username) {
-                this.username = username;
-            }
+        public void setImage(String image) {
+            this.image = image;
+        }
 
-            public int getId() {
-                return id;
-            }
+        public String getUsername() {
+            return username;
+        }
 
-            public void setId(int id) {
-                this.id = id;
-            }
+        public void setUsername(String username) {
+            this.username = username;
+        }
 
-            public String getImage() {
-                return image;
-            }
+        public int getCard_status() {
+            return card_status;
+        }
 
-            public void setImage(String image) {
-                this.image = image;
-            }
-
-            public String getUsername() {
-                return username;
-            }
-
-            public void setUsername(String username) {
-                this.username = username;
-            }
-
-            public int getCard_status() {
-                return card_status;
-            }
-
-            public void setCard_status(int card_status) {
-                this.card_status = card_status;
-            }
+        public void setCard_status(int card_status) {
+            this.card_status = card_status;
         }
     }
 }

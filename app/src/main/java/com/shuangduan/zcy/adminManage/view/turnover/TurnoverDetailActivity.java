@@ -193,8 +193,6 @@ public class TurnoverDetailActivity extends BaseActivity{
                 tvPutawayTime.setVisibility(View.GONE);
             }
         });
-
-
     }
 
     @OnClick(R.id.iv_bar_back)

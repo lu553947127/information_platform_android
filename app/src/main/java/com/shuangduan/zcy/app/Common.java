@@ -6,13 +6,6 @@ public class Common {
     public static final String WECHAT_USER_INFO="/api/Wechat/userInfo";
     //会话列表群组头像名称显示
     public static final String WECHAT_GROUP_INFO="/api/wechat/groupInfo";
-    //群聊详情
-    public static final String WECHAT_GROUP="/api/Wechat/groupList";
-
-    //群聊退出
-    public static final String WECHAT_QUIT_GROUP="/api/Wechat/quitGroup";
-    //群聊加入
-    public static final String WECHAT_JOIN_GROUP="/api/wechat/joinGroup";
 
 
     //注册 隐私协议
