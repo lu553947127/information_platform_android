@@ -83,15 +83,13 @@ public class LoginUtils {
      *
      * @return
      */
-    public static boolean isWeixinAvilible(Context context) {
-        final PackageManager packageManager = context.getPackageManager();// 获取packagemanager
-        List<PackageInfo> pinfo = packageManager.getInstalledPackages(0);// 获取所有已安装程序的包信息
-        if (pinfo != null) {
-            for (int i = 0; i < pinfo.size(); i++) {
-                String pn = pinfo.get(i).packageName;
-                if (pn.equals("com.tencent.mm")) {
-                    return true;
-                }
+    public static boolean isWeiXinInstall(Context context) {
+        final PackageManager packageManager = context.getPackageManager();// 获取packageManager
+        List<PackageInfo> packageInfoList = packageManager.getInstalledPackages(0);// 获取所有已安装程序的包信息
+        for (int i = 0; i < packageInfoList.size(); i++) {
+            String pn = packageInfoList.get(i).packageName;
+            if (pn.equals("com.tencent.mm")) {
+                return true;
             }
         }
         return false;

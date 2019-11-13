@@ -246,7 +246,7 @@ public class LoginActivity extends BaseActivity {
                 ActivityUtils.startActivity(bundle,WebViewActivity.class);
                 break;
             case R.id.iv_wechat://微信登录
-                if (LoginUtils.isWeixinAvilible(this)){
+                if (LoginUtils.isWeiXinInstall(this)){
                     SendAuth.Req req = new SendAuth.Req();
                     req.scope = "snsapi_userinfo";
                     req.state = "wechat_sdk_shuangduan_zcy";
