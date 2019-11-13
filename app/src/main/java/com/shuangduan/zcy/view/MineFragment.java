@@ -377,4 +377,5 @@ public class MineFragment extends BaseFragment {
                 break;
         }
     }
+
 }

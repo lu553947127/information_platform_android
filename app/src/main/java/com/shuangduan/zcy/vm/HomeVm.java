@@ -88,8 +88,7 @@ public class HomeVm extends BaseViewModel {
 
     //后台管理权限
     public void getSupplierRole(){
-        LogUtils.e("HomeVm---user_id>>>>>>>>>"+userId);
-        new HomeRepository().getSupplierRole(supplierRoleLiveData,SPUtils.getInstance().getInt(SpConfig.USER_ID));
+        new HomeRepository().getSupplierRole(supplierRoleLiveData,userId);
     }
 
     //帮助列表

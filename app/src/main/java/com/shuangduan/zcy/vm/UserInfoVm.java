@@ -103,8 +103,7 @@ public class UserInfoVm extends BaseViewModel {
     }
 
     public void userInfo(){
-        LogUtils.e("UserInfoVm---user_id>>>>>>>>>"+userId);
-        new UserRepository().userInfo(getInfoLiveData, pageStateLiveData, SPUtils.getInstance().getInt(SpConfig.USER_ID));
+        new UserRepository().userInfo(getInfoLiveData, pageStateLiveData, userId);
     }
 
     public void information(){
