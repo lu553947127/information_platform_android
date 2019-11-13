@@ -10,6 +10,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
@@ -18,8 +19,6 @@ import com.shuangduan.zcy.utils.image.ImageConfig;
 import com.shuangduan.zcy.utils.image.ImageLoader;
 import com.shuangduan.zcy.vm.IMAddVm;
 import com.shuangduan.zcy.weight.CircleImageView;
-
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -76,11 +75,10 @@ public class IMAddFriendActivity extends BaseActivity {
 
         imAddVm = ViewModelProviders.of(this).get(IMAddVm.class);
 
-        Bundle bundle = getIntent().getExtras();
-        id = Objects.requireNonNull(bundle).getString("id");
-        String name = bundle.getString("name");
-        String msg = bundle.getString("msg");
-        String image = bundle.getString("image");
+        id = getIntent().getStringExtra("id");
+        String name = getIntent().getStringExtra("name");
+        String msg = getIntent().getStringExtra("msg");
+        String image = getIntent().getStringExtra("image");
 
         tvName.setText(name);
         tvContent.setText(msg);

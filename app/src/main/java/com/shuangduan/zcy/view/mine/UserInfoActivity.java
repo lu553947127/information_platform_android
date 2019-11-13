@@ -181,6 +181,7 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
             apply_status=userInfoBean.getApply_status();
             id= String.valueOf(userInfoBean.getId());
             user_name=userInfoBean.getUsername();
+            company=userInfoBean.getCompany();
             image=userInfoBean.getImage();
             if (apply_status != null && apply_status.equals("1")) {
                 if (SPUtils.getInstance().getInt(SpConfig.USER_ID) != uid) {
