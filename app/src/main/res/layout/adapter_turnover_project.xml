@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginTop="10dp">
+
+    <LinearLayout
+        android:id="@+id/ll_more"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_city_long"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="啊是否合适的接口返回盛开的菊花反抗精神啊是否合适的接口返回盛开的菊花反抗精神"
+            android:singleLine="true"
+            android:maxEms="5"
+            android:textColor="@color/color_666666"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:textSize="12sp"
+            android:textColor="@color/colorTvHint"
+            android:text="("/>
+
+        <TextView
+            android:id="@+id/tv_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="3dp"
+            android:drawableRight="@drawable/icon_admin_project_more"
+            android:layout_marginLeft="1dp"
+            android:layout_gravity="center_vertical"
+            android:textSize="12sp"
+            android:textColor="@color/colorTvHint"
+            android:text="显示全部"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="1dp"
+            android:textSize="12sp"
+            android:textColor="@color/colorTvHint"
+            android:text=")"/>
+
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_city"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="35dp"
+        android:textColor="@color/color_666666"
+        android:textSize="14sp"
+        android:text="啊是否合适的接口返回盛开的菊花反抗精神啊是否合适的接口返回盛开的菊花反抗精神啊是否合适的接口返回盛开的菊花反抗精神啊是否合适的接口返回盛开的菊花反抗精神"
+        android:visibility="visible"/>
+
+    <ImageView
+        android:id="@+id/iv_select"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:src="@drawable/icon_select_yes"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dp"
+        android:visibility="gone"
+        tools:ignore="RtlHardcoded" />
+
+</RelativeLayout>

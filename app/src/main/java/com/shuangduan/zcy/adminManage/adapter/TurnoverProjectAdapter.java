@@ -2,6 +2,8 @@ package com.shuangduan.zcy.adminManage.adapter;
 
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
@@ -38,19 +40,40 @@ public class TurnoverProjectAdapter extends BaseQuickAdapter<TurnoverNameBean, B
     @Override
     protected void convert(BaseViewHolder helper, TurnoverNameBean item) {
         ImageView ivSelect=helper.getView(R.id.iv_select);
+        TextView textView=helper.getView(R.id.tv_city);
+        LinearLayout linearLayout=helper.getView(R.id.ll_more);
+        TextView tvCityLong=helper.getView(R.id.tv_city_long);
+        TextView tv_more=helper.getView(R.id.tv_more);
+
+        //判断项目名称过长显示全部
+        if (item.name.length()>5){
+            linearLayout.setVisibility(View.VISIBLE);
+            textView.setVisibility(View.GONE);
+            tvCityLong.setText(item.name);
+            tv_more.setOnClickListener(v -> {
+                linearLayout.setVisibility(View.GONE);
+                textView.setVisibility(View.VISIBLE);
+                textView.setText(item.name);
+            });
+        }else {
+            linearLayout.setVisibility(View.GONE);
+            textView.setVisibility(View.VISIBLE);
+            textView.setText(item.name);
+        }
+
         if (is_select!=0){
             if (is_select==item.id){
-                helper.setText(R.id.tv_city, item.name)
-                        .setTextColor(R.id.tv_city,mContext.getResources().getColor(R.color.color_5C54F4));
+                textView.setTextColor(mContext.getResources().getColor(R.color.color_5C54F4));
+                tvCityLong.setTextColor(mContext.getResources().getColor(R.color.color_5C54F4));
                 ivSelect.setVisibility(View.VISIBLE);
             }else {
-                helper.setText(R.id.tv_city, item.name)
-                        .setTextColor(R.id.tv_city,mContext.getResources().getColor(R.color.color_666666));
+                textView.setTextColor(mContext.getResources().getColor(R.color.color_666666));
+                tvCityLong.setTextColor(mContext.getResources().getColor(R.color.color_666666));
                 ivSelect.setVisibility(View.GONE);
             }
         }else {
-            helper.setText(R.id.tv_city, item.name)
-                    .setTextColor(R.id.tv_city,mContext.getResources().getColor(R.color.color_666666));
+            textView.setTextColor(mContext.getResources().getColor(R.color.color_666666));
+            tvCityLong.setTextColor(mContext.getResources().getColor(R.color.color_666666));
             ivSelect.setVisibility(View.GONE);
         }
     }

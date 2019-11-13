@@ -440,7 +440,7 @@ public class DeviceManagementFragment extends BaseLazyFragment {
                 Objects.requireNonNull(rvCompany).setLayoutManager(new LinearLayoutManager(getActivity()));
                 Objects.requireNonNull(rvProjectGroup).setLayoutManager(new LinearLayoutManager(getActivity()));
                 turnoverCompanyAdapter = new TurnoverCompanyAdapter(R.layout.adapter_selector_area_first, null);
-                turnoverProjectAdapter = new TurnoverProjectAdapter(R.layout.adapter_selector_area_second, null);
+                turnoverProjectAdapter = new TurnoverProjectAdapter(R.layout.adapter_turnover_project, null);
                 rvCompany.setAdapter(turnoverCompanyAdapter);
                 rvProjectGroup.setAdapter(turnoverProjectAdapter);
                 turnoverCompanyAdapter.setOnItemClickListener((adapter, view, position) -> {
@@ -479,7 +479,7 @@ public class DeviceManagementFragment extends BaseLazyFragment {
                 Objects.requireNonNull(tvProject).setText("选择项目");
                 RecyclerView rvProject = btn_dialog.findViewById(R.id.rv);
                 Objects.requireNonNull(rvProject).setLayoutManager(new LinearLayoutManager(getActivity()));
-                turnoverProjectAdapter = new TurnoverProjectAdapter(R.layout.adapter_selector_area_second, null);
+                turnoverProjectAdapter = new TurnoverProjectAdapter(R.layout.adapter_turnover_project, null);
                 rvProject.setAdapter(turnoverProjectAdapter);
                 turnoverProjectAdapter.setOnItemClickListener((adapter, view, position) -> {
                     deviceVm.unit_id = projectList.get(position).id;
