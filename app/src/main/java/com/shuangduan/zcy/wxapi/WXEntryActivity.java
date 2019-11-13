@@ -90,7 +90,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
     //微信登录获取openid
     private void getWeChatLogin(String code) {
 
-        OkGo.<String>post( Common.WECHAT_LOGIN_)
+        OkGo.<String>post(Common.WECHAT_LOGIN)
                 .tag(this)
                 .params("appid", AppConfig.APP_ID)//微信的appId
                 .params("secret",AppConfig.AppSecret)//微信的appSecret

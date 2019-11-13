@@ -15,5 +15,5 @@ public class Common {
     //工程信息 认购协议
     public static final String AGREEMENT_WARRANT="/home/Agreement/warrant";
     //微信登录获取oppid和unionid
-    public static final String WECHAT_LOGIN_="https://api.weixin.qq.com/sns/oauth2/access_token";
+    public static final String WECHAT_LOGIN="https://api.weixin.qq.com/sns/oauth2/access_token";
 }

@@ -63,8 +63,8 @@ public class SubOrderActivity extends BaseActivity {
     TextView tvPrice;
     private UpdatePwdPayVm updatePwdPayVm;
     private CoinPayVm coinPayVm;
-    private ProjectSubConfirmBean confirmBean;
     private ProjectDetailVm projectDetailVm;
+    private ProjectSubConfirmBean confirmBean;
 
     @Override
     protected int initLayoutRes() {
@@ -88,14 +88,6 @@ public class SubOrderActivity extends BaseActivity {
         tvSubCycle.setText(confirmBean.getTime());
         String price = "<font>共计支付</font><font color = '#EF583E'>" + confirmBean.getPrice() +"</font><font>紫金币</font>";
         tvPrice.setText(Html.fromHtml(price));
-
-        projectDetailVm = ViewModelProviders.of(this).get(ProjectDetailVm.class);
-        projectDetailVm.joinGroupData.observe(this,item ->{
-            ToastUtils.showShort(getString(R.string.pay_success));
-            EventBus.getDefault().post(new WarrantSuccessEvent());
-            ActivityUtils.finishActivity(GoToSubActivity.class);
-            finish();
-        });
         initPay();
     }
 
@@ -136,7 +128,6 @@ public class SubOrderActivity extends BaseActivity {
             }
         });
 
-
         coinPayVm = ViewModelProviders.of(this).get(CoinPayVm.class);
         coinPayVm.warrantPayLiveData.observe(this, this::payResult);
         coinPayVm.pageStateLiveData.observe(this, s -> {
@@ -148,6 +139,15 @@ public class SubOrderActivity extends BaseActivity {
                     hideLoading();
                     break;
             }
+        });
+
+        //认购成功进入工程群
+        projectDetailVm = ViewModelProviders.of(this).get(ProjectDetailVm.class);
+        projectDetailVm.joinGroupData.observe(this, item ->{
+            ToastUtils.showShort(getString(R.string.pay_success));
+            EventBus.getDefault().post(new WarrantSuccessEvent());
+            ActivityUtils.finishActivity(GoToSubActivity.class);
+            finish();
         });
     }
 

@@ -81,9 +81,10 @@ public class TurnoverAdapter extends BaseQuickAdapter<TurnoverBean.ListBean, Bas
                 tvDelete.setVisibility(View.VISIBLE);
                 break;
             case 3://集团
+            case 5://集团子账号
                 linearLayout.setVisibility(View.GONE);
                 break;
-            case 4://子账号
+            case 4://子公司子账号
                 if (construction_edit == 0 && construction_delete == 0) {
                     linearLayout.setVisibility(View.GONE);
                 } else if (construction_edit == 1 && construction_delete == 0) {

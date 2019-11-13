@@ -353,7 +353,8 @@ public class MineFragment extends BaseFragment {
                 llAdminManage.setVisibility(View.VISIBLE);
                 SPUtils.getInstance().put(CustomConfig.INNER_SWITCH,1);
                 break;
-            case 4://子账号
+            case 4://子公司子账号
+            case 5://集团子账号
                 SPUtils.getInstance().put(CustomConfig.INNER_SWITCH,1);
                 if (construction==0&&equipment==0&&equipment_order==0&&construction_order==0){
                     llAdminManage.setVisibility(View.GONE);

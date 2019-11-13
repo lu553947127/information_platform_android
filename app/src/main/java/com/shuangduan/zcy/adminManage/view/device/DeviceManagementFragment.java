@@ -168,6 +168,7 @@ public class DeviceManagementFragment extends BaseLazyFragment {
                     ActivityUtils.startActivity(bundle,DeviceDetailActivity.class);
                     break;
                 case 4:
+                case 5:
                     if (SPUtils.getInstance().getInt(CustomConfig.EQIPMENT_DETAIL,0)==1){
                         bundle.putInt(CustomConfig.EQIPMENT_ID,listBean.getId());
                         ActivityUtils.startActivity(bundle,DeviceDetailActivity.class);
@@ -408,7 +409,7 @@ public class DeviceManagementFragment extends BaseLazyFragment {
     @SuppressLint("RestrictedApi,InflateParams")
     private void getBottomSheetDialog(int layout, String type) {
         //底部滑动对话框
-        BottomSheetDialogs btn_dialog = new BottomSheetDialogs(Objects.requireNonNull(getActivity()));
+        BottomSheetDialogs btn_dialog = new BottomSheetDialogs(Objects.requireNonNull(getActivity()), R.style.BottomSheetStyle);
         //设置自定view
         View dialog_view = this.getLayoutInflater().inflate(layout, null);
         //把布局添加进去
@@ -616,10 +617,11 @@ public class DeviceManagementFragment extends BaseLazyFragment {
                 ivAdd.setVisibility(View.VISIBLE);
                 break;
             case 3://集团
+            case 5://集团子账号
                 tvCompany.setText("公司/项目");
                 ivAdd.setVisibility(View.GONE);
                 break;
-            case 4://子账号
+            case 4://子公司子账号
                 tvCompany.setText("项目名称");
                 if (SPUtils.getInstance().getInt(CustomConfig.EQIPMENT_ADD,0) ==1){
                     ivAdd.setVisibility(View.VISIBLE);
