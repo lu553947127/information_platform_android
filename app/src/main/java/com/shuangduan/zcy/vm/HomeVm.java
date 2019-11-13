@@ -4,6 +4,7 @@ import android.content.Context;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
@@ -45,7 +46,6 @@ public class HomeVm extends BaseViewModel {
     public MutableLiveData<String> pageStateLiveData;
 
     public HomeVm() {
-
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
         pushLiveData = new MutableLiveData<>();
         bannerLiveData = new MutableLiveData<>();
@@ -88,8 +88,8 @@ public class HomeVm extends BaseViewModel {
 
     //后台管理权限
     public void getSupplierRole(){
-        userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
-        new HomeRepository().getSupplierRole(supplierRoleLiveData,userId);
+        LogUtils.e("HomeVm---user_id>>>>>>>>>"+userId);
+        new HomeRepository().getSupplierRole(supplierRoleLiveData,SPUtils.getInstance().getInt(SpConfig.USER_ID));
     }
 
     //帮助列表

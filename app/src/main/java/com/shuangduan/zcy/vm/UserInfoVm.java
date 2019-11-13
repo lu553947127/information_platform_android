@@ -103,9 +103,8 @@ public class UserInfoVm extends BaseViewModel {
     }
 
     public void userInfo(){
-        userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
-        LogUtils.e("userId>>>>>>>>>>>>"+userId);
-        new UserRepository().userInfo(getInfoLiveData, pageStateLiveData, userId);
+        LogUtils.e("UserInfoVm---user_id>>>>>>>>>"+userId);
+        new UserRepository().userInfo(getInfoLiveData, pageStateLiveData, SPUtils.getInstance().getInt(SpConfig.USER_ID));
     }
 
     public void information(){
