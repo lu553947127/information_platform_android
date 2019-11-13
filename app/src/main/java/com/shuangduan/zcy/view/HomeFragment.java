@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
@@ -79,6 +80,7 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.rong.imkit.RongIM;
+import io.rong.imkit.manager.IUnReadMessageObserver;
 import io.rong.imlib.model.Conversation;
 
 import static com.shuangduan.zcy.app.CustomConfig.DEMAND_TYPE;
@@ -133,6 +135,7 @@ public class HomeFragment extends BaseFragment {
     private TextView number;
     private IMAddVm imAddVm;
     private HomeVm homeVm;
+    private IUnReadMessageObserver observer;
 
     public static HomeFragment newInstance() {
         Bundle args = new Bundle();
@@ -270,8 +273,8 @@ public class HomeFragment extends BaseFragment {
         });
 
         //版本升级返回数据
-        homeVm.versionUpgradesLiveData.observe(this,versionUpgradesBean -> {
-            if (versionUpgradesBean.getStatus().equals("1")){
+        homeVm.versionUpgradesLiveData.observe(this, versionUpgradesBean -> {
+            if (versionUpgradesBean.getStatus().equals("1")) {
                 //版本更新弹出框显示
                 UpdateManager manager = new UpdateManager(getActivity(), versionUpgradesBean);
                 manager.showNoticeDialog();
@@ -279,9 +282,9 @@ public class HomeFragment extends BaseFragment {
         });
 
         imAddVm = ViewModelProviders.of(this).get(IMAddVm.class);
-        imAddVm.applyCountData.observe(this,friendApplyCountBean -> {
+        imAddVm.applyCountData.observe(this, friendApplyCountBean -> {
             //设置底部标签数量
-            int counts=imAddVm.count+friendApplyCountBean.getCount();
+            int counts = imAddVm.count + friendApplyCountBean.getCount();
             if (counts < 1) {
                 relativeLayout.setVisibility(View.GONE);
             } else if (counts < 100) {
@@ -302,13 +305,14 @@ public class HomeFragment extends BaseFragment {
     private AutoScrollRecyclerView recyclerView1;
     private AutoScrollRecyclerView recyclerView2;
     private AutoScrollRecyclerView recyclerView3;
+
     @SuppressLint("InflateParams")
     private void getNeedData() {
         view.getBackground().mutate().setAlpha(10);
         LayoutInflater inflater = getLayoutInflater();
-        View view1 = inflater.inflate(R.layout.fragment_demand_information, null,false);
-        View view2 = inflater.inflate(R.layout.fragment_demand_information, null,false);
-        View view3 = inflater.inflate(R.layout.fragment_demand_information, null,false);
+        View view1 = inflater.inflate(R.layout.fragment_demand_information, null, false);
+        View view2 = inflater.inflate(R.layout.fragment_demand_information, null, false);
+        View view3 = inflater.inflate(R.layout.fragment_demand_information, null, false);
         titleList.add("找关系");
         titleList.add("找物资");
         titleList.add("找买家");
@@ -324,15 +328,15 @@ public class HomeFragment extends BaseFragment {
         recyclerView1 = view1.findViewById(R.id.rv);
         recyclerView2 = view2.findViewById(R.id.rv);
         recyclerView3 = view3.findViewById(R.id.rv);
-        ImageView iv_empty1=view1.findViewById(R.id.iv_icon);
-        ImageView iv_empty2=view2.findViewById(R.id.iv_icon);
-        ImageView iv_empty3=view3.findViewById(R.id.iv_icon);
-        TextView tv_empty1=view1.findViewById(R.id.tv_tip);
-        TextView tv_empty2=view2.findViewById(R.id.tv_tip);
-        TextView tv_empty3=view3.findViewById(R.id.tv_tip);
-        ConstraintLayout cl_empty1=view1.findViewById(R.id.cl_empty);
-        ConstraintLayout cl_empty2=view2.findViewById(R.id.cl_empty);
-        ConstraintLayout cl_empty3=view3.findViewById(R.id.cl_empty);
+        ImageView iv_empty1 = view1.findViewById(R.id.iv_icon);
+        ImageView iv_empty2 = view2.findViewById(R.id.iv_icon);
+        ImageView iv_empty3 = view3.findViewById(R.id.iv_icon);
+        TextView tv_empty1 = view1.findViewById(R.id.tv_tip);
+        TextView tv_empty2 = view2.findViewById(R.id.tv_tip);
+        TextView tv_empty3 = view3.findViewById(R.id.tv_tip);
+        ConstraintLayout cl_empty1 = view1.findViewById(R.id.cl_empty);
+        ConstraintLayout cl_empty2 = view2.findViewById(R.id.cl_empty);
+        ConstraintLayout cl_empty3 = view3.findViewById(R.id.cl_empty);
         recyclerView1.setNestedScrollingEnabled(false);
         recyclerView2.setNestedScrollingEnabled(false);
         recyclerView3.setNestedScrollingEnabled(false);
@@ -353,27 +357,27 @@ public class HomeFragment extends BaseFragment {
         recyclerView3.setAdapter(buyerAdapter);
 
         relationshipAdapter.setOnItemClickListener((adapter, view, position) -> {
-            DemandRelationshipBean.ListBean listBean = relationshipAdapter.getData().get(position%adapter.getData().size());
+            DemandRelationshipBean.ListBean listBean = relationshipAdapter.getData().get(position % adapter.getData().size());
             Bundle bundle = new Bundle();
             bundle.putInt(CustomConfig.DEMAND_ID, listBean.getId());
             ActivityUtils.startActivity(bundle, FindRelationshipDetailActivity.class);
         });
 
         substanceAdapter.setOnItemClickListener((adapter, view, position) -> {
-            DemandSubstanceBean.ListBean listBean = substanceAdapter.getData().get(position%adapter.getData().size());
+            DemandSubstanceBean.ListBean listBean = substanceAdapter.getData().get(position % adapter.getData().size());
             Bundle bundle = new Bundle();
             bundle.putInt(CustomConfig.DEMAND_ID, listBean.getId());
             ActivityUtils.startActivity(bundle, FindSubstanceDetailActivity.class);
         });
 
         buyerAdapter.setOnItemClickListener((adapter1, view, position) -> {
-            DemandBuyerBean.ListBean listBean = buyerAdapter.getData().get(position%adapter1.getData().size());
+            DemandBuyerBean.ListBean listBean = buyerAdapter.getData().get(position % adapter1.getData().size());
             Bundle bundle = new Bundle();
             bundle.putInt(CustomConfig.DEMAND_ID, listBean.getId());
             ActivityUtils.startActivity(bundle, FindBuyerDetailActivity.class);
         });
 
-        DemandRelationshipVm demandRelationshipVm= ViewModelProviders.of(mActivity).get(DemandRelationshipVm.class);
+        DemandRelationshipVm demandRelationshipVm = ViewModelProviders.of(mActivity).get(DemandRelationshipVm.class);
         demandRelationshipVm.getRelationship();
         DemandSubstanceVm demandSubstanceVm = ViewModelProviders.of(mActivity).get(DemandSubstanceVm.class);
         demandSubstanceVm.getSubstance();
@@ -381,42 +385,42 @@ public class HomeFragment extends BaseFragment {
         demandBuyerVm.getBuyer();
 
         demandRelationshipVm.relationshipLiveData.observe(this, relationshipBean -> {
-            if (relationshipBean.getList()!=null&&relationshipBean.getList().size()!=0){
+            if (relationshipBean.getList() != null && relationshipBean.getList().size() != 0) {
                 cl_empty1.setVisibility(View.GONE);
                 if (relationshipBean.getPage() == 1) {
                     relationshipAdapter.setNewData(relationshipBean.getList());
                 } else {
                     relationshipAdapter.addData(relationshipBean.getList());
                 }
-            }else {
+            } else {
                 cl_empty1.setVisibility(View.VISIBLE);
                 iv_empty1.setImageResource(R.drawable.icon_empty_project);
                 tv_empty1.setText(R.string.empty_pull_strings_info);
             }
         });
         demandSubstanceVm.substanceLiveData.observe(this, demandSubstanceBean -> {
-            if (demandSubstanceBean.getList()!=null&&demandSubstanceBean.getList().size()!=0){
+            if (demandSubstanceBean.getList() != null && demandSubstanceBean.getList().size() != 0) {
                 cl_empty2.setVisibility(View.GONE);
                 if (demandSubstanceBean.getPage() == 1) {
                     substanceAdapter.setNewData(demandSubstanceBean.getList());
-                }else {
+                } else {
                     substanceAdapter.addData(demandSubstanceBean.getList());
                 }
-            }else {
+            } else {
                 cl_empty2.setVisibility(View.VISIBLE);
                 iv_empty2.setImageResource(R.drawable.icon_empty_project);
                 tv_empty2.setText(R.string.empty_substance_info);
             }
         });
         demandBuyerVm.buyerLiveData.observe(this, demandBuyerBean -> {
-            if (demandBuyerBean.getList()!=null&&demandBuyerBean.getList().size()!=0){
+            if (demandBuyerBean.getList() != null && demandBuyerBean.getList().size() != 0) {
                 cl_empty3.setVisibility(View.GONE);
                 if (demandBuyerBean.getPage() == 1) {
                     buyerAdapter.setNewData(demandBuyerBean.getList());
-                }else {
+                } else {
                     buyerAdapter.addData(demandBuyerBean.getList());
                 }
-            }else {
+            } else {
                 cl_empty3.setVisibility(View.VISIBLE);
                 iv_empty3.setImageResource(R.drawable.icon_empty_project);
                 tv_empty3.setText(R.string.empty_buyer_info);
@@ -424,10 +428,10 @@ public class HomeFragment extends BaseFragment {
         });
     }
 
-    @OnClick({R.id.tv_bar_title, R.id.tv_more, R.id.iv_subscribed,R.id.tv_bar_title_home,R.id.iv_subscribed_home,R.id.iv_my_income,R.id.rl_zgx,R.id.rl_zwz,R.id.rl_zmj,R.id.tv_more_need})
-    void onClick(View view){
+    @OnClick({R.id.tv_bar_title, R.id.tv_more, R.id.iv_subscribed, R.id.tv_bar_title_home, R.id.iv_subscribed_home, R.id.iv_my_income, R.id.rl_zgx, R.id.rl_zwz, R.id.rl_zmj, R.id.tv_more_need})
+    void onClick(View view) {
         Bundle bundle = new Bundle();
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.tv_bar_title:
             case R.id.tv_bar_title_home://搜索
                 ActivityUtils.startActivity(SearchActivity.class);
@@ -448,22 +452,22 @@ public class HomeFragment extends BaseFragment {
                 break;
             case R.id.rl_zwz://发布找物资
                 bundle.putString("type", "1");
-                ActivityUtils.startActivity(bundle,DemandReleaseActivity.class);
+                ActivityUtils.startActivity(bundle, DemandReleaseActivity.class);
                 break;
             case R.id.rl_zmj://发布找买家
                 bundle.putString("type", "2");
-                ActivityUtils.startActivity(bundle,DemandReleaseActivity.class);
+                ActivityUtils.startActivity(bundle, DemandReleaseActivity.class);
                 break;
             case R.id.tv_more_need://需求资讯查看更多
-                if(viewPager.getCurrentItem()==0){
-                    bundle.putInt(DEMAND_TYPE,FIND_RELATIONSHIP_TYPE);//找关系列表
-                    ActivityUtils.startActivity(bundle,DemandActivity.class);
-                }else if (viewPager.getCurrentItem()==1){
-                    bundle.putInt(DEMAND_TYPE,FIND_SUBSTANCE_TYPE);//找物资列表
+                if (viewPager.getCurrentItem() == 0) {
+                    bundle.putInt(DEMAND_TYPE, FIND_RELATIONSHIP_TYPE);//找关系列表
                     ActivityUtils.startActivity(bundle, DemandActivity.class);
-                }else if (viewPager.getCurrentItem()==2){
-                    bundle.putInt(DEMAND_TYPE,FIND_BUYER_TYPE);//找买家列表
-                    ActivityUtils.startActivity(bundle,DemandActivity.class);
+                } else if (viewPager.getCurrentItem() == 1) {
+                    bundle.putInt(DEMAND_TYPE, FIND_SUBSTANCE_TYPE);//找物资列表
+                    ActivityUtils.startActivity(bundle, DemandActivity.class);
+                } else if (viewPager.getCurrentItem() == 2) {
+                    bundle.putInt(DEMAND_TYPE, FIND_BUYER_TYPE);//找买家列表
+                    ActivityUtils.startActivity(bundle, DemandActivity.class);
                 }
                 break;
         }
@@ -487,7 +491,7 @@ public class HomeFragment extends BaseFragment {
         recyclerView3.stop();
     }
 
-    private List<ClassifyBean> getClassify(){
+    private List<ClassifyBean> getClassify() {
         List<ClassifyBean> list = new ArrayList<>();
         String[] classifys = getResources().getStringArray(R.array.classify);
         list.add(new ClassifyBean(R.drawable.classify_xxgc, classifys[0], 1));
@@ -497,7 +501,7 @@ public class HomeFragment extends BaseFragment {
         return list;
     }
 
-    private void initBanner(ArrayList<String> list, ArrayList<String> titles){
+    private void initBanner(ArrayList<String> list, ArrayList<String> titles) {
         //设置banner样式
         banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);
         //设置图片加载器
@@ -534,18 +538,26 @@ public class HomeFragment extends BaseFragment {
         //显示角标数字
         relativeLayout = badge.findViewById(R.id.rl);
         //显示/隐藏整个视图
-        number=badge.findViewById(R.id.number);
+        number = badge.findViewById(R.id.number);
     }
 
     @Override
     protected void initDataFromService() {
-        RongIM.getInstance().addUnReadMessageCountChangedObserver(i -> {
+        observer = i -> {
             LogUtils.i(i);
             // i 是未读数量
-            imAddVm.count=i;
+            imAddVm.count = i;
             imAddVm.applyCount();
-        }, Conversation.ConversationType.PRIVATE,Conversation.ConversationType.GROUP,Conversation.ConversationType.SYSTEM);
+        };
+        RongIM.getInstance().addUnReadMessageCountChangedObserver(observer, Conversation.ConversationType.PRIVATE, Conversation.ConversationType.GROUP, Conversation.ConversationType.SYSTEM);
         homeVm.getInit(getActivity());
+    }
+
+
+    @Override
+    public void onDestroy() {
+        RongIM.getInstance().removeUnReadMessageCountChangedObserver(observer);
+        super.onDestroy();
     }
 }
 

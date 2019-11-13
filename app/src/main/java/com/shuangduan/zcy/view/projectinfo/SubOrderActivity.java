@@ -143,6 +143,7 @@ public class SubOrderActivity extends BaseActivity {
 
         //认购成功进入工程群
         projectDetailVm = ViewModelProviders.of(this).get(ProjectDetailVm.class);
+        projectDetailVm.init(getIntent().getIntExtra(CustomConfig.PROJECT_ID,0));
         projectDetailVm.joinGroupData.observe(this, item ->{
             ToastUtils.showShort(getString(R.string.pay_success));
             EventBus.getDefault().post(new WarrantSuccessEvent());

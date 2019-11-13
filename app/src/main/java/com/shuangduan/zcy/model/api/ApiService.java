@@ -185,6 +185,7 @@ public interface ApiService {
             @Field("password") String password
     );
 
+    //退出登录
     @FormUrlEncoded
     @POST("api/Userinfo/outLogin")
     Flowable<BaseResponse> outLogin(

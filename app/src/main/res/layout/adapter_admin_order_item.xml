@@ -2,14 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="@drawable/circular_background_white_10"
-    android:layout_marginTop="10dp"
     android:layout_marginLeft="15dp"
+    android:layout_marginTop="10dp"
     android:layout_marginRight="15dp"
-    android:paddingLeft="15dp"
+    android:background="@drawable/circular_background_white_10"
+    android:orientation="vertical"
     android:paddingTop="17dp"
-    android:paddingRight="15dp"
     android:paddingBottom="14dp">
 
     <TextView
@@ -17,6 +15,8 @@
         style="@style/TextSize14Style"
         android:layout_width="match_parent"
         android:ellipsize="end"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
         android:lines="1"
         android:textColor="@color/colorTv" />
 
@@ -27,6 +27,8 @@
         android:layout_marginTop="8dp"
         android:ellipsize="end"
         android:lines="1"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
         android:textColor="@color/color_666666"
         android:textSize="@dimen/dimenTvStates" />
 
@@ -36,6 +38,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:ellipsize="end"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
         android:lines="1"
         android:textColor="@color/color_666666"
         android:textSize="@dimen/dimenTvStates" />
@@ -46,6 +50,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
         android:ellipsize="end"
         android:lines="1"
         android:textColor="@color/color_666666"
@@ -55,6 +61,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
         android:orientation="horizontal">
 
         <TextView
@@ -79,4 +87,60 @@
             android:textSize="10sp" />
     </LinearLayout>
 
+
+    <LinearLayout
+        android:id="@+id/ll_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_F4F4F4" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="11dp"
+            android:layout_marginRight="15dp">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/icon_admin_delete"
+                android:drawablePadding="5dp"
+                android:text="删除"
+                android:textColor="@color/colorTvHint"
+                android:textSize="12sp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_split"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="30dp"
+                android:layout_toLeftOf="@+id/tv_edit"
+                android:drawableLeft="@drawable/icon_admin_split"
+                android:drawablePadding="5dp"
+                android:text="驳回"
+                android:textColor="@color/color_5C54F4"
+                android:textSize="12sp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:drawableLeft="@drawable/icon_admin_edit"
+                android:drawablePadding="5dp"
+                android:text="修改进度"
+                android:textColor="@color/color_5C54F4"
+                android:textSize="12sp" />
+        </RelativeLayout>
+
+    </LinearLayout>
 </LinearLayout>

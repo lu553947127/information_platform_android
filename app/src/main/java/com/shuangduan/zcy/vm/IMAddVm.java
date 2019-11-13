@@ -2,6 +2,7 @@ package com.shuangduan.zcy.vm;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseViewModel;
@@ -62,93 +63,95 @@ public class IMAddVm extends BaseViewModel {
     }
 
     //好友群组搜索列表
-    public void search(String name){
+    public void search(String name) {
         new IMRepository().imFriendSearch(searchLiveData, pageStateLiveData, userId, name);
     }
 
     //通讯录 好友申请操作
-    public void imFriendApply(int receiverId,String msg){
+    public void imFriendApply(int receiverId, String msg) {
         new IMRepository().imFriendApply(applyLiveData, pageStateLiveData, userId, receiverId, msg);
     }
 
     //工程圈 新的好友列表
-    public void imFriendApplyList(){
+    public void imFriendApplyList() {
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
         new IMRepository().imFriendApplyList(applyListLiveData, pageStateLiveData, userId);
     }
 
     //工程圈 好友添加验证
-    public void imFriendApplyOperation(int id, int status,String msg){
+    public void imFriendApplyOperation(int id, int status, String msg) {
         new IMRepository().imFriendApplyOperation(applyOperateLiveData, pageStateLiveData, userId, id, status, msg);
     }
 
     //搜索 更多好友列表
-    public void searchFriend(String name){
+    public void searchFriend(String name) {
         page = 1;
-        new IMRepository().searchFriend(imFriendListLiveData, pageStateLiveData, userId, name,page);
+        new IMRepository().searchFriend(imFriendListLiveData, pageStateLiveData, userId, name, page);
     }
 
     //搜索 更多好友列表
-    public void searchFriendMore(String name){
-        page ++;
-        new IMRepository().searchFriend(imFriendListLiveData, pageStateLiveData, userId, name,page);
+    public void searchFriendMore(String name) {
+        page++;
+        new IMRepository().searchFriend(imFriendListLiveData, pageStateLiveData, userId, name, page);
     }
 
     //搜索 更多好友列表
-    public void friendList(int pageSize){
+    public void friendList(int pageSize) {
         page = 1;
-        new IMRepository().friendList(friendListLiveData, pageStateLiveData, userId,page,pageSize);
+        new IMRepository().friendList(friendListLiveData, pageStateLiveData, userId, page, pageSize);
     }
 
     //搜索 更多好友列表
-    public void friendListMore(){
-        page ++;
-        new IMRepository().friendList(friendListLiveData, pageStateLiveData, userId,page,10);
+    public void friendListMore() {
+        page++;
+        new IMRepository().friendList(friendListLiveData, pageStateLiveData, userId, page, 10);
     }
 
     //搜索 更多群聊列表
-    public void searchGroup(String name){
+    public void searchGroup(String name) {
         page = 1;
-        new IMRepository().searchGroup(imGroupListData, pageStateLiveData, userId, name,page);
+        new IMRepository().searchGroup(imGroupListData, pageStateLiveData, userId, name, page);
     }
 
     //搜索 更多群聊列表
-    public void searchGroupMore(String name){
-        page ++;
-        new IMRepository().searchGroup(imGroupListData, pageStateLiveData, userId, name,page);
+    public void searchGroupMore(String name) {
+        page++;
+        new IMRepository().searchGroup(imGroupListData, pageStateLiveData, userId, name, page);
     }
 
     //通讯录 群组列表
-    public void myGroup(int pageSize){
+    public void myGroup(int pageSize) {
         page = 1;
-        new IMRepository().myGroup(groupListData, pageStateLiveData, userId,page,pageSize);
+        new IMRepository().myGroup(groupListData, pageStateLiveData, userId, page, pageSize);
     }
 
     //通讯录 群组列表
-    public void myGroupMore(){
-        page ++;
-        new IMRepository().myGroup(groupListData, pageStateLiveData, userId,page,10);
+    public void myGroupMore() {
+        page++;
+        new IMRepository().myGroup(groupListData, pageStateLiveData, userId, page, 10);
     }
 
     //通讯录 好友申请数量
-    public void applyCount(){
+    public void applyCount() {
+        userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
+        LogUtils.e("user_id=====" + userId);
         new IMRepository().applyCount(applyCountData, pageStateLiveData, userId);
     }
 
     //退出群聊
-    public void quitGroup(String group_id){
-        new IMRepository().quitGroup(quitGroupLiveData, pageStateLiveData, userId,group_id);
+    public void quitGroup(String group_id) {
+        new IMRepository().quitGroup(quitGroupLiveData, pageStateLiveData, userId, group_id);
     }
 
     //群聊详情
-    public void groupList(String group_id,int pageSize){
+    public void groupList(String group_id, int pageSize) {
         page = 1;
-        new IMRepository().groupList(imGroupInfoLiveData, pageStateLiveData, userId,group_id,page,pageSize);
+        new IMRepository().groupList(imGroupInfoLiveData, pageStateLiveData, userId, group_id, page, pageSize);
     }
 
     //群聊详情
-    public void groupListMore(String group_id){
-        page ++;
-        new IMRepository().groupList(imGroupInfoLiveData, pageStateLiveData, userId,group_id,page,10);
+    public void groupListMore(String group_id) {
+        page++;
+        new IMRepository().groupList(imGroupInfoLiveData, pageStateLiveData, userId, group_id, page, 10);
     }
 }

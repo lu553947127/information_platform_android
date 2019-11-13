@@ -6,6 +6,7 @@ import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.app.SpConfig;
@@ -102,6 +103,8 @@ public class UserInfoVm extends BaseViewModel {
     }
 
     public void userInfo(){
+        userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
+        LogUtils.e("userId>>>>>>>>>>>>"+userId);
         new UserRepository().userInfo(getInfoLiveData, pageStateLiveData, userId);
     }
 

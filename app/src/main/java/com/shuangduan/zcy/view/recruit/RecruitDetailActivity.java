@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.shuangduan.zcy.R;
@@ -111,7 +112,13 @@ public class RecruitDetailActivity extends BaseActivity {
             tvIntroTitle.setText(recruitDetailBean.getTitle());
             tvReleaseTime.setText(String.format(getString(R.string.format_release_time), recruitDetailBean.getStart_time()));
             tvIntroTime.setText(String.format(getString(R.string.format_release_time), recruitDetailBean.getStart_time()));
-            tvReleaseSource.setText(String.format(getString(R.string.format_source), recruitDetailBean.getSourceName()));
+
+            if (!StringUtils.isTrimEmpty(recruitDetailBean.getSourceName())) {
+                tvReleaseSource.setText(String.format(getString(R.string.format_source), recruitDetailBean.getSourceName()));
+            }else {
+                tvReleaseSource.setText("来源:");
+            }
+
             tvIntroContent.setGlide(Glide.with(this));
             tvIntroContent.setHtml(recruitDetailBean.getContent());
             recruitDetailVm.collectionLiveData.postValue(recruitDetailBean.getCollection());
@@ -193,7 +200,6 @@ public class RecruitDetailActivity extends BaseActivity {
                     break;
             }
         });
-
 
 
     }

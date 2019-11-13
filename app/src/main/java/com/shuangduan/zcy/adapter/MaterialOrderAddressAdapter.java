@@ -28,7 +28,7 @@ public class MaterialOrderAddressAdapter extends BaseQuickAdapter<MaterialOrderB
     @Override
     protected void convert(BaseViewHolder helper, MaterialOrderBean.AddressList item) {
         helper.setText(R.id.tv_reserve_num, item.number + unit)
-                .setText(R.id.tv_address, item.address);
+                .setText(R.id.tv_address, "存放地："+item.address);
     }
 
     public void setUnit(String unit) {

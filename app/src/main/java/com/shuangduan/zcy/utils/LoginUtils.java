@@ -74,8 +74,8 @@ public class LoginUtils {
     public static void getExitLogin() {
         SPUtils.getInstance().clear(true);
         SPUtils.getInstance().put(SpConfig.FIRST_APP, 1);
-        ActivityUtils.startActivity(LoginActivity.class);
         ActivityUtils.finishAllActivitiesExceptNewest();
+        ActivityUtils.startActivity(LoginActivity.class);
     }
 
     /**

@@ -55,6 +55,7 @@ import butterknife.OnClick;
 import io.rong.imkit.RongContext;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationListFragment;
+import io.rong.imkit.manager.IUnReadMessageObserver;
 import io.rong.imkit.model.UIConversation;
 import io.rong.imkit.widget.adapter.ConversationListAdapter;
 import io.rong.imlib.RongIMClient;
@@ -88,6 +89,7 @@ public class CircleFragment extends BaseFragment {
     private RelativeLayout relativeLayout;
     private TextView number;
     private IMAddVm imAddVm;
+    private IUnReadMessageObserver observer;
 
     public static CircleFragment newInstance() {
         Bundle args = new Bundle();
@@ -188,13 +190,15 @@ public class CircleFragment extends BaseFragment {
         RongIM.setUserInfoProvider(this::getFriendData,true);
         //设置群聊列表数据
         RongIM.setGroupInfoProvider(this::getGroupData,true);
-        //获取未读消息数量
-        RongIM.getInstance().addUnReadMessageCountChangedObserver(i -> {
+
+        observer = i -> {
             LogUtils.i(i);
             // i 是未读数量
-            imAddVm.count=i;
+            imAddVm.count = i;
             imAddVm.applyCount();
-        }, Conversation.ConversationType.PRIVATE,Conversation.ConversationType.GROUP,Conversation.ConversationType.SYSTEM);
+        };
+        //获取未读消息数量
+        RongIM.getInstance().addUnReadMessageCountChangedObserver(observer, Conversation.ConversationType.PRIVATE,Conversation.ConversationType.GROUP,Conversation.ConversationType.SYSTEM);
         //设置会话列表头像点击监听
         adapterEx.setOnPortraitItemClick(new ConversationListAdapter.OnPortraitItemClick() {
             @Override
@@ -356,5 +360,11 @@ public class CircleFragment extends BaseFragment {
                 default:
                     break;
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        RongIM.getInstance().removeUnReadMessageCountChangedObserver(observer);
+        super.onDestroy();
     }
 }
