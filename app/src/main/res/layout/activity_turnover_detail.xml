@@ -139,9 +139,6 @@
                     app:layout_constraintLeft_toRightOf="@id/tv_use_status"
                     app:layout_constraintTop_toBottomOf="@id/tv_spec" />
 
-
-
-
                 <TextView
                     android:id="@+id/tv_project_key"
                     style="@style/TurnoverDetailTextKeyStyle"
@@ -204,8 +201,6 @@
                     app:layout_constraintTop_toTopOf="@id/tv_tel_key"
                     app:layout_constraintBottom_toBottomOf="@id/tv_tel_key"/>
 
-
-
                 <TextView
                     android:id="@+id/tv_vulnerable_key"
                     style="@style/TurnoverDetailTextKeyStyle"
@@ -219,8 +214,6 @@
                     app:layout_constraintLeft_toRightOf="@id/tv_vulnerable_key"
                     app:layout_constraintTop_toTopOf="@id/tv_vulnerable_key"
                     app:layout_constraintBottom_toBottomOf="@id/tv_vulnerable_key"/>
-
-
 
                 <TextView
                     android:id="@+id/tv_putaway_key"

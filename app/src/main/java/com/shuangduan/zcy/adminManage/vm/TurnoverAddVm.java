@@ -83,6 +83,7 @@ public class TurnoverAddVm extends BaseViewModel {
 
         shelf_type = 1;
         method = 1;
+        is_vulnerable = 1;
     }
 
     //后台管理 --- 周转材料添加/编辑
@@ -167,12 +168,12 @@ public class TurnoverAddVm extends BaseViewModel {
         switch (type){
             case "add"://添加周转材料
                 new TurnoverRepository().constructionAdd(turnoverAddData,userId,unit_id,category,material_id,stock,unit_price,unit,spec,use_status,material_status
-                        ,province,city,address,longitude,latitude,person_liable,tel,is_shelf,shelf_start_time,shelf_end_time,shelf_type,method,guidance_price,images
+                        ,province,city,address,longitude,latitude,person_liable,tel,is_vulnerable,is_shelf,shelf_start_time,shelf_end_time,shelf_type,method,guidance_price,images
                         ,use_count,plan,accumulated_amortization,start_date,entry_time,exit_time,original_price,net_worth,remark);
                 break;
             case "edit"://编辑周转材料
                 new TurnoverRepository().constructionEdit(turnoverEditData,userId,editId,unit_id,category,material_id,stock,unit_price,unit,spec,use_status,material_status
-                        ,province,city,address,longitude,latitude,person_liable,tel,is_shelf,shelf_start_time,shelf_end_time,shelf_type,method,guidance_price,images
+                        ,province,city,address,longitude,latitude,person_liable,tel,is_vulnerable,is_shelf,shelf_start_time,shelf_end_time,shelf_type,method,guidance_price,images
                         ,use_count,plan,accumulated_amortization,start_date,entry_time,exit_time,original_price,net_worth,remark);
                 break;
         }

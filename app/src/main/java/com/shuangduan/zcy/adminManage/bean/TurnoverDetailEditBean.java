@@ -101,7 +101,25 @@ public class TurnoverDetailEditBean {
     private String original_price;
     private String net_worth;
     private String remark;
+    private int rapid_wear;
+    private String rapid_wear_name;
     private List<ImagesBean> images;
+
+    public int getRapid_wear() {
+        return rapid_wear;
+    }
+
+    public void setRapid_wear(int rapid_wear) {
+        this.rapid_wear = rapid_wear;
+    }
+
+    public String getRapid_wear_name() {
+        return rapid_wear_name;
+    }
+
+    public void setRapid_wear_name(String rapid_wear_name) {
+        this.rapid_wear_name = rapid_wear_name;
+    }
 
     public int getCategory() {
         return category;

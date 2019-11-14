@@ -107,7 +107,6 @@ public class TurnoverDetailActivity extends BaseActivity {
     Group group;
     @BindView(R.id.tv_project_value)
     TextView tvProjectValue;
-
     @BindView(R.id.tv_vulnerable_value)
     TextView tvVulnerableValue;
 
@@ -143,6 +142,7 @@ public class TurnoverDetailActivity extends BaseActivity {
             tvMaterialStatus.setText(turnover.materialStatusName);
             tvPutAddress.setText(turnover.provinceName + turnover.cityName + turnover.address);
             tvName.setText(turnover.personLiable);
+            tvVulnerableValue.setText(turnover.rapidWear);
             tvTel.setText(turnover.tel);
             tvPutaway.setText(turnover.isShelfName);
             String shelf = turnover.shelfType == 1 ? "到期自动公开" : "到期自动下架";

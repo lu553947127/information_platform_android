@@ -65,6 +65,9 @@ public class TurnoverDetailBean {
 
     //联系电话
     public String tel;
+    //是否易损
+    @SerializedName("rapid_wear")
+    public String rapidWear;
     //是否上架
     @SerializedName("is_shelf_name")
     public String isShelfName;
@@ -123,7 +126,6 @@ public class TurnoverDetailBean {
         public String heade_url;
     }
 
-
     @Override
     public String toString() {
         return "TurnoverDetailBean{" +
@@ -131,7 +133,7 @@ public class TurnoverDetailBean {
                 ", materialIdName='" + materialIdName + '\'' +
                 ", unitIdName='" + unitIdName + '\'' +
                 ", stock=" + stock +
-                ", unitPrice=" + unitPrice +
+                ", unitPrice='" + unitPrice + '\'' +
                 ", unitName='" + unitName + '\'' +
                 ", spec='" + spec + '\'' +
                 ", useStatusName='" + useStatusName + '\'' +
@@ -141,6 +143,7 @@ public class TurnoverDetailBean {
                 ", address='" + address + '\'' +
                 ", personLiable='" + personLiable + '\'' +
                 ", tel='" + tel + '\'' +
+                ", rapidWear='" + rapidWear + '\'' +
                 ", isShelfName='" + isShelfName + '\'' +
                 ", method=" + method +
                 ", shelfStartTime='" + shelfStartTime + '\'' +
@@ -156,6 +159,7 @@ public class TurnoverDetailBean {
                 ", originalPrice='" + originalPrice + '\'' +
                 ", netWorth='" + netWorth + '\'' +
                 ", remark='" + remark + '\'' +
+                ", username='" + username + '\'' +
                 ", images=" + images +
                 '}';
     }

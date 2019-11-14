@@ -469,7 +469,7 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
                 if (isChecked) {
                     cbYes.setChecked(true);
                     cbNo.setChecked(false);
-                    turnoverAddVm.is_vulnerable = 1;
+                    turnoverAddVm.is_vulnerable = 2;
                 } else {
                     if (!cbNo.isChecked()) cbYes.setChecked(true);
                 }
@@ -478,7 +478,7 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
                 if (isChecked) {
                     cbYes.setChecked(false);
                     cbNo.setChecked(true);
-                    turnoverAddVm.is_vulnerable = 2;
+                    turnoverAddVm.is_vulnerable = 1;
                 } else {
                     if (!cbYes.isChecked()) cbNo.setChecked(true);
                 }
@@ -849,6 +849,14 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
             tvAddress.setTextColor(getResources().getColor(R.color.colorTv));
             etPersonLiable.setText(turnoverDetailEditBean.getPerson_liable());
             etTel.setText(turnoverDetailEditBean.getTel());
+            turnoverAddVm.is_vulnerable=turnoverDetailEditBean.getRapid_wear();
+            if (turnoverAddVm.is_vulnerable == 1) {
+                cbYes.setChecked(false);
+                cbNo.setChecked(true);
+            } else {
+                cbYes.setChecked(true);
+                cbNo.setChecked(false);
+            }
             turnoverAddVm.is_shelf = turnoverDetailEditBean.getIs_shelf();
             tvIsShelf.setText(turnoverDetailEditBean.getIs_shelf_name());
             tvIsShelf.setTextColor(getResources().getColor(R.color.colorTv));
