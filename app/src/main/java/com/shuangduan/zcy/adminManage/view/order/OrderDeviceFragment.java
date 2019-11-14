@@ -2,8 +2,12 @@ package com.shuangduan.zcy.adminManage.view.order;
 
 import android.os.Bundle;
 
+import androidx.appcompat.widget.AppCompatTextView;
+
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.base.BaseLazyFragment;
+
+import butterknife.BindView;
 
 /**
  * @ProjectName: information_platform_android
@@ -18,6 +22,15 @@ import com.shuangduan.zcy.base.BaseLazyFragment;
  * @Version: 1.0
  */
 public class OrderDeviceFragment extends BaseLazyFragment {
+
+    @BindView(R.id.tv_project)
+    AppCompatTextView tvProject;
+    @BindView(R.id.tv_name)
+    AppCompatTextView tvName;
+    @BindView(R.id.tv_order_manage)
+    AppCompatTextView tvOrderManage;
+    @BindView(R.id.tv_order_type)
+    AppCompatTextView tvOrderType;
 
     public static OrderDeviceFragment newInstance() {
         Bundle args = new Bundle();
@@ -43,6 +56,6 @@ public class OrderDeviceFragment extends BaseLazyFragment {
 
     @Override
     protected void initDataFromService() {
-
+        tvProject.setText("设备名称");
     }
 }
