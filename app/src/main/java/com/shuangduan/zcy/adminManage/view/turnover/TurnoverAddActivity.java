@@ -36,10 +36,12 @@ import com.shuangduan.zcy.adminManage.adapter.ImagesAdapter;
 import com.shuangduan.zcy.adminManage.adapter.MaterialStatusAdapter;
 import com.shuangduan.zcy.adminManage.adapter.SelectorCategoryFirstAdapter;
 import com.shuangduan.zcy.adminManage.adapter.SelectorMaterialSecondAdapter;
+import com.shuangduan.zcy.adminManage.adapter.TurnoverProjectAdapter;
 import com.shuangduan.zcy.adminManage.adapter.UnitAdapter;
 import com.shuangduan.zcy.adminManage.adapter.UseStatueAdapter;
 import com.shuangduan.zcy.adminManage.bean.TurnoverCategoryBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverDetailEditBean;
+import com.shuangduan.zcy.adminManage.bean.TurnoverNameBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverTypeBean;
 import com.shuangduan.zcy.adminManage.dialog.TurnoverDialogControl;
 import com.shuangduan.zcy.adminManage.vm.TurnoverAddVm;
@@ -80,6 +82,7 @@ import butterknife.BindView;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 
+import static com.blankj.utilcode.util.StringUtils.getString;
 import static com.shuangduan.zcy.app.CustomConfig.ADD;
 import static com.shuangduan.zcy.app.CustomConfig.EDIT;
 
@@ -100,6 +103,8 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
 
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
+    @BindView(R.id.tv_project)
+    TextView tvProject;
     @BindView(R.id.tv_category_material_id)
     TextView tvCategoryMaterial_id;
     @BindView(R.id.et_stock)
@@ -120,6 +125,10 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
     XEditText etPersonLiable;
     @BindView(R.id.et_tel)
     XEditText etTel;
+    @BindView(R.id.cb_yes)
+    RoundCheckBox cbYes;
+    @BindView(R.id.cb_no)
+    RoundCheckBox cbNo;
     @BindView(R.id.tv_is_shelf)
     TextView tvIsShelf;
     @BindView(R.id.ll_inside_shelf)
@@ -153,8 +162,6 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
     @BindView(R.id.rv_images)
     RecyclerView rvImages;
 
-    @BindView(R.id.ts_project)
-    TurnoverSelectView tsProject;
     @BindView(R.id.ts_plan)
     TurnoverSelectView tsPlan;
     @BindView(R.id.ts_num)
@@ -208,6 +215,11 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
                 getEditDetail(constructionId);
                 break;
         }
+
+        //获取项目名称
+        turnoverVm.turnoverProject.observe(this,turnoverNameBeans -> {
+            projectList=turnoverNameBeans;
+        });
 
         //获取材料类别
         turnoverVm.turnoverFirstData.observe(this, turnoverCategoryBeans -> {
@@ -268,6 +280,7 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
         //设置选择按钮默认选中
         cbShelfTypeOpen.setChecked(true);
         cbLease.setChecked(true);
+        cbNo.setChecked(true);
 
         //图片上传转换返回地址
         uploadPhotoVm.uploadLiveData.observe(this, uploadBean -> {
@@ -305,9 +318,10 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
         });
 
         turnoverVm.constructionSearch();
+        turnoverVm.getUnitInfo();
     }
 
-    @OnClick({R.id.iv_bar_back, R.id.tv_category_material_id, R.id.tv_unit, R.id.tv_use_status, R.id.tv_material_status
+    @OnClick({R.id.iv_bar_back,R.id.tv_project, R.id.tv_category_material_id, R.id.tv_unit, R.id.tv_use_status, R.id.tv_material_status
             , R.id.tv_address, R.id.tv_is_shelf, R.id.tv_shelf_time_start, R.id.tv_shelf_time_end, R.id.iv_images
             , R.id.ts_project, R.id.ts_plan, R.id.ts_num, R.id.ts_start_time, R.id.ts_enter_time, R.id.ts_exit_time, R.id.ts_amortize, R.id.ts_original, R.id.ts_value
             , R.id.tv_reserve})
@@ -316,6 +330,13 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
         switch (view.getId()) {
             case R.id.iv_bar_back:
                 finish();
+                break;
+            case R.id.tv_project://选择所属项目
+                if (projectList.size()!=0){
+                    getBottomSheetDialog(R.layout.dialog_is_grounding, "project");
+                }else {
+                    ToastUtils.showShort(getString(R.string.admin_selector_no_project_list));
+                }
                 break;
             case R.id.tv_category_material_id://选择材料类别/名称
                 getBottomSheetDialog(R.layout.dialog_depositing_place, "category_material_id");
@@ -363,9 +384,6 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
                     ToastUtils.showShort("最多上传5张照片哦");
                 }
                 break;
-            case R.id.ts_project://所属项目
-                dialogControl.showDialog(0, R.string.admin_selector_material_project);
-                break;
             case R.id.ts_plan://预计下步使用计划
                 dialogControl.showDialog(1, R.string.admin_selector_material_plan);
                 break;
@@ -405,7 +423,7 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
         }
     }
 
-    @OnCheckedChanged({R.id.cb_shelf_type_open, R.id.cb_shelf_type_close, R.id.cb_lease, R.id.cb_sell})
+    @OnCheckedChanged({R.id.cb_shelf_type_open, R.id.cb_shelf_type_close, R.id.cb_lease, R.id.cb_sell,R.id.cb_yes,R.id.cb_no})
     void OnOnCheckedChanged(CompoundButton view, boolean isChecked) {
         switch (view.getId()) {
             case R.id.cb_shelf_type_open://到期自动公开
@@ -446,9 +464,29 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
                 }
                 tvGuidancePrice.setText(getString(R.string.admin_turnover_add_guidance_price));
                 break;
+            case R.id.cb_yes://是
+                if (isChecked) {
+                    cbYes.setChecked(true);
+                    cbNo.setChecked(false);
+                    turnoverAddVm.is_vulnerable = 1;
+                } else {
+                    if (!cbNo.isChecked()) cbYes.setChecked(true);
+                }
+                break;
+            case R.id.cb_no://否
+                if (isChecked) {
+                    cbYes.setChecked(false);
+                    cbNo.setChecked(true);
+                    turnoverAddVm.is_vulnerable = 2;
+                } else {
+                    if (!cbYes.isChecked()) cbNo.setChecked(true);
+                }
+                break;
         }
     }
 
+    private TurnoverProjectAdapter turnoverProjectAdapter;
+    private List<TurnoverNameBean> projectList = new ArrayList<>();
     private SelectorCategoryFirstAdapter selectorCategoryFirstAdapter;
     private List<TurnoverCategoryBean> categoryList = new ArrayList<>();
     private SelectorMaterialSecondAdapter selectorMaterialSecondAdapter;
@@ -479,6 +517,24 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
         }
         turnoverVm.type = type;
         switch (type) {
+            case "project":
+                TextView tvProjects = btn_dialog.findViewById(R.id.tv_title);
+                Objects.requireNonNull(tvProjects).setText("选择项目");
+                RecyclerView rvProject = btn_dialog.findViewById(R.id.rv);
+                Objects.requireNonNull(rvProject).setLayoutManager(new LinearLayoutManager(this));
+                turnoverProjectAdapter = new TurnoverProjectAdapter(R.layout.adapter_turnover_project, projectList);
+                rvProject.setAdapter(turnoverProjectAdapter);
+                turnoverProjectAdapter.setOnItemClickListener((adapter, view, position) -> {
+                    turnoverAddVm.unit_id = projectList.get(position).id;
+                    tvProject.setText(projectList.get(position).name);
+                    tvProject.setTextColor(getResources().getColor(R.color.colorTv));
+                    turnoverProjectAdapter.setIsSelect(turnoverAddVm.unit_id);
+                    btn_dialog.dismiss();
+                });
+                if (turnoverAddVm.unit_id != 0) {
+                    turnoverProjectAdapter.setIsSelect(turnoverAddVm.unit_id);
+                }
+                break;
             case "category_material_id"://选择材料类别/名称
                 RecyclerView rvFirst = btn_dialog.findViewById(R.id.rv_province);
                 RecyclerView rvSecond = btn_dialog.findViewById(R.id.rv_city);
@@ -765,6 +821,9 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
         turnoverAddVm.editId = id;
         turnoverVm.constructionEditShow(id);
         turnoverVm.turnoverDetailEditLiveData.observe(this, turnoverDetailEditBean -> {
+            turnoverAddVm.unit_id = turnoverDetailEditBean.getUnit_id();
+            tvProject.setText(turnoverDetailEditBean.getUnit_id_name());
+            tvProject.setTextColor(getResources().getColor(R.color.colorTv));
             turnoverAddVm.category = turnoverDetailEditBean.getCategory();
             turnoverAddVm.material_id = turnoverDetailEditBean.getMaterial_id();
             tvCategoryMaterial_id.setText(turnoverDetailEditBean.getCategory_name() + " - " + turnoverDetailEditBean.getMaterial_id_name());
@@ -851,8 +910,6 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
             turnoverAddVm.images = getListToString();
             getImageBitmap();
 
-            turnoverAddVm.unit_id = turnoverDetailEditBean.getUnit_id();
-            tsProject.setValue(turnoverDetailEditBean.getUnit_id_name());
             turnoverAddVm.plan = turnoverDetailEditBean.getPlan();
             tsPlan.setValue(turnoverDetailEditBean.getPlan_name());
             turnoverAddVm.use_count = turnoverDetailEditBean.getUse_count();
@@ -876,7 +933,7 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
 
             etRemark.setText(turnoverDetailEditBean.getRemark());
 
-            if (turnoverAddVm.unit_id != 0 || turnoverAddVm.plan != 0 || !StringUtils.isTrimEmpty(turnoverAddVm.use_count)
+            if (turnoverAddVm.plan != 0 || !StringUtils.isTrimEmpty(turnoverAddVm.use_count)
                     || !StringUtils.isTrimEmpty(turnoverAddVm.start_date) || !StringUtils.isTrimEmpty(turnoverAddVm.entry_time)
                     || !StringUtils.isTrimEmpty(turnoverAddVm.exit_time) || !StringUtils.isTrimEmpty(turnoverAddVm.accumulated_amortization)
                     || !StringUtils.isTrimEmpty(turnoverAddVm.original_price) || !StringUtils.isTrimEmpty(turnoverAddVm.net_worth)) {
@@ -896,7 +953,6 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
     public void callInfo(int unit_id, String unit, int plan, String planStr, String use_count, String start_date, String entry_time, String exit_time,
                          String accumulated_amortization, String original_price, String net_worth) {
 
-        turnoverAddVm.unit_id = unit_id;
         turnoverAddVm.plan = plan;
         turnoverAddVm.use_count = use_count;
         turnoverAddVm.start_date = start_date;
@@ -906,9 +962,6 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
         turnoverAddVm.original_price = original_price;
         turnoverAddVm.net_worth = net_worth;
 
-        if (!StringUtils.isTrimEmpty(unit)) {
-            tsProject.setValue(unit);
-        }
         if (!StringUtils.isTrimEmpty(planStr)) {
             tsPlan.setValue(planStr);
         }

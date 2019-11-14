@@ -15,13 +15,13 @@
         android:orientation="horizontal">
 
         <com.shuangduan.zcy.weight.TurnoverSelectView
-            android:id="@+id/ts_item_one"
+            android:id="@+id/ts_item_three"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             app:edit_show="false"
-            app:hind_value_text="@string/admin_please_select"
-            app:title_text="@string/admin_material_project" />
+            app:hind_value_text="@string/admin_turnover_hint_input"
+            app:title_text="@string/admin_material_brand" />
 
         <com.shuangduan.zcy.weight.TurnoverSelectView
             android:id="@+id/ts_item_two"
@@ -33,13 +33,14 @@
             app:title_text="@string/admin_material_start_time" />
 
         <com.shuangduan.zcy.weight.TurnoverSelectView
-            android:id="@+id/ts_item_three"
+            android:id="@+id/tv_item_nine"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             app:edit_show="false"
             app:hind_value_text="@string/admin_turnover_hint_input"
-            app:title_text="@string/admin_material_brand" />
+            app:title_text="@string/admin_device_material_operator_name" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -101,13 +102,14 @@
             app:hind_value_text="@string/admin_please_select" />
 
         <com.shuangduan.zcy.weight.TurnoverSelectView
-            android:id="@+id/tv_item_nine"
+            android:id="@+id/ts_item_one"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             app:edit_show="false"
-            app:hind_value_text="@string/admin_turnover_hint_input"
-            app:title_text="@string/admin_device_material_operator_name" />
+            app:hind_value_text="@string/admin_please_select"
+            app:title_text="@string/admin_material_project"
+            android:visibility="invisible"/>
     </LinearLayout>
 
     <View

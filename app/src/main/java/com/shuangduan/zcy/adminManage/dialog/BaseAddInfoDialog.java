@@ -106,7 +106,7 @@ public abstract class BaseAddInfoDialog {
             }
         });
 
-        vm.projectListData();
+//        vm.projectListData();
     }
 
     //初始化日历

@@ -23,13 +23,13 @@
         android:orientation="horizontal">
 
         <com.shuangduan.zcy.weight.TurnoverSelectView
-            android:id="@+id/ts_project"
+            android:id="@+id/ts_brand"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             app:edit_show="false"
-            app:title_text="@string/admin_material_project"
-            app:hind_value_text="@string/admin_please_select" />
+            app:title_text="@string/admin_material_brand"
+            app:hind_value_text="@string/admin_turnover_hint_input" />
 
         <com.shuangduan.zcy.weight.TurnoverSelectView
             android:id="@+id/ts_start_time"
@@ -40,15 +40,15 @@
             app:title_text="@string/admin_material_start_time"
             app:hind_value_text="@string/admin_please_select" />
 
-
         <com.shuangduan.zcy.weight.TurnoverSelectView
-            android:id="@+id/ts_brand"
+            android:id="@+id/ts_operator_name"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             app:edit_show="false"
-            app:title_text="@string/admin_material_brand"
+            app:title_text="@string/admin_device_material_operator_name"
             app:hind_value_text="@string/admin_turnover_hint_input" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -80,6 +80,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:inputType="number"
+            android:maxLength="4"
             app:title_text="@string/admin_material_power"
             app:edit_show="false"
             app:hind_value_text="@string/admin_turnover_hint_input" />
@@ -110,13 +112,15 @@
             app:hind_value_text="@string/admin_please_select" />
 
         <com.shuangduan.zcy.weight.TurnoverSelectView
-            android:id="@+id/ts_operator_name"
+            android:id="@+id/ts_project"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             app:edit_show="false"
-            app:title_text="@string/admin_device_material_operator_name"
-            app:hind_value_text="@string/admin_turnover_hint_input" />
+            app:title_text="@string/admin_material_project"
+            app:hind_value_text="@string/admin_please_select"
+            android:visibility="invisible"/>
+
     </LinearLayout>
 
     <View
@@ -162,6 +166,8 @@
         <com.shuangduan.zcy.weight.XEditText
             android:id="@+id/et_use_month_count"
             style="@style/AdminManageSecondHint"
+            android:inputType="number"
+            android:maxLength="4"
             android:hint="@string/admin_device_material_use_month_count_et" />
     </LinearLayout>
 

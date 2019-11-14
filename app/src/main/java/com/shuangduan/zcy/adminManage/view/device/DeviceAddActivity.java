@@ -36,10 +36,12 @@ import com.shuangduan.zcy.adminManage.adapter.MaterialStatusAdapter;
 import com.shuangduan.zcy.adminManage.adapter.PlanAdapter;
 import com.shuangduan.zcy.adminManage.adapter.SelectorCategoryFirstAdapter;
 import com.shuangduan.zcy.adminManage.adapter.SelectorMaterialSecondAdapter;
+import com.shuangduan.zcy.adminManage.adapter.TurnoverProjectAdapter;
 import com.shuangduan.zcy.adminManage.adapter.UnitAdapter;
 import com.shuangduan.zcy.adminManage.adapter.UseStatueAdapter;
 import com.shuangduan.zcy.adminManage.bean.DeviceDetailEditBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverCategoryBean;
+import com.shuangduan.zcy.adminManage.bean.TurnoverNameBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverTypeBean;
 import com.shuangduan.zcy.adminManage.dialog.DeviceDialogControl;
 import com.shuangduan.zcy.adminManage.vm.DeviceAddVm;
@@ -99,6 +101,8 @@ import static com.shuangduan.zcy.app.CustomConfig.EDIT;
 public class DeviceAddActivity extends BaseActivity implements DeviceDialogControl.DeviceDetailListening {
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
+    @BindView(R.id.tv_project)
+    TextView tvProject;
     @BindView(R.id.tv_category_material_id)
     TextView tvCategoryMaterial_id;
     @BindView(R.id.et_encoding)
@@ -150,8 +154,6 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
     @BindView(R.id.rv_images)
     RecyclerView rvImages;
 
-    @BindView(R.id.ts_project)
-    TurnoverSelectView tsProject;
     @BindView(R.id.ts_start_time)
     TurnoverSelectView tsStartTime;
     @BindView(R.id.ts_brand)
@@ -220,6 +222,11 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
         //详细信息输入弹出框初始化
         dialogControl = new DeviceDialogControl(this, turnoverVm, this);
         dialogControl.initView();
+
+        //获取项目名称
+        deviceVm.turnoverProject.observe(this,turnoverNameBeans -> {
+            projectList=turnoverNameBeans;
+        });
 
         //获取材料类别
         deviceVm.deviceFirstData.observe(this, turnoverCategoryBeans -> {
@@ -309,9 +316,10 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
         });
 
         deviceVm.constructionSearch();
+        deviceVm.getUnitInfo();
     }
 
-    @OnClick({R.id.iv_bar_back, R.id.tv_category_material_id, R.id.tv_unit, R.id.tv_use_status
+    @OnClick({R.id.iv_bar_back,R.id.tv_project, R.id.tv_category_material_id, R.id.tv_unit, R.id.tv_use_status
             , R.id.tv_address, R.id.tv_is_shelf, R.id.tv_shelf_time_start, R.id.tv_shelf_time_end, R.id.iv_images
             , R.id.ts_project, R.id.ts_start_time, R.id.ts_brand, R.id.ts_original_price, R.id.ts_main_params, R.id.ts_power, R.id.ts_entry_time, R.id.ts_exit_time, R.id.ts_operator_name
             , R.id.tv_material_status, R.id.tv_plan, R.id.tv_reserve})
@@ -320,6 +328,13 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
         switch (view.getId()) {
             case R.id.iv_bar_back:
                 finish();
+                break;
+            case R.id.tv_project://项目名称
+                if (projectList.size()!=0){
+                    getBottomSheetDialog(R.layout.dialog_is_grounding, "project");
+                }else {
+                    ToastUtils.showShort(getString(R.string.admin_selector_no_project_list));
+                }
                 break;
             case R.id.tv_category_material_id://选择材料类别/名称
                 getBottomSheetDialog(R.layout.dialog_depositing_place, "category_material_id");
@@ -363,9 +378,6 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
                 } else {
                     ToastUtils.showShort("最多上传5张照片哦");
                 }
-                break;
-            case R.id.ts_project://所属项目
-                dialogControl.showDialog(0,  R.string.admin_selector_material_project);
                 break;
             case R.id.ts_start_time://开始使用日期
                 dialogControl.showDialog(1,  R.string.admin_selector_material_start_time);
@@ -458,6 +470,8 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
         }
     }
 
+    private TurnoverProjectAdapter turnoverProjectAdapter;
+    private List<TurnoverNameBean> projectList = new ArrayList<>();
     private SelectorCategoryFirstAdapter selectorCategoryFirstAdapter;
     private List<TurnoverCategoryBean> categoryList = new ArrayList<>();
     private SelectorMaterialSecondAdapter selectorMaterialSecondAdapter;
@@ -491,6 +505,24 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
         }
         deviceVm.type = type;
         switch (type) {
+            case "project":
+                TextView tvProjects = btn_dialog.findViewById(R.id.tv_title);
+                Objects.requireNonNull(tvProjects).setText("选择项目");
+                RecyclerView rvProject = btn_dialog.findViewById(R.id.rv);
+                Objects.requireNonNull(rvProject).setLayoutManager(new LinearLayoutManager(this));
+                turnoverProjectAdapter = new TurnoverProjectAdapter(R.layout.adapter_turnover_project, projectList);
+                rvProject.setAdapter(turnoverProjectAdapter);
+                turnoverProjectAdapter.setOnItemClickListener((adapter, view, position) -> {
+                    deviceAddVm.unit_id = projectList.get(position).id;
+                    tvProject.setText(projectList.get(position).name);
+                    tvProject.setTextColor(getResources().getColor(R.color.colorTv));
+                    turnoverProjectAdapter.setIsSelect(deviceAddVm.unit_id);
+                    btn_dialog.dismiss();
+                });
+                if (deviceAddVm.unit_id != 0) {
+                    turnoverProjectAdapter.setIsSelect(deviceAddVm.unit_id);
+                }
+                break;
             case "category_material_id"://选择材料类别/名称
                 RecyclerView rvFirst = btn_dialog.findViewById(R.id.rv_province);
                 RecyclerView rvSecond = btn_dialog.findViewById(R.id.rv_city);
@@ -794,6 +826,9 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
         deviceAddVm.editId = id;
         deviceVm.equipmentEditShow(id);
         deviceVm.deviceDetailEditLiveData.observe(this, deviceDetailEditBean -> {
+            deviceAddVm.unit_id = deviceDetailEditBean.getUnit_id();
+            tvProject.setText(deviceDetailEditBean.getUnit_id_name());
+            tvProject.setTextColor(getResources().getColor(R.color.colorTv));
             deviceAddVm.category = deviceDetailEditBean.getCategory();
             deviceAddVm.material_id = deviceDetailEditBean.getMaterial_id();
             tvCategoryMaterial_id.setText(deviceDetailEditBean.getCategory_name() + " - " + deviceDetailEditBean.getMaterial_id_name());
@@ -877,8 +912,6 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
             deviceAddVm.images = getListToString();
             getImageBitmap();
 
-            deviceAddVm.unit_id = deviceDetailEditBean.getUnit_id();
-            tsProject.setValue(deviceDetailEditBean.getUnit_id_name());
             deviceAddVm.start_date = deviceDetailEditBean.getStart_date();
             tsStartTime.setValue(deviceDetailEditBean.getStart_date());
             deviceAddVm.brand = deviceDetailEditBean.getBrand();
@@ -900,7 +933,7 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
                     ,deviceDetailEditBean.getBrand(),deviceDetailEditBean.getOriginal_price(),deviceDetailEditBean.getMain_params(),deviceDetailEditBean.getPower()
                     ,deviceDetailEditBean.getEntry_time(),deviceDetailEditBean.getExit_time(),deviceDetailEditBean.getOperator_name());
 
-            if (deviceDetailEditBean.getUnit_id() != 0 || !StringUtils.isTrimEmpty(deviceDetailEditBean.getUnit_id_name())
+            if (!StringUtils.isTrimEmpty(deviceDetailEditBean.getUnit_id_name())
                     || !StringUtils.isTrimEmpty(deviceDetailEditBean.getStart_date()) || !StringUtils.isTrimEmpty(deviceDetailEditBean.getBrand())
                     || !StringUtils.isTrimEmpty(deviceDetailEditBean.getOriginal_price()) || !StringUtils.isTrimEmpty(deviceDetailEditBean.getMain_params())
                     || !StringUtils.isTrimEmpty(deviceDetailEditBean.getPower()) || !StringUtils.isTrimEmpty(deviceDetailEditBean.getEntry_time())
@@ -930,7 +963,6 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
     @Override
     public void callInfo(int unit_id, String unit, String start_date, String brand, String original_price,
                          String main_params, String power, String entry_time, String exit_time, String operator_name) {
-        deviceAddVm.unit_id = unit_id;
         deviceAddVm.start_date = start_date;
         deviceAddVm.brand = brand;
         deviceAddVm.original_price = original_price;
@@ -940,7 +972,6 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
         deviceAddVm.exit_time = exit_time;
         deviceAddVm.operator_name = operator_name;
 
-        tsProject.setValue(unit);
         tsStartTime.setValue(start_date);
         tsBrand.setValue(brand);
         tsOriginalPrice.setValue(original_price);

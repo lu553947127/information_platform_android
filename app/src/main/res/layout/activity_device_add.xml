@@ -19,6 +19,27 @@
             android:background="@color/colorFFF"
             android:orientation="vertical">
 
+            <!--项目名称-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/colorFFF"
+                android:orientation="horizontal">
+
+                <TextView style="@style/RedMustText" />
+
+                <TextView
+                    style="@style/AdminManageFirstText"
+                    android:text="@string/admin_turnover_add_project" />
+
+                <TextView
+                    android:id="@+id/tv_project"
+                    style="@style/AdminManageSecondText"
+                    android:text="@string/admin_turnover_add_project_et" />
+            </LinearLayout>
+
+            <View style="@style/DividingLine" />
+
             <!--类别-->
             <LinearLayout
                 android:layout_width="match_parent"

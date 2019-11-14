@@ -31,6 +31,7 @@ import static com.blankj.utilcode.util.StringUtils.getString;
 public class DeviceAddVm extends BaseViewModel {
 
     private int userId;
+    public int unit_id;
     public int category;
     public int material_id;
     public String categoryName;
@@ -50,15 +51,14 @@ public class DeviceAddVm extends BaseViewModel {
     public int method;//1出租 2出售
     public String images;
 
-    public int unit_id;
-    public String start_date;
     public String brand;
+    public String start_date;
+    public String operator_name;
     public String original_price;
     public String main_params;
     public String power;
     public String entry_time;
     public String exit_time;
-    public String operator_name;
 
     public int material_status;
     public int plan;
@@ -85,6 +85,10 @@ public class DeviceAddVm extends BaseViewModel {
     //后台管理 --- 设备添加/编辑
     public void equipmentAdd(String type,String encoding,String stock,String spec,String person_liable,String tel,String guidance_price
             ,String use_month_count,String technology_detail,String equipment_time){
+        if (unit_id==0) {
+            ToastUtils.showShort(getString(R.string.admin_selector_no_project));
+            return;
+        }
         if (category==0) {
             ToastUtils.showShort(getString(R.string.admin_selector_device_no_category));
             return;
@@ -156,14 +160,14 @@ public class DeviceAddVm extends BaseViewModel {
 
         switch (type){
             case "add"://添加设备
-                new DeviceRepository().equipmentAdd(deviceAddData,userId,category,material_id,encoding,stock,unit,spec,use_status
+                new DeviceRepository().equipmentAdd(deviceAddData,userId,unit_id,category,material_id,encoding,stock,unit,spec,use_status
                         ,province,city,address,longitude,latitude,person_liable,tel,is_shelf,shelf_start_time,shelf_end_time,shelf_type,method,guidance_price,images
-                        ,unit_id,start_date,brand,original_price,main_params,power,entry_time,exit_time,operator_name,material_status,use_month_count,plan,technology_detail,equipment_time);
+                        ,brand,operator_name,start_date,original_price,main_params,power,entry_time,exit_time,material_status,use_month_count,plan,technology_detail,equipment_time);
                 break;
             case "edit"://编辑设备
-                new DeviceRepository().equipmentEdit(deviceEditData,userId,editId,category,material_id,encoding,stock,unit,spec,use_status
+                new DeviceRepository().equipmentEdit(deviceEditData,userId,editId,unit_id,category,material_id,encoding,stock,unit,spec,use_status
                         ,province,city,address,longitude,latitude,person_liable,tel,is_shelf,shelf_start_time,shelf_end_time,shelf_type,method,guidance_price,images
-                        ,unit_id,start_date,brand,original_price,main_params,power,entry_time,exit_time,operator_name,material_status,use_month_count,plan,technology_detail,equipment_time);
+                        ,brand,operator_name,start_date,original_price,main_params,power,entry_time,exit_time,material_status,use_month_count,plan,technology_detail,equipment_time);
                 break;
         }
     }

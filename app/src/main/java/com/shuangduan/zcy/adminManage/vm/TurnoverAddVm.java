@@ -31,6 +31,7 @@ import static com.blankj.utilcode.util.StringUtils.getString;
 public class TurnoverAddVm extends BaseViewModel {
 
     private int userId;
+    public int unit_id;
     public int category;
     public int material_id;
     public String categoryName;
@@ -43,6 +44,7 @@ public class TurnoverAddVm extends BaseViewModel {
     public String address;
     public double longitude;
     public double latitude;
+    public int is_vulnerable;
     public int is_shelf;
     public String todayTime;
     public String shelf_start_time;
@@ -51,13 +53,12 @@ public class TurnoverAddVm extends BaseViewModel {
     public int method;//1出租 2出售
     public String images;
 
-    public int unit_id;
-    public int plan;
     public String use_count;
+    public int plan;
+    public String accumulated_amortization;
     public String start_date;
     public String entry_time;
     public String exit_time;
-    public String accumulated_amortization;
     public String original_price;
     public String net_worth;
 
@@ -66,7 +67,6 @@ public class TurnoverAddVm extends BaseViewModel {
     public MutableLiveData<String> turnoverAddData;
     public MutableLiveData<String> turnoverEditData;
     public MutableLiveData<String> pageStateLiveData;
-
 
     public TurnoverAddVm() {
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
@@ -87,6 +87,10 @@ public class TurnoverAddVm extends BaseViewModel {
 
     //后台管理 --- 周转材料添加/编辑
     public void constructionAdd(String type,String stock,String unit_price,String spec,String person_liable,String tel,String guidance_price,String remark){
+        if (unit_id==0) {
+            ToastUtils.showShort(getString(R.string.admin_selector_no_project));
+            return;
+        }
         if (category==0) {
             ToastUtils.showShort(getString(R.string.admin_selector_no_category));
             return;
@@ -162,14 +166,14 @@ public class TurnoverAddVm extends BaseViewModel {
 
         switch (type){
             case "add"://添加周转材料
-                new TurnoverRepository().constructionAdd(turnoverAddData,userId,category,material_id,stock,unit_price,unit,spec,use_status,material_status
+                new TurnoverRepository().constructionAdd(turnoverAddData,userId,unit_id,category,material_id,stock,unit_price,unit,spec,use_status,material_status
                         ,province,city,address,longitude,latitude,person_liable,tel,is_shelf,shelf_start_time,shelf_end_time,shelf_type,method,guidance_price,images
-                        ,unit_id,plan,use_count,start_date,entry_time,exit_time,accumulated_amortization,original_price,net_worth,remark);
+                        ,use_count,plan,accumulated_amortization,start_date,entry_time,exit_time,original_price,net_worth,remark);
                 break;
             case "edit"://编辑周转材料
-                new TurnoverRepository().constructionEdit(turnoverEditData,userId,editId,category,material_id,stock,unit_price,unit,spec,use_status,material_status
+                new TurnoverRepository().constructionEdit(turnoverEditData,userId,editId,unit_id,category,material_id,stock,unit_price,unit,spec,use_status,material_status
                         ,province,city,address,longitude,latitude,person_liable,tel,is_shelf,shelf_start_time,shelf_end_time,shelf_type,method,guidance_price,images
-                        ,unit_id,plan,use_count,start_date,entry_time,exit_time,accumulated_amortization,original_price,net_worth,remark);
+                        ,use_count,plan,accumulated_amortization,start_date,entry_time,exit_time,original_price,net_worth,remark);
                 break;
         }
     }
