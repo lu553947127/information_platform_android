@@ -187,6 +187,8 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
     private List<String> picture_list = new ArrayList<>();
     private TurnoverDialogControl dialogControl;
     private List<TurnoverTypeBean.PlanBean> planBeanList;
+    private SimpleDateFormat f;
+    private Calendar c;
 
     @Override
     protected int initLayoutRes() {
@@ -217,15 +219,15 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
         }
 
         //获取项目名称
-        turnoverVm.turnoverProject.observe(this,turnoverNameBeans -> {
-            projectList=turnoverNameBeans;
+        turnoverVm.turnoverProject.observe(this, turnoverNameBeans -> {
+            projectList = turnoverNameBeans;
         });
 
         //获取材料类别
         turnoverVm.turnoverFirstData.observe(this, turnoverCategoryBeans -> {
             categoryList = turnoverCategoryBeans;
             selectorCategoryFirstAdapter.setNewData(categoryList);
-            if (getIntent().getIntExtra(CustomConfig.HANDLE_TYPE, 0)==ADD&&materialList.size() == 0) {
+            if (getIntent().getIntExtra(CustomConfig.HANDLE_TYPE, 0) == ADD && materialList.size() == 0) {
                 turnoverAddVm.category = categoryList.get(0).getId();
                 turnoverAddVm.categoryName = categoryList.get(0).getCatname();
                 selectorCategoryFirstAdapter.setIsSelect(turnoverAddVm.category);
@@ -321,7 +323,7 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
         turnoverVm.getUnitInfo();
     }
 
-    @OnClick({R.id.iv_bar_back,R.id.tv_project, R.id.tv_category_material_id, R.id.tv_unit, R.id.tv_use_status, R.id.tv_material_status
+    @OnClick({R.id.iv_bar_back, R.id.tv_project, R.id.tv_category_material_id, R.id.tv_unit, R.id.tv_use_status, R.id.tv_material_status
             , R.id.tv_address, R.id.tv_is_shelf, R.id.tv_shelf_time_start, R.id.tv_shelf_time_end, R.id.iv_images
             , R.id.ts_project, R.id.ts_plan, R.id.ts_num, R.id.ts_start_time, R.id.ts_enter_time, R.id.ts_exit_time, R.id.ts_amortize, R.id.ts_original, R.id.ts_value
             , R.id.tv_reserve})
@@ -332,9 +334,9 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
                 finish();
                 break;
             case R.id.tv_project://选择所属项目
-                if (projectList.size()!=0){
+                if (projectList.size() != 0) {
                     getBottomSheetDialog(R.layout.dialog_is_grounding, "project");
-                }else {
+                } else {
                     ToastUtils.showShort(getString(R.string.admin_selector_no_project_list));
                 }
                 break;
@@ -365,17 +367,16 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
                     ToastUtils.showShort("请先选择开始时间");
                     return;
                 }
-                SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
-                Calendar c = Calendar.getInstance();
+                if (f == null || c == null) {
+                    f = new SimpleDateFormat("yyyy-MM-dd");
+                    c = Calendar.getInstance();
+                }
                 try {
                     c.setTime(Objects.requireNonNull(f.parse(turnoverAddVm.shelf_start_time)));
+                    showTimeDialog("shelf_time_end", f.format(c.getTime()));
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                c.add(Calendar.DAY_OF_MONTH, 1);
-                Date tomorrow = c.getTime();
-                f.format(tomorrow);
-                showTimeDialog("shelf_time_end", f.format(tomorrow));
                 break;
             case R.id.iv_images://上传图片
                 if (picture_list != null && picture_list.size() < 5) {
@@ -403,7 +404,7 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
                 dialogControl.showDialog(6, R.string.admin_input_material_amortize);
                 break;
             case R.id.ts_original://周转材料原值
-                dialogControl.showDialog(7,R.string.admin_input_material_original);
+                dialogControl.showDialog(7, R.string.admin_input_material_original);
                 break;
             case R.id.ts_value://净值
                 dialogControl.showDialog(8, R.string.admin_input_material_value);
@@ -423,7 +424,7 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
         }
     }
 
-    @OnCheckedChanged({R.id.cb_shelf_type_open, R.id.cb_shelf_type_close, R.id.cb_lease, R.id.cb_sell,R.id.cb_yes,R.id.cb_no})
+    @OnCheckedChanged({R.id.cb_shelf_type_open, R.id.cb_shelf_type_close, R.id.cb_lease, R.id.cb_sell, R.id.cb_yes, R.id.cb_no})
     void OnOnCheckedChanged(CompoundButton view, boolean isChecked) {
         switch (view.getId()) {
             case R.id.cb_shelf_type_open://到期自动公开
@@ -499,6 +500,7 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
     private List<TurnoverTypeBean.MaterialStatusBean> materialStatusList = new ArrayList<>();
     private GroundingAdapter groundingAdapter;
     private List<TurnoverTypeBean.IsShelfBean> groundingList = new ArrayList<>();
+
     @SuppressLint({"RestrictedApi,InflateParams", "SetTextI18n"})
     private void getBottomSheetDialog(int layout, String type) {
         //底部滑动对话框
@@ -713,34 +715,32 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
                     tvShelfTimeStart.setTextColor(getResources().getColor(R.color.colorTv));
                     break;
                 case "shelf_time_end"://上架结束时间
-                    DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-                    try {
-                        Date dd = df.parse(time);
-                        Calendar calendar = Calendar.getInstance();
-                        calendar.setTime(dd);
-                        calendar.add(Calendar.DAY_OF_MONTH, 1);//加一天
-                        String times = df.format(calendar.getTime());
-                        turnoverAddVm.shelf_end_time = time;
-                        if (time.equals(turnoverAddVm.todayTime)) {
-                            tvShelfTimeEnd.setText(times);
-                            tvShelfTimeEnd.setTextColor(getResources().getColor(R.color.colorTv));
-                        } else {
-                            tvShelfTimeEnd.setText(time);
-                            tvShelfTimeEnd.setTextColor(getResources().getColor(R.color.colorTv));
-                        }
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
+                    turnoverAddVm.shelf_end_time = time;
+                    tvShelfTimeEnd.setText(time);
+                    tvShelfTimeEnd.setTextColor(getResources().getColor(R.color.colorTv));
                     break;
             }
         }, "yyyy-MM-dd", showTime, "2040-12-31");
         customDatePicker.showSpecificTime(false);
-        customDatePicker.show(TimeUtils.getNowString());
+
+        if (type.equals("shelf_time_start")) {
+            customDatePicker.show(TimeUtils.getNowString());
+        } else {
+            try {
+                c.setTime(Objects.requireNonNull(f.parse(showTime)));
+                c.add(Calendar.DAY_OF_MONTH, 1);
+                customDatePicker.show(f.format(c.getTime()));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
     //获取权限
     public static final int CAMERA = 111;
     public static final int PHOTO = 222;
+
     private void getPermissions() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager
