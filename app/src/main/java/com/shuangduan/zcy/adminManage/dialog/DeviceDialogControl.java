@@ -31,8 +31,7 @@ public class DeviceDialogControl extends BaseAddInfoDialog implements DialogInte
     //当前滑动的角标值
     private int selectorIndex;
 
-    private int unit_id;
-    private String start_date, brand, original_price, main_params, power, entry_time, exit_time, operator_name, unit;
+    private String start_date, brand, original_price, main_params, power, entry_time, exit_time, operator_name;
 
     @Override
     public int layoutId() {
@@ -114,10 +113,8 @@ public class DeviceDialogControl extends BaseAddInfoDialog implements DialogInte
     }
 
     //获取编辑详情数据
-    public void setDetail(int unit_id, String unit, String start_date, String brand, String original_price, String main_params, String power,
+    public void setDetail(String start_date, String brand, String original_price, String main_params, String power,
                           String entry_time, String exit_time, String operator_name) {
-        this.unit_id = unit_id;
-        this.unit = unit;
         this.start_date = start_date;
         this.brand = brand;
         this.original_price = original_price;
@@ -127,7 +124,6 @@ public class DeviceDialogControl extends BaseAddInfoDialog implements DialogInte
         this.exit_time = exit_time;
         this.operator_name = operator_name;
 
-        tsItemOne.setValue(unit);
         tsItemTwo.setValue(start_date);
         tsItemThree.getEditText().setText(brand);
         tsItemFour.getEditText().setText(original_price);
@@ -182,9 +178,6 @@ public class DeviceDialogControl extends BaseAddInfoDialog implements DialogInte
                 showView(0, R.string.admin_selector_material_project);
                 break;
             case 1:
-                unit = projectList.get(selectorIndex);
-                unit_id = projectIdList.get(selectorIndex);
-                tsItemOne.setValue(unit);
                 showView(1, R.string.admin_selector_material_start_time);
                 break;
             case 2:
@@ -290,12 +283,12 @@ public class DeviceDialogControl extends BaseAddInfoDialog implements DialogInte
         if (KeyboardUtil.isSoftShowing(context)) {
             KeyboardUtil.showORhideSoftKeyboard(context);
         }
-        listening.callInfo(unit_id, unit, start_date, brand, original_price, main_params, power, entry_time, exit_time, operator_name);
+        listening.callInfo( brand,start_date, operator_name, original_price, main_params, power, entry_time, exit_time);
     }
 
 
     public interface DeviceDetailListening {
-        void callInfo(int unit_id, String unit, String start_date, String brand, String original_price, String main_params,
-                      String power, String entry_time, String exit_time, String operator_name);
+        void callInfo(String brand,String start_date, String operator_name, String original_price, String main_params,
+                      String power, String entry_time, String exit_time);
     }
 }

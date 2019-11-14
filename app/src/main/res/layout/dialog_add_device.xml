@@ -73,6 +73,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             app:edit_show="false"
+            android:inputType="number"
+            android:maxLength="4"
             app:hind_value_text="@string/admin_turnover_hint_input"
             app:title_text="@string/admin_material_power" />
     </LinearLayout>

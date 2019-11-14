@@ -162,12 +162,12 @@ public class DeviceAddVm extends BaseViewModel {
             case "add"://添加设备
                 new DeviceRepository().equipmentAdd(deviceAddData,userId,unit_id,category,material_id,encoding,stock,unit,spec,use_status
                         ,province,city,address,longitude,latitude,person_liable,tel,is_shelf,shelf_start_time,shelf_end_time,shelf_type,method,guidance_price,images
-                        ,brand,operator_name,start_date,original_price,main_params,power,entry_time,exit_time,material_status,use_month_count,plan,technology_detail,equipment_time);
+                        ,brand,start_date,operator_name,original_price,main_params,power,entry_time,exit_time,material_status,use_month_count,plan,technology_detail,equipment_time);
                 break;
             case "edit"://编辑设备
                 new DeviceRepository().equipmentEdit(deviceEditData,userId,editId,unit_id,category,material_id,encoding,stock,unit,spec,use_status
                         ,province,city,address,longitude,latitude,person_liable,tel,is_shelf,shelf_start_time,shelf_end_time,shelf_type,method,guidance_price,images
-                        ,brand,operator_name,start_date,original_price,main_params,power,entry_time,exit_time,material_status,use_month_count,plan,technology_detail,equipment_time);
+                        ,brand,start_date,operator_name,original_price,main_params,power,entry_time,exit_time,material_status,use_month_count,plan,technology_detail,equipment_time);
                 break;
         }
     }

@@ -929,7 +929,7 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
             deviceAddVm.operator_name = deviceDetailEditBean.getOperator_name();
             tsOperatorName.setValue(deviceDetailEditBean.getOperator_name());
 
-            dialogControl.setDetail(deviceDetailEditBean.getUnit_id(),deviceDetailEditBean.getUnit_id_name(),deviceDetailEditBean.getStart_date()
+            dialogControl.setDetail(deviceDetailEditBean.getStart_date()
                     ,deviceDetailEditBean.getBrand(),deviceDetailEditBean.getOriginal_price(),deviceDetailEditBean.getMain_params(),deviceDetailEditBean.getPower()
                     ,deviceDetailEditBean.getEntry_time(),deviceDetailEditBean.getExit_time(),deviceDetailEditBean.getOperator_name());
 
@@ -961,24 +961,24 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
     }
 
     @Override
-    public void callInfo(int unit_id, String unit, String start_date, String brand, String original_price,
-                         String main_params, String power, String entry_time, String exit_time, String operator_name) {
-        deviceAddVm.start_date = start_date;
+    public void callInfo(String brand,String start_date, String operator_name,  String original_price,
+                         String main_params, String power, String entry_time, String exit_time) {
         deviceAddVm.brand = brand;
+        deviceAddVm.start_date = start_date;
+        deviceAddVm.operator_name = operator_name;
         deviceAddVm.original_price = original_price;
         deviceAddVm.main_params = main_params;
         deviceAddVm.power = power;
         deviceAddVm.entry_time = entry_time;
         deviceAddVm.exit_time = exit_time;
-        deviceAddVm.operator_name = operator_name;
 
-        tsStartTime.setValue(start_date);
         tsBrand.setValue(brand);
+        tsStartTime.setValue(start_date);
+        tsOperatorName.setValue(operator_name);
         tsOriginalPrice.setValue(original_price);
         tsMainParams.setValue(main_params);
         tsPower.setValue(power);
         tsEntryTime.setValue(entry_time);
         tsExitTime.setValue(exit_time);
-        tsOperatorName.setValue(operator_name);
     }
 }

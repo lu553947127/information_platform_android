@@ -80,8 +80,6 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:inputType="number"
-            android:maxLength="4"
             app:title_text="@string/admin_material_power"
             app:edit_show="false"
             app:hind_value_text="@string/admin_turnover_hint_input" />
