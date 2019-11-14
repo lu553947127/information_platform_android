@@ -94,7 +94,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <View
             android:layout_width="match_parent"
@@ -108,22 +108,14 @@
             android:layout_marginTop="11dp"
             android:layout_marginRight="15dp">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_delete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/icon_admin_delete"
-                android:drawablePadding="5dp"
-                android:text="删除"
-                android:textColor="@color/colorTvHint"
-                android:textSize="12sp" />
+
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_split"
+                android:id="@+id/tv_reject"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="30dp"
-                android:layout_toLeftOf="@+id/tv_edit"
+                android:layout_toLeftOf="@+id/tv_progress"
                 android:drawableLeft="@drawable/icon_admin_split"
                 android:drawablePadding="5dp"
                 android:text="驳回"
@@ -131,7 +123,7 @@
                 android:textSize="12sp" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_edit"
+                android:id="@+id/tv_progress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"

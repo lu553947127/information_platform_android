@@ -5,26 +5,7 @@
     android:background="@color/colorBgDark"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorFFF"
-        android:paddingTop="10dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="10dp"
-            android:background="@color/color_EDEDED" />
-
-    </LinearLayout>
+    <include layout="@layout/layout_admin_order_search" />
 
     <include
         android:id="@+id/search"

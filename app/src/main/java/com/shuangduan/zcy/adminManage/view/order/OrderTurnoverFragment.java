@@ -1,12 +1,16 @@
 package com.shuangduan.zcy.adminManage.view.order;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
@@ -15,7 +19,12 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adminManage.adapter.AdminOrderListAdapter;
 import com.shuangduan.zcy.adminManage.vm.AdminOrderVm;
 import com.shuangduan.zcy.base.BaseLazyFragment;
+import com.shuangduan.zcy.dialog.BaseDialog;
+import com.shuangduan.zcy.dialog.CustomDialog;
 import com.shuangduan.zcy.model.api.PageState;
+import com.shuangduan.zcy.utils.DrawableUtils;
+
+import java.util.Objects;
 
 import butterknife.BindView;
 
@@ -31,10 +40,14 @@ import butterknife.BindView;
  * @UpdateRemark: 更新说明
  * @Version: 1.0
  */
-public class OrderTurnoverFragment extends BaseLazyFragment {
+public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuickAdapter.OnItemChildClickListener {
 
     @BindView(R.id.refresh)
     SmartRefreshLayout refresh;
+
+    @BindView(R.id.rl_search)
+    RelativeLayout rlSearch;
+
     @BindView(R.id.rv)
     RecyclerView rv;
     private AdminOrderVm orderVm;
@@ -59,10 +72,14 @@ public class OrderTurnoverFragment extends BaseLazyFragment {
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
 
+        Drawable drawable = DrawableUtils.getDrawable(getResources().getColor(R.color.color_EDEDED), 25);
+        rlSearch.setBackground(drawable);
 
         rv.setLayoutManager(new LinearLayoutManager(getActivity()));
         AdminOrderListAdapter adapter = new AdminOrderListAdapter(R.layout.adapter_admin_order_item, null);
         rv.setAdapter(adapter);
+
+        adapter.setOnItemChildClickListener(this);
 
         orderVm = ViewModelProviders.of(this).get(AdminOrderVm.class);
 
@@ -91,7 +108,7 @@ public class OrderTurnoverFragment extends BaseLazyFragment {
                 adapter.addData(item.list);
             }
 
-            setNoMore(item.page,item.count);
+            setNoMore(item.page, item.count);
         });
 
 
@@ -111,7 +128,7 @@ public class OrderTurnoverFragment extends BaseLazyFragment {
 
     }
 
-    private void setNoMore(int page,int count) {
+    private void setNoMore(int page, int count) {
         if (page == 1) {
             if (page * 10 >= count) {
                 if (refresh.getState() == RefreshState.None) {
@@ -135,5 +152,28 @@ public class OrderTurnoverFragment extends BaseLazyFragment {
     @Override
     protected void initDataFromService() {
 
+    }
+
+
+    //Adapter Child 的点击事件
+    @Override
+    public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+        switch (view.getId()) {
+            case R.id.tv_reject://驳回
+                new CustomDialog(Objects.requireNonNull(getActivity()))
+                        .setTip(getString(R.string.admin_turnover_reject))
+                        .setCallBack(new BaseDialog.CallBack() {
+                            @Override
+                            public void cancel() {
+                            }
+
+                            @Override
+                            public void ok(String s) {
+                            }
+                        }).showDialog();
+                break;
+            case R.id.tv_progress://修改进度
+                break;
+        }
     }
 }

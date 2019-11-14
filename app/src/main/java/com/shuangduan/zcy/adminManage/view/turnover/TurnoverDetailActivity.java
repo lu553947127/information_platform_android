@@ -41,7 +41,7 @@ import butterknife.OnClick;
  * @UpdateRemark: 更新说明
  * @Version: 1.0
  */
-public class TurnoverDetailActivity extends BaseActivity{
+public class TurnoverDetailActivity extends BaseActivity {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.tv_bar_title)
@@ -105,6 +105,11 @@ public class TurnoverDetailActivity extends BaseActivity{
     TextView tvSupplyMethodKey;
     @BindView(R.id.group)
     Group group;
+    @BindView(R.id.tv_project_value)
+    TextView tvProjectValue;
+
+    @BindView(R.id.tv_vulnerable_value)
+    TextView tvVulnerableValue;
 
     @Override
     protected int initLayoutRes() {
@@ -143,8 +148,9 @@ public class TurnoverDetailActivity extends BaseActivity{
             String shelf = turnover.shelfType == 1 ? "到期自动公开" : "到期自动下架";
             tvPutawayTime.setText(getString(R.string.format_admin_shelf_time, turnover.shelfStartTime, turnover.shelfEndTime, shelf));
             tvSupplyMethod.setText(turnover.method == 1 ? "出租" : "出售");
+            tvProjectValue.setText(turnover.unitIdName);
 
-            tvProject.setText(StringUtils.isTrimEmpty(turnover.unitIdName) ? "—" : turnover.unitIdName);
+
             tvPlan.setText(StringUtils.isTrimEmpty(turnover.planName) ? "—" : turnover.planName);
             tvNum.setText(turnover.useCount == 0 ? "—" : String.valueOf(turnover.useCount));
             tvStartTime.setText(StringUtils.isTrimEmpty(turnover.startDate) ? "—" : turnover.startDate);
@@ -156,7 +162,7 @@ public class TurnoverDetailActivity extends BaseActivity{
 
             tvEntryPerson.setText(StringUtils.isTrimEmpty(turnover.username) ? "—" : turnover.username);
 
-            tvRemark.setText(StringUtils.isTrimEmpty(turnover.remark) ? "—" :turnover.remark);
+            tvRemark.setText(StringUtils.isTrimEmpty(turnover.remark) ? "—" : turnover.remark);
 
             if (turnover.images != null && turnover.images.size() > 0) {
                 tvMaterialPhoto.setVisibility(View.VISIBLE);

@@ -10,11 +10,13 @@
     <string name="format_admin_order_number">订单号：%1$s</string>
 
 
+    <string name="admin_project">项目名称：</string>
     <string name="admin_turnover_material_details">周转材料详情</string>
     <string name="admin_material_put_address">存放地点：</string>
     <string name="admin_material_device_coding">设备编码：</string>
     <string name="admin_material_duty_name">责&#160;&#160;任&#160;&#160;人：</string>
     <string name="admin_material_tel">联系电话：</string>
+    <string name="admin_material_vulnerable">是否易损：</string>
     <string name="admin_material_putaway">是否上架：</string>
     <string name="admin_material_putaway_time">上架时间：</string>
     <string name="admin_material_supply_method">供应方式：</string>
@@ -56,6 +58,7 @@
 
     <string name="admin_material_remark">备注</string>
     <string name="admin_turnover_delete">确定删除吗？</string>
+    <string name="admin_turnover_reject">确定驳回吗？</string>
     <string name="admin_turnover_material_add">周转材料添加</string>
     <string name="admin_turnover_add_project">项目名称</string>
     <string name="admin_turnover_add_project_et">请选择项目名称</string>

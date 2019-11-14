@@ -33,13 +33,15 @@ public class AdminOrderListAdapter extends BaseQuickAdapter<AdminOrderBean.Order
                 .setText(R.id.tv_category, mContext.getString(R.string.format_admin_category, item.categoryName))
                 .setText(R.id.tv_order_number, mContext.getString(R.string.format_admin_order_number, item.orderNumber));
 
-        if (item.status.equals("驳回")){
+        if (item.status.equals("驳回")) {
             helper.setText(R.id.tv_order_state, item.status);
-        }else {
+        } else {
             helper.setText(R.id.tv_order_state, item.phases);
         }
 
         Drawable drawable = DrawableUtils.getDrawable(mContext.getResources().getColor(R.color.color_EFEEFD), 3);
         helper.getView(R.id.tv_order_state).setBackground(drawable);
+
+        helper.addOnClickListener(R.id.tv_reject, R.id.tv_progress);
     }
 }

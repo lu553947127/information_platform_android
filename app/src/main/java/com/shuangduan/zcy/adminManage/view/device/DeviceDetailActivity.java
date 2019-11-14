@@ -85,8 +85,7 @@ public class DeviceDetailActivity extends BaseActivity {
     @BindView(R.id.rv_photo)
     RecyclerView rvImage;
 
-    @BindView(R.id.tv_project)
-    TextView tvProject;
+
     @BindView(R.id.tv_plan)
     TextView tvPlan;
     @BindView(R.id.tv_brand)
@@ -115,6 +114,9 @@ public class DeviceDetailActivity extends BaseActivity {
     TextView tvEquipmentTime;
     @BindView(R.id.tv_operator_name)
     TextView tvOperatorName;
+
+    @BindView(R.id.tv_project_value)
+    TextView tvProject;
 
     @Override
     protected int initLayoutRes() {
@@ -187,8 +189,9 @@ public class DeviceDetailActivity extends BaseActivity {
                 tvPutawayTimeKey.setVisibility(View.GONE);
                 tvPutawayTime.setVisibility(View.GONE);
             }
+             tvProject.setText( deviceDetailBean.getUnit_id_name());
 
-             tvProject.setText(StringUtils.isTrimEmpty(deviceDetailBean.getUnit_id_name()) ? "—" : deviceDetailBean.getUnit_id_name());
+
              tvPlan.setText(StringUtils.isTrimEmpty(deviceDetailBean.getPlan_name()) ? "—" : deviceDetailBean.getPlan_name());
              tvBrand.setText(StringUtils.isTrimEmpty(deviceDetailBean.getBrand()) ? "—" : deviceDetailBean.getBrand());
              tvMainParams.setText(StringUtils.isTrimEmpty(deviceDetailBean.getMain_params()) ? "—" : deviceDetailBean.getMain_params());

@@ -31,6 +31,7 @@
         android:paddingRight="6dp"
         android:paddingBottom="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
+        android:visibility="gone"
         app:layout_constraintRight_toLeftOf="@id/ll_plan"
         app:layout_constraintTop_toBottomOf="@id/tv_detail">
 
@@ -46,6 +47,33 @@
 
     </LinearLayout>
 
+
+    <LinearLayout
+        android:id="@+id/ll_brand"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/shape_f6f7fb_3"
+        android:orientation="vertical"
+        android:paddingLeft="6dp"
+        android:paddingTop="8dp"
+        android:paddingRight="6dp"
+        android:paddingBottom="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/ll_plan"
+        app:layout_constraintTop_toBottomOf="@id/tv_detail">
+
+        <TextView
+            style="@style/TurnoverDetailTextKeyStyle"
+            android:layout_marginTop="0dp"
+            android:text="@string/admin_material_brand" />
+
+        <TextView
+            android:id="@+id/tv_brand"
+            style="@style/TurnoverDetailTextValueStyle"
+            android:layout_marginTop="8dp" />
+    </LinearLayout>
+
     <LinearLayout
         android:id="@+id/ll_plan"
         android:layout_width="0dp"
@@ -57,10 +85,10 @@
         android:paddingTop="8dp"
         android:paddingRight="6dp"
         android:paddingBottom="8dp"
-        app:layout_constraintLeft_toRightOf="@id/ll_project"
-        app:layout_constraintRight_toLeftOf="@id/ll_brand"
-        app:layout_constraintTop_toTopOf="@id/ll_project"
-        app:layout_constraintBottom_toBottomOf="@id/ll_project">
+        app:layout_constraintLeft_toRightOf="@id/ll_brand"
+        app:layout_constraintRight_toLeftOf="@id/ll_operator_name"
+        app:layout_constraintTop_toTopOf="@id/ll_brand"
+        app:layout_constraintBottom_toBottomOf="@id/ll_brand">
 
         <TextView
             style="@style/TurnoverDetailTextKeyStyle"
@@ -75,8 +103,9 @@
 
     </LinearLayout>
 
+
     <LinearLayout
-        android:id="@+id/ll_brand"
+        android:id="@+id/ll_operator_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="7dp"
@@ -88,19 +117,22 @@
         android:paddingBottom="8dp"
         app:layout_constraintLeft_toRightOf="@id/ll_plan"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/ll_project"
-        app:layout_constraintBottom_toBottomOf="@id/ll_project">
+        app:layout_constraintTop_toTopOf="@id/ll_brand"
+        app:layout_constraintBottom_toBottomOf="@id/ll_brand">
 
         <TextView
             style="@style/TurnoverDetailTextKeyStyle"
             android:layout_marginTop="0dp"
-            android:text="@string/admin_material_brand" />
+            android:textSize="11sp"
+            android:text="@string/admin_device_material_operator_name" />
 
         <TextView
-            android:id="@+id/tv_brand"
+            android:id="@+id/tv_operator_name"
             style="@style/TurnoverDetailTextValueStyle"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="8dp"/>
     </LinearLayout>
+
+
 
     <LinearLayout
         android:id="@+id/ll_main_params"
@@ -113,9 +145,9 @@
         android:paddingTop="8dp"
         android:paddingRight="6dp"
         android:paddingBottom="8dp"
-        app:layout_constraintLeft_toLeftOf="@id/ll_project"
-        app:layout_constraintRight_toRightOf="@id/ll_project"
-        app:layout_constraintTop_toBottomOf="@id/ll_project">
+        app:layout_constraintLeft_toLeftOf="@id/ll_brand"
+        app:layout_constraintRight_toRightOf="@id/ll_brand"
+        app:layout_constraintTop_toBottomOf="@id/ll_brand">
 
         <TextView
             style="@style/TurnoverDetailTextKeyStyle"
@@ -170,8 +202,8 @@
         android:paddingRight="6dp"
         android:paddingBottom="8dp"
         app:layout_constraintBottom_toBottomOf="@id/ll_main_params"
-        app:layout_constraintLeft_toLeftOf="@id/ll_brand"
-        app:layout_constraintRight_toRightOf="@id/ll_brand"
+        app:layout_constraintLeft_toLeftOf="@id/ll_operator_name"
+        app:layout_constraintRight_toRightOf="@id/ll_operator_name"
         app:layout_constraintTop_toTopOf="@id/ll_main_params">
 
         <TextView
@@ -280,8 +312,8 @@
         android:paddingTop="8dp"
         android:paddingRight="6dp"
         android:paddingBottom="8dp"
-        app:layout_constraintLeft_toLeftOf="@id/ll_project"
-        app:layout_constraintRight_toRightOf="@id/ll_project"
+        app:layout_constraintLeft_toLeftOf="@id/ll_brand"
+        app:layout_constraintRight_toRightOf="@id/ll_brand"
         app:layout_constraintTop_toBottomOf="@id/ll_start_time">
 
         <TextView
@@ -334,8 +366,8 @@
         android:paddingRight="6dp"
         android:paddingBottom="8dp"
         app:layout_constraintBottom_toBottomOf="@id/ll_material_status_name"
-        app:layout_constraintLeft_toLeftOf="@id/ll_brand"
-        app:layout_constraintRight_toRightOf="@id/ll_brand"
+        app:layout_constraintLeft_toLeftOf="@id/ll_operator_name"
+        app:layout_constraintRight_toRightOf="@id/ll_operator_name"
         app:layout_constraintTop_toTopOf="@id/ll_material_status_name">
 
         <TextView
@@ -362,8 +394,8 @@
         android:paddingTop="8dp"
         android:paddingRight="6dp"
         android:paddingBottom="8dp"
-        app:layout_constraintLeft_toLeftOf="@id/ll_project"
-        app:layout_constraintRight_toRightOf="@id/ll_project"
+        app:layout_constraintLeft_toLeftOf="@id/ll_brand"
+        app:layout_constraintRight_toRightOf="@id/ll_brand"
         app:layout_constraintTop_toBottomOf="@id/ll_material_status_name">
 
         <TextView
@@ -405,31 +437,6 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/ll_operator_name"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@drawable/shape_f6f7fb_3"
-        android:orientation="vertical"
-        android:paddingLeft="6dp"
-        android:paddingTop="8dp"
-        android:paddingRight="6dp"
-        android:paddingBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="@id/ll_technology_detail"
-        app:layout_constraintLeft_toLeftOf="@id/ll_brand"
-        app:layout_constraintRight_toRightOf="@id/ll_brand"
-        app:layout_constraintTop_toTopOf="@id/ll_technology_detail">
 
-        <TextView
-            style="@style/TurnoverDetailTextKeyStyle"
-            android:layout_marginTop="0dp"
-            android:textSize="11sp"
-            android:text="@string/admin_device_material_operator_name" />
-
-        <TextView
-            android:id="@+id/tv_operator_name"
-            style="@style/TurnoverDetailTextValueStyle"
-            android:layout_marginTop="8dp"/>
-    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
