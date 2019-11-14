@@ -456,6 +456,7 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
 
         CustomDatePicker customDatePicker = new CustomDatePicker(this, time -> {
             tv.setText(time);
+            tv.setTextColor(getResources().getColor(R.color.colorTv));
             if (type == 0) leaseStartTime = time;
             else leaseEndTime = time;
 

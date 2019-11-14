@@ -19,9 +19,9 @@ public class AdminOrderRepository extends BaseRepository {
 
 
     //后台管理 --- 周转材料订单列表
-    public void orderListData(MutableLiveData<AdminOrderBean> liveData, MutableLiveData<String> pageState, int userId, int type, int pCategoryId,
+    public void orderListData(MutableLiveData<AdminOrderBean> liveData, MutableLiveData<String> pageState, int userId, int pCategoryId,
                               int categoryId, int phases, int inside, String orderNumber, int page) {
-        request(apiService.orderListData(userId, type, pCategoryId, categoryId, phases, inside, orderNumber, page)).setData(liveData).setPageState(pageState).send();
+        request(apiService.orderListData(userId, pCategoryId, categoryId, phases, inside, orderNumber, page)).setData(liveData).setPageState(pageState).send();
     }
 
 }

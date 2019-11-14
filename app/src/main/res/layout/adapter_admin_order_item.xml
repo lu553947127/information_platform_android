@@ -108,8 +108,6 @@
             android:layout_marginTop="11dp"
             android:layout_marginRight="15dp">
 
-
-
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_reject"
                 android:layout_width="wrap_content"
@@ -135,4 +133,5 @@
         </RelativeLayout>
 
     </LinearLayout>
+
 </LinearLayout>

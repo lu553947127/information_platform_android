@@ -38,7 +38,7 @@ import com.shuangduan.zcy.adminManage.bean.TurnoverBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverCompanyBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverNameBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverTypeBean;
-import com.shuangduan.zcy.adminManage.event.TurnoverChildrenEvent;
+import com.shuangduan.zcy.adminManage.event.TurnoverEvent;
 import com.shuangduan.zcy.adminManage.view.SelectTypeActivity;
 import com.shuangduan.zcy.adminManage.vm.TurnoverVm;
 import com.shuangduan.zcy.app.CustomConfig;
@@ -61,8 +61,6 @@ import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-
-import static com.shuangduan.zcy.app.CustomConfig.CHIILDREN;
 
 /**
  * @ProjectName: information_platform_android
@@ -359,7 +357,6 @@ public class TurnoverMaterialFragment extends BaseLazyFragment {
                 break;
             case R.id.tv_name://选择材料名称
                 bundle.putInt(CustomConfig.ADMIN_MANAGE_TYPE,CustomConfig.ADMIN_MANAGE_CONSTRUCTION);
-                bundle.putInt(CustomConfig.SELECT_TYPE,CHIILDREN);
                 ActivityUtils.startActivity(bundle, SelectTypeActivity.class);
                 break;
             case R.id.tv_grounding://是否上架
@@ -655,7 +652,7 @@ public class TurnoverMaterialFragment extends BaseLazyFragment {
     }
 
     @Subscribe
-    public void onEventTurnoverChildren(TurnoverChildrenEvent event) {
+    public void onEventTurnover(TurnoverEvent event) {
         turnoverVm.category_id=event.material_id;
         turnoverVm.constructionList(areaVm.id,areaVm.city_id);
         getAddTopScreenView(tvNameSecond,event.material_name,View.VISIBLE);

@@ -22,15 +22,18 @@
             android:layout_centerVertical="true"
             android:src="@drawable/icon_admin_search" />
 
-        <EditText
+        <com.shuangduan.zcy.weight.XEditText
             android:id="@+id/tv_order_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:paddingRight="10dp"
             android:layout_marginLeft="5dp"
             android:background="@color/colorTransparent"
-            android:textColorHint="@color/text2"
-            android:textColor="@color/text2"
+            android:inputType="text"
+            android:imeOptions="actionSearch"
+            android:textColorHint="@color/colorTvHint"
+            android:textColor="@color/colorTv"
             android:textSize="13sp"
             android:layout_toRightOf="@id/iv_search"
             android:hint="请输入订单号"

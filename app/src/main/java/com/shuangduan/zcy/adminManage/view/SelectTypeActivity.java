@@ -21,10 +21,9 @@ import com.shuangduan.zcy.adminManage.adapter.TurnoverFirstAdapter;
 import com.shuangduan.zcy.adminManage.adapter.TurnoverHistoryAdapter;
 import com.shuangduan.zcy.adminManage.adapter.TurnoverSecondAdapter;
 import com.shuangduan.zcy.adminManage.bean.TurnoverCategoryBean;
-import com.shuangduan.zcy.adminManage.event.DeviceChildrenEvent;
-import com.shuangduan.zcy.adminManage.event.DeviceGroupEvent;
-import com.shuangduan.zcy.adminManage.event.TurnoverChildrenEvent;
-import com.shuangduan.zcy.adminManage.event.TurnoverGroupEvent;
+import com.shuangduan.zcy.adminManage.event.DeviceEvent;
+import com.shuangduan.zcy.adminManage.event.OrderTurnoverEvent;
+import com.shuangduan.zcy.adminManage.event.TurnoverEvent;
 import com.shuangduan.zcy.adminManage.vm.DeviceVm;
 import com.shuangduan.zcy.adminManage.vm.TurnoverVm;
 import com.shuangduan.zcy.app.CustomConfig;
@@ -41,7 +40,9 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 import static com.shuangduan.zcy.app.CustomConfig.ADMIN_MANAGE_CONSTRUCTION;
+import static com.shuangduan.zcy.app.CustomConfig.ADMIN_MANAGE_CONSTRUCTION_ORDER;
 import static com.shuangduan.zcy.app.CustomConfig.ADMIN_MANAGE_EQIPMENT;
+import static com.shuangduan.zcy.app.CustomConfig.ADMIN_MANAGE_EQIPMENT_ORDER;
 
 /**
  * @ProjectName: information_platform_android
@@ -103,12 +104,15 @@ public class SelectTypeActivity extends BaseActivity {
 
         //判断周转材料还是设备
         int type = getIntent().getIntExtra(CustomConfig.ADMIN_MANAGE_TYPE,0);
-        //判断是集团还是子公司
-        int select_type= getIntent().getIntExtra(CustomConfig.SELECT_TYPE,0);
-        if (type==ADMIN_MANAGE_CONSTRUCTION){
-            getTurnoverData();
-        }else if (type==ADMIN_MANAGE_EQIPMENT){
-            getDevice();
+        switch (type){
+            case ADMIN_MANAGE_CONSTRUCTION://选择周转材料
+            case ADMIN_MANAGE_CONSTRUCTION_ORDER://选择订单 周转材料
+                getTurnoverData();
+                break;
+            case ADMIN_MANAGE_EQIPMENT://选择设备
+            case ADMIN_MANAGE_EQIPMENT_ORDER://选择订单 设备
+                getDevice();
+                break;
         }
 
         //历史浏览
@@ -117,20 +121,17 @@ public class SelectTypeActivity extends BaseActivity {
         rvHistory.setAdapter(turnoverHistoryAdapter);
         turnoverHistoryAdapter.setOnItemClickListener((adapter, view, position) -> {
             TurnoverCategoryBean listBean = turnoverHistoryAdapter.getData().get(position);
-            switch (select_type){
-                case 1://集团
-                    if (type==ADMIN_MANAGE_CONSTRUCTION){
-                        EventBus.getDefault().post(new TurnoverGroupEvent(listBean.getId(),listBean.getCatname()));
-                    }else if (type==ADMIN_MANAGE_EQIPMENT){
-                        EventBus.getDefault().post(new DeviceGroupEvent(listBean.getId(),listBean.getCatname()));
-                    }
+            switch (type){
+                case ADMIN_MANAGE_CONSTRUCTION://选择周转材料
+                    EventBus.getDefault().post(new TurnoverEvent(listBean.getId(),listBean.getCatname()));
                     break;
-                case 2://子公司
-                    if (type==ADMIN_MANAGE_CONSTRUCTION){
-                        EventBus.getDefault().post(new TurnoverChildrenEvent(listBean.getId(),listBean.getCatname()));
-                    }else if (type==ADMIN_MANAGE_EQIPMENT){
-                        EventBus.getDefault().post(new DeviceChildrenEvent(listBean.getId(),listBean.getCatname()));
-                    }
+                case ADMIN_MANAGE_EQIPMENT://选择设备
+                    EventBus.getDefault().post(new DeviceEvent(listBean.getId(),listBean.getCatname()));
+                    break;
+                case ADMIN_MANAGE_CONSTRUCTION_ORDER://选择订单 周转材料
+                    EventBus.getDefault().post(new OrderTurnoverEvent(listBean.getId(),listBean.getCatname()));
+                    break;
+                case ADMIN_MANAGE_EQIPMENT_ORDER://选择订单 设备
                     break;
             }
             finish();
@@ -142,10 +143,15 @@ public class SelectTypeActivity extends BaseActivity {
         rvType.setAdapter(turnoverFirstAdapter);
         turnoverFirstAdapter.setOnItemClickListener((adapter, view, position) -> {
             TurnoverCategoryBean listBean = turnoverFirstAdapter.getData().get(position);
-            if (type==ADMIN_MANAGE_CONSTRUCTION){
-                turnoverVm.constructionCategoryList("",listBean.getId());
-            }else if (type==ADMIN_MANAGE_EQIPMENT){
-                deviceVm.equipmentCategoryList("",listBean.getId());
+            switch (type){
+                case ADMIN_MANAGE_CONSTRUCTION://选择周转材料
+                case ADMIN_MANAGE_CONSTRUCTION_ORDER://选择订单 周转材料
+                    turnoverVm.constructionCategoryList("",listBean.getId());
+                    break;
+                case ADMIN_MANAGE_EQIPMENT://选择设备
+                case ADMIN_MANAGE_EQIPMENT_ORDER://选择订单 设备
+                    deviceVm.equipmentCategoryList("",listBean.getId());
+                    break;
             }
             tvAll.setText(listBean.getCatname());
         });
@@ -157,20 +163,17 @@ public class SelectTypeActivity extends BaseActivity {
         rvAll.setAdapter(turnoverSecondAdapter);
         turnoverSecondAdapter.setOnItemClickListener((adapter, view, position) -> {
             TurnoverCategoryBean listBean = turnoverSecondAdapter.getData().get(position);
-            switch (select_type){
-                case 1://集团
-                    if (type==ADMIN_MANAGE_CONSTRUCTION){
-                        EventBus.getDefault().post(new TurnoverGroupEvent(listBean.getId(),listBean.getCatname()));
-                    }else if (type==ADMIN_MANAGE_EQIPMENT){
-                        EventBus.getDefault().post(new DeviceGroupEvent(listBean.getId(),listBean.getCatname()));
-                    }
+            switch (type){
+                case ADMIN_MANAGE_CONSTRUCTION://选择周转材料
+                    EventBus.getDefault().post(new TurnoverEvent(listBean.getId(),listBean.getCatname()));
                     break;
-                case 2://子公司
-                    if (type==ADMIN_MANAGE_CONSTRUCTION){
-                        EventBus.getDefault().post(new TurnoverChildrenEvent(listBean.getId(),listBean.getCatname()));
-                    }else if (type==ADMIN_MANAGE_EQIPMENT){
-                        EventBus.getDefault().post(new DeviceChildrenEvent(listBean.getId(),listBean.getCatname()));
-                    }
+                case ADMIN_MANAGE_EQIPMENT://选择设备
+                    EventBus.getDefault().post(new DeviceEvent(listBean.getId(),listBean.getCatname()));
+                    break;
+                case ADMIN_MANAGE_CONSTRUCTION_ORDER://选择订单 周转材料
+                    EventBus.getDefault().post(new OrderTurnoverEvent(listBean.getId(),listBean.getCatname()));
+                    break;
+                case ADMIN_MANAGE_EQIPMENT_ORDER://选择订单 设备
                     break;
             }
             finish();
@@ -185,10 +188,15 @@ public class SelectTypeActivity extends BaseActivity {
                         .hideSoftInputFromWindow(Objects.requireNonNull(SelectTypeActivity.this.getCurrentFocus()).getWindowToken(),
                                 InputMethodManager.HIDE_NOT_ALWAYS);
                 // 搜索，进行自己要的操作...
-                if (type==ADMIN_MANAGE_CONSTRUCTION){
-                    turnoverVm.constructionCategoryList(Objects.requireNonNull(etSearch.getText()).toString(),0);
-                }else if (type==ADMIN_MANAGE_EQIPMENT){
-                    deviceVm.equipmentCategoryList(Objects.requireNonNull(etSearch.getText()).toString(),0);
+                switch (type){
+                    case ADMIN_MANAGE_CONSTRUCTION://选择周转材料
+                    case ADMIN_MANAGE_CONSTRUCTION_ORDER://选择订单 周转材料
+                        turnoverVm.constructionCategoryList(Objects.requireNonNull(etSearch.getText()).toString(),0);
+                        break;
+                    case ADMIN_MANAGE_EQIPMENT://选择设备
+                    case ADMIN_MANAGE_EQIPMENT_ORDER://选择订单 设备
+                        deviceVm.equipmentCategoryList(Objects.requireNonNull(etSearch.getText()).toString(),0);
+                        break;
                 }
                 return true;
             }
@@ -206,10 +214,15 @@ public class SelectTypeActivity extends BaseActivity {
                     llHistory.setVisibility(View.VISIBLE);
                     llType.setVisibility(View.VISIBLE);
                 }
-                if (type==ADMIN_MANAGE_CONSTRUCTION){
-                    turnoverVm.constructionCategoryList(Objects.requireNonNull(etSearch.getText()).toString(),0);
-                }else if (type==ADMIN_MANAGE_EQIPMENT){
-                    deviceVm.equipmentCategoryList(Objects.requireNonNull(etSearch.getText()).toString(),0);
+                switch (type){
+                    case ADMIN_MANAGE_CONSTRUCTION://选择周转材料
+                    case ADMIN_MANAGE_CONSTRUCTION_ORDER://选择订单 周转材料
+                        turnoverVm.constructionCategoryList(Objects.requireNonNull(etSearch.getText()).toString(),0);
+                        break;
+                    case ADMIN_MANAGE_EQIPMENT://选择设备
+                    case ADMIN_MANAGE_EQIPMENT_ORDER://选择订单 设备
+                        deviceVm.equipmentCategoryList(Objects.requireNonNull(etSearch.getText()).toString(),0);
+                        break;
                 }
             }
         });

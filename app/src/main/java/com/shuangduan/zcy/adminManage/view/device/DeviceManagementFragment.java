@@ -36,7 +36,7 @@ import com.shuangduan.zcy.adminManage.bean.DeviceBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverCompanyBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverNameBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverTypeBean;
-import com.shuangduan.zcy.adminManage.event.DeviceChildrenEvent;
+import com.shuangduan.zcy.adminManage.event.DeviceEvent;
 import com.shuangduan.zcy.adminManage.view.SelectTypeActivity;
 import com.shuangduan.zcy.adminManage.vm.DeviceVm;
 import com.shuangduan.zcy.app.CustomConfig;
@@ -58,8 +58,6 @@ import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-
-import static com.shuangduan.zcy.app.CustomConfig.CHIILDREN;
 
 /**
  * @ProjectName: information_platform_android
@@ -340,7 +338,6 @@ public class DeviceManagementFragment extends BaseLazyFragment {
                 break;
             case R.id.tv_name://选择设备名称
                 bundle.putInt(CustomConfig.ADMIN_MANAGE_TYPE,CustomConfig.ADMIN_MANAGE_EQIPMENT);
-                bundle.putInt(CustomConfig.SELECT_TYPE,CHIILDREN);
                 ActivityUtils.startActivity(bundle, SelectTypeActivity.class);
                 break;
             case R.id.tv_grounding://是否上架
@@ -584,7 +581,7 @@ public class DeviceManagementFragment extends BaseLazyFragment {
     }
 
     @Subscribe
-    public void onEventDeviceChildren(DeviceChildrenEvent event) {
+    public void onEventDevice(DeviceEvent event) {
         deviceVm.category_id=event.material_id;
         deviceVm.equipmentList(areaVm.id,areaVm.city_id);
         getAddTopScreenView(tvNameSecond,event.material_name,View.VISIBLE);

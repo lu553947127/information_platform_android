@@ -5,7 +5,7 @@ import com.shuangduan.zcy.model.event.BaseEvent;
 /**
  * @ProjectName: information_platform_android
  * @Package: com.shuangduan.zcy.adminManage.event
- * @ClassName: DeviceChildrenEvent
+ * @ClassName: DeviceEvent
  * @Description: java类作用描述
  * @Author: 鹿鸿祥
  * @CreateDate: 2019/11/6 14:27
@@ -14,12 +14,12 @@ import com.shuangduan.zcy.model.event.BaseEvent;
  * @UpdateRemark: 更新说明
  * @Version: 1.0
  */
-public class DeviceChildrenEvent extends BaseEvent {
+public class DeviceEvent extends BaseEvent {
 
     public int material_id;
     public String material_name;
 
-    public DeviceChildrenEvent(int material_id, String material_name) {
+    public DeviceEvent(int material_id, String material_name) {
         this.material_id = material_id;
         this.material_name = material_name;
     }

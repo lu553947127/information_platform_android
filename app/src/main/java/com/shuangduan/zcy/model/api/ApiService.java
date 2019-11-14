@@ -1938,7 +1938,6 @@ public interface ApiService {
     @POST("api/Manage/constructionOrderList")
     Flowable<BaseResponse<AdminOrderBean>> orderListData(
             @Field("user_id") int userId,
-            @Field("type") int type,
             @Field("p_category_id") int pCategoryId,
             @Field("category_id") int categoryId,
             @Field("phases") int phases,

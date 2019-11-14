@@ -162,7 +162,7 @@ public class CustomConfig {
     public static final String EQIPMENT_EDIT = "equipment-edit"; //设备修改
     public static final String EQIPMENT_DELETE = "equipment-delete";//设备删除
     public static final String EQIPMENT_ORDER_LIST = "equipment-order-list";//设备订单列表
-    public static final String EQIPMENT_ORDER_DETAIL = "equipment-order-detail";//设备订单详细
+    public static final String EQIPMENT_ORDER_DETAIL = "equipment-order-detail";//设备订单详情
     public static final String EQIPMENT_ORDER_EDIT = "equipment-order-edit";//设备订单修改
     public static final String CONSTRUCTION_ORDER_LIST = "construction-order-list";//周转材料订单列表
     public static final String CONSTRUCTION_ORDER_DETAIL = "construction-order-detail"; //周转材料订单详情
@@ -171,13 +171,12 @@ public class CustomConfig {
     public static String ADMIN_MANAGE_TYPE = "ADMIN_MANAGE_TYPE";
     public static final int ADMIN_MANAGE_CONSTRUCTION = 1;//选择周转材料
     public static final int ADMIN_MANAGE_EQIPMENT = 2;//选择设备
-
-    public static String SELECT_TYPE = "SELECT_TYPE";
-    public static int GROUP = 1;//集团
-    public static int CHIILDREN = 2;//子公司
+    public static final int ADMIN_MANAGE_CONSTRUCTION_ORDER = 3;//选择周转材料订单
+    public static final int ADMIN_MANAGE_EQIPMENT_ORDER = 4;//选择设备订单
 
     public static String CONSTRUCTION_ID = "CONSTRUCTION_ID";
     public static String EQIPMENT_ID = "EQIPMENT_ID";
+    public static String ADMIN_ORDER_ID = "ADMIN_ORDER_ID";
 
     public static final String HANDLE_TYPE = "HANDLE_TYPE";
     public static final int ADD = 1;//添加

@@ -9,6 +9,7 @@
     android:layout_below="@+id/divider">
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_project"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
@@ -21,6 +22,7 @@
         android:text="公司/项目"/>
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_name"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
@@ -33,6 +35,7 @@
         android:text="材料名称"/>
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_order_manage"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
@@ -45,6 +48,7 @@
         android:text="订单管理"/>
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_order_type"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"

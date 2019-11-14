@@ -146,7 +146,17 @@ public class AdminManageActivity extends BaseActivity {
             }else {
                 navigation.getMenu().findItem(R.id.menu_order_management).setVisible(false);
             }
-            if (construction+equipment+equipment_order+construction_order<2){
+
+            //判断底部tab栏只有一个功能模块时隐藏
+            if (construction==1&&equipment==0&&equipment_order==0&&construction_order==0){
+                navigation.setVisibility(View.GONE);
+            }else if (construction==0&&equipment==1&&equipment_order==0&&construction_order==0){
+                navigation.setVisibility(View.GONE);
+            }else if (construction==0&&equipment==0&&equipment_order==1&&construction_order==0){
+                navigation.setVisibility(View.GONE);
+            }else if (construction==0&&equipment==0&&equipment_order==0&&construction_order==1){
+                navigation.setVisibility(View.GONE);
+            }else if (construction==0&&equipment==0&&equipment_order==1&&construction_order==1){
                 navigation.setVisibility(View.GONE);
             }else {
                 navigation.setVisibility(View.VISIBLE);
