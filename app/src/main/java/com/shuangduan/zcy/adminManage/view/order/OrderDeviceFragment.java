@@ -51,11 +51,11 @@ public class OrderDeviceFragment extends BaseLazyFragment {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
-
+        tvName.setText("设备名称");
     }
 
     @Override
     protected void initDataFromService() {
-        tvProject.setText("设备名称");
+
     }
 }
