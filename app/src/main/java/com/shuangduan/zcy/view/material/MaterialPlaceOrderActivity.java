@@ -225,6 +225,8 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
 
                 tvAdd.setText(R.string.material_add);
 
+                tvAdd.setVisibility(View.GONE);
+
                 LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                 param.gravity = Gravity.CENTER_HORIZONTAL;
                 param.setMargins(DensityUtil.dp2px(22), DensityUtil.dp2px(22), DensityUtil.dp2px(22), DensityUtil.dp2px(22));
@@ -256,7 +258,8 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
 
                 //动态修改按钮样式
                 if (materialDepositingPlaceAdapter.getItemCount() == 0) {
-                    tvAdd.setText(materialDetail.getMethod() == 1 ? R.string.material_tv_lease_add : R.string.material_tv_add);
+                    tvAdd.setVisibility(View.VISIBLE);
+                    tvAdd.setText(R.string.material_tv_add);
                     LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                     param.gravity = Gravity.LEFT;
                     param.setMargins(DensityUtil.dp2px(22), DensityUtil.dp2px(22), DensityUtil.dp2px(22), DensityUtil.dp2px(22));
@@ -306,7 +309,6 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
                 ActivityUtils.startActivity(bundle, ReleaseAreaSelectActivity.class);
                 break;
             case R.id.tv_add://添加存放地
-
                 if (materialDetail.getMethod() == 1) {
                     if (StringUtils.isTrimEmpty(leaseStartTime)) {
                         ToastUtils.showShort("请选择租赁开始时间");
@@ -386,7 +388,8 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
 //        dialog_view.findViewById(R.id.ll_lease).setVisibility(materialDetail.getMethod() == 1 ? View.VISIBLE : View.GONE);
 
         TextView tv_title = dialog_view.findViewById(R.id.tv_dialog_title);
-        tv_title.setText("添加数量、存放地");
+        tv_title.setText(R.string.material_tv_add);
+
 
         TextView tv_save = dialog_view.findViewById(R.id.tv_save);
         et_num = dialog_view.findViewById(R.id.et_num);
