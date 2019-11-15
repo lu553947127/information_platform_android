@@ -4,11 +4,17 @@
     <string name="format_admin_ton">%1$d吨</string>
     <string name="format_admin_ton_other">%1$s/吨</string>
     <string name="format_admin_shelf_time">%1$s至%2$s%3$s</string>
-    <string name="format_admin_category">分类：%1$s</string>
+    <string name="format_admin_category">材料类别：%1$s</string>
     <string name="format_admin_company">下属公司：%1$s</string>
     <string name="format_admin_project">项目名称：%1$s</string>
     <string name="format_admin_order_number">订单号：%1$s</string>
+    <string name="format_admin_spec">规格：%1$s</string>
 
+
+    <string name="format_admin_order_price">指导单价：<font color="#EF583E">¥%1$s</font></string>
+
+    <string name="format_admin_lease_time">租赁时间：%1$s至%2$s</string>
+    <string name="format_admin_address">存放地：%1$s</string>
 
     <string name="admin_project">项目名称：</string>
     <string name="admin_turnover_material_details">周转材料详情</string>
@@ -145,4 +151,15 @@
     <string name="admin_device_material_details">设备物资详情</string>
 
     <string name="admin_selector_no_project_list">您当前没有项目</string>
+    <string name="admin_subsidiary">子公司</string>
+    <string name="admin_order_number">订单号</string>
+    <string name="admin_create_time">创建时间</string>
+    <string name="admin_order_phases">订单进度</string>
+    <string name="admin_buy_company">购买企业</string>
+    <string name="admin_use_address">使用地点</string>
+    <string name="admin_buy_remark">购买备注</string>
+
+    <string name="admin_reject">驳回</string>
+    <string name="admin_rejected">已驳回</string>
+    <string name="admin_order_details">订单详情</string>
 </resources>

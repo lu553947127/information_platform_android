@@ -89,6 +89,7 @@ public class DeviceDetailBean {
     private String use_month_count;
     private List<ImagesBean> images;
 
+
     public String getUse_month_count() {
         return use_month_count;
     }

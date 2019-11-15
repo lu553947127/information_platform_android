@@ -96,6 +96,7 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
     RecyclerView rv;
     private OrderTurnoverVm orderVm;
     private int manage_status;
+    private AdminOrderListAdapter adminOrderListAdapter;
 
     public static OrderTurnoverFragment newInstance() {
         Bundle args = new Bundle();
@@ -124,7 +125,7 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
         rlSearch.setBackground(drawable);
 
         rv.setLayoutManager(new LinearLayoutManager(getActivity()));
-        AdminOrderListAdapter adminOrderListAdapter = new AdminOrderListAdapter(R.layout.adapter_admin_order_item, null
+        adminOrderListAdapter = new AdminOrderListAdapter(R.layout.adapter_admin_order_item, null
                 ,SPUtils.getInstance().getInt(CustomConfig.CONSTRUCTION_ORDER_EDIT,0),manage_status);
         rv.setAdapter(adminOrderListAdapter);
 
@@ -136,13 +137,16 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
                 case 1://普通供应商
                 case 2://子公司
                 case 3://集团
-
+                    bundle.putInt(CustomConfig.ADMIN_ORDER_ID, listBean.orderId);
+                    bundle.putInt("manage_status", manage_status);
+                    ActivityUtils.startActivity(bundle, OrderDetailsActivity.class);
                     break;
                 case 4://子公司子账号
                 case 5://集团子账号
-                    if (SPUtils.getInstance().getInt(CustomConfig.CONSTRUCTION_ORDER_DETAIL,0)==1){
-                        bundle.putInt(CustomConfig.ADMIN_ORDER_ID,listBean.orderId);
-                        bundle.putInt("manage_status",manage_status);
+                    if (SPUtils.getInstance().getInt(CustomConfig.CONSTRUCTION_ORDER_DETAIL, 0) == 1) {
+                        bundle.putInt(CustomConfig.ADMIN_ORDER_ID, listBean.orderId);
+                        bundle.putInt("manage_status", manage_status);
+                        ActivityUtils.startActivity(bundle, OrderDetailsActivity.class);
                     }
                     break;
             }
@@ -181,6 +185,15 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
             if (SPUtils.getInstance().getInt(CustomConfig.MANAGE_STATUS,0)==3)projectList.add(0,new TurnoverNameBean(0,"全部"));
             turnoverProjectAdapter.setNewData(projectList);
         });
+
+
+        //订单驳回
+        orderVm.rejectLiveData.observe(this, rejectItem -> {
+            AdminOrderBean.OrderList orderItem = adminOrderListAdapter.getData().get(orderVm.position);
+            orderItem.status = "驳回订单";
+            adminOrderListAdapter.notifyItemChanged(orderVm.position, orderItem);
+        });
+
 
         //获取搜索筛选条件数据
         orderVm.orderSearchLiveData.observe(this,orderSearchBean -> {
@@ -247,6 +260,8 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
     //Adapter Child 的点击事件
     @Override
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+        orderVm.position = position;
+        AdminOrderBean.OrderList orderItem = adminOrderListAdapter.getData().get(position);
         switch (view.getId()) {
             case R.id.tv_reject://驳回
                 new CustomDialog(Objects.requireNonNull(getActivity()))
@@ -258,6 +273,7 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
 
                             @Override
                             public void ok(String s) {
+                                orderVm.constructionOrderEditStatus(orderItem.orderId);
                             }
                         }).showDialog();
                 break;

@@ -1,0 +1,455 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBgDark">
+
+    <include layout="@layout/toolbar" />
+
+    <com.shuangduan.zcy.utils.ElasticScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/background"
+                android:paddingLeft="15dp"
+                android:paddingTop="15dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="20dp"
+                tools:ignore="MissingConstraints">
+
+                <TextView
+                    android:id="@+id/tv_goods_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/goods_info"
+                    android:textColor="@color/colorTv"
+                    android:textSize="14sp"
+                    tools:ignore="MissingConstraints" />
+
+
+                <TextView
+                    android:id="@+id/tv_supply_method"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="1dp"
+                    android:background="@drawable/shape_supply_method_3"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:textColor="@color/color_EF583E"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/iv_icon" />
+
+                <ImageView
+                    android:id="@+id/iv_icon"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="15dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/no_banner"
+                    app:layout_constraintTop_toBottomOf="@id/tv_goods_info"
+                    tools:ignore="MissingConstraints" />
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="top"
+                    android:textColor="@color/colorTv"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toTopOf="@id/tv_price"
+                    app:layout_constraintLeft_toRightOf="@+id/iv_icon"
+                    app:layout_constraintTop_toTopOf="@id/iv_icon" />
+
+                <TextView
+                    android:id="@+id/tv_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:gravity="bottom"
+                    android:textColor="@color/color_666666"
+                    android:textSize="13sp"
+                    app:layout_constraintBottom_toTopOf="@id/tv_spec"
+                    app:layout_constraintLeft_toLeftOf="@+id/tv_title"
+                    app:layout_constraintTop_toBottomOf="@id/tv_title"
+                    tools:ignore="MissingConstraints" />
+
+                <TextView
+                    android:id="@+id/tv_spec"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:gravity="bottom"
+                    android:textColor="@color/color_666666"
+                    android:textSize="13sp"
+                    app:layout_constraintBottom_toTopOf="@id/tv_lease_time"
+                    app:layout_constraintLeft_toLeftOf="@+id/tv_title"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_price"
+                    tools:ignore="MissingConstraints" />
+
+                <TextView
+                    android:id="@+id/tv_lease_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:gravity="bottom"
+                    android:textColor="@color/color_666666"
+                    android:textSize="13sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/iv_icon"
+                    app:layout_constraintLeft_toLeftOf="@+id/tv_title"
+                    app:layout_constraintTop_toBottomOf="@id/tv_spec"
+                    tools:ignore="MissingConstraints" />
+
+                <TextView
+                    android:id="@+id/tv_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_666666"
+                    android:textSize="13sp"
+                    android:gravity="bottom"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_spec"/>
+
+
+                <TextView
+                    android:id="@+id/tv_reserve"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/reserve_num"
+                    android:textColor="@color/color_666666"
+                    android:textSize="@dimen/dimenTvStates"
+                    app:layout_constraintTop_toBottomOf="@id/iv_icon"
+                    tools:ignore="MissingConstraints" />
+
+                <TextView
+                    android:id="@+id/tv_reserve_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:textColor="@color/color_EF583E"
+                    android:textSize="@dimen/dimenTvStates"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_reserve"
+                    app:layout_constraintLeft_toRightOf="@id/tv_reserve"
+                    app:layout_constraintTop_toTopOf="@id/tv_reserve"
+                    tools:ignore="MissingConstraints" />
+
+                <TextView
+                    android:id="@+id/tv_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:lineSpacingExtra="3dp"
+                    android:textColor="@color/color_666666"
+                    android:textSize="@dimen/dimenTvStates"
+                    app:layout_constraintTop_toBottomOf="@id/tv_reserve"
+                    tools:ignore="MissingConstraints" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/colorFFF"
+                android:padding="15dp"
+                tools:ignore="MissingConstraints">
+
+                <TextView
+                    android:id="@+id/tv_company"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="公司/项目"
+                    android:textColor="@color/colorTv"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tv_subsidiary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:text="@string/admin_subsidiary"
+                    android:textSize="@dimen/dimenTvStates"
+                    app:layout_constraintTop_toBottomOf="@id/tv_company" />
+
+                <TextView
+                    android:id="@+id/tv_subsidiary_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="90dp"
+                    android:textSize="@dimen/dimenTvStates"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tv_subsidiary" />
+
+                <TextView
+                    android:id="@+id/tv_project"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14sp"
+                    android:text="@string/admin_project"
+                    android:textSize="@dimen/dimenTvStates"
+                    app:layout_constraintTop_toBottomOf="@id/tv_subsidiary"
+                    app:layout_goneMarginTop="0dp" />
+
+                <TextView
+                    android:id="@+id/tv_project_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="90dp"
+                    android:textSize="@dimen/dimenTvStates"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tv_project" />
+
+                <androidx.constraintlayout.widget.Group
+                    android:id="@+id/group_visible"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    app:constraint_referenced_ids="tv_company,tv_subsidiary,tv_subsidiary_name" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:background="@color/background"
+                android:paddingLeft="15dp"
+                android:paddingTop="15dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="20dp"
+                tools:ignore="MissingConstraints">
+
+                <TextView
+                    android:id="@+id/tv_order_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/order_info"
+                    android:textColor="@color/colorTv"
+                    android:textSize="14sp"
+                    tools:ignore="MissingConstraints" />
+
+
+                <ImageView
+                    android:id="@+id/iv_default"
+                    android:layout_width="60dp"
+                    android:layout_height="18dp"
+                    android:layout_marginTop="2dp"
+                    android:src="@drawable/icon_mine_default_material"
+                    android:visibility="invisible"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tv_order_info" />
+
+
+                <TextView
+                    android:id="@+id/tv_replication"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/replication"
+                    android:textColor="@color/text1"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_order_number_value"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tv_order_number_value" />
+
+
+                <TextView
+                    android:id="@+id/tv_order_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="17dp"
+                    android:text="@string/admin_order_number"
+                    android:textColor="@color/color_666666"
+                    android:textSize="12sp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_order_info" />
+
+
+                <TextView
+                    android:id="@+id/tv_order_number_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="45dp"
+                    android:textColor="@color/color_666666"
+                    android:textSize="12sp"
+                    app:layout_constraintLeft_toRightOf="@id/tv_order_number"
+                    app:layout_constraintTop_toTopOf="@id/tv_order_number" />
+
+                <TextView
+                    android:id="@+id/tv_create_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="@string/admin_create_time"
+                    android:textColor="@color/color_666666"
+                    android:textSize="12sp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_order_number"
+                    tools:ignore="MissingConstraints" />
+
+                <TextView
+                    android:id="@+id/tv_create_time_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_666666"
+                    android:textSize="12sp"
+                    app:layout_constraintLeft_toLeftOf="@id/tv_order_number_value"
+                    app:layout_constraintTop_toTopOf="@id/tv_create_time" />
+
+
+                <TextView
+                    android:id="@+id/tv_order_phases"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="@string/admin_order_phases"
+                    android:textColor="@color/color_666666"
+                    android:textSize="12sp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_create_time"
+                    tools:ignore="MissingConstraints" />
+
+                <TextView
+                    android:id="@+id/tv_order_phases_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_666666"
+                    android:textSize="12sp"
+                    app:layout_constraintLeft_toLeftOf="@id/tv_order_number_value"
+                    app:layout_constraintTop_toTopOf="@id/tv_order_phases" />
+
+                <TextView
+                    android:id="@+id/tv_contact"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="@string/contact"
+                    android:textColor="@color/color_666666"
+                    android:textSize="12sp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_order_phases"
+                    tools:ignore="MissingConstraints" />
+
+                <TextView
+                    android:id="@+id/tv_contact_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_666666"
+                    android:textSize="12sp"
+                    app:layout_constraintLeft_toLeftOf="@id/tv_order_number_value"
+                    app:layout_constraintTop_toTopOf="@id/tv_contact" />
+
+                <TextView
+                    android:id="@+id/tv_contact_tel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="@string/contacts_phone"
+                    android:textColor="@color/color_666666"
+                    android:textSize="12sp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_contact"
+                    tools:ignore="MissingConstraints" />
+
+                <TextView
+                    android:id="@+id/tv_contact_tel_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_666666"
+                    android:textSize="12sp"
+                    app:layout_constraintLeft_toLeftOf="@id/tv_order_number_value"
+                    app:layout_constraintTop_toTopOf="@id/tv_contact_tel" />
+
+
+                <TextView
+                    android:id="@+id/tv_buy_company"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="@string/admin_buy_company"
+                    android:textColor="@color/color_666666"
+                    android:textSize="12sp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_contact_tel"
+                    tools:ignore="MissingConstraints" />
+
+                <TextView
+                    android:id="@+id/tv_buy_company_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_666666"
+                    android:textSize="12sp"
+                    app:layout_constraintLeft_toLeftOf="@id/tv_order_number_value"
+                    app:layout_constraintTop_toTopOf="@id/tv_buy_company" />
+
+
+                <TextView
+                    android:id="@+id/tv_use_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="@string/admin_use_address"
+                    android:textColor="@color/color_666666"
+                    android:textSize="12sp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_buy_company"
+                    tools:ignore="MissingConstraints" />
+
+                <TextView
+                    android:id="@+id/tv_use_address_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_666666"
+                    android:textSize="12sp"
+                    app:layout_constraintLeft_toLeftOf="@id/tv_order_number_value"
+                    app:layout_constraintTop_toTopOf="@id/tv_use_address" />
+
+
+                <TextView
+                    android:id="@+id/tv_buy_remark"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="@string/admin_buy_remark"
+                    android:textColor="@color/color_666666"
+                    android:textSize="12sp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_use_address"
+                    tools:ignore="MissingConstraints" />
+
+                <TextView
+                    android:id="@+id/tv_buy_remark_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_666666"
+                    android:textSize="12sp"
+                    app:layout_constraintLeft_toLeftOf="@id/tv_order_number_value"
+                    app:layout_constraintTop_toTopOf="@id/tv_buy_remark" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <CheckBox
+                android:id="@+id/tv_reject"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="35dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="30dp"
+                android:background="@drawable/selector_btn_bg_e0e0e5_6a5ff8"
+                android:button="@null"
+                android:enabled="false"
+                android:gravity="center"
+                android:text="@string/admin_rejected"
+                android:textColor="@drawable/selector_text_color_b1_ff"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </com.shuangduan.zcy.utils.ElasticScrollView>
+
+</RelativeLayout>

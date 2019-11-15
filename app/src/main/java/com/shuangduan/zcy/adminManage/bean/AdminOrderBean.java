@@ -46,6 +46,10 @@ public class AdminOrderBean {
         //订单描述
         @SerializedName("inside_name")
         public String insideName;
-
+        //公司名称
+        public String company;
+        //项目名称
+        @SerializedName("unit_name")
+        public String unitName;
     }
 }

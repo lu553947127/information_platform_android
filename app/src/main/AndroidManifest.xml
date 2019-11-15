@@ -52,24 +52,47 @@
         android:supportsRtl="true"
         tools:ignore="GoogleAppIndexingWarning,UnusedAttribute">
         <!-- 启动页-->
-        <activity android:name="com.shuangduan.zcy.view.login.StartUpActivity" android:theme="@style/SplashTheme">
+        <activity
+            android:name="com.shuangduan.zcy.view.login.StartUpActivity"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <!-- 引导页-->
-        <activity android:name="com.shuangduan.zcy.view.login.FirstStartActivity" android:theme="@style/BaseAppTheme" android:windowSoftInputMode="stateHidden|adjustPan"/>
+        <activity
+            android:name="com.shuangduan.zcy.view.login.FirstStartActivity"
+            android:theme="@style/BaseAppTheme"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
         <!-- 微信身份认证页-->
-        <activity android:name="com.shuangduan.zcy.view.login.WeChatBindingActivity" android:theme="@style/BaseAppTheme" android:launchMode="singleTop"  android:windowSoftInputMode="stateHidden|adjustPan"/>
+        <activity
+            android:name="com.shuangduan.zcy.view.login.WeChatBindingActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/BaseAppTheme"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
         <!-- 登录页-->
-        <activity android:name="com.shuangduan.zcy.view.login.LoginActivity" android:theme="@style/BaseAppTheme" android:launchMode="singleTop"  android:windowSoftInputMode="stateHidden|adjustPan"/>
+        <activity
+            android:name="com.shuangduan.zcy.view.login.LoginActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/BaseAppTheme"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
         <!-- 注册页-->
-        <activity android:name="com.shuangduan.zcy.view.login.RegisterActivity" android:theme="@style/BaseAppTheme" android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name="com.shuangduan.zcy.view.login.RegisterActivity"
+            android:theme="@style/BaseAppTheme"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
         <!-- 首次登陆需要录入信息页-->
-        <activity android:name="com.shuangduan.zcy.view.login.UserInfoInputActivity" android:theme="@style/BaseAppTheme" android:launchMode="singleTop" android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name="com.shuangduan.zcy.view.login.UserInfoInputActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/BaseAppTheme"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <!-- 首页-->
-        <activity android:name="com.shuangduan.zcy.view.MainActivity" android:theme="@style/BaseAppTheme" android:launchMode="singleTask">
+        <activity
+            android:name="com.shuangduan.zcy.view.MainActivity"
+            android:launchMode="singleTask"
+            android:theme="@style/BaseAppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -80,205 +103,414 @@
             </intent-filter>
         </activity>
         <!-- 手机邮箱验证页-->
-        <activity android:name="com.shuangduan.zcy.view.login.MobileVerificationActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.login.MobileVerificationActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 用户详情页-->
-        <activity android:name="com.shuangduan.zcy.view.mine.UserInfoActivity" android:theme="@style/BaseAppTheme" android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.UserInfoActivity"
+            android:theme="@style/BaseAppTheme"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <!-- 提现页-->
-        <activity android:name="com.shuangduan.zcy.view.mine.WithdrawActivity" android:theme="@style/BaseAppTheme" android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.WithdrawActivity"
+            android:theme="@style/BaseAppTheme"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <!-- 编辑用户名页-->
-        <activity android:name="com.shuangduan.zcy.view.mine.UpdateNameActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.UpdateNameActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 编辑手机号页-->
-        <activity android:name="com.shuangduan.zcy.view.mine.UpdateMobileActivity" android:theme="@style/BaseAppTheme"  />
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.UpdateMobileActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 修改密码页-->
-        <activity android:name="com.shuangduan.zcy.view.mine.ForgetPwdActivity" android:theme="@style/BaseAppTheme" android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.ForgetPwdActivity"
+            android:theme="@style/BaseAppTheme"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <!-- 修改手机验证-->
-        <activity android:name="com.shuangduan.zcy.view.mine.UpdateResultActivity" android:theme="@style/BaseAppTheme"  />
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.UpdateResultActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 修改邮箱-->
-        <activity android:name="com.shuangduan.zcy.view.mine.UpdateEmailActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.UpdateEmailActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 修改用户密码-->
-        <activity android:name="com.shuangduan.zcy.view.mine.UpdatePwdActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.UpdatePwdActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 经营产品修改-->
-        <activity android:name="com.shuangduan.zcy.view.mine.UpdateProductionActivity" android:theme="@style/BaseAppTheme"  />
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.UpdateProductionActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 身份证上传页-->
-        <activity android:name="com.shuangduan.zcy.view.mine.AuthenticationActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.AuthenticationActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 绑定银行卡页-->
-        <activity android:name="com.shuangduan.zcy.view.mine.BindBankCardActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.BindBankCardActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 公司搜索页-->
-        <activity android:name="com.shuangduan.zcy.view.mine.CompanySearchActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.CompanySearchActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 地区选择多选页-->
-        <activity android:name="com.shuangduan.zcy.view.mine.BusinessAreaActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.BusinessAreaActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 帮助页-->
-        <activity android:name="com.shuangduan.zcy.view.mine.HelperActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.HelperActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 设置页-->
-        <activity android:name="com.shuangduan.zcy.view.mine.SetActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.SetActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 关于页-->
-        <activity android:name="com.shuangduan.zcy.view.mine.AboutOursActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.AboutOursActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 推荐好友页-->
-        <activity android:name="com.shuangduan.zcy.view.mine.RecommendFriendsActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.RecommendFriendsActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 意见反馈页-->
-        <activity android:name="com.shuangduan.zcy.view.mine.FeedbackActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.FeedbackActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 浏览历史页-->
-        <activity android:name="com.shuangduan.zcy.view.mine.ReadHistoryActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.ReadHistoryActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 我的订阅-->
-        <activity android:name="com.shuangduan.zcy.view.mine.MineSubActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.MineSubActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 我的收藏-->
-        <activity android:name="com.shuangduan.zcy.view.mine.MineCollectionActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.MineCollectionActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 我的钱包页面-->
-        <activity android:name="com.shuangduan.zcy.view.mine.MineWalletActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.MineWalletActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 银行卡列表-->
-        <activity android:name="com.shuangduan.zcy.view.mine.BankCardListActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.BankCardListActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 提现记录页-->
-        <activity android:name="com.shuangduan.zcy.view.mine.WithdrawRecordActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.WithdrawRecordActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 提现记录详情页-->
-        <activity android:name="com.shuangduan.zcy.view.mine.WithdrawDetailActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.WithdrawDetailActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 解绑银行卡-->
-        <activity android:name="com.shuangduan.zcy.view.mine.UnbindBankCardActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.UnbindBankCardActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 查看记录-->
-        <activity android:name="com.shuangduan.zcy.view.mine.MineOrderActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.MineOrderActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 已认购订单-->
-        <activity android:name="com.shuangduan.zcy.view.mine.OrderSubActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.OrderSubActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 支付密码页-->
-        <activity android:name="com.shuangduan.zcy.view.mine.PwdPayActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.PwdPayActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 修改支付密码-->
-        <activity android:name="com.shuangduan.zcy.view.mine.UpdatePwdPayActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.UpdatePwdPayActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 忘记支付密码-->
-        <activity android:name="com.shuangduan.zcy.view.mine.ForgetPwdPayActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.ForgetPwdPayActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 设置支付密码-->
-        <activity android:name="com.shuangduan.zcy.view.mine.SetPwdPayActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.SetPwdPayActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 收益说明书详情-->
-        <activity android:name="com.shuangduan.zcy.view.mine.ExplainDetailActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.ExplainDetailActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 交易记录-->
-        <activity android:name="com.shuangduan.zcy.view.mine.TransRecordActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.TransRecordActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 交易记录详情-->
-        <activity android:name="com.shuangduan.zcy.view.mine.TransRecordDetailActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.TransRecordDetailActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 我的需求-->
-        <activity android:name="com.shuangduan.zcy.view.mine.MineDemandActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.MineDemandActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 充值中心-->
-        <activity android:name="com.shuangduan.zcy.view.recharge.RechargeActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.recharge.RechargeActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 充值记录-->
-        <activity android:name="com.shuangduan.zcy.view.recharge.RechargeRecordActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.recharge.RechargeRecordActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 充值结果-->
-        <activity android:name="com.shuangduan.zcy.view.recharge.RechargeResultActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.recharge.RechargeResultActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 充值记录详情-->
-        <activity android:name="com.shuangduan.zcy.view.recharge.RechargeRecordDetailActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.recharge.RechargeRecordDetailActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 我的收益-->
-        <activity android:name="com.shuangduan.zcy.view.income.MineIncomeActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.income.MineIncomeActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 收益分类-->
-        <activity android:name="com.shuangduan.zcy.view.income.IncomeClassifyActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.income.IncomeClassifyActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 发布信息收益-->
-        <activity android:name="com.shuangduan.zcy.view.income.IncomeReleaseActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.income.IncomeReleaseActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 认购品权收益-->
-        <activity android:name="com.shuangduan.zcy.view.income.IncomeProductRightsActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.income.IncomeProductRightsActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 人脉收益-->
-        <activity android:name="com.shuangduan.zcy.view.income.IncomePeopleActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.income.IncomePeopleActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 发布动态收益-->
-        <activity android:name="com.shuangduan.zcy.view.income.IncomeLocusActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.income.IncomeLocusActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 认购信息收益-->
-        <activity android:name="com.shuangduan.zcy.view.income.IncomeMsgActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.income.IncomeMsgActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 人脉个人详情-->
-        <activity android:name="com.shuangduan.zcy.view.people.PeopleInfoActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.people.PeopleInfoActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 收益记录-->
-        <activity android:name="com.shuangduan.zcy.view.people.IncomeRecordActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.people.IncomeRecordActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 工程信息展示地图页-->
-        <activity android:name="com.shuangduan.zcy.view.projectinfo.ProjectInfoActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.projectinfo.ProjectInfoActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 工程信息列表-->
-        <activity android:name="com.shuangduan.zcy.view.projectinfo.ProjectInfoListActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.projectinfo.ProjectInfoListActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 工程信息详情-->
-        <activity android:name="com.shuangduan.zcy.view.projectinfo.ProjectDetailActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.projectinfo.ProjectDetailActivity"
+            android:theme="@style/BaseAppTheme" />
         <!--去认购页面 -->
-        <activity android:name="com.shuangduan.zcy.view.projectinfo.GoToSubActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.projectinfo.GoToSubActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 已认购-->
-        <activity android:name="com.shuangduan.zcy.view.projectinfo.SubOrderActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.projectinfo.SubOrderActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 认购信息-->
-        <activity android:name="com.shuangduan.zcy.view.projectinfo.SubInfoActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.projectinfo.SubInfoActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 工程信息详情纠错页-->
-        <activity android:name="com.shuangduan.zcy.view.projectinfo.ProjectErrorActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.projectinfo.ProjectErrorActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 动态信息头像查看详情-->
-        <activity android:name="com.shuangduan.zcy.view.projectinfo.LocusOwnerDetailActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.projectinfo.LocusOwnerDetailActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 招采信息列表-->
-        <activity android:name="com.shuangduan.zcy.view.recruit.RecruitActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.recruit.RecruitActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 招采信息详情-->
-        <activity android:name="com.shuangduan.zcy.view.recruit.RecruitDetailActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.recruit.RecruitDetailActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 基建物资页-->
-        <activity android:name="com.shuangduan.zcy.view.material.MaterialActivity" android:theme="@style/BaseAppTheme"  />
+        <activity
+            android:name="com.shuangduan.zcy.view.material.MaterialActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 基建物资预定成功页-->
-        <activity android:name="com.shuangduan.zcy.view.material.MaterialOrderSuccessActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.material.MaterialOrderSuccessActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 物资提交预定页面-->
-        <activity android:name="com.shuangduan.zcy.view.material.MaterialPlaceOrderActivity" android:theme="@style/BaseAppTheme" android:windowSoftInputMode="stateHidden|adjustResize"/>
-        <activity android:name="com.shuangduan.zcy.view.material.MaterialEquipmentPlaceOrderActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.material.MaterialPlaceOrderActivity"
+            android:theme="@style/BaseAppTheme"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name="com.shuangduan.zcy.view.material.MaterialEquipmentPlaceOrderActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 基建物资详情页-->
-        <activity android:name="com.shuangduan.zcy.view.material.MaterialDetailActivity" android:theme="@style/BaseAppTheme" />
-        <activity android:name="com.shuangduan.zcy.view.material.MaterialEquipmentDetailActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.material.MaterialDetailActivity"
+            android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.material.MaterialEquipmentDetailActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 存放地选择列表-->
-        <activity android:name="com.shuangduan.zcy.view.material.DepositingPlaceActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.material.DepositingPlaceActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 物资列表搜索页面 -->
-        <activity android:name=".view.material.MaterialSearchActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name=".view.material.MaterialSearchActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 优质供应商列表-->
-        <activity android:name="com.shuangduan.zcy.view.supplier.SupplierActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.supplier.SupplierActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 优质供应商详情-->
-        <activity android:name="com.shuangduan.zcy.view.supplier.SupplierDetailActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.supplier.SupplierDetailActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 加入供应商-->
-        <activity android:name="com.shuangduan.zcy.view.supplier.SupplierJoinActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.supplier.SupplierJoinActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 发布信息列表-->
-        <activity android:name="com.shuangduan.zcy.view.release.ReleaseListActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.release.ReleaseListActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 工程信息 招采信息 发布-->
-        <activity android:name="com.shuangduan.zcy.view.release.ReleaseProjectActivity" android:theme="@style/BaseAppTheme" android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name="com.shuangduan.zcy.view.release.ReleaseProjectActivity"
+            android:theme="@style/BaseAppTheme"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <!-- 发布类型选择-->
-        <activity android:name="com.shuangduan.zcy.view.release.ReleaseTypeSelectActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.release.ReleaseTypeSelectActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 发布信息 地区选择-->
-        <activity android:name="com.shuangduan.zcy.view.release.ReleaseAreaSelectActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.release.ReleaseAreaSelectActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 根据省市定位项目位置，获取经纬度-->
-        <activity android:name="com.shuangduan.zcy.view.release.LocationMapActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.release.LocationMapActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 发布信息 联系人类型选择-->
-        <activity android:name="com.shuangduan.zcy.view.release.ContactTypeActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.release.ContactTypeActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 工程搜索-->
-        <activity android:name="com.shuangduan.zcy.view.release.ProjectSearchActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.release.ProjectSearchActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 项目阶段选择-->
-        <activity android:name="com.shuangduan.zcy.view.release.ReleaseStageSelectActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.release.ReleaseStageSelectActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 首页搜索-->
-        <activity android:name="com.shuangduan.zcy.view.search.SearchActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.search.SearchActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 工程和招采 分类搜索-->
-        <activity android:name="com.shuangduan.zcy.view.search.SearchResultActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.search.SearchResultActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 基建头条列表-->
-        <activity android:name="com.shuangduan.zcy.view.headlines.HeadlinesActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.headlines.HeadlinesActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 基建头条详情-->
-        <activity android:name="com.shuangduan.zcy.view.headlines.HeadlinesDetailActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.headlines.HeadlinesDetailActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 需求广场列表-->
-        <activity android:name="com.shuangduan.zcy.view.demand.DemandActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.demand.DemandActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 需求广场 添加-->
-        <activity android:name="com.shuangduan.zcy.view.demand.DemandReleaseActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.demand.DemandReleaseActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 找关系详情-->
-        <activity android:name="com.shuangduan.zcy.view.demand.FindRelationshipDetailActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.demand.FindRelationshipDetailActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 找物资详情-->
-        <activity android:name="com.shuangduan.zcy.view.demand.FindSubstanceDetailActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.demand.FindSubstanceDetailActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 需求广场 找关系支付页面-->
-        <activity android:name="com.shuangduan.zcy.view.demand.ReleaseRelationshipOrderActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.demand.ReleaseRelationshipOrderActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 找买家详情-->
-        <activity android:name="com.shuangduan.zcy.view.demand.FindBuyerDetailActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.demand.FindBuyerDetailActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 我的发布 我接受的详情-->
-        <activity android:name="com.shuangduan.zcy.view.demand.FindRelationshipAcceptDetailActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.demand.FindRelationshipAcceptDetailActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 我的需求 我发布详情-->
-        <activity android:name="com.shuangduan.zcy.view.demand.FindRelationshipReleaseDetailActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.demand.FindRelationshipReleaseDetailActivity"
+            android:theme="@style/BaseAppTheme" />
         <!--  我的工程 工程信息概况详情页 -->
-        <activity android:name=".view.mine.MineProjectActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name=".view.mine.MineProjectActivity"
+            android:theme="@style/BaseAppTheme" />
         <!--  我的工程 工程信息动态详情页 -->
-        <activity android:name=".view.mine.MineLocusActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name=".view.mine.MineLocusActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 图片放大查看页-->
-        <activity android:name="com.shuangduan.zcy.view.PhotoViewActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.PhotoViewActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 地区选择页-->
-        <activity android:name="com.shuangduan.zcy.view.MultiAreaActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.MultiAreaActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 支付页-->
-        <activity android:name="com.shuangduan.zcy.view.PayActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.PayActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 好友群聊搜索页-->
-        <activity android:name="com.shuangduan.zcy.rongyun.view.IMSearchActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.rongyun.view.IMSearchActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 加好友页-->
-        <activity android:name="com.shuangduan.zcy.rongyun.view.IMAddFriendActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.rongyun.view.IMAddFriendActivity"
+            android:theme="@style/BaseAppTheme" />
         <!--物资预定列表-->
-        <activity android:name=".view.mine.MaterialOrderActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name=".view.mine.MaterialOrderActivity"
+            android:theme="@style/BaseAppTheme" />
         <!--  物资预定详情 -->
-        <activity android:name=".view.mine.MaterialOrderDetailActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name=".view.mine.MaterialOrderDetailActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 融云单聊页-->
-        <activity android:name="com.shuangduan.zcy.rongyun.view.IMPrivateChatActivity" android:theme="@style/BaseAppTheme" android:configChanges="orientation|screenSize" android:windowSoftInputMode="stateHidden|adjustResize">
+        <activity
+            android:name="com.shuangduan.zcy.rongyun.view.IMPrivateChatActivity"
+            android:configChanges="orientation|screenSize"
+            android:theme="@style/BaseAppTheme"
+            android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -289,7 +521,11 @@
             </intent-filter>
         </activity>
         <!--融云聚合消息页面-->
-        <activity android:name="com.shuangduan.zcy.rongyun.view.IMSubConversationListActivity" android:theme="@style/BaseAppTheme" android:configChanges="orientation|screenSize" android:windowSoftInputMode="stateHidden|adjustResize">
+        <activity
+            android:name="com.shuangduan.zcy.rongyun.view.IMSubConversationListActivity"
+            android:configChanges="orientation|screenSize"
+            android:theme="@style/BaseAppTheme"
+            android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -300,23 +536,43 @@
             </intent-filter>
         </activity>
         <!-- 新的好友列表页-->
-        <activity android:name="com.shuangduan.zcy.rongyun.view.NewFriendsActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.rongyun.view.NewFriendsActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 通讯录页-->
-        <activity android:name="com.shuangduan.zcy.rongyun.view.IMContactsActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.rongyun.view.IMContactsActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 搜索好友更多页-->
-        <activity android:name="com.shuangduan.zcy.rongyun.view.IMFriendMoreActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.rongyun.view.IMFriendMoreActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 搜索群聊更多页-->
-        <activity android:name="com.shuangduan.zcy.rongyun.view.IMGroupMoreActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.rongyun.view.IMGroupMoreActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 群聊详情页-->
-        <activity android:name="com.shuangduan.zcy.rongyun.view.IMGroupDetailsActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.rongyun.view.IMGroupDetailsActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 群聊详情人员列表-->
-        <activity android:name="com.shuangduan.zcy.rongyun.view.IMGroupMembersActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.rongyun.view.IMGroupMembersActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 相机拍照页-->
-        <activity android:name="com.shuangduan.zcy.view.photo.CameraActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.photo.CameraActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- h5加载页-->
-        <activity android:name="com.shuangduan.zcy.view.WebViewActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.view.WebViewActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 微信支付 返回结果页-->
-        <activity android:name="com.shuangduan.zcy.wxapi.WXPayEntryActivity" android:theme="@style/BaseAppTheme" android:exported="true" android:launchMode="singleTop" />
+        <activity
+            android:name="com.shuangduan.zcy.wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:theme="@style/BaseAppTheme" />
         <!-- 微信分享和登录 返回结果页-->
         <activity
             android:name=".wxapi.WXEntryActivity"
@@ -333,17 +589,37 @@
         </activity>
 
         <!-- 后台管理页-->
-        <activity android:name="com.shuangduan.zcy.adminManage.view.AdminManageActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.adminManage.view.AdminManageActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 选择子公司/周转材料/设备 列表-->
-        <activity android:name="com.shuangduan.zcy.adminManage.view.SelectTypeActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.adminManage.view.SelectTypeActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 周转材料详情-->
-        <activity android:name="com.shuangduan.zcy.adminManage.view.turnover.TurnoverDetailActivity" android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name="com.shuangduan.zcy.adminManage.view.turnover.TurnoverDetailActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 周转材料添加-->
-        <activity android:name="com.shuangduan.zcy.adminManage.view.turnover.TurnoverAddActivity" android:theme="@style/BaseAppTheme" android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name="com.shuangduan.zcy.adminManage.view.turnover.TurnoverAddActivity"
+            android:theme="@style/BaseAppTheme"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <!-- 设备管理详情-->
-        <activity android:name="com.shuangduan.zcy.adminManage.view.device.DeviceDetailActivity" android:theme="@style/BaseAppTheme"  />
+        <activity
+            android:name="com.shuangduan.zcy.adminManage.view.device.DeviceDetailActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 设备管理添加-->
-        <activity android:name="com.shuangduan.zcy.adminManage.view.device.DeviceAddActivity" android:theme="@style/BaseAppTheme" android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name="com.shuangduan.zcy.adminManage.view.device.DeviceAddActivity"
+            android:theme="@style/BaseAppTheme"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <!--        订单详情-->
+        <activity
+            android:name="com.shuangduan.zcy.adminManage.view.order.OrderDetailsActivity"
+            android:theme="@style/BaseAppTheme" />
+
+
         <!--高德地图appKey-->
         <meta-data
             android:name="com.amap.api.v2.apikey"

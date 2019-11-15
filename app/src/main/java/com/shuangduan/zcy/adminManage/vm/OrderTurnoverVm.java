@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.adminManage.bean.AdminOrderBean;
+import com.shuangduan.zcy.adminManage.bean.OrderDetailsBean;
 import com.shuangduan.zcy.adminManage.bean.OrderSearchBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverCompanyBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverNameBean;
@@ -50,8 +51,20 @@ public class OrderTurnoverVm extends BaseViewModel {
     public MutableLiveData<AdminOrderBean> orderListLiveData;
     public MutableLiveData<List<TurnoverCompanyBean>> turnoverCompanyData;
     public MutableLiveData<List<TurnoverNameBean>> turnoverProject;
+
+    //驳回订单
+    public MutableLiveData rejectLiveData;
+
     public MutableLiveData<OrderSearchBean> orderSearchLiveData;
+
+    //周转材料详情
+    public MutableLiveData<OrderDetailsBean> orderDetailsLiveData;
+
     public MutableLiveData<String> pageStateLiveData;
+
+    //记录当前Adapter点击的position值
+    public int position;
+
 
     public OrderTurnoverVm() {
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
@@ -60,6 +73,9 @@ public class OrderTurnoverVm extends BaseViewModel {
         turnoverCompanyData = new MutableLiveData<>();
         turnoverProject = new MutableLiveData<>();
         orderSearchLiveData = new MutableLiveData<>();
+        rejectLiveData = new MutableLiveData();
+
+        orderDetailsLiveData = new MutableLiveData<>();
     }
 
     //后台管理 --- 周转材料订单列表
@@ -73,21 +89,32 @@ public class OrderTurnoverVm extends BaseViewModel {
     public void moreOrderListData(String orderNumber) {
         page++;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
-        new AdminOrderRepository().orderListData(orderListLiveData, pageStateLiveData, userId ,pCategoryId, categoryId, phases, inside, orderNumber, page);
+        new AdminOrderRepository().orderListData(orderListLiveData, pageStateLiveData, userId, pCategoryId, categoryId, phases, inside, orderNumber, page);
     }
 
     //后台管理 --- 子公司列表
-    public void getSupplierInfo(){
+    public void getSupplierInfo() {
         new TurnoverRepository().getSupplierInfo(turnoverCompanyData, pageStateLiveData, userId);
     }
 
     //后台管理 --- 周转材料列表 筛选项目
-    public void getUnitInfo(){
-        new TurnoverRepository().getUnitInfo(turnoverProject,pageStateLiveData,userId,supplier_id);
+    public void getUnitInfo() {
+        new TurnoverRepository().getUnitInfo(turnoverProject, pageStateLiveData, userId, supplier_id);
     }
 
     //订单管理 --- 筛选条件列表
-    public void orderSearch(){
+    public void orderSearch() {
         new TurnoverRepository().orderSearch(orderSearchLiveData, pageStateLiveData, userId);
     }
+
+    //订单管理 --- 驳回功能
+    public void constructionOrderEditStatus(int orderId) {
+        new AdminOrderRepository().constructionOrderEditStatus(rejectLiveData, pageStateLiveData, userId, orderId);
+    }
+
+    //订单管理 --- 周转材料详情
+    public void constructionOrderDetail(int orderId){
+        new AdminOrderRepository().constructionOrderDetail(orderDetailsLiveData,pageStateLiveData,userId,orderId);
+    }
+
 }

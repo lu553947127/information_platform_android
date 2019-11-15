@@ -4,6 +4,7 @@ import com.shuangduan.zcy.adminManage.bean.AdminOrderBean;
 import com.shuangduan.zcy.adminManage.bean.DeviceBean;
 import com.shuangduan.zcy.adminManage.bean.DeviceDetailBean;
 import com.shuangduan.zcy.adminManage.bean.DeviceDetailEditBean;
+import com.shuangduan.zcy.adminManage.bean.OrderDetailsBean;
 import com.shuangduan.zcy.adminManage.bean.OrderSearchBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverCompanyBean;
@@ -1970,5 +1971,21 @@ public interface ApiService {
     @POST("api/Manage/orderSearch")
     Flowable<BaseResponse<OrderSearchBean>> orderSearch(
             @Field("user_id") int userId
+    );
+
+    //后台管理 --- 订单驳回
+    @FormUrlEncoded
+    @POST("api/Manage/constructionOrderEditStatus")
+    Flowable<BaseResponse> constructionOrderEditStatus(
+            @Field("user_id") int userId,
+            @Field("id") int id
+    );
+
+    //后台管理 --- 周转材料详情
+    @FormUrlEncoded
+    @POST("api/Manage/constructionOrderDetail")
+    Flowable<BaseResponse<OrderDetailsBean>> constructionOrderDetail(
+            @Field("user_id") int userId,
+            @Field("id") int id
     );
 }

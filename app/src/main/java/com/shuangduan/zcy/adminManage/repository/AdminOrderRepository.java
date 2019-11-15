@@ -3,6 +3,7 @@ package com.shuangduan.zcy.adminManage.repository;
 import androidx.lifecycle.MutableLiveData;
 
 import com.shuangduan.zcy.adminManage.bean.AdminOrderBean;
+import com.shuangduan.zcy.adminManage.bean.OrderDetailsBean;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.api.repository.BaseRepository;
 
@@ -22,6 +23,16 @@ public class AdminOrderRepository extends BaseRepository {
     public void orderListData(MutableLiveData<AdminOrderBean> liveData, MutableLiveData<String> pageState, int userId, int pCategoryId,
                               int categoryId, int phases, int inside, String orderNumber, int page) {
         request(apiService.orderListData(userId, pCategoryId, categoryId, phases, inside, orderNumber, page)).setData(liveData).setPageState(pageState).send();
+    }
+
+    //后台管理 --- 周转材料订单驳回
+    public void constructionOrderEditStatus(MutableLiveData<AdminOrderBean> liveData, MutableLiveData<String> pageState, int userId, int orderId) {
+        request(apiService.constructionOrderEditStatus(userId, orderId)).setData(liveData).setPageState(pageState).send();
+    }
+
+    //后台管理 --- 周转材料详情
+    public void constructionOrderDetail(MutableLiveData<OrderDetailsBean> liveData, MutableLiveData<String> pageState, int userId, int orderId) {
+        request(apiService.constructionOrderDetail(userId, orderId)).setData(liveData).setPageState(pageState).send();
     }
 
 }
