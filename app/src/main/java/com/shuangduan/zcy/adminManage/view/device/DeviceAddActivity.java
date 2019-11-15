@@ -44,6 +44,7 @@ import com.shuangduan.zcy.adminManage.bean.TurnoverCategoryBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverNameBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverTypeBean;
 import com.shuangduan.zcy.adminManage.dialog.DeviceDialogControl;
+import com.shuangduan.zcy.adminManage.event.DeviceEvent;
 import com.shuangduan.zcy.adminManage.vm.DeviceAddVm;
 import com.shuangduan.zcy.adminManage.vm.DeviceVm;
 import com.shuangduan.zcy.adminManage.vm.TurnoverVm;
@@ -66,15 +67,14 @@ import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.File;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -208,7 +208,6 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
 
         TurnoverVm turnoverVm = ViewModelProviders.of(this).get(TurnoverVm.class);
 
-
         deviceVm = ViewModelProviders.of(this).get(DeviceVm.class);
         deviceAddVm = ViewModelProviders.of(this).get(DeviceAddVm.class);
         uploadPhotoVm = ViewModelProviders.of(this).get(UploadPhotoVm.class);
@@ -228,7 +227,7 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
         //获取项目名称
         deviceVm.turnoverProject.observe(this,turnoverNameBeans -> {
             projectList=turnoverNameBeans;
-            if (getIntent().getIntExtra(CustomConfig.HANDLE_TYPE, 0)==ADD){
+            if (getIntent().getIntExtra(CustomConfig.HANDLE_TYPE, 0)==ADD&&projectList.size()!=0){
                 deviceAddVm.unit_id = projectList.get(0).id;
                 tvProject.setText(projectList.get(0).name);
                 tvProject.setTextColor(getResources().getColor(R.color.colorTv));
@@ -296,6 +295,7 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
 
         //添加周转材料成功返回结果
         deviceAddVm.deviceAddData.observe(this, item -> {
+            EventBus.getDefault().post(new DeviceEvent(0,""));
             ToastUtils.showShort("添加成功");
             finish();
         });
@@ -956,6 +956,7 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
 
         //编辑周转材料返回结果
         deviceAddVm.deviceEditData.observe(this, item -> {
+            EventBus.getDefault().post(new DeviceEvent(0,""));
             ToastUtils.showShort("编辑成功");
             finish();
         });

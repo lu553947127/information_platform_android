@@ -20,9 +20,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:text="啊是否合适的接口返回盛开的菊花反抗精神啊是否合适的接口返回盛开的菊花反抗精神"
+            android:text="商合杭铁路芜湖长江公铁大桥公路桥接线工程江北接线及收费站工程项目"
             android:singleLine="true"
-            android:maxEms="5"
+            android:maxEms="12"
             android:textColor="@color/color_666666"
             android:textSize="14sp" />
 
@@ -66,7 +66,7 @@
         android:layout_marginRight="35dp"
         android:textColor="@color/color_666666"
         android:textSize="14sp"
-        android:text="啊是否合适的接口返回盛开的菊花反抗精神啊是否合适的接口返回盛开的菊花反抗精神啊是否合适的接口返回盛开的菊花反抗精神啊是否合适的接口返回盛开的菊花反抗精神"
+        android:text="商合杭铁路芜湖长江公铁大桥公路桥接线工程江北接线及收费站工程项目"
         android:visibility="visible"/>
 
     <ImageView

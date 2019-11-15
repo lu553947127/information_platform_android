@@ -44,6 +44,7 @@ import com.shuangduan.zcy.adminManage.bean.TurnoverDetailEditBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverNameBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverTypeBean;
 import com.shuangduan.zcy.adminManage.dialog.TurnoverDialogControl;
+import com.shuangduan.zcy.adminManage.event.TurnoverEvent;
 import com.shuangduan.zcy.adminManage.vm.TurnoverAddVm;
 import com.shuangduan.zcy.adminManage.vm.TurnoverVm;
 import com.shuangduan.zcy.app.CustomConfig;
@@ -51,7 +52,6 @@ import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BottomSheetDialogs;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.event.LocationEvent;
-import com.shuangduan.zcy.utils.KeyboardUtil;
 import com.shuangduan.zcy.utils.image.PictureEnlargeUtils;
 import com.shuangduan.zcy.utils.matisse.Glide4Engine;
 import com.shuangduan.zcy.view.photo.CameraActivity;
@@ -66,15 +66,14 @@ import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.File;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -82,7 +81,6 @@ import butterknife.BindView;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 
-import static com.blankj.utilcode.util.StringUtils.getString;
 import static com.shuangduan.zcy.app.CustomConfig.ADD;
 import static com.shuangduan.zcy.app.CustomConfig.EDIT;
 
@@ -221,7 +219,7 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
         //获取项目名称
         turnoverVm.turnoverProject.observe(this, turnoverNameBeans -> {
             projectList = turnoverNameBeans;
-            if (getIntent().getIntExtra(CustomConfig.HANDLE_TYPE, 0)==ADD){
+            if (getIntent().getIntExtra(CustomConfig.HANDLE_TYPE, 0)==ADD&&projectList.size()!=0){
                 turnoverAddVm.unit_id = projectList.get(0).id;
                 tvProject.setText(projectList.get(0).name);
                 tvProject.setTextColor(getResources().getColor(R.color.colorTv));
@@ -299,6 +297,7 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
         //添加周转材料成功返回结果
         turnoverAddVm.turnoverAddData.observe(this, item -> {
             ToastUtils.showShort("添加成功");
+            EventBus.getDefault().post(new TurnoverEvent(0,""));
             finish();
         });
 
@@ -956,6 +955,7 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
         //编辑周转材料返回结果
         turnoverAddVm.turnoverEditData.observe(this, item -> {
             ToastUtils.showShort("编辑成功");
+            EventBus.getDefault().post(new TurnoverEvent(0,""));
             finish();
         });
     }

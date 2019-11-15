@@ -156,6 +156,7 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
         orderVm.orderListLiveData.observe(this, item -> {
             if (item.page == 1) {
                 adminOrderListAdapter.setNewData(item.list);
+                adminOrderListAdapter.setEmptyView(R.layout.layout_empty_admin, rv);
             } else {
                 adminOrderListAdapter.addData(item.list);
             }
@@ -284,9 +285,11 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
                 break;
             case R.id.tv_order_phases://选择订单进度
                 getBottomSheetDialog(R.layout.dialog_is_grounding,"order_phases");
+                getDrawableRightView(tvOrderPhases,R.drawable.icon_pullup_arrow,R.color.color_5C54F4);
                 break;
             case R.id.tv_order_type://选择订单类型
                 getBottomSheetDialog(R.layout.dialog_is_grounding,"order_type");
+                getDrawableRightView(tvOrderType,R.drawable.icon_pullup_arrow,R.color.color_5C54F4);
                 break;
             case R.id.tv_reset://重置按钮
                 llAdminManageScreen.setVisibility(View.GONE);
@@ -345,7 +348,6 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
         }
         btn_dialog.setOnDismissListener(dialog -> {
             getDrawableRightView(tvProject,R.drawable.icon_pulldown_arrow,R.color.color_666666);
-            getDrawableRightView(tvName,R.drawable.icon_pulldown_arrow,R.color.color_666666);
             getDrawableRightView(tvOrderPhases,R.drawable.icon_pulldown_arrow,R.color.color_666666);
             getDrawableRightView(tvOrderType,R.drawable.icon_pulldown_arrow,R.color.color_666666);
         });

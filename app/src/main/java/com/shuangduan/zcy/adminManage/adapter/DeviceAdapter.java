@@ -42,7 +42,7 @@ public class DeviceAdapter extends BaseQuickAdapter<DeviceBean.ListBean, BaseVie
         TextView tvUseStatus = helper.getView(R.id.tv_use_status);
         tvUseStatus.setText(use_status);
         switch (use_status){
-            case "再用":
+            case "在用":
                 tvUseStatus.setBackgroundResource(R.drawable.shape_green);
                 break;
             case "闲置":
@@ -68,18 +68,21 @@ public class DeviceAdapter extends BaseQuickAdapter<DeviceBean.ListBean, BaseVie
         LinearLayout linearLayout = helper.getView(R.id.ll_edit);
         TextView tvEdit = helper.getView(R.id.tv_edit);
         TextView tvDelete = helper.getView(R.id.tv_delete);
+        TextView tvCompany = helper.getView(R.id.tv_company);
         switch (is_children){
             case 1://普通供应商
             case 2://子公司
                 linearLayout.setVisibility(View.VISIBLE);
                 tvEdit.setVisibility(View.VISIBLE);
                 tvDelete.setVisibility(View.VISIBLE);
+                tvCompany.setVisibility(View.GONE);
                 break;
             case 3://集团
             case 5://集团子账号
                 linearLayout.setVisibility(View.GONE);
                 break;
             case 4://子公司子账号
+                tvCompany.setVisibility(View.GONE);
                 if (construction_edit == 0 && construction_delete == 0) {
                     linearLayout.setVisibility(View.GONE);
                 } else if (construction_edit == 1 && construction_delete == 0) {

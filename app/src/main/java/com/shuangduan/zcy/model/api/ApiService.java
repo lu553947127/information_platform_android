@@ -465,6 +465,22 @@ public interface ApiService {
             @Field("pageSize") int pageSize
     );
 
+    //会话列表人员头像名称显示
+    @FormUrlEncoded
+    @POST("api/Wechat/userInfo")
+    Flowable<BaseResponse<IMGroupInfoBean>> userInfo(
+            @Field("user_id") int user_id,
+            @Field("id") String id
+    );
+
+    //会话列表群组头像名称显示
+    @FormUrlEncoded
+    @POST("api/wechat/groupInfo")
+    Flowable<BaseResponse<IMGroupInfoBean>> groupInfo(
+            @Field("user_id") int user_id,
+            @Field("group_id") String group_id
+    );
+
     @FormUrlEncoded
     @POST("api/Userinfo/myProject")
     Flowable<BaseResponse<ProjectMineBean>> myProject(

@@ -3,6 +3,7 @@ package com.shuangduan.zcy.adminManage.view.device;
 import android.annotation.SuppressLint;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -371,24 +372,24 @@ public class DeviceManagementFragment extends BaseLazyFragment {
             case R.id.tv_company_children://子公司
                 deviceVm.supplier_id=0;
                 deviceVm.unit_id=0;
-                getDeleteView(tvCompanyChildren,View.GONE);
+                getDeleteView(tvCompanyChildren);
                 break;
             case R.id.tv_name_second://名称二级
                 deviceVm.category_id=0;
-                getDeleteView(tvNameSecond,View.GONE);
+                getDeleteView(tvNameSecond);
                 break;
             case R.id.tv_is_shelf://是否上架
                 deviceVm.is_shelf=0;
-                getDeleteView(tvIsShelf,View.GONE);
+                getDeleteView(tvIsShelf);
                 break;
             case R.id.tv_use_status://使用状态
                 deviceVm.use_status=0;
-                getDeleteView(tvUseStatus,View.GONE);
+                getDeleteView(tvUseStatus);
                 break;
             case R.id.tv_address://存放地点
                 areaVm.id=0;
                 areaVm.city_id=0;
-                getDeleteView(tvAddress,View.GONE);
+                getDeleteView(tvAddress);
                 break;
         }
     }
@@ -453,13 +454,13 @@ public class DeviceManagementFragment extends BaseLazyFragment {
                         turnoverProjectAdapter.setIsSelect(projectList.get(position).id);
                         btn_dialog.dismiss();
                         getDrawableRightView(tvCompany,R.drawable.icon_pulldown_arrow,R.color.color_666666);
-                        getAddTopScreenView(tvCompanyChildren,projectList.get(position).name,View.VISIBLE);
+                        getAddTopScreenView(tvCompanyChildren,projectList.get(position).name);
                     }else {
                         deviceVm.unit_id=0;
                         deviceVm.equipmentList(areaVm.id,areaVm.city_id);
                         btn_dialog.dismiss();
                         getDrawableRightView(tvCompany,R.drawable.icon_pulldown_arrow,R.color.color_666666);
-                        getAddTopScreenView(tvCompanyChildren,deviceVm.supplier_name,View.VISIBLE);
+                        getAddTopScreenView(tvCompanyChildren,deviceVm.supplier_name);
                     }
                 });
                 deviceVm.getSupplierInfo();
@@ -484,7 +485,7 @@ public class DeviceManagementFragment extends BaseLazyFragment {
                     turnoverProjectAdapter.setIsSelect(projectList.get(position).id);
                     btn_dialog.dismiss();
                     getDrawableRightView(tvCompany,R.drawable.icon_pulldown_arrow,R.color.color_666666);
-                    getAddTopScreenView(tvCompanyChildren,projectList.get(position).name,View.VISIBLE);
+                    getAddTopScreenView(tvCompanyChildren,projectList.get(position).name);
                 });
                 deviceVm.getUnitInfo();
                 if (deviceVm.unit_id!=0){
@@ -503,7 +504,7 @@ public class DeviceManagementFragment extends BaseLazyFragment {
                     deviceVm.equipmentList(areaVm.id,areaVm.city_id);
                     btn_dialog.dismiss();
                     getDrawableRightView(tvGrounding,R.drawable.icon_pulldown_arrow,R.color.color_666666);
-                    getAddTopScreenView(tvIsShelf,groundingList.get(position).getName(),View.VISIBLE);
+                    getAddTopScreenView(tvIsShelf,groundingList.get(position).getName());
                 });
                 if (deviceVm.is_shelf!=0){
                     groundingAdapter.setIsSelect(deviceVm.is_shelf);
@@ -521,7 +522,7 @@ public class DeviceManagementFragment extends BaseLazyFragment {
                     deviceVm.equipmentList(areaVm.id,areaVm.city_id);
                     btn_dialog.dismiss();
                     getDrawableRightView(tvUseStatue,R.drawable.icon_pulldown_arrow,R.color.color_666666);
-                    getAddTopScreenView(tvUseStatus,useStatueList.get(position).getName(),View.VISIBLE);
+                    getAddTopScreenView(tvUseStatus,useStatueList.get(position).getName());
                 });
                 if (deviceVm.use_status!=0){
                     useStatueAdapter.setIsSelect(deviceVm.use_status);
@@ -549,13 +550,13 @@ public class DeviceManagementFragment extends BaseLazyFragment {
                         cityAdapter.setIsSelect(cityList.get(position).getId());
                         btn_dialog.dismiss();
                         getDrawableRightView(tvDepositingPlace,R.drawable.icon_pulldown_arrow,R.color.color_666666);
-                        getAddTopScreenView(tvAddress,cityList.get(position).getName(),View.VISIBLE);
+                        getAddTopScreenView(tvAddress,cityList.get(position).getName());
                     }else {
                         areaVm.city_id=0;
                         deviceVm.equipmentList(areaVm.id,areaVm.city_id);
                         btn_dialog.dismiss();
                         getDrawableRightView(tvDepositingPlace,R.drawable.icon_pulldown_arrow,R.color.color_666666);
-                        getAddTopScreenView(tvAddress,areaVm.cityResult,View.VISIBLE);
+                        getAddTopScreenView(tvAddress,areaVm.cityResult);
                     }
                 });
                 areaVm.getProvince();
@@ -584,23 +585,26 @@ public class DeviceManagementFragment extends BaseLazyFragment {
     public void onEventDevice(DeviceEvent event) {
         deviceVm.category_id=event.material_id;
         deviceVm.equipmentList(areaVm.id,areaVm.city_id);
-        getAddTopScreenView(tvNameSecond,event.material_name,View.VISIBLE);
+        getAddTopScreenView(tvNameSecond,event.material_name);
     }
 
     //添加头部筛选布局view
-    private void getAddTopScreenView(TextView textView,String text,int type) {
-        llAdminManageScreen.setVisibility(type);
-        tvReset.setVisibility(type);
-        textView.setVisibility(type);
+    private void getAddTopScreenView(TextView textView, String text) {
+        if (TextUtils.isEmpty(text)){
+            return;
+        }
+        llAdminManageScreen.setVisibility(View.VISIBLE);
+        tvReset.setVisibility(View.VISIBLE);
+        textView.setVisibility(View.VISIBLE);
         textView.setText(text);
     }
 
     //关闭筛选条件
-    private void getDeleteView(TextView textView,int type) {
-        textView.setVisibility(type);
+    private void getDeleteView(TextView textView) {
+        textView.setVisibility(View.GONE);
         if (tvCompanyChildren.getVisibility()==View.GONE &&tvNameSecond.getVisibility()==View.GONE
                 &&tvIsShelf.getVisibility()==View.GONE &&tvUseStatus.getVisibility()==View.GONE &&tvAddress.getVisibility()==View.GONE){
-            llAdminManageScreen.setVisibility(type);
+            llAdminManageScreen.setVisibility(View.GONE);
         }
         deviceVm.equipmentList(areaVm.id,areaVm.city_id);
     }
