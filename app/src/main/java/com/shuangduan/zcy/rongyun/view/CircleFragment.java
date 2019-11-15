@@ -16,26 +16,17 @@ import androidx.lifecycle.ViewModelProviders;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
-import com.blankj.utilcode.util.ToastUtils;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
-import com.lzy.okgo.OkGo;
-import com.lzy.okgo.model.Response;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 import com.shuangduan.zcy.R;
-import com.shuangduan.zcy.app.Common;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.MyApplication;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseFragment;
-import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
-import com.shuangduan.zcy.model.bean.IMWechatGroupInfoBean;
-import com.shuangduan.zcy.model.bean.IMWechatUserInfoBean;
 import com.shuangduan.zcy.model.event.AvatarEvent;
 import com.shuangduan.zcy.utils.BarUtils;
 import com.shuangduan.zcy.utils.image.ImageConfig;
@@ -138,6 +129,7 @@ public class CircleFragment extends BaseFragment {
         });
 
         imAddVm = ViewModelProviders.of(this).get(IMAddVm.class);
+        //未读消息数量返回数据
         imAddVm.applyCountData.observe(this,friendApplyCountBean -> {
             if (friendApplyCountBean.getCount() == 0) {
                 tvNumber.setVisibility(View.INVISIBLE);
@@ -161,6 +153,17 @@ public class CircleFragment extends BaseFragment {
                 number.setTextSize(9);
                 number.setText("99+");
             }
+        });
+
+        ///会话列表人员头像名称显示
+        imAddVm.imUserInfoLiveData.observe(this,imWechatUserInfoBean -> {
+            RongIM.getInstance().refreshUserInfoCache(new UserInfo(imWechatUserInfoBean.getUserId(),imWechatUserInfoBean.getName(),Uri.parse(imWechatUserInfoBean.getPortraitUri())));
+        });
+
+        //会话列表群组头像名称显示
+        imAddVm.imWechaGroupInfoLiveData.observe(this,imWechatGroupInfoBean -> {
+            Group groupInfo = new Group(imWechatGroupInfoBean.getGroupId(), imWechatGroupInfoBean.getGroupName(), Uri.parse(imWechatGroupInfoBean.getGroupName()));
+            RongIM.getInstance().refreshGroupInfoCache(groupInfo);
         });
 
         //判断是否认证
@@ -187,18 +190,19 @@ public class CircleFragment extends BaseFragment {
         getBadgeViewInitView(view);
 
         //根据 userId 去你的用户系统里查询对应的用户信息返回给融云 SDK。
-        RongIM.setUserInfoProvider(this::getFriendData,true);
+        RongIM.setUserInfoProvider(s -> imAddVm.userInfo(s),true);
         //设置群聊列表数据
-        RongIM.setGroupInfoProvider(this::getGroupData,true);
+        RongIM.setGroupInfoProvider(s -> imAddVm.groupInfo(s),true);
 
+        //获取未读消息数量
         observer = i -> {
             LogUtils.i(i);
             // i 是未读数量
             imAddVm.count = i;
             imAddVm.applyCount();
         };
-        //获取未读消息数量
         RongIM.getInstance().addUnReadMessageCountChangedObserver(observer, Conversation.ConversationType.PRIVATE,Conversation.ConversationType.GROUP,Conversation.ConversationType.SYSTEM);
+
         //设置会话列表头像点击监听
         adapterEx.setOnPortraitItemClick(new ConversationListAdapter.OnPortraitItemClick() {
             @Override
@@ -225,6 +229,7 @@ public class CircleFragment extends BaseFragment {
                 return false;
             }
         });
+
         //设置官方消息默认置顶
         RongIM.getInstance().setConversationToTop(Conversation.ConversationType.SYSTEM, "18", true, new RongIMClient.ResultCallback<Boolean>() {
             @Override
@@ -259,75 +264,6 @@ public class CircleFragment extends BaseFragment {
         relativeLayout = badge.findViewById(R.id.rl);
         //显示/隐藏整个视图
         number=badge.findViewById(R.id.number);
-    }
-
-    //会话列表头像名称显示
-    private UserInfo getFriendData(String userId) {
-
-        OkGo.<String>post(RetrofitHelper.BASE_TEST_URL+ Common.WECHAT_USER_INFO)
-                .tag(this)
-                .headers("token", SPUtils.getInstance().getString(SpConfig.TOKEN))//请求头
-                .params("id",userId)//对应的用户编号
-                .params("user_id", SPUtils.getInstance().getInt(SpConfig.USER_ID))//用户编号
-                .execute(new com.lzy.okgo.callback.StringCallback() {//返回值
-
-                    @Override
-                    public void onError(Response<String> response) {
-                        super.onError(response);
-                    }
-
-                    @Override
-                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-                        try {
-                            IMWechatUserInfoBean bean=new Gson().fromJson(response.body(),IMWechatUserInfoBean.class);
-                            if (bean.getCode().equals("200")){
-                                RongIM.getInstance().refreshUserInfoCache(new UserInfo(bean.getData().getUserId()
-                                        ,bean.getData().getName()
-                                        ,Uri.parse(bean.getData().getPortraitUri())));
-                            }else {
-                                ToastUtils.showShort(bean.getMsg());
-                            }
-                        }catch (JsonSyntaxException | IllegalStateException ignored){
-                            ToastUtils.showShort(getString(R.string.request_error));
-                        }
-                    }
-                });
-        return null;
-    }
-
-    //会话列表群组头像名称显示
-    private Group getGroupData(String group_id) {
-
-        OkGo.<String>post(RetrofitHelper.BASE_TEST_URL+ Common.WECHAT_GROUP_INFO)
-                .tag(this)
-                .headers("token", SPUtils.getInstance().getString(SpConfig.TOKEN))//请求头
-                .params("group_id",group_id)//群组编号
-                .params("user_id", SPUtils.getInstance().getInt(SpConfig.USER_ID))//用户编号
-                .execute(new com.lzy.okgo.callback.StringCallback() {//返回值
-
-                    @Override
-                    public void onError(Response<String> response) {
-                        super.onError(response);
-                    }
-
-                    @Override
-                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-                        try {
-                            IMWechatGroupInfoBean bean=new Gson().fromJson(response.body(),IMWechatGroupInfoBean.class);
-                            if (bean.getCode().equals("200")){
-                                Group groupInfo = new Group(bean.getData().getGroupId()
-                                        , bean.getData().getGroupName()
-                                        , Uri.parse(bean.getData().getGroupName()));
-                                RongIM.getInstance().refreshGroupInfoCache(groupInfo);
-                            }else {
-                                ToastUtils.showShort(bean.getMsg());
-                            }
-                        }catch (JsonSyntaxException | IllegalStateException ignored){
-                            ToastUtils.showShort(getString(R.string.request_error));
-                        }
-                    }
-                });
-        return null;
     }
 
     @Override

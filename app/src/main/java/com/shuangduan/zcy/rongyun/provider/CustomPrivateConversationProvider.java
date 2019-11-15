@@ -20,10 +20,8 @@ import com.shuangduan.zcy.model.bean.IMWechatUserInfoBean;
 
 import io.rong.imkit.model.ConversationProviderTag;
 import io.rong.imkit.model.UIConversation;
-import io.rong.imkit.userInfoCache.RongUserInfoManager;
 import io.rong.imkit.widget.provider.PrivateConversationProvider;
 import io.rong.imlib.model.Conversation;
-import io.rong.imlib.model.UserInfo;
 
 /**
  * @author 徐玉 QQ:876885613

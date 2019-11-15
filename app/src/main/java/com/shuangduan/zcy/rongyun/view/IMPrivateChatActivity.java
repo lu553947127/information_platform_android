@@ -10,24 +10,18 @@ import android.widget.LinearLayout;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.FragmentTransaction;
-
+import androidx.lifecycle.ViewModelProviders;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.JsonUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.StringUtils;
-import com.blankj.utilcode.util.ToastUtils;
 import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
-import com.lzy.okgo.OkGo;
-import com.lzy.okgo.model.Response;
+
 import com.shuangduan.zcy.R;
-import com.shuangduan.zcy.app.Common;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
-import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
-import com.shuangduan.zcy.model.bean.IMWechatUserInfoBean;
 import com.shuangduan.zcy.rongyun.bean.RongExtraBean;
 import com.shuangduan.zcy.view.demand.FindBuyerDetailActivity;
 import com.shuangduan.zcy.view.demand.FindRelationshipReleaseDetailActivity;
@@ -37,6 +31,7 @@ import com.shuangduan.zcy.view.mine.TransRecordDetailActivity;
 import com.shuangduan.zcy.view.mine.UserInfoActivity;
 import com.shuangduan.zcy.view.projectinfo.ProjectDetailActivity;
 import com.shuangduan.zcy.view.recruit.RecruitDetailActivity;
+import com.shuangduan.zcy.vm.IMAddVm;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -79,6 +74,7 @@ public class IMPrivateChatActivity extends BaseActivity implements RongIM.Conver
     private ConversationFragment fragment;
     private Conversation.ConversationType mConversationType;
     private String user_id;
+    private IMAddVm imAddVm;
 
     @Override
     protected int initLayoutRes() {
@@ -90,8 +86,12 @@ public class IMPrivateChatActivity extends BaseActivity implements RongIM.Conver
         return false;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
+
+        imAddVm = ViewModelProviders.of(this).get(IMAddVm.class);
+
         mConversationType = Conversation.ConversationType.valueOf(Objects.requireNonNull(Objects.requireNonNull(getIntent().getData()).getLastPathSegment()).toUpperCase(Locale.US));
         user_id = getIntent().getData().getQueryParameter("targetId");
         tvBarTitle.setText(getIntent().getData().getQueryParameter("title"));
@@ -108,9 +108,8 @@ public class IMPrivateChatActivity extends BaseActivity implements RongIM.Conver
             tvBarTitle.setVisibility(View.GONE);
             ll_bar_title_small.setVisibility(View.VISIBLE);
             //刷新好友头像
-            getFriendData(user_id);
-            //刷新自己头像
-            getFriendData(String.valueOf(SPUtils.getInstance().getInt(SpConfig.USER_ID)));
+            imAddVm.userInfo(user_id);
+            imAddVm.userInfo(String.valueOf(SPUtils.getInstance().getInt(SpConfig.USER_ID)));
         } else {
             ivBarRight.setVisibility(View.GONE);
             tvBarTitle.setVisibility(View.VISIBLE);
@@ -118,6 +117,14 @@ public class IMPrivateChatActivity extends BaseActivity implements RongIM.Conver
         }
         //设置会话页面操作监听
         RongIM.setConversationClickListener(this);
+
+        //会话列表头像名称显示
+        imAddVm.imUserInfoLiveData.observe(this,imWechatUserInfoBean -> {
+            RongIM.getInstance().refreshUserInfoCache(new UserInfo(imWechatUserInfoBean.getUserId(),imWechatUserInfoBean.getName(),Uri.parse(imWechatUserInfoBean.getPortraitUri())));
+            if (imWechatUserInfoBean.getUserId().equals(user_id)) {
+                tvBarCompanyOrPost.setText(imWechatUserInfoBean.getCompany() + " " + imWechatUserInfoBean.getPosition());
+            }
+        });
     }
 
     //加载会话页面
@@ -130,45 +137,6 @@ public class IMPrivateChatActivity extends BaseActivity implements RongIM.Conver
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.activity_im_contact_fragment, fragment);
         transaction.commitAllowingStateLoss();
-    }
-
-    //会话列表头像名称显示
-    private void getFriendData(String userId) {
-
-        OkGo.<String>post(RetrofitHelper.BASE_TEST_URL + Common.WECHAT_USER_INFO)
-                .tag(this)
-                .headers("token", SPUtils.getInstance().getString(SpConfig.TOKEN))//请求头
-                .params("id", userId)//对应的用户编号
-                .params("user_id", SPUtils.getInstance().getInt(SpConfig.USER_ID))//用户编号
-                .execute(new com.lzy.okgo.callback.StringCallback() {//返回值
-
-                    @Override
-                    public void onError(Response<String> response) {
-                        super.onError(response);
-                        LogUtils.json(response.body());
-                    }
-
-                    @SuppressLint("SetTextI18n")
-                    @Override
-                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-                        LogUtils.json(response.body());
-                        try {
-                            IMWechatUserInfoBean bean = new Gson().fromJson(response.body(), IMWechatUserInfoBean.class);
-                            if (bean.getCode().equals("200")) {
-                                RongIM.getInstance().refreshUserInfoCache(new UserInfo(bean.getData().getUserId()
-                                        , bean.getData().getName()
-                                        , Uri.parse(bean.getData().getPortraitUri())));
-                                if (userId.equals(user_id)) {
-                                    tvBarCompanyOrPost.setText(bean.getData().getCompany() + " " + bean.getData().getPosition());
-                                }
-                            } else {
-                                ToastUtils.showShort(bean.getMsg());
-                            }
-                        } catch (JsonSyntaxException | IllegalStateException ignored) {
-                            ToastUtils.showShort(getString(R.string.request_error));
-                        }
-                    }
-                });
     }
 
     @OnClick({R.id.iv_bar_back, R.id.iv_bar_right})

@@ -469,7 +469,7 @@ public interface ApiService {
     //会话列表人员头像名称显示
     @FormUrlEncoded
     @POST("api/Wechat/userInfo")
-    Flowable<BaseResponse<IMGroupInfoBean>> userInfo(
+    Flowable<BaseResponse<IMWechatUserInfoBean.DataBean>> userInfo(
             @Field("user_id") int user_id,
             @Field("id") String id
     );
@@ -477,7 +477,7 @@ public interface ApiService {
     //会话列表群组头像名称显示
     @FormUrlEncoded
     @POST("api/wechat/groupInfo")
-    Flowable<BaseResponse<IMGroupInfoBean>> groupInfo(
+    Flowable<BaseResponse<IMWechatGroupInfoBean>> groupInfo(
             @Field("user_id") int user_id,
             @Field("group_id") String group_id
     );

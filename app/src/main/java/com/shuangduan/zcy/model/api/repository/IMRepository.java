@@ -10,6 +10,8 @@ import com.shuangduan.zcy.model.bean.IMFriendSearchBean;
 import com.shuangduan.zcy.model.bean.IMGroupInfoBean;
 import com.shuangduan.zcy.model.bean.IMGroupListBean;
 import com.shuangduan.zcy.model.bean.IMTokenBean;
+import com.shuangduan.zcy.model.bean.IMWechatGroupInfoBean;
+import com.shuangduan.zcy.model.bean.IMWechatUserInfoBean;
 
 /**
  * @author 徐玉 QQ:876885613
@@ -80,5 +82,15 @@ public class IMRepository extends BaseRepository {
     //群聊详情
     public void groupList(MutableLiveData<IMGroupInfoBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, String group_id,int page,int pageSize){
         request(apiService.groupList(userId, group_id,page,pageSize)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    //会话列表人员头像名称显示
+    public void userInfo(MutableLiveData<IMWechatUserInfoBean.DataBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, String id){
+        request(apiService.userInfo(userId, id)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    //会话列表群组头像名称显示
+    public void groupInfo(MutableLiveData<IMWechatGroupInfoBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, String group_id){
+        request(apiService.groupInfo(userId, group_id)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 }

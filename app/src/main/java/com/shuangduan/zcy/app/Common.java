@@ -4,9 +4,6 @@ public class Common {
 
     //会话列表人员头像名称显示
     public static final String WECHAT_USER_INFO="/api/Wechat/userInfo";
-    //会话列表群组头像名称显示
-    public static final String WECHAT_GROUP_INFO="/api/wechat/groupInfo";
-
 
     //注册 隐私协议
     public static final String AGREEMENT_PRIVACY="/home/Agreement/privacy";

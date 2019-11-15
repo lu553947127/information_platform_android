@@ -16,6 +16,11 @@ import com.shuangduan.zcy.model.bean.IMFriendListBean;
 import com.shuangduan.zcy.model.bean.IMFriendSearchBean;
 import com.shuangduan.zcy.model.bean.IMGroupInfoBean;
 import com.shuangduan.zcy.model.bean.IMGroupListBean;
+import com.shuangduan.zcy.model.bean.IMWechatGroupInfoBean;
+import com.shuangduan.zcy.model.bean.IMWechatUserInfoBean;
+
+import io.rong.imlib.model.Group;
+import io.rong.imlib.model.UserInfo;
 
 /**
  * @author 徐玉 QQ:876885613
@@ -41,6 +46,8 @@ public class IMAddVm extends BaseViewModel {
     public MutableLiveData applyLiveData;
     public MutableLiveData quitGroupLiveData;
     public MutableLiveData<IMGroupInfoBean> imGroupInfoLiveData;
+    public MutableLiveData<IMWechatUserInfoBean.DataBean> imUserInfoLiveData;
+    public MutableLiveData<IMWechatGroupInfoBean> imWechaGroupInfoLiveData;
     public MutableLiveData<String> pageStateLiveData;
     private int page;
     public int count;
@@ -59,6 +66,8 @@ public class IMAddVm extends BaseViewModel {
         applyLiveData = new MutableLiveData();
         quitGroupLiveData = new MutableLiveData();
         imGroupInfoLiveData = new MutableLiveData<>();
+        imUserInfoLiveData = new MutableLiveData<>();
+        imWechaGroupInfoLiveData = new MutableLiveData<>();
         pageStateLiveData = new MutableLiveData<>();
     }
 
@@ -153,5 +162,17 @@ public class IMAddVm extends BaseViewModel {
     public void groupListMore(String group_id) {
         page++;
         new IMRepository().groupList(imGroupInfoLiveData, pageStateLiveData, userId, group_id, page, 10);
+    }
+
+    //会话列表人员头像名称显示
+    public UserInfo userInfo(String id) {
+        new IMRepository().userInfo(imUserInfoLiveData, pageStateLiveData, userId, id);
+        return null;
+    }
+
+    //会话列表群组头像名称显示
+    public Group groupInfo(String group_id) {
+        new IMRepository().groupInfo(imWechaGroupInfoLiveData, pageStateLiveData, userId, group_id);
+        return null;
     }
 }
