@@ -27,8 +27,8 @@ public class OrderDeviceFragment extends BaseLazyFragment {
     AppCompatTextView tvProject;
     @BindView(R.id.tv_name)
     AppCompatTextView tvName;
-    @BindView(R.id.tv_order_manage)
-    AppCompatTextView tvOrderManage;
+    @BindView(R.id.tv_order_phases)
+    AppCompatTextView tvOrderPhases;
     @BindView(R.id.tv_order_type)
     AppCompatTextView tvOrderType;
 

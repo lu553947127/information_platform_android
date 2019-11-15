@@ -2,6 +2,7 @@ package com.shuangduan.zcy.adminManage.repository;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.shuangduan.zcy.adminManage.bean.OrderSearchBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverCompanyBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverCategoryBean;
@@ -105,5 +106,10 @@ public class TurnoverRepository extends BaseRepository {
     //后台管理 --- 周转材料列表 筛选项目
     public void getUnitInfo(MutableLiveData<List<TurnoverNameBean>> liveData, MutableLiveData<String> pageState, int userId,int supplier_id) {
         request(apiService.getUnitInfo(userId,supplier_id)).setDataList(liveData).setPageState(pageState).send();
+    }
+
+    //订单管理 --- 筛选条件列表
+    public void orderSearch(MutableLiveData<OrderSearchBean> liveData, MutableLiveData<String> pageState, int user_id) {
+        request(apiService.orderSearch(user_id)).setData(liveData).setPageState(pageState).send();
     }
 }

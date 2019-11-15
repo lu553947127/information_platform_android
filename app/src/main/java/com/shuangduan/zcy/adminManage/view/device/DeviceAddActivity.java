@@ -187,6 +187,8 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
     private UploadPhotoVm uploadPhotoVm;
     private List<String> picture_list = new ArrayList<>();
     private DeviceDialogControl dialogControl;
+    private SimpleDateFormat f;
+    private Calendar c;
 
     @Override
     protected int initLayoutRes() {
@@ -226,6 +228,11 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
         //获取项目名称
         deviceVm.turnoverProject.observe(this,turnoverNameBeans -> {
             projectList=turnoverNameBeans;
+            if (getIntent().getIntExtra(CustomConfig.HANDLE_TYPE, 0)==ADD){
+                deviceAddVm.unit_id = projectList.get(0).id;
+                tvProject.setText(projectList.get(0).name);
+                tvProject.setTextColor(getResources().getColor(R.color.colorTv));
+            }
         });
 
         //获取材料类别
@@ -360,17 +367,16 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
                     ToastUtils.showShort("请先选择开始时间");
                     return;
                 }
-                SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
-                Calendar c = Calendar.getInstance();
+                if (f == null || c == null) {
+                    f = new SimpleDateFormat("yyyy-MM-dd");
+                    c = Calendar.getInstance();
+                }
                 try {
                     c.setTime(Objects.requireNonNull(f.parse(deviceAddVm.shelf_start_time)));
+                    showTimeDialog("shelf_time_end", f.format(c.getTime()));
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                c.add(Calendar.DAY_OF_MONTH, 1);
-                Date tomorrow = c.getTime();
-                f.format(tomorrow);
-                showTimeDialog("shelf_time_end", f.format(tomorrow));
                 break;
             case R.id.iv_images://上传图片
                 if (picture_list != null && picture_list.size() < 5) {
@@ -709,7 +715,6 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
 
     //时间选择器
     private void showTimeDialog(String type, String showTime) {
-
         CustomDatePicker customDatePicker = new CustomDatePicker(this, time -> {
             switch (type) {
                 case "shelf_time_start"://上架开始时间
@@ -718,29 +723,25 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
                     tvShelfTimeStart.setTextColor(getResources().getColor(R.color.colorTv));
                     break;
                 case "shelf_time_end"://上架结束时间
-                    DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-                    try {
-                        Date dd = df.parse(time);
-                        Calendar calendar = Calendar.getInstance();
-                        calendar.setTime(dd);
-                        calendar.add(Calendar.DAY_OF_MONTH, 1);//加一天
-                        String times = df.format(calendar.getTime());
-                        deviceAddVm.shelf_end_time = time;
-                        if (time.equals(deviceAddVm.todayTime)) {
-                            tvShelfTimeEnd.setText(times);
-                            tvShelfTimeEnd.setTextColor(getResources().getColor(R.color.colorTv));
-                        } else {
-                            tvShelfTimeEnd.setText(time);
-                            tvShelfTimeEnd.setTextColor(getResources().getColor(R.color.colorTv));
-                        }
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
+                    deviceAddVm.shelf_end_time = time;
+                    tvShelfTimeEnd.setText(time);
+                    tvShelfTimeEnd.setTextColor(getResources().getColor(R.color.colorTv));
                     break;
             }
         }, "yyyy-MM-dd", showTime, "2040-12-31");
         customDatePicker.showSpecificTime(false);
-        customDatePicker.show(TimeUtils.getNowString());
+
+        if (type.equals("shelf_time_start")) {
+            customDatePicker.show(TimeUtils.getNowString());
+        } else {
+            try {
+                c.setTime(Objects.requireNonNull(f.parse(showTime)));
+                c.add(Calendar.DAY_OF_MONTH, 1);
+                customDatePicker.show(f.format(c.getTime()));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     //获取权限

@@ -4,6 +4,7 @@ import com.shuangduan.zcy.adminManage.bean.AdminOrderBean;
 import com.shuangduan.zcy.adminManage.bean.DeviceBean;
 import com.shuangduan.zcy.adminManage.bean.DeviceDetailBean;
 import com.shuangduan.zcy.adminManage.bean.DeviceDetailEditBean;
+import com.shuangduan.zcy.adminManage.bean.OrderSearchBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverCompanyBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverCategoryBean;
@@ -1946,5 +1947,12 @@ public interface ApiService {
             @Field("inside") int inside,
             @Field("order_number") String orderNumber,
             @Field("page") int page
+    );
+
+    //订单管理 --- 筛选条件列表
+    @FormUrlEncoded
+    @POST("api/Manage/orderSearch")
+    Flowable<BaseResponse<OrderSearchBean>> orderSearch(
+            @Field("user_id") int userId
     );
 }

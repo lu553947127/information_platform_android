@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.adminManage.bean.AdminOrderBean;
+import com.shuangduan.zcy.adminManage.bean.OrderSearchBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverCompanyBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverNameBean;
 import com.shuangduan.zcy.adminManage.repository.AdminOrderRepository;
@@ -17,13 +18,13 @@ import java.util.List;
 /**
  * @author xuyu
  * @Package com.shuangduan.zcy.adminManage.vm$
- * @class AdminOrderVm$
+ * @class OrderTurnoverVm$
  * @class describe
  * @time 2019/11/12 17:09
  * @change
  * @class describe
  */
-public class AdminOrderVm extends BaseViewModel {
+public class OrderTurnoverVm extends BaseViewModel {
 
     public int userId;
     public int page = 1;
@@ -49,14 +50,16 @@ public class AdminOrderVm extends BaseViewModel {
     public MutableLiveData<AdminOrderBean> orderListLiveData;
     public MutableLiveData<List<TurnoverCompanyBean>> turnoverCompanyData;
     public MutableLiveData<List<TurnoverNameBean>> turnoverProject;
+    public MutableLiveData<OrderSearchBean> orderSearchLiveData;
     public MutableLiveData<String> pageStateLiveData;
 
-    public AdminOrderVm() {
+    public OrderTurnoverVm() {
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
         pageStateLiveData = new MutableLiveData<>();
         orderListLiveData = new MutableLiveData<>();
         turnoverCompanyData = new MutableLiveData<>();
         turnoverProject = new MutableLiveData<>();
+        orderSearchLiveData = new MutableLiveData<>();
     }
 
     //后台管理 --- 周转材料订单列表
@@ -81,5 +84,10 @@ public class AdminOrderVm extends BaseViewModel {
     //后台管理 --- 周转材料列表 筛选项目
     public void getUnitInfo(){
         new TurnoverRepository().getUnitInfo(turnoverProject,pageStateLiveData,userId,supplier_id);
+    }
+
+    //订单管理 --- 筛选条件列表
+    public void orderSearch(){
+        new TurnoverRepository().orderSearch(orderSearchLiveData, pageStateLiveData, userId);
     }
 }

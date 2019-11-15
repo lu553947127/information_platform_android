@@ -221,6 +221,11 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
         //获取项目名称
         turnoverVm.turnoverProject.observe(this, turnoverNameBeans -> {
             projectList = turnoverNameBeans;
+            if (getIntent().getIntExtra(CustomConfig.HANDLE_TYPE, 0)==ADD){
+                turnoverAddVm.unit_id = projectList.get(0).id;
+                tvProject.setText(projectList.get(0).name);
+                tvProject.setTextColor(getResources().getColor(R.color.colorTv));
+            }
         });
 
         //获取材料类别
@@ -706,7 +711,6 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
 
     //时间选择器
     private void showTimeDialog(String type, String showTime) {
-
         CustomDatePicker customDatePicker = new CustomDatePicker(this, time -> {
             switch (type) {
                 case "shelf_time_start"://上架开始时间
@@ -734,7 +738,6 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
                 e.printStackTrace();
             }
         }
-
     }
 
     //获取权限

@@ -24,14 +24,17 @@ import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adminManage.adapter.AdminOrderListAdapter;
+import com.shuangduan.zcy.adminManage.adapter.OrderInsideAdapter;
+import com.shuangduan.zcy.adminManage.adapter.OrderPhasesAdapter;
 import com.shuangduan.zcy.adminManage.adapter.TurnoverCompanyAdapter;
 import com.shuangduan.zcy.adminManage.adapter.TurnoverProjectAdapter;
 import com.shuangduan.zcy.adminManage.bean.AdminOrderBean;
+import com.shuangduan.zcy.adminManage.bean.OrderSearchBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverCompanyBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverNameBean;
 import com.shuangduan.zcy.adminManage.event.OrderTurnoverEvent;
 import com.shuangduan.zcy.adminManage.view.SelectTypeActivity;
-import com.shuangduan.zcy.adminManage.vm.AdminOrderVm;
+import com.shuangduan.zcy.adminManage.vm.OrderTurnoverVm;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseLazyFragment;
 import com.shuangduan.zcy.dialog.BaseDialog;
@@ -67,8 +70,8 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
     AppCompatTextView tvProject;
     @BindView(R.id.tv_name)
     AppCompatTextView tvName;
-    @BindView(R.id.tv_order_manage)
-    AppCompatTextView tvOrderManage;
+    @BindView(R.id.tv_order_phases)
+    AppCompatTextView tvOrderPhases;
     @BindView(R.id.tv_order_type)
     AppCompatTextView tvOrderType;
 
@@ -91,7 +94,7 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
     RelativeLayout rlSearch;
     @BindView(R.id.rv)
     RecyclerView rv;
-    private AdminOrderVm orderVm;
+    private OrderTurnoverVm orderVm;
     private int manage_status;
 
     public static OrderTurnoverFragment newInstance() {
@@ -139,7 +142,7 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
                 case 5://集团子账号
                     if (SPUtils.getInstance().getInt(CustomConfig.CONSTRUCTION_ORDER_DETAIL,0)==1){
                         bundle.putInt(CustomConfig.ADMIN_ORDER_ID,listBean.orderId);
-
+                        bundle.putInt("manage_status",manage_status);
                     }
                     break;
             }
@@ -147,7 +150,7 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
 
         adminOrderListAdapter.setOnItemChildClickListener(this);
 
-        orderVm = ViewModelProviders.of(this).get(AdminOrderVm.class);
+        orderVm = ViewModelProviders.of(this).get(OrderTurnoverVm.class);
 
         //订单列表返回数据
         orderVm.orderListLiveData.observe(this, item -> {
@@ -176,6 +179,14 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
             projectList = turnoverNameBeans;
             if (SPUtils.getInstance().getInt(CustomConfig.MANAGE_STATUS,0)==3)projectList.add(0,new TurnoverNameBean(0,"全部"));
             turnoverProjectAdapter.setNewData(projectList);
+        });
+
+        //获取搜索筛选条件数据
+        orderVm.orderSearchLiveData.observe(this,orderSearchBean -> {
+            //订单进度数据
+            orderPhasesList=orderSearchBean.getOrder_phases();
+            //订单类型数据
+            orderInsideList=orderSearchBean.getInside();
         });
 
         orderVm.pageStateLiveData.observe(this, s -> {
@@ -229,6 +240,7 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
     @Override
     protected void initDataFromService() {
         orderVm.orderListData( "");
+        orderVm.orderSearch();
     }
 
     //Adapter Child 的点击事件
@@ -253,7 +265,7 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
         }
     }
 
-    @OnClick({R.id.tv_project,R.id.tv_name,R.id.tv_order_manage,R.id.tv_order_type
+    @OnClick({R.id.tv_project,R.id.tv_name,R.id.tv_order_phases,R.id.tv_order_type
             ,R.id.tv_reset,R.id.tv_company_children,R.id.tv_name_second,R.id.tv_is_shelf,R.id.tv_use_status})
     void onClick(View view){
         Bundle bundle = new Bundle();
@@ -270,9 +282,11 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
                 bundle.putInt(CustomConfig.ADMIN_MANAGE_TYPE,CustomConfig.ADMIN_MANAGE_CONSTRUCTION_ORDER);
                 ActivityUtils.startActivity(bundle, SelectTypeActivity.class);
                 break;
-            case R.id.tv_order_manage://选择订单管理
+            case R.id.tv_order_phases://选择订单进度
+                getBottomSheetDialog(R.layout.dialog_is_grounding,"order_phases");
                 break;
             case R.id.tv_order_type://选择订单类型
+                getBottomSheetDialog(R.layout.dialog_is_grounding,"order_type");
                 break;
             case R.id.tv_reset://重置按钮
                 llAdminManageScreen.setVisibility(View.GONE);
@@ -283,6 +297,8 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
                 orderVm.supplier_id=0;
                 orderVm.unit_id=0;
                 orderVm.categoryId=0;
+                orderVm.phases=0;
+                orderVm.inside=0;
                 orderVm.orderListData( "");
                 break;
             case R.id.tv_company_children://子公司/项目
@@ -294,9 +310,13 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
                 orderVm.categoryId=0;
                 getDeleteView(tvTwo,View.GONE);
                 break;
-            case R.id.tv_is_shelf://订单管理
+            case R.id.tv_is_shelf://订单进度
+                orderVm.phases=0;
+                getDeleteView(tvThree,View.GONE);
                 break;
             case R.id.tv_use_status://订单类型
+                orderVm.inside=0;
+                getDeleteView(tvFour,View.GONE);
                 break;
         }
     }
@@ -305,6 +325,8 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
     private List<TurnoverCompanyBean> companyList = new ArrayList<>();
     private TurnoverProjectAdapter turnoverProjectAdapter;
     private List<TurnoverNameBean> projectList = new ArrayList<>();
+    private List<OrderSearchBean.OrderPhasesBean> orderPhasesList = new ArrayList<>();
+    private List<OrderSearchBean.InsideBean> orderInsideList = new ArrayList<>();
     @SuppressLint("RestrictedApi,InflateParams")
     private void getBottomSheetDialog(int layout, String type) {
         //底部滑动对话框
@@ -324,7 +346,7 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
         btn_dialog.setOnDismissListener(dialog -> {
             getDrawableRightView(tvProject,R.drawable.icon_pulldown_arrow,R.color.color_666666);
             getDrawableRightView(tvName,R.drawable.icon_pulldown_arrow,R.color.color_666666);
-            getDrawableRightView(tvOrderManage,R.drawable.icon_pulldown_arrow,R.color.color_666666);
+            getDrawableRightView(tvOrderPhases,R.drawable.icon_pulldown_arrow,R.color.color_666666);
             getDrawableRightView(tvOrderType,R.drawable.icon_pulldown_arrow,R.color.color_666666);
         });
         orderVm.type=type;
@@ -393,6 +415,42 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
                     turnoverProjectAdapter.setIsSelect(orderVm.unit_id);
                 }
                 break;
+            case "order_phases":
+                TextView tv_order_phases=btn_dialog.findViewById(R.id.tv_title);
+                Objects.requireNonNull(tv_order_phases).setText("订单进度");
+                RecyclerView rvOrderPhases = btn_dialog.findViewById(R.id.rv);
+                Objects.requireNonNull(rvOrderPhases).setLayoutManager(new LinearLayoutManager(getActivity()));
+                OrderPhasesAdapter orderPhasesAdapter = new OrderPhasesAdapter(R.layout.adapter_selector_area_second, orderPhasesList);
+                rvOrderPhases.setAdapter(orderPhasesAdapter);
+                orderPhasesAdapter.setOnItemClickListener((adapter, view, position) -> {
+                    orderVm.phases=orderPhasesList.get(position).getId();
+                    orderVm.orderListData( "");
+                    btn_dialog.dismiss();
+                    getDrawableRightView(tvOrderPhases,R.drawable.icon_pulldown_arrow,R.color.color_666666);
+                    getAddTopScreenView(tvThree,orderPhasesList.get(position).getName(),View.VISIBLE);
+                });
+                if (orderVm.phases!=0){
+                    orderPhasesAdapter.setIsSelect(orderVm.phases);
+                }
+                break;
+            case "order_type":
+                TextView tv_order_inside=btn_dialog.findViewById(R.id.tv_title);
+                Objects.requireNonNull(tv_order_inside).setText("订单类型");
+                RecyclerView rvOrderInside = btn_dialog.findViewById(R.id.rv);
+                Objects.requireNonNull(rvOrderInside).setLayoutManager(new LinearLayoutManager(getActivity()));
+                OrderInsideAdapter orderInsideAdapter = new OrderInsideAdapter(R.layout.adapter_selector_area_second, orderInsideList);
+                rvOrderInside.setAdapter(orderInsideAdapter);
+                orderInsideAdapter.setOnItemClickListener((adapter, view, position) -> {
+                    orderVm.inside=orderInsideList.get(position).getId();
+                    orderVm.orderListData( "");
+                    btn_dialog.dismiss();
+                    getDrawableRightView(tvOrderType,R.drawable.icon_pulldown_arrow,R.color.color_666666);
+                    getAddTopScreenView(tvFour,orderInsideList.get(position).getName(),View.VISIBLE);
+                });
+                if (orderVm.inside!=0){
+                    orderInsideAdapter.setIsSelect(orderVm.inside);
+                }
+                break;
         }
         btn_dialog.show();
     }
@@ -436,13 +494,18 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
     private void getAdminEntrance(int manage_status) {
         switch (manage_status){
             case 1://普通供应商
+                tvProject.setText("项目名称");
+                tvOrderType.setVisibility(View.GONE);
+                break;
             case 2://子公司
             case 4://子公司子账号
                 tvProject.setText("项目名称");
+                tvOrderType.setVisibility(View.VISIBLE);
                 break;
             case 3://集团
             case 5://集团子账号
                 tvProject.setText("公司/项目");
+                tvOrderType.setVisibility(View.VISIBLE);
                 break;
         }
     }
