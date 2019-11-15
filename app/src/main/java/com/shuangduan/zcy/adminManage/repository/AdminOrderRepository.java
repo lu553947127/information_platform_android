@@ -6,6 +6,7 @@ import com.shuangduan.zcy.adminManage.bean.AdminOrderBean;
 import com.shuangduan.zcy.adminManage.bean.OrderDetailsBean;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.api.repository.BaseRepository;
+import com.shuangduan.zcy.model.bean.BaseResponse;
 
 /**
  * @author xuyu
@@ -33,6 +34,11 @@ public class AdminOrderRepository extends BaseRepository {
     //后台管理 --- 周转材料详情
     public void constructionOrderDetail(MutableLiveData<OrderDetailsBean> liveData, MutableLiveData<String> pageState, int userId, int orderId) {
         request(apiService.constructionOrderDetail(userId, orderId)).setData(liveData).setPageState(pageState).send();
+    }
+
+    //后台管理 --- 周转材料修改订单进度
+    public void constructionOrderPhases(MutableLiveData<BaseResponse> liveData, MutableLiveData<String> pageState, int userId, int orderId, int phases) {
+        request(apiService.constructionOrderPhases(userId, orderId, phases)).setData(liveData).setPageState(pageState).send();
     }
 
 }

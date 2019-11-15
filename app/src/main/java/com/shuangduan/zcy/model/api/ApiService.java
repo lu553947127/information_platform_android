@@ -1988,4 +1988,13 @@ public interface ApiService {
             @Field("user_id") int userId,
             @Field("id") int id
     );
+
+    //后台管理 --- 周转材料修改订单进度
+    @FormUrlEncoded
+    @POST("api/Manage/constructionOrderPhases")
+    Flowable<BaseResponse> constructionOrderPhases(
+            @Field("user_id") int userId,
+            @Field("id") int id,
+            @Field("phases") int phases
+    );
 }

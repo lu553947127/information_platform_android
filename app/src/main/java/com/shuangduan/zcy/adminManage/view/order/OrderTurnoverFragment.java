@@ -3,8 +3,11 @@ package com.shuangduan.zcy.adminManage.view.order;
 import android.annotation.SuppressLint;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -17,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -42,6 +46,8 @@ import com.shuangduan.zcy.dialog.BottomSheetDialogs;
 import com.shuangduan.zcy.dialog.CustomDialog;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.utils.DrawableUtils;
+import com.shuangduan.zcy.utils.KeyboardUtil;
+import com.shuangduan.zcy.weight.XEditText;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -51,6 +57,7 @@ import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cc.shinichi.library.tool.utility.ui.ToastUtil;
 
 /**
  * @ProjectName: information_platform_android
@@ -94,6 +101,10 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
     RelativeLayout rlSearch;
     @BindView(R.id.rv)
     RecyclerView rv;
+
+    @BindView(R.id.tv_order_number)
+    XEditText xetOrderNumber;
+
     private OrderTurnoverVm orderVm;
     private int manage_status;
     private AdminOrderListAdapter adminOrderListAdapter;
@@ -115,10 +126,11 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
         return true;
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
 
-        manage_status = SPUtils.getInstance().getInt(CustomConfig.MANAGE_STATUS,0);
+        manage_status = SPUtils.getInstance().getInt(CustomConfig.MANAGE_STATUS, 0);
         getAdminEntrance(manage_status);
 
         Drawable drawable = DrawableUtils.getDrawable(getResources().getColor(R.color.color_EDEDED), 25);
@@ -126,14 +138,14 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
 
         rv.setLayoutManager(new LinearLayoutManager(getActivity()));
         adminOrderListAdapter = new AdminOrderListAdapter(R.layout.adapter_admin_order_item, null
-                ,SPUtils.getInstance().getInt(CustomConfig.CONSTRUCTION_ORDER_EDIT,0),manage_status);
+                , SPUtils.getInstance().getInt(CustomConfig.CONSTRUCTION_ORDER_EDIT, 0), manage_status);
         rv.setAdapter(adminOrderListAdapter);
 
         adminOrderListAdapter.setOnItemClickListener((adapter, view, position) -> {
             AdminOrderBean.OrderList listBean = adminOrderListAdapter.getData().get(position);
             Bundle bundle = new Bundle();
             //判断当前登录身份为子账户时，是否有查看详情的权限
-            switch (manage_status){
+            switch (manage_status) {
                 case 1://普通供应商
                 case 2://子公司
                 case 3://集团
@@ -168,11 +180,11 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
         });
 
         //获取子公司列表数据
-        orderVm.turnoverCompanyData.observe(this,turnoverCompanyBeans -> {
-            companyList=turnoverCompanyBeans;
+        orderVm.turnoverCompanyData.observe(this, turnoverCompanyBeans -> {
+            companyList = turnoverCompanyBeans;
             turnoverCompanyAdapter.setNewData(companyList);
-            if (orderVm.supplier_id==0){
-                orderVm.supplier_id=companyList.get(0).getSupplier_id();
+            if (orderVm.supplier_id == 0) {
+                orderVm.supplier_id = companyList.get(0).getSupplier_id();
                 orderVm.supplier_name = companyList.get(0).getCompany();
                 turnoverCompanyAdapter.setIsSelect(orderVm.supplier_id);
                 orderVm.getUnitInfo();
@@ -180,9 +192,10 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
         });
 
         //获取项目列表数据
-        orderVm.turnoverProject.observe(this,turnoverNameBeans -> {
+        orderVm.turnoverProject.observe(this, turnoverNameBeans -> {
             projectList = turnoverNameBeans;
-            if (SPUtils.getInstance().getInt(CustomConfig.MANAGE_STATUS,0)==3)projectList.add(0,new TurnoverNameBean(0,"全部"));
+            if (SPUtils.getInstance().getInt(CustomConfig.MANAGE_STATUS, 0) == 3)
+                projectList.add(0, new TurnoverNameBean(0, "全部"));
             turnoverProjectAdapter.setNewData(projectList);
         });
 
@@ -196,11 +209,11 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
 
 
         //获取搜索筛选条件数据
-        orderVm.orderSearchLiveData.observe(this,orderSearchBean -> {
+        orderVm.orderSearchLiveData.observe(this, orderSearchBean -> {
             //订单进度数据
-            orderPhasesList=orderSearchBean.getOrder_phases();
+            orderPhasesList = orderSearchBean.getOrder_phases();
             //订单类型数据
-            orderInsideList=orderSearchBean.getInside();
+            orderInsideList = orderSearchBean.getInside();
         });
 
         orderVm.pageStateLiveData.observe(this, s -> {
@@ -220,14 +233,49 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 super.onRefresh(refreshLayout);
-                orderVm.orderListData( "");
+                orderVm.orderListData("");
             }
 
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 super.onLoadMore(refreshLayout);
-                orderVm.moreOrderListData( "");
+                orderVm.moreOrderListData("");
             }
+        });
+
+
+        //EditTextView 搜索
+        xetOrderNumber.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                //关闭软键盘
+                KeyboardUtil.closeKeyboard(mActivity);
+                orderVm.orderListData(xetOrderNumber.getText().toString());
+                return true;
+            }
+            return false;
+        });
+
+        //EditText 的 X号 点击事件
+        xetOrderNumber.setOnTouchListener((v, event) -> {
+            Drawable drawable1 = xetOrderNumber.getCompoundDrawables()[2];
+            //如果右边没有图片，不再处理
+            if (drawable1 == null)
+                return false;
+            //如果不是按下事件，不再处理
+            if (event.getAction() != MotionEvent.ACTION_UP)
+                return false;
+            if (event.getX() > xetOrderNumber.getWidth() - xetOrderNumber.getPaddingRight() - drawable1.getIntrinsicWidth()) {
+                KeyboardUtil.closeKeyboard(mActivity);
+                orderVm.orderListData("");
+            }
+            return false;
+        });
+
+        //修改订单进度成功回调监听
+        orderVm.orderPhases.observe(this, phases -> {
+            AdminOrderBean.OrderList orderItem = adminOrderListAdapter.getData().get(orderVm.position);
+            orderItem.phases = orderVm.phasesName;
+            adminOrderListAdapter.notifyItemChanged(orderVm.position, orderItem);
         });
     }
 
@@ -253,7 +301,7 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
 
     @Override
     protected void initDataFromService() {
-        orderVm.orderListData( "");
+        orderVm.orderListData("");
         orderVm.orderSearch();
     }
 
@@ -278,34 +326,35 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
                         }).showDialog();
                 break;
             case R.id.tv_progress://修改进度
+                getBottomSheetDialog(R.layout.dialog_is_grounding, "order_phases", 1);
                 break;
         }
     }
 
-    @OnClick({R.id.tv_project,R.id.tv_name,R.id.tv_order_phases,R.id.tv_order_type
-            ,R.id.tv_reset,R.id.tv_company_children,R.id.tv_name_second,R.id.tv_is_shelf,R.id.tv_use_status})
-    void onClick(View view){
+    @OnClick({R.id.tv_project, R.id.tv_name, R.id.tv_order_phases, R.id.tv_order_type
+            , R.id.tv_reset, R.id.tv_company_children, R.id.tv_name_second, R.id.tv_is_shelf, R.id.tv_use_status})
+    void onClick(View view) {
         Bundle bundle = new Bundle();
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.tv_project://选择子公司/项目
-                if (manage_status==3){
-                    getBottomSheetDialog(R.layout.dialog_depositing_place,"company");
-                }else {
-                    getBottomSheetDialog(R.layout.dialog_is_grounding,"project");
+                if (manage_status == 3) {
+                    getBottomSheetDialog(R.layout.dialog_depositing_place, "company", 0);
+                } else {
+                    getBottomSheetDialog(R.layout.dialog_is_grounding, "project", 0);
                 }
-                getDrawableRightView(tvProject,R.drawable.icon_pullup_arrow,R.color.color_5C54F4);
+                getDrawableRightView(tvProject, R.drawable.icon_pullup_arrow, R.color.color_5C54F4);
                 break;
             case R.id.tv_name://选择材料名称
-                bundle.putInt(CustomConfig.ADMIN_MANAGE_TYPE,CustomConfig.ADMIN_MANAGE_CONSTRUCTION_ORDER);
+                bundle.putInt(CustomConfig.ADMIN_MANAGE_TYPE, CustomConfig.ADMIN_MANAGE_CONSTRUCTION_ORDER);
                 ActivityUtils.startActivity(bundle, SelectTypeActivity.class);
                 break;
             case R.id.tv_order_phases://选择订单进度
-                getBottomSheetDialog(R.layout.dialog_is_grounding,"order_phases");
-                getDrawableRightView(tvOrderPhases,R.drawable.icon_pullup_arrow,R.color.color_5C54F4);
+                getBottomSheetDialog(R.layout.dialog_is_grounding, "order_phases", 0);
+                getDrawableRightView(tvOrderPhases, R.drawable.icon_pullup_arrow, R.color.color_5C54F4);
                 break;
             case R.id.tv_order_type://选择订单类型
-                getBottomSheetDialog(R.layout.dialog_is_grounding,"order_type");
-                getDrawableRightView(tvOrderType,R.drawable.icon_pullup_arrow,R.color.color_5C54F4);
+                getBottomSheetDialog(R.layout.dialog_is_grounding, "order_type", 0);
+                getDrawableRightView(tvOrderType, R.drawable.icon_pullup_arrow, R.color.color_5C54F4);
                 break;
             case R.id.tv_reset://重置按钮
                 llAdminManageScreen.setVisibility(View.GONE);
@@ -313,29 +362,29 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
                 tvTwo.setVisibility(View.GONE);
                 tvThree.setVisibility(View.GONE);
                 tvFour.setVisibility(View.GONE);
-                orderVm.supplier_id=0;
-                orderVm.unit_id=0;
-                orderVm.categoryId=0;
-                orderVm.phases=0;
-                orderVm.inside=0;
-                orderVm.orderListData( "");
+                orderVm.supplier_id = 0;
+                orderVm.unit_id = 0;
+                orderVm.categoryId = 0;
+                orderVm.phases = 0;
+                orderVm.inside = 0;
+                orderVm.orderListData("");
                 break;
             case R.id.tv_company_children://子公司/项目
-                orderVm.supplier_id=0;
-                orderVm.unit_id=0;
-                getDeleteView(tvOne,View.GONE);
+                orderVm.supplier_id = 0;
+                orderVm.unit_id = 0;
+                getDeleteView(tvOne, View.GONE);
                 break;
             case R.id.tv_name_second://材料名称
-                orderVm.categoryId=0;
-                getDeleteView(tvTwo,View.GONE);
+                orderVm.categoryId = 0;
+                getDeleteView(tvTwo, View.GONE);
                 break;
             case R.id.tv_is_shelf://订单进度
-                orderVm.phases=0;
-                getDeleteView(tvThree,View.GONE);
+                orderVm.phases = 0;
+                getDeleteView(tvThree, View.GONE);
                 break;
             case R.id.tv_use_status://订单类型
-                orderVm.inside=0;
-                getDeleteView(tvFour,View.GONE);
+                orderVm.inside = 0;
+                getDeleteView(tvFour, View.GONE);
                 break;
         }
     }
@@ -346,8 +395,9 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
     private List<TurnoverNameBean> projectList = new ArrayList<>();
     private List<OrderSearchBean.OrderPhasesBean> orderPhasesList = new ArrayList<>();
     private List<OrderSearchBean.InsideBean> orderInsideList = new ArrayList<>();
+
     @SuppressLint("RestrictedApi,InflateParams")
-    private void getBottomSheetDialog(int layout, String type) {
+    private void getBottomSheetDialog(int layout, String type, int updateState) {
         //底部滑动对话框
         BottomSheetDialogs btn_dialog = new BottomSheetDialogs(Objects.requireNonNull(getActivity()), R.style.BottomSheetStyle);
         //设置自定view
@@ -363,12 +413,12 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
             e.printStackTrace();
         }
         btn_dialog.setOnDismissListener(dialog -> {
-            getDrawableRightView(tvProject,R.drawable.icon_pulldown_arrow,R.color.color_666666);
-            getDrawableRightView(tvOrderPhases,R.drawable.icon_pulldown_arrow,R.color.color_666666);
-            getDrawableRightView(tvOrderType,R.drawable.icon_pulldown_arrow,R.color.color_666666);
+            getDrawableRightView(tvProject, R.drawable.icon_pulldown_arrow, R.color.color_666666);
+            getDrawableRightView(tvOrderPhases, R.drawable.icon_pulldown_arrow, R.color.color_666666);
+            getDrawableRightView(tvOrderType, R.drawable.icon_pulldown_arrow, R.color.color_666666);
         });
-        orderVm.type=type;
-        switch (type){
+        orderVm.type = type;
+        switch (type) {
             case "company":
                 TextView tvFirst = btn_dialog.findViewById(R.id.tv_first);
                 TextView tvSecond = btn_dialog.findViewById(R.id.tv_second);
@@ -389,32 +439,32 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
                     turnoverCompanyAdapter.setIsSelect(companyList.get(position).getSupplier_id());
                 });
                 turnoverProjectAdapter.setOnItemClickListener((adapter, view, position) -> {
-                    if (projectList.get(position).id!=0){
+                    if (projectList.get(position).id != 0) {
                         orderVm.unit_id = projectList.get(position).id;
-                        orderVm.orderListData( "");
+                        orderVm.orderListData("");
                         turnoverProjectAdapter.setIsSelect(projectList.get(position).id);
                         btn_dialog.dismiss();
-                        getDrawableRightView(tvProject,R.drawable.icon_pulldown_arrow,R.color.color_666666);
-                        getAddTopScreenView(tvOne,projectList.get(position).name,View.VISIBLE);
-                    }else {
-                        orderVm.unit_id=0;
-                        orderVm.orderListData( "");
+                        getDrawableRightView(tvProject, R.drawable.icon_pulldown_arrow, R.color.color_666666);
+                        getAddTopScreenView(tvOne, projectList.get(position).name, View.VISIBLE);
+                    } else {
+                        orderVm.unit_id = 0;
+                        orderVm.orderListData("");
                         btn_dialog.dismiss();
-                        getDrawableRightView(tvProject,R.drawable.icon_pulldown_arrow,R.color.color_666666);
-                        getAddTopScreenView(tvOne,orderVm.supplier_name,View.VISIBLE);
+                        getDrawableRightView(tvProject, R.drawable.icon_pulldown_arrow, R.color.color_666666);
+                        getAddTopScreenView(tvOne, orderVm.supplier_name, View.VISIBLE);
                     }
                 });
                 orderVm.getSupplierInfo();
-                if (orderVm.supplier_id!=0){
+                if (orderVm.supplier_id != 0) {
                     turnoverCompanyAdapter.setIsSelect(orderVm.supplier_id);
                     orderVm.getUnitInfo();
                 }
-                if (orderVm.unit_id!=0){
+                if (orderVm.unit_id != 0) {
                     turnoverProjectAdapter.setIsSelect(orderVm.unit_id);
                 }
                 break;
             case "project":
-                TextView tvProject=btn_dialog.findViewById(R.id.tv_title);
+                TextView tvProject = btn_dialog.findViewById(R.id.tv_title);
                 Objects.requireNonNull(tvProject).setText("选择项目");
                 RecyclerView rvProject = btn_dialog.findViewById(R.id.rv);
                 Objects.requireNonNull(rvProject).setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -422,50 +472,56 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
                 rvProject.setAdapter(turnoverProjectAdapter);
                 turnoverProjectAdapter.setOnItemClickListener((adapter, view, position) -> {
                     orderVm.unit_id = projectList.get(position).id;
-                    orderVm.orderListData( "");
+                    orderVm.orderListData("");
                     turnoverProjectAdapter.setIsSelect(projectList.get(position).id);
                     btn_dialog.dismiss();
-                    getDrawableRightView(tvProject,R.drawable.icon_pulldown_arrow,R.color.color_666666);
-                    getAddTopScreenView(tvOne,projectList.get(position).name,View.VISIBLE);
+                    getDrawableRightView(tvProject, R.drawable.icon_pulldown_arrow, R.color.color_666666);
+                    getAddTopScreenView(tvOne, projectList.get(position).name, View.VISIBLE);
                 });
                 orderVm.getUnitInfo();
-                if (orderVm.unit_id!=0){
+                if (orderVm.unit_id != 0) {
                     turnoverProjectAdapter.setIsSelect(orderVm.unit_id);
                 }
                 break;
             case "order_phases":
-                TextView tv_order_phases=btn_dialog.findViewById(R.id.tv_title);
+                TextView tv_order_phases = btn_dialog.findViewById(R.id.tv_title);
                 Objects.requireNonNull(tv_order_phases).setText("订单进度");
                 RecyclerView rvOrderPhases = btn_dialog.findViewById(R.id.rv);
                 Objects.requireNonNull(rvOrderPhases).setLayoutManager(new LinearLayoutManager(getActivity()));
                 OrderPhasesAdapter orderPhasesAdapter = new OrderPhasesAdapter(R.layout.adapter_selector_area_second, orderPhasesList);
                 rvOrderPhases.setAdapter(orderPhasesAdapter);
                 orderPhasesAdapter.setOnItemClickListener((adapter, view, position) -> {
-                    orderVm.phases=orderPhasesList.get(position).getId();
-                    orderVm.orderListData( "");
+                    orderVm.phases = orderPhasesList.get(position).getId();
+                    orderVm.phasesName = orderPhasesList.get(position).getName();
+                    if (updateState == 0) {
+                        getDrawableRightView(tvOrderPhases, R.drawable.icon_pulldown_arrow, R.color.color_666666);
+                        orderVm.orderListData("");
+                        getAddTopScreenView(tvThree, orderPhasesList.get(position).getName(), View.VISIBLE);
+                    } else {
+                        orderVm.constructionOrderPhases(adminOrderListAdapter.getData().get(orderVm.position).orderId, orderPhasesList.get(position).getId());
+                    }
                     btn_dialog.dismiss();
-                    getDrawableRightView(tvOrderPhases,R.drawable.icon_pulldown_arrow,R.color.color_666666);
-                    getAddTopScreenView(tvThree,orderPhasesList.get(position).getName(),View.VISIBLE);
                 });
-                if (orderVm.phases!=0){
+                if (orderVm.phases != 0) {
                     orderPhasesAdapter.setIsSelect(orderVm.phases);
                 }
                 break;
             case "order_type":
-                TextView tv_order_inside=btn_dialog.findViewById(R.id.tv_title);
+                TextView tv_order_inside = btn_dialog.findViewById(R.id.tv_title);
                 Objects.requireNonNull(tv_order_inside).setText("订单类型");
                 RecyclerView rvOrderInside = btn_dialog.findViewById(R.id.rv);
                 Objects.requireNonNull(rvOrderInside).setLayoutManager(new LinearLayoutManager(getActivity()));
                 OrderInsideAdapter orderInsideAdapter = new OrderInsideAdapter(R.layout.adapter_selector_area_second, orderInsideList);
                 rvOrderInside.setAdapter(orderInsideAdapter);
                 orderInsideAdapter.setOnItemClickListener((adapter, view, position) -> {
-                    orderVm.inside=orderInsideList.get(position).getId();
-                    orderVm.orderListData( "");
+                    orderVm.inside = orderInsideList.get(position).getId();
+                    orderVm.orderListData("");
                     btn_dialog.dismiss();
-                    getDrawableRightView(tvOrderType,R.drawable.icon_pulldown_arrow,R.color.color_666666);
-                    getAddTopScreenView(tvFour,orderInsideList.get(position).getName(),View.VISIBLE);
+                    getDrawableRightView(tvOrderType, R.drawable.icon_pulldown_arrow, R.color.color_666666);
+                    getAddTopScreenView(tvFour, orderInsideList.get(position).getName(), View.VISIBLE);
+
                 });
-                if (orderVm.inside!=0){
+                if (orderVm.inside != 0) {
                     orderInsideAdapter.setIsSelect(orderVm.inside);
                 }
                 break;
@@ -484,7 +540,7 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
     }
 
     //添加头部筛选布局view
-    private void getAddTopScreenView(TextView textView,String text,int type) {
+    private void getAddTopScreenView(TextView textView, String text, int type) {
         llAdminManageScreen.setVisibility(type);
         tvReset.setVisibility(type);
         textView.setVisibility(type);
@@ -492,25 +548,25 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
     }
 
     //关闭筛选条件
-    private void getDeleteView(TextView textView,int type) {
+    private void getDeleteView(TextView textView, int type) {
         textView.setVisibility(type);
-        if (tvOne.getVisibility()==View.GONE &&tvTwo.getVisibility()==View.GONE
-                &&tvThree.getVisibility()==View.GONE &&tvFour.getVisibility()==View.GONE ){
+        if (tvOne.getVisibility() == View.GONE && tvTwo.getVisibility() == View.GONE
+                && tvThree.getVisibility() == View.GONE && tvFour.getVisibility() == View.GONE) {
             llAdminManageScreen.setVisibility(type);
         }
-        orderVm.orderListData( "");
+        orderVm.orderListData("");
     }
 
     @Subscribe
     public void onEventOrderTurnover(OrderTurnoverEvent event) {
-        orderVm.categoryId=event.material_id;
-        orderVm.orderListData( "");
-        getAddTopScreenView(tvTwo,event.material_name,View.VISIBLE);
+        orderVm.categoryId = event.material_id;
+        orderVm.orderListData("");
+        getAddTopScreenView(tvTwo, event.material_name, View.VISIBLE);
     }
 
     //权限显示判断
     private void getAdminEntrance(int manage_status) {
-        switch (manage_status){
+        switch (manage_status) {
             case 1://普通供应商
                 tvProject.setText("项目名称");
                 tvOrderType.setVisibility(View.GONE);
@@ -527,4 +583,5 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
                 break;
         }
     }
+
 }

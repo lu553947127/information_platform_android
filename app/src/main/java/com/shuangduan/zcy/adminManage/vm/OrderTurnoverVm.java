@@ -44,6 +44,9 @@ public class OrderTurnoverVm extends BaseViewModel {
     public int categoryId;
     //订单进度
     public int phases;
+    //订单进度名称
+    public String phasesName;
+
     //订单类型
     public int inside;
 
@@ -54,6 +57,9 @@ public class OrderTurnoverVm extends BaseViewModel {
 
     //驳回订单
     public MutableLiveData rejectLiveData;
+    //修改订单进度
+    public MutableLiveData orderPhases;
+
 
     public MutableLiveData<OrderSearchBean> orderSearchLiveData;
 
@@ -76,6 +82,8 @@ public class OrderTurnoverVm extends BaseViewModel {
         rejectLiveData = new MutableLiveData();
 
         orderDetailsLiveData = new MutableLiveData<>();
+
+        orderPhases = new MutableLiveData();
     }
 
     //后台管理 --- 周转材料订单列表
@@ -113,8 +121,12 @@ public class OrderTurnoverVm extends BaseViewModel {
     }
 
     //订单管理 --- 周转材料详情
-    public void constructionOrderDetail(int orderId){
-        new AdminOrderRepository().constructionOrderDetail(orderDetailsLiveData,pageStateLiveData,userId,orderId);
+    public void constructionOrderDetail(int orderId) {
+        new AdminOrderRepository().constructionOrderDetail(orderDetailsLiveData, pageStateLiveData, userId, orderId);
     }
 
+    //订单管理 --- 周转材料修改订单进度
+    public void constructionOrderPhases(int orderId, int phases) {
+        new AdminOrderRepository().constructionOrderPhases(orderPhases, pageStateLiveData, userId, orderId, phases);
+    }
 }

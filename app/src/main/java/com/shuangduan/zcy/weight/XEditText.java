@@ -122,6 +122,7 @@ public class XEditText extends AppCompatEditText {
                 if (cdId == R.drawable.x_et_svg_ic_clear_24dp)
                     DrawableCompat.setTint(mClearDrawable, getCurrentHintTextColor());
             }
+
         }
 
         boolean togglePwdDrawableEnable = a.getBoolean(R.styleable.XEditText_x_togglePwdDrawableEnable, true);
