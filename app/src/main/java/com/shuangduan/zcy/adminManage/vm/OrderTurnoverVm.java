@@ -13,7 +13,6 @@ import com.shuangduan.zcy.adminManage.repository.TurnoverRepository;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseViewModel;
 import com.shuangduan.zcy.model.api.PageState;
-import com.shuangduan.zcy.model.bean.OrderListBean;
 
 import java.util.List;
 
@@ -38,7 +37,6 @@ public class OrderTurnoverVm extends BaseViewModel {
     public String supplier_name;
     //项目id
     public int unit_id;
-
     //周转材料父类型ID
     public int pCategoryId;
     //周转材料子类型ID
@@ -47,32 +45,22 @@ public class OrderTurnoverVm extends BaseViewModel {
     public int phases;
     //订单进度名称
     public String phasesName;
-
     //订单类型
     public int inside;
-
     //周转材料订单列表数据
     public MutableLiveData<AdminOrderBean> orderListLiveData;
-
     public MutableLiveData<List<TurnoverCompanyBean>> turnoverCompanyData;
     public MutableLiveData<List<TurnoverNameBean>> turnoverProject;
-
     //驳回订单
     public MutableLiveData rejectLiveData;
     //修改订单进度
     public MutableLiveData<AdminOrderBean.OrderList> orderPhases;
-
-
     public MutableLiveData<OrderSearchBean> orderSearchLiveData;
-
     //周转材料详情
     public MutableLiveData<OrderDetailsBean> orderDetailsLiveData;
-
     public MutableLiveData<String> pageStateLiveData;
-
     //记录当前Adapter点击的position值
     public int position;
-
 
     public OrderTurnoverVm() {
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
@@ -82,9 +70,7 @@ public class OrderTurnoverVm extends BaseViewModel {
         turnoverProject = new MutableLiveData<>();
         orderSearchLiveData = new MutableLiveData<>();
         rejectLiveData = new MutableLiveData();
-
         orderDetailsLiveData = new MutableLiveData<>();
-
         orderPhases = new MutableLiveData();
     }
 

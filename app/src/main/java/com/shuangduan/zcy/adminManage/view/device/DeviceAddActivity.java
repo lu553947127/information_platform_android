@@ -516,7 +516,7 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
                 Objects.requireNonNull(tvProjects).setText("选择项目");
                 RecyclerView rvProject = btn_dialog.findViewById(R.id.rv);
                 Objects.requireNonNull(rvProject).setLayoutManager(new LinearLayoutManager(this));
-                turnoverProjectAdapter = new TurnoverProjectAdapter(R.layout.adapter_turnover_project, projectList);
+                turnoverProjectAdapter = new TurnoverProjectAdapter(R.layout.adapter_turnover_project, projectList,12);
                 rvProject.setAdapter(turnoverProjectAdapter);
                 turnoverProjectAdapter.setOnItemClickListener((adapter, view, position) -> {
                     deviceAddVm.unit_id = projectList.get(position).id;

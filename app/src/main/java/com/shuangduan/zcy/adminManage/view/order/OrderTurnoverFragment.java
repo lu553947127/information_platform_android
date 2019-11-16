@@ -3,7 +3,6 @@ package com.shuangduan.zcy.adminManage.view.order;
 import android.annotation.SuppressLint;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,7 +57,6 @@ import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import cc.shinichi.library.tool.utility.ui.ToastUtil;
 
 /**
  * @ProjectName: information_platform_android
@@ -202,14 +200,12 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
             turnoverProjectAdapter.setNewData(projectList);
         });
 
-
         //订单驳回
         orderVm.rejectLiveData.observe(this, rejectItem -> {
             AdminOrderBean.OrderList orderItem = adminOrderListAdapter.getData().get(orderVm.position);
             orderItem.statusId = 3;
             adminOrderListAdapter.notifyItemChanged(orderVm.position, orderItem);
         });
-
 
         //获取搜索筛选条件数据
         orderVm.orderSearchLiveData.observe(this, orderSearchBean -> {
@@ -245,7 +241,6 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
                 orderVm.moreOrderListData("");
             }
         });
-
 
         //EditTextView 搜索
         xetOrderNumber.setOnEditorActionListener((v, actionId, event) -> {
@@ -434,7 +429,7 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
                 Objects.requireNonNull(rvCompany).setLayoutManager(new LinearLayoutManager(getActivity()));
                 Objects.requireNonNull(rvProjectGroup).setLayoutManager(new LinearLayoutManager(getActivity()));
                 turnoverCompanyAdapter = new TurnoverCompanyAdapter(R.layout.adapter_selector_area_first, null);
-                turnoverProjectAdapter = new TurnoverProjectAdapter(R.layout.adapter_turnover_project, null);
+                turnoverProjectAdapter = new TurnoverProjectAdapter(R.layout.adapter_turnover_project_company, null,7);
                 rvCompany.setAdapter(turnoverCompanyAdapter);
                 rvProjectGroup.setAdapter(turnoverProjectAdapter);
                 turnoverCompanyAdapter.setOnItemClickListener((adapter, view, position) -> {
@@ -473,7 +468,7 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
                 Objects.requireNonNull(tvProject).setText("选择项目");
                 RecyclerView rvProject = btn_dialog.findViewById(R.id.rv);
                 Objects.requireNonNull(rvProject).setLayoutManager(new LinearLayoutManager(getActivity()));
-                turnoverProjectAdapter = new TurnoverProjectAdapter(R.layout.adapter_turnover_project, null);
+                turnoverProjectAdapter = new TurnoverProjectAdapter(R.layout.adapter_turnover_project, null,12);
                 rvProject.setAdapter(turnoverProjectAdapter);
                 turnoverProjectAdapter.setOnItemClickListener((adapter, view, position) -> {
                     orderVm.unit_id = projectList.get(position).id;
@@ -594,5 +589,4 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
                 break;
         }
     }
-
 }

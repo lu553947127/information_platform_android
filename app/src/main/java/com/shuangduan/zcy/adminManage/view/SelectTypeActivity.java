@@ -22,6 +22,7 @@ import com.shuangduan.zcy.adminManage.adapter.TurnoverHistoryAdapter;
 import com.shuangduan.zcy.adminManage.adapter.TurnoverSecondAdapter;
 import com.shuangduan.zcy.adminManage.bean.TurnoverCategoryBean;
 import com.shuangduan.zcy.adminManage.event.DeviceEvent;
+import com.shuangduan.zcy.adminManage.event.OrderDeviceEvent;
 import com.shuangduan.zcy.adminManage.event.OrderTurnoverEvent;
 import com.shuangduan.zcy.adminManage.event.TurnoverEvent;
 import com.shuangduan.zcy.adminManage.vm.DeviceVm;
@@ -132,6 +133,7 @@ public class SelectTypeActivity extends BaseActivity {
                     EventBus.getDefault().post(new OrderTurnoverEvent(listBean.getId(),listBean.getCatname()));
                     break;
                 case ADMIN_MANAGE_EQIPMENT_ORDER://选择订单 设备
+                    EventBus.getDefault().post(new OrderDeviceEvent(listBean.getId(),listBean.getCatname()));
                     break;
             }
             finish();
@@ -174,6 +176,7 @@ public class SelectTypeActivity extends BaseActivity {
                     EventBus.getDefault().post(new OrderTurnoverEvent(listBean.getId(),listBean.getCatname()));
                     break;
                 case ADMIN_MANAGE_EQIPMENT_ORDER://选择订单 设备
+                    EventBus.getDefault().post(new OrderDeviceEvent(listBean.getId(),listBean.getCatname()));
                     break;
             }
             finish();

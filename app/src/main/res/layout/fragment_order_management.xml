@@ -11,8 +11,6 @@
     <com.shuangduan.zcy.weight.NoScrollViewPager
         android:id="@+id/vp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </com.shuangduan.zcy.weight.NoScrollViewPager>
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

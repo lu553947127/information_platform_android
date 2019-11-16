@@ -44,6 +44,7 @@
                 android:drawablePadding="6dp"
                 android:layout_marginRight="17dp"
                 android:padding="6dp"
+                android:maxEms="10"
                 android:singleLine="true"
                 android:textColor="@color/color_888888"
                 android:textSize="12sp"

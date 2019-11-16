@@ -27,9 +27,10 @@ import java.util.List;
  * @Version: 1.0
  */
 public class TurnoverProjectAdapter extends BaseQuickAdapter<TurnoverNameBean, BaseViewHolder> {
-    private int is_select;
-    public TurnoverProjectAdapter(int layoutResId, @Nullable List<TurnoverNameBean> data) {
+    private int is_select,maxEms;
+    public TurnoverProjectAdapter(int layoutResId, @Nullable List<TurnoverNameBean> data,int maxEms) {
         super(layoutResId, data);
+        this.maxEms = maxEms;
     }
 
     public void setIsSelect(int is_select) {
@@ -46,7 +47,7 @@ public class TurnoverProjectAdapter extends BaseQuickAdapter<TurnoverNameBean, B
         TextView tv_more=helper.getView(R.id.tv_more);
 
         //判断项目名称过长显示全部
-        if (item.name.length()>12){
+        if (item.name.length()>maxEms){
             linearLayout.setVisibility(View.VISIBLE);
             textView.setVisibility(View.GONE);
             tvCityLong.setText(item.name);

@@ -13,6 +13,7 @@ import com.shuangduan.zcy.adminManage.view.order.OrderManagementFragment;
 import com.shuangduan.zcy.adminManage.view.turnover.TurnoverMaterialFragment;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
+import com.shuangduan.zcy.weight.NoScrollViewPager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +37,7 @@ public class AdminManageActivity extends BaseActivity {
     @BindView(R.id.navigation)
     BottomNavigationView navigation;
     @BindView(R.id.view_pager)
-    ViewPager viewPager;
+    NoScrollViewPager viewPager;
     List<Fragment> mFragments;
     FragmentAdapter fragmentAdapter;
 
