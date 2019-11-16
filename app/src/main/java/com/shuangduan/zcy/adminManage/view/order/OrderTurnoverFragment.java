@@ -372,19 +372,19 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
             case R.id.tv_company_children://子公司/项目
                 orderVm.supplier_id = 0;
                 orderVm.unit_id = 0;
-                getDeleteView(tvOne, View.GONE);
+                getDeleteView(tvOne);
                 break;
             case R.id.tv_name_second://材料名称
                 orderVm.categoryId = 0;
-                getDeleteView(tvTwo, View.GONE);
+                getDeleteView(tvTwo);
                 break;
             case R.id.tv_is_shelf://订单进度
                 orderVm.phases = 0;
-                getDeleteView(tvThree, View.GONE);
+                getDeleteView(tvThree);
                 break;
             case R.id.tv_use_status://订单类型
                 orderVm.inside = 0;
-                getDeleteView(tvFour, View.GONE);
+                getDeleteView(tvFour);
                 break;
         }
     }
@@ -445,13 +445,13 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
                         turnoverProjectAdapter.setIsSelect(projectList.get(position).id);
                         btn_dialog.dismiss();
                         getDrawableRightView(tvProject, R.drawable.icon_pulldown_arrow, R.color.color_666666);
-                        getAddTopScreenView(tvOne, projectList.get(position).name, View.VISIBLE);
+                        getAddTopScreenView(tvOne, projectList.get(position).name);
                     } else {
                         orderVm.unit_id = 0;
                         orderVm.orderListData("");
                         btn_dialog.dismiss();
                         getDrawableRightView(tvProject, R.drawable.icon_pulldown_arrow, R.color.color_666666);
-                        getAddTopScreenView(tvOne, orderVm.supplier_name, View.VISIBLE);
+                        getAddTopScreenView(tvOne, orderVm.supplier_name);
                     }
                 });
                 orderVm.getSupplierInfo();
@@ -476,7 +476,7 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
                     turnoverProjectAdapter.setIsSelect(projectList.get(position).id);
                     btn_dialog.dismiss();
                     getDrawableRightView(tvProject, R.drawable.icon_pulldown_arrow, R.color.color_666666);
-                    getAddTopScreenView(tvOne, projectList.get(position).name, View.VISIBLE);
+                    getAddTopScreenView(tvOne, projectList.get(position).name);
                 });
                 orderVm.getUnitInfo();
                 if (orderVm.unit_id != 0) {
@@ -497,7 +497,7 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
                         orderVm.phases = orderPhasesList.get(position).getId();
                         getDrawableRightView(tvOrderPhases, R.drawable.icon_pulldown_arrow, R.color.color_666666);
                         orderVm.orderListData("");
-                        getAddTopScreenView(tvThree, orderPhasesList.get(position).getName(), View.VISIBLE);
+                        getAddTopScreenView(tvThree, orderPhasesList.get(position).getName());
                     } else {
                         orderVm.updatePhasesId = orderPhasesList.get(position).getId();
                         AdminOrderBean.OrderList order = adminOrderListAdapter.getData().get(orderVm.position);
@@ -525,7 +525,7 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
                     orderVm.orderListData("");
                     btn_dialog.dismiss();
                     getDrawableRightView(tvOrderType, R.drawable.icon_pulldown_arrow, R.color.color_666666);
-                    getAddTopScreenView(tvFour, orderInsideList.get(position).getName(), View.VISIBLE);
+                    getAddTopScreenView(tvFour, orderInsideList.get(position).getName());
 
                 });
                 if (orderVm.inside != 0) {
@@ -547,19 +547,19 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
     }
 
     //添加头部筛选布局view
-    private void getAddTopScreenView(TextView textView, String text, int type) {
-        llAdminManageScreen.setVisibility(type);
-        tvReset.setVisibility(type);
-        textView.setVisibility(type);
+    private void getAddTopScreenView(TextView textView, String text) {
+        llAdminManageScreen.setVisibility(View.VISIBLE);
+        tvReset.setVisibility(View.VISIBLE);
+        textView.setVisibility(View.VISIBLE);
         textView.setText(text);
     }
 
     //关闭筛选条件
-    private void getDeleteView(TextView textView, int type) {
-        textView.setVisibility(type);
+    private void getDeleteView(TextView textView) {
+        textView.setVisibility(View.GONE);
         if (tvOne.getVisibility() == View.GONE && tvTwo.getVisibility() == View.GONE
                 && tvThree.getVisibility() == View.GONE && tvFour.getVisibility() == View.GONE) {
-            llAdminManageScreen.setVisibility(type);
+            llAdminManageScreen.setVisibility(View.GONE);
         }
         orderVm.orderListData("");
     }
@@ -568,7 +568,7 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
     public void onEventOrderTurnover(OrderTurnoverEvent event) {
         orderVm.categoryId = event.material_id;
         orderVm.orderListData("");
-        getAddTopScreenView(tvTwo, event.material_name, View.VISIBLE);
+        getAddTopScreenView(tvTwo, event.material_name);
     }
 
     //权限显示判断

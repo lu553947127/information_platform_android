@@ -84,7 +84,6 @@ public class OrderManagementFragment extends BaseLazyFragment {
         if (equipment_order==1&&construction_order==1){
             llBarTitle.setVisibility(View.VISIBLE);
             tvBarTitle.setVisibility(View.GONE);
-            vp.setCurrentItem(0);
         }else if (equipment_order==1&&construction_order==0){
             llBarTitle.setVisibility(View.GONE);
             tvBarTitle.setVisibility(View.VISIBLE);
