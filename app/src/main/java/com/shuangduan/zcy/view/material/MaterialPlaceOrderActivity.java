@@ -133,12 +133,12 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
 
     private MaterialDetailVm materialDetailVm;
     private BottomSheetDialogs btn_dialog;
-    int province, city, material_id, materialId, guidance_price, adapterPosition, supplier_id, day;
+    int province, city, material_id, materialId, adapterPosition, supplier_id, day;
     String material_name, unit, science_num_id;
     List<MaterialPlaceOrderBean> list = new ArrayList<>();
     private List<String> list_address = new ArrayList<>();
     MaterialPlaceOrderAdapter materialDepositingPlaceAdapter;
-    private long num, price;
+    private long num, price,guidance_price;
     private MaterialDetailBean materialDetail;
     //租期开始时间  ,租期结束时间
     private String leaseStartTime, leaseEndTime;

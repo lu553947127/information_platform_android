@@ -109,7 +109,7 @@ public class MaterialRepository extends BaseRepository {
     //基建物质---设备物资预定订单
     public void getAddEquipmentOrder(MutableLiveData<MaterialAddBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int materialId,
                                      String realName, String tel, String company, int province, int city, String address, String remark,
-                                     int method, int num, int cateId, String leaseStartTime, String leaseEndTime) {
+                                     int method, long num, int cateId, String leaseStartTime, String leaseEndTime) {
         request(apiService.getAddEquipmentOrder(userId, materialId, realName, tel, company, province, city, address,
                 remark, method, num, cateId, leaseStartTime, leaseEndTime)).
                 setData(liveData).setPageState(pageStateLiveData).send();

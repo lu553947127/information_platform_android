@@ -109,10 +109,11 @@ public class MaterialEquipmentPlaceOrderActivity extends BaseActivity {
     LinearLayout llLease;
 
     private MaterialDetailVm materialDetailVm;
-    int province, city, material_id, materialId, guidance_price, supplier_id, day;
+    int province, city, material_id, materialId, supplier_id, day;
+    long guidance_price;
     String material_name, unit;
-    private int num;
-    private long price;
+
+    private long num, price;
     private MaterialDetailBean materialDetail;
     //租期开始时间  ,租期结束时间
     private String leaseStartTime, leaseEndTime;
@@ -158,7 +159,7 @@ public class MaterialEquipmentPlaceOrderActivity extends BaseActivity {
             tvSpec.setText(materialDetailBean.getSpec());
             unit = materialDetailBean.getUnit();
             tvUnit.setText("单位：" + materialDetailBean.getUnit());
-            tvCompany.setText( materialDetailBean.getCompany());
+            tvCompany.setText(materialDetailBean.getCompany());
             material_id = materialDetailBean.getMaterial_id();
             supplier_id = materialDetailBean.getSupplier_id();
 
@@ -280,7 +281,7 @@ public class MaterialEquipmentPlaceOrderActivity extends BaseActivity {
     private void showTimeDialog(TextView tv, int type) {
 
         try {
-            if (sdf == null || c==null) {
+            if (sdf == null || c == null) {
                 sdf = new SimpleDateFormat("yyyy-MM-dd");
                 c = Calendar.getInstance();
             }

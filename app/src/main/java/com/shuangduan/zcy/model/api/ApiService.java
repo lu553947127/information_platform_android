@@ -1519,7 +1519,7 @@ public interface ApiService {
             @Field("address") String address,
             @Field("remark") String remark,
             @Field("method") int method,
-            @Field("num") int num,
+            @Field("num") long num,
             @Field("cate_id") int cateId,
             @Field("lease_start_time") String leaseStartTime,
             @Field("lease_end_time") String leaseEndTime
