@@ -183,10 +183,10 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
                     String.format(getString(R.string.format_material_price), String.valueOf(guidance_price), "天") :
                     String.format(getString(R.string.format_material_price), String.valueOf(guidance_price), materialDetailBean.getUnit()));
 
-            tvSpec.setText(String.format(getString(R.string.format_spec), materialDetailBean.getSpec()));
+            tvSpec.setText(materialDetailBean.getSpec());
             unit = materialDetailBean.getUnit();
             tvUnit.setText("单位：" + materialDetailBean.getUnit());
-            tvCompany.setText("供应商：" + materialDetailBean.getCompany());
+            tvCompany.setText(materialDetailBean.getCompany());
             material_id = materialDetailBean.getMaterial_id();
             supplier_id = materialDetailBean.getSupplier_id();
             tvAdd.setText(R.string.material_tv_add);
@@ -194,7 +194,6 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
             materialDepositingPlaceAdapter = new MaterialPlaceOrderAdapter(this, list, materialDetail.getMethod());
 
             recyclerView.setAdapter(materialDepositingPlaceAdapter);
-
         });
 
         //数量、存放地保存成功返回结果
@@ -440,11 +439,12 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
      */
     private SimpleDateFormat sdf;
     private Calendar c;
+
     private void showTimeDialog(TextView tv, int type) {
 
 
         try {
-            if (sdf == null || c==null) {
+            if (sdf == null || c == null) {
                 sdf = new SimpleDateFormat("yyyy-MM-dd");
                 c = Calendar.getInstance();
             }

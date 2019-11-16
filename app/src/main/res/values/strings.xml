@@ -403,6 +403,8 @@
 
     <string name="material_tv_submission">提交预订单</string>
 
+    <string name="supplier_str">供应商：</string>
+
     <string name="format_version_name">v%1$s</string>
     <string name="format_get_verification_code_again">重新获取 (%1$ds)</string>
     <string name="format_balance">余额:%1$s紫金币</string>
@@ -567,10 +569,10 @@
         <item>设备物资</item>
     </string-array>
 
-     <string-array name="turnover_material">
-         <item>集团</item>
-         <item>子公司</item>
-     </string-array>
+    <string-array name="turnover_material">
+        <item>集团</item>
+        <item>子公司</item>
+    </string-array>
 
     <string-array name="withdraw_state">
         <item>审核中</item>
@@ -639,6 +641,7 @@
 
     <string name="real_name">已实名</string>
     <string name="un_real_name">未实名</string>
+    <string name="guide_price">指导价：</string>
 
     <!--    空提示 -->
     <string name="see_all">查看全部</string>

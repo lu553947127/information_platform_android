@@ -112,7 +112,8 @@ public class MaterialEquipmentPlaceOrderActivity extends BaseActivity {
     private MaterialDetailVm materialDetailVm;
     int province, city, material_id, materialId, guidance_price, supplier_id, day;
     String material_name, unit;
-    private int num, price;
+    private int num;
+    private long price;
     private MaterialDetailBean materialDetail;
     //租期开始时间  ,租期结束时间
     private String leaseStartTime, leaseEndTime;
@@ -134,7 +135,6 @@ public class MaterialEquipmentPlaceOrderActivity extends BaseActivity {
         tvBarTitle.setText(getString(R.string.material_place_order));
 
         tvAddressStar.setVisibility(View.INVISIBLE);
-        tvUnit.setVisibility(View.INVISIBLE);
 
         materialDetailVm = ViewModelProviders.of(this).get(MaterialDetailVm.class);
         materialDetailVm.id = getIntent().getIntExtra(CustomConfig.MATERIAL_ID, 0);
@@ -159,10 +159,10 @@ public class MaterialEquipmentPlaceOrderActivity extends BaseActivity {
                     String.format(getString(R.string.format_material_price), String.valueOf(guidance_price), "天") :
                     String.format(getString(R.string.format_material_price), String.valueOf(guidance_price), materialDetailBean.getUnit()));
 
-            tvSpec.setText(String.format(getString(R.string.format_spec), materialDetailBean.getSpec()));
+            tvSpec.setText(materialDetailBean.getSpec());
             unit = materialDetailBean.getUnit();
             tvUnit.setText("单位：" + materialDetailBean.getUnit());
-            tvCompany.setText("供应商：" + materialDetailBean.getCompany());
+            tvCompany.setText( materialDetailBean.getCompany());
             material_id = materialDetailBean.getMaterial_id();
             supplier_id = materialDetailBean.getSupplier_id();
 
