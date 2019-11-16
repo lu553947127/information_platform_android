@@ -13,6 +13,7 @@ import com.shuangduan.zcy.adminManage.repository.TurnoverRepository;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseViewModel;
 import com.shuangduan.zcy.model.api.PageState;
+import com.shuangduan.zcy.model.bean.OrderListBean;
 
 import java.util.List;
 
@@ -52,13 +53,14 @@ public class OrderTurnoverVm extends BaseViewModel {
 
     //周转材料订单列表数据
     public MutableLiveData<AdminOrderBean> orderListLiveData;
+
     public MutableLiveData<List<TurnoverCompanyBean>> turnoverCompanyData;
     public MutableLiveData<List<TurnoverNameBean>> turnoverProject;
 
     //驳回订单
     public MutableLiveData rejectLiveData;
     //修改订单进度
-    public MutableLiveData orderPhases;
+    public MutableLiveData<AdminOrderBean.OrderList> orderPhases;
 
 
     public MutableLiveData<OrderSearchBean> orderSearchLiveData;
@@ -90,14 +92,14 @@ public class OrderTurnoverVm extends BaseViewModel {
     public void orderListData(String orderNumber) {
         page = 1;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
-        new AdminOrderRepository().orderListData(orderListLiveData, pageStateLiveData, userId, pCategoryId, categoryId, phases, inside, orderNumber, page);
+        new AdminOrderRepository().orderListData(orderListLiveData, pageStateLiveData, userId, unit_id, supplier_id, pCategoryId, categoryId, phases, inside, orderNumber, page);
     }
 
     //后台管理 --- 周转材料订单列表
     public void moreOrderListData(String orderNumber) {
         page++;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
-        new AdminOrderRepository().orderListData(orderListLiveData, pageStateLiveData, userId, pCategoryId, categoryId, phases, inside, orderNumber, page);
+        new AdminOrderRepository().orderListData(orderListLiveData, pageStateLiveData, userId, unit_id, supplier_id, pCategoryId, categoryId, phases, inside, orderNumber, page);
     }
 
     //后台管理 --- 子公司列表

@@ -5,6 +5,7 @@
     <string name="format_admin_ton_other">%1$s/吨</string>
     <string name="format_admin_shelf_time">%1$s至%2$s%3$s</string>
     <string name="format_admin_category">材料类别：%1$s</string>
+    <string name="format_admin_device_category">设备类别：%1$s</string>
     <string name="format_admin_company">下属公司：%1$s</string>
     <string name="format_admin_project">项目名称：%1$s</string>
     <string name="format_admin_order_number">订单号：%1$s</string>

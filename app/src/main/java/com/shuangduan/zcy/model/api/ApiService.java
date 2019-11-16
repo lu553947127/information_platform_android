@@ -1958,8 +1958,24 @@ public interface ApiService {
     @POST("api/Manage/constructionOrderList")
     Flowable<BaseResponse<AdminOrderBean>> orderListData(
             @Field("user_id") int userId,
+            @Field("unit_id") int unitId,
+            @Field("supplier_id") int supplierId,
             @Field("p_category_id") int pCategoryId,
             @Field("category_id") int categoryId,
+            @Field("phases") int phases,
+            @Field("inside") int inside,
+            @Field("order_number") String orderNumber,
+            @Field("page") int page
+    );
+
+    //后台管理 --- 设备订单管理
+    @FormUrlEncoded
+    @POST("api/Manage/equipmentOrderList")
+    Flowable<BaseResponse<AdminOrderBean>> orderDeviceListData(
+            @Field("user_id") int userId,
+            @Field("unit_id") int unitId,
+            @Field("supplier_id") int supplierId,
+            @Field("category") int categoryId,
             @Field("phases") int phases,
             @Field("inside") int inside,
             @Field("order_number") String orderNumber,
@@ -1973,12 +1989,21 @@ public interface ApiService {
             @Field("user_id") int userId
     );
 
-    //后台管理 --- 订单驳回
+    //后台管理 --- 周转材料订单驳回
     @FormUrlEncoded
     @POST("api/Manage/constructionOrderEditStatus")
     Flowable<BaseResponse> constructionOrderEditStatus(
             @Field("user_id") int userId,
             @Field("id") int id
+    );
+
+    //后台管理 --- 设备订单驳回
+    @FormUrlEncoded
+    @POST("api/Manage/equipmentOrderStatus")
+    Flowable<BaseResponse> equipmentOrderStatus(
+            @Field("user_id") int userId,
+            @Field("id") int id,
+            @Field("status") int status
     );
 
     //后台管理 --- 周转材料详情
@@ -1992,9 +2017,17 @@ public interface ApiService {
     //后台管理 --- 周转材料修改订单进度
     @FormUrlEncoded
     @POST("api/Manage/constructionOrderPhases")
-    Flowable<BaseResponse> constructionOrderPhases(
+    Flowable<BaseResponse<AdminOrderBean.OrderList>> constructionOrderPhases(
             @Field("user_id") int userId,
             @Field("id") int id,
             @Field("phases") int phases
+    );
+
+    //后台管理 --- 设备详情
+    @FormUrlEncoded
+    @POST("api/Manage/equipmentOrderDetail")
+    Flowable<BaseResponse<OrderDetailsBean>> adminEquipmentOrderDetail(
+            @Field("user_id") int userId,
+            @Field("id") int id
     );
 }

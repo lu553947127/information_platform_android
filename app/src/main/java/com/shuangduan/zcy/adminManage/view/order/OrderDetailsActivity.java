@@ -17,6 +17,8 @@ import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.shuangduan.zcy.R;
+import com.shuangduan.zcy.adminManage.bean.OrderDetailsBean;
+import com.shuangduan.zcy.adminManage.vm.OrderDeviceVm;
 import com.shuangduan.zcy.adminManage.vm.OrderTurnoverVm;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
@@ -120,6 +122,9 @@ public class OrderDetailsActivity extends BaseActivity {
     //账号角色ID
     private int manageStatus;
 
+    //订单类型 0:周转物资 1：设备
+    private int orderType;
+
     @Override
     protected int initLayoutRes() {
         return R.layout.activity_admin_order_details;
@@ -137,46 +142,60 @@ public class OrderDetailsActivity extends BaseActivity {
 
         orderId = getIntent().getIntExtra(CustomConfig.ADMIN_ORDER_ID, 0);
         manageStatus = getIntent().getIntExtra("manage_status", 0);
+        orderType = getIntent().getIntExtra("order_type", 0);
 
-        OrderTurnoverVm vm = ViewModelProviders.of(this).get(OrderTurnoverVm.class);
 
-        vm.constructionOrderDetail(orderId);
 
-        vm.orderDetailsLiveData.observe(this, orderItem -> {
-            Glide.with(this).load(orderItem.images.get(0).url).into(ivIcon);
-            tvTitle.setText(orderItem.materialIdName);
-            if(orderItem.method==1){
-                tvPrice.setText(Html.fromHtml("指导单价：<font color=\"#EF583E\">¥"+orderItem.price+"</font>/天"));
-            }else {
-                tvPrice.setText(Html.fromHtml("指导单价：<font color=\"#EF583E\">¥"+orderItem.price+"</font>/"+orderItem.unit));
-            }
-            tvSpec.setText(getString(R.string.format_admin_spec, orderItem.spec));
-            tvCategory.setText(getString(R.string.format_admin_category, orderItem.categoryName));
-            tvSupplyMethod.setText(orderItem.method == 1 ? getString(R.string.admin_turnover_add_lease) : getString(R.string.admin_turnover_add_sell));
-            if (!StringUtils.isTrimEmpty(orderItem.leaseStartTime) && !StringUtils.isTrimEmpty(orderItem.leaseEndTime)) {
-                tvLeaseTime.setText(getString(R.string.format_admin_lease_time, orderItem.leaseStartTime, orderItem.leaseEndTime));
-            }
-            tvReserveNum.setText(orderItem.number+orderItem.unit);
-            tvAddress.setText(getString(R.string.format_admin_address, orderItem.province + orderItem.city + orderItem.address));
+        if(orderType==0){
+            OrderTurnoverVm vm = ViewModelProviders.of(this).get(OrderTurnoverVm.class);
+            vm.constructionOrderDetail(orderId);
 
-            if (manageStatus == 3 || manageStatus == 5) {
-                groupVisible.setVisibility(View.VISIBLE);
-                tvSubsidiaryName.setText(orderItem.company);
-            } else {
-                groupVisible.setVisibility(View.GONE);
-            }
-            tvProjectName.setText(orderItem.unitName);
-            tvOrderNumberValue.setText(orderItem.orderNumber);
-            tvCreateTimeValue.setText(orderItem.createTime);
+            vm.orderDetailsLiveData.observe(this, orderItem -> {
+               initViewData(orderItem);
+            });
+        }else {
+            OrderDeviceVm vm = ViewModelProviders.of(this).get(OrderDeviceVm.class);
+            vm.equipmentOrderDetail(orderId);
+            vm.orderDetailsLiveData.observe(this,orderItem->{
+                initViewData(orderItem);
+            });
+        }
+    }
 
-            tvOrderPhasesValue.setText(orderItem.phases);
-            tvContactValue.setText(orderItem.realName);
-            tvContactTelValue.setText(orderItem.tel);
-            tvBuyCompanyValue.setText(orderItem.orderCompany);
-            tvUseAddressValue.setText(orderItem.orderProvince + orderItem.orderCity + orderItem.orderAddress);
-            tvBuyRemarkValue.setText(orderItem.remark);
-            tvReject.setVisibility(orderItem.status==3?View.VISIBLE:View.GONE);
-        });
+    private void initViewData(OrderDetailsBean orderItem) {
+        Glide.with(this).load(orderItem.images.get(0).url).into(ivIcon);
+        tvTitle.setText(orderItem.materialIdName);
+        if (orderItem.method == 1) {
+            tvPrice.setText(Html.fromHtml("指导单价：<font color=\"#EF583E\">¥" + orderItem.price + "</font>/天"));
+        } else {
+            tvPrice.setText(Html.fromHtml("指导单价：<font color=\"#EF583E\">¥" + orderItem.price + "</font>/" + orderItem.unit));
+        }
+        tvSpec.setText(getString(R.string.format_admin_spec, orderItem.spec));
+        tvCategory.setText(getString(R.string.format_admin_category, orderItem.categoryName));
+        tvSupplyMethod.setText(orderItem.method == 1 ? getString(R.string.admin_turnover_add_lease) : getString(R.string.admin_turnover_add_sell));
+        if (!StringUtils.isTrimEmpty(orderItem.leaseStartTime) && !StringUtils.isTrimEmpty(orderItem.leaseEndTime)) {
+            tvLeaseTime.setText(getString(R.string.format_admin_lease_time, orderItem.leaseStartTime, orderItem.leaseEndTime));
+        }
+        tvReserveNum.setText(orderItem.number + orderItem.unit);
+        tvAddress.setText(getString(R.string.format_admin_address, orderItem.province + orderItem.city + orderItem.address));
+
+        if (manageStatus == 3 || manageStatus == 5) {
+            groupVisible.setVisibility(View.VISIBLE);
+            tvSubsidiaryName.setText(orderItem.company);
+        } else {
+            groupVisible.setVisibility(View.GONE);
+        }
+        tvProjectName.setText(orderItem.unitName);
+        tvOrderNumberValue.setText(orderItem.orderNumber);
+        tvCreateTimeValue.setText(orderItem.createTime);
+
+        tvOrderPhasesValue.setText(orderItem.phases);
+        tvContactValue.setText(orderItem.realName);
+        tvContactTelValue.setText(orderItem.tel);
+        tvBuyCompanyValue.setText(orderItem.orderCompany);
+        tvUseAddressValue.setText(orderItem.orderProvince + orderItem.orderCity + orderItem.orderAddress);
+        tvBuyRemarkValue.setText(orderItem.remark);
+        tvReject.setVisibility(orderItem.status == 3 ? View.VISIBLE : View.GONE);
     }
 
     @Override

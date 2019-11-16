@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -138,7 +139,7 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
 
         rv.setLayoutManager(new LinearLayoutManager(getActivity()));
         adminOrderListAdapter = new AdminOrderListAdapter(R.layout.adapter_admin_order_item, null
-                , SPUtils.getInstance().getInt(CustomConfig.CONSTRUCTION_ORDER_EDIT, 0), manage_status);
+                , SPUtils.getInstance().getInt(CustomConfig.CONSTRUCTION_ORDER_EDIT, 0), manage_status,0);
         rv.setAdapter(adminOrderListAdapter);
 
         adminOrderListAdapter.setOnItemClickListener((adapter, view, position) -> {
@@ -151,6 +152,7 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
                 case 3://集团
                     bundle.putInt(CustomConfig.ADMIN_ORDER_ID, listBean.orderId);
                     bundle.putInt("manage_status", manage_status);
+                    bundle.putInt("order_type",0);
                     ActivityUtils.startActivity(bundle, OrderDetailsActivity.class);
                     break;
                 case 4://子公司子账号
@@ -158,6 +160,7 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
                     if (SPUtils.getInstance().getInt(CustomConfig.CONSTRUCTION_ORDER_DETAIL, 0) == 1) {
                         bundle.putInt(CustomConfig.ADMIN_ORDER_ID, listBean.orderId);
                         bundle.putInt("manage_status", manage_status);
+                        bundle.putInt("order_type",0);
                         ActivityUtils.startActivity(bundle, OrderDetailsActivity.class);
                     }
                     break;
@@ -203,7 +206,7 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
         //订单驳回
         orderVm.rejectLiveData.observe(this, rejectItem -> {
             AdminOrderBean.OrderList orderItem = adminOrderListAdapter.getData().get(orderVm.position);
-            orderItem.status = "驳回订单";
+            orderItem.statusId = 3;
             adminOrderListAdapter.notifyItemChanged(orderVm.position, orderItem);
         });
 
@@ -273,7 +276,9 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
 
         //修改订单进度成功回调监听
         orderVm.orderPhases.observe(this, phases -> {
+            LogUtils.e(phases);
             AdminOrderBean.OrderList orderItem = adminOrderListAdapter.getData().get(orderVm.position);
+            orderItem.statusUpdate = phases.statusUpdate;
             orderItem.phases = orderVm.phasesName;
             adminOrderListAdapter.notifyItemChanged(orderVm.position, orderItem);
         });
@@ -498,7 +503,13 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
                         orderVm.orderListData("");
                         getAddTopScreenView(tvThree, orderPhasesList.get(position).getName(), View.VISIBLE);
                     } else {
-                        orderVm.constructionOrderPhases(adminOrderListAdapter.getData().get(orderVm.position).orderId, orderPhasesList.get(position).getId());
+
+                        AdminOrderBean.OrderList order = adminOrderListAdapter.getData().get(orderVm.position);
+                        if(orderPhasesList.get(position).getId()<=order.phasesId){
+                            ToastUtils.showShort("订单进度不能回退");
+                            return;
+                        }
+                        orderVm.constructionOrderPhases(order.orderId, orderPhasesList.get(position).getId());
                     }
                     btn_dialog.dismiss();
                 });
