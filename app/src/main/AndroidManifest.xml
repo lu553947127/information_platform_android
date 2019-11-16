@@ -353,18 +353,21 @@
         <activity
             android:name="com.shuangduan.zcy.view.material.MaterialOrderSuccessActivity"
             android:theme="@style/BaseAppTheme" />
-        <!-- 物资提交预定页面-->
+        <!-- 周转材料物资提交预定页面-->
         <activity
             android:name="com.shuangduan.zcy.view.material.MaterialPlaceOrderActivity"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
+        <!-- 设备管理物资提交预定页面-->
         <activity
             android:name="com.shuangduan.zcy.view.material.MaterialEquipmentPlaceOrderActivity"
-            android:theme="@style/BaseAppTheme" />
-        <!-- 基建物资详情页-->
+            android:theme="@style/BaseAppTheme"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <!-- 周转材料基建物资详情页-->
         <activity
             android:name="com.shuangduan.zcy.view.material.MaterialDetailActivity"
             android:theme="@style/BaseAppTheme" />
+        <!-- 设备管理基建物资详情页-->
         <activity
             android:name="com.shuangduan.zcy.view.material.MaterialEquipmentDetailActivity"
             android:theme="@style/BaseAppTheme" />

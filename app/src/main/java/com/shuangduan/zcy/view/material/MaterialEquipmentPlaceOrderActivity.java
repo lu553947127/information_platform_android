@@ -16,7 +16,6 @@ import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.ActivityUtils;
-import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.TimeUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -118,7 +117,6 @@ public class MaterialEquipmentPlaceOrderActivity extends BaseActivity {
     //租期开始时间  ,租期结束时间
     private String leaseStartTime, leaseEndTime;
 
-
     @Override
     protected int initLayoutRes() {
         return R.layout.activity_equipment_material_place_order;
@@ -131,7 +129,6 @@ public class MaterialEquipmentPlaceOrderActivity extends BaseActivity {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
-        BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.material_place_order));
 
         tvAddressStar.setVisibility(View.INVISIBLE);
@@ -153,7 +150,6 @@ public class MaterialEquipmentPlaceOrderActivity extends BaseActivity {
             tvMaterialCategory.setText(materialDetailBean.getMaterial_category());
             tvSupplyMethod.setText(materialDetailBean.getMethod() == 1 ? "出租" : "出售");
 
-
             guidance_price = materialDetailBean.getGuidance_price();
             tvGuidancePrice.setText(materialDetailBean.getMethod() == 1 ?
                     String.format(getString(R.string.format_material_price), String.valueOf(guidance_price), "天") :
@@ -173,7 +169,6 @@ public class MaterialEquipmentPlaceOrderActivity extends BaseActivity {
             } else {
                 llLease.setVisibility(View.GONE);
             }
-
         });
 
         //预定订单提交成功返回结果
@@ -208,7 +203,6 @@ public class MaterialEquipmentPlaceOrderActivity extends BaseActivity {
 
         materialDetailVm.getEquipmentDetail(getIntent().getIntExtra(CustomConfig.MATERIAL_ID, 0));
     }
-
 
     @OnClick({R.id.iv_bar_back, R.id.tv_province, R.id.tv_submission, R.id.tv_time_start, R.id.tv_time_end})
     void onClick(View view) {
