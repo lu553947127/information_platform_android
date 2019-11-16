@@ -43,6 +43,10 @@ public class OrderTurnoverVm extends BaseViewModel {
     public int categoryId;
     //订单进度
     public int phases;
+    //修改订单进度Id
+    public int updatePhasesId;
+
+
     //订单进度名称
     public String phasesName;
     //订单类型

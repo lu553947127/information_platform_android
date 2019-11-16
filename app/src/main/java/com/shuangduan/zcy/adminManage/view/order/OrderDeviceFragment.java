@@ -278,6 +278,7 @@ public class OrderDeviceFragment extends BaseLazyFragment implements BaseQuickAd
             AdminOrderBean.OrderList orderItem = adminOrderListAdapter.getData().get(orderVm.position);
             orderItem.statusUpdate = phases.statusUpdate;
             orderItem.phases = orderVm.phasesName;
+            orderItem.phasesId = orderVm.updatePhasesId;
             adminOrderListAdapter.notifyItemChanged(orderVm.position, orderItem);
         });
     }
@@ -467,20 +468,21 @@ public class OrderDeviceFragment extends BaseLazyFragment implements BaseQuickAd
                 OrderPhasesAdapter orderPhasesAdapter = new OrderPhasesAdapter(R.layout.adapter_selector_area_second, orderPhasesList);
                 rvOrderPhases.setAdapter(orderPhasesAdapter);
                 orderPhasesAdapter.setOnItemClickListener((adapter, view, position) -> {
-                    orderVm.phases = orderPhasesList.get(position).getId();
+
                     orderVm.phasesName = orderPhasesList.get(position).getName();
                     if (updateState == 0) {
+                        orderVm.phases = orderPhasesList.get(position).getId();
                         getDrawableRightView(tvOrderPhases, R.drawable.icon_pulldown_arrow, R.color.color_666666);
                         orderVm.orderDeviceListData("");
                         getAddTopScreenView(tvThree, orderPhasesList.get(position).getName(), View.VISIBLE);
                     } else {
-
                         AdminOrderBean.OrderList order = adminOrderListAdapter.getData().get(orderVm.position);
+                        orderVm.updatePhasesId = orderPhasesList.get(position).getId();
                         if(orderPhasesList.get(position).getId()<=order.phasesId){
                             ToastUtils.showShort("订单进度不能回退");
                             return;
                         }
-//                        orderVm.constructionOrderPhases(order.orderId, orderPhasesList.get(position).getId());
+                        orderVm.equipmentOrderPhase(order.id, orderPhasesList.get(position).getId());
                     }
                     btn_dialog.dismiss();
                 });
@@ -586,7 +588,7 @@ public class OrderDeviceFragment extends BaseLazyFragment implements BaseQuickAd
                         }).showDialog();
                 break;
             case R.id.tv_progress://修改进度
-//                getBottomSheetDialog(R.layout.dialog_is_grounding, "order_phases", 1);
+                getBottomSheetDialog(R.layout.dialog_is_grounding, "order_phases", 1);
                 break;
         }
     }

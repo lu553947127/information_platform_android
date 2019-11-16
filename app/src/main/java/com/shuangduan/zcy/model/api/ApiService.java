@@ -2030,4 +2030,14 @@ public interface ApiService {
             @Field("user_id") int userId,
             @Field("id") int id
     );
+
+    //后台管理 --- 设备订单修改进度
+    @FormUrlEncoded
+    @POST("api/Manage/equipmentOrderPhases")
+    Flowable<BaseResponse<AdminOrderBean.OrderList>> equipmentOrderPhases(
+            @Field("user_id") int userId,
+            @Field("id") int id,
+            @Field("phases") int phases
+    );
+
 }

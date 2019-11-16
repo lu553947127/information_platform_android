@@ -170,6 +170,7 @@ public class TurnoverDialogControl extends BaseAddInfoDialog implements DialogIn
                 if (currentPosition < 9) {
                     next(++currentPosition);
                 }
+
                 break;
         }
     }

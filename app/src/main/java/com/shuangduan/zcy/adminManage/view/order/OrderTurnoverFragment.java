@@ -274,7 +274,7 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
             LogUtils.e(phases);
             AdminOrderBean.OrderList orderItem = adminOrderListAdapter.getData().get(orderVm.position);
             orderItem.statusUpdate = phases.statusUpdate;
-            orderItem.phases = orderVm.phasesName;
+            orderItem.phasesId = orderVm.updatePhasesId;
             adminOrderListAdapter.notifyItemChanged(orderVm.position, orderItem);
         });
     }
@@ -491,14 +491,15 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
                 OrderPhasesAdapter orderPhasesAdapter = new OrderPhasesAdapter(R.layout.adapter_selector_area_second, orderPhasesList);
                 rvOrderPhases.setAdapter(orderPhasesAdapter);
                 orderPhasesAdapter.setOnItemClickListener((adapter, view, position) -> {
-                    orderVm.phases = orderPhasesList.get(position).getId();
+
                     orderVm.phasesName = orderPhasesList.get(position).getName();
                     if (updateState == 0) {
+                        orderVm.phases = orderPhasesList.get(position).getId();
                         getDrawableRightView(tvOrderPhases, R.drawable.icon_pulldown_arrow, R.color.color_666666);
                         orderVm.orderListData("");
                         getAddTopScreenView(tvThree, orderPhasesList.get(position).getName(), View.VISIBLE);
                     } else {
-
+                        orderVm.updatePhasesId = orderPhasesList.get(position).getId();
                         AdminOrderBean.OrderList order = adminOrderListAdapter.getData().get(orderVm.position);
                         if(orderPhasesList.get(position).getId()<=order.phasesId){
                             ToastUtils.showShort("订单进度不能回退");

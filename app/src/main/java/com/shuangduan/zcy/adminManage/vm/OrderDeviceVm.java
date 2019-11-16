@@ -46,6 +46,9 @@ public class OrderDeviceVm extends BaseViewModel {
     public int categoryId;
     //订单进度
     public int phases;
+
+    //修改订单进度ID
+    public int updatePhasesId;
     //订单进度名称
     public String phasesName;
     //订单类型
@@ -113,5 +116,11 @@ public class OrderDeviceVm extends BaseViewModel {
     //订单管理 --- 筛选条件列表
     public void orderSearch() {
         new TurnoverRepository().orderSearch(orderSearchLiveData, pageStateLiveData, userId);
+    }
+
+
+    //订单管理 --- 设备修改进度
+    public void equipmentOrderPhase(int orderId, int phases){
+        new AdminOrderRepository().equipmentOrderPhases(orderPhasesLiveData,pageStateLiveData,userId, orderId, phases);
     }
 }

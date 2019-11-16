@@ -59,4 +59,9 @@ public class AdminOrderRepository extends BaseRepository {
     public void equipmentOrderDetail(MutableLiveData<OrderDetailsBean> liveData, MutableLiveData<String> pageState, int userId, int orderId) {
         request(apiService.adminEquipmentOrderDetail(userId, orderId)).setData(liveData).setPageState(pageState).send();
     }
+
+    //后台管理 --- 设备订单修改订单进度
+    public void equipmentOrderPhases(MutableLiveData<AdminOrderBean.OrderList> liveData, MutableLiveData<String> pageState, int userId, int orderId, int phases) {
+        request(apiService.equipmentOrderPhases(userId, orderId, phases)).setData(liveData).setPageState(pageState).send();
+    }
 }
