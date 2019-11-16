@@ -46,13 +46,13 @@ public class DeviceAdapter extends BaseQuickAdapter<DeviceBean.ListBean, BaseVie
                 tvUseStatus.setBackgroundResource(R.drawable.shape_green);
                 break;
             case "闲置":
-                tvUseStatus.setBackgroundResource(R.drawable.shape_gray);
+                tvUseStatus.setBackgroundResource(R.drawable.shape_red);
                 break;
             case "出租":
                 tvUseStatus.setBackgroundResource(R.drawable.shape_yellow);
                 break;
             case "待报废":
-                tvUseStatus.setBackgroundResource(R.drawable.shape_red);
+                tvUseStatus.setBackgroundResource(R.drawable.shape_gray);
                 break;
         }
 
