@@ -89,18 +89,18 @@ public class GoToSubActivity extends BaseActivity {
             switch (checkedId) {
                 case R.id.rb_first:
                     goToSubVm.month = valueSelect.get(0).getMonths();
-                    tvSubPrice.setText(valueSelect.get(0).getPrice()+"紫金币");
-                    tvExpectedReturn.setText(valueSelect.get(0).getExpect_price()+"紫金币");
+                    tvSubPrice.setText(valueSelect.get(0).getPrice()+"元");
+                    tvExpectedReturn.setText(valueSelect.get(0).getExpect_price()+"元");
                     break;
                 case R.id.rb_second:
                     goToSubVm.month = valueSelect.get(1).getMonths();
-                    tvSubPrice.setText(valueSelect.get(1).getPrice()+"紫金币");
-                    tvExpectedReturn.setText(valueSelect.get(1).getExpect_price()+"紫金币");
+                    tvSubPrice.setText(valueSelect.get(1).getPrice()+"元");
+                    tvExpectedReturn.setText(valueSelect.get(1).getExpect_price()+"元");
                     break;
                 case R.id.rb_third:
                     goToSubVm.month = valueSelect.get(2).getMonths();
-                    tvSubPrice.setText(valueSelect.get(2).getPrice()+"紫金币");
-                    tvExpectedReturn.setText(valueSelect.get(2).getExpect_price()+"紫金币");
+                    tvSubPrice.setText(valueSelect.get(2).getPrice()+"元");
+                    tvExpectedReturn.setText(valueSelect.get(2).getExpect_price()+"元");
                     break;
             }
         });
@@ -115,8 +115,8 @@ public class GoToSubActivity extends BaseActivity {
                     ProjectSubFirstBean.SelectBean selectBean = projectSubFirstBean.getSelect().get(i);
                     if (i == 0) {
                         rbFirst.setText(selectBean.getTime());
-                        tvSubPrice.setText(selectBean.getPrice()+"紫金币");
-                        tvExpectedReturn.setText(selectBean.getExpect_price()+"紫金币");
+                        tvSubPrice.setText(selectBean.getPrice()+"元");
+                        tvExpectedReturn.setText(selectBean.getExpect_price()+"元");
                         goToSubVm.month = selectBean.getMonths();
                     }else if (i == 1){
                         rbSecond.setText(selectBean.getTime());

@@ -96,8 +96,8 @@ public class SubInfoActivity extends BaseActivity {
             tvSubTime.setText(info.getCreate_time());
             tvHoldTime.setText(String.format(getString(R.string.format_validity_period_less), info.getStart_time(), info.getEnd_time()));
             tvReadPeopleNum.setText(String.valueOf(info.getCount()));
-            tvExpectedReturn.setText(info.getExpect_price()+"紫金币");
-            tvGenerateRevenue.setText(info.getIncome_price()+"紫金币");
+            tvExpectedReturn.setText(info.getExpect_price()+"元");
+            tvGenerateRevenue.setText(info.getIncome_price()+"元");
 
             List<ProjectSubViewBean.ListBean> list = projectSubViewBean.getList();
             values.clear();

@@ -284,7 +284,7 @@ public class DemandReleaseActivity extends BaseActivity {
                             return;
                         }
                         if (Double.valueOf(edtCommission.getText().toString())<10){
-                            ToastUtils.showShort("佣金不能低于10紫金币");
+                            ToastUtils.showShort("佣金不能低于10元");
                             return;
                         }
                         demandReleaseVm.releaseRelationShip(edtTitle.getText().toString(), edtDes.getText().toString(), edtCommission.getText().toString());

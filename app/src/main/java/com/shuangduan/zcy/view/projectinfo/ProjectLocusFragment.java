@@ -257,7 +257,7 @@ public class ProjectLocusFragment extends BaseLazyFragment {
             }
         });
 
-        //紫金币支付
+        //元支付
         coinPayVm = ViewModelProviders.of(this).get(CoinPayVm.class);
         coinPayVm.locusPayLiveData.observe(this, coinPayResultBean -> {
             if (coinPayResultBean.getPay_status() == 1) {

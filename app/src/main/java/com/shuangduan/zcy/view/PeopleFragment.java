@@ -76,7 +76,7 @@ public class PeopleFragment extends BaseLazyFragment {
         incomePeopleVm = ViewModelProviders.of(this).get(IncomePeopleVm.class);
         incomePeopleVm.showLiveData.observe(this, peopleBean -> {
             isInited = true;
-            tvIncomeAmount.setText(peopleBean.getNetworking_funds()+"紫金币");
+            tvIncomeAmount.setText(peopleBean.getNetworking_funds()+"元");
         });
     }
 

@@ -36,7 +36,7 @@ public class IncomePeopleAdapter extends BaseQuickAdapter<IncomePeopleBean.ListB
     protected void convert(BaseViewHolder helper, IncomePeopleBean.ListBean item) {
         helper.setText(R.id.tv_name, item.getUsername())
                 .setText(R.id.tv_time, item.getCreate_time())
-                .setText(R.id.tv_price, item.getPrice() + "紫金币")
+                .setText(R.id.tv_price, item.getPrice() + "元")
                 .setVisible(R.id.iv_sgs, item.getCardStatus() == 2);
 //                .setVisible(R.id.tv_add_friends, type != 1 && type != 7);
 

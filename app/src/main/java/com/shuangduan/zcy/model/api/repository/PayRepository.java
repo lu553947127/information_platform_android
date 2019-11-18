@@ -25,56 +25,56 @@ public class PayRepository extends BaseRepository {
     }
 
     /**
-     * 紫金币支付概况
+     * 元支付概况
      */
     public void payProjectContent(MutableLiveData<CoinPayResultBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int id, String coin_password){
         request(apiService.payProjectContent(userId, id, coin_password)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
     /**
-     * 紫金币支付动态
+     * 元支付动态
      */
     public void payLocus(MutableLiveData<CoinPayResultBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int id, String coin_password){
         request(apiService.payLocus(userId, id, coin_password)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
     /**
-     * 紫金币支付供应商
+     * 元支付供应商
      */
     public void paySupplier(MutableLiveData<CoinPayResultBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int id, String coin_password){
         request(apiService.paySupplier(userId, id, coin_password)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
     /**
-     * 紫金币支付招采信息
+     * 元支付招采信息
      */
     public void payRecruit(MutableLiveData<CoinPayResultBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int id, String coin_password){
         request(apiService.payRecruit(userId, id, coin_password)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
     /**
-     * 紫金币支付找物质信息
+     * 元支付找物质信息
      */
     public void payFindSubstance(MutableLiveData<CoinPayResultBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int id, String coin_password){
         request(apiService.payFindSubstance(userId, id, coin_password)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
     /**
-     * 紫金币支付找买家信息
+     * 元支付找买家信息
      */
     public void payFindBuyer(MutableLiveData<CoinPayResultBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int id, String coin_password){
         request(apiService.payFindBuyer(userId, id, coin_password)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
     /**
-     * 紫金币支付发布找关系佣金
+     * 元支付发布找关系佣金
      */
     public void payRelationshipRelease(MutableLiveData<CoinPayResultBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int id, String coin_password){
         request(apiService.payRelationshipRelease(userId, id, coin_password)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
     /**
-     * 紫金币支付工程信息认购
+     * 元支付工程信息认购
      */
     public void payWarrant(MutableLiveData<CoinPayResultBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int id, int orderId, String coin_password){
         request(apiService.payWarrant(userId, id, orderId, coin_password)).setData(liveData).setPageState(pageStateLiveData).send();

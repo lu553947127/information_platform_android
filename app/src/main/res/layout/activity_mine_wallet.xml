@@ -68,7 +68,7 @@
                 android:layout_marginTop="16dp"
                 android:textSize="13sp"
                 android:textColor="@color/color_D4CFFF"
-                android:text="余额（紫金币）"/>
+                android:text="余额（元）"/>
 
             <com.shuangduan.zcy.weight.NumberAnimTextView
                 android:id="@+id/tv_balance"

@@ -349,7 +349,7 @@ public class TurnoverMaterialFragment extends BaseLazyFragment {
                 ActivityUtils.startActivity(bundle, TurnoverAddActivity.class);
                 break;
             case R.id.tv_company://选择子公司/项目
-                if (SPUtils.getInstance().getInt(CustomConfig.MANAGE_STATUS,0)==3){
+                if (SPUtils.getInstance().getInt(CustomConfig.MANAGE_STATUS,0)==3||SPUtils.getInstance().getInt(CustomConfig.MANAGE_STATUS,0)==5){
                     getBottomSheetDialog(R.layout.dialog_depositing_place,"company",0,1);
                 }else {
                     getBottomSheetDialog(R.layout.dialog_is_grounding,"project",0,1);

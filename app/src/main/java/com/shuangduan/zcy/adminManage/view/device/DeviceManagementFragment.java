@@ -330,7 +330,7 @@ public class DeviceManagementFragment extends BaseLazyFragment {
                 ActivityUtils.startActivity(bundle, DeviceAddActivity.class);
                 break;
             case R.id.tv_company://选择子公司
-                if (SPUtils.getInstance().getInt(CustomConfig.MANAGE_STATUS,0)==3){
+                if (SPUtils.getInstance().getInt(CustomConfig.MANAGE_STATUS,0)==3||SPUtils.getInstance().getInt(CustomConfig.MANAGE_STATUS,0)==5){
                     getBottomSheetDialog(R.layout.dialog_depositing_place,"company");
                 }else {
                     getBottomSheetDialog(R.layout.dialog_is_grounding,"project");

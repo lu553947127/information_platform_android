@@ -333,14 +333,14 @@
 
     <string name="recruit_intro">招标简介</string>
     <string name="filter">筛选</string>
-    <string name="loose_change_withdraw">紫金币提现</string>
+    <string name="loose_change_withdraw">元提现</string>
     <string name="withdraw_record">提现记录</string>
     <string name="bank_card">我的银行卡</string>
     <string name="add_bank_card">添加银行卡</string>
     <string name="add_bank_card_tip">(最多只能添加5张银行卡)</string>
     <string name="wallet">我的钱包</string>
     <string name="Invite_friends">邀请好友加入</string>
-    <string name="make_money">赚取紫金币</string>
+    <string name="make_money">赚取收益</string>
     <string name="my_channel">我的频道</string>
     <string name="material_services">基建服务</string>
     <string name="admin_manage">后台管理</string>
@@ -407,10 +407,10 @@
 
     <string name="format_version_name">v%1$s</string>
     <string name="format_get_verification_code_again">重新获取 (%1$ds)</string>
-    <string name="format_balance">余额:%1$s紫金币</string>
+    <string name="format_balance">余额:%1$s元</string>
     <string name="format_amount">%1$s元</string>
-    <string name="format_amount_people">%1$s紫金币</string>
-    <string name="format_amount_bi">%1$s紫金币</string>
+    <string name="format_amount_people">%1$s元</string>
+    <string name="format_amount_bi">%1$s元</string>
     <string name="format_amount_rmb">￥%1$s元</string>
     <string name="format_num_of_people">人脉数量: %1$d人</string>
     <string name="format_num_of_readers">收藏人数: %1$d人</string>
@@ -440,10 +440,10 @@
     <string name="format_valuation">估价：%1$s</string>
     <string name="format_consumption">消费次数：%1$d次</string>
     <string name="format_locus_num">动态信息：%1$d条</string>
-    <string name="format_pay_price_release">发布此消息请支付%1$s紫金币</string>
-    <string name="format_pay_price">查看此消息请支付%1$s紫金币</string>
-    <string name="format_pay_price_project">查看这条工程信息和全部联系人需要支付%1$s紫金币</string>
-    <string name="format_pay_price_sub">认购此工程请支付%1$s紫金币</string>
+    <string name="format_pay_price_release">发布此消息请支付%1$s元</string>
+    <string name="format_pay_price">查看此消息请支付%1$s元</string>
+    <string name="format_pay_price_project">查看这条工程信息和全部联系人需要支付%1$s元</string>
+    <string name="format_pay_price_sub">认购此工程请支付%1$s元</string>
     <string name="format_stock">库存：%1$d%2$s</string>
     <string name="format_stock_no_unit">库存：%1$d</string>
     <string name="format_enclosure">查看物资图纸</string>
@@ -461,10 +461,10 @@
     <string name="format_supplier_product">经营产品：%1$s</string>
     <string name="format_supplier_service_area">服务地区：%1$s</string>
     <string name="format_sales_volume">已成交：%1$s单</string>
-    <string name="format_pay_amount">支付金额: %1$s紫金币</string>
-    <string name="format_pay_read">-%1$s紫金币</string>
-    <string name="format_amount_sub">认购金额: %1$s紫金币</string>
-    <string name="format_amount_return">已返金额: %1$s紫金币</string>
+    <string name="format_pay_amount">支付金额: %1$s元</string>
+    <string name="format_pay_read">-%1$s元</string>
+    <string name="format_amount_sub">认购金额: %1$s元</string>
+    <string name="format_amount_return">已返金额: %1$s元</string>
     <string name="format_price">价格: %1$s元</string>
     <string name="format_price_demand">价格: %1$s元</string>
     <string name="format_price_accept">接受价格: %1$s元</string>
@@ -474,7 +474,7 @@
     <string name="format_validity_period">有效期: %1$s至%2$s</string>
     <string name="format_validity_period_less">%1$s至%2$s</string>
     <string name="format_demand_num">需求数量: %1$s</string>
-    <string name="format_commission">佣金: %1$s紫金币</string>
+    <string name="format_commission">佣金: %1$s元</string>
     <string name="format_price_unit">元/%1$s</string>
 
     <string name="im_no_friend">暂无更多联系人</string>

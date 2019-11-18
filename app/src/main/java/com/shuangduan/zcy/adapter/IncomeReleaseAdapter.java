@@ -28,6 +28,6 @@ public class IncomeReleaseAdapter extends BaseQuickAdapter<IncomeReleaseBean.Lis
     protected void convert(BaseViewHolder helper, IncomeReleaseBean.ListBean item) {
         helper.setText(R.id.tv_title, item.getTitle())
                 .setText(R.id.tv_time, item.getCreate_time())
-                .setText(R.id.tv_price, item.getPrice() + "紫金币");
+                .setText(R.id.tv_price, item.getPrice() + "元");
     }
 }

@@ -83,10 +83,10 @@ public class SubOrderActivity extends BaseActivity {
         tvBarTitle.setText(getString(R.string.sub_order));
         confirmBean = getIntent().getParcelableExtra(CustomConfig.ORDER);
         tvProjectName.setText(confirmBean.getTitle());
-        tvSubAmount.setText(confirmBean.getPrice()+"紫金币");
+        tvSubAmount.setText(confirmBean.getPrice()+"元");
         tvOrderNum.setText(confirmBean.getOrder_sn());
         tvSubCycle.setText(confirmBean.getTime());
-        String price = "<font>共计支付</font><font color = '#EF583E'>" + confirmBean.getPrice() +"</font><font>紫金币</font>";
+        String price = "<font>共计支付</font><font color = '#EF583E'>" + confirmBean.getPrice() +"</font><font>元</font>";
         tvPrice.setText(Html.fromHtml(price));
         initPay();
     }

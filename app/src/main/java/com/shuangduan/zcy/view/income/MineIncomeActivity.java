@@ -80,8 +80,8 @@ public class MineIncomeActivity extends BaseActivity {
         mineIncomeVm = ViewModelProviders.of(this).get(MineIncomeVm.class);
         mineIncomeVm.incomeLiveData.observe(this, mineIncomeBean -> {
             MineIncomeBean.ProceedsBean proceeds = mineIncomeBean.getProceeds();
-            tvExpectedReturn.setText(proceeds.getAll_funds() + "紫金币");
-            tvWithdrawIncome.setText(proceeds.getCoin() + "紫金币");
+            tvExpectedReturn.setText(proceeds.getAll_funds() + "元");
+            tvWithdrawIncome.setText(proceeds.getCoin() + "元");
             List<MineIncomeBean.ListBean> list = mineIncomeBean.getList();
 
             values.clear();

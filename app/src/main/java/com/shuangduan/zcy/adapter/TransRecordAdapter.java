@@ -36,10 +36,10 @@ public class TransRecordAdapter extends BaseQuickAdapter<TransRecordBean.ListBea
         if (item.getType() == 1){
             //收入
             tvPrice.setTextColor(mContext.getResources().getColor(R.color.color_EF583E));
-            tvPrice.setText(String.format("+%1$s紫金币", item.getPrice()));
+            tvPrice.setText(String.format("+%1$s元", item.getPrice()));
         }else if (item.getType() == 2){
             tvPrice.setTextColor(mContext.getResources().getColor(R.color.colorTv));
-            tvPrice.setText(String.format("-%1$s紫金币", item.getPrice()));
+            tvPrice.setText(String.format("-%1$s元", item.getPrice()));
         }
     }
 }

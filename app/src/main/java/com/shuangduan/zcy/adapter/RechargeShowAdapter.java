@@ -28,7 +28,7 @@ public class RechargeShowAdapter extends BaseQuickAdapter<RechargeShowBean.ListB
 
     @Override
     protected void convert(BaseViewHolder helper, RechargeShowBean.ListBean item) {
-        helper.setText(R.id.tv_num, item.getCoin() + "紫金币")
+        helper.setText(R.id.tv_num, item.getCoin() + "元")
                 .setText(R.id.tv_price, String.format(mContext.getString(R.string.format_price), item.getPrice()))
                 .setTextColor(R.id.tv_num, mContext.getResources().getColor(item.getIsSelect() == 1? R.color.colorPrimary: R.color.colorTvHint))
                 .setTextColor(R.id.tv_price, mContext.getResources().getColor(item.getIsSelect() == 1? R.color.colorPrimary: R.color.colorTvHint));
