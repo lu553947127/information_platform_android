@@ -52,6 +52,9 @@ public abstract class BaseAddInfoDialog {
     public TurnoverSelectView tsItemSeven;
     public TurnoverSelectView tsItemEight;
     public TurnoverSelectView tsItemNine;
+
+
+
     public TextView tvTitle;
     public WheelSlideView wheelView;
     public RelativeLayout rlDate;
@@ -69,6 +72,9 @@ public abstract class BaseAddInfoDialog {
     public List<String> projectList;
     //项目ID
     public List<Integer> projectIdList;
+    public TextView tvCancel;
+
+
 
     public abstract int layoutId();
 
@@ -162,6 +168,8 @@ public abstract class BaseAddInfoDialog {
         tvTitle = view.findViewById(R.id.tv_dialog_item_title);
         wheelView = view.findViewById(R.id.wheel_view);
 
+
+
         //时间
         rlDate = view.findViewById(R.id.rl_date);
         year_pv = view.findViewById(R.id.year_pv);
@@ -173,7 +181,7 @@ public abstract class BaseAddInfoDialog {
         minute_text = view.findViewById(R.id.minute_text);
 
         tvPositive = view.findViewById(R.id.tv_positive);
-
+        tvCancel = view.findViewById(R.id.tv_cancel);
 
         wheelView.setDividerColor(0x000000);
 

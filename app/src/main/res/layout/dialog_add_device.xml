@@ -133,6 +133,19 @@
             android:layout_height="wrap_content">
 
             <TextView
+                android:id="@+id/tv_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/tv_dialog_item_title"
+                android:layout_alignBottom="@id/tv_dialog_item_title"
+                android:gravity="center"
+                android:paddingLeft="15sp"
+                android:paddingRight="15sp"
+                android:text="@string/admin_clear"
+                android:textColor="@color/text2"
+                android:textSize="15sp" />
+
+            <TextView
                 android:id="@+id/tv_dialog_item_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

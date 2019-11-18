@@ -38,11 +38,11 @@ public class TurnoverDialogControl extends BaseAddInfoDialog implements DialogIn
     //当前滑动的角标值
     private int selectorIndex;
 
-    private int  plan;
+    private int plan;
     private String use_count, start_date, entry_time, exit_time, accumulated_amortization, original_price, net_worth, planStr;
 
     public TurnoverDialogControl(BaseActivity context, TurnoverVm vm, TurnoverDetailListening listening) {
-        super(context,vm);
+        super(context, vm);
         this.listening = listening;
         initData(vm);
     }
@@ -72,6 +72,7 @@ public class TurnoverDialogControl extends BaseAddInfoDialog implements DialogIn
         tsItemEight.setOnClickListener(this);
         tsItemNine.setOnClickListener(this);
         tvPositive.setOnClickListener(this);
+        tvCancel.setOnClickListener(this);
 
 
         tsItemThree.getEditText().addTextChangedListener(new TextWatcherWrapper() {
@@ -143,13 +144,13 @@ public class TurnoverDialogControl extends BaseAddInfoDialog implements DialogIn
                 showView(0, R.string.admin_selector_material_project);
                 break;
             case R.id.ts_item_two:
-                showView(1,  R.string.admin_selector_material_plan);
+                showView(1, R.string.admin_selector_material_plan);
                 break;
             case R.id.ts_item_three:
                 showView(2, R.string.admin_input_material_num);
                 break;
             case R.id.ts_item_four:
-                showView(3,R.string.admin_selector_material_start_time);
+                showView(3, R.string.admin_selector_material_start_time);
                 break;
             case R.id.ts_item_five:
                 showView(4, R.string.admin_selector_material_enter_time);
@@ -170,7 +171,31 @@ public class TurnoverDialogControl extends BaseAddInfoDialog implements DialogIn
                 if (currentPosition < 9) {
                     next(++currentPosition);
                 }
+                break;
+            case R.id.tv_cancel://清空时间
+                clearData(currentPosition);
+                break;
+        }
+    }
 
+    private void clearData(int position) {
+        switch (position) {
+            case 1:
+                planStr = "";
+                plan = 0;
+                tsItemTwo.setValue(planStr);
+                break;
+            case 3:
+                start_date = "";
+                tsItemFour.setValue(start_date);
+                break;
+            case 4:
+                entry_time = "";
+                tsItemFive.setValue(entry_time);
+                break;
+            case 5:
+                exit_time = "";
+                tsItemSix.setValue(exit_time);
                 break;
         }
     }
@@ -181,16 +206,16 @@ public class TurnoverDialogControl extends BaseAddInfoDialog implements DialogIn
                 showView(0, R.string.admin_selector_material_project);
                 break;
             case 1:
-                showView(1,  R.string.admin_selector_material_plan);
+                showView(1, R.string.admin_selector_material_plan);
                 break;
             case 2:
-                showView(6, R.string.admin_input_material_amortize);
-                break;
-            case 3:
                 planStr = planList.get(selectorIndex);
                 plan = planIdList.get(selectorIndex);
                 tsItemTwo.setValue(planStr);
-                showView(1,  R.string.admin_input_material_num);
+                showView(6, R.string.admin_input_material_amortize);
+                break;
+            case 3:
+                showView(1, R.string.admin_input_material_num);
                 break;
             case 4:
                 start_date = sdf.format(selectedCalender.getTime());
@@ -200,15 +225,15 @@ public class TurnoverDialogControl extends BaseAddInfoDialog implements DialogIn
             case 5:
                 entry_time = sdf.format(selectedCalender.getTime());
                 tsItemFive.setValue(entry_time);
-                showView(5,R.string.admin_selector_material_exit_time);
+                showView(5, R.string.admin_selector_material_exit_time);
                 break;
             case 6:
                 exit_time = sdf.format(selectedCalender.getTime());
                 tsItemSix.setValue(exit_time);
-                showView(7,R.string.admin_input_material_original);
+                showView(7, R.string.admin_input_material_original);
                 break;
             case 7:
-                showView(3,R.string.admin_selector_material_start_time);
+                showView(3, R.string.admin_selector_material_start_time);
                 break;
             case 8:
                 showView(8, R.string.admin_input_material_value);
@@ -243,8 +268,6 @@ public class TurnoverDialogControl extends BaseAddInfoDialog implements DialogIn
                 if (KeyboardUtil.isSoftShowing(context)) {
                     KeyboardUtil.showORhideSoftKeyboard(context);
                 }
-
-
                 wheelView.setItemsVisibleCount(5);
 //                wheelView.setCurrentItem(1);
 //                selectorIndex = 1;
@@ -305,7 +328,7 @@ public class TurnoverDialogControl extends BaseAddInfoDialog implements DialogIn
     }
 
     public interface TurnoverDetailListening {
-        void callInfo( int plan, String planStr, String use_count, String start_date, String entry_time,
-                       String exit_time, String accumulated_amortization, String original_price, String net_worth);
+        void callInfo(int plan, String planStr, String use_count, String start_date, String entry_time,
+                      String exit_time, String accumulated_amortization, String original_price, String net_worth);
     }
 }

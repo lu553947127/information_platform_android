@@ -64,6 +64,8 @@ public class DeviceDialogControl extends BaseAddInfoDialog implements DialogInte
         tsItemNine.setOnClickListener(this);
         tvPositive.setOnClickListener(this);
 
+        tvCancel.setOnClickListener(this);
+
 
         tsItemThree.getEditText().addTextChangedListener(new TextWatcherWrapper() {
             @Override
@@ -168,6 +170,26 @@ public class DeviceDialogControl extends BaseAddInfoDialog implements DialogInte
                 if (currentPosition < 9) {
                     next(++currentPosition);
                 }
+                break;
+            case R.id.tv_cancel://清空时间
+                clearData(currentPosition);
+                break;
+        }
+    }
+
+    private void clearData(int position) {
+        switch (position){
+            case 1:
+                start_date = "";
+                tsItemTwo.setValue(start_date);
+                break;
+            case 6:
+                entry_time = "";
+                tsItemSeven.setValue(entry_time);
+                break;
+            case 7:
+                exit_time = "";
+                tsItemEight.setValue(exit_time);
                 break;
         }
     }

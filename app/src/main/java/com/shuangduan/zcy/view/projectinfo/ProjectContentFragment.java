@@ -83,6 +83,7 @@ public class ProjectContentFragment extends BaseFragment implements BaseQuickAda
     private UpdatePwdPayVm updatePwdPayVm;
     private CoinPayVm coinPayVm;
     private static int project_id;
+    private ProjectDetailBean.DetailBean detail;
 
     public static ProjectContentFragment newInstance(int id) {
         Bundle args = new Bundle();
@@ -107,7 +108,7 @@ public class ProjectContentFragment extends BaseFragment implements BaseQuickAda
     protected void initDataAndEvent(Bundle savedInstanceState, View v) {
 
         rvContact.setLayoutManager(new LinearLayoutManager(mContext));
-        contactAdapter = new ContactAdapter(R.layout.item_contact, null,0);
+        contactAdapter = new ContactAdapter(R.layout.item_contact, null, 0);
         contactAdapter.setEmptyView(R.layout.layout_loading_top, rvContact);
         contactAdapter.setOnItemChildClickListener(this);
 
@@ -116,7 +117,7 @@ public class ProjectContentFragment extends BaseFragment implements BaseQuickAda
         //基本信息设置
         projectDetailVm = ViewModelProviders.of(mActivity).get(ProjectDetailVm.class);
         projectDetailVm.detailLiveData.observe(this, projectDetailBean -> {
-            ProjectDetailBean.DetailBean detail = projectDetailBean.getDetail();
+            detail = projectDetailBean.getDetail();
             projectDetailVm.titleLiveData.postValue(detail.getTitle());
             projectDetailVm.locationLiveData.postValue(detail.getProvince() + detail.getCity());
             projectDetailVm.latitudeLiveData.postValue(new LatLng(detail.getLatitude(), detail.getLongitude()));
@@ -167,7 +168,7 @@ public class ProjectContentFragment extends BaseFragment implements BaseQuickAda
         });
 
         //加入群聊返回结果
-        projectDetailVm.joinGroupData.observe(this,item ->{
+        projectDetailVm.joinGroupData.observe(this, item -> {
             ToastUtils.showShort(getString(R.string.buy_success));
             projectDetailVm.getDetail();
         });
@@ -270,7 +271,9 @@ public class ProjectContentFragment extends BaseFragment implements BaseQuickAda
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
         switch (view.getId()) {
             case R.id.tv_phone:
-                addPayDialog();
+                if (detail.getIs_pay() != 1) {
+                    addPayDialog();
+                }
                 break;
         }
     }

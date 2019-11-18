@@ -944,7 +944,6 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
                     String.valueOf(turnoverDetailEditBean.getNet_worth()));
 
             etRemark.setText(turnoverDetailEditBean.getRemark());
-
             if (turnoverDetailEditBean.getPlan() != 0 || turnoverDetailEditBean.getUse_count() != 0
                     || !StringUtils.isTrimEmpty(turnoverAddVm.start_date) || !StringUtils.isTrimEmpty(turnoverAddVm.entry_time)
                     || !StringUtils.isTrimEmpty(turnoverAddVm.exit_time) || turnoverDetailEditBean.getAccumulated_amortization() != 0
@@ -975,19 +974,12 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
         turnoverAddVm.original_price = original_price;
         turnoverAddVm.net_worth = net_worth;
 
-        if (!StringUtils.isTrimEmpty(planStr)) {
-            tsPlan.setValue(planStr);
-        }
+
+        tsPlan.setValue(planStr);
         tsNum.setValue(use_count);
-        if (!StringUtils.isTrimEmpty(start_date)) {
-            tsStartTime.setValue(start_date);
-        }
-        if (!StringUtils.isTrimEmpty(entry_time)) {
-            tsEnterTime.setValue(entry_time);
-        }
-        if (!StringUtils.isTrimEmpty(exit_time)) {
-            tsExitTime.setValue(exit_time);
-        }
+        tsStartTime.setValue(start_date);
+        tsEnterTime.setValue(entry_time);
+        tsExitTime.setValue(exit_time);
         tsAmortize.setValue(accumulated_amortization);
         tsOriginal.setValue(original_price);
         tsValue.setValue(net_worth);
