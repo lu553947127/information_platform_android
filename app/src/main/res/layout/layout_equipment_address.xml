@@ -33,6 +33,7 @@
             android:layout_marginLeft="48dp"
             android:background="@color/colorFFF"
             android:hint="请输入"
+            android:maxLength="6"
             android:inputType="number"
             android:textColor="@color/color_666666"
             android:textSize="14sp"

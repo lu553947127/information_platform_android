@@ -225,9 +225,9 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
         dialogControl.initView();
 
         //获取项目名称
-        deviceVm.turnoverProject.observe(this,turnoverNameBeans -> {
-            projectList=turnoverNameBeans;
-            if (getIntent().getIntExtra(CustomConfig.HANDLE_TYPE, 0)==ADD&&projectList.size()!=0){
+        deviceVm.turnoverProject.observe(this, turnoverNameBeans -> {
+            projectList = turnoverNameBeans;
+            if (getIntent().getIntExtra(CustomConfig.HANDLE_TYPE, 0) == ADD && projectList.size() != 0) {
                 deviceAddVm.unit_id = projectList.get(0).id;
                 tvProject.setText(projectList.get(0).name);
                 tvProject.setTextColor(getResources().getColor(R.color.colorTv));
@@ -238,7 +238,7 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
         deviceVm.deviceFirstData.observe(this, turnoverCategoryBeans -> {
             categoryList = turnoverCategoryBeans;
             selectorCategoryFirstAdapter.setNewData(categoryList);
-            if (getIntent().getIntExtra(CustomConfig.HANDLE_TYPE, 0)==ADD&&materialList.size() == 0) {
+            if (getIntent().getIntExtra(CustomConfig.HANDLE_TYPE, 0) == ADD && materialList.size() == 0) {
                 deviceAddVm.category = categoryList.get(0).getId();
                 deviceAddVm.categoryName = categoryList.get(0).getCatname();
                 selectorCategoryFirstAdapter.setIsSelect(deviceAddVm.category);
@@ -295,7 +295,7 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
 
         //添加周转材料成功返回结果
         deviceAddVm.deviceAddData.observe(this, item -> {
-            EventBus.getDefault().post(new DeviceEvent(0,""));
+            EventBus.getDefault().post(new DeviceEvent(0, ""));
             ToastUtils.showShort("添加成功");
             finish();
         });
@@ -326,7 +326,7 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
         deviceVm.getUnitInfo();
     }
 
-    @OnClick({R.id.iv_bar_back,R.id.tv_project, R.id.tv_category_material_id, R.id.tv_unit, R.id.tv_use_status
+    @OnClick({R.id.iv_bar_back, R.id.tv_project, R.id.tv_category_material_id, R.id.tv_unit, R.id.tv_use_status
             , R.id.tv_address, R.id.tv_is_shelf, R.id.tv_shelf_time_start, R.id.tv_shelf_time_end, R.id.iv_images
             , R.id.ts_project, R.id.ts_start_time, R.id.ts_brand, R.id.ts_original_price, R.id.ts_main_params, R.id.ts_power, R.id.ts_entry_time, R.id.ts_exit_time, R.id.ts_operator_name
             , R.id.tv_material_status, R.id.tv_plan, R.id.tv_reserve})
@@ -337,9 +337,9 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
                 finish();
                 break;
             case R.id.tv_project://项目名称
-                if (projectList.size()!=0){
+                if (projectList.size() != 0) {
                     getBottomSheetDialog(R.layout.dialog_is_grounding, "project");
-                }else {
+                } else {
                     ToastUtils.showShort(getString(R.string.admin_selector_no_project_list));
                 }
                 break;
@@ -386,10 +386,10 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
                 }
                 break;
             case R.id.ts_start_time://开始使用日期
-                dialogControl.showDialog(1,  R.string.admin_selector_material_start_time);
+                dialogControl.showDialog(1, R.string.admin_selector_material_start_time);
                 break;
             case R.id.ts_brand://品牌
-                dialogControl.showDialog(2,  R.string.admin_input_material_brand);
+                dialogControl.showDialog(2, R.string.admin_input_material_brand);
                 break;
             case R.id.ts_original_price://设备原值
                 dialogControl.showDialog(3, R.string.admin_input_material_original_price);
@@ -398,16 +398,16 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
                 dialogControl.showDialog(4, R.string.admin_input_material_main_params);
                 break;
             case R.id.ts_power://功率
-                dialogControl.showDialog(5,  R.string.admin_input_material_power);
+                dialogControl.showDialog(5, R.string.admin_input_material_power);
                 break;
             case R.id.ts_entry_time://设备进场时间
-                dialogControl.showDialog(6,  R.string.admin_input_device_material_entry_time);
+                dialogControl.showDialog(6, R.string.admin_input_device_material_entry_time);
                 break;
             case R.id.ts_exit_time://设备退场时间
                 dialogControl.showDialog(7, R.string.admin_input_device_material_exit_time);
                 break;
             case R.id.ts_operator_name://操作上姓名
-                dialogControl.showDialog(8,R.string.admin_input_device_material_operator_name);
+                dialogControl.showDialog(8, R.string.admin_input_device_material_operator_name);
                 break;
             case R.id.tv_material_status://设备状况
                 getBottomSheetDialog(R.layout.dialog_is_grounding, "material_status");
@@ -516,7 +516,7 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
                 Objects.requireNonNull(tvProjects).setText("选择项目");
                 RecyclerView rvProject = btn_dialog.findViewById(R.id.rv);
                 Objects.requireNonNull(rvProject).setLayoutManager(new LinearLayoutManager(this));
-                turnoverProjectAdapter = new TurnoverProjectAdapter(R.layout.adapter_turnover_project, projectList,12);
+                turnoverProjectAdapter = new TurnoverProjectAdapter(R.layout.adapter_turnover_project, projectList, 12);
                 rvProject.setAdapter(turnoverProjectAdapter);
                 turnoverProjectAdapter.setOnItemClickListener((adapter, view, position) -> {
                     deviceAddVm.unit_id = projectList.get(position).id;
@@ -747,6 +747,7 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
     //获取权限
     public static final int CAMERA = 111;
     public static final int PHOTO = 222;
+
     private void getPermissions() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager
@@ -917,12 +918,12 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
             tsStartTime.setValue(deviceDetailEditBean.getStart_date());
             deviceAddVm.brand = deviceDetailEditBean.getBrand();
             tsBrand.setValue(deviceDetailEditBean.getBrand());
-            deviceAddVm.original_price = deviceDetailEditBean.getOriginal_price();
-            tsOriginalPrice.setValue(deviceDetailEditBean.getOriginal_price());
+            deviceAddVm.original_price = String.valueOf(deviceDetailEditBean.getOriginal_price());
+            tsOriginalPrice.setValue(String.valueOf(deviceDetailEditBean.getOriginal_price()));
             deviceAddVm.main_params = deviceDetailEditBean.getMain_params();
             tsMainParams.setValue(deviceDetailEditBean.getMain_params());
-            deviceAddVm.power = deviceDetailEditBean.getPower();
-            tsPower.setValue(deviceDetailEditBean.getPower());
+            deviceAddVm.power = String.valueOf(deviceDetailEditBean.getPower());
+            tsPower.setValue(String.valueOf(deviceDetailEditBean.getPower()));
             deviceAddVm.entry_time = deviceDetailEditBean.getEntry_time();
             tsEntryTime.setValue(deviceDetailEditBean.getEntry_time());
             deviceAddVm.exit_time = deviceDetailEditBean.getExit_time();
@@ -931,13 +932,12 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
             tsOperatorName.setValue(deviceDetailEditBean.getOperator_name());
 
             dialogControl.setDetail(deviceDetailEditBean.getStart_date()
-                    ,deviceDetailEditBean.getBrand(),deviceDetailEditBean.getOriginal_price(),deviceDetailEditBean.getMain_params(),deviceDetailEditBean.getPower()
-                    ,deviceDetailEditBean.getEntry_time(),deviceDetailEditBean.getExit_time(),deviceDetailEditBean.getOperator_name());
+                    , deviceDetailEditBean.getBrand(), String.valueOf(deviceDetailEditBean.getOriginal_price()), deviceDetailEditBean.getMain_params(), String.valueOf(deviceDetailEditBean.getPower())
+                    , deviceDetailEditBean.getEntry_time(), deviceDetailEditBean.getExit_time(), deviceDetailEditBean.getOperator_name());
 
-            if (!StringUtils.isTrimEmpty(deviceDetailEditBean.getUnit_id_name())
-                    || !StringUtils.isTrimEmpty(deviceDetailEditBean.getStart_date()) || !StringUtils.isTrimEmpty(deviceDetailEditBean.getBrand())
-                    || !StringUtils.isTrimEmpty(deviceDetailEditBean.getOriginal_price()) || !StringUtils.isTrimEmpty(deviceDetailEditBean.getMain_params())
-                    || !StringUtils.isTrimEmpty(deviceDetailEditBean.getPower()) || !StringUtils.isTrimEmpty(deviceDetailEditBean.getEntry_time())
+            if (!StringUtils.isTrimEmpty(deviceDetailEditBean.getStart_date()) || !StringUtils.isTrimEmpty(deviceDetailEditBean.getBrand())
+                    || deviceDetailEditBean.getOriginal_price() != 0 || !StringUtils.isTrimEmpty(deviceDetailEditBean.getMain_params())
+                    || deviceDetailEditBean.getPower() != 0 || !StringUtils.isTrimEmpty(deviceDetailEditBean.getEntry_time())
                     || !StringUtils.isTrimEmpty(deviceDetailEditBean.getExit_time()) || !StringUtils.isTrimEmpty(deviceDetailEditBean.getOperator_name())) {
                 svOtherDetails.setOpened(true);
                 llTurnoverDetail.setVisibility(View.VISIBLE);
@@ -956,14 +956,14 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
 
         //编辑周转材料返回结果
         deviceAddVm.deviceEditData.observe(this, item -> {
-            EventBus.getDefault().post(new DeviceEvent(0,""));
+            EventBus.getDefault().post(new DeviceEvent(0, ""));
             ToastUtils.showShort("编辑成功");
             finish();
         });
     }
 
     @Override
-    public void callInfo(String brand,String start_date, String operator_name,  String original_price,
+    public void callInfo(String brand, String start_date, String operator_name, String original_price,
                          String main_params, String power, String entry_time, String exit_time) {
         deviceAddVm.brand = brand;
         deviceAddVm.start_date = start_date;

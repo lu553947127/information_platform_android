@@ -41,7 +41,6 @@ public class MaterialOrderAdapter extends BaseQuickAdapter<MaterialOrderBean.Lis
             tvTitle.setText(item.materialName);
         }
 
-
         ImageView ivIcon = helper.getView(R.id.iv_icon);
         try {
             String thumb = item.images;

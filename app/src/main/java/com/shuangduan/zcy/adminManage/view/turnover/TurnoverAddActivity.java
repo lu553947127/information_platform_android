@@ -219,7 +219,7 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
         //获取项目名称
         turnoverVm.turnoverProject.observe(this, turnoverNameBeans -> {
             projectList = turnoverNameBeans;
-            if (getIntent().getIntExtra(CustomConfig.HANDLE_TYPE, 0)==ADD&&projectList.size()!=0){
+            if (getIntent().getIntExtra(CustomConfig.HANDLE_TYPE, 0) == ADD && projectList.size() != 0) {
                 turnoverAddVm.unit_id = projectList.get(0).id;
                 tvProject.setText(projectList.get(0).name);
                 tvProject.setTextColor(getResources().getColor(R.color.colorTv));
@@ -297,7 +297,7 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
         //添加周转材料成功返回结果
         turnoverAddVm.turnoverAddData.observe(this, item -> {
             ToastUtils.showShort("添加成功");
-            EventBus.getDefault().post(new TurnoverEvent(0,""));
+            EventBus.getDefault().post(new TurnoverEvent(0, ""));
             finish();
         });
 
@@ -528,7 +528,7 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
                 Objects.requireNonNull(tvProjects).setText("选择项目");
                 RecyclerView rvProject = btn_dialog.findViewById(R.id.rv);
                 Objects.requireNonNull(rvProject).setLayoutManager(new LinearLayoutManager(this));
-                turnoverProjectAdapter = new TurnoverProjectAdapter(R.layout.adapter_turnover_project, projectList,12);
+                turnoverProjectAdapter = new TurnoverProjectAdapter(R.layout.adapter_turnover_project, projectList, 12);
                 rvProject.setAdapter(turnoverProjectAdapter);
                 turnoverProjectAdapter.setOnItemClickListener((adapter, view, position) -> {
                     turnoverAddVm.unit_id = projectList.get(position).id;
@@ -851,7 +851,7 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
             tvAddress.setTextColor(getResources().getColor(R.color.colorTv));
             etPersonLiable.setText(turnoverDetailEditBean.getPerson_liable());
             etTel.setText(turnoverDetailEditBean.getTel());
-            turnoverAddVm.is_vulnerable=turnoverDetailEditBean.getRapid_wear();
+            turnoverAddVm.is_vulnerable = turnoverDetailEditBean.getRapid_wear();
             if (turnoverAddVm.is_vulnerable == 1) {
                 cbYes.setChecked(false);
                 cbNo.setChecked(true);
@@ -922,31 +922,33 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
 
             turnoverAddVm.plan = turnoverDetailEditBean.getPlan();
             tsPlan.setValue(turnoverDetailEditBean.getPlan_name());
-            turnoverAddVm.use_count = turnoverDetailEditBean.getUse_count();
-            tsNum.setValue(turnoverDetailEditBean.getUse_count());
+            turnoverAddVm.use_count = String.valueOf(turnoverDetailEditBean.getUse_count());
+            tsNum.setValue(String.valueOf(turnoverDetailEditBean.getUse_count()));
             turnoverAddVm.start_date = turnoverDetailEditBean.getStart_date();
             tsStartTime.setValue(turnoverDetailEditBean.getStart_date());
             turnoverAddVm.entry_time = turnoverDetailEditBean.getEntry_time();
             tsEnterTime.setValue(turnoverDetailEditBean.getEntry_time());
             turnoverAddVm.exit_time = turnoverDetailEditBean.getExit_time();
             tsExitTime.setValue(turnoverDetailEditBean.getExit_time());
-            turnoverAddVm.accumulated_amortization = turnoverDetailEditBean.getAccumulated_amortization();
-            tsAmortize.setValue(turnoverDetailEditBean.getAccumulated_amortization());
-            turnoverAddVm.original_price = turnoverDetailEditBean.getOriginal_price();
-            tsOriginal.setValue(turnoverDetailEditBean.getOriginal_price());
-            turnoverAddVm.net_worth = turnoverDetailEditBean.getNet_worth();
-            tsValue.setValue(turnoverDetailEditBean.getNet_worth());
+            turnoverAddVm.accumulated_amortization = String.valueOf(turnoverDetailEditBean.getAccumulated_amortization());
+            tsAmortize.setValue(String.valueOf(turnoverDetailEditBean.getAccumulated_amortization()));
+            turnoverAddVm.original_price = String.valueOf(turnoverDetailEditBean.getOriginal_price());
+            tsOriginal.setValue(String.valueOf(turnoverDetailEditBean.getOriginal_price()));
+            turnoverAddVm.net_worth = String.valueOf(turnoverDetailEditBean.getNet_worth());
+            tsValue.setValue(String.valueOf(turnoverDetailEditBean.getNet_worth()));
 
             dialogControl.setDetail(turnoverDetailEditBean.getPlan(), turnoverDetailEditBean.getPlan_name()
-                    , turnoverDetailEditBean.getUse_count(), turnoverDetailEditBean.getStart_date(), turnoverDetailEditBean.getEntry_time(), turnoverDetailEditBean.getExit_time()
-                    , turnoverDetailEditBean.getAccumulated_amortization(), turnoverDetailEditBean.getOriginal_price(), turnoverDetailEditBean.getNet_worth());
+                    , String.valueOf(turnoverDetailEditBean.getUse_count()), turnoverDetailEditBean.getStart_date(),
+                    turnoverDetailEditBean.getEntry_time(), turnoverDetailEditBean.getExit_time()
+                    , String.valueOf(turnoverDetailEditBean.getAccumulated_amortization()), String.valueOf(turnoverDetailEditBean.getOriginal_price()),
+                    String.valueOf(turnoverDetailEditBean.getNet_worth()));
 
             etRemark.setText(turnoverDetailEditBean.getRemark());
 
-            if (turnoverAddVm.plan != 0 || !StringUtils.isTrimEmpty(turnoverAddVm.use_count)
+            if (turnoverDetailEditBean.getPlan() != 0 || turnoverDetailEditBean.getUse_count() != 0
                     || !StringUtils.isTrimEmpty(turnoverAddVm.start_date) || !StringUtils.isTrimEmpty(turnoverAddVm.entry_time)
-                    || !StringUtils.isTrimEmpty(turnoverAddVm.exit_time) || !StringUtils.isTrimEmpty(turnoverAddVm.accumulated_amortization)
-                    || !StringUtils.isTrimEmpty(turnoverAddVm.original_price) || !StringUtils.isTrimEmpty(turnoverAddVm.net_worth)) {
+                    || !StringUtils.isTrimEmpty(turnoverAddVm.exit_time) || turnoverDetailEditBean.getAccumulated_amortization() != 0
+                    || turnoverDetailEditBean.getOriginal_price() != 0 || turnoverDetailEditBean.getNet_worth() != 0) {
                 svOtherDetails.setOpened(true);
                 llTurnoverDetail.setVisibility(View.VISIBLE);
             }
@@ -955,7 +957,7 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
         //编辑周转材料返回结果
         turnoverAddVm.turnoverEditData.observe(this, item -> {
             ToastUtils.showShort("编辑成功");
-            EventBus.getDefault().post(new TurnoverEvent(0,""));
+            EventBus.getDefault().post(new TurnoverEvent(0, ""));
             finish();
         });
     }

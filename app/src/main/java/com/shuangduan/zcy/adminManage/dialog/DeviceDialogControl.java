@@ -178,15 +178,18 @@ public class DeviceDialogControl extends BaseAddInfoDialog implements DialogInte
                 showView(0, R.string.admin_selector_material_project);
                 break;
             case 1:
-                showView(1, R.string.admin_selector_material_start_time);
+
                 break;
             case 2:
                 start_date = sdf.format(selectedCalender.getTime());
                 tsItemTwo.setValue(start_date);
-                showView(2, R.string.admin_input_material_brand);
+                showView(8, R.string.admin_input_device_material_operator_name);
+
+//                showView(2, R.string.admin_input_material_brand);
                 break;
             case 3:
-                showView(3, R.string.admin_input_material_original_price);
+                showView(1, R.string.admin_selector_material_start_time);
+
                 break;
             case 4:
                 showView(4, R.string.admin_input_material_main_params);
@@ -205,10 +208,10 @@ public class DeviceDialogControl extends BaseAddInfoDialog implements DialogInte
             case 8:
                 exit_time = sdf.format(selectedCalender.getTime());
                 tsItemEight.setValue(exit_time);
-                showView(8, R.string.admin_input_device_material_operator_name);
+                dialog.dismiss();
                 break;
             case 9:
-                dialog.dismiss();
+                showView(3, R.string.admin_input_material_original_price);
                 break;
         }
     }
@@ -240,7 +243,7 @@ public class DeviceDialogControl extends BaseAddInfoDialog implements DialogInte
                 break;
             case 5:
                 KeyboardUtil.showSoftInputFromWindow(context, tsItemSix.getEditText());
-                tsItemSix.getEditText().setInputType(InputType.TYPE_CLASS_TEXT);
+//                tsItemSix.getEditText().setInputType(InputType.TYPE_CLASS_TEXT);
                 break;
             case 2:
                 KeyboardUtil.showSoftInputFromWindow(context, tsItemThree.getEditText());
@@ -283,12 +286,12 @@ public class DeviceDialogControl extends BaseAddInfoDialog implements DialogInte
         if (KeyboardUtil.isSoftShowing(context)) {
             KeyboardUtil.showORhideSoftKeyboard(context);
         }
-        listening.callInfo( brand,start_date, operator_name, original_price, main_params, power, entry_time, exit_time);
+        listening.callInfo(brand, start_date, operator_name, original_price, main_params, power, entry_time, exit_time);
     }
 
 
     public interface DeviceDetailListening {
-        void callInfo(String brand,String start_date, String operator_name, String original_price, String main_params,
+        void callInfo(String brand, String start_date, String operator_name, String original_price, String main_params,
                       String power, String entry_time, String exit_time);
     }
 }

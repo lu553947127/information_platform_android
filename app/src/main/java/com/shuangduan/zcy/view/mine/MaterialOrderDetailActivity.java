@@ -115,7 +115,7 @@ public class MaterialOrderDetailActivity extends BaseActivity {
 
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
-        MaterialOrderAddressAdapter adapter = new MaterialOrderAddressAdapter(R.layout.item_material_details_address, null);
+        MaterialOrderAddressAdapter adapter = new MaterialOrderAddressAdapter(R.layout.item_material_details_address, null,type);
         adapter.setEmptyView(R.layout.layout_empty, rv);
         rv.setAdapter(adapter);
 
@@ -135,9 +135,15 @@ public class MaterialOrderDetailActivity extends BaseActivity {
             tvTitle.setText(item.category);
 
 
-            tvPrice.setText(item.method == 1 ?
-                    Html.fromHtml("商品单价：<font color=#EF583E>" + item.price + "<font/>/天") :
-                    Html.fromHtml("商品单价：<font color=#EF583E>" + item.price + "<font/>/" + item.unit));
+            if (type == CustomConfig.FRP) {
+                tvPrice.setText(item.method == 1 ?
+                        Html.fromHtml("商品单价：<font color=#EF583E>" + item.price + "<font/>/天") :
+                        Html.fromHtml("商品单价：<font color=#EF583E>" + item.price + "<font/>/" + item.unit));
+            } else if (type == CustomConfig.EQUIPMENT) {
+                tvPrice.setText(item.method == 1 ?
+                        Html.fromHtml("商品单价：<font color=#EF583E>" + item.price + "<font/>/天") :
+                        Html.fromHtml("商品单价：<font color=#EF583E>" + item.price + "<font/>" ));
+            }
 
             tvSpec.setText("规格：" + item.spec);
             tvSupplier.setText("供应商：" + item.supplier);

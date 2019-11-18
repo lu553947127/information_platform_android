@@ -274,6 +274,7 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
             LogUtils.e(phases);
             AdminOrderBean.OrderList orderItem = adminOrderListAdapter.getData().get(orderVm.position);
             orderItem.statusUpdate = phases.statusUpdate;
+            orderItem.phases = orderVm.phasesName;
             orderItem.phasesId = orderVm.updatePhasesId;
             adminOrderListAdapter.notifyItemChanged(orderVm.position, orderItem);
         });

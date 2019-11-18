@@ -1,5 +1,7 @@
 package com.shuangduan.zcy.adminManage.bean;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 /**
@@ -96,8 +98,8 @@ public class DeviceDetailEditBean {
     private String plan_name;
     private String brand;
     private String main_params;
-    private String power;
-    private String original_price;
+    private int power;
+    private int original_price;
     private String start_date;
     private String entry_time;
     private String exit_time;
@@ -106,6 +108,7 @@ public class DeviceDetailEditBean {
     private String equipment_time;
     private String operator_name;
     private List<ImagesBean> images;
+
 
     public int getCategory() {
         return category;
@@ -387,19 +390,19 @@ public class DeviceDetailEditBean {
         this.main_params = main_params;
     }
 
-    public String getPower() {
+    public int getPower() {
         return power;
     }
 
-    public void setPower(String power) {
+    public void setPower(int power) {
         this.power = power;
     }
 
-    public String getOriginal_price() {
+    public int getOriginal_price() {
         return original_price;
     }
 
-    public void setOriginal_price(String original_price) {
+    public void setOriginal_price(int original_price) {
         this.original_price = original_price;
     }
 

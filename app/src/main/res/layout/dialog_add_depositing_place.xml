@@ -73,7 +73,7 @@
                     android:digits="0123456789"
                     android:hint="请输入数量"
                     android:inputType="number"
-                    android:maxLength="8"
+                    android:maxLength="6"
                     android:singleLine="true"
                     android:textColor="@color/colorTv"
                     android:textColorHint="@color/colorTvHint"

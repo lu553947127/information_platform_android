@@ -27,11 +27,18 @@ public class RongExtraBean {
 
         public String name;
 
+        //订单类型
+        @SerializedName("order_type")
+        public int orderType;
+
         @Override
         public String toString() {
             return "ExtraData{" +
                     "id=" + id +
                     ", orderId=" + orderId +
+                    ", userId=" + userId +
+                    ", name='" + name + '\'' +
+                    ", orderType=" + orderType +
                     '}';
         }
     }

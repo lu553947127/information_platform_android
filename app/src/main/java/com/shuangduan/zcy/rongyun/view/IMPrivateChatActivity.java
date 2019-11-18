@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
+
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.JsonUtils;
 import com.blankj.utilcode.util.LogUtils;
@@ -31,6 +32,7 @@ import com.shuangduan.zcy.view.mine.TransRecordDetailActivity;
 import com.shuangduan.zcy.view.mine.UserInfoActivity;
 import com.shuangduan.zcy.view.projectinfo.ProjectDetailActivity;
 import com.shuangduan.zcy.view.recruit.RecruitDetailActivity;
+import com.shuangduan.zcy.view.supplier.SupplierDetailActivity;
 import com.shuangduan.zcy.vm.IMAddVm;
 
 import java.util.Locale;
@@ -119,8 +121,8 @@ public class IMPrivateChatActivity extends BaseActivity implements RongIM.Conver
         RongIM.setConversationClickListener(this);
 
         //会话列表头像名称显示
-        imAddVm.imUserInfoLiveData.observe(this,imWechatUserInfoBean -> {
-            RongIM.getInstance().refreshUserInfoCache(new UserInfo(imWechatUserInfoBean.getUserId(),imWechatUserInfoBean.getName(),Uri.parse(imWechatUserInfoBean.getPortraitUri())));
+        imAddVm.imUserInfoLiveData.observe(this, imWechatUserInfoBean -> {
+            RongIM.getInstance().refreshUserInfoCache(new UserInfo(imWechatUserInfoBean.getUserId(), imWechatUserInfoBean.getName(), Uri.parse(imWechatUserInfoBean.getPortraitUri())));
             if (imWechatUserInfoBean.getUserId().equals(user_id)) {
                 tvBarCompanyOrPost.setText(imWechatUserInfoBean.getCompany() + " " + imWechatUserInfoBean.getPosition());
             }
@@ -237,8 +239,8 @@ public class IMPrivateChatActivity extends BaseActivity implements RongIM.Conver
                     ActivityUtils.startActivity(bundle, TransRecordDetailActivity.class); //交易记录详情
                     break;
                 case 24:// 物资订单状态有更新
-                    //TODO 此处需要进行修改 物资订单有两种 周转材料  和 设备物资
                     bundle.putInt(CustomConfig.ORDER_ID, extraBean.data.orderId);
+                    bundle.putInt(CustomConfig.MATERIALS_TYPE, extraBean.data.orderType);
                     ActivityUtils.startActivity(bundle, MaterialOrderDetailActivity.class);//物资预定详情
                     break;
 //                case 25://优质供应商申请已通过审核

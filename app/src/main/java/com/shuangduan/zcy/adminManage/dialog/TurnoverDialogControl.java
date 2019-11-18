@@ -184,13 +184,13 @@ public class TurnoverDialogControl extends BaseAddInfoDialog implements DialogIn
                 showView(1,  R.string.admin_selector_material_plan);
                 break;
             case 2:
+                showView(6, R.string.admin_input_material_amortize);
+                break;
+            case 3:
                 planStr = planList.get(selectorIndex);
                 plan = planIdList.get(selectorIndex);
                 tsItemTwo.setValue(planStr);
-                showView(2,  R.string.admin_input_material_num);
-                break;
-            case 3:
-                showView(3,R.string.admin_selector_material_start_time);
+                showView(1,  R.string.admin_input_material_num);
                 break;
             case 4:
                 start_date = sdf.format(selectedCalender.getTime());
@@ -205,10 +205,10 @@ public class TurnoverDialogControl extends BaseAddInfoDialog implements DialogIn
             case 6:
                 exit_time = sdf.format(selectedCalender.getTime());
                 tsItemSix.setValue(exit_time);
-                showView(6, R.string.admin_input_material_amortize);
+                showView(7,R.string.admin_input_material_original);
                 break;
             case 7:
-                showView(7,R.string.admin_input_material_original);
+                showView(3,R.string.admin_selector_material_start_time);
                 break;
             case 8:
                 showView(8, R.string.admin_input_material_value);
@@ -306,6 +306,6 @@ public class TurnoverDialogControl extends BaseAddInfoDialog implements DialogIn
 
     public interface TurnoverDetailListening {
         void callInfo( int plan, String planStr, String use_count, String start_date, String entry_time,
-                      String exit_time, String accumulated_amortization, String original_price, String net_worth);
+                       String exit_time, String accumulated_amortization, String original_price, String net_worth);
     }
 }
