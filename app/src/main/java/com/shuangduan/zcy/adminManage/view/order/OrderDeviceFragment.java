@@ -315,7 +315,7 @@ public class OrderDeviceFragment extends BaseLazyFragment implements BaseQuickAd
         Bundle bundle = new Bundle();
         switch (view.getId()) {
             case R.id.tv_project://选择子公司/项目
-                if (manage_status == 3) {
+                if (manage_status == 3 || manage_status == 5) {
                     getBottomSheetDialog(R.layout.dialog_depositing_place, "company", 0);
                 } else {
                     getBottomSheetDialog(R.layout.dialog_is_grounding, "project", 0);
