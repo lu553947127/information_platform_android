@@ -53,7 +53,6 @@ import com.shuangduan.zcy.view.headlines.HeadlinesActivity;
 import com.shuangduan.zcy.view.headlines.HeadlinesDetailActivity;
 import com.shuangduan.zcy.view.material.MaterialActivity;
 import com.shuangduan.zcy.view.income.MineIncomeActivity;
-import com.shuangduan.zcy.view.mine.MineSubActivity;
 import com.shuangduan.zcy.view.projectinfo.ProjectInfoActivity;
 import com.shuangduan.zcy.view.recruit.RecruitActivity;
 import com.shuangduan.zcy.view.search.SearchActivity;
@@ -428,7 +427,7 @@ public class HomeFragment extends BaseFragment {
         });
     }
 
-    @OnClick({R.id.tv_bar_title, R.id.tv_more, R.id.iv_subscribed, R.id.tv_bar_title_home, R.id.iv_subscribed_home, R.id.iv_my_income, R.id.rl_zgx, R.id.rl_zwz, R.id.rl_zmj, R.id.tv_more_need})
+    @OnClick({R.id.tv_bar_title, R.id.tv_more, R.id.tv_bar_title_home, R.id.iv_my_income, R.id.rl_zgx, R.id.rl_zwz, R.id.rl_zmj, R.id.tv_more_need})
     void onClick(View view) {
         Bundle bundle = new Bundle();
         switch (view.getId()) {
@@ -438,10 +437,6 @@ public class HomeFragment extends BaseFragment {
                 break;
             case R.id.tv_more://基建头条查看更多
                 ActivityUtils.startActivity(HeadlinesActivity.class);
-                break;
-            case R.id.iv_subscribed:
-            case R.id.iv_subscribed_home://我的订阅
-                ActivityUtils.startActivity(MineSubActivity.class);
                 break;
             case R.id.iv_my_income://我的收益
                 ActivityUtils.startActivity(MineIncomeActivity.class);

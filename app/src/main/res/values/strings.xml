@@ -6,7 +6,7 @@
 
     <string name="home">首页</string>
     <string name="people">人脉</string>
-    <string name="circle">工程圈</string>
+    <string name="circle">消息</string>
     <string name="mine">我的</string>
 
     <string name="net_error">没有网络，点击重试</string>

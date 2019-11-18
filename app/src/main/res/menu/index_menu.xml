@@ -14,7 +14,7 @@
     <item
         android:id="@+id/menu_circle"
         android:icon="@drawable/icon_circle_normal"
-        android:title="工程圈" />
+        android:title="消息" />
     <!--我的-->
     <item
         android:id="@+id/menu_mime"

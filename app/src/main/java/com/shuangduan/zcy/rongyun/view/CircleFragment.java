@@ -28,10 +28,11 @@ import com.shuangduan.zcy.app.MyApplication;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseFragment;
 import com.shuangduan.zcy.model.event.AvatarEvent;
-import com.shuangduan.zcy.utils.BarUtils;
 import com.shuangduan.zcy.utils.image.ImageConfig;
 import com.shuangduan.zcy.utils.image.ImageLoader;
+import com.shuangduan.zcy.view.mine.MineSubActivity;
 import com.shuangduan.zcy.view.mine.UserInfoActivity;
+import com.shuangduan.zcy.vm.HomeVm;
 import com.shuangduan.zcy.vm.IMAddVm;
 import com.shuangduan.zcy.vm.UserInfoVm;
 import com.shuangduan.zcy.weight.CircleImageView;
@@ -66,21 +67,32 @@ import io.rong.imlib.model.UserInfo;
  */
 public class CircleFragment extends BaseFragment {
 
-    @BindView(R.id.fake_status_bar)
-    View fakeStatusBar;
     @BindView(R.id.iv_header)
     CircleImageView iv_header;
     @BindView(R.id.refresh)
     SmartRefreshLayout refresh;
     @BindView(R.id.iv_sgs)
     AppCompatImageView ivSgs;
-    private TextView tvNumber;
+
+    @BindView(R.id.rl_subscribe_children)
+    RelativeLayout rlSubscribeChildren;
+    @BindView(R.id.tv_subscribe_children_numbers)
+    TextView tvSubscribeChildrenNumbers;
+    @BindView(R.id.rl_idle_reminder)
+    RelativeLayout rlIdleReminder;
+    @BindView(R.id.tv_subscribe_group_number)
+    TextView tvSubscribeGroupNumber;
+    @BindView(R.id.tv_unused_number)
+    TextView tvUnusedNumber;
+
+    private TextView tvContactsNumbers;
     private UserInfoVm userInfoVm;
     private NoScrollViewPager viewPager;
     private RelativeLayout relativeLayout;
     private TextView number;
-    private IMAddVm imAddVm;
     private IUnReadMessageObserver observer;
+    private IMAddVm imAddVm;
+    private HomeVm homeVm;
 
     public static CircleFragment newInstance() {
         Bundle args = new Bundle();
@@ -102,7 +114,6 @@ public class CircleFragment extends BaseFragment {
     @SuppressLint({"CutPasteId", "SetTextI18n"})
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState,View view) {
-        BarUtils.setStatusBarColorRes(fakeStatusBar, getResources().getColor(R.color.colorPrimary));
         FragmentManager fragmentManage = getChildFragmentManager();
         ConversationListFragment fragement = (ConversationListFragment) fragmentManage.findFragmentById(R.id.conversationlist);
         ConversationListAdapterEx adapterEx = new ConversationListAdapterEx(RongContext.getInstance());
@@ -116,6 +127,26 @@ public class CircleFragment extends BaseFragment {
                 .appendQueryParameter(Conversation.ConversationType.SYSTEM.getName(), "false")//系统
                 .build();
         fragement.setUri(uri);
+
+        //获取后台管理权限
+        homeVm = ViewModelProviders.of(mActivity).get(HomeVm.class);
+        homeVm.supplierRoleLiveData.observe(this, supplierRoleBean -> {
+            //获取用户身份 0普通用户 1普通供应商 2子公司 3集团 4子账号
+            switch (supplierRoleBean.getManage_status()){
+                case 0://普通用户
+                case 1://普通供应商
+                    rlSubscribeChildren.setVisibility(View.VISIBLE);
+                    rlIdleReminder.setVisibility(View.GONE);
+                    break;
+                case 2://子公司
+                case 3://集团
+                case 4://子公司子账号
+                case 5://集团子账号
+                    rlSubscribeChildren.setVisibility(View.GONE);
+                    rlIdleReminder.setVisibility(View.VISIBLE);
+                    break;
+            }
+        });
 
         userInfoVm = ViewModelProviders.of(mActivity).get(UserInfoVm.class);
         userInfoVm.getInfoLiveData.observe(this, userInfoBean -> {
@@ -132,13 +163,13 @@ public class CircleFragment extends BaseFragment {
         //未读消息数量返回数据
         imAddVm.applyCountData.observe(this,friendApplyCountBean -> {
             if (friendApplyCountBean.getCount() == 0) {
-                tvNumber.setVisibility(View.INVISIBLE);
+                tvContactsNumbers.setVisibility(View.INVISIBLE);
             } else if (friendApplyCountBean.getCount() > 0 && friendApplyCountBean.getCount() < 100) {
-                tvNumber.setVisibility(View.VISIBLE);
-                tvNumber.setText(String.valueOf(friendApplyCountBean.getCount()));
+                tvContactsNumbers.setVisibility(View.VISIBLE);
+                tvContactsNumbers.setText(String.valueOf(friendApplyCountBean.getCount()));
             } else {
-                tvNumber.setVisibility(View.VISIBLE);
-                tvNumber.setText(R.string.im_no_read_message);
+                tvContactsNumbers.setVisibility(View.VISIBLE);
+                tvContactsNumbers.setText(R.string.im_no_read_message);
             }
             //设置底部标签数量
             int counts=imAddVm.count+friendApplyCountBean.getCount();
@@ -247,7 +278,7 @@ public class CircleFragment extends BaseFragment {
     //设置底部消息提醒数字布局
     private void getBadgeViewInitView(View view) {
         //因为黄油刀在碎片重绘时初始化空指针异常，则用view视图来显示
-        tvNumber=view.findViewById(R.id.tv_numbers);
+        tvContactsNumbers=view.findViewById(R.id.tv_contacts_numbers);
         viewPager= Objects.requireNonNull(getActivity()).findViewById(R.id.view_pager);
         //底部标题栏右上角标设置
         //获取整个的NavigationView
@@ -269,6 +300,7 @@ public class CircleFragment extends BaseFragment {
     @Override
     protected void initDataFromService() {
         userInfoVm.userInfo();
+        homeVm.getSupplierRole();
     }
 
     @Subscribe
@@ -281,17 +313,20 @@ public class CircleFragment extends BaseFragment {
                 .build());
     }
 
-    @OnClick({R.id.tv_bar_title, R.id.rl_message,R.id.iv_header})
+    @OnClick({R.id.iv_header,R.id.rl_subscribe_children,R.id.rl_message,R.id.rl_subscribe_group,R.id.rl_unused})
     void onClick(View view){
         switch (view.getId()){
-            case R.id.tv_bar_title:
-                ActivityUtils.startActivity(IMSearchActivity.class);
+            case R.id.iv_header://左侧头像
+                viewPager.setCurrentItem(3);
                 break;
-            case R.id.rl_message:
+            case R.id.rl_subscribe_children://普通用户订阅信息
+            case R.id.rl_subscribe_group://集团用户订阅信息
+                ActivityUtils.startActivity(MineSubActivity.class);
+                break;
+            case R.id.rl_message://通讯录
                 ActivityUtils.startActivity(IMContactsActivity.class);
                 break;
-            case R.id.iv_header:
-                viewPager.setCurrentItem(3);
+            case R.id.rl_unused://闲置提醒
                 break;
                 default:
                     break;
