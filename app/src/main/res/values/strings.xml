@@ -222,6 +222,8 @@
 
     <string name="subscribe_message">订阅信息</string>
     <string name="subscribe_message_group">闲置提醒</string>
+    <string name="close_subscribe_message">关闭订阅</string>
+    <string name="close_subscribe_message_group">关闭推送</string>
     <string name="model_list">切换列表模式</string>
     <string name="collection">收藏</string>
     <string name="collected">已收藏</string>

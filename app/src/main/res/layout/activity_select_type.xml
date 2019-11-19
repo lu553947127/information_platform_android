@@ -27,7 +27,6 @@
             android:layout_margin="16dp"
             style="@style/MessageHint"
             android:imeOptions="actionSearch"
-            android:hint="请输入子公司名称"
             app:x_disableEmoji="false"
             tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry" />
     </LinearLayout>
@@ -62,6 +61,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:paddingLeft="25dp"
+                    android:paddingRight="15dp"
                     android:background="@color/colorFFF"
                     android:nestedScrollingEnabled="false"
                     android:layout_marginTop="10dp"

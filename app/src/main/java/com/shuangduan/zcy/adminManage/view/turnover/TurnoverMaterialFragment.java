@@ -115,6 +115,7 @@ public class TurnoverMaterialFragment extends BaseLazyFragment {
     private TurnoverVm turnoverVm;
     private MultiAreaVm areaVm;
     private TurnoverAdapter turnoverAdapter;
+    private int manage_status;
 
     public static TurnoverMaterialFragment newInstance() {
         Bundle args = new Bundle();
@@ -139,11 +140,12 @@ public class TurnoverMaterialFragment extends BaseLazyFragment {
         tvBarTitle.setText(getString(R.string.turnover_material));
         tvName.setText("材料名称");
 
-        getAdminEntrance(SPUtils.getInstance().getInt(CustomConfig.MANAGE_STATUS,0));
+        manage_status = SPUtils.getInstance().getInt(CustomConfig.MANAGE_STATUS, 0);
+        getAdminEntrance(manage_status);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         turnoverAdapter = new TurnoverAdapter(R.layout.item_turnover, null,SPUtils.getInstance().getInt(CustomConfig.CONSTRUCTION_EDIT,0)
-                , SPUtils.getInstance().getInt(CustomConfig.CONSTRUCTION_DELETE,0),SPUtils.getInstance().getInt(CustomConfig.MANAGE_STATUS,0));
+                , SPUtils.getInstance().getInt(CustomConfig.CONSTRUCTION_DELETE,0),manage_status);
         recyclerView.setAdapter(turnoverAdapter);
 
         turnoverVm = ViewModelProviders.of(this).get(TurnoverVm.class);
@@ -163,7 +165,7 @@ public class TurnoverMaterialFragment extends BaseLazyFragment {
             TurnoverBean.ListBean listBean = turnoverAdapter.getData().get(position);
             Bundle bundle = new Bundle();
             //判断当前登录身份为子账户时，是否有查看详情的权限
-            switch (SPUtils.getInstance().getInt(CustomConfig.MANAGE_STATUS,0)){
+            switch (manage_status){
                 case 1:
                 case 2:
                 case 3:
@@ -240,7 +242,7 @@ public class TurnoverMaterialFragment extends BaseLazyFragment {
         //获取项目列表数据
         turnoverVm.turnoverProject.observe(this,turnoverNameBeans -> {
             projectList = turnoverNameBeans;
-            if (SPUtils.getInstance().getInt(CustomConfig.MANAGE_STATUS,0)==3)projectList.add(0,new TurnoverNameBean(0,"全部"));
+            if (manage_status==3||manage_status==5) projectList.add(0,new TurnoverNameBean(1000000,"全部"));
             turnoverProjectAdapter.setNewData(projectList);
         });
 
@@ -267,7 +269,7 @@ public class TurnoverMaterialFragment extends BaseLazyFragment {
         });
         areaVm.cityLiveData.observe(this, cityBeans -> {
             cityList = cityBeans;
-            cityList.add(0,new CityBean(0,"全部"));
+            cityList.add(0,new CityBean(1000000,"全部"));
             cityAdapter.setNewData(cityList);
         });
 
@@ -349,7 +351,7 @@ public class TurnoverMaterialFragment extends BaseLazyFragment {
                 ActivityUtils.startActivity(bundle, TurnoverAddActivity.class);
                 break;
             case R.id.tv_company://选择子公司/项目
-                if (SPUtils.getInstance().getInt(CustomConfig.MANAGE_STATUS,0)==3||SPUtils.getInstance().getInt(CustomConfig.MANAGE_STATUS,0)==5){
+                if (manage_status==3||manage_status==5){
                     getBottomSheetDialog(R.layout.dialog_depositing_place,"company",0,1);
                 }else {
                     getBottomSheetDialog(R.layout.dialog_is_grounding,"project",0,1);
@@ -479,18 +481,14 @@ public class TurnoverMaterialFragment extends BaseLazyFragment {
                     turnoverCompanyAdapter.setIsSelect(companyList.get(position).getSupplier_id());
                 });
                 turnoverProjectAdapter.setOnItemClickListener((adapter, view, position) -> {
-                    if (projectList.get(position).id!=0){
-                        turnoverVm.unit_id = projectList.get(position).id;
-                        turnoverVm.constructionList(areaVm.id,areaVm.city_id);
-                        turnoverProjectAdapter.setIsSelect(projectList.get(position).id);
-                        btn_dialog.dismiss();
-                        getDrawableRightView(tvCompany,R.drawable.icon_pulldown_arrow,R.color.color_666666);
+                    turnoverVm.unit_id = projectList.get(position).id;
+                    turnoverVm.constructionList(areaVm.id,areaVm.city_id);
+                    turnoverProjectAdapter.setIsSelect(projectList.get(position).id);
+                    btn_dialog.dismiss();
+                    getDrawableRightView(tvCompany,R.drawable.icon_pulldown_arrow,R.color.color_666666);
+                    if (turnoverVm.unit_id!=1000000){
                         getAddTopScreenView(tvCompanyChildren,projectList.get(position).name);
                     }else {
-                        turnoverVm.unit_id=0;
-                        turnoverVm.constructionList(areaVm.id,areaVm.city_id);
-                        btn_dialog.dismiss();
-                        getDrawableRightView(tvCompany,R.drawable.icon_pulldown_arrow,R.color.color_666666);
                         getAddTopScreenView(tvCompanyChildren,turnoverVm.supplier_name);
                     }
                 });
@@ -581,18 +579,14 @@ public class TurnoverMaterialFragment extends BaseLazyFragment {
                     provinceAdapter.setIsSelect(provinceList.get(position).getId());
                 });
                 cityAdapter.setOnItemClickListener((adapter, view, position) -> {
-                    if (cityList.get(position).getId()!=0){
-                        areaVm.city_id = cityList.get(position).getId();
-                        turnoverVm.constructionList(areaVm.id,areaVm.city_id);
-                        cityAdapter.setIsSelect(cityList.get(position).getId());
-                        btn_dialog.dismiss();
-                        getDrawableRightView(tvDepositingPlace,R.drawable.icon_pulldown_arrow,R.color.color_666666);
+                    areaVm.city_id = cityList.get(position).getId();
+                    turnoverVm.constructionList(areaVm.id,areaVm.city_id);
+                    cityAdapter.setIsSelect(cityList.get(position).getId());
+                    btn_dialog.dismiss();
+                    getDrawableRightView(tvDepositingPlace,R.drawable.icon_pulldown_arrow,R.color.color_666666);
+                    if (areaVm.city_id!=1000000){
                         getAddTopScreenView(tvAddress,cityList.get(position).getName());
                     }else {
-                        areaVm.city_id=0;
-                        turnoverVm.constructionList(areaVm.id,areaVm.city_id);
-                        btn_dialog.dismiss();
-                        getDrawableRightView(tvDepositingPlace,R.drawable.icon_pulldown_arrow,R.color.color_666666);
                         getAddTopScreenView(tvAddress,areaVm.cityResult);
                     }
                 });

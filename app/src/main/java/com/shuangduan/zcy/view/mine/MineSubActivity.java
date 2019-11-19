@@ -200,6 +200,7 @@ public class MineSubActivity extends BaseActivity {
 
     @OnClick({R.id.iv_bar_back,R.id.iv_bar_right_select, R.id.iv_bar_right})
     void onClick(View v){
+        Bundle bundle = new Bundle();
         switch (v.getId()){
             case R.id.iv_bar_back:
                 finish();
@@ -208,7 +209,8 @@ public class MineSubActivity extends BaseActivity {
                 mineSubVm.myPhases();
                 break;
             case R.id.iv_bar_right://设置
-
+                bundle.putInt(CustomConfig.NEWS_TYPE,getIntent().getIntExtra(CustomConfig.NEWS_TYPE,0));
+                ActivityUtils.startActivity(bundle, NoticeSetActivity.class);
                 break;
         }
     }

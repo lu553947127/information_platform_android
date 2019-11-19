@@ -138,6 +138,15 @@ public class MaterialActivity extends BaseActivity {
             for (SupplierCliqueBean.SupplierIdBean item : supplierClique.getSupplier_id()) {
                 materialVm.authGroup.auth_group.add(item.getId());
             }
+
+            //基建物资订阅推送 默认打开内定物资
+            if (getIntent().getIntExtra("notice",0)==1){
+                tvOpen.setTextSize(14);
+                tvDefault.setTextSize(18);
+                materialVm.materialFlag = 3;
+                materialVm.sellList(materialVm.materialFlag);
+                materialVm.equipmentList(materialVm.materialFlag);
+            }
         } else {
             BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
             tvBarTitle.setText(getString(R.string.material_base));
@@ -162,8 +171,6 @@ public class MaterialActivity extends BaseActivity {
                     break;
             }
         });
-
-
     }
 
     @OnClick({R.id.iv_bar_back, R.id.iv_back, R.id.tv_open, R.id.tv_default, R.id.over, R.id.ll_name, R.id.ll_spec, R.id.ll_supplier, R.id.ll_supplier_method, R.id.tv_bar_right})
@@ -212,7 +219,6 @@ public class MaterialActivity extends BaseActivity {
                 break;
         }
     }
-
 
     private void initPop() {
         if (popupWindowCategory == null) {
@@ -274,10 +280,7 @@ public class MaterialActivity extends BaseActivity {
         }
     }
 
-
     private CommonPopupWindow popupWindowCategory;
-
-
     private void initPop(int filterType) {
         popupWindowCategory = new CommonPopupWindow.Builder(this)
                 .setView(R.layout.dialog_material_filter)
@@ -380,7 +383,6 @@ public class MaterialActivity extends BaseActivity {
             popupWindowCategory.showAsDropDown(clFilter, 0, DensityUtil.dp2px(10));
         }
     }
-
 
     public void updateFilterStyle() {
         //筛选框文字

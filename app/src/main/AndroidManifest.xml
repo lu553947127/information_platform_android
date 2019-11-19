@@ -189,6 +189,10 @@
         <activity
             android:name="com.shuangduan.zcy.view.mine.MineSubActivity"
             android:theme="@style/BaseAppTheme" />
+        <!-- 订阅通知推送设置-->
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.NoticeSetActivity"
+            android:theme="@style/BaseAppTheme" />
         <!-- 我的收藏-->
         <activity
             android:name="com.shuangduan.zcy.view.mine.MineCollectionActivity"

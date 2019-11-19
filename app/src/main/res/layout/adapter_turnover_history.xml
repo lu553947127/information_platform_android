@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.AppCompatTextView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/tv_title"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:singleLine="true"
-    android:maxLength="4"
     android:gravity="center_vertical"
     android:textColor="@color/color_666666"
-    android:textSize="15sp">
+    android:textSize="15sp"
+    android:layout_marginRight="15dp"
+    tools:ignore="RtlHardcoded">
 
 </androidx.appcompat.widget.AppCompatTextView>

@@ -8,8 +8,8 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.model.bean.JPushExtraBean;
+import com.shuangduan.zcy.view.material.MaterialActivity;
 import com.shuangduan.zcy.view.projectinfo.ProjectDetailActivity;
-import com.shuangduan.zcy.view.recruit.RecruitDetailActivity;
 
 import cn.jpush.android.api.CmdMessage;
 import cn.jpush.android.api.CustomMessage;
@@ -45,11 +45,10 @@ public class MessageReceiver extends JPushMessageReceiver {
         try{
             switch (extraBean.getType()){
                 case 1://工程信息
-                case 2:
                     getStartActivity(context,ProjectDetailActivity.class,CustomConfig.PROJECT_ID,extraBean.getId(),message);
                     break;
-                case 3://招采信息
-                    getStartActivity(context,RecruitDetailActivity.class,CustomConfig.RECRUIT_ID,extraBean.getId(),message);
+                case 2://基建物资
+                    getStartActivity(context, MaterialActivity.class,"notice",1,message);
                     break;
             }
         }catch (Throwable ignored){

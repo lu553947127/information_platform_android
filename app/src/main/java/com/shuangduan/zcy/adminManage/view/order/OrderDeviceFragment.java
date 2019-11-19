@@ -205,8 +205,7 @@ public class OrderDeviceFragment extends BaseLazyFragment implements BaseQuickAd
         //获取项目列表数据
         orderVm.turnoverProject.observe(this, turnoverNameBeans -> {
             projectList = turnoverNameBeans;
-            if (SPUtils.getInstance().getInt(CustomConfig.MANAGE_STATUS, 0) == 3)
-                projectList.add(0, new TurnoverNameBean(0, "全部"));
+            if (manage_status == 3 || manage_status==5) projectList.add(0, new TurnoverNameBean(1000000, "全部"));
             turnoverProjectAdapter.setNewData(projectList);
         });
 
@@ -416,19 +415,15 @@ public class OrderDeviceFragment extends BaseLazyFragment implements BaseQuickAd
                     turnoverCompanyAdapter.setIsSelect(companyList.get(position).getSupplier_id());
                 });
                 turnoverProjectAdapter.setOnItemClickListener((adapter, view, position) -> {
-                    if (projectList.get(position).id != 0) {
-                        orderVm.unit_id = projectList.get(position).id;
-                        orderVm.orderDeviceListData("");
-                        turnoverProjectAdapter.setIsSelect(projectList.get(position).id);
-                        btn_dialog.dismiss();
-                        getDrawableRightView(tvProject, R.drawable.icon_pulldown_arrow, R.color.color_666666);
-                        getAddTopScreenView(tvOne, projectList.get(position).name);
-                    } else {
-                        orderVm.unit_id = 0;
-                        orderVm.orderDeviceListData("");
-                        btn_dialog.dismiss();
-                        getDrawableRightView(tvProject, R.drawable.icon_pulldown_arrow, R.color.color_666666);
-                        getAddTopScreenView(tvOne, orderVm.supplier_name);
+                    orderVm.unit_id = projectList.get(position).id;
+                    orderVm.orderDeviceListData("");
+                    turnoverProjectAdapter.setIsSelect(projectList.get(position).id);
+                    btn_dialog.dismiss();
+                    getDrawableRightView(tvProject, R.drawable.icon_pulldown_arrow, R.color.color_666666);
+                    if (orderVm.unit_id!=1000000){
+                        getAddTopScreenView(tvOne,projectList.get(position).name);
+                    }else {
+                        getAddTopScreenView(tvOne,orderVm.supplier_name);
                     }
                 });
                 orderVm.getSupplierInfo();
@@ -503,7 +498,6 @@ public class OrderDeviceFragment extends BaseLazyFragment implements BaseQuickAd
                     btn_dialog.dismiss();
                     getDrawableRightView(tvOrderType, R.drawable.icon_pulldown_arrow, R.color.color_666666);
                     getAddTopScreenView(tvFour, orderInsideList.get(position).getName());
-
                 });
                 if (orderVm.inside != 0) {
                     orderInsideAdapter.setIsSelect(orderVm.inside);

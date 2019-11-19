@@ -117,7 +117,10 @@ public class SelectTypeActivity extends BaseActivity {
         }
 
         //历史浏览
-        rvHistory.setLayoutManager(new GridLayoutManager(this, 4));
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1);
+        gridLayoutManager.setOrientation(GridLayoutManager.HORIZONTAL);
+        rvHistory.setLayoutManager(gridLayoutManager);
+
         turnoverHistoryAdapter = new TurnoverHistoryAdapter(R.layout.adapter_turnover_history, null);
         rvHistory.setAdapter(turnoverHistoryAdapter);
         turnoverHistoryAdapter.setOnItemClickListener((adapter, view, position) -> {
@@ -237,6 +240,7 @@ public class SelectTypeActivity extends BaseActivity {
         tvHistory.setText("历史浏览材料");
         tvType.setText("材料分类");
         tvAll.setText("全部材料");
+        etSearch.setHint("请输入材料名称");
         llType.setVisibility(View.VISIBLE);
         turnoverVm = ViewModelProviders.of(this).get(TurnoverVm.class);
         turnoverVm.constructionCategoryHistory();
@@ -276,6 +280,7 @@ public class SelectTypeActivity extends BaseActivity {
         tvHistory.setText("历史浏览设备");
         tvType.setText("设备分类");
         tvAll.setText("全部设备");
+        etSearch.setHint("请输入设备名称");
         llType.setVisibility(View.VISIBLE);
         deviceVm = ViewModelProviders.of(this).get(DeviceVm.class);
         deviceVm.equipmentCategoryHistory();
