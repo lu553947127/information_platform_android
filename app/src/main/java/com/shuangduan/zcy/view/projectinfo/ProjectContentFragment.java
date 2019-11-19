@@ -1,6 +1,7 @@
 package com.shuangduan.zcy.view.projectinfo;
 
 import android.os.Bundle;
+import android.text.Html;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
@@ -140,12 +141,12 @@ public class ProjectContentFragment extends BaseFragment implements BaseQuickAda
             String materialStr = detail.getMaterials().trim();
 
             if (detail.getIs_pay() == 1) {
-                tvDetail.setText(introStr);
+                tvDetail.setText(Html.fromHtml(introStr));
                 tvMaterial.setText(materialStr);
             } else {
                 if (!StringUtils.isEmpty(introStr)) {
                     tvDetail.setHighlightColor(getResources().getColor(R.color.color_6a5ff8));
-                    SpannableString detailInfo = new SpannableString(introStr + " 查看详情");
+                    SpannableString detailInfo = new SpannableString(Html.fromHtml(introStr) + " 查看详情");
                     detailInfo.setSpan(new Clickable(v1 -> addPayDialog()), introStr.length(), detailInfo.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                     tvDetail.setText(detailInfo);
                     tvDetail.setMovementMethod(LinkMovementMethod.getInstance());

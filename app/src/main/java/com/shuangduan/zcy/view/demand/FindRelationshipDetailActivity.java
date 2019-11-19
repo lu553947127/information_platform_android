@@ -18,6 +18,8 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.PageState;
+import com.shuangduan.zcy.utils.PhoneFormatCheckUtils;
+import com.shuangduan.zcy.utils.Regular;
 import com.shuangduan.zcy.vm.DemandRelationshipVm;
 
 import butterknife.BindView;
@@ -88,7 +90,7 @@ public class FindRelationshipDetailActivity extends BaseActivity {
             tvDes.setText(relationshipDetailBean.getIntro());
         });
         demandRelationshipVm.pageStateLiveData.observe(this, s -> {
-            switch (s){
+            switch (s) {
                 case PageState.PAGE_LOADING:
                     showLoading();
                     break;
@@ -100,29 +102,38 @@ public class FindRelationshipDetailActivity extends BaseActivity {
         demandRelationshipVm.relationshipDetail();
 
         //提示 只显示一次
-        if (SPUtils.getInstance().getInt("isFindRelationShip")==-1){
-            SPUtils.getInstance().put("isFindRelationShip",1);
+        if (SPUtils.getInstance().getInt("isFindRelationShip") == -1) {
+            SPUtils.getInstance().put("isFindRelationShip", 1);
             llFindRelationShip.setVisibility(View.VISIBLE);
             tvMarquee.setSelected(true);
-        }else {
+        } else {
             llFindRelationShip.setVisibility(View.GONE);
         }
     }
 
     @OnClick({R.id.iv_bar_back, R.id.tv_confirm})
-    void onClick(View view){
-        switch (view.getId()){
+    void onClick(View view) {
+        switch (view.getId()) {
             case R.id.iv_bar_back:
                 finish();
                 break;
             case R.id.tv_confirm:
-                if (TextUtils.isEmpty(edtName.getText())){
+                if (TextUtils.isEmpty(edtName.getText())) {
                     ToastUtils.showShort(getString(R.string.hint_name_or_company));
                     return;
-                }if (TextUtils.isEmpty(edtTel.getText())){
+                }
+                if (TextUtils.isEmpty(edtTel.getText())) {
                     ToastUtils.showShort(getString(R.string.hint_contact));
                     return;
-                }if (TextUtils.isEmpty(edtRemarks.getText())){
+                }
+
+
+                if (!PhoneFormatCheckUtils.isPhoneLegal(edtTel.getText())) {
+                    ToastUtils.showShort(getString(R.string.hint_tel));
+                    return;
+                }
+
+                if (TextUtils.isEmpty(edtRemarks.getText())) {
                     ToastUtils.showShort(getString(R.string.hint_relationship_remarks));
                     return;
                 }

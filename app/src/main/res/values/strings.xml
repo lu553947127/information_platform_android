@@ -705,4 +705,8 @@
 
     <string name="empty_mine_materials_info">您还没有预定过周转材料\n查看全部基建物资</string>
     <string name="empty_mine_equipment_info">您还没有预定过设备物资\n查看全部基建物资</string>
+
+
+    <string name="hint_tel">请输入正确的联系方式</string>
+
 </resources>

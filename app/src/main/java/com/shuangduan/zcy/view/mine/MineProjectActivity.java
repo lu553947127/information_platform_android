@@ -1,6 +1,7 @@
 package com.shuangduan.zcy.view.mine;
 
 import android.os.Bundle;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
@@ -128,7 +129,7 @@ public class MineProjectActivity extends BaseActivity implements CompoundButton.
             tvAcreage.setText(getString(R.string.format_project_acreage, detail.getAcreage()));
             tvPrice.setText(getString(R.string.format_project_price, detail.getValuation()));
             tvParty.setText(detail.getParty());
-            tvDetail.setText(detail.getIntro());
+            tvDetail.setText(Html.fromHtml(detail.getIntro()));
             tvMaterial.setText(detail.getMaterials());
             llMaterial.setVisibility(StringUtils.isTrimEmpty(detail.getMaterials()) ? View.GONE : View.VISIBLE);
 

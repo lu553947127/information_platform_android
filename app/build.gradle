@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-
+//apply plugin: 'com.huawei.agconnect'
 android {
     signingConfigs {
         release {
@@ -58,6 +58,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
+
 
         debug {
             shrinkResources false
@@ -203,8 +204,8 @@ dependencies {
     api 'cn.rongcloud.sdk:im_lib:2.9.22'
 
     //华为推送模块
-    api 'com.huawei.android.hms:base:2.6.1.301'
-    api 'com.huawei.android.hms:push:2.6.1.301'
+    implementation 'com.huawei.android.hms:base:2.6.1.301'
+    implementation 'com.huawei.android.hms:push:2.6.1.301'
     //条件选择器
     implementation 'com.contrarywind:wheelview:4.1.0'
 

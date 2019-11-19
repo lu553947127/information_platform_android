@@ -173,7 +173,7 @@
             app:layout_constraintRight_toRightOf="@id/tv_title"
             android:background="@null"
             android:inputType="number"
-            android:maxLength="11"
+            android:maxLength="12"
             android:singleLine="true"
             android:textColorHint="@color/colorTvHint"
             android:textColor="@color/color_666666"
