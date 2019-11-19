@@ -1,12 +1,12 @@
 package com.shuangduan.zcy.service;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 import android.util.SparseArray;
 
 import com.blankj.utilcode.util.SPUtils;
-import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.app.SpConfig;
 
 import java.util.Locale;
@@ -70,12 +70,13 @@ public class TagAliasOperatorHelper {
     public void put(int sequence,Object tagAliasBean){
         setActionCache.put(sequence,tagAliasBean);
     }
+    @SuppressLint("HandlerLeak")
     private Handler delaySendHandler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what){
                 case DELAY_SEND_ACTION:
-                    if(msg.obj !=null && msg.obj instanceof  TagAliasBean){
+                    if(msg.obj instanceof TagAliasBean){
                         Logger.i(TAG,"on delay time");
                         sequence++;
                         TagAliasBean tagAliasBean = (TagAliasBean) msg.obj;
@@ -90,7 +91,7 @@ public class TagAliasOperatorHelper {
                     }
                     break;
                 case DELAY_SET_MOBILE_NUMBER_ACTION:
-                    if(msg.obj !=null && msg.obj instanceof  String) {
+                    if(msg.obj instanceof String) {
                         Logger.i(TAG, "retry set mobile number");
                         sequence++;
                         String mobileNumber = (String) msg.obj;
@@ -107,11 +108,13 @@ public class TagAliasOperatorHelper {
             }
         }
     };
-    public void handleAction(Context context,int sequence,String mobileNumber){
+
+    private void handleAction(Context context, int sequence, String mobileNumber){
         put(sequence,mobileNumber);
         Logger.d(TAG,"sequence:"+sequence+",mobileNumber:"+mobileNumber);
         JPushInterface.setMobileNumber(context,sequence,mobileNumber);
     }
+
     /**
      * 处理设置tag
      * */
@@ -330,6 +333,4 @@ public class TagAliasOperatorHelper {
                     '}';
         }
     }
-
-
 }

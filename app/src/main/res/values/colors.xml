@@ -65,6 +65,8 @@
     <color name="color_FD603C">#FD603C</color>
     <color name="color_5C54F4">#5C54F4</color>
     <color name="color_888888">#888888</color>
+    <color name="color_FFD8D8">#FFD8D8</color>
+    <color name="color_FE4931">#FE4931</color>
 
     <!--时间选择器颜色-->
     <color name="text1">#6a5ff8</color>

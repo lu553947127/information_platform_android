@@ -48,34 +48,40 @@ public class MineSubVm extends BaseViewModel {
         phasesId = new ArrayList<>();
     }
 
+    //工程信息订阅
     public void myProject(){
         projectPage = 1;
         pageStateLiveData.setValue(PageState.PAGE_REFRESH);
         new ProjectRepository().projectSub(projectLiveData, pageStateLiveData, userId, projectPage);
     }
 
+    //工程信息订阅
     public void moreMyProject(){
         projectPage++;
         pageStateLiveData.setValue(PageState.PAGE_REFRESH);
         new ProjectRepository().projectSub(projectLiveData, pageStateLiveData, userId, projectPage);
     }
 
+    //基建物资订阅
     public void myRecruit(){
         recruitPage = 1;
         pageStateLiveData.setValue(PageState.PAGE_REFRESH);
         new ProjectRepository().recruitSub(recruitLiveData, pageStateLiveData, userId, recruitPage);
     }
 
+    //基建物资订阅
     public void moreMyRecruit(){
         recruitPage++;
         pageStateLiveData.setValue(PageState.PAGE_REFRESH);
         new ProjectRepository().recruitSub(recruitLiveData, pageStateLiveData, userId, recruitPage);
     }
 
+    //工程信息推送选择
     public void myPhases(){
         new UserRepository().myPhases(phasesLiveData, pageStateLiveData, userId);
     }
 
+    //工程信息推送选择设置
     public void setPhases(){
         SubBean subBean = new SubBean(phasesId);
         new UserRepository().setPhases(phasesSetLiveData, pageStateLiveData, userId, subBean);

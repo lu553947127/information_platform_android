@@ -43,32 +43,30 @@ public class MessageReceiver extends JPushMessageReceiver {
         String extras = message.notificationExtras;
         JPushExtraBean extraBean = new Gson().fromJson(extras, JPushExtraBean.class);
         try{
-            if (extraBean.getType() == 1 || extraBean.getType() == 2){
-                //打开自定义的Activity
-                Intent i = new Intent(context, ProjectDetailActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putInt(CustomConfig.PROJECT_ID, extraBean.getId());
-                bundle.putString(JPushInterface.EXTRA_NOTIFICATION_TITLE,message.notificationTitle);
-                bundle.putString(JPushInterface.EXTRA_ALERT,message.notificationContent);
-                i.putExtras(bundle);
-                //i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP );
-                context.startActivity(i);
-            }else if (extraBean.getType() == 3){
-                //打开自定义的Activity
-                Intent i = new Intent(context, RecruitDetailActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putInt(CustomConfig.RECRUIT_ID, extraBean.getId());
-                bundle.putString(JPushInterface.EXTRA_NOTIFICATION_TITLE,message.notificationTitle);
-                bundle.putString(JPushInterface.EXTRA_ALERT,message.notificationContent);
-                i.putExtras(bundle);
-                //i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP );
-                context.startActivity(i);
+            switch (extraBean.getType()){
+                case 1://工程信息
+                case 2:
+                    getStartActivity(context,ProjectDetailActivity.class,CustomConfig.PROJECT_ID,extraBean.getId(),message);
+                    break;
+                case 3://招采信息
+                    getStartActivity(context,RecruitDetailActivity.class,CustomConfig.RECRUIT_ID,extraBean.getId(),message);
+                    break;
             }
-        }catch (Throwable throwable){
+        }catch (Throwable ignored){
 
         }
+    }
+
+    //点击通知栏跳转
+    private void getStartActivity(Context context,Class<?> cls,String type,int noticeId,NotificationMessage message) {
+        Intent intent =new Intent(context, cls);
+        Bundle bundle = new Bundle();
+        bundle.putInt(type, noticeId);
+        bundle.putString(JPushInterface.EXTRA_NOTIFICATION_TITLE,message.notificationTitle);
+        bundle.putString(JPushInterface.EXTRA_ALERT,message.notificationContent);
+        intent.putExtras(bundle);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP );
+        context.startActivity(intent);
     }
 
     @Override

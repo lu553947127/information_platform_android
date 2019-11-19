@@ -77,6 +77,7 @@ public class TurnoverFirstAdapter extends BaseQuickAdapter<TurnoverCategoryBean,
                         imageView.setBackgroundResource(R.drawable.icon_turnover_type11);
                         break;
                     case 264://其他
+                    default:
                         imageView.setBackgroundResource(R.drawable.icon_turnover_type12);
                         break;
                 }
@@ -102,6 +103,7 @@ public class TurnoverFirstAdapter extends BaseQuickAdapter<TurnoverCategoryBean,
                         imageView.setBackgroundResource(R.drawable.icon_device_type6);
                         break;
                     case 278://其他设备
+                    default:
                         imageView.setBackgroundResource(R.drawable.icon_device_type7);
                         break;
                 }

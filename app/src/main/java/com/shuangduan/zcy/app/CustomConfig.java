@@ -108,7 +108,9 @@ public class CustomConfig {
     public static final int SUPPLIER_TYPE = 2;                                               //
     //-------------------------------------------------------------------------------------------------------
 
-    public static final String MORE = "更多";
+    public static final String NEWS_TYPE = "NEWS_TYPE";
+    public static final int SUBSCRIBE = 1;
+    public static final int UNUSED = 2;
 
     public static final String PEOPLE_DEGREE = "people_degree";
     public static final int FIRST_DEGREE = 1;//1°人脉收益

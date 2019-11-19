@@ -315,18 +315,22 @@ public class CircleFragment extends BaseFragment {
 
     @OnClick({R.id.iv_header,R.id.rl_subscribe_children,R.id.rl_message,R.id.rl_subscribe_group,R.id.rl_unused})
     void onClick(View view){
+        Bundle bundle = new Bundle();
         switch (view.getId()){
             case R.id.iv_header://左侧头像
                 viewPager.setCurrentItem(3);
                 break;
             case R.id.rl_subscribe_children://普通用户订阅信息
             case R.id.rl_subscribe_group://集团用户订阅信息
-                ActivityUtils.startActivity(MineSubActivity.class);
+                bundle.putInt(CustomConfig.NEWS_TYPE,CustomConfig.SUBSCRIBE);
+                ActivityUtils.startActivity(bundle,MineSubActivity.class);
                 break;
             case R.id.rl_message://通讯录
                 ActivityUtils.startActivity(IMContactsActivity.class);
                 break;
             case R.id.rl_unused://闲置提醒
+                bundle.putInt(CustomConfig.NEWS_TYPE,CustomConfig.UNUSED);
+                ActivityUtils.startActivity(bundle,MineSubActivity.class);
                 break;
                 default:
                     break;

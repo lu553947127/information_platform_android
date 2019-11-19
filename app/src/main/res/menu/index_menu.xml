@@ -4,20 +4,20 @@
     <item
         android:id="@+id/menu_home"
         android:icon="@drawable/icon_home_normal"
-        android:title="首页" />
+        android:title="@string/home" />
     <!--人脉-->
     <item
         android:id="@+id/menu_people"
         android:icon="@drawable/icon_people_normal"
-        android:title="人脉" />
+        android:title="@string/people" />
     <!--工程圈-->
     <item
         android:id="@+id/menu_circle"
         android:icon="@drawable/icon_circle_normal"
-        android:title="消息" />
+        android:title="@string/circle" />
     <!--我的-->
     <item
         android:id="@+id/menu_mime"
         android:icon="@drawable/icon_mine_normal"
-        android:title="我的" />
+        android:title="@string/mine" />
 </menu>
