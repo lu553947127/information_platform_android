@@ -39,7 +39,6 @@ import com.shuangduan.zcy.model.bean.HomeBannerBean;
 import com.shuangduan.zcy.model.bean.HomeListBean;
 import com.shuangduan.zcy.model.bean.SupplierCliqueBean;
 import com.shuangduan.zcy.model.bean.HomePushBean;
-import com.shuangduan.zcy.model.bean.IMFriendApplyDetailBean;
 import com.shuangduan.zcy.model.bean.IMFriendApplyListBean;
 import com.shuangduan.zcy.model.bean.IMFriendApplyOperationBean;
 import com.shuangduan.zcy.model.bean.IMFriendSearchBean;
@@ -73,7 +72,7 @@ import com.shuangduan.zcy.model.bean.ProjectFilterBean;
 import com.shuangduan.zcy.model.bean.ProjectInfoBean;
 import com.shuangduan.zcy.model.bean.ProjectMineBean;
 import com.shuangduan.zcy.model.bean.ProjectSearchBean;
-import com.shuangduan.zcy.model.bean.ProjectSubBean;
+import com.shuangduan.zcy.model.bean.SubscribeBean;
 import com.shuangduan.zcy.model.bean.ProjectSubConfirmBean;
 import com.shuangduan.zcy.model.bean.ProjectSubFirstBean;
 import com.shuangduan.zcy.model.bean.ProjectSubViewBean;
@@ -87,7 +86,7 @@ import com.shuangduan.zcy.model.bean.RechargeResultBean;
 import com.shuangduan.zcy.model.bean.RechargeShowBean;
 import com.shuangduan.zcy.model.bean.RecruitBean;
 import com.shuangduan.zcy.model.bean.RecruitDetailBean;
-import com.shuangduan.zcy.model.bean.RecruitSubBean;
+import com.shuangduan.zcy.model.bean.MessagePushBean;
 import com.shuangduan.zcy.model.bean.RegisterBean;
 import com.shuangduan.zcy.model.bean.DemandReleaseBean;
 import com.shuangduan.zcy.model.bean.RelationshipDetailBean;
@@ -548,18 +547,30 @@ public interface ApiService {
             @Field("page") int page
     );
 
+    //订阅消息列表
     @FormUrlEncoded
-    @POST("api/Subscription/projectSubscription")
-    Flowable<BaseResponse<ProjectSubBean>> projectSub(
+    @POST("api/Subscription/subscribe")
+    Flowable<BaseResponse<SubscribeBean>> subscribe(
             @Field("user_id") int user_id,
+            @Field("type") int type,
             @Field("page") int page
     );
 
+    //订阅消息开关状态返回
     @FormUrlEncoded
-    @POST("api/Subscription/tenderer")
-    Flowable<BaseResponse<RecruitSubBean>> recruitSub(
+    @POST("api/Userinfo/msgPush")
+    Flowable<BaseResponse<MessagePushBean>> msgPush(
             @Field("user_id") int user_id,
-            @Field("page") int page
+            @Field("type") int type
+    );
+
+    //订阅消息开关状态修改
+    @FormUrlEncoded
+    @POST("api/Userinfo/msgPushStatus")
+    Flowable<BaseResponse> msgPushStatus(
+            @Field("user_id") int user_id,
+            @Field("type") int type,
+            @Field("status") int status
     );
 
     @FormUrlEncoded
@@ -1308,14 +1319,7 @@ public interface ApiService {
             @Field("msg") String msg
     );
 
-    @FormUrlEncoded
-    @POST("api/Friend/applyDetail")
-    Flowable<BaseResponse<IMFriendApplyDetailBean>> imFriendApplyDetail(
-            @Field("user_id") int user_id,
-            @Field("id") int id
-    );
-
-    //工程圈 好友申请数量
+    //工程圈 好友申请数量/角标数量
     @FormUrlEncoded
     @POST("api/Friend/applyCount")
     Flowable<BaseResponse<IMFriendApplyCountBean>> applyCount(

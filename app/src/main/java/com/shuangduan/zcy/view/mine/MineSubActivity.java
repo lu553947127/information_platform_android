@@ -18,14 +18,15 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shuangduan.zcy.R;
-import com.shuangduan.zcy.adapter.ProjectSubAdapter;
+import com.shuangduan.zcy.adapter.SubscribeAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.SubscriptionTypeDialog;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.MyPhasesBean;
-import com.shuangduan.zcy.model.bean.ProjectSubBean;
+import com.shuangduan.zcy.model.bean.SubscribeBean;
+import com.shuangduan.zcy.view.material.MaterialActivity;
 import com.shuangduan.zcy.view.projectinfo.ProjectDetailActivity;
 import com.shuangduan.zcy.vm.MineSubVm;
 
@@ -57,6 +58,7 @@ public class MineSubActivity extends BaseActivity {
     RecyclerView rv;
     @BindView(R.id.refresh)
     SmartRefreshLayout refresh;
+    private SubscribeAdapter adapter;
     private MineSubVm mineSubVm;
 
     @Override
@@ -75,6 +77,12 @@ public class MineSubActivity extends BaseActivity {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
 
         mineSubVm = ViewModelProviders.of(this).get(MineSubVm.class);
+
+        rv.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new SubscribeAdapter(R.layout.item_project_item, null);
+        adapter.setEmptyView(R.layout.layout_loading, rv);
+        rv.setAdapter(adapter);
+
         switch (getIntent().getIntExtra(CustomConfig.NEWS_TYPE,0)){
             case SUBSCRIBE://订阅消息
                 tvBarTitle.setText(getString(R.string.subscribe_message));
@@ -91,12 +99,26 @@ public class MineSubActivity extends BaseActivity {
         refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                mineSubVm.moreMyProject();
+                switch (getIntent().getIntExtra(CustomConfig.NEWS_TYPE,0)){
+                    case SUBSCRIBE://订阅消息
+                        mineSubVm.moreSubscribe(1);
+                        break;
+                    case UNUSED://闲置提醒
+                        mineSubVm.moreSubscribe(2);
+                        break;
+                }
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                mineSubVm.myProject();
+                switch (getIntent().getIntExtra(CustomConfig.NEWS_TYPE,0)){
+                    case SUBSCRIBE://订阅消息
+                        mineSubVm.subscribe(1);
+                        break;
+                    case UNUSED://闲置提醒
+                        mineSubVm.subscribe(2);
+                        break;
+                }
             }
         });
 
@@ -115,30 +137,25 @@ public class MineSubActivity extends BaseActivity {
     //订阅信息
     private void getSubscribe() {
 
-        View emptyView = emptyViewFactory.createEmptyView(R.drawable.icon_empty_subscibe, R.string.empty_project_subscribe_info, 0, null);
-
-        rv.setLayoutManager(new LinearLayoutManager(this));
-        ProjectSubAdapter adapter = new ProjectSubAdapter(R.layout.item_project_item, null);
-        adapter.setEmptyView(R.layout.layout_loading, rv);
-        rv.setAdapter(adapter);
-
-        adapter.setOnItemClickListener((helper, view, position) -> {
-            ProjectSubBean.ListBean listBean = adapter.getData().get(position);
-            Bundle bundle = new Bundle();
-            bundle.putInt(CustomConfig.PROJECT_ID, listBean.getType_id());
-            bundle.putInt(CustomConfig.LOCATION, 0);
-            ActivityUtils.startActivity(bundle, ProjectDetailActivity.class);
+        adapter.setOnItemChildClickListener((helper, view, position) -> {
+            if (view.getId() == R.id.tv_read) {
+                SubscribeBean.ListBean listBean = adapter.getData().get(position);
+                Bundle bundle = new Bundle();
+                bundle.putInt(CustomConfig.PROJECT_ID, listBean.getType_id());
+                bundle.putInt(CustomConfig.LOCATION, 0);
+                ActivityUtils.startActivity(bundle, ProjectDetailActivity.class);
+            }
         });
 
         //获取订阅信息数据
-        mineSubVm.projectLiveData.observe(this, projectMineBean -> {
-            if (projectMineBean.getPage() == 1) {
-                adapter.setNewData(projectMineBean.getList());
-                adapter.setEmptyView(emptyView);
+        mineSubVm.subscribeLiveData.observe(this, subscribeBean -> {
+            if (subscribeBean.getPage() == 1) {
+                adapter.setNewData(subscribeBean.getList());
+                adapter.setEmptyView(emptyViewFactory.createEmptyView(R.drawable.icon_empty_subscibe, R.string.empty_project_subscribe_info, 0, null));
             }else {
-                adapter.addData(projectMineBean.getList());
+                adapter.addData(subscribeBean.getList());
             }
-            setNoMore(projectMineBean.getPage(), projectMineBean.getCount());
+            setNoMore(subscribeBean.getPage(), subscribeBean.getCount());
         });
 
         //推送选择列表数据
@@ -166,16 +183,35 @@ public class MineSubActivity extends BaseActivity {
 
         //推送选择成功返回结果
         mineSubVm.phasesSetLiveData.observe(this, o -> {
-            mineSubVm.myProject();
-            mineSubVm.myRecruit();
+            mineSubVm.subscribe(1);
         });
 
-        mineSubVm.myProject();
+        mineSubVm.subscribe(1);
     }
 
     //闲置提醒
     private void getUnused() {
 
+        adapter.setOnItemChildClickListener((helper, view, position) -> {
+            if (view.getId() == R.id.tv_read) {
+                Bundle bundle = new Bundle();
+                bundle.putInt("notice", 1);
+                ActivityUtils.startActivity(bundle, MaterialActivity.class);
+            }
+        });
+
+        //获取订阅信息数据
+        mineSubVm.subscribeLiveData.observe(this, subscribeBean -> {
+            if (subscribeBean.getPage() == 1) {
+                adapter.setNewData(subscribeBean.getList());
+                adapter.setEmptyView(emptyViewFactory.createEmptyView(R.drawable.icon_empty_subscibe, R.string.empty_material_subscribe_info, 0, null));
+            }else {
+                adapter.addData(subscribeBean.getList());
+            }
+            setNoMore(subscribeBean.getPage(), subscribeBean.getCount());
+        });
+
+        mineSubVm.subscribe(2);
     }
 
     private void setNoMore(int page, int count){

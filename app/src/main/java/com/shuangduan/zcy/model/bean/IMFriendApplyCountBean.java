@@ -13,6 +13,8 @@ package com.shuangduan.zcy.model.bean;
 public class IMFriendApplyCountBean {
 
     private int count;
+    private int subscribe;
+    private int material;
 
     public int getCount() {
         return count;
@@ -20,5 +22,21 @@ public class IMFriendApplyCountBean {
 
     public void setCount(int count) {
         this.count = count;
+    }
+
+    public int getSubscribe() {
+        return subscribe;
+    }
+
+    public void setSubscribe(int subscribe) {
+        this.subscribe = subscribe;
+    }
+
+    public int getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(int material) {
+        this.material = material;
     }
 }

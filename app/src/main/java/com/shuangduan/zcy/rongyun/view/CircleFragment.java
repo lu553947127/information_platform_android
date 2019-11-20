@@ -162,17 +162,12 @@ public class CircleFragment extends BaseFragment {
         imAddVm = ViewModelProviders.of(this).get(IMAddVm.class);
         //未读消息数量返回数据
         imAddVm.applyCountData.observe(this,friendApplyCountBean -> {
-            if (friendApplyCountBean.getCount() == 0) {
-                tvContactsNumbers.setVisibility(View.INVISIBLE);
-            } else if (friendApplyCountBean.getCount() > 0 && friendApplyCountBean.getCount() < 100) {
-                tvContactsNumbers.setVisibility(View.VISIBLE);
-                tvContactsNumbers.setText(String.valueOf(friendApplyCountBean.getCount()));
-            } else {
-                tvContactsNumbers.setVisibility(View.VISIBLE);
-                tvContactsNumbers.setText(R.string.im_no_read_message);
-            }
+            getCountNumbers(friendApplyCountBean.getCount(),tvContactsNumbers);
+            getCountNumbers(friendApplyCountBean.getSubscribe(),tvSubscribeChildrenNumbers);
+            getCountNumbers(friendApplyCountBean.getSubscribe(),tvSubscribeGroupNumber);
+            getCountNumbers(friendApplyCountBean.getMaterial(),tvUnusedNumber);
             //设置底部标签数量
-            int counts=imAddVm.count+friendApplyCountBean.getCount();
+            int counts=imAddVm.count+friendApplyCountBean.getCount()+friendApplyCountBean.getSubscribe()+friendApplyCountBean.getMaterial();
             if (counts < 1) {
                 relativeLayout.setVisibility(View.GONE);
             } else if (counts < 100) {
@@ -273,6 +268,19 @@ public class CircleFragment extends BaseFragment {
                 LogUtils.i("置顶失败");
             }
         });
+    }
+
+    //设备角标数量
+    private void getCountNumbers(int count,TextView textView) {
+        if (count == 0) {
+            textView.setVisibility(View.INVISIBLE);
+        } else if (count > 0 && count < 100) {
+            textView.setVisibility(View.VISIBLE);
+            textView.setText(String.valueOf(count));
+        } else {
+            textView.setVisibility(View.VISIBLE);
+            textView.setText(R.string.im_no_read_message);
+        }
     }
 
     //设置底部消息提醒数字布局

@@ -282,7 +282,7 @@ public class HomeFragment extends BaseFragment {
         imAddVm = ViewModelProviders.of(this).get(IMAddVm.class);
         imAddVm.applyCountData.observe(this, friendApplyCountBean -> {
             //设置底部标签数量
-            int counts = imAddVm.count + friendApplyCountBean.getCount();
+            int counts=imAddVm.count+friendApplyCountBean.getCount()+friendApplyCountBean.getSubscribe()+friendApplyCountBean.getMaterial();
             if (counts < 1) {
                 relativeLayout.setVisibility(View.GONE);
             } else if (counts < 100) {

@@ -70,6 +70,12 @@ public class OrderSearchBean {
     }
 
     public static class OrderPhasesBean {
+
+        public OrderPhasesBean(int id, String name) {
+            this.id = id;
+            this.name = name;
+        }
+
         /**
          * id : 1
          * name : 提交订单
@@ -92,6 +98,14 @@ public class OrderSearchBean {
 
         public void setName(String name) {
             this.name = name;
+        }
+
+        @Override
+        public String toString() {
+            return "OrderPhasesBean{" +
+                    "id=" + id +
+                    ", name='" + name + '\'' +
+                    '}';
         }
     }
 
@@ -119,5 +133,22 @@ public class OrderSearchBean {
         public void setName(String name) {
             this.name = name;
         }
+
+        @Override
+        public String toString() {
+            return "InsideBean{" +
+                    "id=" + id +
+                    ", name='" + name + '\'' +
+                    '}';
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "OrderSearchBean{" +
+                "order_status=" + order_status +
+                ", order_phases=" + order_phases +
+                ", inside=" + inside +
+                '}';
     }
 }

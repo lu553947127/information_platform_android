@@ -39,7 +39,7 @@ public class IMRepository extends BaseRepository {
         request(apiService.imFriendApply(userId, receive_user_id, msg)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
-    //通讯录 好友申请数量
+    //通讯录 好友申请数量/角标数量
     public void applyCount(MutableLiveData<IMFriendApplyCountBean> liveData, MutableLiveData<String> pageStateLiveData, int userId){
         request(apiService.applyCount(userId)).setData(liveData).setPageState(pageStateLiveData).send();
     }

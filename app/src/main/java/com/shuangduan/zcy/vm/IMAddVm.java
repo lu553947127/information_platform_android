@@ -2,7 +2,6 @@ package com.shuangduan.zcy.vm;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseViewModel;
@@ -140,10 +139,9 @@ public class IMAddVm extends BaseViewModel {
         new IMRepository().myGroup(groupListData, pageStateLiveData, userId, page, 10);
     }
 
-    //通讯录 好友申请数量
+    //通讯录 好友申请数量/角标数量
     public void applyCount() {
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
-        LogUtils.e("user_id=====" + userId);
         new IMRepository().applyCount(applyCountData, pageStateLiveData, userId);
     }
 

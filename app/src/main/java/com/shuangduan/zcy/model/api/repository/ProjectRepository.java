@@ -15,7 +15,7 @@ import com.shuangduan.zcy.model.bean.ProjectSubConfirmBean;
 import com.shuangduan.zcy.model.bean.ProjectSubFirstBean;
 import com.shuangduan.zcy.model.bean.ProjectSubViewBean;
 import com.shuangduan.zcy.model.bean.ProvinceBean;
-import com.shuangduan.zcy.model.bean.RecruitSubBean;
+import com.shuangduan.zcy.model.bean.MessagePushBean;
 import com.shuangduan.zcy.model.bean.StageBean;
 import com.shuangduan.zcy.model.bean.TypeBean;
 
@@ -78,12 +78,19 @@ public class ProjectRepository extends BaseRepository {
         request(apiService.addTrack(user_id, id, remarks, name, tel, update_time, image_id)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
-    public void projectSub(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int user_id, int page){
-        request(apiService.projectSub(user_id, page)).setData(liveData).setPageState(pageStateLiveData).send();
+    //订阅消息列表
+    public void subscribe(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int user_id,int type, int page){
+        request(apiService.subscribe(user_id,type, page)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
-    public void recruitSub(MutableLiveData<RecruitSubBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, int page){
-        request(apiService.recruitSub(user_id, page)).setData(liveData).setPageState(pageStateLiveData).send();
+    //订阅消息开关状态返回
+    public void msgPush(MutableLiveData<MessagePushBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, int type){
+        request(apiService.msgPush(user_id, type)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    //订阅消息开关状态修改
+    public void msgPushStatus(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int user_id, int type,int status){
+        request(apiService.msgPushStatus(user_id, type,status)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
     public void startWarrant(MutableLiveData<ProjectSubFirstBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, int id){

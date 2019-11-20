@@ -61,9 +61,8 @@
                 android:background="@drawable/progressbar_red"
                 android:textColor="@color/colorBgDark"
                 android:gravity="center"
-                android:text="88"
                 android:textSize="11sp"
-                android:visibility="visible"/>
+                android:visibility="invisible"/>
         </RelativeLayout>
 
         <RelativeLayout
@@ -103,9 +102,8 @@
                 android:background="@drawable/progressbar_red"
                 android:textColor="@color/colorBgDark"
                 android:gravity="center"
-                android:text="88"
                 android:textSize="11sp"
-                android:visibility="visible"/>
+                android:visibility="invisible"/>
         </RelativeLayout>
 
     </LinearLayout>

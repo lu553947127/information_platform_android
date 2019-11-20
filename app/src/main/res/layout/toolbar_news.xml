@@ -78,9 +78,8 @@
                 android:background="@drawable/progressbar_red"
                 android:textColor="@color/colorBgDark"
                 android:gravity="center"
-                android:text="15"
                 android:textSize="11sp"
-                android:visibility="visible"/>
+                android:visibility="invisible"/>
         </RelativeLayout>
 
         <!--通讯录-->

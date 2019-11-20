@@ -107,6 +107,8 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
     private OrderTurnoverVm orderVm;
     private AdminOrderListAdapter adminOrderListAdapter;
     private int manage_status;
+    private boolean isRemove = false;
+    private boolean isRemoveAdd = false;
 
     public static OrderTurnoverFragment newInstance() {
         Bundle args = new Bundle();
@@ -326,6 +328,23 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
                         }).showDialog();
                 break;
             case R.id.tv_progress://修改进度
+                //公开物资出售时 才有投标报价
+//                if (!orderPhasesList.get(2).getName().equals("投标报价")&&orderItem.inside==1&&orderItem.method==2){
+//                    orderPhasesList.add(2,new OrderSearchBean.OrderPhasesBean(4,"投标报价"));
+//                }else if (orderPhasesList.get(2).getName().equals("投标报价")&&orderItem.inside!=1&&orderItem.method!=2){
+//                    orderPhasesList.remove(2);
+//                }
+
+                if(!orderPhasesList.get(2).getName().equals("投标报价")&& orderItem.inside==1&&orderItem.method==2){
+                    orderPhasesList.add(2,new OrderSearchBean.OrderPhasesBean(4,"投标报价"));
+                }else {
+                    if(orderPhasesList.get(2).getName().equals("投标报价")){
+                        orderPhasesList.remove(2);
+                    }
+                }
+
+
+                LogUtils.i(orderPhasesList);
                 getBottomSheetDialog(R.layout.dialog_is_grounding, "order_phases", 1);
                 break;
         }

@@ -6,7 +6,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.model.bean.ProjectCollectBean;
-import com.shuangduan.zcy.model.bean.ProjectSubBean;
 
 import java.util.List;
 

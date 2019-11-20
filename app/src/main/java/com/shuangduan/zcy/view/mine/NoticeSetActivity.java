@@ -4,11 +4,13 @@ import android.os.Bundle;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.BarUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
+import com.shuangduan.zcy.vm.MineSubVm;
 import com.shuangduan.zcy.weight.SwitchView;
 
 import butterknife.BindView;
@@ -35,6 +37,7 @@ public class NoticeSetActivity extends BaseActivity {
     Toolbar toolbar;
     @BindView(R.id.sv)
     SwitchView switchView;
+    private MineSubVm mineSubVm;
 
     @Override
     protected int initLayoutRes() {
@@ -49,20 +52,48 @@ public class NoticeSetActivity extends BaseActivity {
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
+
+        mineSubVm = ViewModelProviders.of(this).get(MineSubVm.class);
+
         switch (getIntent().getIntExtra(CustomConfig.NEWS_TYPE,0)){
             case SUBSCRIBE://订阅消息
                 tvBarTitle.setText(getString(R.string.close_subscribe_message));
+                mineSubVm.msgPush(1);
                 break;
             case UNUSED://闲置提醒
                 tvBarTitle.setText(getString(R.string.close_subscribe_message_group));
+                mineSubVm.msgPush(2);
                 break;
         }
+
+        //订阅消息开关状态返回结果
+        mineSubVm.messagePushLiveData.observe(this,messagePushBean -> {
+            if (messagePushBean.getStatus()==1){
+                switchView.setOpened(true);
+            }else {
+                switchView.setOpened(false);
+            }
+        });
+
+        //订阅消息开关状态修改返回结果
+        mineSubVm.messagePushStatusLiveData.observe(this,item ->{
+
+        });
 
         switchView.setOnStateChangedListener(new SwitchView.OnStateChangedListener() {
             @Override
             public void toggleToOn(SwitchView view) {
                 if (view.getId() == R.id.sv) {
                     switchView.setOpened(true);
+                    switch (getIntent().getIntExtra(CustomConfig.NEWS_TYPE,0)){
+                        case SUBSCRIBE://订阅消息
+                            mineSubVm.msgPushStatus(1,1);
+                            break;
+                        case UNUSED://闲置提醒
+                            tvBarTitle.setText(getString(R.string.close_subscribe_message_group));
+                            mineSubVm.msgPushStatus(2,1);
+                            break;
+                    }
                 }
             }
 
@@ -70,6 +101,15 @@ public class NoticeSetActivity extends BaseActivity {
             public void toggleToOff(SwitchView view) {
                 if (view.getId() == R.id.sv) {
                     switchView.setOpened(false);
+                    switch (getIntent().getIntExtra(CustomConfig.NEWS_TYPE,0)){
+                        case SUBSCRIBE://订阅消息
+                            mineSubVm.msgPushStatus(1,2);
+                            break;
+                        case UNUSED://闲置提醒
+                            tvBarTitle.setText(getString(R.string.close_subscribe_message_group));
+                            mineSubVm.msgPushStatus(2,2);
+                            break;
+                    }
                 }
             }
         });
