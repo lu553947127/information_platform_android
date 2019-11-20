@@ -2,6 +2,7 @@ package com.shuangduan.zcy.adminManage.view.order;
 
 import android.os.Bundle;
 import android.text.Html;
+import android.text.Spanned;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -145,18 +146,17 @@ public class OrderDetailsActivity extends BaseActivity {
         orderType = getIntent().getIntExtra("order_type", 0);
 
 
-
-        if(orderType==0){
+        if (orderType == 0) {
             OrderTurnoverVm vm = ViewModelProviders.of(this).get(OrderTurnoverVm.class);
             vm.constructionOrderDetail(orderId);
 
             vm.orderDetailsLiveData.observe(this, orderItem -> {
-               initViewData(orderItem);
+                initViewData(orderItem);
             });
-        }else {
+        } else {
             OrderDeviceVm vm = ViewModelProviders.of(this).get(OrderDeviceVm.class);
             vm.equipmentOrderDetail(orderId);
-            vm.orderDetailsLiveData.observe(this,orderItem->{
+            vm.orderDetailsLiveData.observe(this, orderItem -> {
                 initViewData(orderItem);
             });
         }
@@ -168,7 +168,13 @@ public class OrderDetailsActivity extends BaseActivity {
         if (orderItem.method == 1) {
             tvPrice.setText(Html.fromHtml("指导单价：<font color=\"#EF583E\">¥" + orderItem.price + "</font>/天"));
         } else {
-            tvPrice.setText(Html.fromHtml("指导单价：<font color=\"#EF583E\">¥" + orderItem.price + "</font>/" + orderItem.unit));
+
+            Spanned turnoverPrice = Html.fromHtml("指导单价：<font color=\"#EF583E\">¥" + orderItem.price + "</font>/" + orderItem.unit);
+
+            Spanned devicePrice = Html.fromHtml("指导单价：<font color=\"#EF583E\">¥" + orderItem.price + "</font>");
+            //周转材料显示单位，设备不显示单位
+            tvPrice.setText(orderType==0?turnoverPrice:devicePrice);
+
         }
         tvSpec.setText(getString(R.string.format_admin_spec, orderItem.spec));
         tvCategory.setText(getString(R.string.format_admin_category, orderItem.categoryName));
@@ -176,7 +182,9 @@ public class OrderDetailsActivity extends BaseActivity {
         if (!StringUtils.isTrimEmpty(orderItem.leaseStartTime) && !StringUtils.isTrimEmpty(orderItem.leaseEndTime)) {
             tvLeaseTime.setText(getString(R.string.format_admin_lease_time, orderItem.leaseStartTime, orderItem.leaseEndTime));
         }
-        tvReserveNum.setText(orderItem.number + orderItem.unit);
+        //周转材料显示单位，设备不显示单位
+        tvReserveNum.setText(orderType==0?orderItem.number + orderItem.unit:String.valueOf(orderItem.number));
+
         tvAddress.setText(getString(R.string.format_admin_address, orderItem.province + orderItem.city + orderItem.address));
 
         if (manageStatus == 3 || manageStatus == 5) {

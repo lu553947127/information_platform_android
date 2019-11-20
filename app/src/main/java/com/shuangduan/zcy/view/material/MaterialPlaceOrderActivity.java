@@ -138,7 +138,7 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
     List<MaterialPlaceOrderBean> list = new ArrayList<>();
     private List<String> list_address = new ArrayList<>();
     MaterialPlaceOrderAdapter materialDepositingPlaceAdapter;
-    private long num, price,guidance_price;
+    private long num, price, guidance_price;
     private MaterialDetailBean materialDetail;
     //租期开始时间  ,租期结束时间
     private String leaseStartTime, leaseEndTime;
@@ -352,6 +352,12 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
                     ToastUtils.showShort("数量、存放地为必填项，不能为空");
                     return;
                 }
+
+                if (String.valueOf(price).length() > 8) {
+                    ToastUtils.showShort("订单金额过大，不支持线上交易");
+                    return;
+                }
+
                 materialDetailVm.getAddMaterialOrder(material_id, etRealName.getText().toString(), etTel.getText().toString()
                         , etCompany.getText().toString(), province, city, etAddress.getText().toString(), etRemark.getText(), science_num_id);
                 break;

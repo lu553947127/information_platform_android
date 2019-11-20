@@ -137,12 +137,12 @@ public class MaterialOrderDetailActivity extends BaseActivity {
 
             if (type == CustomConfig.FRP) {
                 tvPrice.setText(item.method == 1 ?
-                        Html.fromHtml("商品单价：<font color=#EF583E>" + item.price + "<font/>/天") :
-                        Html.fromHtml("商品单价：<font color=#EF583E>" + item.price + "<font/>/" + item.unit));
+                        Html.fromHtml("商品单价：<font color=#EF583E>¥" + item.price + "<font/>/天") :
+                        Html.fromHtml("商品单价：<font color=#EF583E>¥" + item.price + "<font/>/" + item.unit));
             } else if (type == CustomConfig.EQUIPMENT) {
                 tvPrice.setText(item.method == 1 ?
-                        Html.fromHtml("商品单价：<font color=#EF583E>" + item.price + "<font/>/天") :
-                        Html.fromHtml("商品单价：<font color=#EF583E>" + item.price + "<font/>" ));
+                        Html.fromHtml("商品单价：<font color=#EF583E>¥" + item.price + "<font/>/天") :
+                        Html.fromHtml("商品单价：<font color=#EF583E>¥" + item.price + "<font/>" ));
             }
 
             tvSpec.setText("规格：" + item.spec);

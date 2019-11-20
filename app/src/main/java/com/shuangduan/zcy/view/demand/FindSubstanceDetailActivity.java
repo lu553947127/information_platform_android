@@ -89,9 +89,7 @@ public class FindSubstanceDetailActivity extends BaseActivity {
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
-
         View emptyView = emptyViewFactory.createEmptyView(R.drawable.icon_empty_project, R.string.empty_recommend_substance_info, 0, null);
-
         tvBarTitle.setText(getString(R.string.find_substance_detail));
 
         initPay();

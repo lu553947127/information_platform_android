@@ -50,6 +50,7 @@
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
                     android:textColor="@color/color_EF583E"
+                    android:text="ssd"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="@id/iv_icon" />
 
@@ -66,61 +67,61 @@
                 <TextView
                     android:id="@+id/tv_title"
                     android:layout_width="wrap_content"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:gravity="top"
                     android:textColor="@color/colorTv"
                     android:textSize="14sp"
-                    app:layout_constraintBottom_toTopOf="@id/tv_price"
                     app:layout_constraintLeft_toRightOf="@+id/iv_icon"
                     app:layout_constraintTop_toTopOf="@id/iv_icon" />
 
                 <TextView
                     android:id="@+id/tv_price"
                     android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:gravity="bottom"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:textColor="@color/color_666666"
                     android:textSize="13sp"
-                    app:layout_constraintBottom_toTopOf="@id/tv_spec"
                     app:layout_constraintLeft_toLeftOf="@+id/tv_title"
                     app:layout_constraintTop_toBottomOf="@id/tv_title"
                     tools:ignore="MissingConstraints" />
 
+
+
                 <TextView
                     android:id="@+id/tv_spec"
                     android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:gravity="bottom"
+                    android:layout_height="wrap_content"
                     android:textColor="@color/color_666666"
+                    android:layout_marginTop="5dp"
                     android:textSize="13sp"
-                    app:layout_constraintBottom_toTopOf="@id/tv_lease_time"
                     app:layout_constraintLeft_toLeftOf="@+id/tv_title"
                     app:layout_constraintTop_toBottomOf="@+id/tv_price"
                     tools:ignore="MissingConstraints" />
 
-                <TextView
-                    android:id="@+id/tv_lease_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:gravity="bottom"
-                    android:textColor="@color/color_666666"
-                    android:textSize="13sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/iv_icon"
-                    app:layout_constraintLeft_toLeftOf="@+id/tv_title"
-                    app:layout_constraintTop_toBottomOf="@id/tv_spec"
-                    tools:ignore="MissingConstraints" />
+
 
                 <TextView
                     android:id="@+id/tv_category"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:textColor="@color/color_666666"
                     android:textSize="13sp"
-                    android:gravity="bottom"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintBottom_toBottomOf="@id/tv_spec"/>
+                    app:layout_constraintLeft_toLeftOf="@id/tv_title"
+                    app:layout_constraintTop_toBottomOf="@id/tv_spec"/>
 
+
+
+                <TextView
+                    android:id="@+id/tv_lease_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/color_666666"
+                    android:textSize="13sp"
+                    app:layout_constraintLeft_toLeftOf="@+id/tv_title"
+                    app:layout_constraintTop_toBottomOf="@id/tv_category"
+                    tools:ignore="MissingConstraints" />
 
                 <TextView
                     android:id="@+id/tv_reserve"

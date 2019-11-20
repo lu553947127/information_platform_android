@@ -299,8 +299,9 @@
     <LinearLayout
         android:id="@+id/ll_remark"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:minHeight="70dp"
         android:background="@drawable/shape_f6f7fb_3"
         android:orientation="vertical"
         android:paddingLeft="6dp"

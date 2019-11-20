@@ -259,6 +259,12 @@ public class MaterialEquipmentPlaceOrderActivity extends BaseActivity {
                     return;
                 }
 
+
+                if (String.valueOf(price).length() > 8) {
+                    ToastUtils.showShort("订单金额过大，不支持线上交易");
+                    return;
+                }
+
                 materialDetailVm.getAddEquipmentOrder(materialDetail.getId(), etRealName.getText().toString(), etTel.getText().toString()
                         , etCompany.getText().toString(), province, city, etAddress.getText().toString(), etRemark.getText(),
                         materialDetail.getMethod(), num, materialDetail.getCategory(), leaseStartTime, leaseEndTime);

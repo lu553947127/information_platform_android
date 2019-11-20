@@ -55,6 +55,7 @@ public class FeedbackActivity extends BaseActivity {
 
         feedbackVm = ViewModelProviders.of(this).get(FeedbackVm.class);
         feedbackVm.feedbackLiveData.observe(this, o -> {
+            ToastUtils.showShort("提交意见反馈成功.");
             finish();
         });
         feedbackVm.pageStateLiveData.observe(this, s -> {
