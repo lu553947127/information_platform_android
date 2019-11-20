@@ -8,7 +8,6 @@
     android:layout_height="match_parent"
     android:background="@color/colorBgDark">
 
-
     <include layout="@layout/toolbar"/>
 
     <LinearLayout
@@ -116,8 +115,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="10dp"
-                    android:paddingLeft="20dp"
-                    android:background="@color/colorFFF"
                     android:nestedScrollingEnabled="false"
                     tools:ignore="UnusedAttribute" />
 

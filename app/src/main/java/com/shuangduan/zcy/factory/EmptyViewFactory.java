@@ -1,10 +1,13 @@
 package com.shuangduan.zcy.factory;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.manage.ShareManage;
@@ -18,6 +21,7 @@ import com.shuangduan.zcy.manage.ShareManage;
  * @change
  * @class describe
  */
+@SuppressLint("InflateParams")
 public class EmptyViewFactory {
 
     private static EmptyViewFactory instance;
@@ -60,6 +64,40 @@ public class EmptyViewFactory {
         tvTip.setText(strRes);
         TextView tvGoto = view.findViewById(R.id.tv_goto);
 
+        ConstraintLayout constraintLayout = view.findViewById(R.id.constraint);
+        constraintLayout.setBackgroundResource(R.color.colorFFF);
+
+        //跳转的点击回调
+        if (callBack != null) {
+            tvGoto.setText(btnStrRes);
+            tvGoto.setVisibility(View.VISIBLE);
+            tvGoto.setOnClickListener(v -> callBack.onEmptyClick());
+        }
+        return view;
+    }
+
+    /**
+     * 空页面没有跳转按钮  callBack 可以传null
+     *
+     * @param iconRes
+     * @param strRes
+     * @param btnStrRes
+     * @param callBack
+     * @return
+     */
+    public View createEmptyView(int iconRes, int strRes, int btnStrRes,int background, EmptyViewCallBack callBack) {
+
+        View view = LayoutInflater.from(context).inflate(R.layout.layout_empty, null);
+
+        ImageView ivIcon = view.findViewById(R.id.iv_icon);
+        ivIcon.setImageResource(iconRes);
+
+        TextView tvTip = view.findViewById(R.id.tv_tip);
+        tvTip.setText(strRes);
+        TextView tvGoto = view.findViewById(R.id.tv_goto);
+
+        ConstraintLayout constraintLayout = view.findViewById(R.id.constraint);
+        constraintLayout.setBackgroundResource(background);
 
         //跳转的点击回调
         if (callBack != null) {

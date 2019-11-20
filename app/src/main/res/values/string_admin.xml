@@ -164,4 +164,7 @@
     <string name="admin_rejected">已驳回</string>
     <string name="admin_order_details">订单详情</string>
     <string name="admin_clear">清空</string>
+
+    <string name="empty_no_turnover">暂时没有相关材料</string>
+    <string name="empty_no_device">暂时没有相关设备</string>
 </resources>

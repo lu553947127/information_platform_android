@@ -212,7 +212,6 @@ public class HomeFragment extends BaseFragment {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
             }
         });
         List<ClassifyBean> list = getClassify();

@@ -12,7 +12,7 @@
         android:id="@+id/tv_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/circular_background_gray2"
+        android:background="@drawable/circular_background_gray3"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:layout_gravity="center_horizontal"

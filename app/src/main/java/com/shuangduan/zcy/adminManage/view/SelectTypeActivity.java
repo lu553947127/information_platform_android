@@ -35,6 +35,8 @@ import com.shuangduan.zcy.weight.XEditText;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -88,6 +90,7 @@ public class SelectTypeActivity extends BaseActivity {
     private TurnoverHistoryAdapter turnoverHistoryAdapter;
     private TurnoverFirstAdapter turnoverFirstAdapter;
     private TurnoverSecondAdapter turnoverSecondAdapter;
+    private List<TurnoverCategoryBean> turnoverHistoryList = new ArrayList<>();
 
     @Override
     protected int initLayoutRes() {
@@ -216,9 +219,15 @@ public class SelectTypeActivity extends BaseActivity {
                 if (s.length()!=0){
                     llHistory.setVisibility(View.GONE);
                     llType.setVisibility(View.GONE);
+                    tvAll.setVisibility(View.GONE);
                 }else {
-                    llHistory.setVisibility(View.VISIBLE);
+                    if (turnoverHistoryList.size()!=0){
+                        llHistory.setVisibility(View.VISIBLE);
+                    }else {
+                        llHistory.setVisibility(View.GONE);
+                    }
                     llType.setVisibility(View.VISIBLE);
+                    tvAll.setVisibility(View.VISIBLE);
                 }
                 switch (type){
                     case ADMIN_MANAGE_CONSTRUCTION://选择周转材料
@@ -236,6 +245,9 @@ public class SelectTypeActivity extends BaseActivity {
 
     //周转材料名称
     private void getTurnoverData() {
+
+        View emptyView = emptyViewFactory.createEmptyView(R.drawable.icon_empty_project, R.string.empty_no_turnover, 0, R.color.colorBgDark,null);
+
         tvBarTitle.setText("选择材料");
         tvHistory.setText("历史浏览材料");
         tvType.setText("材料分类");
@@ -249,9 +261,10 @@ public class SelectTypeActivity extends BaseActivity {
 
         //周转材料历史列表数据
         turnoverVm.turnoverHistoryData.observe(this,turnoverHistoryBeans -> {
-            if (turnoverHistoryBeans.size()!=0){
+            turnoverHistoryList = turnoverHistoryBeans;
+            if (turnoverHistoryList.size()!=0){
                 llHistory.setVisibility(View.VISIBLE);
-                turnoverHistoryAdapter.setNewData(turnoverHistoryBeans);
+                turnoverHistoryAdapter.setNewData(turnoverHistoryList);
             }else {
                 llHistory.setVisibility(View.GONE);
             }
@@ -265,17 +278,17 @@ public class SelectTypeActivity extends BaseActivity {
 
         //周转材料名称二级列表数据
         turnoverVm.turnoverSecondData.observe(this,turnoverCategoryBeans -> {
-            if (turnoverCategoryBeans.size()!=0){
-                turnoverSecondAdapter.setNewData(turnoverCategoryBeans);
-                turnoverSecondAdapter.setKeyword(Objects.requireNonNull(etSearch.getText()).toString());
-            }else {
-                turnoverSecondAdapter.setEmptyView(R.layout.layout_empty_admin, rvAll);
-            }
+            turnoverSecondAdapter.setNewData(turnoverCategoryBeans);
+            turnoverSecondAdapter.setKeyword(Objects.requireNonNull(etSearch.getText()).toString());
+            turnoverSecondAdapter.setEmptyView(emptyView);
         });
     }
 
     //设备名称
     private void getDevice() {
+
+        View emptyView = emptyViewFactory.createEmptyView(R.drawable.icon_empty_project, R.string.empty_no_device, 0, R.color.colorBgDark,null);
+
         tvBarTitle.setText("选择设备");
         tvHistory.setText("历史浏览设备");
         tvType.setText("设备分类");
@@ -289,9 +302,10 @@ public class SelectTypeActivity extends BaseActivity {
 
         //设备历史列表数据
         deviceVm.deviceHistoryData.observe(this,turnoverHistoryBeans -> {
-            if (turnoverHistoryBeans.size()!=0){
+            turnoverHistoryList = turnoverHistoryBeans;
+            if (turnoverHistoryList.size()!=0){
                 llHistory.setVisibility(View.VISIBLE);
-                turnoverHistoryAdapter.setNewData(turnoverHistoryBeans);
+                turnoverHistoryAdapter.setNewData(turnoverHistoryList);
             }else {
                 llHistory.setVisibility(View.GONE);
             }
@@ -305,12 +319,9 @@ public class SelectTypeActivity extends BaseActivity {
 
         //设备名称二级列表数据
         deviceVm.deviceSecondData.observe(this,turnoverCategoryBeans -> {
-            if (turnoverCategoryBeans.size()!=0){
-                turnoverSecondAdapter.setNewData(turnoverCategoryBeans);
-                turnoverSecondAdapter.setKeyword(Objects.requireNonNull(etSearch.getText()).toString());
-            }else {
-                turnoverSecondAdapter.setEmptyView(R.layout.layout_empty_admin, rvAll);
-            }
+            turnoverSecondAdapter.setNewData(turnoverCategoryBeans);
+            turnoverSecondAdapter.setKeyword(Objects.requireNonNull(etSearch.getText()).toString());
+            turnoverSecondAdapter.setEmptyView(emptyView);
         });
     }
 

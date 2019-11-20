@@ -2,6 +2,7 @@ package com.shuangduan.zcy.view.release;
 
 import android.graphics.Point;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 
 import androidx.appcompat.widget.AppCompatTextView;
@@ -29,6 +30,7 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
@@ -255,18 +257,22 @@ public class LocationMapActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_bar_right:
-                LogUtils.i(searchLatlonPoint.getLatitude(), searchLatlonPoint.getLongitude());
-                EventBus.getDefault().post(new LocationEvent(
-                        getIntent().getStringExtra(CustomConfig.PROVINCE_NAME),
-                        getIntent().getStringExtra(CustomConfig.CITY_NAME),
-                        getIntent().getIntExtra(CustomConfig.PROVINCE_ID, 0),
-                        getIntent().getIntExtra(CustomConfig.CITY_ID, 0),
-                        searchLatlonPoint.getLatitude(),
-                        searchLatlonPoint.getLongitude(),
-                        formatAddress
-                ));
-                ActivityUtils.finishActivity(ReleaseAreaSelectActivity.class);
-                finish();
+                if (!TextUtils.isEmpty(formatAddress)&&searchLatlonPoint.getLatitude()!=0&&searchLatlonPoint.getLongitude()!=0){
+                    LogUtils.i(searchLatlonPoint.getLatitude(), searchLatlonPoint.getLongitude());
+                    EventBus.getDefault().post(new LocationEvent(
+                            getIntent().getStringExtra(CustomConfig.PROVINCE_NAME),
+                            getIntent().getStringExtra(CustomConfig.CITY_NAME),
+                            getIntent().getIntExtra(CustomConfig.PROVINCE_ID, 0),
+                            getIntent().getIntExtra(CustomConfig.CITY_ID, 0),
+                            searchLatlonPoint.getLatitude(),
+                            searchLatlonPoint.getLongitude(),
+                            formatAddress
+                    ));
+                    ActivityUtils.finishActivity(ReleaseAreaSelectActivity.class);
+                    finish();
+                }else {
+                    ToastUtils.showShort("正在定位,请稍等");
+                }
                 break;
         }
     }
