@@ -261,11 +261,15 @@ public class ProjectContentFragment extends BaseFragment implements BaseQuickAda
      * 去支付
      */
     private void goToPay() {
-        addDialog(new PayDialog(mActivity)
-                .setSingleCallBack((item, position) -> {
-                    coinPayVm.payProject(item);
-                })
-                .showDialog());
+        try {
+            addDialog(new PayDialog(mActivity)
+                    .setSingleCallBack((item, position) -> {
+                        coinPayVm.payProject(item);
+                    })
+                    .showDialog());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -280,25 +284,29 @@ public class ProjectContentFragment extends BaseFragment implements BaseQuickAda
     }
 
     private void addPayDialog() {
-        addDialog(new CustomDialog(mActivity)
-                .setTip(String.format(getString(R.string.format_pay_price_project), projectDetailVm.detailLiveData.getValue().getDetail().getDetail_price()))
-                .setCallBack(new BaseDialog.CallBack() {
-                    @Override
-                    public void cancel() {
-                    }
-
-                    @Override
-                    public void ok(String s) {
-                        int status = SPUtils.getInstance().getInt(SpConfig.PWD_PAY_STATUS, 0);
-                        if (status == 1) {
-                            goToPay();
-                        } else {
-                            //查询是否设置支付密码
-                            updatePwdPayVm.payPwdState();
+        try {
+            addDialog(new CustomDialog(mActivity)
+                    .setTip(String.format(getString(R.string.format_pay_price_project), projectDetailVm.detailLiveData.getValue().getDetail().getDetail_price()))
+                    .setCallBack(new BaseDialog.CallBack() {
+                        @Override
+                        public void cancel() {
                         }
-                    }
-                })
-                .showDialog());
+
+                        @Override
+                        public void ok(String s) {
+                            int status = SPUtils.getInstance().getInt(SpConfig.PWD_PAY_STATUS, 0);
+                            if (status == 1) {
+                                goToPay();
+                            } else {
+                                //查询是否设置支付密码
+                                updatePwdPayVm.payPwdState();
+                            }
+                        }
+                    })
+                    .showDialog());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**

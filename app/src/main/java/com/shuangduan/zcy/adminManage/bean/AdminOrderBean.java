@@ -70,5 +70,6 @@ public class AdminOrderBean {
         //项目名称
         @SerializedName("unit_name")
         public String unitName;
+
     }
 }

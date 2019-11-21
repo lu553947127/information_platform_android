@@ -135,6 +135,7 @@ public class HomeFragment extends BaseFragment {
     private IMAddVm imAddVm;
     private HomeVm homeVm;
     private IUnReadMessageObserver observer;
+    private DemandRelationshipVm demandRelationshipVm;
 
     public static HomeFragment newInstance() {
         Bundle args = new Bundle();
@@ -195,6 +196,7 @@ public class HomeFragment extends BaseFragment {
         refresh.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);
         refresh.setOnRefreshListener(refreshLayout -> {
             homeVm.getInit(getActivity());
+            demandRelationshipVm.getRelationship();
             refreshLayout.finishRefresh(1000);
         });
         refresh.setEnableOverScrollDrag(true);
@@ -280,6 +282,9 @@ public class HomeFragment extends BaseFragment {
         });
 
         imAddVm = ViewModelProviders.of(this).get(IMAddVm.class);
+
+        demandRelationshipVm = ViewModelProviders.of(mActivity).get(DemandRelationshipVm.class);
+
         imAddVm.applyCountData.observe(this, friendApplyCountBean -> {
             //设置底部标签数量
             int counts=imAddVm.count+friendApplyCountBean.getCount()+friendApplyCountBean.getSubscribe()+friendApplyCountBean.getMaterial();
@@ -375,7 +380,7 @@ public class HomeFragment extends BaseFragment {
             ActivityUtils.startActivity(bundle, FindBuyerDetailActivity.class);
         });
 
-        DemandRelationshipVm demandRelationshipVm = ViewModelProviders.of(mActivity).get(DemandRelationshipVm.class);
+
         demandRelationshipVm.getRelationship();
         DemandSubstanceVm demandSubstanceVm = ViewModelProviders.of(mActivity).get(DemandSubstanceVm.class);
         demandSubstanceVm.getSubstance();

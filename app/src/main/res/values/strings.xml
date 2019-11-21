@@ -355,6 +355,8 @@
     <string name="trans_order_number">交易单号</string>
     <string name="target_account">到账账户</string>
     <string name="withdraw_state">提现状态</string>
+    <string name="state">状态</string>
+    <string name="down_enclosure">下载附件</string>
     <string name="material_base">基建物资</string>
     <string name="product_detail">产品详情</string>
     <string name="authentication_not">尚未实名认证</string>

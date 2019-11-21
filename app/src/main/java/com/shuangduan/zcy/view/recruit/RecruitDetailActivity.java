@@ -2,6 +2,7 @@ package com.shuangduan.zcy.view.recruit;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -27,6 +28,9 @@ import com.shuangduan.zcy.dialog.CustomDialog;
 import com.shuangduan.zcy.dialog.PayDialog;
 import com.shuangduan.zcy.manage.ShareManage;
 import com.shuangduan.zcy.model.api.PageState;
+import com.shuangduan.zcy.model.bean.RecruitDetailBean;
+import com.shuangduan.zcy.utils.KeyboardUtil;
+import com.shuangduan.zcy.view.material.MaterialDetailActivity;
 import com.shuangduan.zcy.view.mine.SetPwdPayActivity;
 import com.shuangduan.zcy.view.recharge.RechargeActivity;
 import com.shuangduan.zcy.vm.CoinPayVm;
@@ -75,11 +79,17 @@ public class RecruitDetailActivity extends BaseActivity {
     TextView tvReleaseSource;
     @BindView(R.id.tv_intro_content)
     RichText tvIntroContent;
+    @BindView(R.id.tv_down)
+    TextView tvDown;
+
+
     private int id;
     private RecruitDetailVm recruitDetailVm;
     private UpdatePwdPayVm updatePwdPayVm;
     private CoinPayVm coinPayVm;
     private ShareManage shareManage;
+
+    private RecruitDetailBean recruitDetail;
 
 
     @Override
@@ -108,6 +118,7 @@ public class RecruitDetailActivity extends BaseActivity {
         recruitDetailVm = ViewModelProviders.of(this).get(RecruitDetailVm.class);
         recruitDetailVm.id = id;
         recruitDetailVm.detailLiveData.observe(this, recruitDetailBean -> {
+            this.recruitDetail = recruitDetailBean;
             tvTitle.setText(recruitDetailBean.getTitle());
             tvIntroTitle.setText(recruitDetailBean.getTitle());
             tvReleaseTime.setText(String.format(getString(R.string.format_release_time), recruitDetailBean.getStart_time()));
@@ -115,7 +126,7 @@ public class RecruitDetailActivity extends BaseActivity {
 
             if (!StringUtils.isTrimEmpty(recruitDetailBean.getSourceName())) {
                 tvReleaseSource.setText(String.format(getString(R.string.format_source), recruitDetailBean.getSourceName()));
-            }else {
+            } else {
                 tvReleaseSource.setText("来源:");
             }
 
@@ -123,6 +134,8 @@ public class RecruitDetailActivity extends BaseActivity {
             tvIntroContent.setHtml(recruitDetailBean.getContent());
             recruitDetailVm.collectionLiveData.postValue(recruitDetailBean.getCollection());
             llReadDetail.setVisibility(recruitDetailBean.getIs_pay() == 1 ? View.GONE : View.VISIBLE);
+
+            tvDown.setVisibility(StringUtils.isTrimEmpty(recruitDetailBean.getEnclosure()) ? View.INVISIBLE : View.VISIBLE);
         });
         recruitDetailVm.collectionLiveData.observe(this, i -> {
             tvCollect.setText(getString(i == 1 ? R.string.collected : R.string.collection));
@@ -204,7 +217,7 @@ public class RecruitDetailActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.iv_bar_back, R.id.iv_bar_right, R.id.ll_collect, R.id.ll_read_detail})
+    @OnClick({R.id.iv_bar_back, R.id.iv_bar_right, R.id.ll_collect, R.id.ll_read_detail, R.id.tv_down})
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_bar_back:
@@ -237,6 +250,23 @@ public class RecruitDetailActivity extends BaseActivity {
                             }
                         })
                         .showDialog());
+                break;
+            case R.id.tv_down:
+                new CustomDialog(this)
+                        .setTip(recruitDetail.getEnclosure())
+                        .setOk("确定")
+                        .setTitle("建议复制到电脑端打开")
+                        .setCallBack(new BaseDialog.CallBack() {
+                            @Override
+                            public void cancel() {
+                            }
+
+                            @Override
+                            public void ok(String s) {
+                                KeyboardUtil.copyString(RecruitDetailActivity.this, recruitDetail.getEnclosure());
+                                ToastUtils.showShort(getString(R.string.replication_success));
+                            }
+                        }).showDialog();
                 break;
         }
     }

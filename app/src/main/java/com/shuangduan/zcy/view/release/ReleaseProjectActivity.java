@@ -6,6 +6,7 @@ import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,12 +61,17 @@ import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
+
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.File;
 import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -172,6 +178,8 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
     private ReleaseContactAdapter releaseContactAdapter;
     private UploadPhotoVm uploadPhotoVm;
     private BottomSheetDialogs btn_dialog;
+    private SimpleDateFormat f;
+    private Calendar c;
 
     @Override
     protected int initLayoutRes() {
@@ -189,19 +197,23 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.release_msg));
 
+
+        f = new SimpleDateFormat("yyyy-MM-dd");
+        c = Calendar.getInstance();
+
         initPhoto();
         photoSet();
 
         releaseVm = ViewModelProviders.of(this).get(ReleaseVm.class);
         releaseVm.contactLiveData.observe(this, contactBeans -> {
-            if (releaseContactAdapter == null){
+            if (releaseContactAdapter == null) {
                 rvContact.setLayoutManager(new LinearLayoutManager(this));
                 rvContact.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_10_10));
-                releaseContactAdapter = new ReleaseContactAdapter(R.layout.item_release_contact, contactBeans){
+                releaseContactAdapter = new ReleaseContactAdapter(R.layout.item_release_contact, contactBeans) {
                     @Override
                     public void typeChange(String text, int position) {
                         List<ContactBean> list = releaseVm.contactLiveData.getValue();
-                        if (list != null){
+                        if (list != null) {
                             list.get(position).setPhone_type(text);
                             releaseVm.contactLiveData.postValue(list);
                         }
@@ -210,7 +222,7 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
                     @Override
                     public void unitChange(String text, int position) {
                         List<ContactBean> list = releaseVm.contactLiveData.getValue();
-                        if (list != null){
+                        if (list != null) {
                             list.get(position).setCompany(text);
                             releaseVm.contactLiveData.postValue(list);
                         }
@@ -219,7 +231,7 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
                     @Override
                     public void principleChange(String text, int position) {
                         List<ContactBean> list = releaseVm.contactLiveData.getValue();
-                        if (list != null){
+                        if (list != null) {
                             list.get(position).setName(text);
                             releaseVm.contactLiveData.postValue(list);
                         }
@@ -228,7 +240,7 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
                     @Override
                     public void mobileChange(String text, int position) {
                         List<ContactBean> list = releaseVm.contactLiveData.getValue();
-                        if (list != null){
+                        if (list != null) {
                             list.get(position).setTel(text);
                             releaseVm.contactLiveData.postValue(list);
                         }
@@ -237,7 +249,7 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
                 releaseContactAdapter.setHasStableIds(true);
                 rvContact.setAdapter(releaseContactAdapter);
                 releaseContactAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-                    switch (view.getId()){
+                    switch (view.getId()) {
                         case R.id.iv_del:
                             releaseVm.delContact(position);
                             break;
@@ -249,7 +261,7 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
                             break;
                     }
                 });
-            }else {
+            } else {
                 releaseContactAdapter.setNewData(contactBeans);
             }
         });
@@ -263,22 +275,22 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
             finish();
         });
         releaseVm.pageStateLiveData.observe(this, s -> {
-            switch (s){
+            switch (s) {
                 case PageState.PAGE_LOADING:
                     showLoading();
                     break;
-                    default:
-                        hideLoading();
-                        break;
+                default:
+                    hideLoading();
+                    break;
             }
         });
 
         //判断显示工程信息或动态信息
         if (getIntent().getIntExtra(CustomConfig.RELEASE_TYPE, 0) == 0) {
             projectLocus();
-        }else if (getIntent().getIntExtra(CustomConfig.RELEASE_TYPE, 0) == 1){
+        } else if (getIntent().getIntExtra(CustomConfig.RELEASE_TYPE, 0) == 1) {
             clickLocus();
-        }else if (getIntent().getIntExtra(CustomConfig.RELEASE_TYPE, 0) == 2){
+        } else if (getIntent().getIntExtra(CustomConfig.RELEASE_TYPE, 0) == 2) {
             clickLocus();
             tvProjectType.setClickable(false);
             tvProjectName.setText(getIntent().getStringExtra(CustomConfig.PROJECT_NAME));
@@ -313,7 +325,7 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
                     }
                 }
                 //查看图片
-                PictureEnlargeUtils.getPictureEnlargeList(ReleaseProjectActivity.this,list,position);
+                PictureEnlargeUtils.getPictureEnlargeList(ReleaseProjectActivity.this, list, position);
             }
 
             @Override
@@ -350,13 +362,13 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
             releaseVm.addImage(uploadBean.getImage_id());
         });
         uploadPhotoVm.mPageStateLiveData.observe(this, s -> {
-            switch (s){
+            switch (s) {
                 case PageState.PAGE_LOADING:
                     showLoading();
                     break;
-                    default:
-                        hideLoading();
-                        break;
+                default:
+                    hideLoading();
+                    break;
             }
         });
     }
@@ -396,7 +408,7 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
         permissionVm.getPermissionAlbum(rxPermissions);
     }
 
-    @OnClick({R.id.iv_bar_back, R.id.tv_release, R.id.tv_project_type, R.id.tv_project_address, R.id.tv_project_stage, R.id.tv_project_types, R.id.tv_time_start, R.id.tv_time_end, R.id.tv_add, R.id.tv_project_name,R.id.tv_authentication})
+    @OnClick({R.id.iv_bar_back, R.id.tv_release, R.id.tv_project_type, R.id.tv_project_address, R.id.tv_project_stage, R.id.tv_project_types, R.id.tv_time_start, R.id.tv_time_end, R.id.tv_add, R.id.tv_project_name, R.id.tv_authentication})
     void onClick(View view) {
         Bundle bundle = new Bundle();
         switch (view.getId()) {
@@ -418,10 +430,21 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
                 ActivityUtils.startActivity(ReleaseTypeSelectActivity.class);
                 break;
             case R.id.tv_time_start:
-                showTimeDialog(tvTimeStart, 0);
+                showTimeDialog(tvTimeStart, 0, releaseVm.todayTime);
                 break;
             case R.id.tv_time_end:
-                showTimeDialog(tvTimeEnd, 1);
+                if (TextUtils.isEmpty(releaseVm.start_time)) {
+                    ToastUtils.showShort("请先选择起始时间");
+                    return;
+                }
+                try {
+                    c.setTime(Objects.requireNonNull(f.parse(releaseVm.todayTime)));
+                    c.add(Calendar.DAY_OF_MONTH, 1);
+                    showTimeDialog(tvTimeEnd, 1, f.format(c.getTime()));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
                 break;
             case R.id.tv_add:
                 releaseVm.addContact();
@@ -432,7 +455,7 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
             case R.id.tv_release:
                 if (releaseVm.type == 1) {
                     releaseVm.releaseProject(edtProjectName.getText().toString(), edtProjectCompany.getText().toString(), edtProjectAcreage.getText().toString(), edtProjectPrice.getText().toString(), edtProjectDetail.getText().toString(), edtProjectMaterial.getText().toString());
-                }else if (releaseVm.type == 2){
+                } else if (releaseVm.type == 2) {
                     releaseVm.releaseLocus(edtProjectDes.getText().toString(), edtVisitor.getText().toString(), edtMobile.getText().toString());
                 }
                 break;
@@ -499,19 +522,19 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
     /**
      * 时间选择器
      */
-    private void showTimeDialog(TextView tv, int type){
+    private void showTimeDialog(TextView tv, int type, String showTime) {
         CustomDatePicker customDatePicker = new CustomDatePicker(this, time -> {
             tv.setText(time);
             if (type == 0) releaseVm.start_time = time;
             else releaseVm.end_time = time;
-        }, "yyyy-MM-dd", "2010-01-01", "2040-12-31");
+        }, "yyyy-MM-dd", showTime, "2040-12-31");
         customDatePicker.showSpecificTime(false);
-        customDatePicker.show(TimeUtils.getNowString());
+        customDatePicker.show(showTime);
     }
 
     @SuppressLint("SetTextI18n")
     @Subscribe
-    public void onEventLocationEvent(LocationEvent event){
+    public void onEventLocationEvent(LocationEvent event) {
         releaseVm.province = event.getProvinceId();
         releaseVm.city = event.getCityId();
         DecimalFormat df = new DecimalFormat("#.000000");
@@ -521,21 +544,21 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
     }
 
     @Subscribe
-    public void onEventStageEvent(StageEvent event){
+    public void onEventStageEvent(StageEvent event) {
         releaseVm.phases = event.getId();
         tvProjectStage.setText(event.getName());
     }
 
     @Subscribe
-    public void onEventTypesEvent(TypesArrayEvent event){
+    public void onEventTypesEvent(TypesArrayEvent event) {
         releaseVm.types = event.getId();
         tvProjectTypes.setText(event.getName());
     }
 
     @Subscribe
-    public void onEventContactEvent(ContactTypeEvent event){
+    public void onEventContactEvent(ContactTypeEvent event) {
         List<ContactBean> list = releaseVm.contactLiveData.getValue();
-        if (list != null){
+        if (list != null) {
             list.get(releaseVm.editContactTypePos).setType(event.getBean());
             list.get(releaseVm.editContactTypePos).setPhone_type(String.valueOf(event.getBean().getId()));
             releaseVm.contactLiveData.postValue(list);
@@ -543,9 +566,9 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
     }
 
     @Subscribe
-    public void onEventAddressEvent(AddressEvent event){
+    public void onEventAddressEvent(AddressEvent event) {
         List<ContactBean> list = releaseVm.contactLiveData.getValue();
-        if (list != null){
+        if (list != null) {
             list.get(releaseVm.editContactAddressPos).setAddress(event.getProvince() + event.getCity());
             list.get(releaseVm.editContactAddressPos).setProvince(event.getProvinceId());
             list.get(releaseVm.editContactAddressPos).setCity(event.getCityId());
@@ -554,7 +577,7 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
     }
 
     @Subscribe
-    public void onEventProjectNameEvent(ProjectNameEvent event){
+    public void onEventProjectNameEvent(ProjectNameEvent event) {
         tvProjectName.setText(event.getName());
         releaseVm.projectId = event.getId();
     }
@@ -579,6 +602,7 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
 
     /**
      * EditText竖直方向是否可以滚动
+     *
      * @param editText 需要判断的EditText
      * @return true：可以滚动  false：不可以滚动
      */
@@ -588,18 +612,18 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
         //控件内容的总高度
         int scrollRange = editText.getLayout().getHeight();
         //控件实际显示的高度
-        int scrollExtent = editText.getHeight() - editText.getCompoundPaddingTop() -editText.getCompoundPaddingBottom();
+        int scrollExtent = editText.getHeight() - editText.getCompoundPaddingTop() - editText.getCompoundPaddingBottom();
         //控件内容总高度与实际显示高度的差值
         int scrollDifference = scrollRange - scrollExtent;
 
-        if(scrollDifference == 0) {
+        if (scrollDifference == 0) {
             return false;
         }
         return (scrollY > 0) || (scrollY < scrollDifference - 1);
     }
 
     //底部弹出框
-    @SuppressLint({"RestrictedApi","InflateParams"})
+    @SuppressLint({"RestrictedApi", "InflateParams"})
     private void getBottomWindow() {
         //底部滑动对话框
         btn_dialog = new BottomSheetDialogs(this);
@@ -615,8 +639,8 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
         } catch (Exception e) {
             e.printStackTrace();
         }
-        TextView tv_project=dialog_view.findViewById(R.id.tv_project);
-        TextView tv_locus=dialog_view.findViewById(R.id.tv_locus);
+        TextView tv_project = dialog_view.findViewById(R.id.tv_project);
+        TextView tv_locus = dialog_view.findViewById(R.id.tv_locus);
         tv_project.setOnClickListener(view -> {
             projectLocus();
             btn_dialog.cancel();
@@ -629,13 +653,13 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
 
     //身份认证滚动文字显示
     private void getAuthenticationData() {
-        if (SPUtils.getInstance().getInt(SpConfig.IS_VERIFIED)!=2) {
+        if (SPUtils.getInstance().getInt(SpConfig.IS_VERIFIED) != 2) {
             llAuthentication.setVisibility(View.VISIBLE);
-            String str="已通过实名认证发布信息审核时间为<font color=\"#6a5ff8\">"+"2小时内"+"</font>，" +
-                    "未实名认证审核时间则为<font color=\"#6a5ff8\">"+"24小时内"+"</font>，建议您先实名认证再发布，审核会更快哦~";
+            String str = "已通过实名认证发布信息审核时间为<font color=\"#6a5ff8\">" + "2小时内" + "</font>，" +
+                    "未实名认证审核时间则为<font color=\"#6a5ff8\">" + "24小时内" + "</font>，建议您先实名认证再发布，审核会更快哦~";
             tvMarquee.setText(Html.fromHtml(str));
             tvMarquee.setSelected(true);
-        }else {
+        } else {
             llAuthentication.setVisibility(View.GONE);
         }
     }

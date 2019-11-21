@@ -138,8 +138,8 @@ public class ProjectDetailActivity extends BaseActivity {
         });
 
         //查询是否可以进入讨论组返回结果
-        projectDetailVm.projectMembersStatusData.observe(this,projectMembersStatusBean -> {
-            RongIM.getInstance().startGroupChat(ProjectDetailActivity.this,projectMembersStatusBean.getGroupId(),projectMembersStatusBean.getGroupName());
+        projectDetailVm.projectMembersStatusData.observe(this, projectMembersStatusBean -> {
+            RongIM.getInstance().startGroupChat(ProjectDetailActivity.this, projectMembersStatusBean.getGroupId(), projectMembersStatusBean.getGroupName());
         });
 
         Fragment[] fragments = new Fragment[4];
@@ -153,7 +153,6 @@ public class ProjectDetailActivity extends BaseActivity {
         tabLayout.addTab(tabLayout.newTab());
         tabLayout.addTab(tabLayout.newTab());
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), fragments, getResources().getStringArray(R.array.project_detail));
-        vp.setOffscreenPageLimit(3);
         vp.setAdapter(adapter);
         tabLayout.setupWithViewPager(vp);
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -188,6 +187,8 @@ public class ProjectDetailActivity extends BaseActivity {
 
             }
         });
+
+
 
         PermissionVm permissionVm = ViewModelProviders.of(this).get(PermissionVm.class);
         permissionVm.getLiveData().observe(this, integer -> {

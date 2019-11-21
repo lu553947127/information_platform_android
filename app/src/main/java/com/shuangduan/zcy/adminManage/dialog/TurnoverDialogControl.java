@@ -4,6 +4,9 @@ import android.content.DialogInterface;
 import android.text.Editable;
 import android.view.View;
 
+import com.blankj.utilcode.util.StringUtils;
+import com.blankj.utilcode.util.ToastUtils;
+import com.huawei.android.hms.agent.common.UIUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ArrayWheelAdapter;
 import com.shuangduan.zcy.adminManage.vm.TurnoverVm;
@@ -228,6 +231,10 @@ public class TurnoverDialogControl extends BaseAddInfoDialog implements DialogIn
                 showView(5, R.string.admin_selector_material_exit_time);
                 break;
             case 6:
+                if(StringUtils.isEmpty(entry_time)){
+                    ToastUtils.showShort("请先选择材料进场时间");
+                    return;
+                }
                 exit_time = sdf.format(selectedCalender.getTime());
                 tsItemSix.setValue(exit_time);
                 showView(7, R.string.admin_input_material_original);

@@ -31,6 +31,16 @@ public class RecruitDetailBean {
     private int is_pay;
     private String sourceName;
 
+    private String enclosure;
+
+    public String getEnclosure() {
+        return enclosure;
+    }
+
+    public void setEnclosure(String enclosure) {
+        this.enclosure = enclosure;
+    }
+
     public int getId() {
         return id;
     }

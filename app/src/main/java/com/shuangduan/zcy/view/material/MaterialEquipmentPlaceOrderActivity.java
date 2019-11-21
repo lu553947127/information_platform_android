@@ -154,7 +154,7 @@ public class MaterialEquipmentPlaceOrderActivity extends BaseActivity {
             guidance_price = materialDetailBean.getGuidance_price();
             tvGuidancePrice.setText(materialDetailBean.getMethod() == 1 ?
                     String.format(getString(R.string.format_material_price), String.valueOf(guidance_price), "天") :
-                    String.format(getString(R.string.format_material_price), String.valueOf(guidance_price), materialDetailBean.getUnit()));
+                    String.format(getString(R.string.format_material_price_no_unit), String.valueOf(guidance_price)));
 
             tvSpec.setText(materialDetailBean.getSpec());
             unit = materialDetailBean.getUnit();

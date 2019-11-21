@@ -187,6 +187,7 @@ public class OrderDeviceFragment extends BaseLazyFragment implements BaseQuickAd
         orderVm.rejectLiveData.observe(this, rejectItem -> {
             AdminOrderBean.OrderList orderItem = adminOrderListAdapter.getData().get(orderVm.position);
             orderItem.statusId = 3;
+            orderItem.status = "驳回订单";
             adminOrderListAdapter.notifyItemChanged(orderVm.position, orderItem);
         });
 
@@ -205,7 +206,8 @@ public class OrderDeviceFragment extends BaseLazyFragment implements BaseQuickAd
         //获取项目列表数据
         orderVm.turnoverProject.observe(this, turnoverNameBeans -> {
             projectList = turnoverNameBeans;
-            if (manage_status == 3 || manage_status==5) projectList.add(0, new TurnoverNameBean(1000000, "全部"));
+            if (manage_status == 3 || manage_status == 5)
+                projectList.add(0, new TurnoverNameBean(1000000, "全部"));
             turnoverProjectAdapter.setNewData(projectList);
         });
 
@@ -375,6 +377,7 @@ public class OrderDeviceFragment extends BaseLazyFragment implements BaseQuickAd
     private List<TurnoverNameBean> projectList = new ArrayList<>();
     private List<OrderSearchBean.OrderPhasesBean> orderPhasesList = new ArrayList<>();
     private List<OrderSearchBean.InsideBean> orderInsideList = new ArrayList<>();
+
     @SuppressLint("RestrictedApi,InflateParams")
     private void getBottomSheetDialog(int layout, String type, int updateState) {
         //底部滑动对话框
@@ -408,7 +411,7 @@ public class OrderDeviceFragment extends BaseLazyFragment implements BaseQuickAd
                 Objects.requireNonNull(rvCompany).setLayoutManager(new LinearLayoutManager(getActivity()));
                 Objects.requireNonNull(rvProjectGroup).setLayoutManager(new LinearLayoutManager(getActivity()));
                 turnoverCompanyAdapter = new TurnoverCompanyAdapter(R.layout.adapter_selector_area_first, null);
-                turnoverProjectAdapter = new TurnoverProjectAdapter(R.layout.adapter_turnover_project_company, null,7);
+                turnoverProjectAdapter = new TurnoverProjectAdapter(R.layout.adapter_turnover_project_company, null, 7);
                 rvCompany.setAdapter(turnoverCompanyAdapter);
                 rvProjectGroup.setAdapter(turnoverProjectAdapter);
                 turnoverCompanyAdapter.setOnItemClickListener((adapter, view, position) -> {
@@ -423,10 +426,10 @@ public class OrderDeviceFragment extends BaseLazyFragment implements BaseQuickAd
                     turnoverProjectAdapter.setIsSelect(projectList.get(position).id);
                     btn_dialog.dismiss();
                     getDrawableRightView(tvProject, R.drawable.icon_pulldown_arrow, R.color.color_666666);
-                    if (orderVm.unit_id!=1000000){
-                        getAddTopScreenView(tvOne,projectList.get(position).name);
-                    }else {
-                        getAddTopScreenView(tvOne,orderVm.supplier_name);
+                    if (orderVm.unit_id != 1000000) {
+                        getAddTopScreenView(tvOne, projectList.get(position).name);
+                    } else {
+                        getAddTopScreenView(tvOne, orderVm.supplier_name);
                     }
                 });
                 orderVm.getSupplierInfo();
@@ -443,7 +446,7 @@ public class OrderDeviceFragment extends BaseLazyFragment implements BaseQuickAd
                 Objects.requireNonNull(tvProject).setText("选择项目");
                 RecyclerView rvProject = btn_dialog.findViewById(R.id.rv);
                 Objects.requireNonNull(rvProject).setLayoutManager(new LinearLayoutManager(getActivity()));
-                turnoverProjectAdapter = new TurnoverProjectAdapter(R.layout.adapter_turnover_project, null,12);
+                turnoverProjectAdapter = new TurnoverProjectAdapter(R.layout.adapter_turnover_project, null, 12);
                 rvProject.setAdapter(turnoverProjectAdapter);
                 turnoverProjectAdapter.setOnItemClickListener((adapter, view, position) -> {
                     orderVm.unit_id = projectList.get(position).id;
@@ -476,8 +479,18 @@ public class OrderDeviceFragment extends BaseLazyFragment implements BaseQuickAd
                     } else {
                         AdminOrderBean.OrderList order = adminOrderListAdapter.getData().get(orderVm.position);
                         orderVm.updatePhasesId = orderPhasesList.get(position).getId();
-                        if(orderPhasesList.get(position).getId()<=order.phasesId){
+                        if (orderPhasesList.get(position).getId() <= order.phasesId) {
                             ToastUtils.showShort("订单进度不能回退");
+                            return;
+                        }
+                        int index = 0;
+                        for (int i = 0; i < orderPhasesList.size(); i++) {
+                            if (order.phasesId == orderPhasesList.get(i).getId()) {
+                                index = i;
+                            }
+                        }
+                        if (position - index != 1) {
+                            ToastUtils.showShort("订单进度不能跨越.");
                             return;
                         }
                         orderVm.equipmentOrderPhase(order.id, orderPhasesList.get(position).getId());

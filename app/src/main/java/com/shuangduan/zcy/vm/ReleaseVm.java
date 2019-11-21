@@ -16,9 +16,11 @@ import com.shuangduan.zcy.model.bean.AddTrackBean;
 import com.shuangduan.zcy.model.bean.ContactBean;
 import com.shuangduan.zcy.model.bean.ContactListBean;
 import com.shuangduan.zcy.model.bean.ContactTypeBean;
+import com.shuangduan.zcy.utils.DateUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -44,9 +46,10 @@ public class ReleaseVm extends BaseViewModel {
     public int editContactAddressPos = 0;
     public String longitude, latitude, start_time, end_time;
     public int province, city, phases;
-    public List<Integer> types=new ArrayList<>();
+    public List<Integer> types = new ArrayList<>();
     public int projectId;
     private List<Integer> imageIds;
+    public String todayTime;
 
     public ReleaseVm() {
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
@@ -58,6 +61,13 @@ public class ReleaseVm extends BaseViewModel {
         contactTypeLiveData = new MutableLiveData<>();
         releaseProjectLiveData = new MutableLiveData();
         releaseLocusLiveData = new MutableLiveData();
+
+        //设置时间为今天
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        todayTime = DateUtils.formatTime(year, month, day);
     }
 
     /**
