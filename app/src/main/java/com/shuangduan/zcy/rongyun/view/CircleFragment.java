@@ -171,9 +171,9 @@ public class CircleFragment extends BaseFragment {
             if (counts < 1) {
                 relativeLayout.setVisibility(View.GONE);
             } else if (counts < 100) {
-                number.setTextSize(11);
                 relativeLayout.setVisibility(View.VISIBLE);
-                number.setText(" " + counts + " ");
+                number.setTextSize(11);
+                number.setText(String.valueOf(counts));
             } else {
                 relativeLayout.setVisibility(View.VISIBLE);
                 number.setTextSize(9);
@@ -219,15 +219,6 @@ public class CircleFragment extends BaseFragment {
         RongIM.setUserInfoProvider(s -> imAddVm.userInfo(s),true);
         //设置群聊列表数据
         RongIM.setGroupInfoProvider(s -> imAddVm.groupInfo(s),true);
-
-        //获取未读消息数量
-        observer = i -> {
-            LogUtils.i(i);
-            // i 是未读数量
-            imAddVm.count = i;
-            imAddVm.applyCount();
-        };
-        RongIM.getInstance().addUnReadMessageCountChangedObserver(observer, Conversation.ConversationType.PRIVATE,Conversation.ConversationType.GROUP,Conversation.ConversationType.SYSTEM);
 
         //设置会话列表头像点击监听
         adapterEx.setOnPortraitItemClick(new ConversationListAdapter.OnPortraitItemClick() {
@@ -343,6 +334,20 @@ public class CircleFragment extends BaseFragment {
                 default:
                     break;
         }
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //获取未读消息数量
+        observer = i -> {
+            LogUtils.i(i);
+            // i 是未读数量
+            imAddVm.count = i;
+            imAddVm.applyCount();
+        };
+        RongIM.getInstance().addUnReadMessageCountChangedObserver(observer, Conversation.ConversationType.PRIVATE,Conversation.ConversationType.GROUP,Conversation.ConversationType.SYSTEM);
     }
 
     @Override

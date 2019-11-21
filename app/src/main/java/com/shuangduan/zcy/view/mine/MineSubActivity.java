@@ -185,8 +185,6 @@ public class MineSubActivity extends BaseActivity {
         mineSubVm.phasesSetLiveData.observe(this, o -> {
             mineSubVm.subscribe(1);
         });
-
-        mineSubVm.subscribe(1);
     }
 
     //闲置提醒
@@ -210,8 +208,6 @@ public class MineSubActivity extends BaseActivity {
             }
             setNoMore(subscribeBean.getPage(), subscribeBean.getCount());
         });
-
-        mineSubVm.subscribe(2);
     }
 
     private void setNoMore(int page, int count){
@@ -247,6 +243,19 @@ public class MineSubActivity extends BaseActivity {
             case R.id.iv_bar_right://设置
                 bundle.putInt(CustomConfig.NEWS_TYPE,getIntent().getIntExtra(CustomConfig.NEWS_TYPE,0));
                 ActivityUtils.startActivity(bundle, NoticeSetActivity.class);
+                break;
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        switch (getIntent().getIntExtra(CustomConfig.NEWS_TYPE,0)){
+            case SUBSCRIBE://订阅消息
+                mineSubVm.subscribe(1);
+                break;
+            case UNUSED://闲置提醒
+                mineSubVm.subscribe(2);
                 break;
         }
     }

@@ -9,6 +9,7 @@ import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.api.repository.HomeRepository;
 import com.shuangduan.zcy.model.bean.HeadlinesBean;
 import com.shuangduan.zcy.model.bean.HeadlinesDetailBean;
+import com.shuangduan.zcy.model.bean.HeadlinesGetCategoryBean;
 
 import java.util.List;
 
@@ -26,30 +27,38 @@ public class HeadlinesVm extends BaseViewModel {
     private int userId;
     public MutableLiveData<HeadlinesBean> headlinesLiveData;
     public MutableLiveData<HeadlinesDetailBean> detailLiveData;
+    public MutableLiveData<List<HeadlinesGetCategoryBean>> headlinesGetCategoryLiveData;
     public MutableLiveData<String> pageStateLiveData;
     private int page;
     public int id;
+    //基建头条类型id
+    public int category_id;
 
     public HeadlinesVm() {
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
         headlinesLiveData = new MutableLiveData<>();
         detailLiveData = new MutableLiveData<>();
+        headlinesGetCategoryLiveData = new MutableLiveData<>();
         pageStateLiveData = new MutableLiveData<>();
     }
 
     public void getHeadlines(){
         page = 1;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
-        new HomeRepository().headlines(headlinesLiveData, pageStateLiveData, userId, page);
+        new HomeRepository().headlines(headlinesLiveData, pageStateLiveData, userId,category_id, page);
     }
 
     public void getMoreHeadlines(){
         page ++;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
-        new HomeRepository().headlines(headlinesLiveData, pageStateLiveData, userId, page);
+        new HomeRepository().headlines(headlinesLiveData, pageStateLiveData, userId,category_id, page);
     }
 
     public void getDetail(){
         new HomeRepository().headlinesDetail(detailLiveData, pageStateLiveData, userId, id);
+    }
+
+    public void headlinesGetCategory(){
+        new HomeRepository().headlinesGetCategory(headlinesGetCategoryLiveData, pageStateLiveData, userId);
     }
 }

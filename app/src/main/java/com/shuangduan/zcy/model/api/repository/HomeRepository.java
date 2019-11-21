@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.shuangduan.zcy.model.bean.ExplainDetailBean;
 import com.shuangduan.zcy.model.bean.HeadlinesBean;
 import com.shuangduan.zcy.model.bean.HeadlinesDetailBean;
+import com.shuangduan.zcy.model.bean.HeadlinesGetCategoryBean;
 import com.shuangduan.zcy.model.bean.HelpBean;
 import com.shuangduan.zcy.model.bean.HomeBannerBean;
 import com.shuangduan.zcy.model.bean.HomeListBean;
@@ -38,12 +39,17 @@ public class HomeRepository extends BaseRepository {
         request(apiService.homeList(userId)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
-    public void headlines(MutableLiveData<HeadlinesBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int page){
-        request(apiService.headlines(userId, page)).setData(liveData).setPageState(pageStateLiveData).send();
+    public void headlines(MutableLiveData<HeadlinesBean> liveData, MutableLiveData<String> pageStateLiveData, int userId,int category_id, int page){
+        request(apiService.headlines(userId,category_id, page)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
     public void headlinesDetail(MutableLiveData<HeadlinesDetailBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int id){
         request(apiService.headlinesDetail(userId, id)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    //基建头条分类列表
+    public void headlinesGetCategory(MutableLiveData<List<HeadlinesGetCategoryBean>> liveData, MutableLiveData<String> pageStateLiveData, int userId){
+        request(apiService.headlinesGetCategory(userId)).setDataList(liveData).setPageState(pageStateLiveData).send();
     }
 
     public void explainDetail(MutableLiveData<ExplainDetailBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int id){

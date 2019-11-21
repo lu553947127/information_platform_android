@@ -68,7 +68,7 @@ public class NoticeSetActivity extends BaseActivity {
 
         //订阅消息开关状态返回结果
         mineSubVm.messagePushLiveData.observe(this,messagePushBean -> {
-            if (messagePushBean.getStatus()==1){
+            if (messagePushBean.getStatus()==0){
                 switchView.setOpened(true);
             }else {
                 switchView.setOpened(false);
@@ -87,11 +87,11 @@ public class NoticeSetActivity extends BaseActivity {
                     switchView.setOpened(true);
                     switch (getIntent().getIntExtra(CustomConfig.NEWS_TYPE,0)){
                         case SUBSCRIBE://订阅消息
-                            mineSubVm.msgPushStatus(1,1);
+                            mineSubVm.msgPushStatus(1,0);
                             break;
                         case UNUSED://闲置提醒
                             tvBarTitle.setText(getString(R.string.close_subscribe_message_group));
-                            mineSubVm.msgPushStatus(2,1);
+                            mineSubVm.msgPushStatus(2,0);
                             break;
                     }
                 }
@@ -103,11 +103,11 @@ public class NoticeSetActivity extends BaseActivity {
                     switchView.setOpened(false);
                     switch (getIntent().getIntExtra(CustomConfig.NEWS_TYPE,0)){
                         case SUBSCRIBE://订阅消息
-                            mineSubVm.msgPushStatus(1,2);
+                            mineSubVm.msgPushStatus(1,1);
                             break;
                         case UNUSED://闲置提醒
                             tvBarTitle.setText(getString(R.string.close_subscribe_message_group));
-                            mineSubVm.msgPushStatus(2,2);
+                            mineSubVm.msgPushStatus(2,1);
                             break;
                     }
                 }

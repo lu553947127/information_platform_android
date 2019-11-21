@@ -1,26 +1,21 @@
 package com.shuangduan.zcy.view.headlines;
 
 import android.os.Bundle;
-import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
-import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.constant.RefreshState;
-import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shuangduan.zcy.R;
-import com.shuangduan.zcy.adapter.HeadlinesListAdapter;
-import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
-import com.shuangduan.zcy.model.bean.HeadlinesBean;
+import com.shuangduan.zcy.model.bean.HeadlinesGetCategoryBean;
 import com.shuangduan.zcy.vm.HeadlinesVm;
-import com.shuangduan.zcy.weight.DividerItemDecoration;
+import com.shuangduan.zcy.weight.XTabLayout;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -40,10 +35,11 @@ public class HeadlinesActivity extends BaseActivity {
     AppCompatTextView tvBarTitle;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.rv_action)
-    RecyclerView rvAction;
-    @BindView(R.id.refresh)
-    SmartRefreshLayout refresh;
+    @BindView(R.id.tab_layout)
+    XTabLayout tabLayout;
+    @BindView(R.id.view_pager)
+    ViewPager viewPager;
+    private List<Fragment> mFragments=new ArrayList<>();
 
     @Override
     protected int initLayoutRes() {
@@ -60,62 +56,20 @@ public class HeadlinesActivity extends BaseActivity {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.headlines));
 
-        rvAction.setLayoutManager(new LinearLayoutManager(this));
-        rvAction.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
-        HeadlinesListAdapter headlinesCategoryAdapter = new HeadlinesListAdapter(R.layout.item_headlines_action, null);
-        headlinesCategoryAdapter.setEmptyView(R.layout.layout_loading, rvAction);
-        rvAction.setAdapter(headlinesCategoryAdapter);
-        headlinesCategoryAdapter.setOnItemClickListener((adapter, view, position) -> {
-            HeadlinesBean.ListBean listBean = headlinesCategoryAdapter.getData().get(position);
-            Bundle bundle = new Bundle();
-            bundle.putInt(CustomConfig.HEADLINES_ID, listBean.getId());
-            ActivityUtils.startActivity(bundle, HeadlinesDetailActivity.class);
-        });
-
         HeadlinesVm headlinesVm = ViewModelProviders.of(this).get(HeadlinesVm.class);
-        headlinesVm.headlinesLiveData.observe(this, headlinesBean -> {
-            if (headlinesBean.getPage() == 1) {
-                headlinesCategoryAdapter.setNewData(headlinesBean.getList());
-                headlinesCategoryAdapter.setEmptyView(R.layout.layout_empty, rvAction);
-            }else {
-                headlinesCategoryAdapter.addData(headlinesBean.getList());
+        headlinesVm.headlinesGetCategoryLiveData.observe(this, headlinesGetCategoryBean -> {
+            headlinesGetCategoryBean.add(0,new HeadlinesGetCategoryBean(0,"全部"));
+            String[] titleList = new String[headlinesGetCategoryBean.size()];
+            for (int i = 0; i < headlinesGetCategoryBean.size(); i++) {
+                titleList[i] = headlinesGetCategoryBean.get(i).getCatname();
+                HeadlinesFragment headlinesFragment = new HeadlinesFragment(headlinesGetCategoryBean.get(i).getId());
+                mFragments.add(headlinesFragment);
             }
-            setNoMore(headlinesBean.getPage(), headlinesBean.getCount());
+            BaseFragmentRefreshAdapter adapter = new BaseFragmentRefreshAdapter(getSupportFragmentManager(), mFragments, titleList);
+            viewPager.setAdapter(adapter);
+            tabLayout.setupWithViewPager(viewPager);
         });
-
-        refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
-            @Override
-            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                headlinesVm.getMoreHeadlines();
-            }
-
-            @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                headlinesVm.getHeadlines();
-            }
-        });
-
-        headlinesVm.getHeadlines();
-    }
-
-    private void setNoMore(int page, int count){
-        if (page == 1){
-            if (page * 10 >= count){
-                if (refresh.getState() == RefreshState.None){
-                    refresh.setNoMoreData(true);
-                }else {
-                    refresh.finishRefreshWithNoMoreData();
-                }
-            }else {
-                refresh.finishRefresh();
-            }
-        }else {
-            if (page * 10 >= count){
-                refresh.finishLoadMoreWithNoMoreData();
-            }else {
-                refresh.finishLoadMore();
-            }
-        }
+        headlinesVm.headlinesGetCategory();
     }
 
     @OnClick(R.id.iv_bar_back)

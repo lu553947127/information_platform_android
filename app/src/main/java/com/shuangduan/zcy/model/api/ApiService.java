@@ -1067,6 +1067,7 @@ public interface ApiService {
     @POST("api/Headline/dataList")
     Flowable<BaseResponse<HeadlinesBean>> headlines(
             @Field("user_id") int user_id,
+            @Field("category_id") int category_id,
             @Field("page") int page
     );
 
@@ -1075,6 +1076,13 @@ public interface ApiService {
     Flowable<BaseResponse<HeadlinesDetailBean>> headlinesDetail(
             @Field("user_id") int user_id,
             @Field("id") int id
+    );
+
+    //基建头条分类列表
+    @FormUrlEncoded
+    @POST("api/Headline/getCategory")
+    Flowable<BaseListResponse<HeadlinesGetCategoryBean>> headlinesGetCategory(
+            @Field("user_id") int user_id
     );
 
     @FormUrlEncoded
