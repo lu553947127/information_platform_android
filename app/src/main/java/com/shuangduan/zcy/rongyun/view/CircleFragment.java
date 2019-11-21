@@ -168,6 +168,7 @@ public class CircleFragment extends BaseFragment {
             getCountNumbers(friendApplyCountBean.getMaterial(),tvUnusedNumber);
             //设置底部标签数量
             int counts=imAddVm.count+friendApplyCountBean.getCount()+friendApplyCountBean.getSubscribe()+friendApplyCountBean.getMaterial();
+            LogUtils.e(counts);
             if (counts < 1) {
                 relativeLayout.setVisibility(View.GONE);
             } else if (counts < 100) {
@@ -205,8 +206,8 @@ public class CircleFragment extends BaseFragment {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 RongIM.getInstance().addUnReadMessageCountChangedObserver(i -> {
-                    LogUtils.i(i);
-                    // i 是未读数量
+                    LogUtils.e(i);
+                    // i 是未读数量luho
                     imAddVm.count=i;
                     imAddVm.applyCount();
                 }, Conversation.ConversationType.PRIVATE,Conversation.ConversationType.GROUP,Conversation.ConversationType.SYSTEM);
