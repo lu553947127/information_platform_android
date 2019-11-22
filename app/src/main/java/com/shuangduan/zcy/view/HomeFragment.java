@@ -158,8 +158,143 @@ public class HomeFragment extends BaseFragment {
     @SuppressLint({"NewApi", "SetTextI18n"})
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState, View v) {
-//        BarUtils.setStatusBarColorRes(fakeStatusBar, getResources().getColor(R.color.colorPrimary));
 
+        homeVm = ViewModelProviders.of(this).get(HomeVm.class);
+        imAddVm = ViewModelProviders.of(this).get(IMAddVm.class);
+        demandRelationshipVm = ViewModelProviders.of(mActivity).get(DemandRelationshipVm.class);
+
+        getChangeLister();
+        getBadgeViewInitView();
+        getNeedData();
+
+        //快讯滚动标题返回数据
+        homeVm.pushLiveData.observe(this, homePushBeans -> {
+            List<String> marquee = new ArrayList<>();
+            for (HomePushBean bean : homePushBeans) {
+                marquee.add(bean.getTitle());
+            }
+            marqueeView.setContent(marquee);
+        });
+
+        //轮播图列表返回数据
+        homeVm.bannerLiveData.observe(this, homeBannerBeans -> {
+            ArrayList<String> pics = new ArrayList<>();
+            ArrayList<String> titles = new ArrayList<>();
+            for (HomeBannerBean bean : homeBannerBeans) {
+                pics.add(bean.getImages());
+                titles.add("");
+            }
+            initBanner(pics, titles);
+        });
+
+        //基建头条列表返回数据
+        homeVm.listLiveData.observe(this, homeListBean -> {
+            if (headlinesAdapter == null) {
+                rvHeadlines.setLayoutManager(new LinearLayoutManager(mContext));
+                rvHeadlines.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
+                headlinesAdapter = new HomeHeadlinesAdapter(R.layout.item_headlines, homeListBean.getHeadlines());
+                rvHeadlines.setAdapter(headlinesAdapter);
+                headlinesAdapter.setOnItemClickListener((adapter, view, position) -> {
+                    HomeListBean.HeadlinesBean headlinesBean = headlinesAdapter.getData().get(position);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(CustomConfig.HEADLINES_ID, headlinesBean.getId());
+                    ActivityUtils.startActivity(bundle, HeadlinesDetailActivity.class);
+                });
+            } else {
+                headlinesAdapter.setNewData(homeListBean.getHeadlines());
+            }
+        });
+
+        //版本升级返回数据
+        homeVm.versionUpgradesLiveData.observe(this, versionUpgradesBean -> {
+            if (versionUpgradesBean.getStatus().equals("1")) {
+                //版本更新弹出框显示
+                UpdateManager manager = new UpdateManager(getActivity(), versionUpgradesBean);
+                manager.showNoticeDialog();
+            }
+        });
+
+        //后台管理权限
+        homeVm.supplierRoleLiveData.observe(this, supplierRoleBean -> {
+            //获取用户身份 0普通用户 1普通供应商 2子公司 3集团 4子账号
+            manage_status=supplierRoleBean.getManage_status();
+        });
+
+        //设置角标数量
+        imAddVm.applyCountData.observe(this, friendApplyCountBean -> {
+            int counts=0;
+            //获取用户身份 0普通用户 1普通供应商 2子公司 3集团 4子账号
+            switch (manage_status){
+                case 0://普通用户
+                case 1://普通供应商
+                    counts=imAddVm.count+friendApplyCountBean.getCount()+friendApplyCountBean.getSubscribe();
+                    break;
+                case 2://子公司
+                case 3://集团
+                case 4://子公司子账号
+                case 5://集团子账号
+                    counts=imAddVm.count+friendApplyCountBean.getCount()+friendApplyCountBean.getSubscribe()+friendApplyCountBean.getMaterial();
+                    break;
+            }
+            if (counts < 1) {
+                relativeLayout.setVisibility(View.GONE);
+            } else if (counts < 100) {
+                number.setTextSize(11);
+                relativeLayout.setVisibility(View.VISIBLE);
+                number.setText(String.valueOf(counts));
+            } else {
+                relativeLayout.setVisibility(View.VISIBLE);
+                number.setTextSize(9);
+                number.setText("99+");
+            }
+        });
+    }
+
+    @OnClick({R.id.tv_bar_title, R.id.tv_more, R.id.tv_bar_title_home, R.id.iv_my_income, R.id.rl_zgx, R.id.rl_zwz, R.id.rl_zmj, R.id.tv_more_need})
+    void onClick(View view) {
+        Bundle bundle = new Bundle();
+        switch (view.getId()) {
+            case R.id.tv_bar_title:
+            case R.id.tv_bar_title_home://搜索
+                ActivityUtils.startActivity(SearchActivity.class);
+                break;
+            case R.id.tv_more://基建头条查看更多
+                ActivityUtils.startActivity(HeadlinesActivity.class);
+                break;
+            case R.id.iv_my_income://我的收益
+                ActivityUtils.startActivity(MineIncomeActivity.class);
+                break;
+            case R.id.rl_zgx://发布找关系
+                bundle.putString("type", "0");
+                ActivityUtils.startActivity(bundle, DemandReleaseActivity.class);
+                break;
+            case R.id.rl_zwz://发布找物资
+                bundle.putString("type", "1");
+                ActivityUtils.startActivity(bundle, DemandReleaseActivity.class);
+                break;
+            case R.id.rl_zmj://发布找买家
+                bundle.putString("type", "2");
+                ActivityUtils.startActivity(bundle, DemandReleaseActivity.class);
+                break;
+            case R.id.tv_more_need://需求资讯查看更多
+                if (viewPager.getCurrentItem() == 0) {
+                    bundle.putInt(DEMAND_TYPE, FIND_RELATIONSHIP_TYPE);//找关系列表
+                    ActivityUtils.startActivity(bundle, DemandActivity.class);
+                } else if (viewPager.getCurrentItem() == 1) {
+                    bundle.putInt(DEMAND_TYPE, FIND_SUBSTANCE_TYPE);//找物资列表
+                    ActivityUtils.startActivity(bundle, DemandActivity.class);
+                } else if (viewPager.getCurrentItem() == 2) {
+                    bundle.putInt(DEMAND_TYPE, FIND_BUYER_TYPE);//找买家列表
+                    ActivityUtils.startActivity(bundle, DemandActivity.class);
+                }
+                break;
+        }
+    }
+
+    //滑动监听和下拉属性监听事件
+    private void getChangeLister() {
+//        BarUtils.setStatusBarColorRes(fakeStatusBar, getResources().getColor(R.color.colorPrimary));
+//
 //        scrollView.setOnScrollChangeListener((AdaptationScrollView.OnScrollChangeListener) (v1, scrollX, scrollY, oldScrollX, oldScrollY) -> {
 //            if (scrollY > 10) {
 //                toolbar.setVisibility(View.VISIBLE);
@@ -217,116 +352,53 @@ public class HomeFragment extends BaseFragment {
                 }
             }
         });
+
+        //导航按钮初始化
         List<ClassifyBean> list = getClassify();
         rvClassify.setLayoutManager(new GridLayoutManager(mContext, 4));
         ClassifyAdapter classifyAdapter = new ClassifyAdapter(list);
         rvClassify.setAdapter(classifyAdapter);
         classifyAdapter.setOnItemClickListener((adapter, view, position) -> {
             switch (list.get(position).getType()) {
-                case ClassifyBean.GCXX:
+                case ClassifyBean.GCXX://工程信息
                     ActivityUtils.startActivity(ProjectInfoActivity.class);
                     break;
-                case ClassifyBean.ZCXX:
+                case ClassifyBean.ZCXX://招采信息
                     ActivityUtils.startActivity(RecruitActivity.class);
                     break;
-                case ClassifyBean.JJWZ:
+                case ClassifyBean.JJWZ://基建物资
                     ActivityUtils.startActivity(MaterialActivity.class);
                     break;
-                case ClassifyBean.YZGYS:
+                case ClassifyBean.YZGYS://优质供应商
                     ActivityUtils.startActivity(SupplierActivity.class);
                     break;
             }
         });
+    }
 
-        homeVm = ViewModelProviders.of(this).get(HomeVm.class);
-        homeVm.pushLiveData.observe(this, homePushBeans -> {
-            List<String> marquee = new ArrayList<>();
-            for (HomePushBean bean : homePushBeans) {
-                marquee.add(bean.getTitle());
-            }
-            marqueeView.setContent(marquee);
-        });
-        homeVm.bannerLiveData.observe(this, homeBannerBeans -> {
-            ArrayList<String> pics = new ArrayList<>();
-            ArrayList<String> titles = new ArrayList<>();
-            for (HomeBannerBean bean : homeBannerBeans) {
-                pics.add(bean.getImages());
-                titles.add("");
-            }
-            initBanner(pics, titles);
-        });
-        homeVm.listLiveData.observe(this, homeListBean -> {
-            if (headlinesAdapter == null) {
-                rvHeadlines.setLayoutManager(new LinearLayoutManager(mContext));
-                rvHeadlines.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
-                headlinesAdapter = new HomeHeadlinesAdapter(R.layout.item_headlines, homeListBean.getHeadlines());
-                rvHeadlines.setAdapter(headlinesAdapter);
-                headlinesAdapter.setOnItemClickListener((adapter, view, position) -> {
-                    HomeListBean.HeadlinesBean headlinesBean = headlinesAdapter.getData().get(position);
-                    Bundle bundle = new Bundle();
-                    bundle.putInt(CustomConfig.HEADLINES_ID, headlinesBean.getId());
-                    ActivityUtils.startActivity(bundle, HeadlinesDetailActivity.class);
-                });
-            } else {
-                headlinesAdapter.setNewData(homeListBean.getHeadlines());
-            }
-        });
-
-        //版本升级返回数据
-        homeVm.versionUpgradesLiveData.observe(this, versionUpgradesBean -> {
-            if (versionUpgradesBean.getStatus().equals("1")) {
-                //版本更新弹出框显示
-                UpdateManager manager = new UpdateManager(getActivity(), versionUpgradesBean);
-                manager.showNoticeDialog();
-            }
-        });
-
-        homeVm.supplierRoleLiveData.observe(this, supplierRoleBean -> {
-            //获取用户身份 0普通用户 1普通供应商 2子公司 3集团 4子账号
-            manage_status=supplierRoleBean.getManage_status();
-        });
-
-        imAddVm = ViewModelProviders.of(this).get(IMAddVm.class);
-
-        demandRelationshipVm = ViewModelProviders.of(mActivity).get(DemandRelationshipVm.class);
-
-        //设置角标数量
-        imAddVm.applyCountData.observe(this, friendApplyCountBean -> {
-            int counts=0;
-            //获取用户身份 0普通用户 1普通供应商 2子公司 3集团 4子账号
-            switch (manage_status){
-                case 0://普通用户
-                case 1://普通供应商
-                    counts=imAddVm.count+friendApplyCountBean.getCount()+friendApplyCountBean.getSubscribe();
-                    break;
-                case 2://子公司
-                case 3://集团
-                case 4://子公司子账号
-                case 5://集团子账号
-                    counts=imAddVm.count+friendApplyCountBean.getCount()+friendApplyCountBean.getSubscribe()+friendApplyCountBean.getMaterial();
-                    break;
-            }
-            if (counts < 1) {
-                relativeLayout.setVisibility(View.GONE);
-            } else if (counts < 100) {
-                number.setTextSize(11);
-                relativeLayout.setVisibility(View.VISIBLE);
-                number.setText(String.valueOf(counts));
-            } else {
-                relativeLayout.setVisibility(View.VISIBLE);
-                number.setTextSize(9);
-                number.setText("99+");
-            }
-        });
-        getBadgeViewInitView();
-        getNeedData();
+    //设置底部消息提醒数字布局
+    private void getBadgeViewInitView() {
+        //底部标题栏右上角标设置
+        //获取整个的NavigationView
+        BottomNavigationView navigation = Objects.requireNonNull(getActivity()).findViewById(R.id.navigation);
+        BottomNavigationMenuView menuView = (BottomNavigationMenuView) navigation.getChildAt(0);
+        //这里就是获取所添加的每一个Tab(或者叫menu)，设置在标题栏的位置
+        View tab = menuView.getChildAt(2);
+        BottomNavigationItemView itemView = (BottomNavigationItemView) tab;
+        //加载我们的角标View，新创建的一个布局
+        View badge = LayoutInflater.from(getContext()).inflate(R.layout.layout_apply_count, menuView, false);
+        //添加到Tab上
+        itemView.addView(badge);
+        //显示角标数字
+        relativeLayout = badge.findViewById(R.id.rl);
+        //显示/隐藏整个视图
+        number = badge.findViewById(R.id.number);
     }
 
     //需求资讯
     private AutoScrollRecyclerView recyclerView1;
     private AutoScrollRecyclerView recyclerView2;
     private AutoScrollRecyclerView recyclerView3;
-
     @SuppressLint("InflateParams")
     private void getNeedData() {
         view.getBackground().mutate().setAlpha(10);
@@ -449,65 +521,6 @@ public class HomeFragment extends BaseFragment {
         });
     }
 
-    @OnClick({R.id.tv_bar_title, R.id.tv_more, R.id.tv_bar_title_home, R.id.iv_my_income, R.id.rl_zgx, R.id.rl_zwz, R.id.rl_zmj, R.id.tv_more_need})
-    void onClick(View view) {
-        Bundle bundle = new Bundle();
-        switch (view.getId()) {
-            case R.id.tv_bar_title:
-            case R.id.tv_bar_title_home://搜索
-                ActivityUtils.startActivity(SearchActivity.class);
-                break;
-            case R.id.tv_more://基建头条查看更多
-                ActivityUtils.startActivity(HeadlinesActivity.class);
-                break;
-            case R.id.iv_my_income://我的收益
-                ActivityUtils.startActivity(MineIncomeActivity.class);
-                break;
-            case R.id.rl_zgx://发布找关系
-                bundle.putString("type", "0");
-                ActivityUtils.startActivity(bundle, DemandReleaseActivity.class);
-                break;
-            case R.id.rl_zwz://发布找物资
-                bundle.putString("type", "1");
-                ActivityUtils.startActivity(bundle, DemandReleaseActivity.class);
-                break;
-            case R.id.rl_zmj://发布找买家
-                bundle.putString("type", "2");
-                ActivityUtils.startActivity(bundle, DemandReleaseActivity.class);
-                break;
-            case R.id.tv_more_need://需求资讯查看更多
-                if (viewPager.getCurrentItem() == 0) {
-                    bundle.putInt(DEMAND_TYPE, FIND_RELATIONSHIP_TYPE);//找关系列表
-                    ActivityUtils.startActivity(bundle, DemandActivity.class);
-                } else if (viewPager.getCurrentItem() == 1) {
-                    bundle.putInt(DEMAND_TYPE, FIND_SUBSTANCE_TYPE);//找物资列表
-                    ActivityUtils.startActivity(bundle, DemandActivity.class);
-                } else if (viewPager.getCurrentItem() == 2) {
-                    bundle.putInt(DEMAND_TYPE, FIND_BUYER_TYPE);//找买家列表
-                    ActivityUtils.startActivity(bundle, DemandActivity.class);
-                }
-                break;
-        }
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        banner.startAutoPlay();
-        recyclerView1.startLine();
-        recyclerView2.startLine();
-        recyclerView3.startLine();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        banner.stopAutoPlay();
-        recyclerView1.stop();
-        recyclerView2.stop();
-        recyclerView3.stop();
-    }
-
     private List<ClassifyBean> getClassify() {
         List<ClassifyBean> list = new ArrayList<>();
         String[] classifys = getResources().getStringArray(R.array.classify);
@@ -539,28 +552,9 @@ public class HomeFragment extends BaseFragment {
         banner.start();
     }
 
-    //设置底部消息提醒数字布局
-    private void getBadgeViewInitView() {
-        //底部标题栏右上角标设置
-        //获取整个的NavigationView
-        BottomNavigationView navigation = Objects.requireNonNull(getActivity()).findViewById(R.id.navigation);
-        BottomNavigationMenuView menuView = (BottomNavigationMenuView) navigation.getChildAt(0);
-        //这里就是获取所添加的每一个Tab(或者叫menu)，设置在标题栏的位置
-        View tab = menuView.getChildAt(2);
-        BottomNavigationItemView itemView = (BottomNavigationItemView) tab;
-        //加载我们的角标View，新创建的一个布局
-        View badge = LayoutInflater.from(getContext()).inflate(R.layout.layout_apply_count, menuView, false);
-        //添加到Tab上
-        itemView.addView(badge);
-        //显示角标数字
-        relativeLayout = badge.findViewById(R.id.rl);
-        //显示/隐藏整个视图
-        number = badge.findViewById(R.id.number);
-    }
-
     @Override
     protected void initDataFromService() {
-        homeVm.getSupplierRole();
+        homeVm.getInit(getActivity());
         observer = i -> {
             LogUtils.i(i);
             // i 是未读数量
@@ -568,9 +562,25 @@ public class HomeFragment extends BaseFragment {
             imAddVm.applyCount();
         };
         RongIM.getInstance().addUnReadMessageCountChangedObserver(observer, Conversation.ConversationType.PRIVATE, Conversation.ConversationType.GROUP, Conversation.ConversationType.SYSTEM);
-        homeVm.getInit(getActivity());
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        banner.startAutoPlay();
+        recyclerView1.startLine();
+        recyclerView2.startLine();
+        recyclerView3.startLine();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        banner.stopAutoPlay();
+        recyclerView1.stop();
+        recyclerView2.stop();
+        recyclerView3.stop();
+    }
 
     @Override
     public void onDestroy() {

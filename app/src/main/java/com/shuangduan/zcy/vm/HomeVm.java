@@ -62,8 +62,8 @@ public class HomeVm extends BaseViewModel {
         getPush();
         getBanner();
         getList();
-        getSupplierClique();
         versionUpgrade();
+        getSupplierRole();
     }
 
     //快讯标题
@@ -81,9 +81,9 @@ public class HomeVm extends BaseViewModel {
         new HomeRepository().homeList(listLiveData, pageStateLiveData, userId);
     }
 
-    //基建物资 内定物资显示权限 supplier_status 0.普通用户 1.普通供应商 2.集团供应商子公司 3.集团供应商
-    public void getSupplierClique(){
-        new HomeRepository().getSupplierClique(supplierCliqueLiveData,userId);
+    //版本升级 type：1 安卓，2 ios
+    public void versionUpgrade(){
+        new HomeRepository().versionUpgrade(versionUpgradesLiveData, pageStateLiveData, userId, VersionUtils.getVerName(context),1);
     }
 
     //后台管理权限
@@ -91,13 +91,13 @@ public class HomeVm extends BaseViewModel {
         new HomeRepository().getSupplierRole(supplierRoleLiveData,userId);
     }
 
+    //基建物资 内定物资显示权限 supplier_status 0.普通用户 1.普通供应商 2.集团供应商子公司 3.集团供应商
+    public void getSupplierClique(){
+        new HomeRepository().getSupplierClique(supplierCliqueLiveData,userId);
+    }
+
     //帮助列表
     public void help(){
         new HomeRepository().help(helpLiveData, pageStateLiveData, userId);
-    }
-
-    //版本升级 type：1 安卓，2 ios
-    public void versionUpgrade(){
-        new HomeRepository().versionUpgrade(versionUpgradesLiveData, pageStateLiveData, userId, VersionUtils.getVerName(context),1);
     }
 }
