@@ -152,7 +152,7 @@ public class RecruitDetailActivity extends BaseActivity {
                     hideLoading();
                     break;
             }
-        });
+        }) ;
         recruitDetailVm.getDetail();
 
         //支付密码状态查询

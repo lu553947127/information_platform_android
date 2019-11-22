@@ -173,17 +173,20 @@ public class OrderDetailsActivity extends BaseActivity {
 
             Spanned devicePrice = Html.fromHtml("指导单价：<font color=\"#EF583E\">¥" + orderItem.price + "</font>");
             //周转材料显示单位，设备不显示单位
-            tvPrice.setText(orderType==0?turnoverPrice:devicePrice);
+            tvPrice.setText(orderType == 0 ? turnoverPrice : devicePrice);
 
         }
         tvSpec.setText(getString(R.string.format_admin_spec, orderItem.spec));
         tvCategory.setText(getString(R.string.format_admin_category, orderItem.categoryName));
         tvSupplyMethod.setText(orderItem.method == 1 ? getString(R.string.admin_turnover_add_lease) : getString(R.string.admin_turnover_add_sell));
+
+        tvLeaseTime.setVisibility(orderItem.method == 1 ? View.VISIBLE : View.GONE);
+
         if (!StringUtils.isTrimEmpty(orderItem.leaseStartTime) && !StringUtils.isTrimEmpty(orderItem.leaseEndTime)) {
             tvLeaseTime.setText(getString(R.string.format_admin_lease_time, orderItem.leaseStartTime, orderItem.leaseEndTime));
         }
         //周转材料显示单位，设备不显示单位
-        tvReserveNum.setText(orderType==0?orderItem.number + orderItem.unit:String.valueOf(orderItem.number));
+        tvReserveNum.setText(orderType == 0 ? orderItem.number + orderItem.unit : String.valueOf(orderItem.number));
 
         tvAddress.setText(getString(R.string.format_admin_address, orderItem.province + orderItem.city + orderItem.address));
 
