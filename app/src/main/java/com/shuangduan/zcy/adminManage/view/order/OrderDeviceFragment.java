@@ -328,8 +328,8 @@ public class OrderDeviceFragment extends BaseLazyFragment implements BaseQuickAd
                 ActivityUtils.startActivity(bundle, SelectTypeActivity.class);
                 break;
             case R.id.tv_order_phases://选择订单进度
-                if (!orderPhasesList.get(2).getName().equals("投标报价")) {
-                    orderPhasesList.add(2, new OrderSearchBean.OrderPhasesBean(4, "投标报价"));
+                if (!orderPhasesList.get(2).getName().equals("报价投标")) {
+                    orderPhasesList.add(2, new OrderSearchBean.OrderPhasesBean(4, "报价投标"));
                 }
                 getBottomSheetDialog(R.layout.dialog_is_grounding, "order_phases", 0);
                 getDrawableRightView(tvOrderPhases, R.drawable.icon_pullup_arrow, R.color.color_5C54F4);
@@ -597,14 +597,14 @@ public class OrderDeviceFragment extends BaseLazyFragment implements BaseQuickAd
                         }).showDialog();
                 break;
             case R.id.tv_progress://修改进度
-                //公开物资出售时 才有投标报价
-                if (!orderPhasesList.get(2).getName().equals("投标报价")&&orderItem.inside==1&&orderItem.method==2){
-                    orderPhasesList.add(2,new OrderSearchBean.OrderPhasesBean(4,"投标报价"));
-                }else if (orderPhasesList.get(2).getName().equals("投标报价")&&orderItem.inside==1&&orderItem.method==1){
+                //公开物资出售时 才有报价投标
+                if (!orderPhasesList.get(2).getName().equals("报价投标")&&orderItem.inside==1&&orderItem.method==2){
+                    orderPhasesList.add(2,new OrderSearchBean.OrderPhasesBean(4,"报价投标"));
+                }else if (orderPhasesList.get(2).getName().equals("报价投标")&&orderItem.inside==1&&orderItem.method==1){
                     orderPhasesList.remove(2);
-                }else if (orderPhasesList.get(2).getName().equals("投标报价")&&orderItem.inside==3&&orderItem.method==1){
+                }else if (orderPhasesList.get(2).getName().equals("报价投标")&&orderItem.inside==3&&orderItem.method==1){
                     orderPhasesList.remove(2);
-                }else if (orderPhasesList.get(2).getName().equals("投标报价")&&orderItem.inside==3&&orderItem.method==2){
+                }else if (orderPhasesList.get(2).getName().equals("报价投标")&&orderItem.inside==3&&orderItem.method==2){
                     orderPhasesList.remove(2);
                 }
                 LogUtils.i(orderPhasesList);
