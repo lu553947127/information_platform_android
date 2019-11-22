@@ -93,6 +93,7 @@ public class CircleFragment extends BaseFragment {
     private IUnReadMessageObserver observer;
     private IMAddVm imAddVm;
     private HomeVm homeVm;
+    private int manage_status;
 
     public static CircleFragment newInstance() {
         Bundle args = new Bundle();
@@ -132,7 +133,8 @@ public class CircleFragment extends BaseFragment {
         homeVm = ViewModelProviders.of(mActivity).get(HomeVm.class);
         homeVm.supplierRoleLiveData.observe(this, supplierRoleBean -> {
             //获取用户身份 0普通用户 1普通供应商 2子公司 3集团 4子账号
-            switch (supplierRoleBean.getManage_status()){
+            manage_status=supplierRoleBean.getManage_status();
+            switch (manage_status){
                 case 0://普通用户
                 case 1://普通供应商
                     rlSubscribeChildren.setVisibility(View.VISIBLE);
@@ -166,9 +168,21 @@ public class CircleFragment extends BaseFragment {
             getCountNumbers(friendApplyCountBean.getSubscribe(),tvSubscribeChildrenNumbers);
             getCountNumbers(friendApplyCountBean.getSubscribe(),tvSubscribeGroupNumber);
             getCountNumbers(friendApplyCountBean.getMaterial(),tvUnusedNumber);
+            int counts=0;
+            //获取用户身份 0普通用户 1普通供应商 2子公司 3集团 4子账号
+            switch (manage_status){
+                case 0://普通用户
+                case 1://普通供应商
+                    counts=imAddVm.count+friendApplyCountBean.getCount()+friendApplyCountBean.getSubscribe();
+                    break;
+                case 2://子公司
+                case 3://集团
+                case 4://子公司子账号
+                case 5://集团子账号
+                    counts=imAddVm.count+friendApplyCountBean.getCount()+friendApplyCountBean.getSubscribe()+friendApplyCountBean.getMaterial();
+                    break;
+            }
             //设置底部标签数量
-            int counts=imAddVm.count+friendApplyCountBean.getCount()+friendApplyCountBean.getSubscribe()+friendApplyCountBean.getMaterial();
-            LogUtils.e(counts);
             if (counts < 1) {
                 relativeLayout.setVisibility(View.GONE);
             } else if (counts < 100) {
@@ -209,6 +223,7 @@ public class CircleFragment extends BaseFragment {
                     LogUtils.e(i);
                     // i 是未读数量luho
                     imAddVm.count=i;
+                    LogUtils.e(imAddVm.count);
                     imAddVm.applyCount();
                 }, Conversation.ConversationType.PRIVATE,Conversation.ConversationType.GROUP,Conversation.ConversationType.SYSTEM);
                 refreshLayout.finishRefresh(1000);

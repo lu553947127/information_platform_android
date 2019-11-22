@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.NetworkUtils;
+import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.MaterialOrderAddressAdapter;
@@ -121,6 +123,9 @@ public class MaterialOrderDetailActivity extends BaseActivity {
 
         materialVm = ViewModelProviders.of(this).get(MaterialDetailVm.class);
         materialVm.orderDetailLiveData.observe(this, item -> {
+            if (item==null){
+                return;
+            }
             try {
                 ImageLoader.load(this, new ImageConfig.Builder()
                         .url(item.images)
@@ -133,8 +138,6 @@ public class MaterialOrderDetailActivity extends BaseActivity {
                 ivIcon.setImageResource(R.drawable.wuzhi_default);
             }
             tvTitle.setText(item.category);
-
-
             if (type == CustomConfig.FRP) {
                 tvPrice.setText(item.method == 1 ?
                         Html.fromHtml("商品单价：<font color=#EF583E>¥" + item.price + "<font/>/天") :
@@ -177,7 +180,6 @@ public class MaterialOrderDetailActivity extends BaseActivity {
             ToastUtils.showShort("订单取消成功");
             tvCancel.setEnabled(false);
         });
-
 
         if (type == CustomConfig.FRP) {
             materialVm.materialOrderDetail(orderId);

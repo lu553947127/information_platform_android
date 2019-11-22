@@ -136,6 +136,7 @@ public class HomeFragment extends BaseFragment {
     private HomeVm homeVm;
     private IUnReadMessageObserver observer;
     private DemandRelationshipVm demandRelationshipVm;
+    private int manage_status;
 
     public static HomeFragment newInstance() {
         Bundle args = new Bundle();
@@ -280,13 +281,31 @@ public class HomeFragment extends BaseFragment {
             }
         });
 
+        homeVm.supplierRoleLiveData.observe(this, supplierRoleBean -> {
+            //获取用户身份 0普通用户 1普通供应商 2子公司 3集团 4子账号
+            manage_status=supplierRoleBean.getManage_status();
+        });
+
         imAddVm = ViewModelProviders.of(this).get(IMAddVm.class);
 
         demandRelationshipVm = ViewModelProviders.of(mActivity).get(DemandRelationshipVm.class);
 
+        //设置角标数量
         imAddVm.applyCountData.observe(this, friendApplyCountBean -> {
-            //设置底部标签数量
-            int counts=imAddVm.count+friendApplyCountBean.getCount()+friendApplyCountBean.getSubscribe()+friendApplyCountBean.getMaterial();
+            int counts=0;
+            //获取用户身份 0普通用户 1普通供应商 2子公司 3集团 4子账号
+            switch (manage_status){
+                case 0://普通用户
+                case 1://普通供应商
+                    counts=imAddVm.count+friendApplyCountBean.getCount()+friendApplyCountBean.getSubscribe();
+                    break;
+                case 2://子公司
+                case 3://集团
+                case 4://子公司子账号
+                case 5://集团子账号
+                    counts=imAddVm.count+friendApplyCountBean.getCount()+friendApplyCountBean.getSubscribe()+friendApplyCountBean.getMaterial();
+                    break;
+            }
             if (counts < 1) {
                 relativeLayout.setVisibility(View.GONE);
             } else if (counts < 100) {
@@ -541,6 +560,7 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void initDataFromService() {
+        homeVm.getSupplierRole();
         observer = i -> {
             LogUtils.i(i);
             // i 是未读数量
