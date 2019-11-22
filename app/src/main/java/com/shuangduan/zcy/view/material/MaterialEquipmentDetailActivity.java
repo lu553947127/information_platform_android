@@ -147,8 +147,12 @@ public class MaterialEquipmentDetailActivity extends BaseActivity {
             }
             initBanner(pics, titles);
 
-            TextViewUtils.addDrawableInEnd(tvMaterialCategory, getResources().getDrawable(R.drawable.icon_mine_default_material), materialDetailBean.getMaterial_category());
 
+            if(materialDetailBean.getIsShelf()==3){
+                TextViewUtils.addDrawableInEnd(tvMaterialCategory, getResources().getDrawable(R.drawable.icon_mine_default_material), materialDetailBean.getMaterial_category());
+            }else {
+                tvMaterialCategory.setText(materialDetailBean.getMaterial_category());
+            }
 
             tvUnitPrice.setText(materialDetailBean.getMethod() == 1 ?
                     String.format(getString(R.string.format_material_price), String.valueOf(materialDetailBean.getGuidance_price()), "天") :

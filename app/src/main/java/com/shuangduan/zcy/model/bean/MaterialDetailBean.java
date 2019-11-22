@@ -68,7 +68,7 @@ public class MaterialDetailBean {
     //浏览人信息
     public List<User> user;
 
-    //物资类型
+    //物资类型 1 公开物资 2 物资未上架  3内购物资
     @SerializedName("is_shelf")
     private int isShelf;
     //供应方式 1 出租 2 售卖

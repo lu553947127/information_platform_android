@@ -145,7 +145,11 @@ public class MaterialDetailActivity extends BaseActivity {
             }
             initBanner(pics, titles);
 
-            TextViewUtils.addDrawableInEnd(tvMaterialCategory, getResources().getDrawable(R.drawable.icon_mine_default_material), materialDetailBean.getMaterial_category());
+            if(materialDetailBean.getIsShelf()==3){
+                TextViewUtils.addDrawableInEnd(tvMaterialCategory, getResources().getDrawable(R.drawable.icon_mine_default_material), materialDetailBean.getMaterial_category());
+            }else {
+                tvMaterialCategory.setText(materialDetailBean.getMaterial_category());
+            }
 
 //            tvMaterialCategory.setText(materialDetailBean.getMaterial_category());
 
