@@ -1,9 +1,11 @@
 package com.shuangduan.zcy.view.mine;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
@@ -138,11 +140,12 @@ public class MineSubActivity extends BaseActivity {
     private void getSubscribe() {
 
         adapter.setOnItemClickListener((helper, view, position) -> {
+            mineSubVm.pos = position;
             SubscribeBean.ListBean listBean = adapter.getData().get(position);
             Bundle bundle = new Bundle();
             bundle.putInt(CustomConfig.PROJECT_ID, listBean.getType_id());
             bundle.putInt(CustomConfig.LOCATION, 0);
-            ActivityUtils.startActivity(bundle, ProjectDetailActivity.class);
+            ActivityUtils.startActivityForResult(bundle,this, ProjectDetailActivity.class,200);
         });
 
         //获取订阅信息数据
@@ -183,6 +186,8 @@ public class MineSubActivity extends BaseActivity {
         mineSubVm.phasesSetLiveData.observe(this, o -> {
             mineSubVm.subscribe(1);
         });
+
+        mineSubVm.subscribe(1);
     }
 
     //闲置提醒
@@ -204,6 +209,8 @@ public class MineSubActivity extends BaseActivity {
             }
             setNoMore(subscribeBean.getPage(), subscribeBean.getCount());
         });
+
+        mineSubVm.subscribe(2);
     }
 
     private void setNoMore(int page, int count){
@@ -244,15 +251,14 @@ public class MineSubActivity extends BaseActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        switch (getIntent().getIntExtra(CustomConfig.NEWS_TYPE,0)){
-            case SUBSCRIBE://订阅消息
-                mineSubVm.subscribe(1);
-                break;
-            case UNUSED://闲置提醒
-                mineSubVm.subscribe(2);
-                break;
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 200){
+            SubscribeBean.ListBean listBean = adapter.getData().get(mineSubVm.pos);
+            if (listBean.getType()==1){
+                listBean.setIs_view(1);
+                adapter.notifyItemChanged(mineSubVm.pos,listBean);
+            }
         }
     }
 }

@@ -30,6 +30,7 @@ public class MineSubVm extends BaseViewModel {
 
     private int userId;
     public int page = 1;
+    public int pos;
     public MutableLiveData<SubscribeBean> subscribeLiveData;
     public MutableLiveData<MessagePushBean> messagePushLiveData;
     public MutableLiveData messagePushStatusLiveData;
