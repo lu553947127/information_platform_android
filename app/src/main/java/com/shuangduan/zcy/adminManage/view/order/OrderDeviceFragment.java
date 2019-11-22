@@ -377,7 +377,6 @@ public class OrderDeviceFragment extends BaseLazyFragment implements BaseQuickAd
     private List<TurnoverNameBean> projectList = new ArrayList<>();
     private List<OrderSearchBean.OrderPhasesBean> orderPhasesList = new ArrayList<>();
     private List<OrderSearchBean.InsideBean> orderInsideList = new ArrayList<>();
-
     @SuppressLint("RestrictedApi,InflateParams")
     private void getBottomSheetDialog(int layout, String type, int updateState) {
         //底部滑动对话框
@@ -608,6 +607,7 @@ public class OrderDeviceFragment extends BaseLazyFragment implements BaseQuickAd
                 }else if (orderPhasesList.get(2).getName().equals("投标报价")&&orderItem.inside==3&&orderItem.method==2){
                     orderPhasesList.remove(2);
                 }
+                LogUtils.i(orderPhasesList);
                 getBottomSheetDialog(R.layout.dialog_is_grounding, "order_phases", 1);
                 break;
         }

@@ -137,14 +137,12 @@ public class MineSubActivity extends BaseActivity {
     //订阅信息
     private void getSubscribe() {
 
-        adapter.setOnItemChildClickListener((helper, view, position) -> {
-            if (view.getId() == R.id.tv_read) {
-                SubscribeBean.ListBean listBean = adapter.getData().get(position);
-                Bundle bundle = new Bundle();
-                bundle.putInt(CustomConfig.PROJECT_ID, listBean.getType_id());
-                bundle.putInt(CustomConfig.LOCATION, 0);
-                ActivityUtils.startActivity(bundle, ProjectDetailActivity.class);
-            }
+        adapter.setOnItemClickListener((helper, view, position) -> {
+            SubscribeBean.ListBean listBean = adapter.getData().get(position);
+            Bundle bundle = new Bundle();
+            bundle.putInt(CustomConfig.PROJECT_ID, listBean.getType_id());
+            bundle.putInt(CustomConfig.LOCATION, 0);
+            ActivityUtils.startActivity(bundle, ProjectDetailActivity.class);
         });
 
         //获取订阅信息数据
@@ -190,12 +188,10 @@ public class MineSubActivity extends BaseActivity {
     //闲置提醒
     private void getUnused() {
 
-        adapter.setOnItemChildClickListener((helper, view, position) -> {
-            if (view.getId() == R.id.tv_read) {
-                Bundle bundle = new Bundle();
-                bundle.putInt("notice", 1);
-                ActivityUtils.startActivity(bundle, MaterialActivity.class);
-            }
+        adapter.setOnItemClickListener((helper, view, position) -> {
+            Bundle bundle = new Bundle();
+            bundle.putInt("notice", 1);
+            ActivityUtils.startActivity(bundle, MaterialActivity.class);
         });
 
         //获取订阅信息数据
