@@ -151,7 +151,6 @@ public class MaterialDetailActivity extends BaseActivity {
                 tvMaterialCategory.setText(materialDetailBean.getMaterial_category());
             }
 
-//            tvMaterialCategory.setText(materialDetailBean.getMaterial_category());
 
             tvUnitPrice.setText(materialDetailBean.getMethod() == 1 ?
                     String.format(getString(R.string.format_material_price), String.valueOf(materialDetailBean.getGuidance_price()), "天") :
