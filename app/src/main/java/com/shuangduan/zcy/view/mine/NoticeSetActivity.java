@@ -14,6 +14,7 @@ import com.shuangduan.zcy.vm.MineSubVm;
 import com.shuangduan.zcy.weight.SwitchView;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 import static com.shuangduan.zcy.app.CustomConfig.SUBSCRIBE;
 import static com.shuangduan.zcy.app.CustomConfig.UNUSED;
@@ -114,4 +115,7 @@ public class NoticeSetActivity extends BaseActivity {
             }
         });
     }
+
+    @OnClick(R.id.iv_bar_back)
+    void onClick(){finish();}
 }

@@ -61,20 +61,16 @@
     <string name="base_info">基本信息</string>
     <string name="save">保存</string>
     <string name="next">下一步</string>
-    <string name="my_order">我的订单</string>
     <string name="my_income">我的收益</string>
     <string name="my_income_explain">收益说明</string>
-    <string name="my_subscription">我的订阅</string>
     <string name="my_project">我的工程</string>
     <string name="my_demand">我的需求</string>
     <string name="mine_subscription">信息认购</string>
     <string name="my_material">预定订单</string>
     <string name="transaction_record">交易记录</string>
-    <string name="agreement_manage">合同管理</string>
     <string name="pwd_pay">支付密码</string>
     <string name="read_history">查看记录</string>
     <string name="feedback">意见反馈</string>
-    <string name="recommend_friends">推荐好友</string>
     <string name="invite_friends">邀请好友</string>
     <string name="my_collection">我的收藏</string>
     <string name="set">设置</string>
@@ -139,7 +135,6 @@
     <string name="hint_new_pwd">请输入新的密码</string>
     <string name="hint_opinion">请在此输入您的意见</string>
     <string name="hint_opinion_error">请输入您的意见</string>
-    <string name="share_url">https://zicai365.com</string>
     <string name="share">分享</string>
     <string name="mobile">电话</string>
     <string name="exit_confirm">确认退出登录吗</string>
@@ -147,7 +142,6 @@
     <string name="pwd_reset_success">密码重置成功</string>
     <string name="no_company">没有相关公司</string>
     <string name="no_post">没有相关职位</string>
-    <string name="no_jjwz">没有相关基建物资</string>
     <string name="hint_company">请输入公司名称</string>
     <string name="edit_success">信息编辑成功</string>
     <string name="hint_production">请输入产品信息</string>
@@ -322,7 +316,6 @@
     <string name="unit">单位</string>
     <string name="address">地址</string>
     <string name="address_detail">公司地址</string>
-    <string name="push_select">推送选择</string>
     <string name="expected_return_s">总收益</string>
     <string name="withdraw_income">可提现收益</string>
     <string name="income_trend_s">收益走向</string>
@@ -572,11 +565,6 @@
     <string-array name="infrastructure">
         <item>周转材料</item>
         <item>设备物资</item>
-    </string-array>
-
-    <string-array name="turnover_material">
-        <item>集团</item>
-        <item>子公司</item>
     </string-array>
 
     <string-array name="withdraw_state">

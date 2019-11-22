@@ -80,7 +80,6 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
     AppCompatTextView tvOrderPhases;
     @BindView(R.id.tv_order_type)
     AppCompatTextView tvOrderType;
-
     @BindView(R.id.ll_admin_manage_screen)
     LinearLayout llAdminManageScreen;
     @BindView(R.id.tv_reset)
@@ -93,22 +92,17 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
     AppCompatTextView tvThree;
     @BindView(R.id.tv_use_status)
     AppCompatTextView tvFour;
-
     @BindView(R.id.refresh)
     SmartRefreshLayout refresh;
     @BindView(R.id.rl_search)
     RelativeLayout rlSearch;
     @BindView(R.id.rv)
     RecyclerView rv;
-
     @BindView(R.id.tv_order_number)
     XEditText xetOrderNumber;
-
     private OrderTurnoverVm orderVm;
     private AdminOrderListAdapter adminOrderListAdapter;
     private int manage_status;
-    private boolean isRemove = false;
-    private boolean isRemoveAdd = false;
 
     public static OrderTurnoverFragment newInstance() {
         Bundle args = new Bundle();

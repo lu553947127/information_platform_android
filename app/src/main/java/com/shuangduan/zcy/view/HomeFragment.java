@@ -255,7 +255,6 @@ public class HomeFragment extends BaseFragment {
             initBanner(pics, titles);
         });
         homeVm.listLiveData.observe(this, homeListBean -> {
-
             if (headlinesAdapter == null) {
                 rvHeadlines.setLayoutManager(new LinearLayoutManager(mContext));
                 rvHeadlines.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
@@ -293,7 +292,7 @@ public class HomeFragment extends BaseFragment {
             } else if (counts < 100) {
                 number.setTextSize(11);
                 relativeLayout.setVisibility(View.VISIBLE);
-                number.setText(" " + counts + " ");
+                number.setText(String.valueOf(counts));
             } else {
                 relativeLayout.setVisibility(View.VISIBLE);
                 number.setTextSize(9);

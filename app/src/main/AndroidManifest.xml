@@ -484,10 +484,6 @@
         <activity
             android:name=".view.mine.MineLocusActivity"
             android:theme="@style/BaseAppTheme" />
-        <!-- 图片放大查看页-->
-        <activity
-            android:name="com.shuangduan.zcy.view.PhotoViewActivity"
-            android:theme="@style/BaseAppTheme" />
         <!-- 地区选择页-->
         <activity
             android:name="com.shuangduan.zcy.view.MultiAreaActivity"
