@@ -31,18 +31,23 @@
                     android:layout_width="match_parent"
                     android:layout_height="170dp" />
 
-                <RelativeLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    tools:ignore="MissingConstraints" >
 
                     <TextView
                         android:id="@+id/tv_material_category"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="14dp"
                         android:layout_marginTop="17dp"
                         android:textColor="@color/colorTv"
-                        android:textSize="15sp" />
+                        android:textSize="15sp"
+                        android:layout_marginRight="70dp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toLeftOf="@id/tv_unit_price"/>
 
                     <ImageView
                         android:id="@+id/iv_purchased_goods"
@@ -52,8 +57,11 @@
                         android:layout_marginTop="9dp"
                         android:layout_toRightOf="@+id/tv_material_category"
                         android:scaleType="centerCrop"
+                        android:layout_marginRight="15dp"
                         android:src="@drawable/icon_mine_default_material"
-                        android:visibility="gone" />
+                        app:layout_constraintBottom_toBottomOf="@id/tv_material_category"
+                        app:layout_constraintRight_toLeftOf="@id/tv_unit_price"
+                        android:visibility="gone"/>
 
                     <TextView
                         android:id="@+id/tv_unit_price"
@@ -62,9 +70,10 @@
                         android:layout_alignParentRight="true"
                         android:layout_marginTop="18dp"
                         android:layout_marginRight="15dp"
+                        app:layout_constraintRight_toRightOf="parent"
                         android:textColor="@color/color_EF583E"
-                        android:textSize="13sp" />
-                </RelativeLayout>
+                        android:textSize="13sp"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"

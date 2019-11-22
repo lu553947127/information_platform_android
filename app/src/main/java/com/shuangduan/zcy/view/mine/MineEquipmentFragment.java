@@ -16,6 +16,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.MaterialOrderAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
+import com.shuangduan.zcy.base.BaseFragment;
 import com.shuangduan.zcy.base.BaseLazyFragment;
 import com.shuangduan.zcy.factory.EmptyViewFactory;
 import com.shuangduan.zcy.model.bean.MaterialOrderBean;
@@ -34,7 +35,7 @@ import butterknife.BindView;
  * @change
  * @class describe
  */
-public class MineEquipmentFragment extends BaseLazyFragment implements EmptyViewFactory.EmptyViewCallBack {
+public class MineEquipmentFragment extends BaseFragment implements EmptyViewFactory.EmptyViewCallBack {
     @BindView(R.id.rv)
     RecyclerView rv;
     @BindView(R.id.refresh)
@@ -63,7 +64,7 @@ public class MineEquipmentFragment extends BaseLazyFragment implements EmptyView
     }
 
     @Override
-    protected void initDataAndEvent(Bundle savedInstanceState) {
+    protected void initDataAndEvent(Bundle savedInstanceState,View v) {
         //赛选条件列表为空
         emptyView = createEmptyView(R.drawable.icon_empty_project, R.string.empty_substance_screen_info, R.string.see_all, this);
 
@@ -85,7 +86,6 @@ public class MineEquipmentFragment extends BaseLazyFragment implements EmptyView
         materialVm = ViewModelProviders.of(mActivity).get(MaterialVm.class);
         materialVm.equipmentOrderLiveData.observe(this, materialBean -> {
 
-            isInited = true;
             if (materialBean.getPage() == 1) {
                 adapter.setNewData(materialBean.getList());
                 adapter.setEmptyView(emptyView);

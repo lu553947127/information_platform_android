@@ -466,6 +466,7 @@
     <string name="format_price">价格: %1$s元</string>
     <string name="format_price_demand">价格: %1$s元</string>
     <string name="format_price_accept">接受价格: %1$s元</string>
+    <string name="format_supply_accept">供应价格: %1$s元</string>
     <string name="format_pay">需支付: %1$s元！</string>
     <string name="format_income_degree">%1$d°人脉收益</string>
     <string name="format_trans_time">交易时间: %1$s</string>

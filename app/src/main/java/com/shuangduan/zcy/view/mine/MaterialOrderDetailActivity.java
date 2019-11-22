@@ -161,7 +161,7 @@ public class MaterialOrderDetailActivity extends BaseActivity {
             tvCompanyNameValue.setText(item.company);
             tvOrderAddressValue.setText(item.address);
             tvIntroduceValue.setText(item.remark);
-            tvState.setText("状态：" + item.phases);
+            tvState.setText(item.phases);
             if (item.isClose == 0) {
                 tvCancel.setEnabled(false);
             } else {

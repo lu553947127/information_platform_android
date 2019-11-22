@@ -1,15 +1,22 @@
 package com.shuangduan.zcy.adapter;
 
+import android.text.Layout;
+import android.text.StaticLayout;
+import android.text.TextPaint;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.google.gson.JsonObject;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.model.bean.MaterialOrderBean;
+import com.shuangduan.zcy.utils.DensityUtil;
 import com.shuangduan.zcy.utils.TextViewUtils;
 import com.shuangduan.zcy.utils.image.ImageConfig;
 import com.shuangduan.zcy.utils.image.ImageLoader;
@@ -34,11 +41,24 @@ public class MaterialOrderAdapter extends BaseQuickAdapter<MaterialOrderBean.Lis
     protected void convert(BaseViewHolder helper, MaterialOrderBean.ListBean item) {
 
         TextView tvTitle = helper.getView(R.id.tv_title);
+        ConstraintLayout.LayoutParams lp = (ConstraintLayout.LayoutParams) helper.getView(R.id.tv_title).getLayoutParams();
 
         if (item.inside == 3) {
-            TextViewUtils.addDrawableInEnd(tvTitle, mContext.getResources().getDrawable(R.drawable.icon_mine_default_material), item.materialName);
+            lp.rightMargin = DensityUtil.dp2px(10);
+
+            int maxNumber = getLineMaxNumber(item.materialName, tvTitle.getPaint(), tvTitle.getWidth());
+            LogUtils.e(maxNumber);
+            if (item.materialName.length() > maxNumber) {
+                TextViewUtils.addDrawableInEnd(tvTitle, mContext.getResources().
+                        getDrawable(R.drawable.icon_mine_default_material), item.materialName.substring(0, maxNumber - 4) + "...");
+            } else {
+                TextViewUtils.addDrawableInEnd(tvTitle, mContext.getResources().getDrawable(R.drawable.icon_mine_default_material), item.materialName);
+            }
+            tvTitle.setLayoutParams(lp);
         } else {
+            lp.rightMargin = DensityUtil.dp2px(50);
             tvTitle.setText(item.materialName);
+            tvTitle.setLayoutParams(lp);
         }
 
         ImageView ivIcon = helper.getView(R.id.iv_icon);
@@ -60,13 +80,31 @@ public class MaterialOrderAdapter extends BaseQuickAdapter<MaterialOrderBean.Lis
                 .setText(R.id.tv_order_num, "订单号:" + item.orderSn)
                 .setText(R.id.tv_supply_method, item.method == 1 ? "出租" : "出售");
 
-        if (item.status.equals("驳回")){
-            helper.setTextColor(R.id.tv_state,mContext.getResources().getColor(R.color.text2));
+        if (item.status.equals("驳回")) {
+            helper.setTextColor(R.id.tv_state, mContext.getResources().getColor(R.color.text2));
             helper.setText(R.id.tv_state, item.status);
-        }else {
-            helper.setTextColor(R.id.tv_state,mContext.getResources().getColor(R.color.text1));
+        } else {
+            helper.setTextColor(R.id.tv_state, mContext.getResources().getColor(R.color.text1));
             helper.setText(R.id.tv_state, item.phases);
         }
     }
 
+
+    /**
+     * 获取textview一行最大能显示几个字(需要在TextView测量完成之后)
+     *
+     * @param text     文本内容
+     * @param paint    textview.getPaint()
+     * @param maxWidth textview.getMaxWidth()/或者是指定的数值,如200dp
+     */
+    private int getLineMaxNumber(String text, TextPaint paint, int maxWidth) {
+        if (null == text || "".equals(text)) {
+            return 0;
+        }
+        //得到文本内容总体长度
+        float textWidth = paint.measureText(text);
+        // textWidth
+        float width = textWidth / text.length();
+        return (int) (maxWidth / width);
+    }
 }

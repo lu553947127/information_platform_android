@@ -33,7 +33,7 @@ public class DemandMineBuyerAdapter extends BaseQuickAdapter<DemandBuyerBean.Lis
         if(item.getAcceptance_price().equals("面议")){
             helper.setText(R.id.tv_price,item.getAcceptance_price());
         }else {
-            helper.setText(R.id.tv_price, String.format(mContext.getString(R.string.format_price_accept), item.getAcceptance_price()));
+            helper.setText(R.id.tv_price, String.format(mContext.getString(R.string.format_supply_accept), item.getAcceptance_price()));
         }
     }
 }

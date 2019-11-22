@@ -1,5 +1,8 @@
 package com.shuangduan.zcy.adapter;
 
+import android.text.Layout;
+import android.text.StaticLayout;
+import android.text.TextPaint;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -36,6 +39,7 @@ public class SellAdapter extends BaseQuickAdapter<MaterialBean.ListBean, BaseVie
 
         TextView tvTitle = helper.getView(R.id.tv_title);
 
+
         if (item.getIs_order() == 1) {
             TextViewUtils.addDrawableInEnd(tvTitle, mContext.getResources().getDrawable(R.drawable.icon_bought), item.getMaterialName());
         } else {
@@ -67,4 +71,6 @@ public class SellAdapter extends BaseQuickAdapter<MaterialBean.ListBean, BaseVie
         }
 
     }
+
+
 }

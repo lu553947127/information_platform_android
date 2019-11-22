@@ -31,6 +31,7 @@ import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.MaterialDetailBean;
 import com.shuangduan.zcy.model.event.MaterialDetailEvent;
 import com.shuangduan.zcy.utils.KeyboardUtil;
+import com.shuangduan.zcy.utils.TextViewUtils;
 import com.shuangduan.zcy.utils.image.GlideImageLoader;
 import com.shuangduan.zcy.utils.image.PictureEnlargeUtils;
 import com.shuangduan.zcy.vm.MaterialDetailVm;
@@ -143,7 +144,10 @@ public class MaterialDetailActivity extends BaseActivity {
                 titles.add("");
             }
             initBanner(pics, titles);
-            tvMaterialCategory.setText(materialDetailBean.getMaterial_category());
+
+            TextViewUtils.addDrawableInEnd(tvMaterialCategory, getResources().getDrawable(R.drawable.icon_mine_default_material), materialDetailBean.getMaterial_category());
+
+//            tvMaterialCategory.setText(materialDetailBean.getMaterial_category());
 
             tvUnitPrice.setText(materialDetailBean.getMethod() == 1 ?
                     String.format(getString(R.string.format_material_price), String.valueOf(materialDetailBean.getGuidance_price()), "天") :
@@ -184,7 +188,10 @@ public class MaterialDetailActivity extends BaseActivity {
                 tvReserve.setClickable(false);
             }
 
-            ivPurchasedGoods.setVisibility(materialDetailBean.getIsShelf() == 3 ? View.VISIBLE : View.GONE);
+
+
+
+//            ivPurchasedGoods.setVisibility(materialDetailBean.getIsShelf() == 3 ? View.VISIBLE : View.GONE);
 
             //设置浏览人数
             if (materialDetailBean.getUser() != null && materialDetailBean.getUser().size() != 0) {

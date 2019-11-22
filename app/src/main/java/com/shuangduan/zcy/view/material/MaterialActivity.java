@@ -138,7 +138,6 @@ public class MaterialActivity extends BaseActivity {
             for (SupplierCliqueBean.SupplierIdBean item : supplierClique.getSupplier_id()) {
                 materialVm.authGroup.auth_group.add(item.getId());
             }
-
             //基建物资订阅推送 默认打开内定物资
             if (getIntent().getIntExtra("notice",0)==1){
                 tvOpen.setTextSize(14);
