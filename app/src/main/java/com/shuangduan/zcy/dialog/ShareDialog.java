@@ -35,7 +35,7 @@ public class ShareDialog extends BaseDialog {
     @Override
     void initData() {
         setWidth(ConvertUtils.dp2px(260));
-        setHeight(ConvertUtils.dp2px(223));
+        setHeight(ConvertUtils.dp2px(243));
         DialogUtils.enterCustomAnim(this);
     }
 

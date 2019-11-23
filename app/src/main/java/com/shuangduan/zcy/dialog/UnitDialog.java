@@ -32,10 +32,15 @@ public class UnitDialog extends BaseDialog {
     DatePickerView dpExp;
     private int selected = 0;
     private String text;
+    private float minTextScale;
+    private float maxTextScale;
 
-    public UnitDialog(@NonNull Activity activity) {
+    public UnitDialog(@NonNull Activity activity, float minTextScale, float maxTextScale) {
         super(activity);
+        this.minTextScale = minTextScale;
+        this.maxTextScale = maxTextScale;
     }
+
 
     @Override
     int initLayout() {
@@ -45,6 +50,8 @@ public class UnitDialog extends BaseDialog {
     @Override
     void initData() {
         setWidth(ConvertUtils.dp2px(260));
+
+
         List<String> data = new ArrayList<>();
         String[] stringArray = mActivity.getResources().getStringArray(R.array.unit_list);
         Collections.addAll(data, stringArray);
@@ -52,6 +59,7 @@ public class UnitDialog extends BaseDialog {
         dpExp.setCanScroll(true);
         dpExp.setIsLoop(false);
         dpExp.setSelected(selected);
+        dpExp.setTextScale(minTextScale, maxTextScale);
         this.text = stringArray[selected];
     }
 

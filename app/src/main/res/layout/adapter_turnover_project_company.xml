@@ -24,14 +24,14 @@
             android:singleLine="true"
             android:maxEms="7"
             android:textColor="@color/color_666666"
-            android:textSize="14sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="5dp"
-            android:textSize="12sp"
+            android:textSize="14sp"
             android:textColor="@color/colorTvHint"
             android:text="("/>
 
@@ -43,7 +43,7 @@
             android:drawableRight="@drawable/icon_admin_project_more"
             android:layout_marginLeft="1dp"
             android:layout_gravity="center_vertical"
-            android:textSize="12sp"
+            android:textSize="14sp"
             android:textColor="@color/colorTvHint"
             android:text="显示全部"/>
 
@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="1dp"
-            android:textSize="12sp"
+            android:textSize="14sp"
             android:textColor="@color/colorTvHint"
             android:text=")"/>
 
@@ -65,7 +65,7 @@
         android:layout_centerVertical="true"
         android:layout_marginRight="35dp"
         android:textColor="@color/color_666666"
-        android:textSize="14sp"
+        android:textSize="16sp"
         android:text="商合杭铁路芜湖长江公铁大桥公路桥接线工程江北接线及收费站工程项目"
         android:visibility="visible"/>
 

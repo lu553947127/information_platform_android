@@ -103,7 +103,7 @@
     <LinearLayout
         android:id="@+id/ll_edit"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:orientation="vertical"
         android:layout_below="@+id/ll_context">
 
@@ -115,30 +115,36 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_height="match_parent"
             android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="12dp">
+            android:layout_marginRight="15dp">
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_delete"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:drawableLeft="@drawable/icon_admin_delete"
                 android:drawablePadding="5dp"
                 android:textColor="@color/colorTvHint"
                 android:textSize="12sp"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
                 android:text="删除"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_edit"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:drawableLeft="@drawable/icon_admin_edit"
                 android:drawablePadding="5dp"
                 android:layout_alignParentRight="true"
                 android:textColor="@color/color_5C54F4"
                 android:textSize="12sp"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
                 android:text="编辑"/>
         </RelativeLayout>
 

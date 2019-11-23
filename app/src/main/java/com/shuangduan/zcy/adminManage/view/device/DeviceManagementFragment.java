@@ -251,7 +251,7 @@ public class DeviceManagementFragment extends BaseLazyFragment {
         });
         areaVm.cityLiveData.observe(this, cityBeans -> {
             cityList = cityBeans;
-            cityList.add(0,new CityBean(1000000,"全部"));
+//            cityList.add(0,new CityBean(1000000,"全部"));
             cityAdapter.setNewData(cityList);
         });
 

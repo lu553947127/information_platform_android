@@ -68,6 +68,11 @@ public class DatePickerView extends View {
     private Timer timer;
     private MyTimerTask mTask;
 
+    //设置最大字体 和 最小字体比例
+    private float mMinTextScale = 2.2f;
+
+    private float mMaxTextScale = 7.0f;
+
     @SuppressLint("HandlerLeak")
     private Handler updateHandler = new Handler() {
         @Override
@@ -106,6 +111,12 @@ public class DatePickerView extends View {
     public void setData(List<String> datas) {
         mDataList = datas;
         mCurrentSelected = datas.size() / 4;
+        invalidate();
+    }
+
+    public void setTextScale(float minTextScale, float maxTextScale) {
+        mMinTextScale = minTextScale;
+        mMaxTextScale = maxTextScale;
         invalidate();
     }
 
@@ -165,8 +176,8 @@ public class DatePickerView extends View {
         mViewHeight = getMeasuredHeight();
         mViewWidth = getMeasuredWidth();
         // 按照View的高度计算字体大小
-        mMaxTextSize = mViewHeight / 7f;
-        mMinTextSize = mMaxTextSize / 2.2f;
+        mMaxTextSize = mViewHeight / mMaxTextScale;
+        mMinTextSize = mMaxTextSize / mMinTextScale;
         isInit = true;
         invalidate();
     }
@@ -207,7 +218,7 @@ public class DatePickerView extends View {
         FontMetricsInt fmi = mPaint.getFontMetricsInt();
         float baseline = (float) (y - (fmi.bottom / 2.0 + fmi.top / 2.0));
 
-        if (mDataList.size() != 0){
+        if (mDataList.size() != 0) {
             canvas.drawText(mDataList.get(mCurrentSelected), x, baseline, mPaint);
         }
         // 绘制上方data
@@ -315,6 +326,7 @@ public class DatePickerView extends View {
 
     class MyTimerTask extends TimerTask {
         Handler handler;
+
         public MyTimerTask(Handler handler) {
             this.handler = handler;
         }

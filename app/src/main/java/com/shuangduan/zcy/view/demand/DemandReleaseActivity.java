@@ -29,10 +29,12 @@ import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BottomSheetDialogs;
 import com.shuangduan.zcy.dialog.UnitDialog;
 import com.shuangduan.zcy.model.api.PageState;
+import com.shuangduan.zcy.utils.DensityUtil;
 import com.shuangduan.zcy.utils.KeyboardUtil;
 import com.shuangduan.zcy.view.mine.AuthenticationActivity;
 import com.shuangduan.zcy.vm.DemandReleaseVm;
 import com.shuangduan.zcy.weight.datepicker.CustomDatePicker;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -134,8 +136,8 @@ public class DemandReleaseActivity extends BaseActivity {
     TextView tvMarquee;
     private DemandReleaseVm demandReleaseVm;
     private BottomSheetDialogs btn_dialog;
-    int demand_num=0;
-    int supply_num=0;
+    int demand_num = 0;
+    int supply_num = 0;
 
     @Override
     protected int initLayoutRes() {
@@ -155,20 +157,20 @@ public class DemandReleaseActivity extends BaseActivity {
 
         cbSell.setChecked(true);
         demandReleaseVm = ViewModelProviders.of(this).get(DemandReleaseVm.class);
-        tvTimeStart.setText( demandReleaseVm.startTime + " 至");
+        tvTimeStart.setText(demandReleaseVm.startTime + " 至");
         demandReleaseVm.releaseLiveData.observe(this, demandReleaseBean -> {
-            if (demandReleaseVm.releaseType == DemandReleaseVm.RELEASE_TYPE_RELATIONSHIP){
+            if (demandReleaseVm.releaseType == DemandReleaseVm.RELEASE_TYPE_RELATIONSHIP) {
                 Bundle bundle = new Bundle();
                 bundle.putInt(CustomConfig.FIND_RELATIONSHIP_ID, demandReleaseBean.getId());
                 ActivityUtils.startActivity(bundle, ReleaseRelationshipOrderActivity.class);
                 finish();
-            }else {
+            } else {
                 ToastUtils.showShort(getString(R.string.release_success));
                 finish();
             }
         });
         demandReleaseVm.pageStateLiveData.observe(this, s -> {
-            switch (s){
+            switch (s) {
                 case PageState.PAGE_LOADING:
                     showLoading();
                     break;
@@ -181,7 +183,7 @@ public class DemandReleaseActivity extends BaseActivity {
         KeyboardUtil.RemoveDecimalPoints(edtPriceAccept);
         KeyboardUtil.RemoveDecimalPoints(edtSupplyPrice);
 
-        if (Objects.requireNonNull(getIntent().getStringExtra("type")).equals("1")){
+        if (Objects.requireNonNull(getIntent().getStringExtra("type")).equals("1")) {
             tvBarTitle.setText("我要找物资");
             tvReleaseType.setText(getString(R.string.find_substance));
             demandReleaseVm.releaseType = DemandReleaseVm.RELEASE_TYPE_SUBSTANCE;
@@ -199,7 +201,7 @@ public class DemandReleaseActivity extends BaseActivity {
             flSupplyStyle.setVisibility(View.GONE);
             flSupplyAddress.setVisibility(View.GONE);
             flSupplyPrice.setVisibility(View.GONE);
-        }else if (Objects.requireNonNull(getIntent().getStringExtra("type")).equals("2")){
+        } else if (Objects.requireNonNull(getIntent().getStringExtra("type")).equals("2")) {
             tvBarTitle.setText("我要找买家");
             tvReleaseType.setText(getString(R.string.find_buyer));
             demandReleaseVm.releaseType = DemandReleaseVm.RELEASE_TYPE_BUYER;
@@ -235,10 +237,10 @@ public class DemandReleaseActivity extends BaseActivity {
             @Override
             public void afterTextChanged(Editable editable) {
                 if (null != editable) {
-                    double money=Double.valueOf("".equals(editable.toString())?"0.00":editable.toString());
-                    if (money<10){
+                    double money = Double.valueOf("".equals(editable.toString()) ? "0.00" : editable.toString());
+                    if (money < 10) {
                         tvCommission.setVisibility(View.VISIBLE);
-                    }else {
+                    } else {
                         tvCommission.setVisibility(View.GONE);
                     }
                 }
@@ -246,7 +248,7 @@ public class DemandReleaseActivity extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.iv_bar_back, R.id.tv_release_type, R.id.cb_lease, R.id.cb_sell, R.id.tv_time_end, R.id.tv_release,R.id.tv_demand_num,R.id.tv_supply_num,R.id.tv_authentication})
+    @OnClick({R.id.iv_bar_back, R.id.tv_release_type, R.id.cb_lease, R.id.cb_sell, R.id.tv_time_end, R.id.tv_release, R.id.tv_demand_num, R.id.tv_supply_num, R.id.tv_authentication})
     void onClick(View view) {
         Bundle bundle = new Bundle();
         switch (view.getId()) {
@@ -269,44 +271,44 @@ public class DemandReleaseActivity extends BaseActivity {
                 showTimeDialog();
                 break;
             case R.id.tv_release:
-                switch (demandReleaseVm.releaseType){
+                switch (demandReleaseVm.releaseType) {
                     case DemandReleaseVm.RELEASE_TYPE_RELATIONSHIP:
-                        if (TextUtils.isEmpty(edtTitle.getText())){
+                        if (TextUtils.isEmpty(edtTitle.getText())) {
                             ToastUtils.showShort(getString(R.string.hint_title));
                             return;
                         }
-                        if (TextUtils.isEmpty(edtDes.getText())){
+                        if (TextUtils.isEmpty(edtDes.getText())) {
                             ToastUtils.showShort(getString(R.string.hint_des));
                             return;
                         }
-                        if (TextUtils.isEmpty(edtCommission.getText())){
+                        if (TextUtils.isEmpty(edtCommission.getText())) {
                             ToastUtils.showShort(getString(R.string.hint_commission));
                             return;
                         }
-                        if (Double.valueOf(edtCommission.getText().toString())<10){
+                        if (Double.valueOf(edtCommission.getText().toString()) < 10) {
                             ToastUtils.showShort("佣金不能低于10元");
                             return;
                         }
                         demandReleaseVm.releaseRelationShip(edtTitle.getText().toString(), edtDes.getText().toString(), edtCommission.getText().toString());
                         break;
                     case DemandReleaseVm.RELEASE_TYPE_SUBSTANCE:
-                        if (TextUtils.isEmpty(edtMaterialName.getText())){
+                        if (TextUtils.isEmpty(edtMaterialName.getText())) {
                             ToastUtils.showShort(getString(R.string.hint_material_name));
                             return;
                         }
-                        if (TextUtils.isEmpty(edtDemandNum.getText())){
+                        if (TextUtils.isEmpty(edtDemandNum.getText())) {
                             ToastUtils.showShort(getString(R.string.hint_demand_num));
                             return;
                         }
-                        if (demand_num==0){
+                        if (demand_num == 0) {
                             ToastUtils.showShort(getString(R.string.no_unit));
                             return;
                         }
-                        if (TextUtils.isEmpty(edtDemandProject.getText())){
+                        if (TextUtils.isEmpty(edtDemandProject.getText())) {
                             ToastUtils.showShort(getString(R.string.hint_demand_project));
                             return;
                         }
-                        if (TextUtils.isEmpty(edtProjectAddress.getText())){
+                        if (TextUtils.isEmpty(edtProjectAddress.getText())) {
                             ToastUtils.showShort(getString(R.string.hint_project_address));
                             return;
                         }
@@ -314,31 +316,31 @@ public class DemandReleaseActivity extends BaseActivity {
 //                            ToastUtils.showShort(getString(R.string.hint_price_accept));
 //                            return;
 //                        }
-                        if (TextUtils.isEmpty(edtOwner.getText())){
+                        if (TextUtils.isEmpty(edtOwner.getText())) {
                             ToastUtils.showShort(getString(R.string.hint_owner));
                             return;
                         }
-                        if (TextUtils.isEmpty(edtContactsInfo.getText())){
+                        if (TextUtils.isEmpty(edtContactsInfo.getText())) {
                             ToastUtils.showShort(getString(R.string.hint_contact));
                             return;
                         }
                         demandReleaseVm.releaseSubstance(edtMaterialName.getText().toString(), edtDemandNum.getText().toString(), edtDemandProject.getText().toString(),
-                                edtProjectAddress.getText().toString(), edtPriceAccept.getText().toString(), edtContactsInfo.getText().toString(), edtOwner.getText().toString(),demand_num);
+                                edtProjectAddress.getText().toString(), edtPriceAccept.getText().toString(), edtContactsInfo.getText().toString(), edtOwner.getText().toString(), demand_num);
                         break;
                     case DemandReleaseVm.RELEASE_TYPE_BUYER:
-                        if (TextUtils.isEmpty(edtMaterialName.getText())){
+                        if (TextUtils.isEmpty(edtMaterialName.getText())) {
                             ToastUtils.showShort(getString(R.string.hint_material_name));
                             return;
                         }
-                        if (TextUtils.isEmpty(edtSupplyNum.getText())){
+                        if (TextUtils.isEmpty(edtSupplyNum.getText())) {
                             ToastUtils.showShort(getString(R.string.hint_supply_num));
                             return;
                         }
-                        if (supply_num==0){
+                        if (supply_num == 0) {
                             ToastUtils.showShort(getString(R.string.no_unit));
                             return;
                         }
-                        if (TextUtils.isEmpty(edtSupplyAddress.getText())){
+                        if (TextUtils.isEmpty(edtSupplyAddress.getText())) {
                             ToastUtils.showShort(getString(R.string.hint_supply_address));
                             return;
                         }
@@ -346,28 +348,28 @@ public class DemandReleaseActivity extends BaseActivity {
 //                            ToastUtils.showShort(getString(R.string.hint_price_supply));
 //                            return;
 //                        }
-                        if (TextUtils.isEmpty(edtOwner.getText())){
+                        if (TextUtils.isEmpty(edtOwner.getText())) {
                             ToastUtils.showShort(getString(R.string.hint_owner));
                             return;
                         }
-                        if (TextUtils.isEmpty(edtContactsInfo.getText())){
+                        if (TextUtils.isEmpty(edtContactsInfo.getText())) {
                             ToastUtils.showShort(getString(R.string.hint_contact));
                             return;
                         }
                         demandReleaseVm.releaseBuyer(edtMaterialName.getText().toString(), edtSupplyNum.getText().toString(), edtSupplyAddress.getText().toString(),
-                                edtSupplyPrice.getText().toString(), edtContactsInfo.getText().toString(), edtOwner.getText().toString(),supply_num);
+                                edtSupplyPrice.getText().toString(), edtContactsInfo.getText().toString(), edtOwner.getText().toString(), supply_num);
                         break;
                 }
                 break;
             case R.id.tv_demand_num:
-                new UnitDialog(this).setSelected(0).setSingleCallBack((item, position) -> {
-                    demand_num=position+1;
+                new UnitDialog(this, 2f, 5f).setSelected(0).setSingleCallBack((item, position) -> {
+                    demand_num = position + 1;
                     tvDemandNum.setText(item);
                 }).showDialog();
                 break;
             case R.id.tv_supply_num:
-                new UnitDialog(this).setSelected(0).setSingleCallBack((item, position) -> {
-                    supply_num=position+1;
+                new UnitDialog(this, 2f, 5f).setSelected(0).setSingleCallBack((item, position) -> {
+                    supply_num = position + 1;
                     tvSupplyNum.setText(item);
                 }).showDialog();
                 break;
@@ -383,7 +385,7 @@ public class DemandReleaseActivity extends BaseActivity {
      * 时间选择器
      */
     @SuppressLint("SimpleDateFormat")
-    private void showTimeDialog(){
+    private void showTimeDialog() {
 
         SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
         Calendar c = Calendar.getInstance();
@@ -400,17 +402,17 @@ public class DemandReleaseActivity extends BaseActivity {
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(dd);
                 calendar.add(Calendar.DAY_OF_MONTH, 1);//加一天
-                String times=df.format(calendar.getTime());
+                String times = df.format(calendar.getTime());
                 demandReleaseVm.endTime = time;
-                if (time.equals(demandReleaseVm.startTime)){
+                if (time.equals(demandReleaseVm.startTime)) {
                     tvTimeEnd.setText(times);
-                }else {
+                } else {
                     tvTimeEnd.setText(time);
                 }
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-        }, "yyyy-MM-dd", f.format(tomorrow) , "2100-12-31");
+        }, "yyyy-MM-dd", f.format(tomorrow), "2100-12-31");
         customDatePicker.showSpecificTime(false);
         customDatePicker.show(f.format(c.getTime()));
     }
@@ -432,9 +434,9 @@ public class DemandReleaseActivity extends BaseActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        TextView tv_find_relationship=dialog_view.findViewById(R.id.tv_find_relationship);
-        TextView tv_find_substance=dialog_view.findViewById(R.id.tv_find_substance);
-        TextView tv_find_buyer=dialog_view.findViewById(R.id.tv_find_buyer);
+        TextView tv_find_relationship = dialog_view.findViewById(R.id.tv_find_relationship);
+        TextView tv_find_substance = dialog_view.findViewById(R.id.tv_find_substance);
+        TextView tv_find_buyer = dialog_view.findViewById(R.id.tv_find_buyer);
         tv_find_relationship.setOnClickListener(view -> {
             tvReleaseType.setText(getString(R.string.find_relationship));
             demandReleaseVm.releaseType = DemandReleaseVm.RELEASE_TYPE_RELATIONSHIP;
@@ -496,13 +498,13 @@ public class DemandReleaseActivity extends BaseActivity {
 
     //身份认证滚动文字显示
     private void getAuthenticationData() {
-        if (SPUtils.getInstance().getInt(SpConfig.IS_VERIFIED)!=2) {
+        if (SPUtils.getInstance().getInt(SpConfig.IS_VERIFIED) != 2) {
             llAuthentication.setVisibility(View.VISIBLE);
-            String str="已通过实名认证发布信息审核时间为<font color=\"#6a5ff8\">"+"2小时内"+"</font>，" +
-                    "未实名认证审核时间则为<font color=\"#6a5ff8\">"+"24小时内"+"</font>，建议您先实名认证再发布，审核会更快哦~";
+            String str = "已通过实名认证发布信息审核时间为<font color=\"#6a5ff8\">" + "2小时内" + "</font>，" +
+                    "未实名认证审核时间则为<font color=\"#6a5ff8\">" + "24小时内" + "</font>，建议您先实名认证再发布，审核会更快哦~";
             tvMarquee.setText(Html.fromHtml(str));
             tvMarquee.setSelected(true);
-        }else {
+        } else {
             llAuthentication.setVisibility(View.GONE);
         }
     }

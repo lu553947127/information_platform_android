@@ -9,12 +9,12 @@
         android:layout_marginTop="20dp"
         android:layout_marginLeft="26dp"
         android:textColor="@color/colorTv"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:text="@string/unit_select"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="105dp"
+        android:layout_height="135dp"
         android:gravity="center_horizontal">
 
         <com.shuangduan.zcy.weight.datepicker.DatePickerView
