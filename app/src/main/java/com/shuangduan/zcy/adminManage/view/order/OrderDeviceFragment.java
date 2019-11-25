@@ -322,6 +322,7 @@ public class OrderDeviceFragment extends BaseLazyFragment implements BaseQuickAd
                 ActivityUtils.startActivity(bundle, SelectTypeActivity.class);
                 break;
             case R.id.tv_order_phases://选择订单进度
+                orderVm.phasesId = 0;
                 if (!orderPhasesList.get(2).getName().equals("报价投标")) {
                     orderPhasesList.add(2, new OrderSearchBean.OrderPhasesBean(4, "报价投标"));
                 }
@@ -493,6 +494,9 @@ public class OrderDeviceFragment extends BaseLazyFragment implements BaseQuickAd
                 if (orderVm.phases != 0) {
                     orderPhasesAdapter.setIsSelect(orderVm.phases);
                 }
+                if (orderVm.phasesId != 0) {
+                    orderPhasesAdapter.setIsSelect(orderVm.phasesId);
+                }
                 break;
             case "order_type":
                 TextView tv_order_inside = btn_dialog.findViewById(R.id.tv_title);
@@ -602,6 +606,7 @@ public class OrderDeviceFragment extends BaseLazyFragment implements BaseQuickAd
                     orderPhasesList.remove(2);
                 }
                 LogUtils.i(orderPhasesList);
+                orderVm.phasesId = orderItem.phasesId;
                 getBottomSheetDialog(R.layout.dialog_is_grounding, "order_phases", 1);
                 break;
         }

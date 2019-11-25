@@ -46,6 +46,7 @@ public class OrderDeviceVm extends BaseViewModel {
     public int categoryId;
     //订单进度
     public int phases;
+    public int phasesId;
 
     //修改订单进度ID
     public int updatePhasesId;

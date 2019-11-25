@@ -44,9 +44,9 @@ android {
         variant.outputs.all {
             def fileName
             if (variant.buildType.name == 'release') {
-                fileName = "app.release.1.0.3.apk"
+                fileName = "app.release.1.0.4.apk"
             } else if (variant.buildType.name == 'debug') {
-                fileName = "zcy.debug.1.0.3.apk"
+                fileName = "zcy.debug.1.0.4.apk"
             }
             outputFileName = fileName
         }
@@ -58,8 +58,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
-
-
         debug {
             shrinkResources false
             minifyEnabled false
@@ -82,7 +80,6 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-
     //noinspection GradleDependency
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
@@ -92,20 +89,16 @@ dependencies {
 
     /** 网络架包 **/
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-
     //noinspection GradleDependency
     implementation 'androidx.recyclerview:recyclerview:1.1.0-beta01'
     implementation 'com.android.support:design:28.0.0'
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
-
     //noinspection GradleDependency
     implementation 'io.reactivex.rxjava2:rxjava:2.1.12'
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
-
     //Gson解析
-
     //noinspection GradleDependency
     implementation 'com.google.code.gson:gson:2.7'
 
@@ -153,7 +146,6 @@ dependencies {
     implementation 'com.youth.banner:banner:1.4.10'
 
     //高德地图
-
     //noinspection GradleDependency
     implementation 'com.amap.api:3dmap:latest.integration'
     implementation 'com.amap.api:location:latest.integration'
@@ -166,7 +158,6 @@ dependencies {
     implementation(name: 'alipaySdk-15.6.5-20190718211159-noUtdid', ext: 'aar')
 
     //微信支付
-
     //noinspection GradleDynamicVersion
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
 

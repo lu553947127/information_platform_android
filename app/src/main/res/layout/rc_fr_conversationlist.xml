@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@id/rc_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -36,7 +36,8 @@
     <io.rong.imkit.widget.RongSwipeRefreshLayout
         android:id="@+id/rc_refresh"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:srlAccentColor="@color/colorPrimary">
 
         <ListView
             android:id="@id/rc_list"
@@ -74,10 +75,5 @@
             android:textColor="@color/text2"
             android:textSize="@dimen/dimenTvStates"/>
     </LinearLayout>
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_below="@+id/rc_refresh"/>
 
 </RelativeLayout>

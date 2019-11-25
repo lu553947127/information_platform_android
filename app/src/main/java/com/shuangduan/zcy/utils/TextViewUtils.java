@@ -1,16 +1,10 @@
 package com.shuangduan.zcy.utils;
 
-import android.app.Activity;
-import android.content.Context;
-import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.text.Spannable;
 import android.text.SpannableString;
-import android.text.TextPaint;
 import android.text.style.ImageSpan;
 import android.widget.TextView;
-
-import com.huawei.android.hms.agent.common.UIUtils;
 
 /**
  * @author xuyu

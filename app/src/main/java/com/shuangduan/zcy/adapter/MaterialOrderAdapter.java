@@ -1,19 +1,14 @@
 package com.shuangduan.zcy.adapter;
 
-import android.text.Layout;
-import android.text.StaticLayout;
 import android.text.TextPaint;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.google.gson.JsonObject;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.model.bean.MaterialOrderBean;
 import com.shuangduan.zcy.utils.DensityUtil;
@@ -46,17 +41,14 @@ public class MaterialOrderAdapter extends BaseQuickAdapter<MaterialOrderBean.Lis
         if (item.inside == 3) {
             lp.rightMargin = DensityUtil.dp2px(10);
 
-            int maxNumber = getLineMaxNumber(item.materialName, tvTitle.getPaint(), tvTitle.getWidth());
-            LogUtils.e(maxNumber);
-            if (item.materialName.length() > maxNumber) {
-                TextViewUtils.addDrawableInEnd(tvTitle, mContext.getResources().
-                        getDrawable(R.drawable.icon_mine_default_material), item.materialName.substring(0, maxNumber - 4) + "...");
+            if (item.materialName.length() > 9) {
+                TextViewUtils.addDrawableInEnd(tvTitle, mContext.getResources().getDrawable(R.drawable.icon_mine_default_material), item.materialName.substring(0,9) + "...");
             } else {
                 TextViewUtils.addDrawableInEnd(tvTitle, mContext.getResources().getDrawable(R.drawable.icon_mine_default_material), item.materialName);
             }
             tvTitle.setLayoutParams(lp);
         } else {
-            lp.rightMargin = DensityUtil.dp2px(50);
+            lp.rightMargin = DensityUtil.dp2px(10);
             tvTitle.setText(item.materialName);
             tvTitle.setLayoutParams(lp);
         }
@@ -88,7 +80,6 @@ public class MaterialOrderAdapter extends BaseQuickAdapter<MaterialOrderBean.Lis
             helper.setText(R.id.tv_state, item.phases);
         }
     }
-
 
     /**
      * 获取textview一行最大能显示几个字(需要在TextView测量完成之后)

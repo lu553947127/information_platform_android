@@ -221,7 +221,7 @@ public class CircleFragment extends BaseFragment {
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 RongIM.getInstance().addUnReadMessageCountChangedObserver(i -> {
                     LogUtils.e(i);
-                    // i 是未读数量luho
+                    // i 是未读数量
                     imAddVm.count=i;
                     LogUtils.e(imAddVm.count);
                     imAddVm.applyCount();
