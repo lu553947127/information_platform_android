@@ -20,7 +20,7 @@
             android:layout_gravity="center_vertical"
             android:textColor="@color/colorTv"
             android:textSize="14sp"
-            android:text="@string/project_type"/>
+            android:text="@string/release_type"/>
 
         <TextView
             android:id="@+id/tv_release_type"

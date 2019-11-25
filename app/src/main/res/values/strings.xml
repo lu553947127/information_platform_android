@@ -287,6 +287,7 @@
 
     <string name="release_msg">发布信息</string>
     <string name="release">发布</string>
+    <string name="release_type">发布类型</string>
     <string name="principle">负责人</string>
     <string name="project_content">项目概况</string>
     <string name="project_address">项目地址</string>

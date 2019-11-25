@@ -44,9 +44,7 @@ public class RecruitCollectFragment extends BaseLazyFragment implements EmptyVie
     private MineCollectionVm mineCollectionVm;
 
     public static RecruitCollectFragment newInstance() {
-
         Bundle args = new Bundle();
-
         RecruitCollectFragment fragment = new RecruitCollectFragment();
         fragment.setArguments(args);
         return fragment;
@@ -80,7 +78,6 @@ public class RecruitCollectFragment extends BaseLazyFragment implements EmptyVie
 
         mineCollectionVm = ViewModelProviders.of(this).get(MineCollectionVm.class);
         mineCollectionVm.recruitCollectLiveData.observe(this, recruitBean -> {
-            isInited = true;
             if (recruitBean.getPage() == 1) {
                 recruitAdapter.setNewData(recruitBean.getList());
                 recruitAdapter.setEmptyView(emptyView);

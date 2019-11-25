@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="format_admin_ton">%1$d吨</string>
-    <string name="format_admin_ton_other">%1$s/吨</string>
     <string name="format_admin_shelf_time">%1$s至%2$s%3$s</string>
     <string name="format_admin_category">材料类别：%1$s</string>
     <string name="format_admin_device_category">设备类别：%1$s</string>

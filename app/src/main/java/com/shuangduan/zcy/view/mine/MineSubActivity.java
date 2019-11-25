@@ -81,7 +81,7 @@ public class MineSubActivity extends BaseActivity {
         mineSubVm = ViewModelProviders.of(this).get(MineSubVm.class);
 
         rv.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new SubscribeAdapter(R.layout.item_project_item, null);
+        adapter = new SubscribeAdapter(R.layout.adapter_subscribe, null);
         adapter.setEmptyView(R.layout.layout_loading, rv);
         rv.setAdapter(adapter);
 

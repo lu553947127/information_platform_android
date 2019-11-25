@@ -133,8 +133,8 @@ public class TurnoverDetailActivity extends BaseActivity {
         turnoverDetailVm.turnoverDetailLiveData.observe(this, turnover -> {
             tvTitle.setText(turnover.materialIdName);
             tvCategory.setText(turnover.categoryName);
-            tvStockNum.setText(getString(R.string.format_admin_ton, turnover.stock));
-            tvGuidePrice.setText(getString(R.string.format_admin_ton_other, turnover.guidancePrice));
+            tvStockNum.setText(turnover.stock+turnover.unitName);
+            tvGuidePrice.setText(turnover.guidancePrice+"/"+turnover.unitName);
             tvSpec.setText(turnover.spec);
             tvUseStatus.setVisibility(StringUtils.isTrimEmpty(turnover.useStatusName) ? View.GONE : View.VISIBLE);
             tvUseStatus.setText(turnover.useStatusName);

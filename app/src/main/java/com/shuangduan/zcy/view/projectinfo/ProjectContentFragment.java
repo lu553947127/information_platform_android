@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.amap.api.maps.model.LatLng;
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -147,7 +148,7 @@ public class ProjectContentFragment extends BaseFragment implements BaseQuickAda
                 if (!StringUtils.isEmpty(introStr)) {
                     tvDetail.setHighlightColor(getResources().getColor(R.color.color_6a5ff8));
                     SpannableString detailInfo = new SpannableString(Html.fromHtml(introStr) + " 查看详情");
-                    detailInfo.setSpan(new Clickable(v1 -> addPayDialog()), introStr.length(), detailInfo.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    detailInfo.setSpan(new Clickable(v1 -> addPayDialog()), Html.fromHtml(introStr).length(), detailInfo.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                     tvDetail.setText(detailInfo);
                     tvDetail.setMovementMethod(LinkMovementMethod.getInstance());
                 }

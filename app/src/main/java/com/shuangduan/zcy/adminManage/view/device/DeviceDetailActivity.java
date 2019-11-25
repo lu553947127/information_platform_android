@@ -139,8 +139,8 @@ public class DeviceDetailActivity extends BaseActivity {
         deviceVm.deviceDetailLiveData.observe(this,deviceDetailBean -> {
             tvTitle.setText(deviceDetailBean.getMaterial_id_name());
             tvCategory.setText(deviceDetailBean.getCategory_name());
-            tvStockNum.setText(getString(R.string.format_admin_ton, deviceDetailBean.getStock()));
-            tvGuidePrice.setText(getString(R.string.format_admin_ton_other, deviceDetailBean.getGuidance_price()));
+            tvStockNum.setText(deviceDetailBean.getStock()+deviceDetailBean.getUnit_name());
+            tvGuidePrice.setText(deviceDetailBean.getGuidance_price()+"/"+deviceDetailBean.getUnit_name());
             tvSpec.setText(deviceDetailBean.getSpec());
             tvUseStatus.setVisibility(StringUtils.isTrimEmpty(deviceDetailBean.getUse_status_name()) ? View.GONE : View.VISIBLE);
             tvUseStatus.setText(deviceDetailBean.getUse_status_name());

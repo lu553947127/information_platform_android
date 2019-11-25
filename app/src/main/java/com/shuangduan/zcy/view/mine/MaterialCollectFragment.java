@@ -45,7 +45,6 @@ public class MaterialCollectFragment extends BaseLazyFragment implements EmptyVi
     private int type;
 
     public static MaterialCollectFragment newInstance(int type) {
-
         Bundle args = new Bundle();
         args.putInt(CustomConfig.MATERIALS_TYPE, type);
         MaterialCollectFragment fragment = new MaterialCollectFragment();

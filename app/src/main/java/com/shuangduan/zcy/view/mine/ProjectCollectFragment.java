@@ -44,9 +44,7 @@ public class ProjectCollectFragment extends BaseFragment implements EmptyViewFac
     private MineCollectionVm mineCollectionVm;
 
     public static ProjectCollectFragment newInstance() {
-
         Bundle args = new Bundle();
-
         ProjectCollectFragment fragment = new ProjectCollectFragment();
         fragment.setArguments(args);
         return fragment;

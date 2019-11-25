@@ -195,19 +195,13 @@ public class OrderDeviceFragment extends BaseLazyFragment implements BaseQuickAd
         orderVm.turnoverCompanyData.observe(this, turnoverCompanyBeans -> {
             companyList = turnoverCompanyBeans;
             turnoverCompanyAdapter.setNewData(companyList);
-            if (orderVm.supplier_id == 0) {
-                orderVm.supplier_id = companyList.get(0).getSupplier_id();
-                orderVm.supplier_name = companyList.get(0).getCompany();
-                turnoverCompanyAdapter.setIsSelect(orderVm.supplier_id);
-                orderVm.getUnitInfo();
-            }
         });
 
         //获取项目列表数据
         orderVm.turnoverProject.observe(this, turnoverNameBeans -> {
             projectList = turnoverNameBeans;
             if (manage_status == 3 || manage_status == 5)
-                projectList.add(0, new TurnoverNameBean(1000000, "全部"));
+                projectList.add(0, new TurnoverNameBean(0, "全部"));
             turnoverProjectAdapter.setNewData(projectList);
         });
 
@@ -425,7 +419,7 @@ public class OrderDeviceFragment extends BaseLazyFragment implements BaseQuickAd
                     turnoverProjectAdapter.setIsSelect(projectList.get(position).id);
                     btn_dialog.dismiss();
                     getDrawableRightView(tvProject, R.drawable.icon_pulldown_arrow, R.color.color_666666);
-                    if (orderVm.unit_id != 1000000) {
+                    if (orderVm.unit_id != 0) {
                         getAddTopScreenView(tvOne, projectList.get(position).name);
                     } else {
                         getAddTopScreenView(tvOne, orderVm.supplier_name);

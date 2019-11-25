@@ -231,18 +231,12 @@ public class TurnoverMaterialFragment extends BaseLazyFragment {
         turnoverVm.turnoverCompanyData.observe(this,turnoverCompanyBeans -> {
             companyList=turnoverCompanyBeans;
             turnoverCompanyAdapter.setNewData(companyList);
-            if (turnoverVm.supplier_id==0){
-                turnoverVm.supplier_id=companyList.get(0).getSupplier_id();
-                turnoverVm.supplier_name = companyList.get(0).getCompany();
-                turnoverCompanyAdapter.setIsSelect(turnoverVm.supplier_id);
-                turnoverVm.getUnitInfo();
-            }
         });
 
         //获取项目列表数据
         turnoverVm.turnoverProject.observe(this,turnoverNameBeans -> {
             projectList = turnoverNameBeans;
-            if (manage_status==3||manage_status==5) projectList.add(0,new TurnoverNameBean(1000000,"全部"));
+            if (manage_status==3||manage_status==5) projectList.add(0,new TurnoverNameBean(0,"全部"));
             turnoverProjectAdapter.setNewData(projectList);
         });
 
@@ -260,16 +254,10 @@ public class TurnoverMaterialFragment extends BaseLazyFragment {
         areaVm.provinceLiveData.observe(this, provinceBeans -> {
             provinceList = provinceBeans;
             provinceAdapter.setNewData(provinceList);
-            if (areaVm.id==0){
-                areaVm.id=provinceList.get(0).getId();
-                areaVm.cityResult = provinceList.get(0).getName();
-                provinceAdapter.setIsSelect(areaVm.id);
-                areaVm.getCity();
-            }
         });
         areaVm.cityLiveData.observe(this, cityBeans -> {
             cityList = cityBeans;
-//            cityList.add(0,new CityBean(1000000,"全部"));
+            cityList.add(0,new CityBean(0,"全部"));
             cityAdapter.setNewData(cityList);
         });
 
@@ -486,7 +474,7 @@ public class TurnoverMaterialFragment extends BaseLazyFragment {
                     turnoverProjectAdapter.setIsSelect(projectList.get(position).id);
                     btn_dialog.dismiss();
                     getDrawableRightView(tvCompany,R.drawable.icon_pulldown_arrow,R.color.color_666666);
-                    if (turnoverVm.unit_id!=1000000){
+                    if (turnoverVm.unit_id!=0){
                         getAddTopScreenView(tvCompanyChildren,projectList.get(position).name);
                     }else {
                         getAddTopScreenView(tvCompanyChildren,turnoverVm.supplier_name);
@@ -580,22 +568,22 @@ public class TurnoverMaterialFragment extends BaseLazyFragment {
                 });
                 cityAdapter.setOnItemClickListener((adapter, view, position) -> {
                     areaVm.city_id = cityList.get(position).getId();
+                    if (cityList.get(position).getId()==0){
+                        getAddTopScreenView(tvAddress,areaVm.cityResult);
+                    }else {
+                        getAddTopScreenView(tvAddress,cityList.get(position).getName());
+                    }
                     turnoverVm.constructionList(areaVm.id,areaVm.city_id);
                     cityAdapter.setIsSelect(cityList.get(position).getId());
                     btn_dialog.dismiss();
                     getDrawableRightView(tvDepositingPlace,R.drawable.icon_pulldown_arrow,R.color.color_666666);
-                    if (areaVm.city_id!=1000000){
-                        getAddTopScreenView(tvAddress,cityList.get(position).getName());
-                    }else {
-                        getAddTopScreenView(tvAddress,areaVm.cityResult);
-                    }
                 });
                 areaVm.getProvince();
                 if (areaVm.id!=0){
                     provinceAdapter.setIsSelect(areaVm.id);
                     areaVm.getCity();
                 }
-                if (areaVm.city_id!=0){
+                if (areaVm.city_id!=0 ){
                     cityAdapter.setIsSelect(areaVm.city_id);
                 }
                 break;

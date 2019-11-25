@@ -1,91 +1,39 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:paddingLeft="15dp"
-    android:paddingTop="15dp"
-    android:paddingRight="20dp"
-    android:paddingBottom="15dp">
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:background="@drawable/selector_bg_custom"
+    android:padding="15dp">
 
     <TextView
-        android:id="@+id/tv_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/circular_background_gray3"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:layout_gravity="center_horizontal"
-        android:gravity="center"
-        android:textColor="@color/colorTvHint"
-        android:textSize="13sp" />
-
-    <RelativeLayout
+        android:id="@+id/tv_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/circular_background_white_10"
-        android:orientation="vertical"
-        android:layout_marginTop="8dp">
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textColor="@color/colorTv"
+        android:textSize="14sp"/>
 
-        <LinearLayout
-            android:id="@+id/ll_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="18dp"
-            android:layout_marginLeft="19dp">
-            <TextView
-                android:id="@+id/tv_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:maxEms="16"
-                android:textColor="@color/colorTv"
-                android:textSize="14sp" />
-            <TextView
-                android:id="@+id/tv_is_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10dp"
-                android:background="@drawable/circular_background_powder"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:textColor="@color/color_FE4931"
-                android:textSize="10sp"
-                android:text="未读"
-                android:visibility="gone"/>
-        </LinearLayout>
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_title"
+        android:layout_marginTop="4dp"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textColor="@color/color_666666"
+        android:textSize="13sp"/>
+
+    <TextView
+        android:id="@+id/tv_phases"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_content"
+        android:layout_marginTop="5dp"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textColor="@color/color_666666"
+        android:textSize="13sp"/>
 
 
-        <TextView
-            android:id="@+id/tv_content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/ll_title"
-            android:maxLines="2"
-            android:ellipsize="end"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="19dp"
-            android:layout_marginRight="19dp"
-            android:textColor="@color/color_666666"
-            android:textSize="13sp" />
-
-        <TextView
-            android:id="@+id/tv_read"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="36dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="10dp"
-            android:drawableRight="@drawable/icon_push_right"
-            android:drawablePadding="5dp"
-            android:textSize="13sp"
-            android:textColor="@color/colorTvHint"
-            android:text="前往查看"/>
-
-    </RelativeLayout>
-
-</LinearLayout>
+</RelativeLayout>
