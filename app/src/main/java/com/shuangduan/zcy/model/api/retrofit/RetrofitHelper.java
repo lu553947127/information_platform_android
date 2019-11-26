@@ -14,13 +14,16 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * <pre>
- *     author : 徐玉
- *     e-mail : ningwenqiang@lanhuiplay.com
- *     time   : 2018/04/04
- *     desc   : retrofit帮助类
- *     version: 1.0
- * </pre>
+ * @ProjectName: information_platform_android
+ * @Package: com.shuangduan.zcy.model.api.retrofit
+ * @ClassName: RetrofitHelper
+ * @Description: OkHttpClient网络请求初始化设置
+ * @Author: 鹿鸿祥
+ * @CreateDate: 2019/10/7 11:37
+ * @UpdateUser: 鹿鸿祥
+ * @UpdateDate: 2019/10/7 11:37
+ * @UpdateRemark: 更新说明
+ * @Version: 1.0
  */
 
 public class RetrofitHelper {

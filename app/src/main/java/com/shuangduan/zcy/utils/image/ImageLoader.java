@@ -3,7 +3,6 @@ package com.shuangduan.zcy.utils.image;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.RequestManager;
@@ -53,9 +52,7 @@ public class ImageLoader {
             requestBuilder = requestBuilder.transition(DrawableTransitionOptions.withCrossFade());
         }
 
-        requestBuilder.apply(options)
-                .into(config.getImageView());
+        requestBuilder.apply(options).into(config.getImageView());
 
     }
-
 }

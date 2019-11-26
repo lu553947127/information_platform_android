@@ -6,8 +6,10 @@ import com.blankj.utilcode.util.LogUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -33,16 +35,14 @@ public class HtmlUtils {
         Pattern p = Pattern.compile("<(img|IMG)(.*?)(>|></img>|/>)");//匹配字符串中的img标签
         Matcher matcher = p.matcher(content);
         boolean hasPic = matcher.find();
-
-        if(hasPic == true)//判断是否含有图片
-        {
-            while(hasPic) //如果含有图片，那么持续进行查找，直到匹配不到
-            {
+        //判断是否含有图片
+        if(hasPic) {
+            //如果含有图片，那么持续进行查找，直到匹配不到
+            while(hasPic) {
                 String group = matcher.group(2);//获取第二个分组的内容，也就是 (.*?)匹配到的
                 Pattern srcText = Pattern.compile("(src|SRC)=(\"|\')(.*?)(\"|\')");//匹配图片的地址
-                Matcher matcher2 = srcText.matcher(group);
-                if( matcher2.find() )
-                {
+                Matcher matcher2 = srcText.matcher(Objects.requireNonNull(group));
+                if( matcher2.find() ) {
                     srcList.add( matcher2.group(3) );//把获取到的图片地址添加到列表中
                 }
                 hasPic = matcher.find();//判断是否还有img标签
@@ -52,7 +52,7 @@ public class HtmlUtils {
     }
 
     /**
-     * 读取.json文件
+     * 读取省市区.json文件
      * @param context
      * @return
      */
@@ -62,7 +62,7 @@ public class HtmlUtils {
             int lenght = is.available();
             byte[] buffer = new byte[lenght];
             is.read(buffer);
-            String result = new String(buffer, "utf8");
+            String result = new String(buffer, StandardCharsets.UTF_8);
             LogUtils.i(result);
             return result;
         } catch (IOException e) {
@@ -70,5 +70,4 @@ public class HtmlUtils {
             return "";
         }
     }
-
 }

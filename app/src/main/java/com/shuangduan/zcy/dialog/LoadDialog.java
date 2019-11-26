@@ -1,11 +1,8 @@
 package com.shuangduan.zcy.dialog;
 
 import android.app.Activity;
-
 import androidx.annotation.NonNull;
-
 import com.blankj.utilcode.util.ConvertUtils;
-import com.blankj.utilcode.util.LogUtils;
 import com.shuangduan.zcy.R;
 
 /**
@@ -47,7 +44,6 @@ public class LoadDialog extends BaseDialog{
     @Override
     public BaseDialog showDialog() {
         showNum++;
-//        LogUtils.i("cishu",showNum);
         if (showNum > 1){
             return this;
         }else {
@@ -60,7 +56,6 @@ public class LoadDialog extends BaseDialog{
         if (showNum > 0){
             showNum--;
         }
-//        LogUtils.i("cishu",showNum);
         if (showNum > 0){
             return this;
         }else {

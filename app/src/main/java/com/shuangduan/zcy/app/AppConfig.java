@@ -83,7 +83,6 @@ public class AppConfig {
         initUtils(context);
         initLoadSir();
         initWX(context);
-//        initBugly(context);
         if (BuildConfig.IS_DEBUG) {
             initCrash(context);
         }
