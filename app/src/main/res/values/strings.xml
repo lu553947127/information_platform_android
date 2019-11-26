@@ -672,14 +672,14 @@
     <string name="empty_recommend_buyer_info">暂无推荐买家</string>
     <string name="empty_buyer_info">暂无找买家数据</string>
     <string name="empty_substance_screen_info">未找到相关的物资信息\n查看全部物资信息</string>
-    <string name="empty_substance_list_info">还没有供应商发布基建物资</string>
     <string name="empty_project_income_info">您还没有信息\n收益,去发布工程信息吧</string>
     <string name="empty_dynamics_income_info">您还没有动态\n收益,去发布动态信息吧 </string>
     <string name="empty_subscribe_income_info">您还没有认购\n收益,去认购信息吧</string>
     <string name="empty_people_income_info">您还没有人脉\n收益,去拓展人脉吧</string>
     <string name="empty_recommend_friends_info">推荐好友，获取收益</string>
-    <string name="empty_material_order_info">您还没有预定过基建物资，\n前去预定物资吧</string>
 
+    <string name="empty_material_order_turnover">您当前没有周转材料订单</string>
+    <string name="empty_material_order_device">您当前没有设备物资订单</string>
 
     <string name="empty_project_subscribe_info">您的业务地区暂时没有\n相关工程信息,我们已经尽力了</string>
     <string name="empty_material_subscribe_info">您的业务地区暂时没有\n相关基建物资信息,我们已经尽力了</string>
@@ -697,8 +697,8 @@
     <string name="empty_new_friends_info">查看工程信息,获取更多好友</string>
     <string name="empty_im_group_info">查看工程信息\n可加入讨论组,快去加入吧</string>
 
-    <string name="empty_mine_materials_info">您还没有预定过周转材料\n查看全部基建物资</string>
-    <string name="empty_mine_equipment_info">您还没有预定过设备物资\n查看全部基建物资</string>
+    <string name="empty_mine_materials_info">您当前没有周转材料</string>
+    <string name="empty_mine_equipment_info">您当前没有设备物资</string>
 
 
     <string name="hint_tel">请输入正确的联系方式</string>

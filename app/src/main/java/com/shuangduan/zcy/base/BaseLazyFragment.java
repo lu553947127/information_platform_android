@@ -165,4 +165,10 @@ public abstract class BaseLazyFragment extends Fragment implements IView {
         View view = activity.emptyViewFactory.createEmptyView(iconRes, strRes, btnStrRes, callBack);
         return view;
     }
+
+    public View createEmptyView(int iconRes, int strRes, int btnStrRes, int background, EmptyViewFactory.EmptyViewCallBack callBack) {
+        BaseActivity activity = (BaseActivity) getActivity();
+        View view = activity.emptyViewFactory.createEmptyView(iconRes, strRes, btnStrRes,background, callBack);
+        return view;
+    }
 }

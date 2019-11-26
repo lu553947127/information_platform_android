@@ -137,6 +137,8 @@ public class DeviceManagementFragment extends BaseLazyFragment {
         tvBarTitle.setText(getString(R.string.device_management));
         tvName.setText("设备名称");
 
+        View emptyView = createEmptyView(R.drawable.icon_empty_project, R.string.empty_mine_equipment_info, 0,R.color.colorBgDark, null);
+
         manage_status = SPUtils.getInstance().getInt(CustomConfig.MANAGE_STATUS, 0);
         getAdminEntrance(manage_status);
 
@@ -150,7 +152,7 @@ public class DeviceManagementFragment extends BaseLazyFragment {
         deviceVm.deviceLiveData.observe(this,deviceBean -> {
             if (deviceBean.getPage() == 1) {
                 deviceAdapter.setNewData(deviceBean.getList());
-                deviceAdapter.setEmptyView(R.layout.layout_empty_admin, recyclerView);
+                deviceAdapter.setEmptyView(emptyView);
             } else {
                 deviceAdapter.addData(deviceAdapter.getData().size(), deviceBean.getList());
             }

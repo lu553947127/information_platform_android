@@ -161,6 +161,12 @@
                     android:textColor="@color/color_666666"
                     android:textSize="14sp"/>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_gravity="bottom"
+                    android:background="@color/colorDivider"/>
+
             </FrameLayout>
 
             <FrameLayout
@@ -238,10 +244,9 @@
             <FrameLayout
                 android:id="@+id/fl_business_area"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:background="@drawable/selector_bg_custom"
-                android:paddingLeft="14dp"
-                android:paddingRight="14dp">
+                android:padding="14dp">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
@@ -259,17 +264,22 @@
                     android:gravity="center_vertical"
                     android:layout_marginLeft="87dp"
                     android:background="@null"
-                    android:singleLine="true"
-                    android:ellipsize="end"
+                    android:maxEms="18"
                     android:textColor="@color/color_666666"
                     android:textSize="14sp"/>
 
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorFFF"
+                android:paddingLeft="14dp"
+                android:paddingRight="14dp">
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_gravity="bottom"
                     android:background="@color/colorDivider"/>
-
             </FrameLayout>
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -300,6 +310,7 @@
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="10dp"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -378,6 +389,7 @@
                 android:scaleType="centerCrop"
                 android:layout_marginBottom="20dp"/>
         </LinearLayout>
+
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="50dp" />

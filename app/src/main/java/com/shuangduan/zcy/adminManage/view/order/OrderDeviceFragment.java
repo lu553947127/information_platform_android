@@ -130,6 +130,9 @@ public class OrderDeviceFragment extends BaseLazyFragment implements BaseQuickAd
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
+
+        View emptyView = createEmptyView(R.drawable.icon_empty_project, R.string.empty_material_order_device, 0,R.color.colorBgDark, null);
+
         tvName.setText("设备名称");
 
         manage_status = SPUtils.getInstance().getInt(CustomConfig.MANAGE_STATUS, 0);
@@ -176,7 +179,7 @@ public class OrderDeviceFragment extends BaseLazyFragment implements BaseQuickAd
         orderVm.orderListLiveData.observe(this, item -> {
             if (item.page == 1) {
                 adminOrderListAdapter.setNewData(item.list);
-                adminOrderListAdapter.setEmptyView(R.layout.layout_empty_admin, rv);
+                adminOrderListAdapter.setEmptyView(emptyView);
             } else {
                 adminOrderListAdapter.addData(item.list);
             }

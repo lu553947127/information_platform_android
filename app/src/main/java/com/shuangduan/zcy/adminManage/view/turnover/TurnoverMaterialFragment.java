@@ -140,6 +140,8 @@ public class TurnoverMaterialFragment extends BaseLazyFragment {
         tvBarTitle.setText(getString(R.string.turnover_material));
         tvName.setText("材料名称");
 
+        View emptyView = createEmptyView(R.drawable.icon_empty_project, R.string.empty_mine_materials_info, 0,R.color.colorBgDark, null);
+
         manage_status = SPUtils.getInstance().getInt(CustomConfig.MANAGE_STATUS, 0);
         getAdminEntrance(manage_status);
 
@@ -154,7 +156,7 @@ public class TurnoverMaterialFragment extends BaseLazyFragment {
         turnoverVm.turnoverLiveData.observe(this,turnoverBean -> {
             if (turnoverBean.getPage() == 1) {
                 turnoverAdapter.setNewData(turnoverBean.getList());
-                turnoverAdapter.setEmptyView(R.layout.layout_empty_admin, recyclerView);
+                turnoverAdapter.setEmptyView(emptyView);
             } else {
                 turnoverAdapter.addData(turnoverAdapter.getData().size(), turnoverBean.getList());
             }

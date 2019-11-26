@@ -203,7 +203,7 @@ public class WebViewUtils extends LinearLayout {
     }
 
     public void showBrowserController() {
-        mBrowserControllerView.setVisibility(View.VISIBLE);
+        mBrowserControllerView.setVisibility(View.GONE);
     }
 
     public interface RefreshInterface{
