@@ -30,10 +30,10 @@ import butterknife.BindView;
  * @author xuyu
  * @Package com.shuangduan.zcy.view.mine$
  * @class MineMaterialsFragment$
- * @class describe
+ * @class 预定订单周转材料Fragment
  * @time 2019/10/23 11:25
  * @change
- * @class 预定订单周转材料Fragment
+ * @class
  */
 public class MineMaterialsFragment extends BaseFragment implements EmptyViewFactory.EmptyViewCallBack {
 

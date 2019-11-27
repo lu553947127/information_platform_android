@@ -28,7 +28,7 @@ import butterknife.OnClick;
  * @author 徐玉 QQ:876885613
  * @name information_platform_android
  * @class name：com.shuangduan.zcy.view.mine
- * @class describe 忘记支付密码
+ * @class 忘记支付密码
  * @time 2019/8/13 18:05
  * @change
  * @chang time

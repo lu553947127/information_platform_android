@@ -44,7 +44,7 @@ import butterknife.OnClick;
  * @author 徐玉 QQ:876885613
  * @name ZICAICloudPlatform
  * @class name：com.example.zicaicloudplatform.view.activity
- * @class describe  绑定银行卡
+ * @class 绑定银行卡
  * @time 2019/7/8 14:56
  * @change
  * @chang time

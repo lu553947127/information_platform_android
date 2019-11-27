@@ -24,7 +24,7 @@ import butterknife.OnClick;
  * @author 徐玉 QQ:876885613
  * @name information_platform_android
  * @class name：com.shuangduan.zicaicloudplatform.view.activity
- * @class describe  修改密码
+ * @class 修改密码
  * @time 2019/7/10 13:49
  * @change
  * @chang time

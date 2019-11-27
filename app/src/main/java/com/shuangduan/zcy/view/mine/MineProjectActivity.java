@@ -36,7 +36,7 @@ import butterknife.OnClick;
  * @author xuyu
  * @Package com.shuangduan.zcy.view.mine$
  * @class MineProjectActivity$
- * @class describe
+ * @class 我的工程 工程信息概况详情页
  * @time 2019/10/19 17:17
  * @change
  * @class describe

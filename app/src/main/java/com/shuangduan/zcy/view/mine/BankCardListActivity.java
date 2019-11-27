@@ -30,7 +30,7 @@ import butterknife.OnClick;
  * @author 徐玉 QQ:876885613
  * @name information_platform_android
  * @class name：com.shuangduan.zcy.view.mine
- * @class describe  银行卡列表
+ * @class 银行卡列表
  * @time 2019/8/6 16:48
  * @change
  * @chang time

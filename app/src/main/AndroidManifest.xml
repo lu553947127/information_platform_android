@@ -181,10 +181,6 @@
         <activity
             android:name="com.shuangduan.zcy.view.mine.FeedbackActivity"
             android:theme="@style/BaseAppTheme" />
-        <!-- 浏览历史页-->
-        <activity
-            android:name="com.shuangduan.zcy.view.mine.ReadHistoryActivity"
-            android:theme="@style/BaseAppTheme" />
         <!-- 我的订阅-->
         <activity
             android:name="com.shuangduan.zcy.view.mine.MineSubActivity"

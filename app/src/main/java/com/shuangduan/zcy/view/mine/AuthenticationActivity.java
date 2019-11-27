@@ -39,7 +39,7 @@ import butterknife.OnClick;
  * @author 徐玉 QQ:876885613
  * @name ZICAICloudPlatform
  * @class name：com.example.zicaicloudplatform.view.activity
- * @class describe  身份认证,上传名片
+ * @class 身份认证,上传名片
  * @time 2019/7/8 13:25
  * @change
  * @chang time

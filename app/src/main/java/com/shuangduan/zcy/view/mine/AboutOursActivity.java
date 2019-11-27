@@ -29,7 +29,7 @@ import butterknife.OnClick;
  * @author 徐玉 QQ:876885613
  * @name information_platform_android
  * @class name：com.shuangduan.zicaicloudplatform.view.activity
- * @class describe  关于我们
+ * @class 关于我们
  * @time 2019/7/10 14:13
  * @change
  * @chang time

@@ -26,7 +26,7 @@ import butterknife.OnClick;
  * @author 徐玉 QQ:876885613
  * @name information_platform_android
  * @class name：com.shuangduan.zcy.view.mine
- * @class describe  我的需求
+ * @class 我的需求
  * @time 2019/8/12 16:28
  * @change
  * @chang time
