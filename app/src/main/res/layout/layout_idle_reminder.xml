@@ -66,6 +66,48 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/rl_order"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/selector_bg_custom">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_centerInParent="true">
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:scaleType="centerCrop"
+                    android:layout_gravity="center"
+                    android:src="@drawable/icon_order"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColor="@color/color_666666"
+                    android:textSize="12sp"
+                    android:text="订单提醒"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_order_number"
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:layout_marginRight="55dp"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/progressbar_red"
+                android:textColor="@color/colorBgDark"
+                android:gravity="center"
+                android:textSize="11sp"
+                android:visibility="invisible"/>
+        </RelativeLayout>
+
+
+        <RelativeLayout
             android:id="@+id/rl_unused"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

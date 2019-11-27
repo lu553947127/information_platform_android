@@ -254,7 +254,7 @@ public class RecruitDetailActivity extends BaseActivity {
             case R.id.tv_down:
                 new CustomDialog(this)
                         .setTip(recruitDetail.getEnclosure())
-                        .setOk("确定")
+                        .setOk("复制")
                         .setTitle("建议复制到电脑端打开")
                         .setCallBack(new BaseDialog.CallBack() {
                             @Override

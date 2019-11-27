@@ -82,8 +82,14 @@ public class CircleFragment extends BaseFragment {
     RelativeLayout rlIdleReminder;
     @BindView(R.id.tv_subscribe_group_number)
     TextView tvSubscribeGroupNumber;
+    @BindView(R.id.rl_unused)
+    RelativeLayout rlUnused;
     @BindView(R.id.tv_unused_number)
     TextView tvUnusedNumber;
+    @BindView(R.id.rl_order)
+    RelativeLayout rlOrder;
+    @BindView(R.id.tv_order_number)
+    TextView tvOrderNumber;
 
     private TextView tvContactsNumbers;
     private UserInfoVm userInfoVm;
@@ -136,16 +142,27 @@ public class CircleFragment extends BaseFragment {
             manage_status=supplierRoleBean.getManage_status();
             switch (manage_status){
                 case 0://普通用户
-                case 1://普通供应商
                     rlSubscribeChildren.setVisibility(View.VISIBLE);
                     rlIdleReminder.setVisibility(View.GONE);
                     break;
+                case 1://普通供应商
+                    rlSubscribeChildren.setVisibility(View.GONE);
+                    rlIdleReminder.setVisibility(View.VISIBLE);
+                    rlOrder.setVisibility(View.VISIBLE);
+                    rlUnused.setVisibility(View.GONE);
+                    break;
                 case 2://子公司
-                case 3://集团
                 case 4://子公司子账号
+                    rlSubscribeChildren.setVisibility(View.GONE);
+                    rlIdleReminder.setVisibility(View.VISIBLE);
+                    rlOrder.setVisibility(View.VISIBLE);
+                    rlUnused.setVisibility(View.VISIBLE);
+                    break;
+                case 3://集团
                 case 5://集团子账号
                     rlSubscribeChildren.setVisibility(View.GONE);
                     rlIdleReminder.setVisibility(View.VISIBLE);
+                    rlOrder.setVisibility(View.GONE);
                     break;
             }
         });
