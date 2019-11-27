@@ -129,7 +129,6 @@ public class HomeFragment extends BaseFragment {
     View view;
     private List<View> viewList = new ArrayList<>();
     private List<String> titleList = new ArrayList<>();
-    private HomeHeadlinesAdapter headlinesAdapter;
     private RelativeLayout relativeLayout;
     private TextView number;
     private IMAddVm imAddVm;
@@ -189,20 +188,16 @@ public class HomeFragment extends BaseFragment {
 
         //基建头条列表返回数据
         homeVm.listLiveData.observe(this, homeListBean -> {
-            if (headlinesAdapter == null) {
-                rvHeadlines.setLayoutManager(new LinearLayoutManager(mContext));
-                rvHeadlines.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
-                headlinesAdapter = new HomeHeadlinesAdapter(R.layout.item_headlines, homeListBean.getHeadlines());
-                rvHeadlines.setAdapter(headlinesAdapter);
-                headlinesAdapter.setOnItemClickListener((adapter, view, position) -> {
-                    HomeListBean.HeadlinesBean headlinesBean = headlinesAdapter.getData().get(position);
-                    Bundle bundle = new Bundle();
-                    bundle.putInt(CustomConfig.HEADLINES_ID, headlinesBean.getId());
-                    ActivityUtils.startActivity(bundle, HeadlinesDetailActivity.class);
-                });
-            } else {
-                headlinesAdapter.setNewData(homeListBean.getHeadlines());
-            }
+            rvHeadlines.setLayoutManager(new LinearLayoutManager(mContext));
+            rvHeadlines.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
+            HomeHeadlinesAdapter headlinesAdapter = new HomeHeadlinesAdapter(R.layout.item_headlines, homeListBean.getHeadlines());
+            rvHeadlines.setAdapter(headlinesAdapter);
+            headlinesAdapter.setOnItemClickListener((adapter, view, position) -> {
+                HomeListBean.HeadlinesBean headlinesBean = headlinesAdapter.getData().get(position);
+                Bundle bundle = new Bundle();
+                bundle.putInt(CustomConfig.HEADLINES_ID, headlinesBean.getId());
+                ActivityUtils.startActivity(bundle, HeadlinesDetailActivity.class);
+            });
         });
 
         //版本升级返回数据
@@ -217,23 +212,23 @@ public class HomeFragment extends BaseFragment {
         //后台管理权限
         homeVm.supplierRoleLiveData.observe(this, supplierRoleBean -> {
             //获取用户身份 0普通用户 1普通供应商 2子公司 3集团 4子账号
-            manage_status=supplierRoleBean.getManage_status();
+            manage_status = supplierRoleBean.getManage_status();
         });
 
         //设置角标数量
         imAddVm.applyCountData.observe(this, friendApplyCountBean -> {
-            int counts=0;
+            int counts = 0;
             //获取用户身份 0普通用户 1普通供应商 2子公司 3集团 4子账号
-            switch (manage_status){
+            switch (manage_status) {
                 case 0://普通用户
                 case 1://普通供应商
-                    counts=imAddVm.count+friendApplyCountBean.getCount()+friendApplyCountBean.getSubscribe();
+                    counts = imAddVm.count + friendApplyCountBean.getCount() + friendApplyCountBean.getSubscribe();
                     break;
                 case 2://子公司
                 case 3://集团
                 case 4://子公司子账号
                 case 5://集团子账号
-                    counts=imAddVm.count+friendApplyCountBean.getCount()+friendApplyCountBean.getSubscribe()+friendApplyCountBean.getMaterial();
+                    counts = imAddVm.count + friendApplyCountBean.getCount() + friendApplyCountBean.getSubscribe() + friendApplyCountBean.getMaterial();
                     break;
             }
             if (counts < 1) {
@@ -399,8 +394,16 @@ public class HomeFragment extends BaseFragment {
     private AutoScrollRecyclerView recyclerView1;
     private AutoScrollRecyclerView recyclerView2;
     private AutoScrollRecyclerView recyclerView3;
+
     @SuppressLint("InflateParams")
     private void getNeedData() {
+        if (titleList != null && titleList.size() > 0) {
+            titleList.clear();
+        }
+        if (viewList != null && viewList.size() > 0) {
+            viewList.clear();
+        }
+
         view.getBackground().mutate().setAlpha(10);
         LayoutInflater inflater = getLayoutInflater();
         View view1 = inflater.inflate(R.layout.fragment_demand_information, null, false);
@@ -572,6 +575,7 @@ public class HomeFragment extends BaseFragment {
         recyclerView2.startLine();
         recyclerView3.startLine();
     }
+
 
     @Override
     public void onStop() {
