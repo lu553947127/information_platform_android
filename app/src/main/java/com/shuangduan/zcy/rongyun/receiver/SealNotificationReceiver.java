@@ -10,11 +10,9 @@ import io.rong.push.notification.PushNotificationMessage;
 
 public class SealNotificationReceiver extends PushMessageReceiver {
 
-
     @Override
     public boolean onNotificationMessageArrived(Context context, PushType pushType, PushNotificationMessage message) {
-        LogUtils.e("推送数据", "onNotificationMessageArrived....点击了");
-//        LogUtils.e("推送数据", pushNotificationMessage.getPushContent());
+//        LogUtils.e("推送数据", "onNotificationMessageArrived....点击了");
 //        //1.获取系统通知的管理者
 //        NotificationManager nm = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
 //        //2.初始化一个notification的对象
@@ -22,7 +20,7 @@ public class SealNotificationReceiver extends PushMessageReceiver {
 //        //android 8.0 适配     需要配置 通知渠道NotificationChannel
 //        NotificationChannel b;
 //        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-//            b = new NotificationChannel("1","乱七八糟的其他信息",         NotificationManager. IMPORTANCE_MIN);
+//            b = new NotificationChannel("1","11111",         NotificationManager. IMPORTANCE_MIN);
 //            nm.createNotificationChannel(b);
 //            mBuilder.setChannelId("1");
 //        }
@@ -41,7 +39,7 @@ public class SealNotificationReceiver extends PushMessageReceiver {
 
     @Override
     public boolean onNotificationMessageClicked(Context context, PushType pushType, PushNotificationMessage message) {
-        LogUtils.json(LogUtils.E, message);
+//        LogUtils.json(LogUtils.E, message);
         return false;
     }
 
@@ -49,4 +47,6 @@ public class SealNotificationReceiver extends PushMessageReceiver {
     public void onThirdPartyPushState(PushType pushType, String action, long resultCode) {
         super.onThirdPartyPushState(pushType, action, resultCode);
     }
+
+
 }
