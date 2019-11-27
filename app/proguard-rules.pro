@@ -87,3 +87,8 @@
 -keep class com.youth.banner.** {
     *;
  }
+
+#取消后台管理混淆
+-keep class com.shuangduan.zcy.adminManage.** {
+     *;
+}
