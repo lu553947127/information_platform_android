@@ -17,7 +17,6 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.MaterialOrderAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseFragment;
-import com.shuangduan.zcy.base.BaseLazyFragment;
 import com.shuangduan.zcy.factory.EmptyViewFactory;
 import com.shuangduan.zcy.model.bean.MaterialOrderBean;
 import com.shuangduan.zcy.view.material.MaterialActivity;
@@ -68,7 +67,6 @@ public class MineMaterialsFragment extends BaseFragment implements EmptyViewFact
         emptyView = createEmptyView(R.drawable.icon_empty_project, R.string.empty_substance_screen_info, R.string.see_all, this);
 
         rv.setLayoutManager(new LinearLayoutManager(mContext));
-//        rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
         rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_h_5));
         MaterialOrderAdapter adapter = new MaterialOrderAdapter(R.layout.item_material_order, null);
         adapter.setEmptyView(R.layout.layout_loading, rv);
@@ -134,6 +132,4 @@ public class MineMaterialsFragment extends BaseFragment implements EmptyViewFact
     public void onEmptyClick() {
         ActivityUtils.startActivity(MaterialActivity.class);
     }
-
-
 }

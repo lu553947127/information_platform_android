@@ -5,19 +5,16 @@ import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.blankj.utilcode.util.BarUtils;
-import com.blankj.utilcode.util.NetworkUtils;
-import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.MaterialOrderAddressAdapter;
+import com.shuangduan.zcy.adminManage.vm.OrderTurnoverVm;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BaseDialog;
@@ -28,6 +25,10 @@ import com.shuangduan.zcy.utils.image.ImageConfig;
 import com.shuangduan.zcy.utils.image.ImageLoader;
 import com.shuangduan.zcy.vm.MaterialDetailVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
+import com.shuangduan.zcy.weight.FlowViewHorizontal;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -84,15 +85,16 @@ public class MaterialOrderDetailActivity extends BaseActivity {
     ImageView ivDefault;
     @BindView(R.id.tv_supply_method)
     TextView tvSupplyMethod;
-
     @BindView(R.id.iv_overrule)
     ImageView ivOverrule;
     @BindView(R.id.tv_lease_time)
     TextView tvLeaseTime;
-
+    @BindView(R.id.fh_progress)
+    FlowViewHorizontal flowViewHorizontal;
     private MaterialDetailVm materialVm;
-    private int orderId;
+    private OrderTurnoverVm orderVm;
     private int type;
+    private String phases;
 
     @Override
     protected int initLayoutRes() {
@@ -107,7 +109,7 @@ public class MaterialOrderDetailActivity extends BaseActivity {
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         //订单Id
-        orderId = getIntent().getIntExtra(CustomConfig.ORDER_ID, 0);
+        int orderId = getIntent().getIntExtra(CustomConfig.ORDER_ID, 0);
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(R.string.my_material);
 
@@ -162,6 +164,7 @@ public class MaterialOrderDetailActivity extends BaseActivity {
             tvOrderAddressValue.setText(item.address);
             tvIntroduceValue.setText(item.remark);
             tvState.setText(item.phases);
+            phases = item.phases;
             if (item.isClose == 0) {
                 tvCancel.setEnabled(false);
             } else {
@@ -174,6 +177,8 @@ public class MaterialOrderDetailActivity extends BaseActivity {
 
             tvLeaseTime.setVisibility(item.method == 1 ? View.VISIBLE : View.GONE);
             tvLeaseTime.setText(String.format(getResources().getString(R.string.format_material_lease_time), item.leaseStartTime, item.leaseEndTime));
+
+            orderVm.orderSearch();
         });
 
         materialVm.mutableLiveDataCancel.observe(this, item -> {
@@ -186,6 +191,24 @@ public class MaterialOrderDetailActivity extends BaseActivity {
         } else if (type == CustomConfig.EQUIPMENT) {
             materialVm.equipmentOrderDetail(orderId);
         }
+
+        orderVm = ViewModelProviders.of(this).get(OrderTurnoverVm.class);
+        //获取搜索筛选条件数据
+        orderVm.orderSearchLiveData.observe(this, orderSearchBean -> {
+            List<String> list= new ArrayList<>();
+            //获取当前名称字符串列表
+            int index = 0;
+            for(int i = 0; i < orderSearchBean.getOrder_phases().size(); i++){
+                list.add(orderSearchBean.getOrder_phases().get(i).getName());
+                //获取当前订单状态的角标值
+                if (phases.equals(orderSearchBean.getOrder_phases().get(i).getName())) {
+                    index = i;
+                }
+            }
+            //转换成数组
+            String[] array = list.toArray(new String[list.size()]);
+            flowViewHorizontal.setProgress(index+1,orderSearchBean.getOrder_phases().size(),array);
+        });
     }
 
     @OnClick({R.id.iv_bar_back, R.id.tv_replication, R.id.tv_cancel})
@@ -219,12 +242,10 @@ public class MaterialOrderDetailActivity extends BaseActivity {
     //取消预定订单
     private void cancelOrder() {
         MaterialOrderBean.ListBean order = materialVm.orderDetailLiveData.getValue();
-
         if (type == CustomConfig.FRP) {
             materialVm.materialOrderCancel(order.id);
         } else if (type == CustomConfig.EQUIPMENT) {
             materialVm.cancelEquipmentOrder(order.id);
         }
-
     }
 }

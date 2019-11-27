@@ -3,13 +3,11 @@ package com.shuangduan.zcy.view.mine;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
-
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.google.android.material.tabs.TabLayout;
@@ -44,15 +42,11 @@ public class MaterialOrderActivity extends BaseActivity {
     TextView tvOpen;
     @BindView(R.id.tv_default)
     TextView tvDefault;
-
     @BindView(R.id.tab_layout)
     TabLayout tabLayout;
     @BindView(R.id.vp)
     ViewPager vp;
-
-
     private MaterialVm materialVm;
-
 
     @Override
     protected int initLayoutRes() {
@@ -66,7 +60,6 @@ public class MaterialOrderActivity extends BaseActivity {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
-
         //获取内定物资显示权限
         HomeVm homeVm = ViewModelProviders.of(this).get(HomeVm.class);
         homeVm.supplierCliqueLiveData.observe(this, supplierCliqueBean -> {
@@ -74,13 +67,11 @@ public class MaterialOrderActivity extends BaseActivity {
             initViewAndData(supplierCliqueBean);
         });
         homeVm.getSupplierClique();
-
     }
 
     private void initViewAndData(SupplierCliqueBean supplierClique) {
 
         materialVm = ViewModelProviders.of(this).get(MaterialVm.class);
-
 
         if (supplierClique.getSupplier_status() == 2 || supplierClique.getSupplier_status() == 3) {
             BarUtils.addMarginTopEqualStatusBarHeight(toolbarMaterial);
@@ -95,7 +86,6 @@ public class MaterialOrderActivity extends BaseActivity {
             toolbar.setVisibility(View.VISIBLE);
             toolbarMaterial.setVisibility(View.GONE);
         }
-
 
         Fragment[] fragments = new Fragment[]{
                 MineMaterialsFragment.newInstance(),
@@ -143,5 +133,4 @@ public class MaterialOrderActivity extends BaseActivity {
                 break;
         }
     }
-
 }
