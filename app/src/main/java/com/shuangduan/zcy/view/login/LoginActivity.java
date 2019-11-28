@@ -198,6 +198,50 @@ public class LoginActivity extends BaseActivity {
                 ActivityUtils.startActivity(bundle,WeChatBindingActivity.class);
             }
         });
+
+        //登录成功返回结果
+        loginVm.accountLoginLiveData.observe(this, loginBean -> {
+
+            SPUtils.getInstance().put(SpConfig.USER_ID, loginBean.getUser_id(), true);
+            SPUtils.getInstance().put(SpConfig.TOKEN, loginBean.getToken(), true);
+            SPUtils.getInstance().put(SpConfig.MOBILE, loginBean.getTel(), true);
+            SPUtils.getInstance().put(SpConfig.INFO_STATUS, loginBean.getInfo_status(), true);
+            SPUtils.getInstance().put(SpConfig.IS_VERIFIED, loginBean.getCard_status(),true);
+            switch (loginStyle){
+                case LOGIN://登录
+                    //记住用户名 记忆开始
+                    if (isAccount==1){
+                        sharesUtils.addShared(SpConfig.ACCOUNT, edtAccount.getText().toString(),"login");
+                        sharesUtils.addShared("isAccount", String.valueOf(isAccount),"login");
+                    }else {
+                        sharesUtils.clearShared("login");
+                    }
+                    LogUtils.i(loginBean.getInfo_status());
+                    break;
+                case REGISTER://注册
+                    break;
+            }
+            //获取融云登录token
+            if (loginBean.getInfo_status() == 1) {
+                imConnectVm.userId = loginBean.getUser_id();
+                imConnectVm.getToken();
+            } else {
+                ActivityUtils.startActivity(UserInfoInputActivity.class);
+            }
+        });
+
+        //加载动画返回结果
+        loginVm.pageStateLiveData.observe(this, s -> {
+            LogUtils.i(s);
+            switch (s) {
+                case PageState.PAGE_LOADING:
+                    showLoading();
+                    break;
+                default:
+                    hideLoading();
+                    break;
+            }
+        });
     }
 
     @OnClick({R.id.tv_login,R.id.tv_register,R.id.tv_login_account,R.id.tv_send_verification_code,R.id.tv_login_home,R.id.tv_forget_pwd
@@ -319,40 +363,6 @@ public class LoginActivity extends BaseActivity {
             }
             loginVm.codeLogin(account, verificationCode, DeviceUtils.getAndroidID());
         }
-        loginVm.accountLoginLiveData.observe(this, loginBean -> {
-            SPUtils.getInstance().put(SpConfig.USER_ID, loginBean.getUser_id(), true);
-            SPUtils.getInstance().put(SpConfig.TOKEN, loginBean.getToken(), true);
-            SPUtils.getInstance().put(SpConfig.MOBILE, loginBean.getTel(), true);
-            SPUtils.getInstance().put(SpConfig.INFO_STATUS, loginBean.getInfo_status(), true);
-            SPUtils.getInstance().put(SpConfig.IS_VERIFIED, loginBean.getCard_status(),true);
-
-            //记住用户名 记忆开始
-            if (isAccount==1){
-                sharesUtils.addShared(SpConfig.ACCOUNT, edtAccount.getText().toString(),"login");
-                sharesUtils.addShared("isAccount", String.valueOf(isAccount),"login");
-            }else {
-                sharesUtils.clearShared("login");
-            }
-
-            LogUtils.i(loginBean.getInfo_status());
-            if (loginBean.getInfo_status() == 1) {
-                imConnectVm.userId = loginBean.getUser_id();
-                imConnectVm.getToken();
-            } else {
-                ActivityUtils.startActivity(UserInfoInputActivity.class);
-            }
-        });
-        loginVm.pageStateLiveData.observe(this, s -> {
-            LogUtils.i(s);
-            switch (s) {
-                case PageState.PAGE_LOADING:
-                    showLoading();
-                    break;
-                default:
-                    hideLoading();
-                    break;
-            }
-        });
     }
 
     //注册
@@ -378,29 +388,6 @@ public class LoginActivity extends BaseActivity {
         loginVm.registerLiveData.observe(this, registerBean -> {
             //注册成功走一遍登录
             loginVm.accountLogin(edtMobile.getText().toString(), edtPwdRegister.getText().toString(), DeviceUtils.getAndroidID());
-            loginVm.accountLoginLiveData.observe(LoginActivity.this, loginBean -> {
-                SPUtils.getInstance().put(SpConfig.USER_ID, loginBean.getUser_id(),true);
-                SPUtils.getInstance().put(SpConfig.TOKEN, loginBean.getToken(),true);
-                SPUtils.getInstance().put(SpConfig.MOBILE, loginBean.getTel(),true);
-                SPUtils.getInstance().put(SpConfig.INFO_STATUS, loginBean.getInfo_status(),true);
-
-                if (loginBean.getInfo_status() == 1){
-                    imConnectVm.userId = loginBean.getUser_id();
-                    imConnectVm.getToken();
-                }else {
-                    ActivityUtils.startActivity(UserInfoInputActivity.class);
-                }
-            });
-        });
-        loginVm.pageStateLiveData.observe(this, s -> {
-            switch (s){
-                case PageState.PAGE_LOADING:
-                    showLoading();
-                    break;
-                default:
-                    hideLoading();
-                    break;
-            }
         });
     }
 

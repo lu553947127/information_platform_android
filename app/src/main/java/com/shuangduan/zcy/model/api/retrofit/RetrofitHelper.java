@@ -28,10 +28,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitHelper {
 
-//    public static String BASE_TEST_URL = "http://xx.yijijian.com";//测试服
-    public static String BASE_TEST_URL = "https://app.zicai365.com";//正式服
-//    public static String RONG_YUN_APP_KEY = "pwe86ga5p43i6";//测试服
-    public static String RONG_YUN_APP_KEY = "pvxdm17jpo4nr";//正式服
+    public static String BASE_TEST_URL = "http://xx.yijijian.com";//测试服
+//    public static String BASE_TEST_URL = "https://app.zicai365.com";//正式服
+    public static String RONG_YUN_APP_KEY = "pwe86ga5p43i6";//测试服
+//    public static String RONG_YUN_APP_KEY = "pvxdm17jpo4nr";//正式服
     private static ApiService apiService;
 
     private static void init(){

@@ -29,7 +29,6 @@ import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BottomSheetDialogs;
 import com.shuangduan.zcy.dialog.UnitDialog;
 import com.shuangduan.zcy.model.api.PageState;
-import com.shuangduan.zcy.utils.DensityUtil;
 import com.shuangduan.zcy.utils.KeyboardUtil;
 import com.shuangduan.zcy.view.mine.AuthenticationActivity;
 import com.shuangduan.zcy.vm.DemandReleaseVm;
@@ -49,7 +48,7 @@ import butterknife.OnClick;
  * @author 徐玉 QQ:876885613
  * @name information_platform_android
  * @class name：com.shuangduan.zcy.view.demand
- * @class describe  需求广场
+ * @class   需求广场
  * @time 2019/8/19 9:01
  * @change
  * @chang time

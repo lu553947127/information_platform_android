@@ -199,8 +199,11 @@ public class CircleFragment extends BaseFragment {
                     counts=imAddVm.count+friendApplyCountBean.getCount()+friendApplyCountBean.getSubscribe()+friendApplyCountBean.getMaterial();
                     break;
             }
+            LogUtils.e(counts);
+            LogUtils.e(imAddVm.count);
             //设置底部标签数量
             if (counts < 1) {
+                LogUtils.e(counts);
                 relativeLayout.setVisibility(View.GONE);
             } else if (counts < 100) {
                 relativeLayout.setVisibility(View.VISIBLE);
