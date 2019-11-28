@@ -15,6 +15,7 @@ buildscript {
         classpath 'com.google.gms:google-services:4.3.0'  //这行对谷歌服务库进行依赖
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
+//        classpath 'com.huawei.agconnect:agcp:1.0.0.300'
     }
 }
 
@@ -29,7 +30,7 @@ allprojects {
         maven { url "https://dl.bintray.com/rongcloud/maven" }
         maven { url 'https://dl.bintray.com/cjt/maven' }
         //华为推送maven仓库
-        maven { url 'http://developer.huawei.com/repo/' }
+        maven {url 'https://developer.huawei.com/repo/'}
         flatDir {
             dirs 'libs'
         }

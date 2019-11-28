@@ -85,10 +85,8 @@ public class MaterialBean {
         private int amount;
         private int sell_amount;
         private String agent_name;
-
         //缩略图
         private List<Images> images;
-
         //物质名称
         @SerializedName("material_name")
         private String materialName;
