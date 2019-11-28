@@ -217,26 +217,26 @@ public class HomeFragment extends BaseFragment {
 
         //设置角标数量
         imAddVm.applyCountData.observe(this, friendApplyCountBean -> {
-            int counts = 0;
             //获取用户身份 0普通用户 1普通供应商 2子公司 3集团 4子账号
             switch (manage_status) {
                 case 0://普通用户
                 case 1://普通供应商
-                    counts = imAddVm.count + friendApplyCountBean.getCount() + friendApplyCountBean.getSubscribe();
+                    imAddVm.count = imAddVm.count + friendApplyCountBean.getCount() + friendApplyCountBean.getSubscribe();
                     break;
                 case 2://子公司
                 case 3://集团
                 case 4://子公司子账号
                 case 5://集团子账号
-                    counts = imAddVm.count + friendApplyCountBean.getCount() + friendApplyCountBean.getSubscribe() + friendApplyCountBean.getMaterial();
+                    imAddVm.count = imAddVm.count + friendApplyCountBean.getCount() + friendApplyCountBean.getSubscribe() + friendApplyCountBean.getMaterial();
                     break;
             }
-            if (counts < 1) {
+            LogUtils.e(imAddVm.count);
+            if (imAddVm.count < 1) {
                 relativeLayout.setVisibility(View.GONE);
-            } else if (counts < 100) {
+            } else if (imAddVm.count < 100) {
                 number.setTextSize(11);
                 relativeLayout.setVisibility(View.VISIBLE);
-                number.setText(String.valueOf(counts));
+                number.setText(String.valueOf(imAddVm.count));
             } else {
                 relativeLayout.setVisibility(View.VISIBLE);
                 number.setTextSize(9);
@@ -559,7 +559,7 @@ public class HomeFragment extends BaseFragment {
     protected void initDataFromService() {
         homeVm.getInit(getActivity());
         observer = i -> {
-            LogUtils.i(i);
+            LogUtils.e(i);
             // i 是未读数量
             imAddVm.count = i;
             imAddVm.applyCount();

@@ -185,30 +185,27 @@ public class CircleFragment extends BaseFragment {
             getCountNumbers(friendApplyCountBean.getSubscribe(),tvSubscribeChildrenNumbers);
             getCountNumbers(friendApplyCountBean.getSubscribe(),tvSubscribeGroupNumber);
             getCountNumbers(friendApplyCountBean.getMaterial(),tvUnusedNumber);
-            int counts=0;
             //获取用户身份 0普通用户 1普通供应商 2子公司 3集团 4子账号
             switch (manage_status){
                 case 0://普通用户
                 case 1://普通供应商
-                    counts=imAddVm.count+friendApplyCountBean.getCount()+friendApplyCountBean.getSubscribe();
+                    imAddVm.count=imAddVm.count+friendApplyCountBean.getCount()+friendApplyCountBean.getSubscribe();
                     break;
                 case 2://子公司
                 case 3://集团
                 case 4://子公司子账号
                 case 5://集团子账号
-                    counts=imAddVm.count+friendApplyCountBean.getCount()+friendApplyCountBean.getSubscribe()+friendApplyCountBean.getMaterial();
+                    imAddVm.count=imAddVm.count+friendApplyCountBean.getCount()+friendApplyCountBean.getSubscribe()+friendApplyCountBean.getMaterial();
                     break;
             }
-            LogUtils.e(counts);
             LogUtils.e(imAddVm.count);
             //设置底部标签数量
-            if (counts < 1) {
-                LogUtils.e(counts);
+            if (imAddVm.count < 1) {
                 relativeLayout.setVisibility(View.GONE);
-            } else if (counts < 100) {
+            } else if (imAddVm.count < 100) {
                 relativeLayout.setVisibility(View.VISIBLE);
                 number.setTextSize(11);
-                number.setText(String.valueOf(counts));
+                number.setText(String.valueOf(imAddVm.count));
             } else {
                 relativeLayout.setVisibility(View.VISIBLE);
                 number.setTextSize(9);
@@ -322,14 +319,10 @@ public class CircleFragment extends BaseFragment {
         //这里就是获取所添加的每一个Tab(或者叫menu)，设置在标题栏的位置
         View tab = menuView.getChildAt(2);
         BottomNavigationItemView itemView = (BottomNavigationItemView) tab;
-        //加载我们的角标View，新创建的一个布局
-        View badge = LayoutInflater.from(getContext()).inflate(R.layout.layout_apply_count, menuView, false);
-        //添加到Tab上
-        itemView.addView(badge);
         //显示角标数字
-        relativeLayout = badge.findViewById(R.id.rl);
+        relativeLayout = itemView.findViewById(R.id.rl);
         //显示/隐藏整个视图
-        number=badge.findViewById(R.id.number);
+        number=itemView.findViewById(R.id.number);
     }
 
     @Override
