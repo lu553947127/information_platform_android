@@ -99,9 +99,6 @@ public class MaterialActivity extends BaseActivity {
     private RadioGroup radioGroup;
 
 
-    private SellFragment sellFragment;
-    private EquipmentFragment leaseFragment;
-
     @Override
     protected int initLayoutRes() {
         return R.layout.activity_material;
@@ -128,8 +125,8 @@ public class MaterialActivity extends BaseActivity {
 
         materialVm = ViewModelProviders.of(this).get(MaterialVm.class);
 
-        sellFragment = SellFragment.newInstance();
-        leaseFragment = EquipmentFragment.newInstance();
+        SellFragment sellFragment = SellFragment.newInstance();
+        EquipmentFragment leaseFragment = EquipmentFragment.newInstance();
 
         if (supplierClique.getSupplier_status() == 2 || supplierClique.getSupplier_status() == 3) {
             BarUtils.addMarginTopEqualStatusBarHeight(toolbarMaterial);

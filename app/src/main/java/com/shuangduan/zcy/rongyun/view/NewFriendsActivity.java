@@ -12,16 +12,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.NewFriendAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
+import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.factory.EmptyViewFactory;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.IMFriendApplyListBean;
+import com.shuangduan.zcy.view.mine.UserInfoActivity;
 import com.shuangduan.zcy.view.projectinfo.ProjectInfoListActivity;
 import com.shuangduan.zcy.vm.IMAddVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
@@ -78,19 +81,25 @@ public class NewFriendsActivity extends BaseActivity implements EmptyViewFactory
         rv.setAdapter(newFriendAdapter);
         newFriendAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             IMFriendApplyListBean.ListBean item = newFriendAdapter.getData().get(position);
+            Bundle bundle = new Bundle();
             switch (view.getId()) {
                 case R.id.tv_accept://接受
                     int id = Integer.parseInt(item.getId());
                     imAddVm.imFriendApplyOperation(id, 2, "");
                     break;
                 case R.id.tv_refuse://拒绝
-                    Bundle bundle = new Bundle();
                     bundle.putInt(CustomConfig.FRIEND_DATA, 3);
                     bundle.putString("id", item.getId());
                     bundle.putString("name", item.getUsername());
                     bundle.putString("msg", item.getApply_user_msg());
                     bundle.putString("image", item.getImage());
                     ActivityUtils.startActivity(bundle, IMAddFriendActivity.class);
+                    break;
+                case R.id.civ_header://点击头像查看人元详情
+                    if (item.getApply_user_id()!= SPUtils.getInstance().getInt(SpConfig.USER_ID)){
+                        bundle.putInt(CustomConfig.UID, item.getApply_user_id());
+                        ActivityUtils.startActivity(bundle, UserInfoActivity.class);
+                    }
                     break;
             }
         });

@@ -55,7 +55,7 @@ public class DeviceDetailBean {
     private String category_name;
     private String material_id_name;
     private String unit_id_name;
-    private int stock;
+    private String stock;
     private String unit_name;
     private String spec;
     private String use_status_name;
@@ -80,7 +80,7 @@ public class DeviceDetailBean {
     private String entry_time;
     private String exit_time;
     private int user_id;
-    private int technology_month_count;
+    private String technology_month_count;
     private String technology_detail;
     private String equipment_time;
     private String operator_name;
@@ -130,11 +130,11 @@ public class DeviceDetailBean {
         this.unit_id_name = unit_id_name;
     }
 
-    public int getStock() {
+    public String getStock() {
         return stock;
     }
 
-    public void setStock(int stock) {
+    public void setStock(String stock) {
         this.stock = stock;
     }
 
@@ -330,11 +330,11 @@ public class DeviceDetailBean {
         this.user_id = user_id;
     }
 
-    public int getTechnology_month_count() {
+    public String getTechnology_month_count() {
         return technology_month_count;
     }
 
-    public void setTechnology_month_count(int technology_month_count) {
+    public void setTechnology_month_count(String technology_month_count) {
         this.technology_month_count = technology_month_count;
     }
 
