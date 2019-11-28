@@ -152,7 +152,7 @@ public class TurnoverDetailActivity extends BaseActivity {
 
 
             tvPlan.setText(StringUtils.isTrimEmpty(turnover.planName) ? "—" : turnover.planName);
-            tvNum.setText(turnover.useCount == 0 ? "—" : String.valueOf(turnover.useCount));
+            tvNum.setText(turnover.useCount.equals("0") ? "—" : turnover.useCount);
             tvStartTime.setText(StringUtils.isTrimEmpty(turnover.startDate) ? "—" : turnover.startDate);
             tvEnterTime.setText(StringUtils.isTrimEmpty(turnover.entryTime) ? "—" : turnover.entryTime);
             tvExitTime.setText(StringUtils.isTrimEmpty(turnover.exitTime) ? "—" : turnover.exitTime);

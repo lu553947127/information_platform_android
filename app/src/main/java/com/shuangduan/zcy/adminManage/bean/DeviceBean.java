@@ -68,7 +68,7 @@ public class DeviceBean {
         private int supplier_id;
         private String category;
         private String material_id;
-        private int stock;
+        private String stock;
         private String is_shelf;
         private String province;
         private String city;
@@ -109,11 +109,11 @@ public class DeviceBean {
             this.material_id = material_id;
         }
 
-        public int getStock() {
+        public String getStock() {
             return stock;
         }
 
-        public void setStock(int stock) {
+        public void setStock(String stock) {
             this.stock = stock;
         }
 

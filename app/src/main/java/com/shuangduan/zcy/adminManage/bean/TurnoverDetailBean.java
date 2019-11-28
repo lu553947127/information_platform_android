@@ -28,7 +28,7 @@ public class TurnoverDetailBean {
     public String unitIdName;
 
     //库存数量
-    public int stock;
+    public String stock;
 
     //单价
     @SerializedName("unit_price")
@@ -91,7 +91,7 @@ public class TurnoverDetailBean {
     public String planName;
     //在用数量
     @SerializedName("use_count")
-    public int useCount;
+    public String useCount;
     //开始使用日期
     @SerializedName("start_date")
     public String startDate;

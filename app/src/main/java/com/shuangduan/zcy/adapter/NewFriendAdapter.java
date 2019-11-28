@@ -38,7 +38,8 @@ public class NewFriendAdapter extends BaseQuickAdapter<IMFriendApplyListBean.Lis
                 .setText(R.id.tv_time, item.getCreate_time())
                 .setText(R.id.tv_msg, item.getApply_user_msg())
                 .setVisible(R.id.tv_refuse, item.getApply_status() == 1)
-                .setVisible(R.id.iv_sgs, item.getCardStatus() == 2);
+                .setVisible(R.id.iv_sgs, item.getCardStatus() == 2)
+                .addOnClickListener(R.id.civ_header);
         CircleImageView ivHead = helper.getView(R.id.civ_header);
         ImageLoader.load(mContext, new ImageConfig.Builder()
                 .url(item.getImage())

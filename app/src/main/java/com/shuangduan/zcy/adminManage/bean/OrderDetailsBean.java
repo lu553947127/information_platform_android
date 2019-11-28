@@ -41,7 +41,7 @@ public class OrderDetailsBean {
     public List<Images> images;
 
     //预定数量
-    public int number;
+    public String number;
 
     //存放地省
     public String province;
