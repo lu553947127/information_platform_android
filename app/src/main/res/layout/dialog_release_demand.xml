@@ -1,40 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"   android:layout_width="match_parent"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/circular_background_white_top">
 
     <TextView
-        android:id="@+id/tv_find_relationship"
+        android:id="@+id/tv_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:gravity="center"
+        android:layout_marginTop="28dp"
+        android:layout_marginLeft="40dp"
         android:textColor="@color/colorTv"
-        android:textSize="16sp"
-        android:text="@string/find_relationship"/>
+        android:textSize="17sp"
+        android:text="@string/release_type"/>
 
-
-    <TextView
-        android:id="@+id/tv_find_substance"
+    <LinearLayout
+        android:id="@+id/rv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:gravity="center"
-        android:textColor="@color/colorTv"
-        android:textSize="16sp"
-        android:text="@string/find_substance"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="10dp">
 
+        <TextView
+            android:id="@+id/tv_find_relationship"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/color_666666"
+            android:textSize="16sp"
+            android:text="@string/find_relationship"/>
 
-    <TextView
-        android:id="@+id/tv_find_buyer"
+        <TextView
+            android:id="@+id/tv_find_substance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:textColor="@color/color_666666"
+            android:textSize="16sp"
+            android:text="@string/find_substance"/>
+
+        <TextView
+            android:id="@+id/tv_find_buyer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:textColor="@color/color_666666"
+            android:textSize="16sp"
+            android:text="@string/find_buyer"/>
+
+    </LinearLayout>
+
+    <Space
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="95dp"
-        android:gravity="center"
-        android:textColor="@color/colorTv"
-        android:textSize="16sp"
-        android:text="@string/find_buyer"/>
+        android:layout_height="60dp"/>
 
 </LinearLayout>
