@@ -217,7 +217,8 @@
                     android:textColor="@color/color_666666"
                     android:textSize="13sp"
                     app:layout_constraintLeft_toLeftOf="@id/tv_buyer_value"
-                    app:layout_constraintTop_toTopOf="@id/tv_state_tip"/>
+                    app:layout_constraintTop_toTopOf="@id/tv_state_tip"
+                    android:visibility="gone"/>
 
 
                 <TextView

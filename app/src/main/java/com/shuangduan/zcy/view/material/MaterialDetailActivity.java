@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -190,9 +189,6 @@ public class MaterialDetailActivity extends BaseActivity {
                 tvReserve.setText("已失效");
                 tvReserve.setClickable(false);
             }
-
-
-
 
 //            ivPurchasedGoods.setVisibility(materialDetailBean.getIsShelf() == 3 ? View.VISIBLE : View.GONE);
 

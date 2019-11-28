@@ -180,6 +180,7 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
     private BottomSheetDialogs btn_dialog;
     private SimpleDateFormat f;
     private Calendar c;
+    private int release_type;
 
     @Override
     protected int initLayoutRes() {
@@ -191,12 +192,14 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
         return true;
     }
 
+    @SuppressLint("SimpleDateFormat")
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         AndroidBug5497Workaround.assistActivity(findViewById(android.R.id.content));
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.release_msg));
 
+        release_type = getIntent().getIntExtra(CustomConfig.RELEASE_TYPE, 0);
 
         f = new SimpleDateFormat("yyyy-MM-dd");
         c = Calendar.getInstance();
@@ -286,18 +289,21 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
         });
 
         //判断显示工程信息或动态信息
-        if (getIntent().getIntExtra(CustomConfig.RELEASE_TYPE, 0) == 0) {
-            projectLocus();
-        } else if (getIntent().getIntExtra(CustomConfig.RELEASE_TYPE, 0) == 1) {
-            clickLocus();
-        } else if (getIntent().getIntExtra(CustomConfig.RELEASE_TYPE, 0) == 2) {
-            clickLocus();
-            tvProjectType.setClickable(false);
-            tvProjectName.setText(getIntent().getStringExtra(CustomConfig.PROJECT_NAME));
-            releaseVm.projectId = getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0);
-            tvProjectName.setClickable(false);
+        switch (release_type){
+            case 0://工程信息
+                projectLocus();
+                break;
+            case 1://动态信息
+                clickLocus();
+                break;
+            case 2://动态信息不能切换工程信息
+                clickLocus();
+                tvProjectType.setClickable(false);
+                tvProjectName.setText(getIntent().getStringExtra(CustomConfig.PROJECT_NAME));
+                releaseVm.projectId = getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0);
+                tvProjectName.setClickable(false);
+                break;
         }
-
         KeyboardUtil.RemoveDecimalPoints(edtProjectAcreage);
         KeyboardUtil.RemoveDecimalPoints(edtProjectPrice);
     }
@@ -623,6 +629,8 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
     }
 
     //底部弹出框
+    private TextView tv_project;
+    private TextView tv_locus;
     @SuppressLint({"RestrictedApi", "InflateParams"})
     private void getBottomWindow() {
         //底部滑动对话框
@@ -639,16 +647,33 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
         } catch (Exception e) {
             e.printStackTrace();
         }
-        TextView tv_project = dialog_view.findViewById(R.id.tv_project);
-        TextView tv_locus = dialog_view.findViewById(R.id.tv_locus);
+        tv_project = dialog_view.findViewById(R.id.tv_project);
+        tv_locus = dialog_view.findViewById(R.id.tv_locus);
         tv_project.setOnClickListener(view -> {
+            release_type = 0;
+            tv_project.setTextColor(getResources().getColor(R.color.colorPrimary));
+            tv_locus.setTextColor(getResources().getColor(R.color.color_666666));
             projectLocus();
             btn_dialog.cancel();
         });
         tv_locus.setOnClickListener(view -> {
+            release_type = 1;
+            tv_project.setTextColor(getResources().getColor(R.color.color_666666));
+            tv_locus.setTextColor(getResources().getColor(R.color.colorPrimary));
             clickLocus();
             btn_dialog.cancel();
         });
+
+        switch (release_type){
+            case 0://工程信息
+                tv_project.setTextColor(getResources().getColor(R.color.colorPrimary));
+                tv_locus.setTextColor(getResources().getColor(R.color.color_666666));
+                break;
+            case 1://动态信息
+                tv_project.setTextColor(getResources().getColor(R.color.color_666666));
+                tv_locus.setTextColor(getResources().getColor(R.color.colorPrimary));
+                break;
+        }
     }
 
     //身份认证滚动文字显示

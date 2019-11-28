@@ -288,26 +288,11 @@ public class HomeFragment extends BaseFragment {
 
     //滑动监听和下拉属性监听事件
     private void getChangeLister() {
-//        BarUtils.setStatusBarColorRes(fakeStatusBar, getResources().getColor(R.color.colorPrimary));
-//
-//        scrollView.setOnScrollChangeListener((AdaptationScrollView.OnScrollChangeListener) (v1, scrollX, scrollY, oldScrollX, oldScrollY) -> {
-//            if (scrollY > 10) {
-//                toolbar.setVisibility(View.VISIBLE);
-//                toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-//                toolbar.getBackground().setAlpha(250);
-//            } else {
-//                toolbar.setVisibility(View.GONE);
-//                toolbar.setBackgroundColor(0);
-//            }
-//        });
         //滑动布局滑动监听
         scrollView.setOnScrollChangeListener(new AdaptationScrollView.OnScrollChangeListener() {
             private int mScrollY_2 = 0;
             private int lastScrollY = 0;
             private int h = DensityUtil.dp2px(70);
-            //设置折叠标题背景颜色
-            private int color = ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.colorPrimary) & 0x00ffffff;
-
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
                 if (lastScrollY < h) {
@@ -315,7 +300,8 @@ public class HomeFragment extends BaseFragment {
                     scrollY = Math.min(h, scrollY);
                     mScrollY_2 = scrollY > h ? h : scrollY;
                     toolbar.setAlpha(1f * mScrollY_2 / h);
-                    toolbar.setBackgroundColor(((255 * mScrollY_2 / h) << 24) | color);
+                    //设置折叠标题背景颜色
+                    toolbar.setBackgroundColor(((255 * mScrollY_2 / h) << 24) | ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.colorPrimary) & 0x00ffffff);
                 } else {
                     toolbar.setVisibility(View.VISIBLE);
                 }

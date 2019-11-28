@@ -16,7 +16,6 @@ import androidx.core.widget.NestedScrollView;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.ActivityUtils;
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
@@ -145,16 +144,14 @@ public class MineFragment extends BaseFragment {
             private int mScrollY_2 = 0;
             private int lastScrollY = 0;
             private int h = DensityUtil.dp2px(65);
-            //设置折叠标题背景颜色
-            private int color = ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.colorPrimary) & 0x00ffffff;
-
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
                 if (lastScrollY < h) {
                     scrollY = Math.min(h, scrollY);
                     mScrollY_2 = scrollY > h ? h : scrollY;
                     toolbar.setAlpha(1f * mScrollY_2 / h);
-                    toolbar.setBackgroundColor(((255 * mScrollY_2 / h) << 24) | color);
+                    //设置折叠标题背景颜色
+                    toolbar.setBackgroundColor(((255 * mScrollY_2 / h) << 24) | ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.colorPrimary) & 0x00ffffff);
                 } else {
                     toolbar.setVisibility(View.VISIBLE);
                 }
@@ -377,5 +374,4 @@ public class MineFragment extends BaseFragment {
                 break;
         }
     }
-
 }

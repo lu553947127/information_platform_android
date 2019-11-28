@@ -137,6 +137,7 @@ public class DemandReleaseActivity extends BaseActivity {
     private BottomSheetDialogs btn_dialog;
     int demand_num = 0;
     int supply_num = 0;
+    private String type;
 
     @Override
     protected int initLayoutRes() {
@@ -153,6 +154,8 @@ public class DemandReleaseActivity extends BaseActivity {
     protected void initDataAndEvent(Bundle savedInstanceState) {
         tvBarTitle.setText("我要找关系");
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
+
+        type = getIntent().getStringExtra("type");
 
         cbSell.setChecked(true);
         demandReleaseVm = ViewModelProviders.of(this).get(DemandReleaseVm.class);
@@ -182,7 +185,7 @@ public class DemandReleaseActivity extends BaseActivity {
         KeyboardUtil.RemoveDecimalPoints(edtPriceAccept);
         KeyboardUtil.RemoveDecimalPoints(edtSupplyPrice);
 
-        if (Objects.requireNonNull(getIntent().getStringExtra("type")).equals("1")) {
+        if (type.equals("1")) {
             tvBarTitle.setText("我要找物资");
             tvReleaseType.setText(getString(R.string.find_substance));
             demandReleaseVm.releaseType = DemandReleaseVm.RELEASE_TYPE_SUBSTANCE;
@@ -200,9 +203,9 @@ public class DemandReleaseActivity extends BaseActivity {
             flSupplyStyle.setVisibility(View.GONE);
             flSupplyAddress.setVisibility(View.GONE);
             flSupplyPrice.setVisibility(View.GONE);
-        } else if (Objects.requireNonNull(getIntent().getStringExtra("type")).equals("2")) {
+        } else if (type.equals("2")) {
             tvBarTitle.setText("我要找买家");
-            tvReleaseType.setText(getString(R.string.find_buyer));
+            tvReleaseType.setText(getString(R.string.find_buyer));;
             demandReleaseVm.releaseType = DemandReleaseVm.RELEASE_TYPE_BUYER;
             flTitle.setVisibility(View.GONE);
             flCommission.setVisibility(View.GONE);
@@ -417,6 +420,9 @@ public class DemandReleaseActivity extends BaseActivity {
     }
 
     //底部弹出框
+    private TextView tv_find_relationship;
+    private TextView tv_find_substance;
+    private TextView tv_find_buyer;
     @SuppressLint("RestrictedApi")
     private void getBottomWindow() {
         //底部滑动对话框
@@ -433,11 +439,15 @@ public class DemandReleaseActivity extends BaseActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        TextView tv_find_relationship = dialog_view.findViewById(R.id.tv_find_relationship);
-        TextView tv_find_substance = dialog_view.findViewById(R.id.tv_find_substance);
-        TextView tv_find_buyer = dialog_view.findViewById(R.id.tv_find_buyer);
+        tv_find_relationship = dialog_view.findViewById(R.id.tv_find_relationship);
+        tv_find_substance = dialog_view.findViewById(R.id.tv_find_substance);
+        tv_find_buyer = dialog_view.findViewById(R.id.tv_find_buyer);
         tv_find_relationship.setOnClickListener(view -> {
             tvReleaseType.setText(getString(R.string.find_relationship));
+            type = "0";
+            tv_find_relationship.setTextColor(getResources().getColor(R.color.colorPrimary));
+            tv_find_substance.setTextColor(getResources().getColor(R.color.color_666666));
+            tv_find_buyer.setTextColor(getResources().getColor(R.color.color_666666));
             demandReleaseVm.releaseType = DemandReleaseVm.RELEASE_TYPE_RELATIONSHIP;
             flTitle.setVisibility(View.VISIBLE);
             flCommission.setVisibility(View.VISIBLE);
@@ -457,6 +467,10 @@ public class DemandReleaseActivity extends BaseActivity {
         });
         tv_find_substance.setOnClickListener(view -> {
             tvReleaseType.setText(getString(R.string.find_substance));
+            type = "1";
+            tv_find_relationship.setTextColor(getResources().getColor(R.color.color_666666));
+            tv_find_substance.setTextColor(getResources().getColor(R.color.colorPrimary));
+            tv_find_buyer.setTextColor(getResources().getColor(R.color.color_666666));
             demandReleaseVm.releaseType = DemandReleaseVm.RELEASE_TYPE_SUBSTANCE;
             flTitle.setVisibility(View.GONE);
             flCommission.setVisibility(View.GONE);
@@ -476,6 +490,10 @@ public class DemandReleaseActivity extends BaseActivity {
         });
         tv_find_buyer.setOnClickListener(v -> {
             tvReleaseType.setText(getString(R.string.find_buyer));
+            type = "2";
+            tv_find_relationship.setTextColor(getResources().getColor(R.color.color_666666));
+            tv_find_substance.setTextColor(getResources().getColor(R.color.color_666666));
+            tv_find_buyer.setTextColor(getResources().getColor(R.color.colorPrimary));
             demandReleaseVm.releaseType = DemandReleaseVm.RELEASE_TYPE_BUYER;
             flTitle.setVisibility(View.GONE);
             flCommission.setVisibility(View.GONE);
@@ -493,6 +511,25 @@ public class DemandReleaseActivity extends BaseActivity {
             flSupplyPrice.setVisibility(View.VISIBLE);
             btn_dialog.cancel();
         });
+
+        //增加选择状态
+        switch (type){
+            case "0":
+                tv_find_relationship.setTextColor(getResources().getColor(R.color.colorPrimary));
+                tv_find_substance.setTextColor(getResources().getColor(R.color.color_666666));
+                tv_find_buyer.setTextColor(getResources().getColor(R.color.color_666666));
+                break;
+            case "1":
+                tv_find_relationship.setTextColor(getResources().getColor(R.color.color_666666));
+                tv_find_substance.setTextColor(getResources().getColor(R.color.colorPrimary));
+                tv_find_buyer.setTextColor(getResources().getColor(R.color.color_666666));
+                break;
+            case "2":
+                tv_find_relationship.setTextColor(getResources().getColor(R.color.color_666666));
+                tv_find_substance.setTextColor(getResources().getColor(R.color.color_666666));
+                tv_find_buyer.setTextColor(getResources().getColor(R.color.colorPrimary));
+                break;
+        }
     }
 
     //身份认证滚动文字显示
