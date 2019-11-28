@@ -35,6 +35,7 @@ import com.shuangduan.zcy.model.event.AddressEvent;
 import com.shuangduan.zcy.model.event.MaterialDetailEvent;
 import com.shuangduan.zcy.utils.DateUtils;
 import com.shuangduan.zcy.utils.DensityUtil;
+import com.shuangduan.zcy.utils.DigitUtils;
 import com.shuangduan.zcy.utils.KeyboardUtil;
 import com.shuangduan.zcy.utils.image.ImageConfig;
 import com.shuangduan.zcy.utils.image.ImageLoader;
@@ -138,7 +139,8 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
     List<MaterialPlaceOrderBean> list = new ArrayList<>();
     private List<String> list_address = new ArrayList<>();
     MaterialPlaceOrderAdapter materialDepositingPlaceAdapter;
-    private long num, price, guidance_price;
+    private long num;
+    private double price, guidance_price;
     private MaterialDetailBean materialDetail;
     //租期开始时间  ,租期结束时间
     private String leaseStartTime, leaseEndTime;
@@ -178,10 +180,10 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
             tvSupplyMethod.setText(materialDetailBean.getMethod() == 1 ? "出租" : "出售");
 
 
-            guidance_price = materialDetailBean.getGuidance_price();
+            guidance_price = Double.parseDouble(materialDetailBean.getGuidance_price());
             tvGuidancePrice.setText(materialDetailBean.getMethod() == 1 ?
-                    String.format(getString(R.string.format_material_price), String.valueOf(guidance_price), "天") :
-                    String.format(getString(R.string.format_material_price), String.valueOf(guidance_price), materialDetailBean.getUnit()));
+                    String.format(getString(R.string.format_material_price), materialDetailBean.getGuidance_price(), "天") :
+                    String.format(getString(R.string.format_material_price), materialDetailBean.getGuidance_price(), materialDetailBean.getUnit()));
 
             tvSpec.setText(materialDetailBean.getSpec());
             unit = materialDetailBean.getUnit();
@@ -203,11 +205,11 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
                 if (materialDetail.getMethod() == 1) {
                     price = price + Integer.valueOf(et_num.getText().toString()) * day * guidance_price;
                     tvNumber.setText("共租赁" + day + "天，共计");
-                    tvPrice.setText(String.valueOf(price));
+                    tvPrice.setText(DigitUtils.doubleToString(price));
                 } else {
                     price = price + Integer.valueOf(et_num.getText().toString()) * guidance_price;
                     tvNumber.setText("共采购" + num + "套，共计");
-                    tvPrice.setText(String.valueOf(price));
+                    tvPrice.setText(DigitUtils.doubleToString(price));
                 }
 
                 materialDepositingPlaceAdapter.addData(list.size(),

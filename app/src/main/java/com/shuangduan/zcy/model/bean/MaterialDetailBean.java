@@ -41,9 +41,9 @@ public class MaterialDetailBean {
     private int category;
     private int supplier_id;
     private int material_id;
-    private int unit_price;
-    private int guidance_price;
-    private int stock;
+    private String unit_price;
+    private String guidance_price;
+    private String stock;
     private String sales_volume;
     private String spec;
     private String unit;
@@ -178,27 +178,27 @@ public class MaterialDetailBean {
         this.material_id = material_id;
     }
 
-    public int getUnit_price() {
+    public String getUnit_price() {
         return unit_price;
     }
 
-    public void setUnit_price(int unit_price) {
+    public void setUnit_price(String unit_price) {
         this.unit_price = unit_price;
     }
 
-    public int getGuidance_price() {
+    public String getGuidance_price() {
         return guidance_price;
     }
 
-    public void setGuidance_price(int guidance_price) {
+    public void setGuidance_price(String guidance_price) {
         this.guidance_price = guidance_price;
     }
 
-    public int getStock() {
+    public String getStock() {
         return stock;
     }
 
-    public void setStock(int stock) {
+    public void setStock(String stock) {
         this.stock = stock;
     }
 

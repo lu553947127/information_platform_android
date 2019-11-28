@@ -27,6 +27,7 @@ import com.shuangduan.zcy.model.bean.MaterialDetailBean;
 import com.shuangduan.zcy.model.event.AddressEvent;
 import com.shuangduan.zcy.model.event.MaterialDetailEvent;
 import com.shuangduan.zcy.utils.DateUtils;
+import com.shuangduan.zcy.utils.DigitUtils;
 import com.shuangduan.zcy.utils.image.ImageConfig;
 import com.shuangduan.zcy.utils.image.ImageLoader;
 import com.shuangduan.zcy.view.release.ReleaseAreaSelectActivity;
@@ -110,10 +111,10 @@ public class MaterialEquipmentPlaceOrderActivity extends BaseActivity {
 
     private MaterialDetailVm materialDetailVm;
     int province, city, material_id, materialId, supplier_id, day;
-    long guidance_price;
+    double guidance_price,price;
     String material_name, unit;
 
-    private long num, price;
+    private long num;
     private MaterialDetailBean materialDetail;
     //租期开始时间  ,租期结束时间
     private String leaseStartTime, leaseEndTime;
@@ -151,10 +152,10 @@ public class MaterialEquipmentPlaceOrderActivity extends BaseActivity {
             tvMaterialCategory.setText(materialDetailBean.getMaterial_category());
             tvSupplyMethod.setText(materialDetailBean.getMethod() == 1 ? "出租" : "出售");
 
-            guidance_price = materialDetailBean.getGuidance_price();
+            guidance_price = Double.parseDouble(materialDetailBean.getGuidance_price());
             tvGuidancePrice.setText(materialDetailBean.getMethod() == 1 ?
-                    String.format(getString(R.string.format_material_price), String.valueOf(guidance_price), "天") :
-                    String.format(getString(R.string.format_material_price_no_unit), String.valueOf(guidance_price)));
+                    String.format(getString(R.string.format_material_price), materialDetailBean.getGuidance_price(), "天") :
+                    String.format(getString(R.string.format_material_price_no_unit), materialDetailBean.getGuidance_price()));
 
             tvSpec.setText(materialDetailBean.getSpec());
             unit = materialDetailBean.getUnit();

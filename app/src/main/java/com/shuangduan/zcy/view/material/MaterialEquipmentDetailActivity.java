@@ -30,6 +30,7 @@ import com.shuangduan.zcy.dialog.CustomDialog;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.MaterialDetailBean;
 import com.shuangduan.zcy.model.event.MaterialDetailEvent;
+import com.shuangduan.zcy.utils.DigitUtils;
 import com.shuangduan.zcy.utils.KeyboardUtil;
 import com.shuangduan.zcy.utils.TextViewUtils;
 import com.shuangduan.zcy.utils.image.GlideImageLoader;
@@ -155,8 +156,8 @@ public class MaterialEquipmentDetailActivity extends BaseActivity {
             }
 
             tvUnitPrice.setText(materialDetailBean.getMethod() == 1 ?
-                    String.format(getString(R.string.format_material_price), String.valueOf(materialDetailBean.getGuidance_price()), "天") :
-                    String.format(getString(R.string.format_material_price_no_unit), String.valueOf(materialDetailBean.getGuidance_price())));
+                    String.format(getString(R.string.format_material_price), materialDetailBean.getGuidance_price(), "天") :
+                    String.format(getString(R.string.format_material_price_no_unit), materialDetailBean.getGuidance_price()));
 
             tvStock.setText(String.format(getString(R.string.format_stock_no_unit), materialDetailBean.getStock()));
 

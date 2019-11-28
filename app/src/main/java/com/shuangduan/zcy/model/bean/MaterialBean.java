@@ -73,7 +73,7 @@ public class MaterialBean {
         private String oss_path;
         private String price;
         //库存
-        private int stock;
+        private String stock;
         private Object sell_stock;
         private int tonne;
         private int agent_id;
@@ -316,11 +316,11 @@ public class MaterialBean {
             this.price = price;
         }
 
-        public int getStock() {
+        public String getStock() {
             return stock;
         }
 
-        public void setStock(int stock) {
+        public void setStock(String stock) {
             this.stock = stock;
         }
 
