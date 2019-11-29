@@ -4,10 +4,8 @@ import android.content.Context;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.app.SpConfig;
-import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.base.BaseViewModel;
 import com.shuangduan.zcy.model.api.repository.HomeRepository;
 import com.shuangduan.zcy.model.bean.HelpBean;
@@ -20,7 +18,6 @@ import com.shuangduan.zcy.model.bean.VersionUpgradesBean;
 import com.shuangduan.zcy.utils.VersionUtils;
 
 import java.util.List;
-import java.util.Objects;
 
 /**
  * @author 徐玉 QQ:876885613
