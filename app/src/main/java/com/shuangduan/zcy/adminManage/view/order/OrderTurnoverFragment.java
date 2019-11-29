@@ -103,6 +103,7 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
     private OrderTurnoverVm orderVm;
     private AdminOrderListAdapter adminOrderListAdapter;
     private int manage_status;
+    private View emptyView = null;
 
     public static OrderTurnoverFragment newInstance() {
         Bundle args = new Bundle();
@@ -125,7 +126,7 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
 
-        View emptyView = createEmptyView(R.drawable.icon_empty_project, R.string.empty_material_order_turnover, 0,R.color.colorBgDark, null);
+        emptyView = createEmptyView(R.drawable.icon_empty_project, R.string.empty_material_order_turnover, 0,R.color.colorBgDark, null);
 
         manage_status = SPUtils.getInstance().getInt(CustomConfig.MANAGE_STATUS, 0);
         getAdminEntrance(manage_status);

@@ -109,6 +109,7 @@ public class OrderDeviceFragment extends BaseLazyFragment implements BaseQuickAd
     private int manage_status;
     private AdminOrderListAdapter adminOrderListAdapter;
     private OrderDeviceVm orderVm;
+    private View emptyView = null;
 
     public static OrderDeviceFragment newInstance() {
         Bundle args = new Bundle();
@@ -131,7 +132,7 @@ public class OrderDeviceFragment extends BaseLazyFragment implements BaseQuickAd
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
 
-        View emptyView = createEmptyView(R.drawable.icon_empty_project, R.string.empty_material_order_device, 0,R.color.colorBgDark, null);
+        emptyView = createEmptyView(R.drawable.icon_empty_project, R.string.empty_material_order_device, 0,R.color.colorBgDark, null);
 
         tvName.setText("设备名称");
 

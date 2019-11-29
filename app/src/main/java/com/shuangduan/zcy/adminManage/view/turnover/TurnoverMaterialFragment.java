@@ -116,6 +116,7 @@ public class TurnoverMaterialFragment extends BaseLazyFragment {
     private MultiAreaVm areaVm;
     private TurnoverAdapter turnoverAdapter;
     private int manage_status;
+    private View emptyView = null;
 
     public static TurnoverMaterialFragment newInstance() {
         Bundle args = new Bundle();
@@ -140,7 +141,7 @@ public class TurnoverMaterialFragment extends BaseLazyFragment {
         tvBarTitle.setText(getString(R.string.turnover_material));
         tvName.setText("材料名称");
 
-        View emptyView = createEmptyView(R.drawable.icon_empty_project, R.string.empty_mine_materials_info, 0,R.color.colorBgDark, null);
+        emptyView = createEmptyView(R.drawable.icon_empty_project, R.string.empty_mine_materials_info, 0,R.color.colorBgDark, null);
 
         manage_status = SPUtils.getInstance().getInt(CustomConfig.MANAGE_STATUS, 0);
         getAdminEntrance(manage_status);
@@ -246,7 +247,7 @@ public class TurnoverMaterialFragment extends BaseLazyFragment {
         turnoverVm.turnoverTypeData.observe(this,turnoverTypeBean -> {
             //是否上架数据
             groundingList=turnoverTypeBean.getIs_shelf();
-            if (SPUtils.getInstance().getInt(CustomConfig.INNER_SWITCH, 0) != 1) groundingList.remove(1);
+            if (SPUtils.getInstance().getInt(CustomConfig.INNER_SWITCH, 0) != 1&& groundingList.get(1).getName().equals("内部上架")) groundingList.remove(1);
             //使用状态数据
             useStatueList=turnoverTypeBean.getUse_status();
         });
