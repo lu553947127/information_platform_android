@@ -61,6 +61,13 @@ public class BuyerDetailBean {
         private String end_time;
         private int is_pay;
 
+        //找买家详情
+        private String remark;
+
+        public String getRemark() {
+            return remark;
+        }
+
         public int getId() {
             return id;
         }
@@ -194,6 +201,12 @@ public class BuyerDetailBean {
         private String start_time;
         private String end_time;
         private int is_pay;
+
+        private String remark;
+
+        public String getRemark() {
+            return remark;
+        }
 
         public int getId() {
             return id;

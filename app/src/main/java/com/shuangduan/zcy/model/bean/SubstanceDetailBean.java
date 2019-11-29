@@ -65,6 +65,31 @@ public class SubstanceDetailBean {
         private String start_time;
         private String end_time;
         private int is_pay;
+        //找物资详情描述
+        private String remark;
+
+        public String getRemark() {
+            return remark;
+        }
+
+        @Override
+        public String toString() {
+            return "InfoBean{" +
+                    "id=" + id +
+                    ", material_name='" + material_name + '\'' +
+                    ", count='" + count + '\'' +
+                    ", real_name='" + real_name + '\'' +
+                    ", tel='" + tel + '\'' +
+                    ", project_name='" + project_name + '\'' +
+                    ", address='" + address + '\'' +
+                    ", acceptance_price='" + acceptance_price + '\'' +
+                    ", price='" + price + '\'' +
+                    ", start_time='" + start_time + '\'' +
+                    ", end_time='" + end_time + '\'' +
+                    ", is_pay=" + is_pay +
+                    ", remark='" + remark + '\'' +
+                    '}';
+        }
 
         public int getId() {
             return id;
@@ -191,6 +216,14 @@ public class SubstanceDetailBean {
         private String start_time;
         private String end_time;
         private int is_pay;
+
+        //推荐
+        private String remark;
+
+
+        public String getRemark() {
+            return remark;
+        }
 
         public int getId() {
             return id;

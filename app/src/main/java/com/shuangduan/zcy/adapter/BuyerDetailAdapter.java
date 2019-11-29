@@ -34,6 +34,7 @@ public class BuyerDetailAdapter extends BaseQuickAdapter<BuyerDetailBean.ListBea
                 .setText(R.id.tv_time, String.format(mContext.getString(R.string.format_validity_period_less), item.getStart_time(), item.getEnd_time()))
                 .setText(R.id.tv_demand_project, item.getProject_name())
                 .setText(R.id.tv_project_address, item.getAddress())
+                .setText(R.id.tv_details_content,item.getRemark())
                 .setVisible(R.id.tv_read_detail, item.getIs_pay() != 1)
                 .addOnClickListener(R.id.tv_read_detail);
 

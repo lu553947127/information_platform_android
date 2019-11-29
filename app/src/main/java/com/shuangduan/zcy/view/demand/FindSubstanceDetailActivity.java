@@ -71,6 +71,10 @@ public class FindSubstanceDetailActivity extends BaseActivity {
     TextView tvReadDetail;
     @BindView(R.id.tv_time)
     TextView tvTime;
+
+    @BindView(R.id.tv_details_content)
+    TextView tvDetailsContent;
+
     private DemandSubstanceVm demandSubstanceVm;
     private UpdatePwdPayVm updatePwdPayVm;
     private CoinPayVm coinPayVm;
@@ -113,15 +117,16 @@ public class FindSubstanceDetailActivity extends BaseActivity {
             tvDemandNum.setText(info.getCount());
             tvDemandProject.setText(info.getProject_name());
             tvProjectAddress.setText(info.getAddress());
-            if (info.getAcceptance_price().equals("面议")){
+            if (info.getAcceptance_price().equals("面议")) {
                 tvPriceAccept.setText(info.getAcceptance_price());
-            }else {
-                tvPriceAccept.setText(info.getAcceptance_price()+"元");
+            } else {
+                tvPriceAccept.setText(info.getAcceptance_price() + "元");
             }
             tvOwner.setText(info.getReal_name());
             tvContact.setText(info.getTel());
-            tvReadDetail.setVisibility(info.getIs_pay() != 1? View.VISIBLE: View.INVISIBLE);
+            tvReadDetail.setVisibility(info.getIs_pay() != 1 ? View.VISIBLE : View.INVISIBLE);
             tvTime.setText(String.format(getString(R.string.format_validity_period_less), info.getStart_time(), info.getEnd_time()));
+            tvDetailsContent.setText(info.getRemark());
             subOrderAdapter.setNewData(substanceDetailBean.getList());
             subOrderAdapter.setEmptyView(emptyView);
         });
@@ -131,7 +136,7 @@ public class FindSubstanceDetailActivity extends BaseActivity {
 
     @OnClick({R.id.iv_bar_back, R.id.tv_read_detail})
     void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.iv_bar_back:
                 finish();
                 break;
@@ -143,20 +148,20 @@ public class FindSubstanceDetailActivity extends BaseActivity {
         }
     }
 
-    private void initPay(){
+    private void initPay() {
         //支付密码状态查询
         updatePwdPayVm = ViewModelProviders.of(this).get(UpdatePwdPayVm.class);
         updatePwdPayVm.stateLiveData.observe(this, pwdPayStateBean -> {
             int status = pwdPayStateBean.getStatus();
             SPUtils.getInstance().put(SpConfig.PWD_PAY_STATUS, status);
-            if (status == 1){
+            if (status == 1) {
                 goToPay();
-            }else {
+            } else {
                 ActivityUtils.startActivity(SetPwdPayActivity.class);
             }
         });
         updatePwdPayVm.pageStateLiveData.observe(this, s -> {
-            switch (s){
+            switch (s) {
                 case PageState.PAGE_LOADING:
                     showLoading();
                     break;
@@ -171,7 +176,7 @@ public class FindSubstanceDetailActivity extends BaseActivity {
         coinPayVm.findSubstancePayLiveData.observe(this, this::payResult);
         coinPayVm.findBuyerPayLiveData.observe(this, this::payResult);
         coinPayVm.pageStateLiveData.observe(this, s -> {
-            switch (s){
+            switch (s) {
                 case PageState.PAGE_LOADING:
                     showLoading();
                     break;
@@ -182,7 +187,7 @@ public class FindSubstanceDetailActivity extends BaseActivity {
         });
     }
 
-    private void showPayDialog(String price){
+    private void showPayDialog(String price) {
         addDialog(new CustomDialog(this)
                 .setTip(String.format(getString(R.string.format_pay_price), price))
                 .setCallBack(new BaseDialog.CallBack() {
@@ -194,9 +199,9 @@ public class FindSubstanceDetailActivity extends BaseActivity {
                     @Override
                     public void ok(String s) {
                         int status = SPUtils.getInstance().getInt(SpConfig.PWD_PAY_STATUS, 0);
-                        if (status == 1){
+                        if (status == 1) {
                             goToPay();
-                        }else {
+                        } else {
                             //查询是否设置支付密码
                             updatePwdPayVm.payPwdState();
                         }
@@ -208,23 +213,23 @@ public class FindSubstanceDetailActivity extends BaseActivity {
     /**
      * 去支付
      */
-    private void goToPay(){
+    private void goToPay() {
         addDialog(new PayDialog(this)
                 .setSingleCallBack((item, position) -> {
-                    if (demandSubstanceVm.currentPay == 1){
+                    if (demandSubstanceVm.currentPay == 1) {
                         coinPayVm.payFindSubstance(item);
-                    }else if (demandSubstanceVm.currentPay == 2){
+                    } else if (demandSubstanceVm.currentPay == 2) {
                         coinPayVm.payFindBuyer(item);
                     }
                 })
                 .showDialog());
     }
 
-    private void payResult(CoinPayResultBean coinPayResultBean){
-        if (coinPayResultBean.getPay_status() == 1){
+    private void payResult(CoinPayResultBean coinPayResultBean) {
+        if (coinPayResultBean.getPay_status() == 1) {
             ToastUtils.showShort(getString(R.string.buy_success));
             demandSubstanceVm.getDetail();
-        }else {
+        } else {
             //余额不足
             addDialog(new CustomDialog(this)
                     .setIcon(R.drawable.icon_error)

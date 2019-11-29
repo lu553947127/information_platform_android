@@ -71,6 +71,9 @@ public class FindBuyerDetailActivity extends BaseActivity {
     TextView tvSupplyAddress;
     @BindView(R.id.rv)
     RecyclerView rv;
+    @BindView(R.id.tv_details_content)
+    TextView tvDetailsContent;
+
     private DemandBuyerVm demandBuyerVm;
     private UpdatePwdPayVm updatePwdPayVm;
     private CoinPayVm coinPayVm;
@@ -113,17 +116,18 @@ public class FindBuyerDetailActivity extends BaseActivity {
             BuyerDetailBean.InfoBean info = buyerDetailBean.getInfo();
             tvMaterialName.setText(info.getMaterial_name());
             tvSupplyNum.setText(info.getCount());
-            tvSupplyStyle.setText(info.getWay() == 1? getString(R.string.sell): getString(R.string.lease));
-            if (info.getAcceptance_price().equals("面议")){
+            tvSupplyStyle.setText(info.getWay() == 1 ? getString(R.string.sell) : getString(R.string.lease));
+            if (info.getAcceptance_price().equals("面议")) {
                 tvSupplyPrice.setText(info.getAcceptance_price());
-            }else {
-                tvSupplyPrice.setText(info.getAcceptance_price()+"元");
+            } else {
+                tvSupplyPrice.setText(info.getAcceptance_price() + "元");
             }
             tvOwner.setText(info.getReal_name());
             tvContact.setText(info.getTel());
-            tvReadDetail.setVisibility(info.getIs_pay() != 1? View.VISIBLE: View.INVISIBLE);
+            tvReadDetail.setVisibility(info.getIs_pay() != 1 ? View.VISIBLE : View.INVISIBLE);
             tvTime.setText(String.format(getString(R.string.format_validity_period_less), info.getStart_time(), info.getEnd_time()));
             tvSupplyAddress.setText(info.getAddress());
+            tvDetailsContent.setText(info.getRemark());
             buyerAdapter.setNewData(buyerDetailBean.getList());
             buyerAdapter.setEmptyView(emptyView);
         });
@@ -133,7 +137,7 @@ public class FindBuyerDetailActivity extends BaseActivity {
 
     @OnClick({R.id.iv_bar_back, R.id.tv_read_detail})
     void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.iv_bar_back:
                 finish();
                 break;
@@ -145,20 +149,20 @@ public class FindBuyerDetailActivity extends BaseActivity {
         }
     }
 
-    private void initPay(){
+    private void initPay() {
         //支付密码状态查询
         updatePwdPayVm = ViewModelProviders.of(this).get(UpdatePwdPayVm.class);
         updatePwdPayVm.stateLiveData.observe(this, pwdPayStateBean -> {
             int status = pwdPayStateBean.getStatus();
             SPUtils.getInstance().put(SpConfig.PWD_PAY_STATUS, status);
-            if (status == 1){
+            if (status == 1) {
                 goToPay();
-            }else {
+            } else {
                 ActivityUtils.startActivity(SetPwdPayActivity.class);
             }
         });
         updatePwdPayVm.pageStateLiveData.observe(this, s -> {
-            switch (s){
+            switch (s) {
                 case PageState.PAGE_LOADING:
                     showLoading();
                     break;
@@ -173,7 +177,7 @@ public class FindBuyerDetailActivity extends BaseActivity {
         coinPayVm.findSubstancePayLiveData.observe(this, this::payResult);
         coinPayVm.findBuyerPayLiveData.observe(this, this::payResult);
         coinPayVm.pageStateLiveData.observe(this, s -> {
-            switch (s){
+            switch (s) {
                 case PageState.PAGE_LOADING:
                     showLoading();
                     break;
@@ -184,7 +188,7 @@ public class FindBuyerDetailActivity extends BaseActivity {
         });
     }
 
-    private void showPayDialog(String price){
+    private void showPayDialog(String price) {
         addDialog(new CustomDialog(this)
                 .setTip(String.format(getString(R.string.format_pay_price), price))
                 .setCallBack(new BaseDialog.CallBack() {
@@ -196,9 +200,9 @@ public class FindBuyerDetailActivity extends BaseActivity {
                     @Override
                     public void ok(String s) {
                         int status = SPUtils.getInstance().getInt(SpConfig.PWD_PAY_STATUS, 0);
-                        if (status == 1){
+                        if (status == 1) {
                             goToPay();
-                        }else {
+                        } else {
                             //查询是否设置支付密码
                             updatePwdPayVm.payPwdState();
                         }
@@ -210,23 +214,23 @@ public class FindBuyerDetailActivity extends BaseActivity {
     /**
      * 去支付
      */
-    private void goToPay(){
+    private void goToPay() {
         addDialog(new PayDialog(this)
                 .setSingleCallBack((item, position) -> {
-                    if (demandBuyerVm.currentPay == 1){
+                    if (demandBuyerVm.currentPay == 1) {
                         coinPayVm.payFindSubstance(item);
-                    }else if (demandBuyerVm.currentPay == 2){
+                    } else if (demandBuyerVm.currentPay == 2) {
                         coinPayVm.payFindBuyer(item);
                     }
                 })
                 .showDialog());
     }
 
-    private void payResult(CoinPayResultBean coinPayResultBean){
-        if (coinPayResultBean.getPay_status() == 1){
+    private void payResult(CoinPayResultBean coinPayResultBean) {
+        if (coinPayResultBean.getPay_status() == 1) {
             ToastUtils.showShort(getString(R.string.buy_success));
             demandBuyerVm.getDetail();
-        }else {
+        } else {
             //余额不足
             addDialog(new CustomDialog(this)
                     .setIcon(R.drawable.icon_error)

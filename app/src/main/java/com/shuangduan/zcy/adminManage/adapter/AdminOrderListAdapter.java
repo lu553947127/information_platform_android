@@ -79,6 +79,7 @@ public class AdminOrderListAdapter extends BaseQuickAdapter<AdminOrderBean.Order
 
         if (item.statusId == 1) {
             helper.setText(R.id.tv_order_state, item.phases);
+            helper.setGone(R.id.ll_edit, item.phasesId != 7);
         } else {
             helper.setText(R.id.tv_order_state, item.status);
             helper.setGone(R.id.ll_edit, false);
