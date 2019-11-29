@@ -1,12 +1,13 @@
 package com.shuangduan.zcy.view;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.lifecycle.ViewModelProviders;
@@ -39,8 +40,8 @@ import com.shuangduan.zcy.view.demand.DemandActivity;
 import com.shuangduan.zcy.view.demand.DemandReleaseActivity;
 import com.shuangduan.zcy.view.headlines.HeadlinesActivity;
 import com.shuangduan.zcy.view.headlines.HeadlinesDetailActivity;
-import com.shuangduan.zcy.view.material.MaterialActivity;
 import com.shuangduan.zcy.view.income.MineIncomeActivity;
+import com.shuangduan.zcy.view.material.MaterialActivity;
 import com.shuangduan.zcy.view.projectinfo.ProjectInfoActivity;
 import com.shuangduan.zcy.view.recruit.RecruitActivity;
 import com.shuangduan.zcy.view.search.SearchActivity;
@@ -83,7 +84,6 @@ import static com.shuangduan.zcy.app.CustomConfig.FIND_SUBSTANCE_TYPE;
  * @chang time
  * @class describe
  */
-@SuppressLint({"NewApi", "SetTextI18n"})
 public class HomeFragment extends BaseFragment {
 
     @BindView(R.id.scroll)
@@ -123,6 +123,10 @@ public class HomeFragment extends BaseFragment {
     private DemandRelationshipVm demandRelationshipVm;
     private int manage_status;
 
+    //顶部状态栏透明度和颜色
+    private static int sColor;
+    private static float sAlpha;
+
     public static HomeFragment newInstance() {
         Bundle args = new Bundle();
         HomeFragment fragment = new HomeFragment();
@@ -151,7 +155,7 @@ public class HomeFragment extends BaseFragment {
         getChangeLister();
         getBadgeViewInitView();
 
-        homeNeedVm.HomeNeedVm(getActivity(),view,viewPager,tabLayout,materialIndicator,demandRelationshipVm);
+        homeNeedVm.HomeNeedVm(getActivity(), view, viewPager, tabLayout, materialIndicator, demandRelationshipVm);
 
         //快讯滚动标题返回数据
         homeVm.pushLiveData.observe(this, homePushBeans -> {
@@ -277,18 +281,26 @@ public class HomeFragment extends BaseFragment {
     private void getChangeLister() {
         //滑动布局滑动监听
         scrollView.setOnScrollChangeListener(new AdaptationScrollView.OnScrollChangeListener() {
+
             private int mScrollY_2 = 0;
             private int lastScrollY = 0;
             private int h = DensityUtil.dp2px(70);
+
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
                 if (lastScrollY < h) {
                     LogUtils.i(lastScrollY);
                     scrollY = Math.min(h, scrollY);
                     mScrollY_2 = scrollY > h ? h : scrollY;
-                    toolbar.setAlpha(1f * mScrollY_2 / h);
+
+                    sAlpha = 1f * mScrollY_2 / h;
+
+                    sColor = ((255 * mScrollY_2 / h) << 24) | ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.colorPrimary) & 0x00ffffff;
+
+                    toolbar.setAlpha(sAlpha);
                     //设置折叠标题背景颜色
-                    toolbar.setBackgroundColor(((255 * mScrollY_2 / h) << 24) | ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.colorPrimary) & 0x00ffffff);
+                    toolbar.setBackgroundColor(sColor);
+
                 } else {
                     toolbar.setVisibility(View.VISIBLE);
                 }
@@ -430,4 +442,19 @@ public class HomeFragment extends BaseFragment {
         RongIM.getInstance().removeUnReadMessageCountChangedObserver(observer);
         super.onDestroy();
     }
+
+
+
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if (sAlpha != 0 && sColor != 0) {
+            toolbar.setAlpha(sAlpha);
+            //设置折叠标题背景颜色
+            toolbar.setBackgroundColor(sColor);
+            toolbar.setVisibility(View.VISIBLE);
+        }
+    }
+
 }

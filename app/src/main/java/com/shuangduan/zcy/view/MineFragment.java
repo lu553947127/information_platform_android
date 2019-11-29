@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.content.ContextCompat;
@@ -97,6 +98,10 @@ public class MineFragment extends BaseFragment {
     private UserInfoVm userInfoVm;
     private HomeVm homeVm;
 
+    //顶部状态栏透明度和颜色
+    private static int sColor;
+    private static float sAlpha;
+
     public static MineFragment newInstance() {
         Bundle args = new Bundle();
         MineFragment fragment = new MineFragment();
@@ -149,9 +154,14 @@ public class MineFragment extends BaseFragment {
                 if (lastScrollY < h) {
                     scrollY = Math.min(h, scrollY);
                     mScrollY_2 = scrollY > h ? h : scrollY;
-                    toolbar.setAlpha(1f * mScrollY_2 / h);
+
+                    sAlpha = 1f * mScrollY_2 / h;
+
+                    sColor = ((255 * mScrollY_2 / h) << 24) | ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.colorPrimary) & 0x00ffffff;
+
+                    toolbar.setAlpha(sAlpha);
                     //设置折叠标题背景颜色
-                    toolbar.setBackgroundColor(((255 * mScrollY_2 / h) << 24) | ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.colorPrimary) & 0x00ffffff);
+                    toolbar.setBackgroundColor(sColor);
                 } else {
                     toolbar.setVisibility(View.VISIBLE);
                 }
@@ -372,6 +382,17 @@ public class MineFragment extends BaseFragment {
                     }
                 }
                 break;
+        }
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if (sAlpha != 0 && sColor != 0) {
+            toolbar.setAlpha(sAlpha);
+            //设置折叠标题背景颜色
+            toolbar.setBackgroundColor(sColor);
+            toolbar.setVisibility(View.VISIBLE);
         }
     }
 }
