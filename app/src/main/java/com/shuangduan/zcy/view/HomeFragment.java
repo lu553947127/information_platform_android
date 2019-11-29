@@ -208,13 +208,13 @@ public class HomeFragment extends BaseFragment {
             switch (manage_status) {
                 case 0://普通用户
                 case 1://普通供应商
-                    imAddVm.count = imAddVm.count + friendApplyCountBean.getCount() + friendApplyCountBean.getSubscribe();
+                    imAddVm.count = friendApplyCountBean.getCount() + friendApplyCountBean.getSubscribe();
                     break;
                 case 2://子公司
                 case 3://集团
                 case 4://子公司子账号
                 case 5://集团子账号
-                    imAddVm.count = imAddVm.count + friendApplyCountBean.getCount() + friendApplyCountBean.getSubscribe() + friendApplyCountBean.getMaterial();
+                    imAddVm.count =  friendApplyCountBean.getCount() + friendApplyCountBean.getSubscribe() + friendApplyCountBean.getMaterial();
                     break;
             }
             LogUtils.e(imAddVm.count);
@@ -423,6 +423,7 @@ public class HomeFragment extends BaseFragment {
         homeNeedVm.recyclerView2.stop();
         homeNeedVm.recyclerView3.stop();
     }
+
 
     @Override
     public void onDestroy() {

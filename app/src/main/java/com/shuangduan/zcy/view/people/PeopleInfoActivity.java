@@ -2,8 +2,10 @@ package com.shuangduan.zcy.view.people;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatImageView;
@@ -13,6 +15,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.StringUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
@@ -46,6 +49,8 @@ public class PeopleInfoActivity extends BaseActivity {
     CircleImageView ivUser;
     @BindView(R.id.tv_name)
     AppCompatTextView tvName;
+    @BindView(R.id.fl_mobile)
+    FrameLayout flMobile;
     @BindView(R.id.tv_mobile)
     AppCompatTextView tvMobile;
     @BindView(R.id.tv_company)
@@ -62,10 +67,8 @@ public class PeopleInfoActivity extends BaseActivity {
     AppCompatTextView tvIncomeAmount;
     @BindView(R.id.tv_add_friend)
     TextView tvAddFriend;
-
     @BindView(R.id.iv_sgs)
     AppCompatImageView ivSgs;
-
     @BindView(R.id.cb_state)
     CheckBox cbState;
 
@@ -92,6 +95,7 @@ public class PeopleInfoActivity extends BaseActivity {
         incomePeopleVm.uid = uid;
         incomePeopleVm.detailLiveData.observe(this, peopleDetailBean -> {
             tvName.setText(peopleDetailBean.getUsername());
+            flMobile.setVisibility(StringUtils.isTrimEmpty(peopleDetailBean.getTel()) ? View.GONE : View.VISIBLE);
             tvMobile.setText(peopleDetailBean.getTel());
             tvCompany.setText(peopleDetailBean.getCompany());
             tvOffice.setText(peopleDetailBean.getPosition());
