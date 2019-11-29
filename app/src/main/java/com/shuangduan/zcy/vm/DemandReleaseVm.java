@@ -50,6 +50,7 @@ public class DemandReleaseVm extends BaseViewModel {
         startTime = DateUtils.formatTime(year, month, day);
     }
 
+    //找关系
     public void releaseRelationShip(String title, String intro, String price){
         if (StringUtils.isTrimEmpty(endTime)){
             ToastUtils.showShort(StringUtils.getString(R.string.select_time));
@@ -58,12 +59,14 @@ public class DemandReleaseVm extends BaseViewModel {
         new DemandRepository().demandRelationshipRelease(releaseLiveData, pageStateLiveData, userId, title, intro, startTime, endTime, price);
     }
 
-    public void releaseSubstance(String title, String demandNum, String projectName, String projectAddress, String priceAccept, String tel, String owner,int demand_num){
-        new DemandRepository().demandSubstanceRelease(releaseLiveData, pageStateLiveData, userId, title, demandNum, projectName, projectAddress, priceAccept, tel, owner, startTime, endTime,demand_num);
+    //找物资
+    public void releaseSubstance(String title, String demandNum, String projectName, String projectAddress, String priceAccept, String tel, String owner,int demand_num,String remark){
+        new DemandRepository().demandSubstanceRelease(releaseLiveData, pageStateLiveData, userId, title, demandNum, projectName, projectAddress, priceAccept, tel, owner, startTime, endTime,demand_num,remark);
     }
 
-    public void releaseBuyer(String title, String demandNum, String projectAddress, String priceAccept, String tel, String owner,int supply_num){
-        new DemandRepository().demandBuyerRelease(releaseLiveData, pageStateLiveData, userId, title, demandNum, projectAddress, priceAccept, tel, owner, way, startTime, endTime,supply_num);
+    //找买家
+    public void releaseBuyer(String title, String demandNum, String projectAddress, String priceAccept, String tel, String owner,int supply_num,String remark){
+        new DemandRepository().demandBuyerRelease(releaseLiveData, pageStateLiveData, userId, title, demandNum, projectAddress, priceAccept, tel, owner, way, startTime, endTime,supply_num,remark);
     }
 
     public void relationshipReleaseOrder(int id){

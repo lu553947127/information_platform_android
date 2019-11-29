@@ -28,12 +28,12 @@ public class DemandRepository extends BaseRepository {
         request(apiService.demandRelationshipRelease(user_id, title, intro, start_time, end_time, price)).setData(liveData).setPageState(pageStateLiveData).send();
     }
     public void demandSubstanceRelease(MutableLiveData<DemandReleaseBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, String material_name, String count, String project_name, String address,
-                              String acceptance_price, String tel, String realName, String start_time, String end_time,int demand_num){
-        request(apiService.demandSubstanceRelease(user_id, material_name, count, project_name, address, acceptance_price, tel, realName, start_time, end_time,demand_num)).setData(liveData).setPageState(pageStateLiveData).send();
+                              String acceptance_price, String tel, String realName, String start_time, String end_time,int demand_num,String remark){
+        request(apiService.demandSubstanceRelease(user_id, material_name, count, project_name, address, acceptance_price, tel, realName, start_time, end_time,demand_num,remark)).setData(liveData).setPageState(pageStateLiveData).send();
     }
     public void demandBuyerRelease(MutableLiveData<DemandReleaseBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, String material_name, String count, String address,
-                              String acceptance_price, String tel, String realName, int way, String start_time, String end_time,int supply_num){
-        request(apiService.demandBuyerRelease(user_id, material_name, count, address, acceptance_price, tel, realName, way, start_time, end_time,supply_num)).setData(liveData).setPageState(pageStateLiveData).send();
+                              String acceptance_price, String tel, String realName, int way, String start_time, String end_time,int supply_num,String remark){
+        request(apiService.demandBuyerRelease(user_id, material_name, count, address, acceptance_price, tel, realName, way, start_time, end_time,supply_num,remark)).setData(liveData).setPageState(pageStateLiveData).send();
     }
     public void relationshipReleaseOrder(MutableLiveData<RelationshipOrderBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, int id){
         request(apiService.relationshipReleaseOrder(user_id, id)).setData(liveData).setPageState(pageStateLiveData).send();

@@ -13,13 +13,9 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import androidx.appcompat.widget.AppCompatTextView;
-import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
-
 import com.blankj.utilcode.util.ActivityUtils;
-import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
@@ -39,7 +35,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -57,8 +52,6 @@ import butterknife.OnClick;
 public class DemandReleaseActivity extends BaseActivity {
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
     @BindView(R.id.tv_release_type)
     TextView tvReleaseType;
     @BindView(R.id.edt_title)
@@ -153,8 +146,6 @@ public class DemandReleaseActivity extends BaseActivity {
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         tvBarTitle.setText("我要找关系");
-        BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
-
         type = getIntent().getStringExtra("type");
 
         cbSell.setChecked(true);
@@ -191,7 +182,6 @@ public class DemandReleaseActivity extends BaseActivity {
             demandReleaseVm.releaseType = DemandReleaseVm.RELEASE_TYPE_SUBSTANCE;
             flTitle.setVisibility(View.GONE);
             flCommission.setVisibility(View.GONE);
-            flDes.setVisibility(View.GONE);
             flMaterialName.setVisibility(View.VISIBLE);
             flDemandNum.setVisibility(View.VISIBLE);
             flDemandProject.setVisibility(View.VISIBLE);
@@ -203,13 +193,13 @@ public class DemandReleaseActivity extends BaseActivity {
             flSupplyStyle.setVisibility(View.GONE);
             flSupplyAddress.setVisibility(View.GONE);
             flSupplyPrice.setVisibility(View.GONE);
+            edtDes.setHint("请输入物资的详细介绍，如规格");
         } else if (type.equals("2")) {
             tvBarTitle.setText("我要找买家");
-            tvReleaseType.setText(getString(R.string.find_buyer));;
+            tvReleaseType.setText(getString(R.string.find_buyer));
             demandReleaseVm.releaseType = DemandReleaseVm.RELEASE_TYPE_BUYER;
             flTitle.setVisibility(View.GONE);
             flCommission.setVisibility(View.GONE);
-            flDes.setVisibility(View.GONE);
             flMaterialName.setVisibility(View.VISIBLE);
             flDemandNum.setVisibility(View.GONE);
             flDemandProject.setVisibility(View.GONE);
@@ -221,6 +211,7 @@ public class DemandReleaseActivity extends BaseActivity {
             flSupplyStyle.setVisibility(View.VISIBLE);
             flSupplyAddress.setVisibility(View.VISIBLE);
             flSupplyPrice.setVisibility(View.VISIBLE);
+            edtDes.setHint("请输入物资的详细介绍，如规格");
         }
 
         //监听键盘
@@ -274,7 +265,7 @@ public class DemandReleaseActivity extends BaseActivity {
                 break;
             case R.id.tv_release:
                 switch (demandReleaseVm.releaseType) {
-                    case DemandReleaseVm.RELEASE_TYPE_RELATIONSHIP:
+                    case DemandReleaseVm.RELEASE_TYPE_RELATIONSHIP://找关系
                         if (TextUtils.isEmpty(edtTitle.getText())) {
                             ToastUtils.showShort(getString(R.string.hint_title));
                             return;
@@ -293,7 +284,7 @@ public class DemandReleaseActivity extends BaseActivity {
                         }
                         demandReleaseVm.releaseRelationShip(edtTitle.getText().toString(), edtDes.getText().toString(), edtCommission.getText().toString());
                         break;
-                    case DemandReleaseVm.RELEASE_TYPE_SUBSTANCE:
+                    case DemandReleaseVm.RELEASE_TYPE_SUBSTANCE://找物资
                         if (TextUtils.isEmpty(edtMaterialName.getText())) {
                             ToastUtils.showShort(getString(R.string.hint_material_name));
                             return;
@@ -314,10 +305,6 @@ public class DemandReleaseActivity extends BaseActivity {
                             ToastUtils.showShort(getString(R.string.hint_project_address));
                             return;
                         }
-//                        if (TextUtils.isEmpty(edtPriceAccept.getText())){
-//                            ToastUtils.showShort(getString(R.string.hint_price_accept));
-//                            return;
-//                        }
                         if (TextUtils.isEmpty(edtOwner.getText())) {
                             ToastUtils.showShort(getString(R.string.hint_owner));
                             return;
@@ -327,9 +314,9 @@ public class DemandReleaseActivity extends BaseActivity {
                             return;
                         }
                         demandReleaseVm.releaseSubstance(edtMaterialName.getText().toString(), edtDemandNum.getText().toString(), edtDemandProject.getText().toString(),
-                                edtProjectAddress.getText().toString(), edtPriceAccept.getText().toString(), edtContactsInfo.getText().toString(), edtOwner.getText().toString(), demand_num);
+                                edtProjectAddress.getText().toString(), edtPriceAccept.getText().toString(), edtContactsInfo.getText().toString(), edtOwner.getText().toString(), demand_num,edtDes.getText().toString());
                         break;
-                    case DemandReleaseVm.RELEASE_TYPE_BUYER:
+                    case DemandReleaseVm.RELEASE_TYPE_BUYER://找买家
                         if (TextUtils.isEmpty(edtMaterialName.getText())) {
                             ToastUtils.showShort(getString(R.string.hint_material_name));
                             return;
@@ -346,10 +333,6 @@ public class DemandReleaseActivity extends BaseActivity {
                             ToastUtils.showShort(getString(R.string.hint_supply_address));
                             return;
                         }
-//                        if (TextUtils.isEmpty(edtSupplyPrice.getText())){
-//                            ToastUtils.showShort(getString(R.string.hint_price_supply));
-//                            return;
-//                        }
                         if (TextUtils.isEmpty(edtOwner.getText())) {
                             ToastUtils.showShort(getString(R.string.hint_owner));
                             return;
@@ -359,7 +342,7 @@ public class DemandReleaseActivity extends BaseActivity {
                             return;
                         }
                         demandReleaseVm.releaseBuyer(edtMaterialName.getText().toString(), edtSupplyNum.getText().toString(), edtSupplyAddress.getText().toString(),
-                                edtSupplyPrice.getText().toString(), edtContactsInfo.getText().toString(), edtOwner.getText().toString(), supply_num);
+                                edtSupplyPrice.getText().toString(), edtContactsInfo.getText().toString(), edtOwner.getText().toString(), supply_num,edtDes.getText().toString());
                         break;
                 }
                 break;

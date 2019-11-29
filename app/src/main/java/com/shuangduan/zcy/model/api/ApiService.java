@@ -138,6 +138,7 @@ import retrofit2.http.Query;
  */
 public interface ApiService {
 
+    //获取验证码
     @FormUrlEncoded
     @POST("api/Passport/smsCode")
     Flowable<BaseResponse> smsCode(
@@ -145,6 +146,7 @@ public interface ApiService {
             @Field("type") int type
     );
 
+    //验证码登录
     @FormUrlEncoded
     @POST("api/Passport/codeLogin")
     Flowable<BaseResponse<LoginBean>> codeLogin(
@@ -153,6 +155,7 @@ public interface ApiService {
             @Field("client_id") String client_id
     );
 
+    //账号密码登录
     @FormUrlEncoded
     @POST("api/Passport/accountLogin")
     Flowable<BaseResponse<LoginBean>> accountLogin(
@@ -161,6 +164,7 @@ public interface ApiService {
             @Field("client_id") String client_id
     );
 
+    //注册
     @FormUrlEncoded
     @POST("api/Passport/register")
     Flowable<BaseResponse<RegisterBean>> register(
@@ -170,6 +174,7 @@ public interface ApiService {
             @Field("invite_tel") String invite_tel
     );
 
+    //重置密码
     @FormUrlEncoded
     @POST("api/Passport/setPassword")
     Flowable<BaseResponse<ReSetPwdBean>> setPassword(
@@ -178,6 +183,7 @@ public interface ApiService {
             @Field("password") String password
     );
 
+    //修改登录密码
     @FormUrlEncoded
     @POST("api/Userinfo/setPassword")
     Flowable<BaseResponse> resetPassword(
@@ -1137,7 +1143,8 @@ public interface ApiService {
             @Field("real_name") String real_name,
             @Field("start_time") String start_time,
             @Field("end_time") String end_time,
-            @Field("unit") int demand_num
+            @Field("unit") int demand_num,
+            @Field("remark") String remark
     );
 
     @FormUrlEncoded
@@ -1153,7 +1160,8 @@ public interface ApiService {
             @Field("way") int way,
             @Field("start_time") String start_time,
             @Field("end_time") String end_time,
-            @Field("unit") int supply_num
+            @Field("unit") int supply_num,
+            @Field("remark") String remark
     );
 
     @FormUrlEncoded
@@ -1454,7 +1462,6 @@ public interface ApiService {
             @Field("inside") int inside
     );
 
-
     //基建物资---设备物资预定列表
     @FormUrlEncoded
     @POST("api/Equipment/myEquipment")
@@ -1463,7 +1470,6 @@ public interface ApiService {
             @Field("page") int page,
             @Field("inside") int inside
     );
-
 
     //基建物质---周转材料预定详情
     @FormUrlEncoded
@@ -2051,5 +2057,4 @@ public interface ApiService {
             @Field("id") int id,
             @Field("phases") int phases
     );
-
 }

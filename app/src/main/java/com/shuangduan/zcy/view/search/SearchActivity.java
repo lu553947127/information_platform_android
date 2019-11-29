@@ -12,8 +12,6 @@ import android.widget.TextView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
@@ -21,7 +19,6 @@ import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.android.flexbox.FlexboxLayout;
 import com.shuangduan.zcy.R;
-import com.shuangduan.zcy.adapter.SearchHistoryAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.PageState;
@@ -57,10 +54,9 @@ public class SearchActivity extends BaseActivity {
     TextView tvPositive;
     @BindView(R.id.fl_hot)
     FlexboxLayout flHot;
-    @BindView(R.id.rv)
-    RecyclerView rv;
+    @BindView(R.id.fl_hot_history)
+    FlexboxLayout flHotHistory;
     private SearchVm searchVm;
-    private SearchHistoryAdapter searchAdapter;
     private String project_type;
 
     @Override
@@ -81,6 +77,8 @@ public class SearchActivity extends BaseActivity {
         project_type=getIntent().getStringExtra(CustomConfig.PROJECT_TYPE);
 
         searchVm = ViewModelProviders.of(this).get(SearchVm.class);
+
+        //热门搜索列表返回数据
         searchVm.hotLiveData.observe(this, list -> {
             for (String s : list) {
                 TextView itemHot = (TextView) LayoutInflater.from(this).inflate(R.layout.item_fl_search, flHot, false);
@@ -95,19 +93,24 @@ public class SearchActivity extends BaseActivity {
             }
         });
 
-        rv.setLayoutManager(new GridLayoutManager(this, 4));
-        searchAdapter = new SearchHistoryAdapter(R.layout.item_search_history, null);
-        rv.setAdapter(searchAdapter);
-        searchAdapter.setOnItemClickListener((adapter, view, position) -> {
-            String s = searchAdapter.getData().get(position);
-            Bundle bundle = new Bundle();
-            bundle.putString(CustomConfig.KEYWORD, s);
-            bundle.putString(CustomConfig.PROJECT_TYPE, project_type);
-            ActivityUtils.startActivity(bundle, SearchResultActivity.class);
-        });
+        //搜索历史列表返回数据
         searchVm.historyLiveData.observe(this, history -> {
-            searchAdapter.setNewData(history);
+            if (history!=null&&history.size() > 0){
+                flHotHistory.removeAllViews();
+                for (String s : history) {
+                    TextView itemHotHistory = (TextView) LayoutInflater.from(this).inflate(R.layout.item_search_history, flHotHistory, false);
+                    itemHotHistory.setText(s);
+                    itemHotHistory.setOnClickListener(l -> {
+                        Bundle bundle = new Bundle();
+                        bundle.putString(CustomConfig.KEYWORD, s);
+                        bundle.putString(CustomConfig.PROJECT_TYPE, project_type);
+                        ActivityUtils.startActivity(bundle, SearchResultActivity.class);
+                    });
+                    flHotHistory.addView(itemHotHistory);
+                }
+            }
         });
+
         searchVm.pageStateLiveData.observe(this, s -> {
             switch (s){
                 case PageState.PAGE_LOADING:
@@ -119,9 +122,6 @@ public class SearchActivity extends BaseActivity {
                     break;
             }
         });
-
-        searchVm.getHot();//获取热点搜索
-        searchVm.getHistory();
 
         //重新键盘，改成搜索键盘，点击搜索键即可完成搜索
         edtKeyword.setOnEditorActionListener((textView, i, keyEvent) -> {
@@ -140,6 +140,9 @@ public class SearchActivity extends BaseActivity {
             }
             return false;
         });
+
+        searchVm.getHot();
+        searchVm.getHistory();
     }
 
     @OnClick({R.id.iv_bar_back, R.id.tv_positive, R.id.iv_del})
@@ -159,6 +162,7 @@ public class SearchActivity extends BaseActivity {
                 ActivityUtils.startActivity(bundle, SearchResultActivity.class);
                 break;
             case R.id.iv_del:
+                flHotHistory.removeAllViews();
                 searchVm.delHistory();
                 break;
         }
@@ -168,5 +172,4 @@ public class SearchActivity extends BaseActivity {
     public void onEventHistoryChange(SearchHistoryEvent event){
         searchVm.getHistory();
     }
-
 }

@@ -439,7 +439,8 @@
         <!-- 需求广场 添加-->
         <activity
             android:name="com.shuangduan.zcy.view.demand.DemandReleaseActivity"
-            android:theme="@style/BaseAppTheme" />
+            android:theme="@style/BaseAppTheme"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
         <!-- 找关系详情-->
         <activity
             android:name="com.shuangduan.zcy.view.demand.FindRelationshipDetailActivity"
