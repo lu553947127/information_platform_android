@@ -2,13 +2,11 @@ package com.shuangduan.zcy.model.api.repository;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.shuangduan.zcy.base.TrackDateilBean;
+import com.shuangduan.zcy.model.bean.TrackDateilBean;
 import com.shuangduan.zcy.model.bean.ConsumeBean;
 import com.shuangduan.zcy.model.bean.ProjectDetailBean;
 import com.shuangduan.zcy.model.bean.ProjectMembersStatusBean;
 import com.shuangduan.zcy.model.bean.TrackBean;
-
-import java.util.List;
 
 /**
  * @author 徐玉 QQ:876885613

@@ -9,7 +9,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adminManage.bean.TurnoverDetailBean;
-import com.shuangduan.zcy.base.TrackDateilBean;
 
 import java.util.List;
 

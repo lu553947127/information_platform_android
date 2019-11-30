@@ -1,4 +1,4 @@
-package com.shuangduan.zcy.base;
+package com.shuangduan.zcy.model.bean;
 
 import com.google.gson.annotations.SerializedName;
 

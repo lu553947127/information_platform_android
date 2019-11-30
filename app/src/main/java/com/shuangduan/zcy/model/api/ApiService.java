@@ -13,7 +13,7 @@ import com.shuangduan.zcy.adminManage.bean.TurnoverDetailBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverDetailEditBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverNameBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverTypeBean;
-import com.shuangduan.zcy.base.TrackDateilBean;
+import com.shuangduan.zcy.model.bean.TrackDateilBean;
 import com.shuangduan.zcy.model.bean.AddTrackBean;
 import com.shuangduan.zcy.model.bean.AuthenBean;
 import com.shuangduan.zcy.model.bean.BankCardBean;

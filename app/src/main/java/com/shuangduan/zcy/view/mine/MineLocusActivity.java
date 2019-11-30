@@ -21,7 +21,7 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.LocusImageAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
-import com.shuangduan.zcy.base.TrackDateilBean;
+import com.shuangduan.zcy.model.bean.TrackDateilBean;
 import com.shuangduan.zcy.utils.image.PictureEnlargeUtils;
 import com.shuangduan.zcy.view.projectinfo.ProjectDetailActivity;
 import com.shuangduan.zcy.vm.ProjectDetailVm;

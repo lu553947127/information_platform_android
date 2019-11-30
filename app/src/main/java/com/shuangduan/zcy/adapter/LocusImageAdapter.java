@@ -8,7 +8,7 @@ import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.shuangduan.zcy.R;
-import com.shuangduan.zcy.base.TrackDateilBean;
+import com.shuangduan.zcy.model.bean.TrackDateilBean;
 
 import java.util.List;
 

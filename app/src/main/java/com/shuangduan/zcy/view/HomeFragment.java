@@ -1,5 +1,6 @@
 package com.shuangduan.zcy.view;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -144,6 +145,7 @@ public class HomeFragment extends BaseFragment {
         return false;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState, View v) {
 
@@ -209,25 +211,27 @@ public class HomeFragment extends BaseFragment {
         //设置角标数量
         imAddVm.applyCountData.observe(this, friendApplyCountBean -> {
             //获取用户身份 0普通用户 1普通供应商 2子公司 3集团 4子账号
-            switch (manage_status) {
+            int counts = 0;
+            switch (manage_status){
                 case 0://普通用户
                 case 1://普通供应商
-                    imAddVm.count = friendApplyCountBean.getCount() + friendApplyCountBean.getSubscribe();
+                    counts = imAddVm.count+friendApplyCountBean.getCount()+friendApplyCountBean.getSubscribe();
                     break;
                 case 2://子公司
                 case 3://集团
                 case 4://子公司子账号
                 case 5://集团子账号
-                    imAddVm.count =  friendApplyCountBean.getCount() + friendApplyCountBean.getSubscribe() + friendApplyCountBean.getMaterial();
+                    counts = imAddVm.count+friendApplyCountBean.getCount()+friendApplyCountBean.getSubscribe()+friendApplyCountBean.getMaterial();
                     break;
             }
-            LogUtils.e(imAddVm.count);
-            if (imAddVm.count < 1) {
+            LogUtils.e(counts);
+            //设置底部标签数量
+            if (counts < 1) {
                 relativeLayout.setVisibility(View.GONE);
-            } else if (imAddVm.count < 100) {
-                number.setTextSize(11);
+            } else if (counts < 100) {
                 relativeLayout.setVisibility(View.VISIBLE);
-                number.setText(String.valueOf(imAddVm.count));
+                number.setTextSize(11);
+                number.setText(String.valueOf(counts));
             } else {
                 relativeLayout.setVisibility(View.VISIBLE);
                 number.setTextSize(9);

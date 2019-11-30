@@ -6,7 +6,7 @@ import com.amap.api.maps.model.LatLng;
 import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseViewModel;
-import com.shuangduan.zcy.base.TrackDateilBean;
+import com.shuangduan.zcy.model.bean.TrackDateilBean;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.api.repository.ProjectDetailRepository;
 import com.shuangduan.zcy.model.bean.ConsumeBean;
