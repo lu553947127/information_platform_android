@@ -41,7 +41,7 @@ import com.shuangduan.zcy.adminManage.event.DeviceEvent;
 import com.shuangduan.zcy.adminManage.view.SelectTypeActivity;
 import com.shuangduan.zcy.adminManage.vm.DeviceVm;
 import com.shuangduan.zcy.app.CustomConfig;
-import com.shuangduan.zcy.base.BaseLazyFragment;
+import com.shuangduan.zcy.base.BaseNoRefreshFragment;
 import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.BottomSheetDialogs;
 import com.shuangduan.zcy.dialog.CustomDialog;
@@ -72,7 +72,7 @@ import butterknife.OnClick;
  * @UpdateRemark: 更新说明
  * @Version: 1.0
  */
-public class DeviceManagementFragment extends BaseLazyFragment {
+public class DeviceManagementFragment extends BaseNoRefreshFragment {
 
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;

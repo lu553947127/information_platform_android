@@ -40,7 +40,7 @@ import com.shuangduan.zcy.adminManage.event.OrderTurnoverEvent;
 import com.shuangduan.zcy.adminManage.view.SelectTypeActivity;
 import com.shuangduan.zcy.adminManage.vm.OrderTurnoverVm;
 import com.shuangduan.zcy.app.CustomConfig;
-import com.shuangduan.zcy.base.BaseLazyFragment;
+import com.shuangduan.zcy.base.BaseNoRefreshFragment;
 import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.BottomSheetDialogs;
 import com.shuangduan.zcy.dialog.CustomDialog;
@@ -70,7 +70,7 @@ import butterknife.OnClick;
  * @UpdateRemark: 更新说明
  * @Version: 1.0
  */
-public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuickAdapter.OnItemChildClickListener {
+public class OrderTurnoverFragment extends BaseNoRefreshFragment implements BaseQuickAdapter.OnItemChildClickListener {
 
     @BindView(R.id.tv_project)
     AppCompatTextView tvProject;

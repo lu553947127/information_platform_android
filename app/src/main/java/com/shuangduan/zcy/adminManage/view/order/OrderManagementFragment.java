@@ -13,7 +13,7 @@ import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ViewPagerAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
-import com.shuangduan.zcy.base.BaseLazyFragment;
+import com.shuangduan.zcy.base.BaseNoRefreshFragment;
 import com.shuangduan.zcy.weight.NoScrollViewPager;
 
 import java.util.Objects;
@@ -33,7 +33,7 @@ import butterknife.OnClick;
  * @UpdateRemark: 更新说明
  * @Version: 1.0
  */
-public class OrderManagementFragment extends BaseLazyFragment {
+public class OrderManagementFragment extends BaseNoRefreshFragment {
 
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
