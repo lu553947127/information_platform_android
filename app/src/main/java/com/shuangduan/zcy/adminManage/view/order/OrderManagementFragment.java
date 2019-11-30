@@ -75,8 +75,7 @@ public class OrderManagementFragment extends BaseLazyFragment {
 
     @Override
     protected void initDataFromService() {
-        getAdminEntrance(SPUtils.getInstance().getInt(CustomConfig.EQIPMENT_ORDER_LIST,0)
-                ,SPUtils.getInstance().getInt(CustomConfig.CONSTRUCTION_ORDER_LIST,0));
+
     }
 
     //后台管理权限判断
@@ -114,5 +113,12 @@ public class OrderManagementFragment extends BaseLazyFragment {
                 vp.setCurrentItem(1);
                 break;
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getAdminEntrance(SPUtils.getInstance().getInt(CustomConfig.EQIPMENT_ORDER_LIST,0)
+                ,SPUtils.getInstance().getInt(CustomConfig.CONSTRUCTION_ORDER_LIST,0));
     }
 }

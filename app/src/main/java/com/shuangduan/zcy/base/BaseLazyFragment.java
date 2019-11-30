@@ -7,19 +7,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-
-import com.blankj.utilcode.util.LogUtils;
-import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.LoadDialog;
 import com.shuangduan.zcy.factory.EmptyViewFactory;
-import com.shuangduan.zcy.model.event.BaseEvent;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
+
+import java.util.Objects;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -43,9 +41,11 @@ public abstract class BaseLazyFragment extends Fragment implements IView {
     private boolean isPrepared = false;//页面ui初始化完成
     public boolean isInited = false;//数据是否已从服务器拉取，拉取成功后设为true
     private SparseArray<BaseDialog> dialogArray = new SparseArray<>();
+    public boolean isVisible;//当从另一个activity回到fragment所在的activity 当fragment回调onResume方法的时候，可以通过这个变量判断fragment是否可见，来决定是否要刷新数据
+    private boolean isLoaded;//是否执行了lazyLoad方法
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         this.mContext = context;
         this.mActivity = (FragmentActivity) context;
@@ -70,18 +70,42 @@ public abstract class BaseLazyFragment extends Fragment implements IView {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initDataAndEvent(savedInstanceState);
-        lazyLoad();
+        onVisible();
     }
 
+    /*
+     * 此方法在viewpager嵌套fragment时会回调
+     * 查看FragmentPagerAdapter源码中instantiateItem和setPrimaryItem会调用此方法
+     * 在所有生命周期方法前调用
+     * 这个基类适用于在viewpager嵌套少量的fragment页面
+     * 该方法是第一个回调，可以将数据放在这里处理（viewpager默认会预加载一个页面）
+     * 只在fragment可见时加载数据，加快响应速度
+     * */
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
+        if (getUserVisibleHint()) {
+            onVisible();
+        }else {
+            onInvisible();
+        }
+    }
+
+    //ViewPager嵌套Fragment卡顿解决方法 避免Viewpager滑动重复加载Fragment Fragment延迟加载
+    protected void onVisible() {
+        isVisible = true;
+        if (!isLoaded && isPrepared && getUserVisibleHint()) {
+            isLoaded = true;
             lazyLoad();
         }
+    }
+
+    //防止view的重复加载 与FragmentPagerAdapter 中destroyItem方法取消调用父类的效果是一样的
+    protected void onInvisible() {
+        isVisible = false;
     }
 
     private void lazyLoad() {
@@ -130,7 +154,6 @@ public abstract class BaseLazyFragment extends Fragment implements IView {
                 }
             }
         }
-
         dialogArray = null;
         super.onDestroyView();
     }
@@ -162,13 +185,11 @@ public abstract class BaseLazyFragment extends Fragment implements IView {
 
     public View createEmptyView(int iconRes, int strRes, int btnStrRes, EmptyViewFactory.EmptyViewCallBack callBack) {
         BaseActivity activity = (BaseActivity) getActivity();
-        View view = activity.emptyViewFactory.createEmptyView(iconRes, strRes, btnStrRes, callBack);
-        return view;
+        return Objects.requireNonNull(activity).emptyViewFactory.createEmptyView(iconRes, strRes, btnStrRes, callBack);
     }
 
     public View createEmptyView(int iconRes, int strRes, int btnStrRes, int background, EmptyViewFactory.EmptyViewCallBack callBack) {
         BaseActivity activity = (BaseActivity) getActivity();
-        View view = activity.emptyViewFactory.createEmptyView(iconRes, strRes, btnStrRes,background, callBack);
-        return view;
+        return Objects.requireNonNull(activity).emptyViewFactory.createEmptyView(iconRes, strRes, btnStrRes,background, callBack);
     }
 }

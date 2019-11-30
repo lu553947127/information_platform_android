@@ -18,6 +18,8 @@ import com.shuangduan.zcy.factory.EmptyViewFactory;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.Objects;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -144,13 +146,11 @@ public abstract class BaseFragment extends Fragment implements IView {
 
     public View createEmptyView(int iconRes, int strRes, int btnStrRes, EmptyViewFactory.EmptyViewCallBack callBack) {
         BaseActivity activity = (BaseActivity) getActivity();
-        View view = activity.emptyViewFactory.createEmptyView(iconRes, strRes, btnStrRes, callBack);
-        return view;
+        return Objects.requireNonNull(activity).emptyViewFactory.createEmptyView(iconRes, strRes, btnStrRes, callBack);
     }
 
     public View createEmptyView(int iconRes, int strRes, int btnStrRes, int background, EmptyViewFactory.EmptyViewCallBack callBack) {
         BaseActivity activity = (BaseActivity) getActivity();
-        View view = activity.emptyViewFactory.createEmptyView(iconRes, strRes, btnStrRes,background, callBack);
-        return view;
+        return Objects.requireNonNull(activity).emptyViewFactory.createEmptyView(iconRes, strRes, btnStrRes,background, callBack);
     }
 }
