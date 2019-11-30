@@ -3,23 +3,21 @@ package com.shuangduan.zcy.view;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.lifecycle.ViewModelProviders;
-
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
+import com.shuangduan.zcy.app.MyApplication;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseFragment;
 import com.shuangduan.zcy.model.bean.SupplierRoleBean;
@@ -49,7 +47,6 @@ import com.shuangduan.zcy.vm.UserInfoVm;
 import com.shuangduan.zcy.weight.AdaptationScrollView;
 import com.shuangduan.zcy.weight.CircleImageView;
 import com.shuangduan.zcy.weight.HeadZoomScrollView;
-
 import org.greenrobot.eventbus.Subscribe;
 import java.util.Objects;
 
@@ -177,7 +174,7 @@ public class MineFragment extends BaseFragment {
         }
 
         //红包开启抖动动画
-        new Handler().postDelayed(() -> {
+        MyApplication.getMainThreadHandler().postDelayed(() -> {
             ObjectAnimator animator = AnimationUtils.tada(ivRedEnvelopes);
             animator.setRepeatCount(ValueAnimator.INFINITE);
             animator.start();
@@ -186,6 +183,7 @@ public class MineFragment extends BaseFragment {
 
     @Override
     protected void initDataFromService() {
+
     }
 
     @Override
