@@ -296,8 +296,10 @@ public class OrderTurnoverFragment extends BaseLazyFragment implements BaseQuick
 
     @Override
     protected void initDataFromService() {
-        orderVm.orderListData("");
-        orderVm.orderSearch();
+        if (SPUtils.getInstance().getInt(CustomConfig.CONSTRUCTION_ORDER_LIST, 0) == 1){
+            orderVm.orderListData("");
+            orderVm.orderSearch();
+        }
     }
 
     //Adapter Child 的点击事件

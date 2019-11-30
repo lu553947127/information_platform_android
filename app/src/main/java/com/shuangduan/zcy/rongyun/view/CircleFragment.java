@@ -26,6 +26,7 @@ import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.MyApplication;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseFragment;
+import com.shuangduan.zcy.model.bean.SupplierRoleBean;
 import com.shuangduan.zcy.model.event.AvatarEvent;
 import com.shuangduan.zcy.utils.image.ImageConfig;
 import com.shuangduan.zcy.utils.image.ImageLoader;
@@ -98,7 +99,7 @@ public class CircleFragment extends BaseFragment {
     private IUnReadMessageObserver observer;
     private IMAddVm imAddVm;
     private HomeVm homeVm;
-    private int manage_status;
+    private int manage_status,order_turnover,order_device;
 
     public static CircleFragment newInstance() {
         Bundle args = new Bundle();
@@ -137,6 +138,17 @@ public class CircleFragment extends BaseFragment {
         //获取后台管理权限
         homeVm = ViewModelProviders.of(mActivity).get(HomeVm.class);
         homeVm.supplierRoleLiveData.observe(this, supplierRoleBean -> {
+            //获取订单权限
+            for (SupplierRoleBean.RoleBean bean : supplierRoleBean.getRole()) {
+                switch (bean.getMenu()){
+                    case CustomConfig.EQIPMENT_ORDER_LIST://设备订单列表
+                        order_device = bean.getStatus();
+                        break;
+                    case CustomConfig.CONSTRUCTION_ORDER_LIST://周转材料订单列表
+                        order_turnover = bean.getStatus();
+                        break;
+                }
+            }
             //获取用户身份 0普通用户 1普通供应商 2子公司 3集团 4子账号
             manage_status=supplierRoleBean.getManage_status();
             switch (manage_status){
@@ -151,11 +163,18 @@ public class CircleFragment extends BaseFragment {
                     rlUnused.setVisibility(View.GONE);
                     break;
                 case 2://子公司
-                case 4://子公司子账号
                     rlSubscribeChildren.setVisibility(View.GONE);
                     rlIdleReminder.setVisibility(View.VISIBLE);
                     rlOrder.setVisibility(View.VISIBLE);
                     rlUnused.setVisibility(View.VISIBLE);
+                    break;
+                case 4://子公司子账号
+                    rlSubscribeChildren.setVisibility(View.GONE);
+                    rlIdleReminder.setVisibility(View.VISIBLE);
+                    rlUnused.setVisibility(View.VISIBLE);
+                    if (order_device == 1 || order_turnover == 1){
+                        rlOrder.setVisibility(View.VISIBLE);
+                    }
                     break;
                 case 3://集团
                 case 5://集团子账号
@@ -242,6 +261,7 @@ public class CircleFragment extends BaseFragment {
                     LogUtils.e(imAddVm.count);
                     imAddVm.applyCount();
                 }, Conversation.ConversationType.PRIVATE,Conversation.ConversationType.GROUP,Conversation.ConversationType.SYSTEM);
+                homeVm.getSupplierRole();
                 refreshLayout.finishRefresh(1000);
             }
         });

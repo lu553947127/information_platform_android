@@ -284,8 +284,10 @@ public class OrderDeviceFragment extends BaseLazyFragment implements BaseQuickAd
 
     @Override
     protected void initDataFromService() {
-        orderVm.orderDeviceListData("");
-        orderVm.orderSearch();
+        if (SPUtils.getInstance().getInt(CustomConfig.EQIPMENT_ORDER_LIST, 0) == 1){
+            orderVm.orderDeviceListData("");
+            orderVm.orderSearch();
+        }
     }
 
     private void setNoMore(int page, int count) {
