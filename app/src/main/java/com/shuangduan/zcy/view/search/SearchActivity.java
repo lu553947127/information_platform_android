@@ -131,6 +131,11 @@ public class SearchActivity extends BaseActivity {
                         .getSystemService(Context.INPUT_METHOD_SERVICE)))
                         .hideSoftInputFromWindow(Objects.requireNonNull(this.getCurrentFocus()).getWindowToken(),
                                 InputMethodManager.HIDE_NOT_ALWAYS);
+
+                if (StringUtils.isTrimEmpty(edtKeyword.getText().toString())){
+                    ToastUtils.showShort(getString(R.string.hint_keyword));
+                    return true;
+                }
                 // 搜索，进行自己要的操作...
                 Bundle bundle = new Bundle();
                 bundle.putString(CustomConfig.KEYWORD, edtKeyword.getText().toString());

@@ -280,18 +280,7 @@ public class ProjectDetailActivity extends BaseActivity {
         if (aMap == null) {
             aMap = mapView.getMap();
             setUpMap();
-            new Thread() {
-                @Override
-                public void run() {
-                    try {
-                        Thread.sleep(500);
-                        //直接设置不生效，做下延迟
-                        aMap.getUiSettings().setZoomControlsEnabled(false);//设置是否允许显示缩放按钮
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }.start();
+
 
             aMap.setOnCameraChangeListener(new AMap.OnCameraChangeListener() {
                 @Override
@@ -319,6 +308,7 @@ public class ProjectDetailActivity extends BaseActivity {
         aMap.getUiSettings().setRotateGesturesEnabled(false);//设置地图不能旋转
         aMap.getUiSettings().setMyLocationButtonEnabled(false);//设置默认定位按钮是否显示，非必需设置。
         aMap.getUiSettings().setAllGesturesEnabled(false);//关闭所有手势
+        aMap.getUiSettings().setZoomControlsEnabled(false);//设置是否允许显示缩放按钮
     }
 
     private Marker locationMarker;

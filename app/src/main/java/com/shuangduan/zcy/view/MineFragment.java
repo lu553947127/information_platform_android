@@ -7,12 +7,14 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.lifecycle.ViewModelProviders;
+
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.R;
@@ -47,7 +49,9 @@ import com.shuangduan.zcy.vm.UserInfoVm;
 import com.shuangduan.zcy.weight.AdaptationScrollView;
 import com.shuangduan.zcy.weight.CircleImageView;
 import com.shuangduan.zcy.weight.HeadZoomScrollView;
+
 import org.greenrobot.eventbus.Subscribe;
+
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -134,10 +138,10 @@ public class MineFragment extends BaseFragment {
         homeVm = ViewModelProviders.of(mActivity).get(HomeVm.class);
         homeVm.supplierRoleLiveData.observe(this, supplierRoleBean -> {
             //获取用户身份 0普通用户 1普通供应商 2子公司 3集团 4子账号
-            SPUtils.getInstance().put(CustomConfig.MANAGE_STATUS,supplierRoleBean.getManage_status());
+            SPUtils.getInstance().put(CustomConfig.MANAGE_STATUS, supplierRoleBean.getManage_status());
             //获取子节点权限
             for (SupplierRoleBean.RoleBean bean : supplierRoleBean.getRole()) {
-                getAdminManagePermission(bean,supplierRoleBean.getManage_status());
+                getAdminManagePermission(bean, supplierRoleBean.getManage_status());
             }
         });
 
@@ -146,6 +150,7 @@ public class MineFragment extends BaseFragment {
             private int mScrollY_2 = 0;
             private int lastScrollY = 0;
             private int h = DensityUtil.dp2px(65);
+
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
                 if (lastScrollY < h) {
@@ -167,17 +172,21 @@ public class MineFragment extends BaseFragment {
         });
 
         //判断是否已经实名
-        if (SPUtils.getInstance().getInt(SpConfig.IS_VERIFIED)==2){
+        if (SPUtils.getInstance().getInt(SpConfig.IS_VERIFIED) == 2) {
             tvAuthentication.setText("已实名认证");
-        }else {
+        } else {
             tvAuthentication.setText("申请实名认证");
         }
 
         //红包开启抖动动画
         MyApplication.getMainThreadHandler().postDelayed(() -> {
-            ObjectAnimator animator = AnimationUtils.tada(ivRedEnvelopes);
-            animator.setRepeatCount(ValueAnimator.INFINITE);
-            animator.start();
+            try {
+                ObjectAnimator animator = AnimationUtils.tada(ivRedEnvelopes);
+                animator.setRepeatCount(ValueAnimator.INFINITE);
+                animator.start();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }, 500);
     }
 
@@ -191,9 +200,9 @@ public class MineFragment extends BaseFragment {
         return true;
     }
 
-    @OnClick({R.id.iv_help,R.id.iv_set,R.id.cl_user, R.id.tv_authentication, R.id.tv_wallet, R.id.rl_recommend_friends,
+    @OnClick({R.id.iv_help, R.id.iv_set, R.id.cl_user, R.id.tv_authentication, R.id.tv_wallet, R.id.rl_recommend_friends,
             R.id.tv_income, R.id.tv_mine_subscription, R.id.tv_read_history, R.id.tv_my_project, R.id.tv_my_demand,
-            R.id.tv_my_collection,R.id.tv_my_material,R.id.tv_turnover_material,R.id.tv_device_management,R.id.tv_order_management})
+            R.id.tv_my_collection, R.id.tv_my_material, R.id.tv_turnover_material, R.id.tv_device_management, R.id.tv_order_management})
     void onClick(View view) {
         Bundle bundle = new Bundle();
         switch (view.getId()) {
@@ -240,16 +249,16 @@ public class MineFragment extends BaseFragment {
                 ActivityUtils.startActivity(MaterialOrderActivity.class);
                 break;
             case R.id.tv_turnover_material://周转材料
-                bundle.putInt(CustomConfig.IS_ADMIN_MANAGE,1);
-                ActivityUtils.startActivity(bundle,AdminManageActivity.class);
+                bundle.putInt(CustomConfig.IS_ADMIN_MANAGE, 1);
+                ActivityUtils.startActivity(bundle, AdminManageActivity.class);
                 break;
             case R.id.tv_device_management://设备管理
-                bundle.putInt(CustomConfig.IS_ADMIN_MANAGE,2);
-                ActivityUtils.startActivity(bundle,AdminManageActivity.class);
+                bundle.putInt(CustomConfig.IS_ADMIN_MANAGE, 2);
+                ActivityUtils.startActivity(bundle, AdminManageActivity.class);
                 break;
             case R.id.tv_order_management://订单管理
-                bundle.putInt(CustomConfig.IS_ADMIN_MANAGE,3);
-                ActivityUtils.startActivity(bundle,AdminManageActivity.class);
+                bundle.putInt(CustomConfig.IS_ADMIN_MANAGE, 3);
+                ActivityUtils.startActivity(bundle, AdminManageActivity.class);
                 break;
         }
     }
@@ -282,69 +291,70 @@ public class MineFragment extends BaseFragment {
         userInfoVm.userInfo();
     }
 
-    private int construction,equipment,equipment_order,construction_order;
+    private int construction, equipment, equipment_order, construction_order;
+
     //存储后台管理权限
-    private void getAdminManagePermission(SupplierRoleBean.RoleBean bean,int manage_status) {
-        switch (bean.getMenu()){
+    private void getAdminManagePermission(SupplierRoleBean.RoleBean bean, int manage_status) {
+        switch (bean.getMenu()) {
             case CustomConfig.CONSTRUCTION_LIST://周转材料列表
-                SPUtils.getInstance().put(CustomConfig.CONSTRUCTION_LIST,bean.getStatus());
-                construction=bean.getStatus();
+                SPUtils.getInstance().put(CustomConfig.CONSTRUCTION_LIST, bean.getStatus());
+                construction = bean.getStatus();
                 break;
             case CustomConfig.CONSTRUCTION_DETAIL://周转材料详情
-                SPUtils.getInstance().put(CustomConfig.CONSTRUCTION_DETAIL,bean.getStatus());
+                SPUtils.getInstance().put(CustomConfig.CONSTRUCTION_DETAIL, bean.getStatus());
                 break;
             case CustomConfig.CONSTRUCTION_ADD://周转材料添加
-                SPUtils.getInstance().put(CustomConfig.CONSTRUCTION_ADD,bean.getStatus());
+                SPUtils.getInstance().put(CustomConfig.CONSTRUCTION_ADD, bean.getStatus());
                 break;
             case CustomConfig.CONSTRUCTION_EDIT://周转材料修改
-                SPUtils.getInstance().put(CustomConfig.CONSTRUCTION_EDIT,bean.getStatus());
+                SPUtils.getInstance().put(CustomConfig.CONSTRUCTION_EDIT, bean.getStatus());
                 break;
             case CustomConfig.CONSTRUCTION_DELETE://周转材料删除
-                SPUtils.getInstance().put(CustomConfig.CONSTRUCTION_DELETE,bean.getStatus());
+                SPUtils.getInstance().put(CustomConfig.CONSTRUCTION_DELETE, bean.getStatus());
                 break;
             case CustomConfig.EQIPMENT_LIST://设备列表
-                SPUtils.getInstance().put(CustomConfig.EQIPMENT_LIST,bean.getStatus());
-                equipment=bean.getStatus();
+                SPUtils.getInstance().put(CustomConfig.EQIPMENT_LIST, bean.getStatus());
+                equipment = bean.getStatus();
                 break;
             case CustomConfig.EQIPMENT_DETAIL://设备详情
-                SPUtils.getInstance().put(CustomConfig.EQIPMENT_DETAIL,bean.getStatus());
+                SPUtils.getInstance().put(CustomConfig.EQIPMENT_DETAIL, bean.getStatus());
                 break;
             case CustomConfig.EQIPMENT_ADD://设备添加
-                SPUtils.getInstance().put(CustomConfig.EQIPMENT_ADD,bean.getStatus());
+                SPUtils.getInstance().put(CustomConfig.EQIPMENT_ADD, bean.getStatus());
                 break;
             case CustomConfig.EQIPMENT_EDIT://设备修改
-                SPUtils.getInstance().put(CustomConfig.EQIPMENT_EDIT,bean.getStatus());
+                SPUtils.getInstance().put(CustomConfig.EQIPMENT_EDIT, bean.getStatus());
                 break;
             case CustomConfig.EQIPMENT_DELETE://设备删除
-                SPUtils.getInstance().put(CustomConfig.EQIPMENT_DELETE,bean.getStatus());
+                SPUtils.getInstance().put(CustomConfig.EQIPMENT_DELETE, bean.getStatus());
                 break;
             case CustomConfig.EQIPMENT_ORDER_LIST://设备订单列表
-                SPUtils.getInstance().put(CustomConfig.EQIPMENT_ORDER_LIST,bean.getStatus());
-                equipment_order=bean.getStatus();
+                SPUtils.getInstance().put(CustomConfig.EQIPMENT_ORDER_LIST, bean.getStatus());
+                equipment_order = bean.getStatus();
                 break;
             case CustomConfig.EQIPMENT_ORDER_DETAIL://设备订单详情
-                SPUtils.getInstance().put(CustomConfig.EQIPMENT_ORDER_DETAIL,bean.getStatus());
+                SPUtils.getInstance().put(CustomConfig.EQIPMENT_ORDER_DETAIL, bean.getStatus());
                 break;
             case CustomConfig.EQIPMENT_ORDER_EDIT://设备订单修改
-                SPUtils.getInstance().put(CustomConfig.EQIPMENT_ORDER_EDIT,bean.getStatus());
+                SPUtils.getInstance().put(CustomConfig.EQIPMENT_ORDER_EDIT, bean.getStatus());
                 break;
             case CustomConfig.CONSTRUCTION_ORDER_LIST://周转材料订单列表
-                SPUtils.getInstance().put(CustomConfig.CONSTRUCTION_ORDER_LIST,bean.getStatus());
-                construction_order=bean.getStatus();
+                SPUtils.getInstance().put(CustomConfig.CONSTRUCTION_ORDER_LIST, bean.getStatus());
+                construction_order = bean.getStatus();
                 break;
             case CustomConfig.CONSTRUCTION_ORDER_DETAIL://周转材料订单详情
-                SPUtils.getInstance().put(CustomConfig.CONSTRUCTION_ORDER_DETAIL,bean.getStatus());
+                SPUtils.getInstance().put(CustomConfig.CONSTRUCTION_ORDER_DETAIL, bean.getStatus());
                 break;
             case CustomConfig.CONSTRUCTION_ORDER_EDIT://周转材料订单详情
-                SPUtils.getInstance().put(CustomConfig.CONSTRUCTION_ORDER_EDIT,bean.getStatus());
+                SPUtils.getInstance().put(CustomConfig.CONSTRUCTION_ORDER_EDIT, bean.getStatus());
                 break;
         }
-        getAdminEntrance(construction,equipment,equipment_order,construction_order,manage_status);
+        getAdminEntrance(construction, equipment, equipment_order, construction_order, manage_status);
     }
 
     //后台管理入口判断显示
-    private void getAdminEntrance(int construction,int equipment,int equipment_order,int construction_order,int manage_status) {
-        switch (manage_status){
+    private void getAdminEntrance(int construction, int equipment, int equipment_order, int construction_order, int manage_status) {
+        switch (manage_status) {
             case 0://普通用户
                 llAdminManage.setVisibility(View.GONE);
                 break;
@@ -354,28 +364,28 @@ public class MineFragment extends BaseFragment {
             case 2://子公司
             case 3://集团
                 llAdminManage.setVisibility(View.VISIBLE);
-                SPUtils.getInstance().put(CustomConfig.INNER_SWITCH,1);
+                SPUtils.getInstance().put(CustomConfig.INNER_SWITCH, 1);
                 break;
             case 4://子公司子账号
             case 5://集团子账号
-                SPUtils.getInstance().put(CustomConfig.INNER_SWITCH,1);
-                if (construction==0&&equipment==0&&equipment_order==0&&construction_order==0){
+                SPUtils.getInstance().put(CustomConfig.INNER_SWITCH, 1);
+                if (construction == 0 && equipment == 0 && equipment_order == 0 && construction_order == 0) {
                     llAdminManage.setVisibility(View.GONE);
-                }else {
+                } else {
                     llAdminManage.setVisibility(View.VISIBLE);
-                    if (construction==1){
+                    if (construction == 1) {
                         tvTurnoverMaterial.setVisibility(View.VISIBLE);
-                    }else {
+                    } else {
                         tvTurnoverMaterial.setVisibility(View.GONE);
                     }
-                    if (equipment==1){
+                    if (equipment == 1) {
                         tvDeviceManagement.setVisibility(View.VISIBLE);
-                    }else {
+                    } else {
                         tvDeviceManagement.setVisibility(View.GONE);
                     }
-                    if (equipment_order==1||construction_order==1){
+                    if (equipment_order == 1 || construction_order == 1) {
                         tvOrderManagement.setVisibility(View.VISIBLE);
-                    }else {
+                    } else {
                         tvOrderManagement.setVisibility(View.GONE);
                     }
                 }
