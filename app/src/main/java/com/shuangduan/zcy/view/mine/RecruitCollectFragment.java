@@ -16,8 +16,10 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.RecruitAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
+import com.shuangduan.zcy.base.BaseFragment;
 import com.shuangduan.zcy.base.BaseLazyFragment;
 import com.shuangduan.zcy.factory.EmptyViewFactory;
+import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.RecruitBean;
 import com.shuangduan.zcy.view.recruit.RecruitActivity;
 import com.shuangduan.zcy.view.recruit.RecruitDetailActivity;
@@ -36,7 +38,7 @@ import butterknife.BindView;
  * @chang time
  * @class describe
  */
-public class RecruitCollectFragment extends BaseLazyFragment implements EmptyViewFactory.EmptyViewCallBack {
+public class RecruitCollectFragment extends BaseFragment implements EmptyViewFactory.EmptyViewCallBack {
     @BindView(R.id.rv)
     RecyclerView rv;
     @BindView(R.id.refresh)
@@ -61,7 +63,7 @@ public class RecruitCollectFragment extends BaseLazyFragment implements EmptyVie
     }
 
     @Override
-    protected void initDataAndEvent(Bundle savedInstanceState) {
+    protected void initDataAndEvent(Bundle savedInstanceState,View v) {
         View emptyView = createEmptyView(R.drawable.icon_empty_project, R.string.empty_recruit_collect_info, R.string.to_look_over, this);
 
         rv.setLayoutManager(new LinearLayoutManager(mContext));
@@ -96,6 +98,17 @@ public class RecruitCollectFragment extends BaseLazyFragment implements EmptyVie
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 mineCollectionVm.recruitCollection();
+            }
+        });
+
+        mineCollectionVm.pageStateLiveData.observe(this, s -> {
+            switch (s) {
+                case PageState.PAGE_LOADING:
+                    showLoading();
+                    break;
+                default:
+                    hideLoading();
+                    break;
             }
         });
     }

@@ -17,7 +17,9 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ProjectCollectAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseFragment;
+import com.shuangduan.zcy.base.BaseLazyFragment;
 import com.shuangduan.zcy.factory.EmptyViewFactory;
+import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.ProjectCollectBean;
 import com.shuangduan.zcy.view.projectinfo.ProjectDetailActivity;
 import com.shuangduan.zcy.view.projectinfo.ProjectInfoListActivity;
@@ -61,7 +63,7 @@ public class ProjectCollectFragment extends BaseFragment implements EmptyViewFac
     }
 
     @Override
-    protected void initDataAndEvent(Bundle savedInstanceState, View v) {
+    protected void initDataAndEvent(Bundle savedInstanceState,View v) {
         View emptyView = createEmptyView(R.drawable.icon_empty_project, R.string.empty_project_collect_info, R.string.to_look_over, this);
 
         rv.setLayoutManager(new LinearLayoutManager(mContext));
@@ -97,6 +99,18 @@ public class ProjectCollectFragment extends BaseFragment implements EmptyViewFac
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 mineCollectionVm.projectCollection();
+            }
+        });
+
+
+        mineCollectionVm.pageStateLiveData.observe(this, s -> {
+            switch (s) {
+                case PageState.PAGE_LOADING:
+                    showLoading();
+                    break;
+                default:
+                    hideLoading();
+                    break;
             }
         });
     }

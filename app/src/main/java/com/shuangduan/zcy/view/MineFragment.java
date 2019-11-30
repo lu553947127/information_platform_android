@@ -3,6 +3,7 @@ package com.shuangduan.zcy.view;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -16,6 +17,7 @@ import androidx.core.widget.NestedScrollView;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
@@ -52,6 +54,7 @@ import com.shuangduan.zcy.weight.HeadZoomScrollView;
 
 import org.greenrobot.eventbus.Subscribe;
 
+import java.lang.annotation.Annotation;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -102,6 +105,9 @@ public class MineFragment extends BaseFragment {
     //顶部状态栏透明度和颜色
     private static int sColor;
     private static float sAlpha;
+    private AnimatorRun animatorRun;
+    private Handler mineHandler;
+    private ObjectAnimator animator;
 
     public static MineFragment newInstance() {
         Bundle args = new Bundle();
@@ -178,16 +184,24 @@ public class MineFragment extends BaseFragment {
             tvAuthentication.setText("申请实名认证");
         }
 
+        mineHandler = MyApplication.getMainThreadHandler();
+        animatorRun = new AnimatorRun();
         //红包开启抖动动画
-        MyApplication.getMainThreadHandler().postDelayed(() -> {
+        mineHandler.postDelayed(animatorRun, 500);
+    }
+
+
+    class AnimatorRun implements Runnable {
+        @Override
+        public void run() {
             try {
-                ObjectAnimator animator = AnimationUtils.tada(ivRedEnvelopes);
+                animator = AnimationUtils.tada(ivRedEnvelopes);
                 animator.setRepeatCount(ValueAnimator.INFINITE);
                 animator.start();
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }, 500);
+        }
     }
 
     @Override
@@ -402,5 +416,17 @@ public class MineFragment extends BaseFragment {
             toolbar.setBackgroundColor(sColor);
             toolbar.setVisibility(View.VISIBLE);
         }
+    }
+
+
+    @Override
+    public void onDestroyView() {
+        animator.cancel();
+        animator.clone();
+        mineHandler.removeCallbacks(animatorRun);
+        animator = null;
+        animatorRun = null;
+        mineHandler = null;
+        super.onDestroyView();
     }
 }

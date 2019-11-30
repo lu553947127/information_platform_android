@@ -106,6 +106,7 @@ public abstract class BaseLazyFragment extends Fragment implements IView {
     //防止view的重复加载 与FragmentPagerAdapter 中destroyItem方法取消调用父类的效果是一样的
     protected void onInvisible() {
         isVisible = false;
+        isLoaded = false;
     }
 
     private void lazyLoad() {
