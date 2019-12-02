@@ -421,12 +421,19 @@ public class MineFragment extends BaseFragment {
 
     @Override
     public void onDestroyView() {
-        animator.cancel();
-        animator.clone();
-        mineHandler.removeCallbacks(animatorRun);
-        animator = null;
-        animatorRun = null;
-        mineHandler = null;
+        if (animator != null) {
+            animator.cancel();
+            animator.clone();
+            animator = null;
+        }
+        if (mineHandler != null) {
+            mineHandler.removeCallbacks(animatorRun);
+            mineHandler = null;
+        }
+        if (animatorRun != null) {
+            animatorRun = null;
+        }
+
         super.onDestroyView();
     }
 }

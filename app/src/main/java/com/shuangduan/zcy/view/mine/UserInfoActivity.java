@@ -1,10 +1,8 @@
 package com.shuangduan.zcy.view.mine;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -120,7 +118,6 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
         return R.layout.activity_user_info;
     }
 
-    @SuppressLint("SetTextI18n")
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
