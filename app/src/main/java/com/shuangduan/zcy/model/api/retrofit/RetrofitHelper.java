@@ -5,8 +5,13 @@ import com.shuangduan.zcy.app.BuildConfig;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.model.api.ApiService;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
+
+import okhttp3.Dns;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import retrofit2.Retrofit;
@@ -43,6 +48,7 @@ public class RetrofitHelper {
                 .retryOnConnectionFailure(true)
                 .sslSocketFactory(Objects.requireNonNull(SSLSocketClient.getSSLSocketFactory()))//配置https证书
                 .hostnameVerifier((hostname, session) -> true)//配置
+                .dns(new ApiDns())
                 .addInterceptor(chain -> {
                     Request original = chain.request();
                     // Request customization: add request headers
