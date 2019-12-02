@@ -239,7 +239,7 @@ public class TurnoverMaterialFragment extends BaseNoRefreshFragment {
         //获取项目列表数据
         turnoverVm.turnoverProject.observe(this,turnoverNameBeans -> {
             projectList = turnoverNameBeans;
-            if (manage_status==3||manage_status==5) projectList.add(0,new TurnoverNameBean(0,"全部"));
+            if (manage_status==3||manage_status==5&&!projectList.get(0).name.equals("全部")) projectList.add(0,new TurnoverNameBean(0,"全部"));
             turnoverProjectAdapter.setNewData(projectList);
         });
 
@@ -260,7 +260,7 @@ public class TurnoverMaterialFragment extends BaseNoRefreshFragment {
         });
         areaVm.cityLiveData.observe(this, cityBeans -> {
             cityList = cityBeans;
-            cityList.add(0,new CityBean(0,"全部"));
+            if (!cityList.get(0).getName().equals("全部"))cityList.add(0,new CityBean(0,"全部"));
             cityAdapter.setNewData(cityList);
         });
 
