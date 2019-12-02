@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
@@ -180,17 +179,18 @@ public class HomeFragment extends BaseFragment {
         });
 
         //基建头条列表返回数据
+        rvHeadlines.setLayoutManager(new LinearLayoutManager(mContext));
+        rvHeadlines.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
+        HomeHeadlinesAdapter headlinesAdapter = new HomeHeadlinesAdapter(R.layout.item_headlines, null);
+        rvHeadlines.setAdapter(headlinesAdapter);
+        headlinesAdapter.setOnItemClickListener((adapter, view, position) -> {
+            HomeListBean.HeadlinesBean headlinesBean = headlinesAdapter.getData().get(position);
+            Bundle bundle = new Bundle();
+            bundle.putInt(CustomConfig.HEADLINES_ID, headlinesBean.getId());
+            ActivityUtils.startActivity(bundle, HeadlinesDetailActivity.class);
+        });
         homeVm.listLiveData.observe(this, homeListBean -> {
-            rvHeadlines.setLayoutManager(new LinearLayoutManager(mContext));
-            rvHeadlines.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
-            HomeHeadlinesAdapter headlinesAdapter = new HomeHeadlinesAdapter(R.layout.item_headlines, homeListBean.getHeadlines());
-            rvHeadlines.setAdapter(headlinesAdapter);
-            headlinesAdapter.setOnItemClickListener((adapter, view, position) -> {
-                HomeListBean.HeadlinesBean headlinesBean = headlinesAdapter.getData().get(position);
-                Bundle bundle = new Bundle();
-                bundle.putInt(CustomConfig.HEADLINES_ID, headlinesBean.getId());
-                ActivityUtils.startActivity(bundle, HeadlinesDetailActivity.class);
-            });
+            headlinesAdapter.setNewData(homeListBean.getHeadlines());
         });
 
         //版本升级返回数据
@@ -440,15 +440,11 @@ public class HomeFragment extends BaseFragment {
         homeNeedVm.recyclerView3.stop();
     }
 
-
     @Override
     public void onDestroy() {
         RongIM.getInstance().removeUnReadMessageCountChangedObserver(observer);
         super.onDestroy();
     }
-
-
-
 
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
@@ -460,5 +456,4 @@ public class HomeFragment extends BaseFragment {
             toolbar.setVisibility(View.VISIBLE);
         }
     }
-
 }
