@@ -28,8 +28,6 @@ public class MyApplication extends Application {
         super.onCreate();
         instance = this;
         AppConfig.init(this);
-
-
     }
 
     public static MyApplication getInstance() {

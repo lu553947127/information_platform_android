@@ -393,7 +393,6 @@ public class LoginActivity extends BaseActivity {
 
     /**
      * 切换登录和注册
-     *
      * @param type
      */
     private void changeLoginStyle(int type) {
@@ -424,6 +423,5 @@ public class LoginActivity extends BaseActivity {
         openid = event.getOpenId();
         unionid = event.getUnionId();
         loginVm.getWeChatVerification(unionid, openid);
-
     }
 }

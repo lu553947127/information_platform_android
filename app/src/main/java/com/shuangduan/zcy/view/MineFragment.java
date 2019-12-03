@@ -17,7 +17,6 @@ import androidx.core.widget.NestedScrollView;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.ActivityUtils;
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
@@ -51,10 +50,7 @@ import com.shuangduan.zcy.vm.UserInfoVm;
 import com.shuangduan.zcy.weight.AdaptationScrollView;
 import com.shuangduan.zcy.weight.CircleImageView;
 import com.shuangduan.zcy.weight.HeadZoomScrollView;
-
 import org.greenrobot.eventbus.Subscribe;
-
-import java.lang.annotation.Annotation;
 import java.util.Objects;
 
 import butterknife.BindView;
