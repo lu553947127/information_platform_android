@@ -28,6 +28,13 @@ public class MyApplication extends Application {
         super.onCreate();
         instance = this;
         AppConfig.init(this);
+
+//        if (LeakCanary.isInAnalyzerProcess(this)) {
+//            return;
+//        }
+//
+//        LeakCanary.install(this);
+
     }
 
     public static MyApplication getInstance() {

@@ -214,4 +214,6 @@ dependencies {
     //noinspection GradlePath
     implementation files('libs\\com.coloros.mcssdk.jar')
 
+    //优化内存
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-alpha-3'
 }
