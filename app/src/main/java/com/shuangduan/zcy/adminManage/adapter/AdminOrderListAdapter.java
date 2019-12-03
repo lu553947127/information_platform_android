@@ -39,18 +39,15 @@ public class AdminOrderListAdapter extends BaseQuickAdapter<AdminOrderBean.Order
     protected void convert(BaseViewHolder helper, AdminOrderBean.OrderList item) {
 
         helper.setText(R.id.tv_material_name, item.materialIdName)
-                .setText(R.id.tv_category, orderType == 0 ?
-                        mContext.getString(R.string.format_admin_category, item.categoryName) : mContext.getString(R.string.format_admin_device_category, item.categoryName))
+                .setText(R.id.tv_category, orderType == 0 ? mContext.getString(R.string.format_admin_category, item.categoryName) : mContext.getString(R.string.format_admin_device_category, item.categoryName))
                 .setText(R.id.tv_project, mContext.getString(R.string.format_admin_project, item.unitName))
                 .setText(R.id.tv_company, mContext.getString(R.string.format_admin_company, item.company))
                 .setText(R.id.tv_order_number, mContext.getString(R.string.format_admin_order_number, item.orderNumber))
                 .setVisible(R.id.tv_inside, item.inside == 3)
                 .setVisible(R.id.tv_reject, item.statusUpdate == 1);
 
-
         Drawable drawable = DrawableUtils.getDrawable(mContext.getResources().getColor(R.color.color_EFEEFD), 3);
         helper.getView(R.id.tv_order_state).setBackground(drawable);
-
 
         helper.addOnClickListener(R.id.tv_reject, R.id.tv_progress);
 
@@ -61,6 +58,7 @@ public class AdminOrderListAdapter extends BaseQuickAdapter<AdminOrderBean.Order
             case 2://子公司
                 helper.setGone(R.id.tv_company, false);
                 linearLayout.setVisibility(View.VISIBLE);
+                getOrderStatus(helper,item);
                 break;
             case 3://集团
             case 5://集团子账号
@@ -71,6 +69,7 @@ public class AdminOrderListAdapter extends BaseQuickAdapter<AdminOrderBean.Order
                 helper.setGone(R.id.tv_company, false);
                 if (construction_order_edit == 1) {
                     linearLayout.setVisibility(View.VISIBLE);
+                    getOrderStatus(helper,item);
                 } else {
                     linearLayout.setVisibility(View.GONE);
                 }
@@ -79,11 +78,17 @@ public class AdminOrderListAdapter extends BaseQuickAdapter<AdminOrderBean.Order
 
         if (item.statusId == 1) {
             helper.setText(R.id.tv_order_state, item.phases);
+        }else {
+            helper.setText(R.id.tv_order_state, item.status);
+        }
+    }
+
+    //在有编辑订单权限时，判断当前订单状态是否可编辑
+    private void getOrderStatus(BaseViewHolder helper,AdminOrderBean.OrderList item) {
+        if (item.statusId == 1) {
             helper.setGone(R.id.ll_edit, item.phasesId != 7);
         } else {
-            helper.setText(R.id.tv_order_state, item.status);
             helper.setGone(R.id.ll_edit, false);
         }
-
     }
 }

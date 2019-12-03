@@ -399,8 +399,9 @@ public class CircleFragment extends BaseFragment {
     }
 
     @Override
-    public void onDestroy() {
+    public void onPause() {
+        super.onPause();
+        LogUtils.e("onPause");
         RongIM.getInstance().removeUnReadMessageCountChangedObserver(observer);
-        super.onDestroy();
     }
 }
