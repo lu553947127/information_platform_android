@@ -489,7 +489,7 @@ public class OrderDeviceFragment extends BaseNoRefreshFragment implements BaseQu
                             }
                         }
                         if (position - index != 1) {
-                            ToastUtils.showShort("订单进度不能跨越.");
+                            ToastUtils.showShort("订单进度不能跨越");
                             return;
                         }
                         orderVm.equipmentOrderPhase(order.id, orderPhasesList.get(position).getId());

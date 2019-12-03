@@ -511,7 +511,7 @@ public class OrderTurnoverFragment extends BaseNoRefreshFragment implements Base
                         orderVm.updatePhasesId = orderPhases.getId();
                         AdminOrderBean.OrderList order = adminOrderListAdapter.getData().get(orderVm.position);
                         if (orderPhasesList.get(position).getId() <= order.phasesId) {
-                            ToastUtils.showShort("订单进度不能回退.");
+                            ToastUtils.showShort("订单进度不能回退");
                             return;
                         }
 
@@ -522,7 +522,7 @@ public class OrderTurnoverFragment extends BaseNoRefreshFragment implements Base
                             }
                         }
                         if (position - index != 1) {
-                            ToastUtils.showShort("订单进度不能跨越.");
+                            ToastUtils.showShort("订单进度不能跨越");
                             return;
                         }
                         orderVm.constructionOrderPhases(order.orderId, orderPhasesList.get(position).getId());

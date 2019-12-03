@@ -4,14 +4,8 @@ import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.app.BuildConfig;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.model.api.ApiService;
-
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
-
-import okhttp3.Dns;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import retrofit2.Retrofit;
