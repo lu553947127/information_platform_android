@@ -13,6 +13,8 @@ import com.shuangduan.zcy.view.login.LoginActivity;
 
 import java.util.List;
 
+import io.rong.imkit.RongIM;
+
 /**
  * <pre>
  *     author : 徐玉
@@ -76,6 +78,7 @@ public class LoginUtils {
         SPUtils.getInstance().put(SpConfig.FIRST_APP, 1);
         ActivityUtils.startActivity(LoginActivity.class);
         ActivityUtils.finishOtherActivities(LoginActivity.class);
+        RongIM.getInstance().logout();
     }
 
     /**

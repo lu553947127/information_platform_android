@@ -113,7 +113,6 @@ public class UserInfoInputActivity extends BaseActivity {
             SPUtils.getInstance().put(SpConfig.INFO_STATUS, 1);
             //获取融云token
             imConnectVm.getToken();
-
             mineSubVm.myPhases();
         });
         userInfoVm.pageStateLiveData.observe(this, s -> {
@@ -164,7 +163,6 @@ public class UserInfoInputActivity extends BaseActivity {
     void onClick(View view){
         switch (view.getId()){
             case R.id.iv_bar_back:
-//                ActivityUtils.finishAllActivities();
                 finish();
                 break;
             case R.id.tv_bar_right:
@@ -220,18 +218,4 @@ public class UserInfoInputActivity extends BaseActivity {
             ToastUtils.showShort("业务地区最多只能选择5个");
         }
     }
-
-//    /**
-//     * 返回键退出应用
-//     */
-//    @Override
-//    public boolean onKeyDown(int keyCode, KeyEvent event) {
-//        if (keyCode == KeyEvent.KEYCODE_BACK) {
-//            ActivityUtils.finishAllActivities();
-//            return true;
-//        }
-//
-//        return super.onKeyDown(keyCode, event);
-//    }
-
 }
