@@ -95,10 +95,10 @@ public class LoginActivity extends BaseActivity {
     private final int LOGIN = 1;//登录
     private final int REGISTER = 2;//注册
     private int loginStyle = LOGIN;//默认显示登录页面
-    private int isAccount=0;
+    private int isAccount = 0;
     private SharesUtils sharesUtils;
-    private String openid,unionid;
-    private int isAgreement=1;
+    private String openid, unionid;
+    private int isAgreement = 1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -119,14 +119,14 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
-        sharesUtils=new SharesUtils(this);
+        sharesUtils = new SharesUtils(this);
         loginVm = ViewModelProviders.of(this).get(LoginVm.class);
 
         //登录验证码获取成功返回结果
-        loginVm.timeLiveDataLiveData.observe(this, aLong -> getCode(aLong,tvSendVerificationCode));
+        loginVm.timeLiveDataLiveData.observe(this, aLong -> getCode(aLong, tvSendVerificationCode));
 
         //注册验证码获取成功返回结果
-        loginVm.timeLiveDataLiveDataRegister.observe(this,aLong -> getCode(aLong,tvSendVerificationCodeRegister));
+        loginVm.timeLiveDataLiveDataRegister.observe(this, aLong -> getCode(aLong, tvSendVerificationCodeRegister));
 
         //初始化，融云链接服务器
         imConnectVm = ViewModelProviders.of(this).get(IMConnectVm.class);
@@ -140,12 +140,12 @@ public class LoginActivity extends BaseActivity {
 
         //记住用户名
         cbKeepUser.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            switch (buttonView.getId()){
+            switch (buttonView.getId()) {
                 case R.id.cb_keep_user:
-                    if(isChecked){
-                        isAccount=1;
-                    }else {
-                        isAccount=0;
+                    if (isChecked) {
+                        isAccount = 1;
+                    } else {
+                        isAccount = 0;
                     }
                     break;
             }
@@ -154,48 +154,48 @@ public class LoginActivity extends BaseActivity {
         //同意隐私协议和用户注册协议
         cbAgreement.setChecked(true);
         cbAgreement.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            switch (buttonView.getId()){
+            switch (buttonView.getId()) {
                 case R.id.cb_agreement:
-                    if(isChecked){
-                        isAgreement=1;
-                    }else {
-                        isAgreement=0;
+                    if (isChecked) {
+                        isAgreement = 1;
+                    } else {
+                        isAgreement = 0;
                     }
                     break;
             }
         });
 
         //记住用户名 获取是否已经记忆
-        if (!sharesUtils.getShared("isAccount","login").equals("")){
+        if (!sharesUtils.getShared("isAccount", "login").equals("")) {
             cbKeepUser.setChecked(true);
-            edtAccount.setText(sharesUtils.getShared(SpConfig.ACCOUNT,"login"));
-        }else {
+            edtAccount.setText(sharesUtils.getShared(SpConfig.ACCOUNT, "login"));
+        } else {
             cbKeepUser.setChecked(false);
         }
 
         //微信验证是否绑定过返回结果
-        loginVm.wxLoginVerificationBeanMutableLiveData.observe(this,wxLoginVerificationBean -> {
+        loginVm.wxLoginVerificationBeanMutableLiveData.observe(this, wxLoginVerificationBean -> {
             //判断是否绑定
-            if (wxLoginVerificationBean.getWechat_status()==1){
+            if (wxLoginVerificationBean.getWechat_status() == 1) {
 
                 SPUtils.getInstance().put(SpConfig.USER_ID, wxLoginVerificationBean.getUser_id(), true);
                 SPUtils.getInstance().put(SpConfig.TOKEN, wxLoginVerificationBean.getToken(), true);
                 SPUtils.getInstance().put(SpConfig.MOBILE, wxLoginVerificationBean.getTel(), true);
                 SPUtils.getInstance().put(SpConfig.INFO_STATUS, wxLoginVerificationBean.getInfo_status(), true);
-                SPUtils.getInstance().put(SpConfig.IS_VERIFIED, wxLoginVerificationBean.getCard_status(),true);
+                SPUtils.getInstance().put(SpConfig.IS_VERIFIED, wxLoginVerificationBean.getCard_status(), true);
 
                 //判断是否完善信息
-                if (wxLoginVerificationBean.getInfo_status()==1){
+                if (wxLoginVerificationBean.getInfo_status() == 1) {
                     imConnectVm.userId = wxLoginVerificationBean.getUser_id();
                     imConnectVm.getToken();
-                }else {
+                } else {
                     ActivityUtils.startActivity(UserInfoInputActivity.class);
                 }
-            }else {
+            } else {
                 Bundle bundle = new Bundle();
-                bundle.putString("open_id",openid);
-                bundle.putString("union_id",unionid);
-                ActivityUtils.startActivity(bundle,WeChatBindingActivity.class);
+                bundle.putString("open_id", openid);
+                bundle.putString("union_id", unionid);
+                ActivityUtils.startActivity(bundle, WeChatBindingActivity.class);
             }
         });
 
@@ -206,14 +206,14 @@ public class LoginActivity extends BaseActivity {
             SPUtils.getInstance().put(SpConfig.TOKEN, loginBean.getToken(), true);
             SPUtils.getInstance().put(SpConfig.MOBILE, loginBean.getTel(), true);
             SPUtils.getInstance().put(SpConfig.INFO_STATUS, loginBean.getInfo_status(), true);
-            SPUtils.getInstance().put(SpConfig.IS_VERIFIED, loginBean.getCard_status(),true);
-            switch (loginStyle){
+            SPUtils.getInstance().put(SpConfig.IS_VERIFIED, loginBean.getCard_status(), true);
+            switch (loginStyle) {
                 case LOGIN://登录
                     //记住用户名 记忆开始
-                    if (isAccount==1){
-                        sharesUtils.addShared(SpConfig.ACCOUNT, edtAccount.getText().toString(),"login");
-                        sharesUtils.addShared("isAccount", String.valueOf(isAccount),"login");
-                    }else {
+                    if (isAccount == 1) {
+                        sharesUtils.addShared(SpConfig.ACCOUNT, edtAccount.getText().toString(), "login");
+                        sharesUtils.addShared("isAccount", String.valueOf(isAccount), "login");
+                    } else {
                         sharesUtils.clearShared("login");
                     }
                     LogUtils.i(loginBean.getInfo_status());
@@ -244,8 +244,8 @@ public class LoginActivity extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.tv_login,R.id.tv_register,R.id.tv_login_account,R.id.tv_send_verification_code,R.id.tv_login_home,R.id.tv_forget_pwd
-            ,R.id.tv_send_verification_code_register, R.id.tv_register_home,R.id.tv_privacy_text,R.id.tv_register_text,R.id.iv_wechat})
+    @OnClick({R.id.tv_login, R.id.tv_register, R.id.tv_login_account, R.id.tv_send_verification_code, R.id.tv_login_home, R.id.tv_forget_pwd
+            , R.id.tv_send_verification_code_register, R.id.tv_register_home, R.id.tv_privacy_text, R.id.tv_register_text, R.id.iv_wechat})
     void onClick(View view) {
         Bundle bundle = new Bundle();
         switch (view.getId()) {
@@ -256,18 +256,18 @@ public class LoginActivity extends BaseActivity {
                 changeLoginStyle(REGISTER);
                 break;
             case R.id.tv_login_account://账号登陆/验证码登录切换
-                if (tvLoginAccount.getText().toString().equals(getString(R.string.login_account))){
+                if (tvLoginAccount.getText().toString().equals(getString(R.string.login_account))) {
                     tvLoginAccount.setText(getString(R.string.login_verification_code));
                     edtPwd.setVisibility(View.VISIBLE);
                     rlVerification_code.setVisibility(View.GONE);
-                }else if (tvLoginAccount.getText().toString().equals(getString(R.string.login_verification_code))){
+                } else if (tvLoginAccount.getText().toString().equals(getString(R.string.login_verification_code))) {
                     tvLoginAccount.setText(getString(R.string.login_account));
                     edtPwd.setVisibility(View.GONE);
                     rlVerification_code.setVisibility(View.VISIBLE);
                 }
                 break;
             case R.id.tv_send_verification_code://获取验证码
-                smsCode(tvSendVerificationCode,edtAccount);
+                smsCode(tvSendVerificationCode, edtAccount);
                 break;
             case R.id.tv_login_home://登录
                 login();
@@ -276,7 +276,7 @@ public class LoginActivity extends BaseActivity {
                 ActivityUtils.startActivity(ForgetPwdActivity.class);
                 break;
             case R.id.tv_send_verification_code_register://注册获取验证码
-                smsCode(tvSendVerificationCodeRegister,edtMobile);
+                smsCode(tvSendVerificationCodeRegister, edtMobile);
                 break;
             case R.id.tv_register_home://注册
                 register();
@@ -287,15 +287,15 @@ public class LoginActivity extends BaseActivity {
                 break;
             case R.id.tv_register_text://用户注册协议
                 bundle.putString("register", "register");
-                ActivityUtils.startActivity(bundle,WebViewActivity.class);
+                ActivityUtils.startActivity(bundle, WebViewActivity.class);
                 break;
             case R.id.iv_wechat://微信登录
-                if (LoginUtils.isWeiXinInstall(this)){
+                if (LoginUtils.isWeiXinInstall(this)) {
                     SendAuth.Req req = new SendAuth.Req();
                     req.scope = "snsapi_userinfo";
                     req.state = "wechat_sdk_shuangduan_zcy";
                     AppConfig.iwxapi.sendReq(req);
-                }else {
+                } else {
                     ToastUtils.showShort("您还没有安装微信，请先安装微信客户端");
                 }
                 break;
@@ -303,30 +303,30 @@ public class LoginActivity extends BaseActivity {
     }
 
     //获取验证码
-    private void smsCode(AppCompatTextView textView,AppCompatEditText editText) {
+    private void smsCode(AppCompatTextView textView, AppCompatEditText editText) {
         if (TextUtils.isEmpty(editText.getText())) {
             ToastUtils.showShort(getString(R.string.mobile_error));
             return;
         }
-        if (loginStyle==LOGIN){
+        if (loginStyle == LOGIN) {
             loginVm.smsCode(editText.getText().toString(), CustomConfig.SMS_LOGIN);
-        }else {
+        } else {
             loginVm.smsCode(editText.getText().toString(), CustomConfig.SMS_REGISTER);
         }
         loginVm.smsDataLiveData.observe(this, o -> {
             textView.setClickable(false);
             textView.setBackgroundColor(getResources().getColor(R.color.color_DDDDDD));
             textView.setTextColor(getResources().getColor(R.color.color_999999));
-            if (loginStyle==LOGIN){
+            if (loginStyle == LOGIN) {
                 loginVm.sendVerificationCode();
-            }else {
+            } else {
                 loginVm.sendVerificationCodeRegister();
             }
         });
     }
 
     //验证码操作
-    private void getCode(Long aLong,AppCompatTextView textView) {
+    private void getCode(Long aLong, AppCompatTextView textView) {
         if (aLong == -1) {
             //重新获取
             textView.setText(getString(R.string.send_again));
@@ -350,7 +350,7 @@ public class LoginActivity extends BaseActivity {
         String account = Objects.requireNonNull(edtAccount.getText()).toString();//手机号
         String pwd = Objects.requireNonNull(edtPwd.getText()).toString();//密码
         String verificationCode = Objects.requireNonNull(edtVerificationCode.getText()).toString();//验证码
-        if (tvLoginAccount.getText().toString().equals(getString(R.string.login_verification_code))){
+        if (tvLoginAccount.getText().toString().equals(getString(R.string.login_verification_code))) {
             if (TextUtils.isEmpty(edtPwd.getText())) {
                 ToastUtils.showShort(R.string.pwd_empty);
                 return;
@@ -367,19 +367,19 @@ public class LoginActivity extends BaseActivity {
 
     //注册
     private void register() {
-        if (TextUtils.isEmpty(edtMobile.getText())){
+        if (TextUtils.isEmpty(edtMobile.getText())) {
             ToastUtils.showShort(getString(R.string.mobile_error));
             return;
         }
-        if (TextUtils.isEmpty(edtVerificationCodeRegister.getText())){
+        if (TextUtils.isEmpty(edtVerificationCodeRegister.getText())) {
             ToastUtils.showShort(getString(R.string.sms_error));
             return;
         }
-        if (TextUtils.isEmpty(edtPwdRegister.getText())){
+        if (TextUtils.isEmpty(edtPwdRegister.getText())) {
             ToastUtils.showShort(getString(R.string.pwd_empty));
             return;
         }
-        if (isAgreement==0){
+        if (isAgreement == 0) {
             ToastUtils.showShort("请您同意隐私协议和用户注册协议");
             return;
         }
@@ -393,6 +393,7 @@ public class LoginActivity extends BaseActivity {
 
     /**
      * 切换登录和注册
+     *
      * @param type
      */
     private void changeLoginStyle(int type) {
@@ -420,8 +421,9 @@ public class LoginActivity extends BaseActivity {
 
     @Subscribe
     public void onEventWxLogin(WxLoginEvent event) {
-        openid=event.getOpenId();
-        unionid=event.getUnionId();
-        loginVm.getWeChatVerification(unionid,openid);
+        openid = event.getOpenId();
+        unionid = event.getUnionId();
+        loginVm.getWeChatVerification(unionid, openid);
+
     }
 }

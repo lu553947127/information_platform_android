@@ -71,7 +71,7 @@
         <!-- 登录/注册页-->
         <activity
             android:name="com.shuangduan.zcy.view.login.LoginActivity"
-            android:launchMode="singleTop"
+            android:launchMode="singleInstance"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <!-- 首次登陆需要录入信息页-->

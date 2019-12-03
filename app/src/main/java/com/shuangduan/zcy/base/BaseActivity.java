@@ -69,7 +69,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IView, S
         }
 
         //初始化空页面工程
-        emptyViewFactory = EmptyViewFactory.newInstance(this);
+        emptyViewFactory = EmptyViewFactory.newInstance(getApplicationContext());
 
         initDataAndEvent(savedInstanceState);
 
