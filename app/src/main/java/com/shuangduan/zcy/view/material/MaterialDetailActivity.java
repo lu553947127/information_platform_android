@@ -26,10 +26,8 @@ import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.CustomDialog;
-import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.MaterialDetailBean;
 import com.shuangduan.zcy.model.event.MaterialDetailEvent;
-import com.shuangduan.zcy.utils.DigitUtils;
 import com.shuangduan.zcy.utils.KeyboardUtil;
 import com.shuangduan.zcy.utils.TextViewUtils;
 import com.shuangduan.zcy.utils.image.GlideImageLoader;
@@ -98,13 +96,10 @@ public class MaterialDetailActivity extends BaseActivity {
     LinearLayout llCollection;
     @BindView(R.id.tv_reserve)
     TextView tvReserve;
-    @BindView(R.id.iv_purchased_goods)
-    ImageView ivPurchasedGoods;
     @BindView(R.id.rv_browse)
     RecyclerView rvBrowse;
     @BindView(R.id.tv_browse_people)
     TextView tvBrowsePeople;
-
     @BindView(R.id.tv_supply_method)
     TextView tvSupplyMethod;
 
@@ -112,7 +107,6 @@ public class MaterialDetailActivity extends BaseActivity {
     private String phone, is_collect, enclosure;
     private List<String> pics;
     int material_id, supplier_id;
-
     private MaterialDetailBean materialDetail;
 
     @Override
@@ -130,7 +124,6 @@ public class MaterialDetailActivity extends BaseActivity {
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.product_detail));
-
 
         materialDetailVm = ViewModelProviders.of(this).get(MaterialDetailVm.class);
         materialDetailVm.id = getIntent().getIntExtra(CustomConfig.MATERIAL_ID, 0);
@@ -150,7 +143,6 @@ public class MaterialDetailActivity extends BaseActivity {
             }else {
                 tvMaterialCategory.setText(materialDetailBean.getMaterial_category());
             }
-
 
             tvUnitPrice.setText(materialDetailBean.getMethod() == 1 ?
                     String.format(getString(R.string.format_material_price), materialDetailBean.getGuidance_price(), "天") :
@@ -191,8 +183,6 @@ public class MaterialDetailActivity extends BaseActivity {
                 tvReserve.setClickable(false);
             }
 
-//            ivPurchasedGoods.setVisibility(materialDetailBean.getIsShelf() == 3 ? View.VISIBLE : View.GONE);
-
             //设置浏览人数
             if (materialDetailBean.getUser() != null && materialDetailBean.getUser().size() != 0) {
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -206,26 +196,22 @@ public class MaterialDetailActivity extends BaseActivity {
             }
         });
 
+        //收藏返回结果
         materialDetailVm.collectedLiveData.observe(this, o -> {
             llCollection.setClickable(true);
             is_collect = "1";
             ivCollection.setBackgroundResource(R.drawable.icon_new_collectioned);
+            ToastUtils.showShort("收藏成功");
         });
+
+        //取消收藏返回结果
         materialDetailVm.collectLiveData.observe(this, o -> {
             llCollection.setClickable(true);
             is_collect = "0";
             ivCollection.setBackgroundResource(R.drawable.icon_new_collection);
+            ToastUtils.showShort("收取消藏成功");
         });
-        materialDetailVm.pageStateLiveData.observe(this, s -> {
-            switch (s) {
-                case PageState.PAGE_LOADING:
-                    showLoading();
-                    break;
-                default:
-                    hideLoading();
-                    break;
-            }
-        });
+
         materialDetailVm.getDetail(getIntent().getIntExtra(CustomConfig.MATERIAL_ID, 0));
     }
 

@@ -2,7 +2,6 @@ package com.shuangduan.zcy.view.material;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -27,10 +26,8 @@ import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.CustomDialog;
-import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.MaterialDetailBean;
 import com.shuangduan.zcy.model.event.MaterialDetailEvent;
-import com.shuangduan.zcy.utils.DigitUtils;
 import com.shuangduan.zcy.utils.KeyboardUtil;
 import com.shuangduan.zcy.utils.TextViewUtils;
 import com.shuangduan.zcy.utils.image.GlideImageLoader;
@@ -99,25 +96,19 @@ public class MaterialEquipmentDetailActivity extends BaseActivity {
     LinearLayout llCollection;
     @BindView(R.id.tv_reserve)
     TextView tvReserve;
-    @BindView(R.id.iv_purchased_goods)
-    ImageView ivPurchasedGoods;
     @BindView(R.id.rv_browse)
     RecyclerView rvBrowse;
     @BindView(R.id.tv_browse_people)
     TextView tvBrowsePeople;
-
     @BindView(R.id.iv_next)
     ImageView ivNext;
-
     @BindView(R.id.tv_supply_method)
     TextView tvSupplyMethod;
-
 
     private MaterialDetailVm materialDetailVm;
     private String phone, is_collect, enclosure;
     private List<String> pics;
     int material_id, supplier_id;
-
 
     @Override
     protected int initLayoutRes() {
@@ -148,7 +139,6 @@ public class MaterialEquipmentDetailActivity extends BaseActivity {
             }
             initBanner(pics, titles);
 
-
             if(materialDetailBean.getIsShelf()==3){
                 TextViewUtils.addDrawableInEnd(tvMaterialCategory, getResources().getDrawable(R.drawable.icon_mine_default_material), materialDetailBean.getMaterial_category());
             }else {
@@ -169,9 +159,6 @@ public class MaterialEquipmentDetailActivity extends BaseActivity {
             tvAddressList.setText(materialDetailBean.getAddress());
 
             ivNext.setVisibility(View.GONE);
-//            Drawable drawable = getResources().getDrawable(R.drawable.icon_address);
-//            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-//            tvAddressList.setCompoundDrawables(drawable, null, null, null);
 
             tvCompanyName.setText(materialDetailBean.getCompany());
             tvSupplieAddress.setText(materialDetailBean.getSupplie_address());
@@ -200,8 +187,6 @@ public class MaterialEquipmentDetailActivity extends BaseActivity {
                 tvReserve.setClickable(false);
             }
 
-//            ivPurchasedGoods.setVisibility(materialDetailBean.getIsShelf() == 3 ? View.VISIBLE : View.GONE);
-
             //设置浏览人数
             if (materialDetailBean.getUser() != null && materialDetailBean.getUser().size() != 0) {
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -215,26 +200,22 @@ public class MaterialEquipmentDetailActivity extends BaseActivity {
             }
         });
 
+        //收藏返回结果
         materialDetailVm.collectedLiveData.observe(this, o -> {
             llCollection.setClickable(true);
             is_collect = "1";
             ivCollection.setBackgroundResource(R.drawable.icon_new_collectioned);
+            ToastUtils.showShort("收藏成功");
         });
+
+        //取消收藏返回结果
         materialDetailVm.collectLiveData.observe(this, o -> {
             llCollection.setClickable(true);
             is_collect = "0";
             ivCollection.setBackgroundResource(R.drawable.icon_new_collection);
+            ToastUtils.showShort("收取消藏成功");
         });
-        materialDetailVm.pageStateLiveData.observe(this, s -> {
-            switch (s) {
-                case PageState.PAGE_LOADING:
-                    showLoading();
-                    break;
-                default:
-                    hideLoading();
-                    break;
-            }
-        });
+
         materialDetailVm.getEquipmentDetail(getIntent().getIntExtra(CustomConfig.MATERIAL_ID, 0));
     }
 
@@ -287,13 +268,6 @@ public class MaterialEquipmentDetailActivity extends BaseActivity {
                             }
                         }).showDialog();
                 break;
-//            case R.id.tv_address_list:
-//                bundle.putInt(CustomConfig.MATERIAL_ID, material_id);
-//                bundle.putInt(CustomConfig.SUPPLIER_ID, supplier_id);
-//                bundle.putInt(CustomConfig.METHOD_TYPE, materialDetail.getMethod());
-//                bundle.putInt(CustomConfig.IS_SHELF, materialDetail.getIsShelf());
-//                ActivityUtils.startActivity(bundle, DepositingPlaceActivity.class);
-//                break;
             case R.id.ll_collect:
                 llCollection.setClickable(false);
                 if (is_collect != null && is_collect.equals("1")) {
