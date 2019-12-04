@@ -50,6 +50,7 @@ public class MaterialVm extends BaseViewModel {
 
     public int materialId;
 
+
     public int supplierId;
     //规格
     public String specification;
@@ -91,6 +92,8 @@ public class MaterialVm extends BaseViewModel {
 
         supplierMethod = "";
 
+        materialName = "";
+
         materialFlag = 1;
     }
 
@@ -103,9 +106,9 @@ public class MaterialVm extends BaseViewModel {
         sellPage = 1;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
         if (flag == 1) {
-            new MaterialRepository().materialList(sellLiveData, pageStateLiveData, userId, supplierMethodId, materialId, specification, supplierId, sellPage);
+            new MaterialRepository().materialList(sellLiveData, pageStateLiveData, userId, supplierMethodId, materialName, specification, supplierId, sellPage);
         } else {
-            new MaterialRepository().materialList(sellLiveData, pageStateLiveData, userId, supplierMethodId, materialId, specification, supplierId, sellPage, authGroup);
+            new MaterialRepository().materialList(sellLiveData, pageStateLiveData, userId, supplierMethodId, materialName, specification, supplierId, sellPage, authGroup);
         }
     }
 
@@ -113,9 +116,9 @@ public class MaterialVm extends BaseViewModel {
         sellPage++;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
         if (flag == 1) {
-            new MaterialRepository().materialList(sellLiveData, pageStateLiveData, userId, supplierMethodId, materialId, specification, supplierId, sellPage);
+            new MaterialRepository().materialList(sellLiveData, pageStateLiveData, userId, supplierMethodId, materialName, specification, supplierId, sellPage);
         } else {
-            new MaterialRepository().materialList(sellLiveData, pageStateLiveData, userId, supplierMethodId, materialId, specification, supplierId, sellPage, authGroup);
+            new MaterialRepository().materialList(sellLiveData, pageStateLiveData, userId, supplierMethodId, materialName, specification, supplierId, sellPage, authGroup);
         }
     }
 
@@ -128,9 +131,9 @@ public class MaterialVm extends BaseViewModel {
         equipmentPage = 1;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
         if (flag == 1) {
-            new MaterialRepository().getEquipmentList(equipmentLiveData, pageStateLiveData, userId, supplierMethodId, materialId, specification, supplierId, equipmentPage);
+            new MaterialRepository().getEquipmentList(equipmentLiveData, pageStateLiveData, userId, supplierMethodId, materialName, specification, supplierId, equipmentPage);
         } else {
-            new MaterialRepository().getEquipmentList(equipmentLiveData, pageStateLiveData, userId, supplierMethodId, materialId, specification, supplierId, equipmentPage, authGroup);
+            new MaterialRepository().getEquipmentList(equipmentLiveData, pageStateLiveData, userId, supplierMethodId, materialName, specification, supplierId, equipmentPage, authGroup);
         }
     }
 
@@ -138,24 +141,12 @@ public class MaterialVm extends BaseViewModel {
         equipmentPage++;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
         if (flag == 1) {
-            new MaterialRepository().getEquipmentList(equipmentLiveData, pageStateLiveData, userId, supplierMethodId, materialId, specification, supplierId, equipmentPage);
+            new MaterialRepository().getEquipmentList(equipmentLiveData, pageStateLiveData, userId, supplierMethodId, materialName, specification, supplierId, equipmentPage);
         } else {
-            new MaterialRepository().getEquipmentList(equipmentLiveData, pageStateLiveData, userId, supplierMethodId, materialId, specification, supplierId, equipmentPage, authGroup);
+            new MaterialRepository().getEquipmentList(equipmentLiveData, pageStateLiveData, userId, supplierMethodId, materialName, specification, supplierId, equipmentPage, authGroup);
         }
     }
 
-
-    public void leaseList() {
-        equipmentPage = 1;
-        pageStateLiveData.postValue(PageState.PAGE_REFRESH);
-        new MaterialRepository().materialList(equipmentLiveData, pageStateLiveData, userId, supplierMethodId, materialId, specification, supplierId, equipmentPage);
-    }
-
-    public void moreLeaseList() {
-        equipmentPage++;
-        pageStateLiveData.postValue(PageState.PAGE_REFRESH);
-        new MaterialRepository().materialList(equipmentLiveData, pageStateLiveData, userId, supplierMethodId, materialId, specification, supplierId, equipmentPage);
-    }
 
     //基建物资---周转材料预定列表
     public void orderList() {

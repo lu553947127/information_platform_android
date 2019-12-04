@@ -3,6 +3,8 @@ package com.shuangduan.zcy.view.material;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -29,6 +31,7 @@ import com.shuangduan.zcy.adapter.MaterialPlaceOrderAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BottomSheetDialogs;
+import com.shuangduan.zcy.listener.TextWatcherWrapper;
 import com.shuangduan.zcy.model.bean.MaterialDetailBean;
 import com.shuangduan.zcy.model.bean.MaterialPlaceOrderBean;
 import com.shuangduan.zcy.model.event.AddressEvent;
@@ -80,7 +83,7 @@ import fj.edittextcount.lib.FJEditTextCount;
  * @Version: 1.0
  */
 @SuppressLint("SetTextI18n")
-public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMenuCreator {
+public class MaterialPlaceOrderActivity extends BaseActivity {
 
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
@@ -110,10 +113,7 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
     EditText etAddress;
     @BindView(R.id.et_remark)
     FJEditTextCount etRemark;
-    @BindView(R.id.rv)
-    SwipeRecyclerView recyclerView;
-    @BindView(R.id.tv_add)
-    TextView tvAdd;
+
     @BindView(R.id.tv_number)
     TextView tvNumber;
     @BindView(R.id.tv_price)
@@ -131,15 +131,19 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
     @BindView(R.id.ll_lease)
     LinearLayout llLease;
 
+    @BindView(R.id.et_num)
+    EditText etNum;
+
+    @BindView(R.id.tv_material_id)
+    TextView tvMaterialId;
+
+
     private MaterialDetailVm materialDetailVm;
-    private BottomSheetDialogs btn_dialog;
-    int province, city, material_id, materialId, adapterPosition, supplier_id, day;
-    String material_name, unit, science_num_id;
-    List<MaterialPlaceOrderBean> list = new ArrayList<>();
-    private List<String> list_address = new ArrayList<>();
-    MaterialPlaceOrderAdapter materialDepositingPlaceAdapter;
-    private long num;
-    private double price, guidance_price;
+    int province, city, material_id, supplier_id, day;
+    String unit, buyStock;
+
+
+    private double num, price, guidance_price;
     private MaterialDetailBean materialDetail;
     //租期开始时间  ,租期结束时间
     private String leaseStartTime, leaseEndTime;
@@ -156,10 +160,11 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
-        BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
+
         tvBarTitle.setText(getString(R.string.material_place_order));
         materialDetailVm = ViewModelProviders.of(this).get(MaterialDetailVm.class);
         materialDetailVm.id = getIntent().getIntExtra(CustomConfig.MATERIAL_ID, 0);
+
         materialDetailVm.detailLiveData.observe(this, materialDetailBean -> {
             this.materialDetail = materialDetailBean;
             if (materialDetailBean.getImages() != null && materialDetailBean.getImages().size() != 0) {
@@ -175,7 +180,7 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
 
             llLease.setVisibility(materialDetail.getMethod() == 1 ? View.VISIBLE : View.GONE);
 
-            tvMaterialCategory.setText(materialDetailBean.getMaterial_category());
+            tvMaterialCategory.setText(materialDetailBean.getMaterialName());
             tvSupplyMethod.setText(materialDetailBean.getMethod() == 1 ? "出租" : "出售");
 
 
@@ -188,86 +193,10 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
             unit = materialDetailBean.getUnit();
             tvUnit.setText("单位：" + materialDetailBean.getUnit());
             tvCompany.setText(materialDetailBean.getCompany());
-            material_id = materialDetailBean.getMaterial_id();
+            material_id = materialDetailBean.getId();
             supplier_id = materialDetailBean.getSupplier_id();
-            tvAdd.setText(R.string.material_tv_add);
 
-            materialDepositingPlaceAdapter = new MaterialPlaceOrderAdapter(this, list, materialDetail.getMethod());
-
-            recyclerView.setAdapter(materialDepositingPlaceAdapter);
-        });
-
-        //数量、存放地保存成功返回结果
-        materialDetailVm.mutableLiveData.observe(this, materialAddBean -> {
-            try {
-                num = num + Integer.valueOf(et_num.getText().toString());
-                if (materialDetail.getMethod() == 1) {
-                    price = price + Integer.valueOf(et_num.getText().toString()) * day * guidance_price;
-                    tvNumber.setText("共租赁" + day + "天，共计");
-                    tvPrice.setText(DigitUtils.doubleToString(price));
-                } else {
-                    price = price + Integer.valueOf(et_num.getText().toString()) * guidance_price;
-                    tvNumber.setText("共采购" + num + "套，共计");
-                    tvPrice.setText(DigitUtils.doubleToString(price));
-                }
-
-                materialDepositingPlaceAdapter.addData(list.size(),
-                        Integer.valueOf(et_num.getText().toString()),
-                        Integer.valueOf(materialAddBean.getId()),
-                        materialId, material_name);
-
-                for (int i = 0; i < list.size(); i++) {
-                    list_address.add(String.valueOf(list.get(i).getId()));
-                }
-                removeDuplicate(list_address);
-                science_num_id = KeyboardUtil.getListForString(list_address);
-                btn_dialog.dismiss();
-
-                tvAdd.setText(R.string.material_add);
-
-                tvAdd.setVisibility(View.GONE);
-
-                LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                param.gravity = Gravity.CENTER_HORIZONTAL;
-                param.setMargins(DensityUtil.dp2px(22), DensityUtil.dp2px(22), DensityUtil.dp2px(22), DensityUtil.dp2px(22));
-                tvAdd.setLayoutParams(param);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
-
-        //数量、存放地删除成功返回结果
-        materialDetailVm.mutableLiveDataDel.observe(this, materialAddBean -> {
-            try {
-                num = num - list.get(adapterPosition).getNum();
-                if (materialDetail.getMethod() == 1) {
-                    price = price - list.get(adapterPosition).getNum() * Integer.valueOf(day) * guidance_price;
-                    tvNumber.setText("共租赁" + num + "天，共计");
-                    tvPrice.setText(String.valueOf(price));
-                } else {
-                    price = price - list.get(adapterPosition).getNum() * guidance_price;
-                    tvNumber.setText("共采购" + num + "套，共计");
-                    tvPrice.setText(String.valueOf(price));
-                }
-
-                materialDepositingPlaceAdapter.removeData(adapterPosition);
-
-                list_address.remove(adapterPosition);
-                list_address = removeDuplicate(list_address);
-                science_num_id = KeyboardUtil.getListForString(list_address);
-
-                //动态修改按钮样式
-                if (materialDepositingPlaceAdapter.getItemCount() == 0) {
-                    tvAdd.setVisibility(View.VISIBLE);
-                    tvAdd.setText(R.string.material_tv_add);
-                    LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                    param.gravity = Gravity.LEFT;
-                    param.setMargins(DensityUtil.dp2px(22), DensityUtil.dp2px(22), DensityUtil.dp2px(22), DensityUtil.dp2px(22));
-                    tvAdd.setLayoutParams(param);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            tvMaterialId.setText(materialDetailBean.getAddress());
         });
 
         //预定订单提交成功返回结果
@@ -279,25 +208,32 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
             finish();
         });
 
-        recyclerView.setSwipeMenuCreator(this);
-        recyclerView.setOnItemMenuClickListener(mItemMenuClickListener);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
+
+        etNum.addTextChangedListener(new TextWatcherWrapper() {
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (StringUtils.isTrimEmpty(s.toString())) {
+                    num = 0;
+                    return;
+                }
+                num = Double.valueOf(s.toString());
+                if (materialDetail.getMethod() == 1) {
+                    price = num * day * guidance_price;
+                    tvNumber.setText("共租赁" + day + "天，共计");
+                    tvPrice.setText(DigitUtils.doubleToString(price));
+                } else {
+                    price = num * guidance_price;
+                    tvNumber.setText("共采购" + num + materialDetail.getUnit() + "，共计");
+                    tvPrice.setText(DigitUtils.doubleToString(price));
+                }
+            }
+        });
 
         materialDetailVm.getDetail(getIntent().getIntExtra(CustomConfig.MATERIAL_ID, 0));
     }
 
-    //list集合用set去重
-    public static List<String> removeDuplicate(List<String> list) {
-        Set set = new LinkedHashSet<String>();
-        set.addAll(list);
-        list.clear();
-        list.addAll(set);
-        return list;
-    }
 
-
-    @OnClick({R.id.iv_bar_back, R.id.tv_province, R.id.tv_add, R.id.tv_submission, R.id.tv_time_start, R.id.tv_time_end})
+    @OnClick({R.id.iv_bar_back, R.id.tv_province, R.id.tv_submission, R.id.tv_time_start, R.id.tv_time_end})
     void onClick(View view) {
         Bundle bundle = new Bundle();
         switch (view.getId()) {
@@ -308,25 +244,8 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
                 bundle.putInt(CustomConfig.PROJECT_ADDRESS, 2);
                 ActivityUtils.startActivity(bundle, ReleaseAreaSelectActivity.class);
                 break;
-            case R.id.tv_add://添加存放地
-                if (materialDetail.getMethod() == 1) {
-                    if (StringUtils.isTrimEmpty(leaseStartTime)) {
-                        ToastUtils.showShort("请选择租赁开始时间");
-                        return;
-                    }
-                    if (StringUtils.isTrimEmpty(leaseEndTime)) {
-                        ToastUtils.showShort("请选择租赁结束时间");
-                        return;
-                    }
-
-                    if (day <= 0) {
-                        ToastUtils.showShort("开始时间必须小于结束时间");
-                        return;
-                    }
-                }
-                getAddDialog();
-                break;
             case R.id.tv_submission://提交预订单
+
                 if (TextUtils.isEmpty(etRealName.getText().toString())) {
                     ToastUtils.showShort("联系人不能为空");
                     return;
@@ -349,8 +268,10 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
                     ToastUtils.showShort("详细地址不能为空");
                     return;
                 }
-                if (TextUtils.isEmpty(science_num_id)) {
-                    ToastUtils.showShort("数量、存放地为必填项，不能为空");
+
+                buyStock = etNum.getText().toString();
+                if (TextUtils.isEmpty(buyStock)) {
+                    ToastUtils.showShort("数量为必填项，不能为空");
                     return;
                 }
 
@@ -360,86 +281,21 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
                 }
 
                 materialDetailVm.getAddMaterialOrder(material_id, etRealName.getText().toString(), etTel.getText().toString()
-                        , etCompany.getText().toString(), province, city, etAddress.getText().toString(), etRemark.getText(), science_num_id);
+                        , etCompany.getText().toString(), province, city, etAddress.getText().toString(), etRemark.getText(), buyStock, leaseStartTime, leaseEndTime);
                 break;
             case R.id.tv_time_start:
                 showTimeDialog(tvTimeStart, 0);
                 break;
             case R.id.tv_time_end:
+                if (StringUtils.isEmpty(leaseStartTime)) {
+                    ToastUtils.showShort("请先选择起始时间");
+                    return;
+                }
                 showTimeDialog(tvTimeEnd, 1);
                 break;
         }
     }
 
-    //添加存放地弹窗
-    TextView tv_material_id;
-    EditText et_num;
-
-    private void getAddDialog() {
-        //底部滑动对话框
-        btn_dialog = new BottomSheetDialogs(this, R.style.BottomSheetStyle);
-        //设置自定view
-        View dialog_view = this.getLayoutInflater().inflate(R.layout.dialog_add_depositing_place, null);
-        //把布局添加进去
-        btn_dialog.setContentView(dialog_view);
-        //去除系统默认的背景色
-        try {
-            // hack bg color of the BottomSheetDialog
-            ViewGroup parent = (ViewGroup) dialog_view.getParent();
-            parent.setBackgroundResource(android.R.color.transparent);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-//        dialog_view.findViewById(R.id.ll_lease).setVisibility(materialDetail.getMethod() == 1 ? View.VISIBLE : View.GONE);
-
-        TextView tv_title = dialog_view.findViewById(R.id.tv_dialog_title);
-        tv_title.setText(R.string.material_tv_add);
-
-
-        TextView tv_save = dialog_view.findViewById(R.id.tv_save);
-        et_num = dialog_view.findViewById(R.id.et_num);
-
-
-        tv_material_id = dialog_view.findViewById(R.id.tv_material_id);
-        tv_material_id.setOnClickListener(v -> {
-            Bundle bundle = new Bundle();
-            bundle.putInt(CustomConfig.MATERIAL_ID, material_id);
-            bundle.putInt(CustomConfig.SUPPLIER_ID, supplier_id);
-            bundle.putInt(CustomConfig.IS_SHELF, materialDetail.getIsShelf());
-            bundle.putInt(CustomConfig.METHOD_TYPE, materialDetail.getMethod());
-            DataHolder.getInstance().setData("list", list);
-            ActivityUtils.startActivity(bundle, DepositingPlaceActivity.class);
-        });
-        tv_save.setOnClickListener(v -> {
-            if (TextUtils.isEmpty(et_num.getText().toString())) {
-                ToastUtils.showShort(getString(R.string.no_mun));
-                return;
-            }
-            if (Integer.valueOf(et_num.getText().toString()) == 0) {
-                ToastUtils.showShort("数量不能为0");
-                return;
-            }
-            if (materialId != 0) {
-                for (int i = 0; i < list.size(); i++) {
-                    String type_no = String.valueOf(list.get(i).getMaterialId());
-                    if (type_no.equals(String.valueOf(materialId))) {
-                        materialId = 0;
-                        return;
-                    }
-                }
-            }
-            if (materialId == 0) {
-                ToastUtils.showShort(getString(R.string.no_materialId));
-                return;
-            }
-
-
-            BigInteger number = new BigInteger(et_num.getText().toString());
-            materialDetailVm.getAddMaterial(materialId, number, materialDetail.getMethod(), leaseStartTime, leaseEndTime);
-        });
-        btn_dialog.show();
-    }
 
     /**
      * 时间选择器
@@ -478,7 +334,7 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
                 price = day * num * guidance_price;
                 if (materialDetail.getMethod() == 1) {
                     tvNumber.setText("共租赁" + day + "天，共计");
-                    tvPrice.setText(String.valueOf(price));
+                    tvPrice.setText(DigitUtils.doubleToString(price));
                 }
             }
         }, "yyyy-MM-dd", TimeUtils.getNowString(), "2040-12-31");
@@ -490,7 +346,6 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
         }
     }
 
-    @SuppressLint("SetTextI18n")
     @Subscribe
     public void onEventAddressEvent(AddressEvent event) {
         province = event.getProvinceId();
@@ -499,41 +354,5 @@ public class MaterialPlaceOrderActivity extends BaseActivity implements SwipeMen
         tvProvince.setTextColor(ContextCompat.getColor(this, R.color.colorTv));
     }
 
-    @Subscribe
-    public void onEventUpdateMaterialDetail(MaterialDetailEvent event) {
-        materialId = event.material_id;
-        material_name = event.material_name;
-        tv_material_id.setText(event.material_name);
-        tv_material_id.setTextColor(ContextCompat.getColor(this, R.color.colorTv));
-    }
 
-    @Override
-    public void onCreateMenu(SwipeMenu swipeLeftMenu, SwipeMenu swipeRightMenu, int viewType) {
-        SwipeMenuItem deleteItem = new SwipeMenuItem(this)
-                .setBackground(R.drawable.circular_background_red)
-                .setText("删除")
-                .setTextColor(Color.WHITE)
-                .setWidth(getResources().getDimensionPixelSize(R.dimen.dp_55))
-                .setHeight(getResources().getDimensionPixelSize(R.dimen.dp_110));
-        swipeRightMenu.addMenuItem(deleteItem);
-    }
-
-    OnItemMenuClickListener mItemMenuClickListener = new OnItemMenuClickListener() {
-        @Override
-        public void onItemClick(SwipeMenuBridge menuBridge, int position) {
-            // 任何操作必须先关闭菜单，否则可能出现Item菜单打开状态错乱。
-            menuBridge.closeMenu();
-            int direction = menuBridge.getDirection(); // 左侧还是右侧菜单。
-            int menuPosition = menuBridge.getPosition(); // 菜单在Item中的Position：
-            if (direction == SwipeRecyclerView.RIGHT_DIRECTION) {
-                //若menuPosition为删除按钮时
-                if (menuPosition == 0) {
-                    LogUtils.i(position);
-                    LogUtils.i(list.get(position).getId());
-                    materialDetailVm.getDelMaterial(list.get(position).getId());
-                    adapterPosition = position;
-                }
-            }
-        }
-    };
 }

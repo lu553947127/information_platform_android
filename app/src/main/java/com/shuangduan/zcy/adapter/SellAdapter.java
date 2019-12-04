@@ -48,7 +48,7 @@ public class SellAdapter extends BaseQuickAdapter<MaterialBean.ListBean, BaseVie
 
         helper.setText(R.id.tv_stock, "库存: " + item.getStock() + item.getUnit())
                 .setText(R.id.tv_spec, "规格: " + item.getSpec())
-                .setText(R.id.tv_supplier, "供应商: " + item.getMaterialSupplie())
+                .setText(R.id.tv_supplier, "供应商: " + item.getMaterialSupplier())
                 .setText(R.id.tv_price, item.getMethod() == 2 ?
                         String.format(mContext.getString(R.string.format_material_price), item.getGuidancePrice(), item.getUnit()) :
                         String.format(mContext.getString(R.string.format_material_price), item.getGuidancePrice(), "天"))

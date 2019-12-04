@@ -48,8 +48,8 @@ public class MaterialCollectBean {
         //图片
         public String images;
         //产品名称
-        public String catname;
-        public String name;
+        @SerializedName("material_name")
+        public String materialName;
         //分类名称
         public String category;
         //名称规格型号

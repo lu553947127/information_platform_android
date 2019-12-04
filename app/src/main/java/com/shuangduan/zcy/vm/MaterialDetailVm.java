@@ -111,16 +111,17 @@ public class MaterialDetailVm extends BaseViewModel {
 
     //基建物资---周转材料预定订单
     public void getAddMaterialOrder(int material_id, String real_name, String tel, String company, int province, int city
-            , String address, String remark, String science_num_id) {
-        new MaterialRepository().getAddMaterialOrder(mutableLiveAddOrder, pageStateLiveData, userId, material_id, real_name, tel, company, province, city, address, remark, science_num_id);
+            , String address, String remark, String buyStock, String leaseStartTime, String leaseEndTime) {
+        new MaterialRepository().getAddMaterialOrder(mutableLiveAddOrder, pageStateLiveData, userId, material_id, real_name, tel, company, province,
+                city, address, remark, buyStock,leaseStartTime,leaseEndTime);
     }
 
 
     //基建物资---设备物资预定订单
     public void getAddEquipmentOrder(int materialId, String realName, String tel, String company,
-                                     int province, int city, String address, String remark, int method,  long num, int cateId,String leaseStartTime, String leaseEndTime) {
+                                     int province, int city, String address, String remark, long num,String leaseStartTime, String leaseEndTime) {
         new MaterialRepository().getAddEquipmentOrder(mutableLiveAddOrder, pageStateLiveData, userId, materialId, realName, tel, company, province,
-                city, address, remark, method,  num, cateId,leaseStartTime,leaseEndTime);
+                city, address, remark, num,leaseStartTime,leaseEndTime);
     }
 
 

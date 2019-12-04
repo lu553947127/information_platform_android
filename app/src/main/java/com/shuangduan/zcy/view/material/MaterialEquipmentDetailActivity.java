@@ -108,7 +108,7 @@ public class MaterialEquipmentDetailActivity extends BaseActivity {
     private MaterialDetailVm materialDetailVm;
     private String phone, is_collect, enclosure;
     private List<String> pics;
-    int material_id, supplier_id;
+    int supplier_id;
 
     @Override
     protected int initLayoutRes() {
@@ -140,9 +140,9 @@ public class MaterialEquipmentDetailActivity extends BaseActivity {
             initBanner(pics, titles);
 
             if(materialDetailBean.getIsShelf()==3){
-                TextViewUtils.addDrawableInEnd(tvMaterialCategory, getResources().getDrawable(R.drawable.icon_mine_default_material), materialDetailBean.getMaterial_category());
+                TextViewUtils.addDrawableInEnd(tvMaterialCategory, getResources().getDrawable(R.drawable.icon_mine_default_material), materialDetailBean.getMaterialName());
             }else {
-                tvMaterialCategory.setText(materialDetailBean.getMaterial_category());
+                tvMaterialCategory.setText(materialDetailBean.getMaterialName());
             }
 
             tvUnitPrice.setText(materialDetailBean.getMethod() == 1 ?
@@ -165,7 +165,7 @@ public class MaterialEquipmentDetailActivity extends BaseActivity {
             tvCompanyWebsite.setText(materialDetailBean.getCompany_website());
             tvServeAddress.setText(materialDetailBean.getServe_address());
             tvProduct.setText(materialDetailBean.getProduct());
-            material_id = materialDetailBean.getMaterial_id();
+
             phone = materialDetailBean.getTel();
             enclosure = materialDetailBean.getEnclosure();
             supplier_id = materialDetailBean.getSupplier_id();

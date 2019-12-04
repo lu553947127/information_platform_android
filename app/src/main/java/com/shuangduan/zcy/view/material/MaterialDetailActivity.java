@@ -106,7 +106,7 @@ public class MaterialDetailActivity extends BaseActivity {
     private MaterialDetailVm materialDetailVm;
     private String phone, is_collect, enclosure;
     private List<String> pics;
-    int material_id, supplier_id;
+    int supplier_id;
     private MaterialDetailBean materialDetail;
 
     @Override
@@ -139,9 +139,9 @@ public class MaterialDetailActivity extends BaseActivity {
             initBanner(pics, titles);
 
             if(materialDetailBean.getIsShelf()==3){
-                TextViewUtils.addDrawableInEnd(tvMaterialCategory, getResources().getDrawable(R.drawable.icon_mine_default_material), materialDetailBean.getMaterial_category());
+                TextViewUtils.addDrawableInEnd(tvMaterialCategory, getResources().getDrawable(R.drawable.icon_mine_default_material), materialDetailBean.getMaterialName());
             }else {
-                tvMaterialCategory.setText(materialDetailBean.getMaterial_category());
+                tvMaterialCategory.setText(materialDetailBean.getMaterialName());
             }
 
             tvUnitPrice.setText(materialDetailBean.getMethod() == 1 ?
@@ -161,7 +161,6 @@ public class MaterialDetailActivity extends BaseActivity {
             tvCompanyWebsite.setText(materialDetailBean.getCompany_website());
             tvServeAddress.setText(materialDetailBean.getServe_address());
             tvProduct.setText(materialDetailBean.getProduct());
-            material_id = materialDetailBean.getMaterial_id();
             phone = materialDetailBean.getTel();
             enclosure = materialDetailBean.getEnclosure();
             supplier_id = materialDetailBean.getSupplier_id();
@@ -263,13 +262,13 @@ public class MaterialDetailActivity extends BaseActivity {
                             }
                         }).showDialog();
                 break;
-            case R.id.tv_address_list:
-                bundle.putInt(CustomConfig.MATERIAL_ID, material_id);
-                bundle.putInt(CustomConfig.SUPPLIER_ID, supplier_id);
-                bundle.putInt(CustomConfig.METHOD_TYPE, materialDetail.getMethod());
-                bundle.putInt(CustomConfig.IS_SHELF, materialDetail.getIsShelf());
-                ActivityUtils.startActivity(bundle, DepositingPlaceActivity.class);
-                break;
+//            case R.id.tv_address_list:
+//                bundle.putInt(CustomConfig.MATERIAL_ID, material_id);
+//                bundle.putInt(CustomConfig.SUPPLIER_ID, supplier_id);
+//                bundle.putInt(CustomConfig.METHOD_TYPE, materialDetail.getMethod());
+//                bundle.putInt(CustomConfig.IS_SHELF, materialDetail.getIsShelf());
+//                ActivityUtils.startActivity(bundle, DepositingPlaceActivity.class);
+//                break;
             case R.id.ll_collect:
                 llCollection.setClickable(false);
                 if (is_collect != null && is_collect.equals("1")) {

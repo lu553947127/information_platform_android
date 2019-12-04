@@ -3,6 +3,7 @@ package com.shuangduan.zcy.view.material;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -19,6 +20,7 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.TimeUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.huawei.android.hms.agent.common.UIUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
@@ -110,7 +112,7 @@ public class MaterialEquipmentPlaceOrderActivity extends BaseActivity {
     LinearLayout llLease;
 
     private MaterialDetailVm materialDetailVm;
-    int province, city, material_id, materialId, supplier_id, day;
+    int province, city, materialId, supplier_id, day;
     double guidance_price,price;
     String material_name, unit;
 
@@ -134,9 +136,11 @@ public class MaterialEquipmentPlaceOrderActivity extends BaseActivity {
         tvBarTitle.setText(getString(R.string.material_place_order));
 
         tvAddressStar.setVisibility(View.INVISIBLE);
+        etNum.setInputType(InputType.TYPE_CLASS_NUMBER);
 
         materialDetailVm = ViewModelProviders.of(this).get(MaterialDetailVm.class);
         materialDetailVm.id = getIntent().getIntExtra(CustomConfig.MATERIAL_ID, 0);
+
         materialDetailVm.detailLiveData.observe(this, materialDetailBean -> {
             this.materialDetail = materialDetailBean;
             if (materialDetailBean.getImages() != null && materialDetailBean.getImages().size() != 0) {
@@ -149,7 +153,7 @@ public class MaterialEquipmentPlaceOrderActivity extends BaseActivity {
                             .build());
                 }
             }
-            tvMaterialCategory.setText(materialDetailBean.getMaterial_category());
+            tvMaterialCategory.setText(materialDetailBean.getMaterialName());
             tvSupplyMethod.setText(materialDetailBean.getMethod() == 1 ? "出租" : "出售");
 
             guidance_price = Double.parseDouble(materialDetailBean.getGuidance_price());
@@ -161,7 +165,7 @@ public class MaterialEquipmentPlaceOrderActivity extends BaseActivity {
             unit = materialDetailBean.getUnit();
             tvUnit.setText("单位：" + materialDetailBean.getUnit());
             tvCompany.setText(materialDetailBean.getCompany());
-            material_id = materialDetailBean.getMaterial_id();
+
             supplier_id = materialDetailBean.getSupplier_id();
 
             tvMaterialId.setText(materialDetail.getAddress());
@@ -190,14 +194,14 @@ public class MaterialEquipmentPlaceOrderActivity extends BaseActivity {
                     num = 0;
                     return;
                 }
-                num = Integer.valueOf(s.toString());
+                num = Long.valueOf(s.toString());
                 if (materialDetail.getMethod() == 1) {
                     price = num * day * guidance_price;
                     tvNumber.setText("共租赁" + day + "天，共计");
                     tvPrice.setText(String.valueOf(price));
                 } else {
                     price = num * guidance_price;
-                    tvNumber.setText("共采购" + num + "套，共计");
+                    tvNumber.setText("共采购" + num + "，共计");
                     tvPrice.setText(String.valueOf(price));
                 }
             }
@@ -260,20 +264,22 @@ public class MaterialEquipmentPlaceOrderActivity extends BaseActivity {
                     return;
                 }
 
-
                 if (String.valueOf(price).length() > 8) {
                     ToastUtils.showShort("订单金额过大，不支持线上交易");
                     return;
                 }
 
                 materialDetailVm.getAddEquipmentOrder(materialDetail.getId(), etRealName.getText().toString(), etTel.getText().toString()
-                        , etCompany.getText().toString(), province, city, etAddress.getText().toString(), etRemark.getText(),
-                        materialDetail.getMethod(), num, materialDetail.getCategory(), leaseStartTime, leaseEndTime);
+                        , etCompany.getText().toString(), province, city, etAddress.getText().toString(), etRemark.getText(), num,  leaseStartTime, leaseEndTime);
                 break;
             case R.id.tv_time_start:
                 showTimeDialog(tvTimeStart, 0);
                 break;
             case R.id.tv_time_end:
+                if(StringUtils.isEmpty(leaseStartTime)){
+                    ToastUtils.showShort("请先选择起始时间");
+                    return;
+                }
                 showTimeDialog(tvTimeEnd, 1);
                 break;
         }

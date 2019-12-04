@@ -758,11 +758,11 @@ public interface ApiService {
     );
 
     //基建物质--公开周转材料列表
-    @POST("api/Material/dateList")
+    @POST("api/Material/dataList")
     Flowable<BaseResponse<MaterialBean>> materialList(
             @Query("user_id") int user_id,
             @Query("type") int type,
-            @Query("material_id") int materialId,
+            @Query("material_name") String materialName,
             @Query("spec") String spec,
             @Query("supplier_id") int supplierId,
             @Query("page") int page
@@ -773,7 +773,7 @@ public interface ApiService {
     Flowable<BaseResponse<MaterialBean>> getEquipmentList(
             @Query("user_id") int userId,
             @Query("type") int type,
-            @Query("material_id") int materialId,
+            @Query("material_name") String materialName,
             @Query("spec") String spec,
             @Query("supplier_id") int supplierId,
             @Query("page") int page
@@ -781,11 +781,11 @@ public interface ApiService {
 
 
     //基建物质列表--内定周转材料
-    @POST("api/Material/dateList")
+    @POST("api/Material/dataList")
     Flowable<BaseResponse<MaterialBean>> materialList(
             @Query("user_id") int user_id,
             @Query("type") int type,
-            @Query("material_id") int materialId,
+            @Query("material_name") String materialName,
             @Query("spec") String spec,
             @Query("supplier_id") int supplierId,
             @Query("page") int page,
@@ -797,7 +797,7 @@ public interface ApiService {
     Flowable<BaseResponse<MaterialBean>> getEquipmentList(
             @Query("user_id") int userId,
             @Query("type") int type,
-            @Query("material_id") int materialId,
+            @Query("material_name") String materialName,
             @Query("spec") String spec,
             @Query("supplier_id") int supplierId,
             @Query("page") int page,
@@ -1520,7 +1520,9 @@ public interface ApiService {
             @Field("city") int city,
             @Field("address") String address,
             @Field("remark") String remark,
-            @Field("science_num_id") String science_num_id
+            @Field("buy_stock") String buyStock,
+            @Field("lease_start_time") String leaseStartTime,
+            @Field("lease_end_time") String leaseEndTime
     );
 
     //基建物资---设备物资提交预定订单
@@ -1528,7 +1530,7 @@ public interface ApiService {
     @POST("api/Equipment/order")
     Flowable<BaseResponse<MaterialAddBean>> getAddEquipmentOrder(
             @Field("user_id") int userId,
-            @Field("material_id") int materialId,
+            @Field("id") int materialId,
             @Field("real_name") String realName,
             @Field("tel") String tel,
             @Field("company") String company,
@@ -1536,9 +1538,7 @@ public interface ApiService {
             @Field("city") int city,
             @Field("address") String address,
             @Field("remark") String remark,
-            @Field("method") int method,
-            @Field("num") long num,
-            @Field("cate_id") int cateId,
+            @Field("buy_stock") long buyStock,
             @Field("lease_start_time") String leaseStartTime,
             @Field("lease_end_time") String leaseEndTime
     );

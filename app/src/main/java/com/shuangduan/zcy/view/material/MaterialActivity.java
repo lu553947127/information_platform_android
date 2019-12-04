@@ -93,7 +93,7 @@ public class MaterialActivity extends BaseActivity {
     CheckBox cbFilterSupplierMethod;
 
     private MaterialVm materialVm;
-    private TextView tvMaterial;
+    private EditText etMaterial;
     private TextView tvSupplier;
     private EditText etSpecification;
     private RadioGroup radioGroup;
@@ -136,7 +136,7 @@ public class MaterialActivity extends BaseActivity {
                 materialVm.authGroup.auth_group.add(item.getId());
             }
             //基建物资订阅推送 默认打开内定物资
-            if (getIntent().getIntExtra("notice",0)==1){
+            if (getIntent().getIntExtra("notice", 0) == 1) {
                 tvOpen.setTextSize(14);
                 tvDefault.setTextSize(18);
                 materialVm.materialFlag = 3;
@@ -169,7 +169,7 @@ public class MaterialActivity extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.iv_bar_back, R.id.iv_back, R.id.tv_open, R.id.tv_default, R.id.over, R.id.ll_name, R.id.ll_spec, R.id.ll_supplier, R.id.ll_supplier_method, R.id.tv_bar_right})
+    @OnClick({R.id.iv_bar_back, R.id.iv_back, R.id.tv_open, R.id.tv_default, R.id.over, R.id.ll_name, R.id.ll_spec, R.id.ll_supplier, R.id.ll_supplier_method})
     void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_bar_back:
@@ -192,9 +192,6 @@ public class MaterialActivity extends BaseActivity {
                 materialVm.sellList(materialVm.materialFlag);
                 materialVm.equipmentList(materialVm.materialFlag);
                 break;
-            case R.id.tv_bar_right:
-                initPop();
-                break;
             case R.id.ll_name:
                 initPop(0);
                 break;
@@ -216,67 +213,10 @@ public class MaterialActivity extends BaseActivity {
         }
     }
 
-    private void initPop() {
-        if (popupWindowCategory == null) {
-            popupWindowCategory = new CommonPopupWindow.Builder(this)
-                    .setView(R.layout.dialog_material_filter_1)
-                    .setOutsideTouchable(false)
-                    .setBackGroundLevel(1f)
-                    .setWidthAndHeight(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-                    .setViewOnclickListener((view, layoutResId) -> {
-                        //商品名称
-                        tvMaterial = view.findViewById(R.id.tv_material_value);
-                        tvMaterial.setOnClickListener(v -> {
-                            Bundle bundle = new Bundle();
-                            bundle.putInt(CustomConfig.SEARCH_MATERIAL_TYPE, CustomConfig.MATERIAL_TYPE);
-                            bundle.putInt(CustomConfig.MATERIALS_TYPE, vp.getCurrentItem()==0?CustomConfig.FRP:CustomConfig.EQUIPMENT);
-                            ActivityUtils.startActivity(bundle, MaterialSearchActivity.class);
-                        });
 
-                        //规格
-                        etSpecification = view.findViewById(R.id.et_specification);
-
-                        //供应商
-                        tvSupplier = view.findViewById(R.id.tv_supplier_value);
-                        tvSupplier.setOnClickListener(v -> {
-                            Bundle bundle = new Bundle();
-                            bundle.putInt(CustomConfig.SEARCH_MATERIAL_TYPE, CustomConfig.SUPPLIER_TYPE);
-                            bundle.putInt(CustomConfig.MATERIALS_TYPE, vp.getCurrentItem()==0?CustomConfig.FRP:CustomConfig.EQUIPMENT);
-                            ActivityUtils.startActivity(bundle, MaterialSearchActivity.class);
-                        });
-
-
-                        view.findViewById(R.id.tv_negative).setOnClickListener(item -> {
-                            materialVm.materialId = 0;
-                            materialVm.specification = "";
-                            materialVm.supplierId = 0;
-                            tvMaterial.setText("");
-                            tvSupplier.setText("");
-                            etSpecification.setText("");
-                        });
-                        view.findViewById(R.id.tv_positive).setOnClickListener(item -> {
-                            String spec = etSpecification.getText().toString();
-                            materialVm.specification = spec;
-                            materialVm.sellList(materialVm.materialFlag);
-                            materialVm.equipmentList(materialVm.materialFlag);
-                            popupWindowCategory.dismiss();
-                            over.setVisibility(View.GONE);
-                        });
-                    })
-                    .create();
-            popupWindowCategory.setFocusable(true);
-
-            popupWindowCategory.setOnDismissListener(() -> {
-                over.setVisibility(View.GONE);
-            });
-        }
-        if (!popupWindowCategory.isShowing()) {
-            popupWindowCategory.showAsDropDown(toolbar, 0, 0);
-            over.setVisibility(View.VISIBLE);
-        }
-    }
 
     private CommonPopupWindow popupWindowCategory;
+
     private void initPop(int filterType) {
         popupWindowCategory = new CommonPopupWindow.Builder(this)
                 .setView(R.layout.dialog_material_filter)
@@ -285,14 +225,8 @@ public class MaterialActivity extends BaseActivity {
                 .setWidthAndHeight(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
                 .setViewOnclickListener((view, layoutResId) -> {
                     //商品名称
-                    tvMaterial = view.findViewById(R.id.tv_filter_name);
-                    tvMaterial.setOnClickListener(v -> {
-                        Bundle bundle = new Bundle();
-                        bundle.putInt(CustomConfig.SEARCH_MATERIAL_TYPE, CustomConfig.MATERIAL_TYPE);
-                        bundle.putInt(CustomConfig.MATERIALS_TYPE, vp.getCurrentItem()==0?CustomConfig.FRP:CustomConfig.EQUIPMENT);
+                    etMaterial = view.findViewById(R.id.et_filter_name);
 
-                        ActivityUtils.startActivity(bundle, MaterialSearchActivity.class);
-                    });
                     //规格
                     etSpecification = view.findViewById(R.id.et_filter_spec);
 
@@ -301,7 +235,7 @@ public class MaterialActivity extends BaseActivity {
                     tvSupplier.setOnClickListener(v -> {
                         Bundle bundle = new Bundle();
                         bundle.putInt(CustomConfig.SEARCH_MATERIAL_TYPE, CustomConfig.SUPPLIER_TYPE);
-                        bundle.putInt(CustomConfig.MATERIALS_TYPE, vp.getCurrentItem()==0?CustomConfig.FRP:CustomConfig.EQUIPMENT);
+                        bundle.putInt(CustomConfig.MATERIALS_TYPE, vp.getCurrentItem() == 0 ? CustomConfig.FRP : CustomConfig.EQUIPMENT);
                         ActivityUtils.startActivity(bundle, MaterialSearchActivity.class);
                     });
                     //供应方式
@@ -323,9 +257,8 @@ public class MaterialActivity extends BaseActivity {
                     view.findViewById(R.id.tv_negative).setOnClickListener(item -> {
                         switch (filterType) {
                             case 0:
-                                materialVm.materialId = 0;
                                 materialVm.materialName = "";
-                                tvMaterial.setText("");
+                                etMaterial.setText("");
                                 break;
                             case 1:
                                 materialVm.specification = "";
@@ -353,6 +286,8 @@ public class MaterialActivity extends BaseActivity {
                     //确定
                     view.findViewById(R.id.tv_positive).setOnClickListener(item -> {
                         String spec = etSpecification.getText().toString();
+                        String materialName = etMaterial.getText().toString();
+                        materialVm.materialName = materialName;
                         materialVm.specification = spec;
                         materialVm.sellList(materialVm.materialFlag);
                         materialVm.equipmentList(materialVm.materialFlag);
@@ -399,15 +334,11 @@ public class MaterialActivity extends BaseActivity {
         cbFilterSpec.setChecked(!StringUtils.isEmpty(materialVm.specification));
         cbFilterSupplier.setChecked(!StringUtils.isEmpty(materialVm.supplier));
         cbFilterSupplierMethod.setChecked(!StringUtils.isEmpty(materialVm.supplierMethod));
-        //筛选框背景
-//        llName.setBackgroundResource(StringUtils.isEmpty(materialVm.materialName) ? R.drawable.shape_f5f5f5_14 : R.drawable.shape_stroke_6a5ff8_bg_f5f5f5_14);
-//        llSpec.setBackgroundResource(StringUtils.isEmpty(materialVm.specification) ? R.drawable.shape_f5f5f5_14 : R.drawable.shape_stroke_6a5ff8_bg_f5f5f5_14);
-//        llSupplier.setBackgroundResource(StringUtils.isEmpty(materialVm.supplier) ? R.drawable.shape_f5f5f5_14 : R.drawable.shape_stroke_6a5ff8_bg_f5f5f5_14);
-//        llSupplierMethod.setBackgroundResource(StringUtils.isEmpty(materialVm.supplierMethod) ? R.drawable.shape_f5f5f5_14 : R.drawable.shape_stroke_6a5ff8_bg_f5f5f5_14);
+
     }
 
     private void showPopView(View view, int type) {
-        tvMaterial.setText(materialVm.materialName);
+        etMaterial.setText(materialVm.materialName);
         etSpecification.setText(materialVm.specification);
         tvSupplier.setText(materialVm.supplier);
 
@@ -462,12 +393,6 @@ public class MaterialActivity extends BaseActivity {
     }
 
 
-    @Subscribe
-    public void onEventUpdateMaterial(MaterialEvent event) {
-        materialVm.materialId = event.id;
-        materialVm.materialName = event.material;
-        tvMaterial.setText(materialVm.materialName);
-    }
 
     @Subscribe
     public void onEventUpdateSupplier(SupplierEvent event) {

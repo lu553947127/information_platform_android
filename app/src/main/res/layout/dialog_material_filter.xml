@@ -18,8 +18,8 @@
         android:layout_marginTop="0.5dp"
         android:background="@color/colorFFF">
 
-        <TextView
-            android:id="@+id/tv_filter_name"
+        <EditText
+            android:id="@+id/et_filter_name"
             android:layout_width="wrap_content"
             android:layout_height="33dp"
             android:layout_marginLeft="15dp"

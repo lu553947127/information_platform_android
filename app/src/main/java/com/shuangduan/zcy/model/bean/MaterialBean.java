@@ -101,7 +101,7 @@ public class MaterialBean {
         private String address;
         //供应商
         @SerializedName("material_supplier")
-        private String materialSupplie;
+        private String materialSupplier;
         //供应商ID
         @SerializedName("supplier_id")
         private int supplierId;
@@ -124,38 +124,13 @@ public class MaterialBean {
         @SerializedName("browse_count")
         private String browseCount;
 
-        //设备名称
-        @SerializedName("equipment_name")
-        private String equipmentName;
 
-        //供应商名称
-        @SerializedName("equipment_supplier")
-        private String equipmentSupplier;
-
-
-        public String getEquipmentSupplier() {
-            return equipmentSupplier;
-        }
-
-        public void setEquipmentSupplier(String equipmentSupplier) {
-            this.equipmentSupplier = equipmentSupplier;
-        }
-
-        public String getEquipmentName() {
-            return equipmentName;
-        }
-
-        public void setEquipmentName(String equipmentName) {
-            this.equipmentName = equipmentName;
-        }
 
         public String getBrowseCount() {
             return browseCount;
         }
 
-        public void setBrowseCount(String browseCount) {
-            this.browseCount = browseCount;
-        }
+
 
         public int getMethod() {
             return method;
@@ -195,7 +170,7 @@ public class MaterialBean {
                     ", guidancePrice='" + guidancePrice + '\'' +
                     ", spec='" + spec + '\'' +
                     ", address='" + address + '\'' +
-                    ", materialSupplie='" + materialSupplie + '\'' +
+                    ", materialSupplie='" + materialSupplier + '\'' +
                     ", supplierId=" + supplierId +
                     ", province=" + province +
                     ", city=" + city +
@@ -204,13 +179,6 @@ public class MaterialBean {
                     '}';
         }
 
-        public int getSalesVolume() {
-            return salesVolume;
-        }
-
-        public void setSalesVolume(int salesVolume) {
-            this.salesVolume = salesVolume;
-        }
 
         public List<Images> getImages() {
             return images;
@@ -252,13 +220,11 @@ public class MaterialBean {
             this.address = address;
         }
 
-        public String getMaterialSupplie() {
-            return materialSupplie;
+
+        public String getMaterialSupplier() {
+            return materialSupplier;
         }
 
-        public void setMaterialSupplie(String materialSupplie) {
-            this.materialSupplie = materialSupplie;
-        }
 
         public int getSupplierId() {
             return supplierId;

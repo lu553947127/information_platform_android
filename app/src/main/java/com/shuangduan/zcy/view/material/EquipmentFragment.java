@@ -68,7 +68,7 @@ public class EquipmentFragment extends BaseLazyFragment implements EmptyViewFact
         emptyView = createEmptyView(R.drawable.icon_empty_project, R.string.empty_substance_screen_info, R.string.see_all, this);
 
         rv.setLayoutManager(new LinearLayoutManager(mContext));
-//        rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
+
         rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_h_5));
         EquipmentAdapter adapter = new EquipmentAdapter(R.layout.item_material_list, null);
         adapter.setEmptyView(R.layout.layout_loading, rv);

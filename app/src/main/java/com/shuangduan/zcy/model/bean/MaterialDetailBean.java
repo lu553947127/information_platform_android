@@ -40,14 +40,16 @@ public class MaterialDetailBean {
     private int id;
     private int category;
     private int supplier_id;
-    private int material_id;
+
+
+    private String material_name;
+
     private String unit_price;
     private String guidance_price;
     private String stock;
     private String sales_volume;
     private String spec;
     private String unit;
-    private String material_category;
     private String company;
     private String address;
     private String company_website;
@@ -59,7 +61,7 @@ public class MaterialDetailBean {
     private String enclosure;
     private String status;
     private List<ImagesBean> images;
-    private List<AddressListBean> address_list;
+
 
     //浏览总人数
     @SerializedName("browse_count")
@@ -78,216 +80,125 @@ public class MaterialDetailBean {
         return browseCount;
     }
 
-    public void setBrowseCount(int browseCount) {
-        this.browseCount = browseCount;
-    }
-
     public List<User> getUser() {
         return user;
     }
 
-    public void setUser(List<User> user) {
-        this.user = user;
-    }
 
     public int getIsShelf() {
         return isShelf;
     }
 
-    public void setIsShelf(int isShelf) {
-        this.isShelf = isShelf;
-    }
 
     public int getMethod() {
         return method;
     }
 
-    public void setMethod(int method) {
-        this.method = method;
-    }
+
 
     public String getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
 
     public String getEnclosure() {
         return enclosure;
     }
 
-    public void setEnclosure(String enclosure) {
-        this.enclosure = enclosure;
-    }
+
 
     public String getIs_collection() {
         return is_collection;
     }
 
-    public void setIs_collection(String is_collection) {
-        this.is_collection = is_collection;
-    }
 
     public String getSupplie_address() {
         return supplie_address;
     }
 
-    public void setSupplie_address(String supplie_address) {
-        this.supplie_address = supplie_address;
-    }
 
     public String getProduct() {
         return product;
     }
 
-    public void setProduct(String product) {
-        this.product = product;
-    }
 
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public int getCategory() {
         return category;
     }
 
-    public void setCategory(int category) {
-        this.category = category;
-    }
 
     public int getSupplier_id() {
         return supplier_id;
     }
 
-    public void setSupplier_id(int supplier_id) {
-        this.supplier_id = supplier_id;
-    }
 
-    public int getMaterial_id() {
-        return material_id;
-    }
-
-    public void setMaterial_id(int material_id) {
-        this.material_id = material_id;
-    }
 
     public String getUnit_price() {
         return unit_price;
     }
 
-    public void setUnit_price(String unit_price) {
-        this.unit_price = unit_price;
-    }
 
     public String getGuidance_price() {
         return guidance_price;
     }
 
-    public void setGuidance_price(String guidance_price) {
-        this.guidance_price = guidance_price;
-    }
 
     public String getStock() {
         return stock;
     }
 
-    public void setStock(String stock) {
-        this.stock = stock;
-    }
 
     public String getSales_volume() {
         return sales_volume;
     }
 
-    public void setSales_volume(String sales_volume) {
-        this.sales_volume = sales_volume;
-    }
 
     public String getSpec() {
         return spec;
     }
 
-    public void setSpec(String spec) {
-        this.spec = spec;
-    }
 
     public String getUnit() {
         return unit;
     }
 
-    public void setUnit(String unit) {
-        this.unit = unit;
+
+    public String getMaterialName() {
+        return material_name;
     }
 
-    public String getMaterial_category() {
-        return material_category;
-    }
-
-    public void setMaterial_category(String material_category) {
-        this.material_category = material_category;
-    }
 
     public String getCompany() {
         return company;
     }
 
-    public void setCompany(String company) {
-        this.company = company;
-    }
 
     public String getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
 
     public String getCompany_website() {
         return company_website;
     }
 
-    public void setCompany_website(String company_website) {
-        this.company_website = company_website;
-    }
 
     public String getServe_address() {
         return serve_address;
     }
 
-    public void setServe_address(String serve_address) {
-        this.serve_address = serve_address;
-    }
 
     public String getTel() {
         return tel;
     }
 
-    public void setTel(String tel) {
-        this.tel = tel;
-    }
-
     public List<ImagesBean> getImages() {
         return images;
-    }
-
-    public void setImages(List<ImagesBean> images) {
-        this.images = images;
-    }
-
-    public List<AddressListBean> getAddress_list() {
-        return address_list;
-    }
-
-    public void setAddress_list(List<AddressListBean> address_list) {
-        this.address_list = address_list;
     }
 
     public static class ImagesBean {

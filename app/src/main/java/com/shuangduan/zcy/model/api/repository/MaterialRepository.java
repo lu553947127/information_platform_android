@@ -27,23 +27,23 @@ import retrofit2.http.Field;
  */
 public class MaterialRepository extends BaseRepository {
     public void materialList(MutableLiveData<MaterialBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int type,
-                             int materialId, String spec, int supplierId, int page) {
-        request(apiService.materialList(userId, type, materialId, spec, supplierId, page)).setData(liveData).setPageState(pageStateLiveData).send();
+                             String materialName, String spec, int supplierId, int page) {
+        request(apiService.materialList(userId, type, materialName, spec, supplierId, page)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
     public void materialList(MutableLiveData<MaterialBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int type,
-                             int materialId, String spec, int supplierId, int page, AuthGroupBean authGroup) {
-        request(apiService.materialList(userId, type, materialId, spec, supplierId, page, authGroup)).setData(liveData).setPageState(pageStateLiveData).send();
+                             String materialName, String spec, int supplierId, int page, AuthGroupBean authGroup) {
+        request(apiService.materialList(userId, type, materialName, spec, supplierId, page, authGroup)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
     public void getEquipmentList(MutableLiveData<MaterialBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int type,
-                                 int materialId, String spec, int supplierId, int page) {
-        request(apiService.getEquipmentList(userId, type, materialId, spec, supplierId, page)).setData(liveData).setPageState(pageStateLiveData).send();
+                                 String materialName, String spec, int supplierId, int page) {
+        request(apiService.getEquipmentList(userId, type, materialName, spec, supplierId, page)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
     public void getEquipmentList(MutableLiveData<MaterialBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int type,
-                                 int materialId, String spec, int supplierId, int page, AuthGroupBean authGroup) {
-        request(apiService.getEquipmentList(userId, type, materialId, spec, supplierId, page, authGroup)).setData(liveData).setPageState(pageStateLiveData).send();
+                                 String materialName, String spec, int supplierId, int page, AuthGroupBean authGroup) {
+        request(apiService.getEquipmentList(userId, type, materialName, spec, supplierId, page, authGroup)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
     //基建物资---周转材料详情
@@ -102,16 +102,17 @@ public class MaterialRepository extends BaseRepository {
 
     //基建物资---周转材料预定订单
     public void getAddMaterialOrder(MutableLiveData<MaterialAddBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int material_id, String real_name, String tel, String company, int province, int city
-            , String address, String remark, String science_num_id) {
-        request(apiService.getAddMaterialOrder(userId, material_id, real_name, tel, company, province, city, address, remark, science_num_id)).setData(liveData).setPageState(pageStateLiveData).send();
+            , String address, String remark, String buyStock, String leaseStartTime, String leaseEndTime) {
+        request(apiService.getAddMaterialOrder(userId, material_id, real_name, tel, company, province, city,
+                address, remark, buyStock, leaseStartTime, leaseEndTime)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
     //基建物质---设备物资预定订单
     public void getAddEquipmentOrder(MutableLiveData<MaterialAddBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int materialId,
                                      String realName, String tel, String company, int province, int city, String address, String remark,
-                                     int method, long num, int cateId, String leaseStartTime, String leaseEndTime) {
+                                      long num,  String leaseStartTime, String leaseEndTime) {
         request(apiService.getAddEquipmentOrder(userId, materialId, realName, tel, company, province, city, address,
-                remark, method, num, cateId, leaseStartTime, leaseEndTime)).
+                remark, num, leaseStartTime, leaseEndTime)).
                 setData(liveData).setPageState(pageStateLiveData).send();
     }
 

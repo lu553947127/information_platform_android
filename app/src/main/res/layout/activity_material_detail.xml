@@ -180,10 +180,12 @@
                         android:layout_marginLeft="2dp"
                         app:layout_constraintLeft_toRightOf="@id/iv_address"
                         app:layout_constraintRight_toLeftOf="@id/iv_next"
-                        android:background="@drawable/selector_bg_custom"
+                        app:layout_constraintTop_toTopOf="@id/tv_address"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_address"
+                        android:background="@color/colorFFF"
                         android:textColor="@color/color_666666"
                         app:layout_goneMarginRight="14dp"
-                        android:textSize="12sp" />
+                        android:textSize="13sp" />
 
                     <ImageView
                         android:id="@+id/iv_next"
@@ -195,6 +197,7 @@
                         app:layout_constraintBottom_toBottomOf="@id/iv_address"
                         android:layout_marginRight="14dp"
                         android:layout_marginLeft="5dp"
+                        android:visibility="gone"
                         android:src="@drawable/icon_next" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

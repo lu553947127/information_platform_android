@@ -39,21 +39,15 @@ public class MaterialCollectAdapter extends BaseQuickAdapter<MaterialCollectBean
     protected void convert(BaseViewHolder helper, MaterialCollectBean.ListBean item) {
         TextView tvTitle = helper.getView(R.id.tv_title);
 
-        String name = null;
 
-        if (type == CustomConfig.FRP) {
-            name = item.catname;
-        } else if (type == CustomConfig.EQUIPMENT) {
-            name = item.name;
-        }
 
         if (item.status == 0) {
-            TextViewUtils.addDrawableInEnd(tvTitle, mContext.getResources().getDrawable(R.drawable.icon_lose), name);
+            TextViewUtils.addDrawableInEnd(tvTitle, mContext.getResources().getDrawable(R.drawable.icon_lose), item.materialName);
         } else {
             if (item.isOrder == 1) {
-                TextViewUtils.addDrawableInEnd(tvTitle, mContext.getResources().getDrawable(R.drawable.icon_bought), name);
+                TextViewUtils.addDrawableInEnd(tvTitle, mContext.getResources().getDrawable(R.drawable.icon_bought), item.materialName);
             } else {
-                tvTitle.setText(name);
+                tvTitle.setText(item.materialName);
             }
         }
 

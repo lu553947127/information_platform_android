@@ -36,14 +36,14 @@ public class EquipmentAdapter extends BaseQuickAdapter<MaterialBean.ListBean, Ba
         TextView tvTitle = helper.getView(R.id.tv_title);
 
         if (item.getIs_order() == 1) {
-            TextViewUtils.addDrawableInEnd(tvTitle, mContext.getResources().getDrawable(R.drawable.icon_bought), item.getEquipmentName());
+            TextViewUtils.addDrawableInEnd(tvTitle, mContext.getResources().getDrawable(R.drawable.icon_bought), item.getMaterialName());
         } else {
-            tvTitle.setText(item.getEquipmentName());
+            tvTitle.setText(item.getMaterialName());
         }
 
         helper.setText(R.id.tv_stock, "库存: " + item.getStock())
                 .setText(R.id.tv_spec, "规格: " + item.getSpec())
-                .setText(R.id.tv_supplier, "供应商: " + item.getEquipmentSupplier())
+                .setText(R.id.tv_supplier, "供应商: " + item.getMaterialSupplier())
                 .setText(R.id.tv_price, item.getMethod() == 2 ?
                         String.format(mContext.getString(R.string.format_material_price_no_unit), item.getGuidancePrice()) :
                         String.format(mContext.getString(R.string.format_material_price), item.getGuidancePrice(), "天"))

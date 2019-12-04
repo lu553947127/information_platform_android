@@ -128,10 +128,10 @@ public class FindRelationshipDetailActivity extends BaseActivity {
                 }
 
 
-                if (!PhoneFormatCheckUtils.isPhoneLegal(edtTel.getText())) {
-                    ToastUtils.showShort(getString(R.string.hint_tel));
-                    return;
-                }
+//                if (!PhoneFormatCheckUtils.isPhoneLegal(edtTel.getText())) {
+//                    ToastUtils.showShort(getString(R.string.hint_tel));
+//                    return;
+//                }
 
                 if (TextUtils.isEmpty(edtRemarks.getText())) {
                     ToastUtils.showShort(getString(R.string.hint_relationship_remarks));
