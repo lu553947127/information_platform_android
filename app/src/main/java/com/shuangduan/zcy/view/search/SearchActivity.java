@@ -23,6 +23,7 @@ import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.event.SearchHistoryEvent;
+import com.shuangduan.zcy.utils.KeyboardUtil;
 import com.shuangduan.zcy.vm.SearchVm;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -43,7 +44,6 @@ import butterknife.OnClick;
  * @class describe
  */
 public class SearchActivity extends BaseActivity {
-
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
     @BindView(R.id.toolbar)
@@ -145,7 +145,6 @@ public class SearchActivity extends BaseActivity {
             }
             return false;
         });
-
         searchVm.getHot();
         searchVm.getHistory();
     }
@@ -176,5 +175,11 @@ public class SearchActivity extends BaseActivity {
     @Subscribe
     public void onEventHistoryChange(SearchHistoryEvent event){
         searchVm.getHistory();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        KeyboardUtil.showSoftInputFromWindow(this,edtKeyword);
     }
 }

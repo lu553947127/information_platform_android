@@ -370,7 +370,8 @@
         <!-- 物资列表搜索页面 -->
         <activity
             android:name=".view.material.MaterialSearchActivity"
-            android:theme="@style/BaseAppTheme" />
+            android:theme="@style/BaseAppTheme"
+            android:windowSoftInputMode="stateVisible|adjustResize"/>
         <!-- 优质供应商列表-->
         <activity
             android:name="com.shuangduan.zcy.view.supplier.SupplierActivity"
@@ -419,7 +420,8 @@
         <!-- 首页搜索-->
         <activity
             android:name="com.shuangduan.zcy.view.search.SearchActivity"
-            android:theme="@style/BaseAppTheme" />
+            android:theme="@style/BaseAppTheme"
+            android:windowSoftInputMode="stateVisible|adjustResize"/>
         <!-- 工程和招采 分类搜索-->
         <activity
             android:name="com.shuangduan.zcy.view.search.SearchResultActivity"
@@ -484,7 +486,8 @@
         <!-- 好友群聊搜索页-->
         <activity
             android:name="com.shuangduan.zcy.rongyun.view.IMSearchActivity"
-            android:theme="@style/BaseAppTheme" />
+            android:theme="@style/BaseAppTheme"
+            android:windowSoftInputMode="stateVisible|adjustResize"/>
         <!-- 加好友页-->
         <activity
             android:name="com.shuangduan.zcy.rongyun.view.IMAddFriendActivity"

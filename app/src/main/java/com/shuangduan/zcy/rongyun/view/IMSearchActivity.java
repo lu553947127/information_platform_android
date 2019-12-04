@@ -23,6 +23,7 @@ import com.shuangduan.zcy.adapter.IMSearchAdapter;
 import com.shuangduan.zcy.adapter.IMSearchGroupAdapter;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.bean.IMFriendSearchBean;
+import com.shuangduan.zcy.utils.KeyboardUtil;
 import com.shuangduan.zcy.vm.IMAddVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
@@ -176,5 +177,11 @@ public class IMSearchActivity extends BaseActivity {
                 ActivityUtils.startActivity(bundle,IMGroupMoreActivity.class);
                 break;
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        KeyboardUtil.showSoftInputFromWindow(this,edtKeyword);
     }
 }

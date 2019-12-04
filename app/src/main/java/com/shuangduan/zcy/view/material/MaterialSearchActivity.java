@@ -26,6 +26,7 @@ import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.event.MaterialEvent;
 import com.shuangduan.zcy.model.event.SupplierEvent;
+import com.shuangduan.zcy.utils.KeyboardUtil;
 import com.shuangduan.zcy.vm.SearchVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
@@ -48,13 +49,10 @@ import butterknife.OnClick;
 public class MaterialSearchActivity extends BaseActivity {
     @BindView(R.id.toolbar)
     ConstraintLayout toolbar;
-
     @BindView(R.id.edt_keyword)
     EditText edtKeyword;
-
     @BindView(R.id.iv_clear)
     ImageView ivClear;
-
     @BindView(R.id.rv_material)
     RecyclerView rvMaterial;
 
@@ -81,8 +79,6 @@ public class MaterialSearchActivity extends BaseActivity {
         materialsType = getIntent().getIntExtra(CustomConfig.MATERIALS_TYPE, 0);
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         SearchVm searchVm = ViewModelProviders.of(this).get(SearchVm.class);
-        //初始化搜索框监听
-//        keywordTextChangedListener(searchVm);
 
         searchVm.materialLiveData.observe(this, list -> {
             if (searchAdapter == null) {
@@ -108,7 +104,7 @@ public class MaterialSearchActivity extends BaseActivity {
             }
         });
 
-        searchVm.pageStateLiveData.observe(this, s -> showHideLoad(s));
+        searchVm.pageStateLiveData.observe(this, this::showHideLoad);
 
         //重新键盘，改成搜索键盘，点击搜索键即可完成搜索
         edtKeyword.setOnEditorActionListener((textView, i, keyEvent) -> {
@@ -126,7 +122,6 @@ public class MaterialSearchActivity extends BaseActivity {
                     } else if (materialsType == CustomConfig.EQUIPMENT) {
                         searchVm.searchEquipment(searchType, edtKeyword.getText().toString());
                     }
-
                 }
                 return true;
             }
@@ -176,32 +171,6 @@ public class MaterialSearchActivity extends BaseActivity {
         }
     }
 
-    private void keywordTextChangedListener(SearchVm vm) {
-        edtKeyword.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                ivClear.setVisibility(s.length() > 0 ? View.VISIBLE : View.INVISIBLE);
-                if (s.length() > 0) {
-                    if (materialsType == CustomConfig.FRP) {
-                        vm.searchMaterial(searchType, edtKeyword.getText().toString());
-                    } else if (materialsType == CustomConfig.EQUIPMENT) {
-                        vm.searchEquipment(searchType, edtKeyword.getText().toString());
-                    }
-                }
-            }
-        });
-    }
-
     @OnClick({R.id.iv_bar_back, R.id.iv_clear})
     void onClick(View v) {
         switch (v.getId()) {
@@ -213,21 +182,12 @@ public class MaterialSearchActivity extends BaseActivity {
                 ivClear.setVisibility(View.INVISIBLE);
                 searchAdapter.setNewData(null);
                 break;
-//            case R.id.tv_positive:
-//                if (StringUtils.isTrimEmpty(edtKeyword.getText().toString())) {
-//                    ToastUtils.showShort(getString(R.string.hint_keyword));
-//                    return;
-//                }
-//                switch (type) {
-//                    case CustomConfig.MATERIAL_TYPE:
-//                        EventBus.getDefault().post(new MaterialEvent(edtKeyword.getText().toString()));
-//                        break;
-//                    case CustomConfig.SUPPLIER_TYPE:
-//                        EventBus.getDefault().post(new SupplierEvent(edtKeyword.getText().toString()));
-//                        break;
-//                }
-//                finish();
-//                break;
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        KeyboardUtil.showSoftInputFromWindow(this,edtKeyword);
     }
 }

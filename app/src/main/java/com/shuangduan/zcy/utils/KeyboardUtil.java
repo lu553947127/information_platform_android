@@ -10,7 +10,7 @@ import android.os.Build;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.util.DisplayMetrics;
-import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
@@ -97,17 +97,7 @@ public class KeyboardUtil {
      */
     public static void showORhideSoftKeyboard(Activity activity){
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-    }
-
-    /**
-     * 打开键盘
-     *
-     * @param context
-     */
-    public static void showKeyBoard(Context context, View view) {
-        InputMethodManager manager = ((InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE));
-        if (manager != null) manager.showSoftInput(view, 0);
+        Objects.requireNonNull(imm).toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
     //打开键盘
@@ -116,7 +106,7 @@ public class KeyboardUtil {
         editText.setFocusableInTouchMode(true);
         editText.requestFocus();
         InputMethodManager inputManager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputManager.toggleSoftInput(0, InputMethodManager.HIDE_IMPLICIT_ONLY);
+        Objects.requireNonNull(inputManager).toggleSoftInput(0, InputMethodManager.HIDE_IMPLICIT_ONLY);
     }
 
     /**
