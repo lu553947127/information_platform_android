@@ -1,8 +1,6 @@
 package com.shuangduan.zcy.view.material;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -29,6 +27,7 @@ import com.shuangduan.zcy.dialog.CustomDialog;
 import com.shuangduan.zcy.model.bean.MaterialDetailBean;
 import com.shuangduan.zcy.model.event.MaterialDetailEvent;
 import com.shuangduan.zcy.utils.KeyboardUtil;
+import com.shuangduan.zcy.utils.PhoneFormatCheckUtils;
 import com.shuangduan.zcy.utils.TextViewUtils;
 import com.shuangduan.zcy.utils.image.GlideImageLoader;
 import com.shuangduan.zcy.utils.image.PictureEnlargeUtils;
@@ -213,7 +212,7 @@ public class MaterialEquipmentDetailActivity extends BaseActivity {
             llCollection.setClickable(true);
             is_collect = "0";
             ivCollection.setBackgroundResource(R.drawable.icon_new_collection);
-            ToastUtils.showShort("收取消藏成功");
+            ToastUtils.showShort("取消收藏成功");
         });
 
         materialDetailVm.getEquipmentDetail(getIntent().getIntExtra(CustomConfig.MATERIAL_ID, 0));
@@ -264,7 +263,7 @@ public class MaterialEquipmentDetailActivity extends BaseActivity {
 
                             @Override
                             public void ok(String s) {
-                                getCallPhone();
+                                PhoneFormatCheckUtils.getCallPhone(getApplicationContext(),phone);
                             }
                         }).showDialog();
                 break;
@@ -287,14 +286,6 @@ public class MaterialEquipmentDetailActivity extends BaseActivity {
     public void onEventUpdateMaterialDetail(MaterialDetailEvent event) {
         LogUtils.i(event.material_id);
         materialDetailVm.getEquipmentDetail(event.material_id);
-    }
-
-    //拨打电话方法
-    private void getCallPhone() {
-        Intent intent = new Intent();
-        intent.setAction("android.intent.action.DIAL");
-        intent.setData(Uri.parse("tel:" + phone));
-        startActivity(intent);
     }
 
     private void initBanner(List<String> list, ArrayList<String> titles) {
