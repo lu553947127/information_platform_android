@@ -117,8 +117,8 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
     TextView tvUseStatus;
     @BindView(R.id.tv_material_status)
     TextView tvMaterialStatus;
-    @BindView(R.id.tv_address)
-    TextView tvAddress;
+    @BindView(R.id.et_address)
+    XEditText etAddress;
     @BindView(R.id.et_person_liable)
     XEditText etPersonLiable;
     @BindView(R.id.et_tel)
@@ -328,7 +328,7 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
     }
 
     @OnClick({R.id.iv_bar_back, R.id.tv_project, R.id.tv_category_material_id, R.id.tv_unit, R.id.tv_use_status, R.id.tv_material_status
-            , R.id.tv_address, R.id.tv_is_shelf, R.id.tv_shelf_time_start, R.id.tv_shelf_time_end, R.id.iv_images
+            , R.id.iv_address, R.id.tv_is_shelf, R.id.tv_shelf_time_start, R.id.tv_shelf_time_end, R.id.iv_images
             , R.id.ts_project, R.id.ts_plan, R.id.ts_num, R.id.ts_start_time, R.id.ts_enter_time, R.id.ts_exit_time, R.id.ts_amortize, R.id.ts_original, R.id.ts_value
             , R.id.tv_reserve})
     void OnClick(View view) {
@@ -356,7 +356,7 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
             case R.id.tv_material_status://选择材料状态
                 getBottomSheetDialog(R.layout.dialog_is_grounding, "material_status");
                 break;
-            case R.id.tv_address://选择存放地点
+            case R.id.iv_address://选择存放地点
                 bundle.putInt(CustomConfig.PROJECT_ADDRESS, 3);
                 ActivityUtils.startActivity(bundle, ReleaseAreaSelectActivity.class);
                 break;
@@ -704,8 +704,7 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
         turnoverAddVm.address = event.getAddress();
         turnoverAddVm.latitude = event.getLatitude();
         turnoverAddVm.longitude = event.getLongitude();
-        tvAddress.setText(event.getProvince() + event.getCity() + event.getAddress());
-        tvAddress.setTextColor(getResources().getColor(R.color.colorTv));
+        etAddress.setText(event.getProvince() + event.getCity() + event.getAddress());
     }
 
     //时间选择器
@@ -847,8 +846,7 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
             turnoverAddVm.address = turnoverDetailEditBean.getAddress();
             turnoverAddVm.latitude = turnoverDetailEditBean.getLatitude();
             turnoverAddVm.longitude = turnoverDetailEditBean.getLongitude();
-            tvAddress.setText(turnoverDetailEditBean.getProvince_name() + turnoverDetailEditBean.getCity_name() + turnoverDetailEditBean.getAddress());
-            tvAddress.setTextColor(getResources().getColor(R.color.colorTv));
+            etAddress.setText(turnoverDetailEditBean.getProvince_name() + turnoverDetailEditBean.getCity_name() + turnoverDetailEditBean.getAddress());
             etPersonLiable.setText(turnoverDetailEditBean.getPerson_liable());
             etTel.setText(turnoverDetailEditBean.getTel());
             turnoverAddVm.is_vulnerable = turnoverDetailEditBean.getRapid_wear();

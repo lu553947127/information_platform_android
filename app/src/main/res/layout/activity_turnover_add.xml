@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBgDark"
@@ -205,10 +206,28 @@
                     style="@style/AdminManageFirstText"
                     android:text="@string/admin_turnover_add_address" />
 
-                <TextView
-                    android:id="@+id/tv_address"
-                    style="@style/AdminManageSecondText"
-                    android:text="@string/admin_turnover_add_address_et" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.shuangduan.zcy.weight.XEditText
+                        android:id="@+id/et_address"
+                        style="@style/AdminManageSecondHint"
+                        android:layout_marginRight="10dp"
+                        android:hint="@string/admin_turnover_add_address_et"
+                        tools:ignore="RtlHardcoded" />
+
+                    <ImageView
+                        android:id="@+id/iv_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:paddingRight="15dp"
+                        android:src="@drawable/icon_admin_address"
+                        tools:ignore="RtlHardcoded,RtlSymmetry" />
+                </RelativeLayout>
+
             </LinearLayout>
 
             <View style="@style/DividingLine" />
