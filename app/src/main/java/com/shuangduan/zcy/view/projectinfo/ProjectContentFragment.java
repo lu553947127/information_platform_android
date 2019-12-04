@@ -19,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.amap.api.maps.model.LatLng;
 import com.blankj.utilcode.util.ActivityUtils;
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -34,11 +33,14 @@ import com.shuangduan.zcy.dialog.CustomDialog;
 import com.shuangduan.zcy.dialog.PayDialog;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.ProjectDetailBean;
+import com.shuangduan.zcy.utils.PhoneFormatCheckUtils;
 import com.shuangduan.zcy.view.mine.SetPwdPayActivity;
 import com.shuangduan.zcy.view.recharge.RechargeActivity;
 import com.shuangduan.zcy.vm.CoinPayVm;
 import com.shuangduan.zcy.vm.ProjectDetailVm;
 import com.shuangduan.zcy.vm.UpdatePwdPayVm;
+
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -275,9 +277,26 @@ public class ProjectContentFragment extends BaseFragment implements BaseQuickAda
 
     @Override
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+        ProjectDetailBean.ContactBean listBean = contactAdapter.getData().get(position);
         switch (view.getId()) {
             case R.id.tv_phone:
-                if (detail.getIs_pay() != 1) {
+                if (detail.getIs_pay() == 1) {
+                    new CustomDialog(mActivity)
+                            .setTip("联系电话: " + listBean.getTel())
+                            .setOk("打电话")
+                            .setCallBack(new BaseDialog.CallBack() {
+
+                                @Override
+                                public void cancel() {
+
+                                }
+
+                                @Override
+                                public void ok(String s) {
+                                    PhoneFormatCheckUtils.getCallPhone(mActivity.getApplicationContext(),listBean.getTel());
+                                }
+                            }).showDialog();
+                }else {
                     addPayDialog();
                 }
                 break;
@@ -287,7 +306,7 @@ public class ProjectContentFragment extends BaseFragment implements BaseQuickAda
     private void addPayDialog() {
         try {
             addDialog(new CustomDialog(mActivity)
-                    .setTip(String.format(getString(R.string.format_pay_price_project), projectDetailVm.detailLiveData.getValue().getDetail().getDetail_price()))
+                    .setTip(String.format(getString(R.string.format_pay_price_project), Objects.requireNonNull(projectDetailVm.detailLiveData.getValue()).getDetail().getDetail_price()))
                     .setCallBack(new BaseDialog.CallBack() {
                         @Override
                         public void cancel() {

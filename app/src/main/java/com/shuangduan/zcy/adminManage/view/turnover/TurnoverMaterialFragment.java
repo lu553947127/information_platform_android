@@ -42,6 +42,7 @@ import com.shuangduan.zcy.adminManage.event.TurnoverEvent;
 import com.shuangduan.zcy.adminManage.view.SelectTypeActivity;
 import com.shuangduan.zcy.adminManage.vm.TurnoverVm;
 import com.shuangduan.zcy.app.CustomConfig;
+import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.base.BaseNoRefreshFragment;
 import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.BottomSheetDialogs;
@@ -51,8 +52,10 @@ import com.shuangduan.zcy.model.bean.CityBean;
 import com.shuangduan.zcy.model.bean.ProvinceBean;
 import com.shuangduan.zcy.model.event.LocationEvent;
 import com.shuangduan.zcy.utils.AnimationUtils;
+import com.shuangduan.zcy.utils.KeyboardUtil;
 import com.shuangduan.zcy.view.release.ReleaseAreaSelectActivity;
 import com.shuangduan.zcy.vm.MultiAreaVm;
+import com.shuangduan.zcy.weight.XEditText;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -350,8 +353,10 @@ public class TurnoverMaterialFragment extends BaseNoRefreshFragment {
                 getDrawableRightView(tvCompany,R.drawable.icon_pullup_arrow,R.color.color_5C54F4);
                 break;
             case R.id.tv_name://选择材料名称
-                bundle.putInt(CustomConfig.ADMIN_MANAGE_TYPE,CustomConfig.ADMIN_MANAGE_CONSTRUCTION);
-                ActivityUtils.startActivity(bundle, SelectTypeActivity.class);
+//                bundle.putInt(CustomConfig.ADMIN_MANAGE_TYPE,CustomConfig.ADMIN_MANAGE_CONSTRUCTION);
+//                ActivityUtils.startActivity(bundle, SelectTypeActivity.class);
+
+                getBottomSheetDialog(R.layout.dialog_search_edit,"edit",0,1);
                 break;
             case R.id.tv_grounding://是否上架
                 getBottomSheetDialog(R.layout.dialog_is_grounding,"grounding",0,1);
@@ -623,6 +628,10 @@ public class TurnoverMaterialFragment extends BaseNoRefreshFragment {
                     bundle.putInt(CustomConfig.PROJECT_ADDRESS, 3);
                     ActivityUtils.startActivity(bundle, ReleaseAreaSelectActivity.class);
                 });
+                break;
+            case "edit"://材料名称搜索
+                XEditText xEditText = dialog_view.findViewById(R.id.edit);
+                KeyboardUtil.showSoftInputFromWindow((BaseActivity) getActivity(), xEditText);
                 break;
         }
         btn_dialog.show();

@@ -5,7 +5,6 @@ import androidx.annotation.Nullable;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.shuangduan.zcy.R;
-import com.shuangduan.zcy.model.bean.ProjectContentBean;
 import com.shuangduan.zcy.model.bean.ProjectDetailBean;
 
 import java.util.List;

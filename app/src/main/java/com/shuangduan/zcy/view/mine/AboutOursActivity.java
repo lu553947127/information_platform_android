@@ -1,7 +1,4 @@
 package com.shuangduan.zcy.view.mine;
-
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -19,6 +16,7 @@ import com.shuangduan.zcy.adapter.IncomeStatementAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.bean.HomeListBean;
+import com.shuangduan.zcy.utils.PhoneFormatCheckUtils;
 import com.shuangduan.zcy.utils.VersionUtils;
 import com.shuangduan.zcy.vm.HomeVm;
 
@@ -95,16 +93,8 @@ public class AboutOursActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_phone:
-                getCallPhone();
+                PhoneFormatCheckUtils.getCallPhone(getApplicationContext(),"4009-987-789");
                 break;
         }
-    }
-
-    //拨打电话方法
-    private void getCallPhone() {
-        Intent intent = new Intent();
-        intent.setAction("android.intent.action.DIAL");
-        intent.setData(Uri.parse("tel:" + "4009-987-789"));
-        startActivity(intent);
     }
 }
