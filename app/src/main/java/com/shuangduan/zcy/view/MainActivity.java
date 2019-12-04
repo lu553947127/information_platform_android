@@ -1,6 +1,9 @@
 package com.shuangduan.zcy.view;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -10,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -18,14 +22,20 @@ import com.shuangduan.zcy.adapter.FragmentAdapter;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.rongyun.view.CircleFragment;
+import com.shuangduan.zcy.view.login.UserInfoInputActivity;
 import com.shuangduan.zcy.vm.IMConnectVm;
 import com.shuangduan.zcy.weight.NoScrollViewPager;
+import com.tencent.mm.opensdk.constants.ConstantsAPI;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import cn.jpush.android.api.JPushInterface;
+
+import static com.shuangduan.zcy.app.AppConfig.APP_ID;
 
 /**
  * @ProjectName: information_platform_android
@@ -48,6 +58,7 @@ public class MainActivity extends BaseActivity {
     NoScrollViewPager viewPager;
     List<Fragment> mFragments;
     FragmentAdapter fragmentAdapter;
+    private BroadcastReceiver receiver;
 
     @Override
     protected int initLayoutRes() {
@@ -69,8 +80,10 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
+        regToWx();
         setAlias();
         initBottomNavigation();
+        checkInfoState();
         if (SPUtils.getInstance().getInt(SpConfig.INFO_STATUS) == 1) {
             //初始化，融云链接服务器
             IMConnectVm imConnectVm = ViewModelProviders.of(this).get(IMConnectVm.class);
@@ -155,6 +168,15 @@ public class MainActivity extends BaseActivity {
         }
     }
 
+    /**
+     * 检测信息是否录入过
+     */
+    private void checkInfoState() {
+        if (SPUtils.getInstance().getInt(SpConfig.INFO_STATUS) != 1) {
+            ActivityUtils.startActivity(UserInfoInputActivity.class);
+        }
+    }
+
     //重写返回键
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         //实现只在冷启动时显示启动页，类似微信效果
@@ -170,6 +192,26 @@ public class MainActivity extends BaseActivity {
     }
 
     /**
+     * 微信支付
+     * IWXAPI 是第三方app和微信通信的openApi接口
+     */
+    private void regToWx() {
+        // 通过WXAPIFactory工厂，获取IWXAPI的实例
+        IWXAPI api = WXAPIFactory.createWXAPI(this, APP_ID, true);
+        // 将应用的appId注册到微信
+        api.registerApp(APP_ID);
+        //建议动态监听微信启动广播进行注册到微信
+        receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                // 将该app注册到微信
+                api.registerApp(APP_ID);
+            }
+        };
+        registerReceiver(receiver, new IntentFilter(ConstantsAPI.ACTION_REFRESH_WXAPP));
+    }
+
+    /**
      * 极光推送别名设置
      */
     private void setAlias() {
@@ -179,5 +221,12 @@ public class MainActivity extends BaseActivity {
             LogUtils.i("别名设置", userId);
             JPushInterface.setAlias(this, userId, String.valueOf(userId));
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //销毁广播接受者
+        unregisterReceiver(receiver);
     }
 }

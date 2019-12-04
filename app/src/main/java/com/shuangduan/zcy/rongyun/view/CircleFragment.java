@@ -398,10 +398,10 @@ public class CircleFragment extends BaseFragment {
         RongIM.getInstance().addUnReadMessageCountChangedObserver(observer, Conversation.ConversationType.PRIVATE,Conversation.ConversationType.GROUP,Conversation.ConversationType.SYSTEM);
     }
 
+
     @Override
-    public void onPause() {
-        super.onPause();
-        LogUtils.e("onPause");
+    public void onDestroy() {
+        super.onDestroy();
         RongIM.getInstance().removeUnReadMessageCountChangedObserver(observer);
     }
 }

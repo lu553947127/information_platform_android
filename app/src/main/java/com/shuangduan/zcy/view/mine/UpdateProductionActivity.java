@@ -16,6 +16,7 @@ import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.event.ProductionEvent;
+import com.shuangduan.zcy.utils.KeyboardUtil;
 import com.shuangduan.zcy.vm.UserInfoVm;
 
 import org.greenrobot.eventbus.EventBus;
@@ -72,6 +73,12 @@ public class UpdateProductionActivity extends BaseActivity {
                     break;
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        KeyboardUtil.showSoftInputFromWindow(this, edtProduction);
     }
 
     @OnClick({R.id.iv_bar_back, R.id.tv_confirm})

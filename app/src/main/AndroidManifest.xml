@@ -111,6 +111,7 @@
         <!-- 编辑用户名页-->
         <activity
             android:name="com.shuangduan.zcy.view.mine.UpdateNameActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize"
             android:theme="@style/BaseAppTheme" />
         <!-- 编辑手机号页-->
         <activity
@@ -136,6 +137,7 @@
         <!-- 经营产品修改-->
         <activity
             android:name="com.shuangduan.zcy.view.mine.UpdateProductionActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize"
             android:theme="@style/BaseAppTheme" />
         <!-- 身份证上传页-->
         <activity
@@ -148,6 +150,7 @@
         <!-- 公司搜索页-->
         <activity
             android:name="com.shuangduan.zcy.view.mine.CompanySearchActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize"
             android:theme="@style/BaseAppTheme" />
         <!-- 地区选择多选页-->
         <activity

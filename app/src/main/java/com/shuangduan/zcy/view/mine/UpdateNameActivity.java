@@ -16,6 +16,7 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.event.UserNameEvent;
+import com.shuangduan.zcy.utils.KeyboardUtil;
 import com.shuangduan.zcy.vm.UserInfoVm;
 
 import org.greenrobot.eventbus.EventBus;
@@ -68,15 +69,21 @@ public class UpdateNameActivity extends BaseActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        KeyboardUtil.showSoftInputFromWindow(this, edtName);
+    }
+
     @OnClick({R.id.iv_bar_back, R.id.tv_save})
-    void onClick(View view){
-        switch (view.getId()){
+    void onClick(View view) {
+        switch (view.getId()) {
             case R.id.iv_bar_back:
                 finish();
                 break;
             case R.id.tv_save:
                 String username = edtName.getText().toString();
-                if (StringUtils.isTrimEmpty(username)){
+                if (StringUtils.isTrimEmpty(username)) {
                     ToastUtils.showShort(getString(R.string.hint_real_name));
                     return;
                 }

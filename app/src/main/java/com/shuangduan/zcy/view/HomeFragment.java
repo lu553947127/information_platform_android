@@ -440,12 +440,7 @@ public class HomeFragment extends BaseFragment {
         homeNeedVm.recyclerView3.stop();
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        LogUtils.e("onPause");
-        RongIM.getInstance().removeUnReadMessageCountChangedObserver(observer);
-    }
+
 
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
@@ -456,5 +451,11 @@ public class HomeFragment extends BaseFragment {
             toolbar.setBackgroundColor(sColor);
             toolbar.setVisibility(View.VISIBLE);
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        RongIM.getInstance().removeUnReadMessageCountChangedObserver(observer);
     }
 }

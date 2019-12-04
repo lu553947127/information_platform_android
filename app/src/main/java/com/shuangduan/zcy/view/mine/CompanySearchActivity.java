@@ -13,6 +13,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -27,6 +28,7 @@ import com.shuangduan.zcy.model.bean.PostBean;
 import com.shuangduan.zcy.model.event.CompanyEvent;
 import com.shuangduan.zcy.model.event.OfficeEvent;
 import com.shuangduan.zcy.utils.DensityUtil;
+import com.shuangduan.zcy.utils.KeyboardUtil;
 import com.shuangduan.zcy.vm.SearchVm;
 import com.shuangduan.zcy.vm.UserInfoVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
@@ -197,6 +199,16 @@ public class CompanySearchActivity extends BaseActivity {
 
         userInfoVm.pageStateLiveData.observe(this, s -> showHideLoad(s));
         searchVm.pageStateLiveData.observe(this, s -> showHideLoad(s));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        switch (type) {
+            case CustomConfig.searchTypeCompany:
+                KeyboardUtil.showSoftInputFromWindow(this, edtKeyword);
+                break;
+        }
     }
 
     private void showHideLoad(String s) {

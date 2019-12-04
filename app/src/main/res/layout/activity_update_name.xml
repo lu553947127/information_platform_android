@@ -39,7 +39,7 @@
         android:textColor="@color/colorTvHint"
         android:textSize="12sp"
         android:text="@string/please_hint_real_name"/>
-    
+
     <TextView
         android:id="@+id/tv_save"
         android:layout_width="335dp"
