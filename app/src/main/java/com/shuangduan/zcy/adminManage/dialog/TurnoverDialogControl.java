@@ -29,16 +29,11 @@ import java.util.List;
 public class TurnoverDialogControl extends BaseAddInfoDialog implements DialogInterface.OnDismissListener, View.OnClickListener {
 
     private final TurnoverDetailListening listening;
-    //使用计划ID
-    private List<Integer> planIdList;
 
 
 
     private int currentPosition;
     private ArrayWheelAdapter projectAdapter;
-
-    //当前滑动的角标值
-    private int selectorIndex;
 
 
     private String use_count, start_date, entry_time, exit_time, accumulated_amortization, original_price, net_worth, planStr;
@@ -53,13 +48,7 @@ public class TurnoverDialogControl extends BaseAddInfoDialog implements DialogIn
     public int layoutId() {
         return R.layout.dialog_add_turnover;
     }
-
-    @Override
-    public void initData(TurnoverVm vm) {
-        super.initData(vm);
-        planIdList = new ArrayList<>();
-    }
-
+    
     @Override
     public void initView() {
         super.initView();
@@ -75,6 +64,14 @@ public class TurnoverDialogControl extends BaseAddInfoDialog implements DialogIn
         tvPositive.setOnClickListener(this);
         tvCancel.setOnClickListener(this);
 
+
+        tsItemTwo.getEditText().addTextChangedListener(new TextWatcherWrapper() {
+            @Override
+            public void afterTextChanged(Editable s) {
+                planStr = s.length() > 0 ? s.toString() : "";
+                tsItemTwo.setValue(planStr);
+            }
+        });
 
         tsItemThree.getEditText().addTextChangedListener(new TextWatcherWrapper() {
             @Override
@@ -109,10 +106,6 @@ public class TurnoverDialogControl extends BaseAddInfoDialog implements DialogIn
 
         projectAdapter = new ArrayWheelAdapter(projectList);
 
-
-        wheelView.setOnItemSelectedListener(index -> {
-            this.selectorIndex = index;
-        });
     }
 
     //获取编辑详情数据
@@ -203,8 +196,6 @@ public class TurnoverDialogControl extends BaseAddInfoDialog implements DialogIn
                 showView(1, R.string.admin_selector_material_plan);
                 break;
             case 2:
-                planStr = tsItemTwo.getValue();
-                tsItemTwo.setValue(planStr);
                 showView(6, R.string.admin_input_material_amortize);
                 break;
             case 3:
@@ -221,7 +212,7 @@ public class TurnoverDialogControl extends BaseAddInfoDialog implements DialogIn
                 showView(5, R.string.admin_selector_material_exit_time);
                 break;
             case 6:
-                if(StringUtils.isEmpty(entry_time)){
+                if (StringUtils.isEmpty(entry_time)) {
                     ToastUtils.showShort("请先选择材料进场时间");
                     return;
                 }
