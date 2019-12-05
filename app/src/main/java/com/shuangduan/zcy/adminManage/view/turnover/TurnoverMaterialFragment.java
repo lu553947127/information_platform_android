@@ -667,6 +667,11 @@ public class TurnoverMaterialFragment extends BaseNoRefreshFragment {
         textView.setTextColor(getResources().getColor(color));
     }
 
+    @Subscribe
+    public void onEventTurnover(TurnoverEvent event) {
+        turnoverVm.constructionList(areaVm.id,areaVm.city_id);
+    }
+
     @SuppressLint("SetTextI18n")
     @Subscribe
     public void onEventLocationEvent(LocationEvent event){

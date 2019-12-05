@@ -52,7 +52,7 @@ public class TurnoverAddVm extends BaseViewModel {
     public String images;
 
     public String use_count;
-    public int plan;
+    public String plan;
     public String accumulated_amortization;
     public String start_date;
     public String entry_time;

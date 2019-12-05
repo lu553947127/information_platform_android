@@ -90,7 +90,7 @@ public class TurnoverDetailEditBean {
     private String shelf_end_time;
     private int shelf_type;
     private String guidance_price;
-    private int plan;
+    private String plan;
     private String plan_name;
     private int use_count;
     private String start_date;
@@ -360,11 +360,11 @@ public class TurnoverDetailEditBean {
         this.guidance_price = guidance_price;
     }
 
-    public int getPlan() {
+    public String getPlan() {
         return plan;
     }
 
-    public void setPlan(int plan) {
+    public void setPlan(String plan) {
         this.plan = plan;
     }
 

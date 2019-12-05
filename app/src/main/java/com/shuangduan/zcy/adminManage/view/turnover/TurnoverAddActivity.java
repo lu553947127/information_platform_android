@@ -880,7 +880,7 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
             getImageBitmap();
 
             turnoverAddVm.plan = turnoverDetailEditBean.getPlan();
-            tsPlan.setValue(turnoverDetailEditBean.getPlan_name());
+            tsPlan.setValue(turnoverDetailEditBean.getPlan());
             turnoverAddVm.use_count = String.valueOf(turnoverDetailEditBean.getUse_count());
             tsNum.setValue(String.valueOf(turnoverDetailEditBean.getUse_count()));
             turnoverAddVm.start_date = turnoverDetailEditBean.getStart_date();
@@ -903,7 +903,7 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
                     String.valueOf(turnoverDetailEditBean.getNet_worth()));
 
             etRemark.setText(turnoverDetailEditBean.getRemark());
-            if (turnoverDetailEditBean.getPlan() != 0 || turnoverDetailEditBean.getUse_count() != 0
+            if (!StringUtils.isTrimEmpty(turnoverAddVm.plan) || turnoverDetailEditBean.getUse_count() != 0
                     || !StringUtils.isTrimEmpty(turnoverAddVm.start_date) || !StringUtils.isTrimEmpty(turnoverAddVm.entry_time)
                     || !StringUtils.isTrimEmpty(turnoverAddVm.exit_time) || turnoverDetailEditBean.getAccumulated_amortization() != 0
                     || turnoverDetailEditBean.getOriginal_price() != 0 || turnoverDetailEditBean.getNet_worth() != 0) {
@@ -924,6 +924,7 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
     public void callInfo(String planStr, String use_count, String start_date, String entry_time, String exit_time,
                          String accumulated_amortization, String original_price, String net_worth) {
 
+        turnoverAddVm.plan = planStr;
         turnoverAddVm.use_count = use_count;
         turnoverAddVm.start_date = start_date;
         turnoverAddVm.entry_time = entry_time;
