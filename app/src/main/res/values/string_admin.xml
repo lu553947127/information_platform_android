@@ -53,8 +53,10 @@
     <string name="admin_device_material_equipment_time">维修设备何时完好</string>
     <string name="admin_device_material_equipment_time_et">请输入维修设备何时完好</string>
     <string name="admin_device_material_operator_name">操作手姓名</string>
-    <string name="admin_device_add_category_material_id">设备类别/名称</string>
-    <string name="admin_device_add_category_material_id_et">请选择设备类别/名称</string>
+    <string name="admin_device_add_category_material_id">设备类别</string>
+    <string name="admin_device_add_category_material_id_et">请选择设备类别</string>
+    <string name="admin_device_add_category_material_name">设备名称</string>
+    <string name="admin_device_add_category_material_name_et">请输入设备名称</string>
     <string name="admin_device_add_encoding">设备编码</string>
     <string name="admin_device_add_encoding_et">请输入设备编码</string>
     <string name="admin_selector_no_encoding">设备编码不能为空</string>
@@ -134,6 +136,7 @@
     <string name="admin_selector_no_project">项目名称不能为空</string>
     <string name="admin_selector_no_category">材料类别不能为空</string>
     <string name="admin_selector_no_material_id">材料名称不能为空</string>
+    <string name="admin_selector_no_material_id_device">设备名称不能为空</string>
     <string name="admin_selector_no_stock">库存数量不能为空</string>
     <string name="admin_selector_no_unit_price">单价不能为空</string>
     <string name="admin_selector_no_unit">单位不能为空</string>

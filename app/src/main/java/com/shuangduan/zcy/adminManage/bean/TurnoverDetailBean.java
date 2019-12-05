@@ -20,7 +20,7 @@ public class TurnoverDetailBean {
     public String categoryName;
 
     //材料名称
-    @SerializedName("material_id_name")
+    @SerializedName("material_name")
     public String materialIdName;
 
     //所属项目名称
@@ -87,7 +87,7 @@ public class TurnoverDetailBean {
     @SerializedName("guidance_price")
     public String guidancePrice;
     //下部使用计划描述
-    @SerializedName("plan_name")
+    @SerializedName("plan")
     public String planName;
     //在用数量
     @SerializedName("use_count")

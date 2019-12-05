@@ -184,10 +184,10 @@
             style="@style/AdminManageFirstText"
             android:text="@string/admin_material_plan" />
 
-        <TextView
-            android:id="@+id/tv_plan"
-            style="@style/AdminManageSecondText"
-            android:text="@string/admin_selector_material_plan" />
+        <com.shuangduan.zcy.weight.XEditText
+            android:id="@+id/et_plan"
+            style="@style/AdminManageSecondHint"
+            android:hint="@string/admin_selector_material_plan" />
     </LinearLayout>
 
     <View style="@style/DividingLine" />

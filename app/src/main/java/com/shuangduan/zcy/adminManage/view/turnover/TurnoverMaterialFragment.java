@@ -54,6 +54,7 @@ import com.shuangduan.zcy.model.bean.ProvinceBean;
 import com.shuangduan.zcy.model.event.LocationEvent;
 import com.shuangduan.zcy.utils.AnimationUtils;
 import com.shuangduan.zcy.utils.KeyboardUtil;
+import com.shuangduan.zcy.utils.PhoneUtils;
 import com.shuangduan.zcy.view.release.ReleaseAreaSelectActivity;
 import com.shuangduan.zcy.vm.MultiAreaVm;
 import com.shuangduan.zcy.weight.XEditText;
@@ -354,9 +355,6 @@ public class TurnoverMaterialFragment extends BaseNoRefreshFragment {
                 getDrawableRightView(tvCompany,R.drawable.icon_pullup_arrow,R.color.color_5C54F4);
                 break;
             case R.id.tv_name://选择材料名称
-//                bundle.putInt(CustomConfig.ADMIN_MANAGE_TYPE,CustomConfig.ADMIN_MANAGE_CONSTRUCTION);
-//                ActivityUtils.startActivity(bundle, SelectTypeActivity.class);
-
                 getBottomSheetDialog(R.layout.dialog_search_edit,"edit",0,1);
                 break;
             case R.id.tv_grounding://是否上架
@@ -601,12 +599,13 @@ public class TurnoverMaterialFragment extends BaseNoRefreshFragment {
                 EditText etNum=dialog_view.findViewById(R.id.et_num);
                 tvSplitUseStatue=dialog_view.findViewById(R.id.tv_use_statue);
                 tvSplitAddress = dialog_view.findViewById(R.id.tv_material_id);
+                KeyboardUtil.RemoveDecimalPoints(etNum);
                 tvSave.setOnClickListener(v -> {
                     if (TextUtils.isEmpty(etNum.getText().toString())) {
                         ToastUtils.showShort(getString(R.string.no_mun));
                         return;
                     }
-                    if (Integer.valueOf(etNum.getText().toString()) == 0) {
+                    if (Double.valueOf(etNum.getText().toString()) == 0) {
                         ToastUtils.showShort("数量不能为0");
                         return;
                     }
@@ -633,6 +632,12 @@ public class TurnoverMaterialFragment extends BaseNoRefreshFragment {
             case "edit"://材料名称搜索
                 XEditText xEditText = dialog_view.findViewById(R.id.edit);
                 TextView tvSearch = dialog_view.findViewById(R.id.tv_search);
+                View view = dialog_view.findViewById(R.id.view);
+                if(PhoneUtils.isPhone()) {
+                    view.setVisibility(View.VISIBLE);
+                }else {
+                    view.setVisibility(View.GONE);
+                }
                 KeyboardUtil.showSoftInputFromWindow((BaseActivity) getActivity(), xEditText);
                 tvSearch.setOnClickListener(v -> {
                     turnoverVm.material_name = xEditText.getText().toString();

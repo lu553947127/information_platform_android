@@ -33,8 +33,6 @@ public class DeviceAddVm extends BaseViewModel {
     private int userId;
     public int unit_id;
     public int category;
-    public int material_id;
-    public String categoryName;
     public String materialName;
     public int unit;
     public int use_status;
@@ -61,7 +59,6 @@ public class DeviceAddVm extends BaseViewModel {
     public String exit_time;
 
     public int material_status;
-    public int plan;
     public int editId;
 
     public MutableLiveData<String> deviceAddData;
@@ -83,8 +80,8 @@ public class DeviceAddVm extends BaseViewModel {
     }
 
     //后台管理 --- 设备添加/编辑
-    public void equipmentAdd(String type,String encoding,String stock,String spec,String person_liable,String tel,String guidance_price
-            ,String use_month_count,String technology_detail,String equipment_time){
+    public void equipmentAdd(String type,String materialName,String encoding,String stock,String spec,String person_liable,String tel,String guidance_price
+            ,String use_month_count,String plan,String technology_detail,String equipment_time){
         if (unit_id==0) {
             ToastUtils.showShort(getString(R.string.admin_selector_no_project));
             return;
@@ -93,8 +90,8 @@ public class DeviceAddVm extends BaseViewModel {
             ToastUtils.showShort(getString(R.string.admin_selector_device_no_category));
             return;
         }
-        if (material_id==0) {
-            ToastUtils.showShort(getString(R.string.admin_selector_no_material_id));
+        if (TextUtils.isEmpty(materialName)){
+            ToastUtils.showShort(getString(R.string.admin_selector_no_material_id_device));
             return;
         }
         if (TextUtils.isEmpty(encoding)){
@@ -109,20 +106,8 @@ public class DeviceAddVm extends BaseViewModel {
             ToastUtils.showShort(getString(R.string.admin_selector_no_unit));
             return;
         }
-        if (TextUtils.isEmpty(spec)){
-            ToastUtils.showShort(getString(R.string.admin_selector_no_spec));
-            return;
-        }
         if (use_status==0) {
             ToastUtils.showShort(getString(R.string.admin_selector_no_use_status));
-            return;
-        }
-        if (province==0) {
-            ToastUtils.showShort(getString(R.string.admin_selector_no_material_address));
-            return;
-        }
-        if (city==0) {
-            ToastUtils.showShort(getString(R.string.admin_selector_no_material_address));
             return;
         }
         if (TextUtils.isEmpty(address)){
@@ -160,12 +145,12 @@ public class DeviceAddVm extends BaseViewModel {
 
         switch (type){
             case "add"://添加设备
-                new DeviceRepository().equipmentAdd(deviceAddData,userId,unit_id,category,material_id,encoding,stock,unit,spec,use_status
+                new DeviceRepository().equipmentAdd(deviceAddData,userId,unit_id,category,materialName,encoding,stock,unit,spec,use_status
                         ,province,city,address,longitude,latitude,person_liable,tel,is_shelf,shelf_start_time,shelf_end_time,shelf_type,method,guidance_price,images
                         ,brand,start_date,operator_name,original_price,main_params,power,entry_time,exit_time,material_status,use_month_count,plan,technology_detail,equipment_time);
                 break;
             case "edit"://编辑设备
-                new DeviceRepository().equipmentEdit(deviceEditData,userId,editId,unit_id,category,material_id,encoding,stock,unit,spec,use_status
+                new DeviceRepository().equipmentEdit(deviceEditData,userId,editId,unit_id,category,materialName,encoding,stock,unit,spec,use_status
                         ,province,city,address,longitude,latitude,person_liable,tel,is_shelf,shelf_start_time,shelf_end_time,shelf_type,method,guidance_price,images
                         ,brand,start_date,operator_name,original_price,main_params,power,entry_time,exit_time,material_status,use_month_count,plan,technology_detail,equipment_time);
                 break;

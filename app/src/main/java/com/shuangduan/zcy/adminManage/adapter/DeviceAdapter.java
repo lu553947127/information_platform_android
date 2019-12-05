@@ -56,8 +56,8 @@ public class DeviceAdapter extends BaseQuickAdapter<DeviceBean.ListBean, BaseVie
                 break;
         }
 
-        helper.setText(R.id.tv_material, item.getMaterial_id())
-                .setText(R.id.tv_category, "设备类别：" + item.getCategory())
+        helper.setText(R.id.tv_material, item.getMaterial_name())
+                .setText(R.id.tv_category, "设备类别：" + item.getCategory_name())
                 .setText(R.id.tv_is_shelf, "是否上架：" + item.getIs_shelf() + "      库存数量：" + item.getStock())
                 .setText(R.id.tv_company, "下属公司：" + item.getCompany())
                 .setText(R.id.tv_project, "项目名称：" + item.getProject())

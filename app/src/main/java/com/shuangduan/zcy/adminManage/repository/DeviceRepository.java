@@ -25,8 +25,8 @@ import java.util.List;
 public class DeviceRepository extends BaseRepository {
 
     //后台管理 --- 设备管理列表
-    public void equipmentList(MutableLiveData<DeviceBean> liveData, MutableLiveData<String> pageState, int user_id, int page, int unit_id, int is_shelf, int use_status, int province, int city, int p_category_id, int category_id, int supplier_id) {
-        request(apiService.equipmentList(user_id, page, unit_id, is_shelf, use_status, province, city, p_category_id, category_id, supplier_id)).setData(liveData).setPageState(pageState).send();
+    public void equipmentList(MutableLiveData<DeviceBean> liveData, MutableLiveData<String> pageState, int user_id, int page, int unit_id, int is_shelf, int use_status, int province, int city, String material_name, int supplier_id) {
+        request(apiService.equipmentList(user_id, page, unit_id, is_shelf, use_status, province, city, material_name, supplier_id)).setData(liveData).setPageState(pageState).send();
     }
 
     //后台管理 --- 设备管理选择条件历史列表
@@ -60,23 +60,23 @@ public class DeviceRepository extends BaseRepository {
     }
 
     //后台管理 --- 设备添加
-    public void equipmentAdd(MutableLiveData<String> liveData, int userId,int unit_id,int category,int material_id,String encoding,String stock,int unit,String spec,int use_status
+    public void equipmentAdd(MutableLiveData<String> liveData, int userId,int unit_id,int category,String material_name,String encoding,String stock,int unit,String spec,int use_status
             ,int province,int city,String address,double longitude,double latitude,String person_liable,String tel,int is_shelf
             ,String shelf_start_time,String shelf_end_time,int shelf_type,int method,String guidance_price,String images
             ,String brand,String start_date,String operator_name,String original_price,String main_params,String power,String entry_time,String exit_time,int material_status
-            ,String use_month_count,int plan,String technology_detail,String equipment_time) {
-        request(apiService.equipmentAdd(userId,unit_id,category,material_id,encoding,stock,unit,spec,use_status
+            ,String use_month_count,String plan,String technology_detail,String equipment_time) {
+        request(apiService.equipmentAdd(userId,unit_id,category,material_name,encoding,stock,unit,spec,use_status
                 ,province,city,address,longitude,latitude,person_liable,tel,is_shelf,shelf_start_time,shelf_end_time,shelf_type,method,guidance_price,images
                 ,brand,start_date,operator_name,original_price,main_params,power,entry_time,exit_time,material_status,use_month_count,plan,technology_detail,equipment_time)).setData(liveData).send();
     }
 
     //后台管理 --- 设备编辑
-    public void equipmentEdit(MutableLiveData<String> liveData, int userId,int id,int unit_id,int category,int material_id,String encoding,String stock,int unit,String spec,int use_status
+    public void equipmentEdit(MutableLiveData<String> liveData, int userId,int id,int unit_id,int category,String material_name,String encoding,String stock,int unit,String spec,int use_status
             ,int province,int city,String address,double longitude,double latitude,String person_liable,String tel,int is_shelf
             ,String shelf_start_time,String shelf_end_time,int shelf_type,int method,String guidance_price,String images
             ,String brand,String start_date,String operator_name,String original_price,String main_params,String power,String entry_time,String exit_time,int material_status
-            ,String use_month_count,int plan,String technology_detail,String equipment_time) {
-        request(apiService.equipmentEdit(userId,id,unit_id,category,material_id,encoding,stock,unit,spec,use_status
+            ,String use_month_count,String plan,String technology_detail,String equipment_time) {
+        request(apiService.equipmentEdit(userId,id,unit_id,category,material_name,encoding,stock,unit,spec,use_status
                 ,province,city,address,longitude,latitude,person_liable,tel,is_shelf,shelf_start_time,shelf_end_time,shelf_type,method,guidance_price,images
                 ,brand,start_date,operator_name,original_price,main_params,power,entry_time,exit_time,material_status,use_month_count,plan,technology_detail,equipment_time)).setData(liveData).send();
     }

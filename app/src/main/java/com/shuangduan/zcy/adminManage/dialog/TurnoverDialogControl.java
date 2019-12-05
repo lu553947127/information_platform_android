@@ -14,9 +14,6 @@ import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.listener.TextWatcherWrapper;
 import com.shuangduan.zcy.utils.KeyboardUtil;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @author xuyu
  * @Package com.shuangduan.zcy.adminManage.view.turnover.dialog$
@@ -29,13 +26,8 @@ import java.util.List;
 public class TurnoverDialogControl extends BaseAddInfoDialog implements DialogInterface.OnDismissListener, View.OnClickListener {
 
     private final TurnoverDetailListening listening;
-
-
-
     private int currentPosition;
     private ArrayWheelAdapter projectAdapter;
-
-
     private String use_count, start_date, entry_time, exit_time, accumulated_amortization, original_price, net_worth, planStr;
 
     public TurnoverDialogControl(BaseActivity context, TurnoverVm vm, TurnoverDetailListening listening) {
@@ -105,7 +97,6 @@ public class TurnoverDialogControl extends BaseAddInfoDialog implements DialogIn
         dialog.setOnDismissListener(this);
 
         projectAdapter = new ArrayWheelAdapter(projectList);
-
     }
 
     //获取编辑详情数据
@@ -121,7 +112,7 @@ public class TurnoverDialogControl extends BaseAddInfoDialog implements DialogIn
         this.original_price = original_price;
         this.net_worth = net_worth;
 
-        tsItemTwo.setValue(planStr);
+        tsItemTwo.getEditText().setText(planStr);
         tsItemThree.getEditText().setText(use_count);
         tsItemFour.setValue(start_date);
         tsItemFive.setValue(entry_time);

@@ -65,8 +65,7 @@ public class DeviceDetailEditBean {
 
     private int category;
     private String category_name;
-    private int material_id;
-    private String material_id_name;
+    private String material_name;
     private String encoding;
     private int unit_id;
     private String unit_id_name;
@@ -94,7 +93,7 @@ public class DeviceDetailEditBean {
     private String shelf_end_time;
     private int shelf_type;
     private String guidance_price;
-    private int plan;
+    private String plan;
     private String plan_name;
     private String brand;
     private String main_params;
@@ -126,20 +125,12 @@ public class DeviceDetailEditBean {
         this.category_name = category_name;
     }
 
-    public int getMaterial_id() {
-        return material_id;
+    public String getMaterial_name() {
+        return material_name;
     }
 
-    public void setMaterial_id(int material_id) {
-        this.material_id = material_id;
-    }
-
-    public String getMaterial_id_name() {
-        return material_id_name;
-    }
-
-    public void setMaterial_id_name(String material_id_name) {
-        this.material_id_name = material_id_name;
+    public void setMaterial_name(String material_name) {
+        this.material_name = material_name;
     }
 
     public String getEncoding() {
@@ -358,11 +349,11 @@ public class DeviceDetailEditBean {
         this.guidance_price = guidance_price;
     }
 
-    public int getPlan() {
+    public String getPlan() {
         return plan;
     }
 
-    public void setPlan(int plan) {
+    public void setPlan(String plan) {
         this.plan = plan;
     }
 

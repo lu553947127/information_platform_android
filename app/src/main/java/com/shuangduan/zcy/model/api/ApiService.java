@@ -1833,8 +1833,7 @@ public interface ApiService {
             @Field("use_status") int use_status,
             @Field("province") int province,
             @Field("city") int city,
-            @Field("p_category_id") int p_category_id,
-            @Field("category_id") int category_id,
+            @Field("material_name") String material_name,
             @Field("supplier_id") int supplier_id
     );
 
@@ -1884,7 +1883,7 @@ public interface ApiService {
             @Field("user_id") int userId,
             @Field("unit_id") int unit_id,
             @Field("category") int category,
-            @Field("material_id") int material_id,
+            @Field("material_name") String material_name,
             @Field("encoding") String encoding,
             @Field("stock") String stock,
             @Field("unit") int unit,
@@ -1914,7 +1913,7 @@ public interface ApiService {
             @Field("exit_time") String exit_time,
             @Field("material_status") int material_status,
             @Field("use_month_count") String use_month_count,
-            @Field("plan") int plan,
+            @Field("plan") String plan,
             @Field("technology_detail") String technology_detail,
             @Field("equipment_time") String equipment_time
     );
@@ -1927,7 +1926,7 @@ public interface ApiService {
             @Field("id") int id,
             @Field("unit_id") int unit_id,
             @Field("category") int category,
-            @Field("material_id") int material_id,
+            @Field("material_name") String material_name,
             @Field("encoding") String encoding,
             @Field("stock") String stock,
             @Field("unit") int unit,
@@ -1957,7 +1956,7 @@ public interface ApiService {
             @Field("exit_time") String exit_time,
             @Field("material_status") int material_status,
             @Field("use_month_count") String use_month_count,
-            @Field("plan") int plan,
+            @Field("plan") String plan,
             @Field("technology_detail") String technology_detail,
             @Field("equipment_time") String equipment_time
     );

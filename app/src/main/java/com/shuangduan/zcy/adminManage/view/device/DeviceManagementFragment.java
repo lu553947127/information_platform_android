@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -41,6 +42,7 @@ import com.shuangduan.zcy.adminManage.event.DeviceEvent;
 import com.shuangduan.zcy.adminManage.view.SelectTypeActivity;
 import com.shuangduan.zcy.adminManage.vm.DeviceVm;
 import com.shuangduan.zcy.app.CustomConfig;
+import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.base.BaseNoRefreshFragment;
 import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.BottomSheetDialogs;
@@ -49,7 +51,10 @@ import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.CityBean;
 import com.shuangduan.zcy.model.bean.ProvinceBean;
 import com.shuangduan.zcy.utils.AnimationUtils;
+import com.shuangduan.zcy.utils.KeyboardUtil;
+import com.shuangduan.zcy.utils.PhoneUtils;
 import com.shuangduan.zcy.vm.MultiAreaVm;
+import com.shuangduan.zcy.weight.XEditText;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -331,8 +336,7 @@ public class DeviceManagementFragment extends BaseNoRefreshFragment {
                 getDrawableRightView(tvCompany,R.drawable.icon_pullup_arrow,R.color.color_5C54F4);
                 break;
             case R.id.tv_name://选择设备名称
-                bundle.putInt(CustomConfig.ADMIN_MANAGE_TYPE,CustomConfig.ADMIN_MANAGE_EQIPMENT);
-                ActivityUtils.startActivity(bundle, SelectTypeActivity.class);
+                getBottomSheetDialog(R.layout.dialog_search_edit,"edit");
                 break;
             case R.id.tv_grounding://是否上架
                 getBottomSheetDialog(R.layout.dialog_is_grounding,"grounding");
@@ -355,7 +359,7 @@ public class DeviceManagementFragment extends BaseNoRefreshFragment {
                 tvAddress.setVisibility(View.GONE);
                 deviceVm.supplier_id=0;
                 deviceVm.unit_id=0;
-                deviceVm.category_id=0;
+                deviceVm.material_name="";
                 deviceVm.is_shelf=0;
                 deviceVm.use_status=0;
                 areaVm.id=0;
@@ -368,7 +372,7 @@ public class DeviceManagementFragment extends BaseNoRefreshFragment {
                 getDeleteView(tvCompanyChildren);
                 break;
             case R.id.tv_name_second://名称二级
-                deviceVm.category_id=0;
+                deviceVm.material_name="";
                 getDeleteView(tvNameSecond);
                 break;
             case R.id.tv_is_shelf://是否上架
@@ -553,6 +557,37 @@ public class DeviceManagementFragment extends BaseNoRefreshFragment {
                     cityAdapter.setIsSelect(areaVm.city_id);
                 }
                 break;
+            case "edit"://设备名称搜索
+                XEditText xEditText = dialog_view.findViewById(R.id.edit);
+                TextView tvSearch = dialog_view.findViewById(R.id.tv_search);
+                xEditText.setHint("请输入设备名称");
+                View view = dialog_view.findViewById(R.id.view);
+                if(PhoneUtils.isPhone()) {
+                    view.setVisibility(View.VISIBLE);
+                }else {
+                    view.setVisibility(View.GONE);
+                }
+                KeyboardUtil.showSoftInputFromWindow((BaseActivity) getActivity(), xEditText);
+                tvSearch.setOnClickListener(v -> {
+                    deviceVm.material_name = xEditText.getText().toString();
+                    deviceVm.equipmentList(areaVm.id,areaVm.city_id);
+                    getAddTopScreenView(tvNameSecond,xEditText.getText().toString());
+                    btn_dialog.dismiss();
+                });
+                //EditTextView 搜索
+                xEditText.setOnEditorActionListener((v, actionId, event) -> {
+                    if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                        //关闭软键盘
+                        KeyboardUtil.closeKeyboard(mActivity);
+                        deviceVm.material_name = xEditText.getText().toString();
+                        deviceVm.equipmentList(areaVm.id,areaVm.city_id);
+                        getAddTopScreenView(tvNameSecond,xEditText.getText().toString());
+                        btn_dialog.dismiss();
+                        return true;
+                    }
+                    return false;
+                });
+                break;
         }
         btn_dialog.show();
     }
@@ -568,9 +603,7 @@ public class DeviceManagementFragment extends BaseNoRefreshFragment {
 
     @Subscribe
     public void onEventDevice(DeviceEvent event) {
-        deviceVm.category_id=event.material_id;
         deviceVm.equipmentList(areaVm.id,areaVm.city_id);
-        getAddTopScreenView(tvNameSecond,event.material_name);
     }
 
     //添加头部筛选布局view

@@ -105,6 +105,8 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
     TextView tvProject;
     @BindView(R.id.tv_category_material_id)
     TextView tvCategoryMaterial_id;
+    @BindView(R.id.et_material_name)
+    XEditText etMaterialName;
     @BindView(R.id.et_encoding)
     XEditText etEncoding;
     @BindView(R.id.et_stock)
@@ -115,8 +117,8 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
     XEditText etSpec;
     @BindView(R.id.tv_use_status)
     TextView tvUseStatus;
-    @BindView(R.id.tv_address)
-    TextView tvAddress;
+    @BindView(R.id.et_address)
+    XEditText etAddress;
     @BindView(R.id.et_person_liable)
     XEditText etPersonLiable;
     @BindView(R.id.et_tel)
@@ -175,8 +177,8 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
     TextView tvMaterialStatus;
     @BindView(R.id.et_use_month_count)
     XEditText etUseMonthCount;
-    @BindView(R.id.tv_plan)
-    TextView tvPlan;
+    @BindView(R.id.et_plan)
+    XEditText etPlan;
     @BindView(R.id.et_technology_detail)
     XEditText etTechnologyDetail;
     @BindView(R.id.et_equipment_time)
@@ -236,20 +238,7 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
 
         //获取材料类别
         deviceVm.deviceFirstData.observe(this, turnoverCategoryBeans -> {
-            categoryList = turnoverCategoryBeans;
-            selectorCategoryFirstAdapter.setNewData(categoryList);
-            if (getIntent().getIntExtra(CustomConfig.HANDLE_TYPE, 0) == ADD && materialList.size() == 0) {
-                deviceAddVm.category = categoryList.get(0).getId();
-                deviceAddVm.categoryName = categoryList.get(0).getCatname();
-                selectorCategoryFirstAdapter.setIsSelect(deviceAddVm.category);
-                deviceVm.equipmentCategoryList("", deviceAddVm.category);
-            }
-        });
-
-        //获取材料名称
-        deviceVm.deviceSecondData.observe(this, turnoverCategoryBeans -> {
             materialList = turnoverCategoryBeans;
-            selectorMaterialSecondAdapter.setNewData(materialList);
         });
 
         //获取筛选条件列表数据
@@ -264,8 +253,6 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
                 groundingList.remove(1);
             //获取设备状况
             materialStatusList = turnoverTypeBean.getMaterial_status();
-            //预计下步使用计划
-            planList = turnoverTypeBean.getPlan();
         });
 
         //详细信息开关隐藏
@@ -324,12 +311,13 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
 
         deviceVm.constructionSearch();
         deviceVm.getUnitInfo();
+        deviceVm.equipmentCategoryParent();
     }
 
     @OnClick({R.id.iv_bar_back, R.id.tv_project, R.id.tv_category_material_id, R.id.tv_unit, R.id.tv_use_status
-            , R.id.tv_address, R.id.tv_is_shelf, R.id.tv_shelf_time_start, R.id.tv_shelf_time_end, R.id.iv_images
+            , R.id.iv_address, R.id.tv_is_shelf, R.id.tv_shelf_time_start, R.id.tv_shelf_time_end, R.id.iv_images
             , R.id.ts_project, R.id.ts_start_time, R.id.ts_brand, R.id.ts_original_price, R.id.ts_main_params, R.id.ts_power, R.id.ts_entry_time, R.id.ts_exit_time, R.id.ts_operator_name
-            , R.id.tv_material_status, R.id.tv_plan, R.id.tv_reserve})
+            , R.id.tv_material_status, R.id.tv_reserve})
     void OnClick(View view) {
         Bundle bundle = new Bundle();
         switch (view.getId()) {
@@ -344,7 +332,7 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
                 }
                 break;
             case R.id.tv_category_material_id://选择材料类别/名称
-                getBottomSheetDialog(R.layout.dialog_depositing_place, "category_material_id");
+                getBottomSheetDialog(R.layout.dialog_is_grounding, "category_material_id");
                 break;
             case R.id.tv_unit://选择单位
                 getBottomSheetDialog(R.layout.dialog_is_grounding, "unit");
@@ -352,7 +340,7 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
             case R.id.tv_use_status://选择使用状态
                 getBottomSheetDialog(R.layout.dialog_is_grounding, "use_statue");
                 break;
-            case R.id.tv_address://选择存放地点
+            case R.id.iv_address://选择存放地点
                 bundle.putInt(CustomConfig.PROJECT_ADDRESS, 3);
                 ActivityUtils.startActivity(bundle, ReleaseAreaSelectActivity.class);
                 break;
@@ -412,20 +400,17 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
             case R.id.tv_material_status://设备状况
                 getBottomSheetDialog(R.layout.dialog_is_grounding, "material_status");
                 break;
-            case R.id.tv_plan://预计下步使用计划
-                getBottomSheetDialog(R.layout.dialog_is_grounding, "plan");
-                break;
             case R.id.tv_reserve://提交
                 switch (getIntent().getIntExtra(CustomConfig.HANDLE_TYPE, 0)) {
                     case ADD://添加
-                        deviceAddVm.equipmentAdd("add", etEncoding.getText().toString(), etStock.getText().toString()
+                        deviceAddVm.equipmentAdd("add",etMaterialName.getText().toString(), etEncoding.getText().toString(), etStock.getText().toString()
                                 , etSpec.getText().toString(), etPersonLiable.getText().toString(), etTel.getText().toString(), etGuidancePrice.getText().toString()
-                                , etUseMonthCount.getText().toString(), etTechnologyDetail.getText().toString(), etEquipmentTime.getText().toString());
+                                , etUseMonthCount.getText().toString(),etPlan.getText().toString(), etTechnologyDetail.getText().toString(), etEquipmentTime.getText().toString());
                         break;
                     case EDIT://编辑
-                        deviceAddVm.equipmentAdd("edit", etEncoding.getText().toString(), etStock.getText().toString()
+                        deviceAddVm.equipmentAdd("edit",etMaterialName.getText().toString(), etEncoding.getText().toString(), etStock.getText().toString()
                                 , etSpec.getText().toString(), etPersonLiable.getText().toString(), etTel.getText().toString(), etGuidancePrice.getText().toString()
-                                , etUseMonthCount.getText().toString(), etTechnologyDetail.getText().toString(), etEquipmentTime.getText().toString());
+                                , etUseMonthCount.getText().toString(),etPlan.getText().toString(), etTechnologyDetail.getText().toString(), etEquipmentTime.getText().toString());
                         break;
                 }
                 break;
@@ -478,8 +463,6 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
 
     private TurnoverProjectAdapter turnoverProjectAdapter;
     private List<TurnoverNameBean> projectList = new ArrayList<>();
-    private SelectorCategoryFirstAdapter selectorCategoryFirstAdapter;
-    private List<TurnoverCategoryBean> categoryList = new ArrayList<>();
     private SelectorMaterialSecondAdapter selectorMaterialSecondAdapter;
     private List<TurnoverCategoryBean> materialList = new ArrayList<>();
     private UnitAdapter unitAdapter;
@@ -490,9 +473,6 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
     private List<TurnoverTypeBean.IsShelfBean> groundingList = new ArrayList<>();
     private MaterialStatusAdapter materialStatusAdapter;
     private List<TurnoverTypeBean.MaterialStatusBean> materialStatusList = new ArrayList<>();
-    private PlanAdapter planAdapter;
-    private List<TurnoverTypeBean.PlanBean> planList = new ArrayList<>();
-
     @SuppressLint({"RestrictedApi,InflateParams", "SetTextI18n"})
     private void getBottomSheetDialog(int layout, String type) {
         //底部滑动对话框
@@ -530,39 +510,21 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
                 }
                 break;
             case "category_material_id"://选择材料类别/名称
-                RecyclerView rvFirst = btn_dialog.findViewById(R.id.rv_province);
-                RecyclerView rvSecond = btn_dialog.findViewById(R.id.rv_city);
-                TextView tvFirst = btn_dialog.findViewById(R.id.tv_first);
-                TextView tvSecond = btn_dialog.findViewById(R.id.tv_second);
-                Objects.requireNonNull(tvFirst).setText("选择类别");
-                Objects.requireNonNull(tvSecond).setText("选择名称");
-                Objects.requireNonNull(rvFirst).setLayoutManager(new LinearLayoutManager(this));
-                Objects.requireNonNull(rvSecond).setLayoutManager(new LinearLayoutManager(this));
-                selectorCategoryFirstAdapter = new SelectorCategoryFirstAdapter(R.layout.adapter_selector_area_first, null);
-                selectorMaterialSecondAdapter = new SelectorMaterialSecondAdapter(R.layout.adapter_selector_area_second, null);
-                rvFirst.setAdapter(selectorCategoryFirstAdapter);
-                rvSecond.setAdapter(selectorMaterialSecondAdapter);
-                selectorCategoryFirstAdapter.setOnItemClickListener((adapter, view, position) -> {
-                    deviceAddVm.category = categoryList.get(position).getId();
-                    deviceVm.equipmentCategoryList("", deviceAddVm.category);
-                    selectorCategoryFirstAdapter.setIsSelect(deviceAddVm.category);
-                    deviceAddVm.categoryName = categoryList.get(position).getCatname();
-                });
+                TextView tvMaterialId = btn_dialog.findViewById(R.id.tv_title);
+                Objects.requireNonNull(tvMaterialId).setText("选择设备类别");
+                RecyclerView rvMaterialId = btn_dialog.findViewById(R.id.rv);
+                Objects.requireNonNull(rvMaterialId).setLayoutManager(new LinearLayoutManager(this));
+                selectorMaterialSecondAdapter = new SelectorMaterialSecondAdapter(R.layout.adapter_selector_area_second,materialList);
+                rvMaterialId.setAdapter(selectorMaterialSecondAdapter);
                 selectorMaterialSecondAdapter.setOnItemClickListener((adapter, view, position) -> {
-                    deviceAddVm.material_id = materialList.get(position).getId();
-                    selectorMaterialSecondAdapter.setIsSelect(deviceAddVm.material_id);
-                    btn_dialog.dismiss();
-                    deviceAddVm.materialName = materialList.get(position).getCatname();
-                    tvCategoryMaterial_id.setText(deviceAddVm.categoryName + " - " + deviceAddVm.materialName);
+                    deviceAddVm.category = materialList.get(position).getId();
+                    tvCategoryMaterial_id.setText(materialList.get(position).getCatname());
                     tvCategoryMaterial_id.setTextColor(getResources().getColor(R.color.colorTv));
+                    selectorMaterialSecondAdapter.setIsSelect(deviceAddVm.category);
+                    btn_dialog.dismiss();
                 });
-                deviceVm.equipmentCategoryParent();
                 if (deviceAddVm.category != 0) {
-                    deviceVm.equipmentCategoryList("", deviceAddVm.category);
-                    selectorCategoryFirstAdapter.setIsSelect(deviceAddVm.category);
-                }
-                if (deviceAddVm.material_id != 0) {
-                    selectorMaterialSecondAdapter.setIsSelect(deviceAddVm.material_id);
+                    selectorMaterialSecondAdapter.setIsSelect(deviceAddVm.category);
                 }
                 break;
             case "unit"://选择单位
@@ -679,24 +641,6 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
                     materialStatusAdapter.setIsSelect(deviceAddVm.material_status);
                 }
                 break;
-            case "plan"://预计下步使用计划
-                TextView tv_plan = btn_dialog.findViewById(R.id.tv_title);
-                Objects.requireNonNull(tv_plan).setText("预计下步使用计划");
-                RecyclerView rvPlan = btn_dialog.findViewById(R.id.rv);
-                Objects.requireNonNull(rvPlan).setLayoutManager(new LinearLayoutManager(this));
-                planAdapter = new PlanAdapter(R.layout.adapter_selector_area_second, planList);
-                rvPlan.setAdapter(planAdapter);
-                planAdapter.setOnItemClickListener((adapter, view, position) -> {
-                    deviceAddVm.plan = planList.get(position).getId();
-                    tvPlan.setText(planList.get(position).getName());
-                    tvPlan.setTextColor(getResources().getColor(R.color.colorTv));
-                    planAdapter.setIsSelect(deviceAddVm.plan);
-                    btn_dialog.dismiss();
-                });
-                if (deviceAddVm.plan != 0) {
-                    planAdapter.setIsSelect(deviceAddVm.plan);
-                }
-                break;
         }
         btn_dialog.show();
     }
@@ -709,8 +653,7 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
         deviceAddVm.address = event.getAddress();
         deviceAddVm.latitude = event.getLatitude();
         deviceAddVm.longitude = event.getLongitude();
-        tvAddress.setText(event.getProvince() + event.getCity() + event.getAddress());
-        tvAddress.setTextColor(getResources().getColor(R.color.colorTv));
+        etAddress.setText(event.getProvince() + event.getCity() + event.getAddress());
     }
 
     //时间选择器
@@ -832,9 +775,9 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
             tvProject.setText(deviceDetailEditBean.getUnit_id_name());
             tvProject.setTextColor(getResources().getColor(R.color.colorTv));
             deviceAddVm.category = deviceDetailEditBean.getCategory();
-            deviceAddVm.material_id = deviceDetailEditBean.getMaterial_id();
-            tvCategoryMaterial_id.setText(deviceDetailEditBean.getCategory_name() + " - " + deviceDetailEditBean.getMaterial_id_name());
+            tvCategoryMaterial_id.setText(deviceDetailEditBean.getCategory_name());
             tvCategoryMaterial_id.setTextColor(getResources().getColor(R.color.colorTv));
+            etMaterialName.setText(deviceDetailEditBean.getMaterial_name());
             etEncoding.setText(deviceDetailEditBean.getEncoding());
             etStock.setText(deviceDetailEditBean.getStock());
             deviceAddVm.unit = deviceDetailEditBean.getUnit();
@@ -849,8 +792,7 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
             deviceAddVm.address = deviceDetailEditBean.getAddress();
             deviceAddVm.latitude = deviceDetailEditBean.getLatitude();
             deviceAddVm.longitude = deviceDetailEditBean.getLongitude();
-            tvAddress.setText(deviceDetailEditBean.getProvince_name() + deviceDetailEditBean.getCity_name() + deviceDetailEditBean.getAddress());
-            tvAddress.setTextColor(getResources().getColor(R.color.colorTv));
+            etAddress.setText(deviceDetailEditBean.getProvince_name() + deviceDetailEditBean.getCity_name() + deviceDetailEditBean.getAddress());
             etPersonLiable.setText(deviceDetailEditBean.getPerson_liable());
             etTel.setText(deviceDetailEditBean.getTel());
             deviceAddVm.is_shelf = deviceDetailEditBean.getIs_shelf();
@@ -947,9 +889,7 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
             tvMaterialStatus.setText(deviceDetailEditBean.getMaterial_status_name());
             tvMaterialStatus.setTextColor(getResources().getColor(R.color.colorTv));
             etUseMonthCount.setText(deviceDetailEditBean.getUse_month_count());
-            deviceAddVm.plan = deviceDetailEditBean.getPlan();
-            tvPlan.setText(deviceDetailEditBean.getPlan_name());
-            tvPlan.setTextColor(getResources().getColor(R.color.colorTv));
+            etPlan.setText(deviceDetailEditBean.getPlan());
             etTechnologyDetail.setText(deviceDetailEditBean.getTechnology_detail());
             etEquipmentTime.setText(deviceDetailEditBean.getEquipment_time());
         });

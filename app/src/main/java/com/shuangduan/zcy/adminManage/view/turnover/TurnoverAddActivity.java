@@ -896,7 +896,7 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
             turnoverAddVm.net_worth = String.valueOf(turnoverDetailEditBean.getNet_worth());
             tsValue.setValue(String.valueOf(turnoverDetailEditBean.getNet_worth()));
 
-            dialogControl.setDetail(turnoverDetailEditBean.getPlan_name()
+            dialogControl.setDetail(turnoverDetailEditBean.getPlan()
                     , String.valueOf(turnoverDetailEditBean.getUse_count()), turnoverDetailEditBean.getStart_date(),
                     turnoverDetailEditBean.getEntry_time(), turnoverDetailEditBean.getExit_time()
                     , String.valueOf(turnoverDetailEditBean.getAccumulated_amortization()), String.valueOf(turnoverDetailEditBean.getOriginal_price()),

@@ -66,8 +66,8 @@ public class DeviceBean {
 
         private int id;
         private int supplier_id;
-        private String category;
-        private String material_id;
+        private String category_name;
+        private String material_name;
         private String stock;
         private String is_shelf;
         private String province;
@@ -93,20 +93,20 @@ public class DeviceBean {
             this.supplier_id = supplier_id;
         }
 
-        public String getCategory() {
-            return category;
+        public String getCategory_name() {
+            return category_name;
         }
 
-        public void setCategory(String category) {
-            this.category = category;
+        public void setCategory_name(String category_name) {
+            this.category_name = category_name;
         }
 
-        public String getMaterial_id() {
-            return material_id;
+        public String getMaterial_name() {
+            return material_name;
         }
 
-        public void setMaterial_id(String material_id) {
-            this.material_id = material_id;
+        public void setMaterial_name(String material_name) {
+            this.material_name = material_name;
         }
 
         public String getStock() {

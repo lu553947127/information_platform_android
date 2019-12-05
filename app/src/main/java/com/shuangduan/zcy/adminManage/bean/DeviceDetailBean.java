@@ -53,7 +53,7 @@ public class DeviceDetailBean {
      */
 
     private String category_name;
-    private String material_id_name;
+    private String material_name;
     private String unit_id_name;
     private String stock;
     private String unit_name;
@@ -71,7 +71,7 @@ public class DeviceDetailBean {
     private String shelf_end_time;
     private int shelf_type;
     private String guidance_price;
-    private String plan_name;
+    private String plan;
     private String brand;
     private String main_params;
     private String power;
@@ -114,12 +114,12 @@ public class DeviceDetailBean {
         this.category_name = category_name;
     }
 
-    public String getMaterial_id_name() {
-        return material_id_name;
+    public String getMaterial_name() {
+        return material_name;
     }
 
-    public void setMaterial_id_name(String material_id_name) {
-        this.material_id_name = material_id_name;
+    public void setMaterial_name(String material_name) {
+        this.material_name = material_name;
     }
 
     public String getUnit_id_name() {
@@ -258,12 +258,12 @@ public class DeviceDetailBean {
         this.guidance_price = guidance_price;
     }
 
-    public String getPlan_name() {
-        return plan_name;
+    public String getPlan() {
+        return plan;
     }
 
-    public void setPlan_name(String plan_name) {
-        this.plan_name = plan_name;
+    public void setPlan(String plan) {
+        this.plan = plan;
     }
 
     public String getBrand() {

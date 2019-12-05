@@ -137,7 +137,7 @@ public class DeviceDetailActivity extends BaseActivity {
         DeviceVm deviceVm = ViewModelProviders.of(this).get(DeviceVm.class);
         deviceVm.equipmentDetail(getIntent().getIntExtra(CustomConfig.EQIPMENT_ID, 0));
         deviceVm.deviceDetailLiveData.observe(this,deviceDetailBean -> {
-            tvTitle.setText(deviceDetailBean.getMaterial_id_name());
+            tvTitle.setText(deviceDetailBean.getMaterial_name());
             tvCategory.setText(deviceDetailBean.getCategory_name());
             tvStockNum.setText(deviceDetailBean.getStock()+deviceDetailBean.getUnit_name());
             tvGuidePrice.setText(deviceDetailBean.getGuidance_price()+"/"+deviceDetailBean.getUnit_name());
@@ -192,7 +192,7 @@ public class DeviceDetailActivity extends BaseActivity {
              tvProject.setText( deviceDetailBean.getUnit_id_name());
 
 
-             tvPlan.setText(StringUtils.isTrimEmpty(deviceDetailBean.getPlan_name()) ? "—" : deviceDetailBean.getPlan_name());
+             tvPlan.setText(StringUtils.isTrimEmpty(deviceDetailBean.getPlan()) ? "—" : deviceDetailBean.getPlan());
              tvBrand.setText(StringUtils.isTrimEmpty(deviceDetailBean.getBrand()) ? "—" : deviceDetailBean.getBrand());
              tvMainParams.setText(StringUtils.isTrimEmpty(deviceDetailBean.getMain_params()) ? "—" : deviceDetailBean.getMain_params());
              tvPower.setText(StringUtils.isTrimEmpty(deviceDetailBean.getPower()) ? "—" : deviceDetailBean.getPower());
