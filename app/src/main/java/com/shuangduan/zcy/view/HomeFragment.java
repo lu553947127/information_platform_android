@@ -2,7 +2,6 @@ package com.shuangduan.zcy.view;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -18,9 +17,6 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
-import com.google.android.material.bottomnavigation.BottomNavigationItemView;
-import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
@@ -49,7 +45,6 @@ import com.shuangduan.zcy.view.supplier.SupplierActivity;
 import com.shuangduan.zcy.vm.DemandRelationshipVm;
 import com.shuangduan.zcy.vm.HomeNeedVm;
 import com.shuangduan.zcy.vm.HomeVm;
-import com.shuangduan.zcy.vm.IMAddVm;
 import com.shuangduan.zcy.weight.AdaptationScrollView;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 import com.shuangduan.zcy.weight.MarqueeListView;
@@ -65,9 +60,6 @@ import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import io.rong.imkit.RongIM;
-import io.rong.imkit.manager.IUnReadMessageObserver;
-import io.rong.imlib.model.Conversation;
 
 import static com.shuangduan.zcy.app.CustomConfig.DEMAND_TYPE;
 import static com.shuangduan.zcy.app.CustomConfig.FIND_BUYER_TYPE;
@@ -85,7 +77,6 @@ import static com.shuangduan.zcy.app.CustomConfig.FIND_SUBSTANCE_TYPE;
  * @class describe
  */
 public class HomeFragment extends BaseFragment {
-
     @BindView(R.id.scroll)
     AdaptationScrollView scrollView;
     @BindView(R.id.tv_bar_title)
@@ -114,15 +105,10 @@ public class HomeFragment extends BaseFragment {
     ViewPager viewPager;
     @BindView(R.id.view)
     View view;
-    private RelativeLayout relativeLayout;
-    private TextView number;
-    private IUnReadMessageObserver observer;
-    private IMAddVm imAddVm;
+
     private HomeVm homeVm;
     private HomeNeedVm homeNeedVm;
     private DemandRelationshipVm demandRelationshipVm;
-    private int manage_status;
-
     //顶部状态栏透明度和颜色
     private static int sColor;
     private static float sAlpha;
@@ -150,11 +136,9 @@ public class HomeFragment extends BaseFragment {
 
         homeVm = ViewModelProviders.of(this).get(HomeVm.class);
         homeNeedVm = ViewModelProviders.of(this).get(HomeNeedVm.class);
-        imAddVm = ViewModelProviders.of(this).get(IMAddVm.class);
         demandRelationshipVm = ViewModelProviders.of(mActivity).get(DemandRelationshipVm.class);
 
         getChangeLister();
-        getBadgeViewInitView();
 
         homeNeedVm.HomeNeedVm(getActivity(), view, viewPager, tabLayout, materialIndicator, demandRelationshipVm);
 
@@ -199,43 +183,6 @@ public class HomeFragment extends BaseFragment {
                 //版本更新弹出框显示
                 UpdateManager manager = new UpdateManager(getActivity(), versionUpgradesBean);
                 manager.showNoticeDialog();
-            }
-        });
-
-        //后台管理权限
-        homeVm.supplierRoleLiveData.observe(this, supplierRoleBean -> {
-            //获取用户身份 0普通用户 1普通供应商 2子公司 3集团 4子账号
-            manage_status = supplierRoleBean.getManage_status();
-        });
-
-        //设置角标数量
-        imAddVm.applyCountData.observe(this, friendApplyCountBean -> {
-            //获取用户身份 0普通用户 1普通供应商 2子公司 3集团 4子账号
-            int counts = 0;
-            switch (manage_status){
-                case 0://普通用户
-                case 1://普通供应商
-                    counts = imAddVm.count+friendApplyCountBean.getCount()+friendApplyCountBean.getSubscribe();
-                    break;
-                case 2://子公司
-                case 3://集团
-                case 4://子公司子账号
-                case 5://集团子账号
-                    counts = imAddVm.count+friendApplyCountBean.getCount()+friendApplyCountBean.getSubscribe()+friendApplyCountBean.getMaterial();
-                    break;
-            }
-            LogUtils.e(counts);
-            //设置底部标签数量
-            if (counts < 1) {
-                relativeLayout.setVisibility(View.GONE);
-            } else if (counts < 100) {
-                relativeLayout.setVisibility(View.VISIBLE);
-                number.setTextSize(11);
-                number.setText(String.valueOf(counts));
-            } else {
-                relativeLayout.setVisibility(View.VISIBLE);
-                number.setTextSize(9);
-                number.setText("99+");
             }
         });
     }
@@ -360,25 +307,6 @@ public class HomeFragment extends BaseFragment {
         });
     }
 
-    //设置底部消息提醒数字布局
-    private void getBadgeViewInitView() {
-        //底部标题栏右上角标设置
-        //获取整个的NavigationView
-        BottomNavigationView navigation = Objects.requireNonNull(getActivity()).findViewById(R.id.navigation);
-        BottomNavigationMenuView menuView = (BottomNavigationMenuView) navigation.getChildAt(0);
-        //这里就是获取所添加的每一个Tab(或者叫menu)，设置在标题栏的位置
-        View tab = menuView.getChildAt(2);
-        BottomNavigationItemView itemView = (BottomNavigationItemView) tab;
-        //加载我们的角标View，新创建的一个布局
-        View badge = LayoutInflater.from(getContext()).inflate(R.layout.layout_apply_count, menuView, false);
-        //添加到Tab上
-        itemView.addView(badge);
-        //显示角标数字
-        relativeLayout = badge.findViewById(R.id.rl);
-        //显示/隐藏整个视图
-        number = badge.findViewById(R.id.number);
-    }
-
     private List<ClassifyBean> getClassify() {
         List<ClassifyBean> list = new ArrayList<>();
         String[] classifys = getResources().getStringArray(R.array.classify);
@@ -413,13 +341,6 @@ public class HomeFragment extends BaseFragment {
     @Override
     protected void initDataFromService() {
         homeVm.getInit(getActivity());
-        observer = i -> {
-            LogUtils.e(i);
-            // i 是未读数量
-            imAddVm.count = i;
-            imAddVm.applyCount();
-        };
-        RongIM.getInstance().addUnReadMessageCountChangedObserver(observer, Conversation.ConversationType.PRIVATE, Conversation.ConversationType.GROUP, Conversation.ConversationType.SYSTEM);
     }
 
     @Override
@@ -440,8 +361,6 @@ public class HomeFragment extends BaseFragment {
         homeNeedVm.recyclerView3.stop();
     }
 
-
-
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
@@ -451,11 +370,5 @@ public class HomeFragment extends BaseFragment {
             toolbar.setBackgroundColor(sColor);
             toolbar.setVisibility(View.VISIBLE);
         }
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        RongIM.getInstance().removeUnReadMessageCountChangedObserver(observer);
     }
 }

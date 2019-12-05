@@ -60,7 +60,6 @@ public class HomeVm extends BaseViewModel {
         getBanner();
         getList();
         versionUpgrade();
-        getSupplierRole();
     }
 
     //快讯标题

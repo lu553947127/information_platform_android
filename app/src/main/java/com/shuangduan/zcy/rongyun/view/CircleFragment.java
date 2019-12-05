@@ -15,9 +15,6 @@ import androidx.lifecycle.ViewModelProviders;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
-import com.google.android.material.bottomnavigation.BottomNavigationItemView;
-import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
@@ -47,7 +44,6 @@ import butterknife.OnClick;
 import io.rong.imkit.RongContext;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationListFragment;
-import io.rong.imkit.manager.IUnReadMessageObserver;
 import io.rong.imkit.model.UIConversation;
 import io.rong.imkit.widget.adapter.ConversationListAdapter;
 import io.rong.imlib.RongIMClient;
@@ -66,18 +62,18 @@ import io.rong.imlib.model.UserInfo;
  * @class describe
  */
 public class CircleFragment extends BaseFragment {
-
     @BindView(R.id.iv_header)
     CircleImageView iv_header;
     @BindView(R.id.refresh)
     SmartRefreshLayout refresh;
     @BindView(R.id.iv_sgs)
     AppCompatImageView ivSgs;
-
     @BindView(R.id.rl_subscribe_children)
     RelativeLayout rlSubscribeChildren;
     @BindView(R.id.tv_subscribe_children_numbers)
     TextView tvSubscribeChildrenNumbers;
+    @BindView(R.id.tv_contacts_numbers)
+    TextView tvContactsNumbers;
     @BindView(R.id.rl_idle_reminder)
     RelativeLayout rlIdleReminder;
     @BindView(R.id.tv_subscribe_group_number)
@@ -91,14 +87,10 @@ public class CircleFragment extends BaseFragment {
     @BindView(R.id.tv_order_number)
     TextView tvOrderNumber;
 
-    private TextView tvContactsNumbers;
     private UserInfoVm userInfoVm;
-    private NoScrollViewPager viewPager;
-    private RelativeLayout relativeLayout;
-    private TextView number;
-    private IUnReadMessageObserver observer;
     private IMAddVm imAddVm;
     private HomeVm homeVm;
+    private NoScrollViewPager viewPager;
     private int manage_status,order_turnover,order_device;
 
     public static CircleFragment newInstance() {
@@ -121,6 +113,9 @@ public class CircleFragment extends BaseFragment {
     @SuppressLint({"CutPasteId", "SetTextI18n"})
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState,View view) {
+
+        viewPager= Objects.requireNonNull(getActivity()).findViewById(R.id.view_pager);
+
         FragmentManager fragmentManage = getChildFragmentManager();
         ConversationListFragment fragement = (ConversationListFragment) fragmentManage.findFragmentById(R.id.conversationlist);
         ConversationListAdapterEx adapterEx = new ConversationListAdapterEx(RongContext.getInstance());
@@ -197,39 +192,12 @@ public class CircleFragment extends BaseFragment {
         });
 
         imAddVm = ViewModelProviders.of(this).get(IMAddVm.class);
-        //未读消息数量返回数据
+        //订阅消息/订单提醒/闲置提醒/新朋友添加 未读消息数量返回数据
         imAddVm.applyCountData.observe(this,friendApplyCountBean -> {
             getCountNumbers(friendApplyCountBean.getCount(),tvContactsNumbers);
             getCountNumbers(friendApplyCountBean.getSubscribe(),tvSubscribeChildrenNumbers);
             getCountNumbers(friendApplyCountBean.getSubscribe(),tvSubscribeGroupNumber);
             getCountNumbers(friendApplyCountBean.getMaterial(),tvUnusedNumber);
-            //获取用户身份 0普通用户 1普通供应商 2子公司 3集团 4子账号
-            int counts = 0;
-            switch (manage_status){
-                case 0://普通用户
-                case 1://普通供应商
-                    counts = imAddVm.count+friendApplyCountBean.getCount()+friendApplyCountBean.getSubscribe();
-                    break;
-                case 2://子公司
-                case 3://集团
-                case 4://子公司子账号
-                case 5://集团子账号
-                    counts = imAddVm.count+friendApplyCountBean.getCount()+friendApplyCountBean.getSubscribe()+friendApplyCountBean.getMaterial();
-                    break;
-            }
-            LogUtils.e(counts);
-            //设置底部标签数量
-            if (counts < 1) {
-                relativeLayout.setVisibility(View.GONE);
-            } else if (counts < 100) {
-                relativeLayout.setVisibility(View.VISIBLE);
-                number.setTextSize(11);
-                number.setText(String.valueOf(counts));
-            } else {
-                relativeLayout.setVisibility(View.VISIBLE);
-                number.setTextSize(9);
-                number.setText("99+");
-            }
         });
 
         ///会话列表人员头像名称显示
@@ -266,7 +234,6 @@ public class CircleFragment extends BaseFragment {
                 refreshLayout.finishRefresh(1000);
             }
         });
-        getBadgeViewInitView(view);
 
         //根据 userId 去你的用户系统里查询对应的用户信息返回给融云 SDK。
         RongIM.setUserInfoProvider(s -> imAddVm.userInfo(s),true);
@@ -327,24 +294,6 @@ public class CircleFragment extends BaseFragment {
         }
     }
 
-    //设置底部消息提醒数字布局
-    private void getBadgeViewInitView(View view) {
-        //因为黄油刀在碎片重绘时初始化空指针异常，则用view视图来显示
-        tvContactsNumbers=view.findViewById(R.id.tv_contacts_numbers);
-        viewPager= Objects.requireNonNull(getActivity()).findViewById(R.id.view_pager);
-        //底部标题栏右上角标设置
-        //获取整个的NavigationView
-        BottomNavigationView navigation =getActivity().findViewById(R.id.navigation);
-        BottomNavigationMenuView menuView = (BottomNavigationMenuView) navigation.getChildAt(0);
-        //这里就是获取所添加的每一个Tab(或者叫menu)，设置在标题栏的位置
-        View tab = menuView.getChildAt(2);
-        BottomNavigationItemView itemView = (BottomNavigationItemView) tab;
-        //显示角标数字
-        relativeLayout = itemView.findViewById(R.id.rl);
-        //显示/隐藏整个视图
-        number=itemView.findViewById(R.id.number);
-    }
-
     @Override
     protected void initDataFromService() {
         userInfoVm.userInfo();
@@ -383,25 +332,5 @@ public class CircleFragment extends BaseFragment {
                 default:
                     break;
         }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        //获取未读消息数量
-        observer = i -> {
-            LogUtils.i(i);
-            // i 是未读数量
-            imAddVm.count = i;
-            imAddVm.applyCount();
-        };
-        RongIM.getInstance().addUnReadMessageCountChangedObserver(observer, Conversation.ConversationType.PRIVATE,Conversation.ConversationType.GROUP,Conversation.ConversationType.SYSTEM);
-    }
-
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        RongIM.getInstance().removeUnReadMessageCountChangedObserver(observer);
     }
 }

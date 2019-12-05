@@ -4,6 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -12,12 +16,16 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.FragmentAdapter;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.rongyun.view.CircleFragment;
+import com.shuangduan.zcy.vm.HomeVm;
+import com.shuangduan.zcy.vm.IMAddVm;
 import com.shuangduan.zcy.vm.IMConnectVm;
 import com.shuangduan.zcy.weight.NoScrollViewPager;
 
@@ -26,6 +34,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import cn.jpush.android.api.JPushInterface;
+import io.rong.imkit.RongIM;
+import io.rong.imkit.manager.IUnReadMessageObserver;
+import io.rong.imlib.model.Conversation;
 
 /**
  * @ProjectName: information_platform_android
@@ -41,13 +52,16 @@ import cn.jpush.android.api.JPushInterface;
  */
 
 public class MainActivity extends BaseActivity {
-
     @BindView(R.id.navigation)
     BottomNavigationView navigation;
     @BindView(R.id.view_pager)
     NoScrollViewPager viewPager;
     List<Fragment> mFragments;
     FragmentAdapter fragmentAdapter;
+    private HomeVm homeVm;
+    private IMAddVm imAddVm;
+    private IUnReadMessageObserver observer;
+    private int manage_status;
 
     @Override
     protected int initLayoutRes() {
@@ -69,13 +83,16 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
-        setAlias();
-        initBottomNavigation();
+
+        //初始化，融云链接服务器
         if (SPUtils.getInstance().getInt(SpConfig.INFO_STATUS) == 1) {
-            //初始化，融云链接服务器
             IMConnectVm imConnectVm = ViewModelProviders.of(this).get(IMConnectVm.class);
             imConnectVm.connect(SPUtils.getInstance().getString(SpConfig.IM_TOKEN));
         }
+
+        setJPushAlias();
+        initBottomNavigation();
+        getBadgeViewInitView();
     }
 
     //底部标签栏点击切换
@@ -145,6 +162,83 @@ public class MainActivity extends BaseActivity {
         });
     }
 
+    //设置底部消息提醒数字布局
+    private RelativeLayout relativeLayout;
+    private TextView number;
+    private void getBadgeViewInitView() {
+        //底部标题栏右上角标设置
+        //获取整个的NavigationView
+        BottomNavigationMenuView menuView = (BottomNavigationMenuView) navigation.getChildAt(0);
+        //这里就是获取所添加的每一个Tab(或者叫menu)，设置在标题栏的位置
+        View tab = menuView.getChildAt(2);
+        BottomNavigationItemView itemView = (BottomNavigationItemView) tab;
+        //加载我们的角标View，新创建的一个布局
+        View badge = LayoutInflater.from(this).inflate(R.layout.layout_apply_count, menuView, false);
+        //添加到Tab上
+        itemView.addView(badge);
+        //显示角标数字
+        relativeLayout = badge.findViewById(R.id.rl);
+        //显示/隐藏整个视图
+        number = badge.findViewById(R.id.number);
+
+        getApplyCounts();
+    }
+
+    //设置角标数量
+    private void getApplyCounts() {
+
+        homeVm = ViewModelProviders.of(this).get(HomeVm.class);
+        imAddVm = ViewModelProviders.of(this).get(IMAddVm.class);
+
+        //后台管理权限
+        homeVm.supplierRoleLiveData.observe(this, supplierRoleBean -> {
+            //获取用户身份 0普通用户 1普通供应商 2子公司 3集团 4子账号
+            manage_status = supplierRoleBean.getManage_status();
+        });
+
+        //获取角标数量接口
+        imAddVm.applyCountData.observe(this, friendApplyCountBean -> {
+            //获取用户身份 0普通用户 1普通供应商 2子公司 3集团 4子账号
+            int counts = 0;
+            switch (manage_status){
+                case 0://普通用户
+                case 1://普通供应商
+                    counts = imAddVm.count+friendApplyCountBean.getCount()+friendApplyCountBean.getSubscribe();
+                    break;
+                case 2://子公司
+                case 3://集团
+                case 4://子公司子账号
+                case 5://集团子账号
+                    counts = imAddVm.count+friendApplyCountBean.getCount()+friendApplyCountBean.getSubscribe()+friendApplyCountBean.getMaterial();
+                    break;
+            }
+            LogUtils.e(counts);
+
+            //设置底部角标显示状态
+            if (counts < 1) {
+                relativeLayout.setVisibility(View.GONE);
+            } else if (counts < 100) {
+                relativeLayout.setVisibility(View.VISIBLE);
+                number.setTextSize(11);
+                number.setText(String.valueOf(counts));
+            } else {
+                relativeLayout.setVisibility(View.VISIBLE);
+                number.setTextSize(9);
+                number.setText("99+");
+            }
+        });
+    }
+
+    //极光推送别名设置
+    private void setJPushAlias() {
+        int userId = SPUtils.getInstance().getInt(SpConfig.USER_ID, 0);
+        int aliasStatus = SPUtils.getInstance().getInt(SpConfig.ALIAS_STATUS, 0);
+        if (userId != 0 && aliasStatus != 1) {
+            LogUtils.i("别名设置", userId);
+            JPushInterface.setAlias(this, userId, String.valueOf(userId));
+        }
+    }
+
     //推出群聊后重新跳转到工程圈页
     @Override
     protected void onNewIntent(Intent intent) {
@@ -169,15 +263,22 @@ public class MainActivity extends BaseActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-    /**
-     * 极光推送别名设置
-     */
-    private void setAlias() {
-        int userId = SPUtils.getInstance().getInt(SpConfig.USER_ID, 0);
-        int aliasStatus = SPUtils.getInstance().getInt(SpConfig.ALIAS_STATUS, 0);
-        if (userId != 0 && aliasStatus != 1) {
-            LogUtils.i("别名设置", userId);
-            JPushInterface.setAlias(this, userId, String.valueOf(userId));
-        }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        homeVm.getSupplierRole();
+        observer = i -> {
+            LogUtils.e(i);
+            // i 是未读数量
+            imAddVm.count = i;
+            imAddVm.applyCount();
+        };
+        RongIM.getInstance().addUnReadMessageCountChangedObserver(observer, Conversation.ConversationType.PRIVATE, Conversation.ConversationType.GROUP, Conversation.ConversationType.SYSTEM);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        RongIM.getInstance().removeUnReadMessageCountChangedObserver(observer);
     }
 }
