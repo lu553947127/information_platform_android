@@ -117,9 +117,9 @@ public class CircleFragment extends BaseFragment {
         viewPager= Objects.requireNonNull(getActivity()).findViewById(R.id.view_pager);
 
         FragmentManager fragmentManage = getChildFragmentManager();
-        ConversationListFragment fragement = (ConversationListFragment) fragmentManage.findFragmentById(R.id.conversationlist);
+        ConversationListFragment conversationListFragment = (ConversationListFragment) fragmentManage.findFragmentById(R.id.conversationlist);
         ConversationListAdapterEx adapterEx = new ConversationListAdapterEx(RongContext.getInstance());
-        Objects.requireNonNull(fragement).setAdapter(adapterEx);
+        Objects.requireNonNull(conversationListFragment).setAdapter(adapterEx);
         Uri uri = Uri.parse("rong://" + MyApplication.getInstance().getApplicationInfo().packageName).buildUpon()
                 .appendPath("conversationlist")
                 .appendQueryParameter(Conversation.ConversationType.PRIVATE.getName(), "false")//设置私聊会话是否聚合显示
@@ -128,7 +128,7 @@ public class CircleFragment extends BaseFragment {
                 .appendQueryParameter(Conversation.ConversationType.APP_PUBLIC_SERVICE.getName(), "false")//公共服务号
                 .appendQueryParameter(Conversation.ConversationType.SYSTEM.getName(), "false")//系统
                 .build();
-        fragement.setUri(uri);
+        conversationListFragment.setUri(uri);
 
         //获取后台管理权限
         homeVm = ViewModelProviders.of(mActivity).get(HomeVm.class);

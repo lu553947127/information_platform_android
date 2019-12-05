@@ -62,6 +62,27 @@
 
             <View style="@style/DividingLine" />
 
+            <!--材料名称-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/colorFFF"
+                android:orientation="horizontal">
+
+                <TextView style="@style/RedMustText" />
+
+                <TextView
+                    style="@style/AdminManageFirstText"
+                    android:text="@string/admin_turnover_add_category_material_name" />
+
+                <com.shuangduan.zcy.weight.XEditText
+                    android:id="@+id/et_material_name"
+                    style="@style/AdminManageSecondHint"
+                    android:hint="@string/admin_turnover_add_category_material_name_et" />
+            </LinearLayout>
+
+            <View style="@style/DividingLine" />
+
             <!--库存数量-->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -136,7 +157,7 @@
                 android:background="@color/colorFFF"
                 android:orientation="horizontal">
 
-                <TextView style="@style/RedMustText" />
+                <TextView style="@style/RedMustText" android:visibility="invisible"/>
 
                 <TextView
                     style="@style/AdminManageFirstText"

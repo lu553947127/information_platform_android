@@ -69,6 +69,8 @@
     <string name="admin_turnover_add_project_et">请选择项目名称</string>
     <string name="admin_turnover_add_category_material_id">材料类别/名称</string>
     <string name="admin_turnover_add_category_material_id_et">请选择材料类别/名称</string>
+    <string name="admin_turnover_add_category_material_name">材料名称</string>
+    <string name="admin_turnover_add_category_material_name_et">请输入材料名称</string>
     <string name="admin_turnover_add_stock">库存数量</string>
     <string name="admin_turnover_add_stock_et">请输入库存数量</string>
     <string name="admin_turnover_add_unit_price">单价</string>
