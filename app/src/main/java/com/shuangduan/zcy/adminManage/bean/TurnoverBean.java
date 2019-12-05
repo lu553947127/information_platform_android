@@ -73,6 +73,7 @@ public class TurnoverBean {
         private String project;
         private String company;
         private String material_name;
+        private String category_name;
 
         public int getId() {
             return id;
@@ -160,6 +161,14 @@ public class TurnoverBean {
 
         public void setMaterial_name(String material_name) {
             this.material_name = material_name;
+        }
+
+        public String getCategory_name() {
+            return category_name;
+        }
+
+        public void setCategory_name(String category_name) {
+            this.category_name = category_name;
         }
     }
 }
