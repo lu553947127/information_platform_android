@@ -6,7 +6,6 @@ import android.view.View;
 
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.huawei.android.hms.agent.common.UIUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ArrayWheelAdapter;
 import com.shuangduan.zcy.adminManage.vm.TurnoverVm;
@@ -143,9 +142,6 @@ public class TurnoverDialogControl extends BaseAddInfoDialog implements DialogIn
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.ts_item_one:
-                showView(0, R.string.admin_selector_material_project);
-                break;
             case R.id.ts_item_two:
                 showView(1, R.string.admin_selector_material_plan);
                 break;
@@ -205,9 +201,6 @@ public class TurnoverDialogControl extends BaseAddInfoDialog implements DialogIn
 
     private void next(int position) {
         switch (position) {
-            case 0:
-                showView(0, R.string.admin_selector_material_project);
-                break;
             case 1:
                 showView(1, R.string.admin_selector_material_plan);
                 break;
@@ -264,11 +257,7 @@ public class TurnoverDialogControl extends BaseAddInfoDialog implements DialogIn
                 if (KeyboardUtil.isSoftShowing(context)) {
                     KeyboardUtil.showORhideSoftKeyboard(context);
                 }
-
-
                 wheelView.setItemsVisibleCount(7);
-//                wheelView.setCurrentItem(2);
-//                selectorIndex = 1;
                 wheelView.setAdapter(projectAdapter);
                 break;
             case 1:
@@ -276,8 +265,6 @@ public class TurnoverDialogControl extends BaseAddInfoDialog implements DialogIn
                     KeyboardUtil.showORhideSoftKeyboard(context);
                 }
                 wheelView.setItemsVisibleCount(5);
-//                wheelView.setCurrentItem(1);
-//                selectorIndex = 1;
                 wheelView.setAdapter(lineAdapter);
                 break;
             case 3:

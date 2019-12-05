@@ -62,8 +62,7 @@ public class TurnoverDetailEditBean {
 
     private int category;
     private String category_name;
-    private int material_id;
-    private String material_id_name;
+    private String material_name;
     private int unit_id;
     private String unit_id_name;
     private String stock;
@@ -137,20 +136,12 @@ public class TurnoverDetailEditBean {
         this.category_name = category_name;
     }
 
-    public int getMaterial_id() {
-        return material_id;
+    public String getMaterial_name() {
+        return material_name;
     }
 
-    public void setMaterial_id(int material_id) {
-        this.material_id = material_id;
-    }
-
-    public String getMaterial_id_name() {
-        return material_id_name;
-    }
-
-    public void setMaterial_id_name(String material_id_name) {
-        this.material_id_name = material_id_name;
+    public void setMaterial_name(String material_name) {
+        this.material_name = material_name;
     }
 
     public int getUnit_id() {

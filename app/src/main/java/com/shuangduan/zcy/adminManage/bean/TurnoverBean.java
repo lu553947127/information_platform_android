@@ -63,24 +63,16 @@ public class TurnoverBean {
          */
 
         private int id;
-        private String category;
-        private String material_id;
+        private String supplier_id;
+        private String stock;
         private String is_shelf;
         private String province;
         private String city;
         private String address;
         private String use_status;
-        private String company;
-        private String stock;
         private String project;
-
-        public String getStock() {
-            return stock;
-        }
-
-        public void setStock(String stock) {
-            this.stock = stock;
-        }
+        private String company;
+        private String material_name;
 
         public int getId() {
             return id;
@@ -90,20 +82,20 @@ public class TurnoverBean {
             this.id = id;
         }
 
-        public String getCategory() {
-            return category;
+        public String getSupplier_id() {
+            return supplier_id;
         }
 
-        public void setCategory(String category) {
-            this.category = category;
+        public void setSupplier_id(String supplier_id) {
+            this.supplier_id = supplier_id;
         }
 
-        public String getMaterial_id() {
-            return material_id;
+        public String getStock() {
+            return stock;
         }
 
-        public void setMaterial_id(String material_id) {
-            this.material_id = material_id;
+        public void setStock(String stock) {
+            this.stock = stock;
         }
 
         public String getIs_shelf() {
@@ -146,6 +138,14 @@ public class TurnoverBean {
             this.use_status = use_status;
         }
 
+        public String getProject() {
+            return project;
+        }
+
+        public void setProject(String project) {
+            this.project = project;
+        }
+
         public String getCompany() {
             return company;
         }
@@ -154,12 +154,12 @@ public class TurnoverBean {
             this.company = company;
         }
 
-        public String getProject() {
-            return project;
+        public String getMaterial_name() {
+            return material_name;
         }
 
-        public void setProject(String project) {
-            this.project = project;
+        public void setMaterial_name(String material_name) {
+            this.material_name = material_name;
         }
     }
 }

@@ -33,8 +33,6 @@ public class TurnoverAddVm extends BaseViewModel {
     private int userId;
     public int unit_id;
     public int category;
-    public int material_id;
-    public String categoryName;
     public String materialName;
     public int unit;
     public int use_status;
@@ -87,7 +85,7 @@ public class TurnoverAddVm extends BaseViewModel {
     }
 
     //后台管理 --- 周转材料添加/编辑
-    public void constructionAdd(String type,String stock,String unit_price,String spec,String person_liable,String tel,String guidance_price,String remark){
+    public void constructionAdd(String type,String material_name,String stock,String unit_price,String spec,String person_liable,String tel,String guidance_price,String remark){
         if (unit_id==0) {
             ToastUtils.showShort(getString(R.string.admin_selector_no_project));
             return;
@@ -96,7 +94,7 @@ public class TurnoverAddVm extends BaseViewModel {
             ToastUtils.showShort(getString(R.string.admin_selector_no_category));
             return;
         }
-        if (material_id==0) {
+        if (TextUtils.isEmpty(material_name)){
             ToastUtils.showShort(getString(R.string.admin_selector_no_material_id));
             return;
         }
@@ -112,24 +110,12 @@ public class TurnoverAddVm extends BaseViewModel {
             ToastUtils.showShort(getString(R.string.admin_selector_no_unit));
             return;
         }
-        if (TextUtils.isEmpty(spec)){
-            ToastUtils.showShort(getString(R.string.admin_selector_no_spec));
-            return;
-        }
         if (use_status==0) {
             ToastUtils.showShort(getString(R.string.admin_selector_no_use_status));
             return;
         }
         if (material_status==0) {
             ToastUtils.showShort(getString(R.string.admin_selector_no_material_status));
-            return;
-        }
-        if (province==0) {
-            ToastUtils.showShort(getString(R.string.admin_selector_no_material_address));
-            return;
-        }
-        if (city==0) {
-            ToastUtils.showShort(getString(R.string.admin_selector_no_material_address));
             return;
         }
         if (TextUtils.isEmpty(address)){
@@ -167,12 +153,12 @@ public class TurnoverAddVm extends BaseViewModel {
 
         switch (type){
             case "add"://添加周转材料
-                new TurnoverRepository().constructionAdd(turnoverAddData,userId,unit_id,category,material_id,stock,unit_price,unit,spec,use_status,material_status
+                new TurnoverRepository().constructionAdd(turnoverAddData,userId,unit_id,category,material_name,stock,unit_price,unit,spec,use_status,material_status
                         ,province,city,address,longitude,latitude,person_liable,tel,is_vulnerable,is_shelf,shelf_start_time,shelf_end_time,shelf_type,method,guidance_price,images
                         ,use_count,plan,accumulated_amortization,start_date,entry_time,exit_time,original_price,net_worth,remark);
                 break;
             case "edit"://编辑周转材料
-                new TurnoverRepository().constructionEdit(turnoverEditData,userId,editId,unit_id,category,material_id,stock,unit_price,unit,spec,use_status,material_status
+                new TurnoverRepository().constructionEdit(turnoverEditData,userId,editId,unit_id,category,material_name,stock,unit_price,unit,spec,use_status,material_status
                         ,province,city,address,longitude,latitude,person_liable,tel,is_vulnerable,is_shelf,shelf_start_time,shelf_end_time,shelf_type,method,guidance_price,images
                         ,use_count,plan,accumulated_amortization,start_date,entry_time,exit_time,original_price,net_worth,remark);
                 break;

@@ -29,8 +29,8 @@ import java.util.List;
 public class TurnoverRepository extends BaseRepository {
 
     //后台管理 --- 周转材料列表
-    public void constructionList(MutableLiveData<TurnoverBean> liveData, MutableLiveData<String> pageState, int user_id, int page, int unit_id, int is_shelf, int use_status, int province, int city, int p_category_id, int category_id, int supplier_id) {
-        request(apiService.constructionList(user_id, page, unit_id, is_shelf, use_status, province, city, p_category_id, category_id, supplier_id)).setData(liveData).setPageState(pageState).send();
+    public void constructionList(MutableLiveData<TurnoverBean> liveData, MutableLiveData<String> pageState, int user_id, int page, int unit_id, int is_shelf, int use_status, int province, int city, String material_name, int supplier_id) {
+        request(apiService.constructionList(user_id, page, unit_id, is_shelf, use_status, province, city, material_name, supplier_id)).setData(liveData).setPageState(pageState).send();
     }
 
     //后台管理 --- 筛选条件列表
@@ -79,21 +79,21 @@ public class TurnoverRepository extends BaseRepository {
     }
 
     //后台管理 --- 周转材料添加
-    public void constructionAdd(MutableLiveData<String> liveData, int userId,int unit_id,int category,int material_id,String stock,String unit_price,int unit,String spec,int use_status,int material_status
+    public void constructionAdd(MutableLiveData<String> liveData, int userId,int unit_id,int category,String material_name,String stock,String unit_price,int unit,String spec,int use_status,int material_status
             ,int province,int city,String address,double longitude,double latitude,String person_liable,String tel,int rapid_wear,int is_shelf
             ,String shelf_start_time,String shelf_end_time,int shelf_type,int method,String guidance_price,String images
             ,String use_count,int plan,String accumulated_amortization,String start_date,String entry_time,String exit_time,String original_price,String net_worth, String remark) {
-        request(apiService.constructionAdd(userId,unit_id,category,material_id,stock,unit_price,unit,spec,use_status,material_status
+        request(apiService.constructionAdd(userId,unit_id,category,material_name,stock,unit_price,unit,spec,use_status,material_status
                 ,province,city,address,longitude,latitude,person_liable,tel,rapid_wear,is_shelf,shelf_start_time,shelf_end_time,shelf_type,method,guidance_price,images
                 ,use_count,plan,accumulated_amortization,start_date,entry_time,exit_time,original_price,net_worth,remark)).setData(liveData).send();
     }
 
     //后台管理 --- 周转材料编辑
-    public void constructionEdit(MutableLiveData<String> liveData, int userId,int id,int unit_id,int category,int material_id,String stock,String unit_price,int unit,String spec,int use_status,int material_status
+    public void constructionEdit(MutableLiveData<String> liveData, int userId,int id,int unit_id,int category,String material_name,String stock,String unit_price,int unit,String spec,int use_status,int material_status
             ,int province,int city,String address,double longitude,double latitude,String person_liable,String tel,int rapid_wear,int is_shelf
             ,String shelf_start_time,String shelf_end_time,int shelf_type,int method,String guidance_price,String images
             ,String use_count,int plan,String accumulated_amortization,String start_date,String entry_time,String exit_time,String original_price,String net_worth, String remark) {
-        request(apiService.constructionEdit(userId,id,unit_id,category,material_id,stock,unit_price,unit,spec,use_status,material_status
+        request(apiService.constructionEdit(userId,id,unit_id,category,material_name,stock,unit_price,unit,spec,use_status,material_status
                 ,province,city,address,longitude,latitude,person_liable,tel,rapid_wear,is_shelf,shelf_start_time,shelf_end_time,shelf_type,method,guidance_price,images
                 ,use_count,plan,accumulated_amortization,start_date,entry_time,exit_time,original_price,net_worth,remark)).setData(liveData).send();
     }

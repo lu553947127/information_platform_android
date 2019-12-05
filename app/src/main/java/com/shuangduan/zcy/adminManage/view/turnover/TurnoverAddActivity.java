@@ -105,6 +105,8 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
     TextView tvProject;
     @BindView(R.id.tv_category_material_id)
     TextView tvCategoryMaterial_id;
+    @BindView(R.id.et_material_name)
+    XEditText etMaterialName;
     @BindView(R.id.et_stock)
     XEditText etStock;
     @BindView(R.id.et_unit_price)
@@ -184,7 +186,6 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
     private UploadPhotoVm uploadPhotoVm;
     private List<String> picture_list = new ArrayList<>();
     private TurnoverDialogControl dialogControl;
-    private List<TurnoverTypeBean.PlanBean> planBeanList;
     private SimpleDateFormat f;
     private Calendar c;
 
@@ -228,20 +229,7 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
 
         //获取材料类别
         turnoverVm.turnoverFirstData.observe(this, turnoverCategoryBeans -> {
-            categoryList = turnoverCategoryBeans;
-            selectorCategoryFirstAdapter.setNewData(categoryList);
-            if (getIntent().getIntExtra(CustomConfig.HANDLE_TYPE, 0) == ADD && materialList.size() == 0) {
-                turnoverAddVm.category = categoryList.get(0).getId();
-                turnoverAddVm.categoryName = categoryList.get(0).getCatname();
-                selectorCategoryFirstAdapter.setIsSelect(turnoverAddVm.category);
-                turnoverVm.constructionCategoryList("", turnoverAddVm.category);
-            }
-        });
-
-        //获取材料名称
-        turnoverVm.turnoverSecondData.observe(this, turnoverCategoryBeans -> {
             materialList = turnoverCategoryBeans;
-            selectorMaterialSecondAdapter.setNewData(materialList);
         });
 
         //详细信息输入弹出框初始化
@@ -260,12 +248,6 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
             groundingList = turnoverTypeBean.getIs_shelf();
             if (SPUtils.getInstance().getInt(CustomConfig.INNER_SWITCH, 0) != 1)
                 groundingList.remove(1);
-            //获取预计下步使用计划
-            planBeanList = turnoverTypeBean.getPlan();
-            for (TurnoverTypeBean.PlanBean item : planBeanList) {
-                dialogControl.getPlanList().add(item.getName());
-                dialogControl.getPlanIdList().add(item.getId());
-            }
         });
 
         //详细信息开关隐藏
@@ -325,6 +307,7 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
 
         turnoverVm.constructionSearch();
         turnoverVm.getUnitInfo();
+        turnoverVm.constructionCategoryParent();
     }
 
     @OnClick({R.id.iv_bar_back, R.id.tv_project, R.id.tv_category_material_id, R.id.tv_unit, R.id.tv_use_status, R.id.tv_material_status
@@ -344,8 +327,8 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
                     ToastUtils.showShort(getString(R.string.admin_selector_no_project_list));
                 }
                 break;
-            case R.id.tv_category_material_id://选择材料类别/名称
-                getBottomSheetDialog(R.layout.dialog_depositing_place, "category_material_id");
+            case R.id.tv_category_material_id://选择材料类别
+                getBottomSheetDialog(R.layout.dialog_is_grounding, "category_material_id");
                 break;
             case R.id.tv_unit://选择单位
                 getBottomSheetDialog(R.layout.dialog_is_grounding, "unit");
@@ -416,11 +399,11 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
             case R.id.tv_reserve://提交
                 switch (getIntent().getIntExtra(CustomConfig.HANDLE_TYPE, 0)) {
                     case ADD://添加
-                        turnoverAddVm.constructionAdd("add", etStock.getText().toString(), etUnitPrice.getText().toString()
+                        turnoverAddVm.constructionAdd("add", etMaterialName.getText().toString(),etStock.getText().toString(), etUnitPrice.getText().toString()
                                 , etSpec.getText().toString(), etPersonLiable.getText().toString(), etTel.getText().toString(), etGuidancePrice.getText().toString(), etRemark.getText().toString());
                         break;
                     case EDIT://编辑
-                        turnoverAddVm.constructionAdd("edit", etStock.getText().toString(), etUnitPrice.getText().toString()
+                        turnoverAddVm.constructionAdd("edit", etMaterialName.getText().toString(), etStock.getText().toString(), etUnitPrice.getText().toString()
                                 , etSpec.getText().toString(), etPersonLiable.getText().toString(), etTel.getText().toString(), etGuidancePrice.getText().toString(), etRemark.getText().toString());
                         break;
                 }
@@ -492,8 +475,6 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
 
     private TurnoverProjectAdapter turnoverProjectAdapter;
     private List<TurnoverNameBean> projectList = new ArrayList<>();
-    private SelectorCategoryFirstAdapter selectorCategoryFirstAdapter;
-    private List<TurnoverCategoryBean> categoryList = new ArrayList<>();
     private SelectorMaterialSecondAdapter selectorMaterialSecondAdapter;
     private List<TurnoverCategoryBean> materialList = new ArrayList<>();
     private UnitAdapter unitAdapter;
@@ -504,7 +485,6 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
     private List<TurnoverTypeBean.MaterialStatusBean> materialStatusList = new ArrayList<>();
     private GroundingAdapter groundingAdapter;
     private List<TurnoverTypeBean.IsShelfBean> groundingList = new ArrayList<>();
-
     @SuppressLint({"RestrictedApi,InflateParams", "SetTextI18n"})
     private void getBottomSheetDialog(int layout, String type) {
         //底部滑动对话框
@@ -541,40 +521,22 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
                     turnoverProjectAdapter.setIsSelect(turnoverAddVm.unit_id);
                 }
                 break;
-            case "category_material_id"://选择材料类别/名称
-                RecyclerView rvFirst = btn_dialog.findViewById(R.id.rv_province);
-                RecyclerView rvSecond = btn_dialog.findViewById(R.id.rv_city);
-                TextView tvFirst = btn_dialog.findViewById(R.id.tv_first);
-                TextView tvSecond = btn_dialog.findViewById(R.id.tv_second);
-                Objects.requireNonNull(tvFirst).setText("选择类别");
-                Objects.requireNonNull(tvSecond).setText("选择名称");
-                Objects.requireNonNull(rvFirst).setLayoutManager(new LinearLayoutManager(this));
-                Objects.requireNonNull(rvSecond).setLayoutManager(new LinearLayoutManager(this));
-                selectorCategoryFirstAdapter = new SelectorCategoryFirstAdapter(R.layout.adapter_selector_area_first, null);
-                selectorMaterialSecondAdapter = new SelectorMaterialSecondAdapter(R.layout.adapter_selector_area_second, null);
-                rvFirst.setAdapter(selectorCategoryFirstAdapter);
-                rvSecond.setAdapter(selectorMaterialSecondAdapter);
-                selectorCategoryFirstAdapter.setOnItemClickListener((adapter, view, position) -> {
-                    turnoverAddVm.category = categoryList.get(position).getId();
-                    turnoverVm.constructionCategoryList("", turnoverAddVm.category);
-                    selectorCategoryFirstAdapter.setIsSelect(turnoverAddVm.category);
-                    turnoverAddVm.categoryName = categoryList.get(position).getCatname();
-                });
+            case "category_material_id"://选择材料类别
+                TextView tvMaterialId = btn_dialog.findViewById(R.id.tv_title);
+                Objects.requireNonNull(tvMaterialId).setText("选择材料类别");
+                RecyclerView rvMaterialId = btn_dialog.findViewById(R.id.rv);
+                Objects.requireNonNull(rvMaterialId).setLayoutManager(new LinearLayoutManager(this));
+                selectorMaterialSecondAdapter = new SelectorMaterialSecondAdapter(R.layout.adapter_selector_area_second,materialList);
+                rvMaterialId.setAdapter(selectorMaterialSecondAdapter);
                 selectorMaterialSecondAdapter.setOnItemClickListener((adapter, view, position) -> {
-                    turnoverAddVm.material_id = materialList.get(position).getId();
-                    selectorMaterialSecondAdapter.setIsSelect(turnoverAddVm.material_id);
-                    btn_dialog.dismiss();
-                    turnoverAddVm.materialName = materialList.get(position).getCatname();
-                    tvCategoryMaterial_id.setText(turnoverAddVm.categoryName + " - " + turnoverAddVm.materialName);
+                    turnoverAddVm.category = materialList.get(position).getId();
+                    tvCategoryMaterial_id.setText(materialList.get(position).getCatname());
                     tvCategoryMaterial_id.setTextColor(getResources().getColor(R.color.colorTv));
+                    selectorMaterialSecondAdapter.setIsSelect(turnoverAddVm.category);
+                    btn_dialog.dismiss();
                 });
-                turnoverVm.constructionCategoryParent();
                 if (turnoverAddVm.category != 0) {
-                    turnoverVm.constructionCategoryList("", turnoverAddVm.category);
-                    selectorCategoryFirstAdapter.setIsSelect(turnoverAddVm.category);
-                }
-                if (turnoverAddVm.material_id != 0) {
-                    selectorMaterialSecondAdapter.setIsSelect(turnoverAddVm.material_id);
+                    selectorMaterialSecondAdapter.setIsSelect(turnoverAddVm.category);
                 }
                 break;
             case "unit"://选择单位
@@ -825,9 +787,9 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
             tvProject.setText(turnoverDetailEditBean.getUnit_id_name());
             tvProject.setTextColor(getResources().getColor(R.color.colorTv));
             turnoverAddVm.category = turnoverDetailEditBean.getCategory();
-            turnoverAddVm.material_id = turnoverDetailEditBean.getMaterial_id();
-            tvCategoryMaterial_id.setText(turnoverDetailEditBean.getCategory_name() + " - " + turnoverDetailEditBean.getMaterial_id_name());
+            tvCategoryMaterial_id.setText(turnoverDetailEditBean.getCategory_name());
             tvCategoryMaterial_id.setTextColor(getResources().getColor(R.color.colorTv));
+            etMaterialName.setText(turnoverDetailEditBean.getMaterial_name());
             etStock.setText(turnoverDetailEditBean.getStock());
             etUnitPrice.setText(turnoverDetailEditBean.getUnit_price());
             turnoverAddVm.unit = turnoverDetailEditBean.getUnit();

@@ -39,8 +39,7 @@ public class TurnoverVm extends BaseViewModel{
     public int use_status;
     public int supplier_id;
     public String supplier_name;
-    public int p_category_id;
-    public int category_id;
+    public String material_name;
     public MutableLiveData<TurnoverBean> turnoverLiveData;
     public MutableLiveData<TurnoverTypeBean> turnoverTypeData;
     public MutableLiveData<List<TurnoverCategoryBean>> turnoverHistoryData;
@@ -76,21 +75,19 @@ public class TurnoverVm extends BaseViewModel{
         is_shelf = 0;
         use_status = 0;
         supplier_id = 0;
-        p_category_id = 0;
-        category_id = 0;
     }
 
     //后台管理 --- 周转材料列表
     public void constructionList(int province,int city){
         page = 1;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
-        new TurnoverRepository().constructionList(turnoverLiveData, pageStateLiveData, userId,page,unit_id,is_shelf,use_status,province,city,p_category_id,category_id,supplier_id);
+        new TurnoverRepository().constructionList(turnoverLiveData, pageStateLiveData, userId,page,unit_id,is_shelf,use_status,province,city,material_name,supplier_id);
     }
 
     public void constructionListMore(int province,int city){
         page ++;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
-        new TurnoverRepository().constructionList(turnoverLiveData, pageStateLiveData, userId,page,unit_id,is_shelf,use_status,province,city,p_category_id,category_id,supplier_id);
+        new TurnoverRepository().constructionList(turnoverLiveData, pageStateLiveData, userId,page,unit_id,is_shelf,use_status,province,city,material_name,supplier_id);
     }
 
     //后台管理 --- 筛选条件列表

@@ -1646,8 +1646,7 @@ public interface ApiService {
             @Field("use_status") int use_status,
             @Field("province") int province,
             @Field("city") int city,
-            @Field("p_category_id") int p_category_id,
-            @Field("category_id") int category_id,
+            @Field("material_name") String material_name,
             @Field("supplier_id") int supplier_id
     );
 
@@ -1734,7 +1733,7 @@ public interface ApiService {
             @Field("user_id") int userId,
             @Field("unit_id") int unit_id,
             @Field("category") int category,
-            @Field("material_id") int material_id,
+            @Field("material_name") String material_name,
             @Field("stock") String stock,
             @Field("unit_price") String unit_price,
             @Field("unit") int unit,
@@ -1775,7 +1774,7 @@ public interface ApiService {
             @Field("id") int id,
             @Field("unit_id") int unit_id,
             @Field("category") int category,
-            @Field("material_id") int material_id,
+            @Field("material_name") String material_name,
             @Field("stock") String stock,
             @Field("unit_price") String unit_price,
             @Field("unit") int unit,

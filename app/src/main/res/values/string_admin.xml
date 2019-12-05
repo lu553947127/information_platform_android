@@ -67,8 +67,8 @@
     <string name="admin_turnover_material_add">周转材料添加</string>
     <string name="admin_turnover_add_project">项目名称</string>
     <string name="admin_turnover_add_project_et">请选择项目名称</string>
-    <string name="admin_turnover_add_category_material_id">材料类别/名称</string>
-    <string name="admin_turnover_add_category_material_id_et">请选择材料类别/名称</string>
+    <string name="admin_turnover_add_category_material_id">材料类别</string>
+    <string name="admin_turnover_add_category_material_id_et">请选择材料类别</string>
     <string name="admin_turnover_add_category_material_name">材料名称</string>
     <string name="admin_turnover_add_category_material_name_et">请输入材料名称</string>
     <string name="admin_turnover_add_stock">库存数量</string>
@@ -114,7 +114,7 @@
     <string name="admin_turnover_remark">备注</string>
     <string name="admin_turnover_hint_input">请输入</string>
     <string name="admin_selector_material_project">请选择所属项目</string>
-    <string name="admin_selector_material_plan">请选择预计下步使用计划</string>
+    <string name="admin_selector_material_plan">请输入预计下步使用计划</string>
     <string name="admin_input_material_num">请输入再用数量</string>
     <string name="admin_selector_material_start_time">请选择开始使用日期</string>
     <string name="admin_selector_material_enter_time">请选择材料进场时间</string>

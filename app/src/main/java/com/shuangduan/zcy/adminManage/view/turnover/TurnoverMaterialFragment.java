@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -379,7 +380,7 @@ public class TurnoverMaterialFragment extends BaseNoRefreshFragment {
                 tvAddress.setVisibility(View.GONE);
                 turnoverVm.supplier_id=0;
                 turnoverVm.unit_id=0;
-                turnoverVm.category_id=0;
+                turnoverVm.material_name="";
                 turnoverVm.is_shelf=0;
                 turnoverVm.use_status=0;
                 areaVm.id=0;
@@ -392,7 +393,7 @@ public class TurnoverMaterialFragment extends BaseNoRefreshFragment {
                 getDeleteView(tvCompanyChildren);
                 break;
             case R.id.tv_name_second://名称二级
-                turnoverVm.category_id=0;
+                turnoverVm.material_name="";
                 getDeleteView(tvNameSecond);
                 break;
             case R.id.tv_is_shelf://是否上架
@@ -631,7 +632,27 @@ public class TurnoverMaterialFragment extends BaseNoRefreshFragment {
                 break;
             case "edit"://材料名称搜索
                 XEditText xEditText = dialog_view.findViewById(R.id.edit);
+                TextView tvSearch = dialog_view.findViewById(R.id.tv_search);
                 KeyboardUtil.showSoftInputFromWindow((BaseActivity) getActivity(), xEditText);
+                tvSearch.setOnClickListener(v -> {
+                    turnoverVm.material_name = xEditText.getText().toString();
+                    turnoverVm.constructionList(areaVm.id,areaVm.city_id);
+                    getAddTopScreenView(tvNameSecond,xEditText.getText().toString());
+                    btn_dialog.dismiss();
+                });
+                //EditTextView 搜索
+                xEditText.setOnEditorActionListener((v, actionId, event) -> {
+                    if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                        //关闭软键盘
+                        KeyboardUtil.closeKeyboard(mActivity);
+                        turnoverVm.material_name = xEditText.getText().toString();
+                        turnoverVm.constructionList(areaVm.id,areaVm.city_id);
+                        getAddTopScreenView(tvNameSecond,xEditText.getText().toString());
+                        btn_dialog.dismiss();
+                        return true;
+                    }
+                    return false;
+                });
                 break;
         }
         btn_dialog.show();
@@ -644,13 +665,6 @@ public class TurnoverMaterialFragment extends BaseNoRefreshFragment {
         drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
         textView.setCompoundDrawables(null, null, drawable, null);
         textView.setTextColor(getResources().getColor(color));
-    }
-
-    @Subscribe
-    public void onEventTurnover(TurnoverEvent event) {
-        turnoverVm.category_id=event.material_id;
-        turnoverVm.constructionList(areaVm.id,areaVm.city_id);
-        getAddTopScreenView(tvNameSecond,event.material_name);
     }
 
     @SuppressLint("SetTextI18n")
