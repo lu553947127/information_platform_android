@@ -2,6 +2,7 @@ package com.shuangduan.zcy.adminManage.dialog;
 
 import android.content.DialogInterface;
 import android.text.Editable;
+import android.text.InputType;
 import android.view.View;
 
 import com.blankj.utilcode.util.StringUtils;
@@ -31,16 +32,15 @@ public class TurnoverDialogControl extends BaseAddInfoDialog implements DialogIn
     //使用计划ID
     private List<Integer> planIdList;
 
-    //使用计划名称
-    private List<String> planList;
+
 
     private int currentPosition;
     private ArrayWheelAdapter projectAdapter;
-    private ArrayWheelAdapter lineAdapter;
+
     //当前滑动的角标值
     private int selectorIndex;
 
-    private int plan;
+
     private String use_count, start_date, entry_time, exit_time, accumulated_amortization, original_price, net_worth, planStr;
 
     public TurnoverDialogControl(BaseActivity context, TurnoverVm vm, TurnoverDetailListening listening) {
@@ -58,7 +58,6 @@ public class TurnoverDialogControl extends BaseAddInfoDialog implements DialogIn
     public void initData(TurnoverVm vm) {
         super.initData(vm);
         planIdList = new ArrayList<>();
-        planList = new ArrayList<>();
     }
 
     @Override
@@ -109,7 +108,7 @@ public class TurnoverDialogControl extends BaseAddInfoDialog implements DialogIn
         dialog.setOnDismissListener(this);
 
         projectAdapter = new ArrayWheelAdapter(projectList);
-        lineAdapter = new ArrayWheelAdapter(planList);
+
 
         wheelView.setOnItemSelectedListener(index -> {
             this.selectorIndex = index;
@@ -117,9 +116,9 @@ public class TurnoverDialogControl extends BaseAddInfoDialog implements DialogIn
     }
 
     //获取编辑详情数据
-    public void setDetail(int plan, String planStr, String use_count, String start_date, String entry_time, String exit_time,
+    public void setDetail(String planStr, String use_count, String start_date, String entry_time, String exit_time,
                           String accumulated_amortization, String original_price, String net_worth) {
-        this.plan = plan;
+
         this.planStr = planStr;
         this.use_count = use_count;
         this.start_date = start_date;
@@ -181,7 +180,6 @@ public class TurnoverDialogControl extends BaseAddInfoDialog implements DialogIn
         switch (position) {
             case 1:
                 planStr = "";
-                plan = 0;
                 tsItemTwo.setValue(planStr);
                 break;
             case 3:
@@ -205,8 +203,7 @@ public class TurnoverDialogControl extends BaseAddInfoDialog implements DialogIn
                 showView(1, R.string.admin_selector_material_plan);
                 break;
             case 2:
-                planStr = planList.get(selectorIndex);
-                plan = planIdList.get(selectorIndex);
+                planStr = tsItemTwo.getValue();
                 tsItemTwo.setValue(planStr);
                 showView(6, R.string.admin_input_material_amortize);
                 break;
@@ -247,6 +244,7 @@ public class TurnoverDialogControl extends BaseAddInfoDialog implements DialogIn
     private void showView(int position, int titleRes) {
         this.currentPosition = position;
 
+        tsItemTwo.getEditText().setVisibility(position == 1 ? View.VISIBLE : View.GONE);
         tsItemThree.getEditText().setVisibility(position == 2 ? View.VISIBLE : View.GONE);
         tsItemSeven.getEditText().setVisibility(position == 6 ? View.VISIBLE : View.GONE);
         tsItemEight.getEditText().setVisibility(position == 7 ? View.VISIBLE : View.GONE);
@@ -260,13 +258,6 @@ public class TurnoverDialogControl extends BaseAddInfoDialog implements DialogIn
                 wheelView.setItemsVisibleCount(7);
                 wheelView.setAdapter(projectAdapter);
                 break;
-            case 1:
-                if (KeyboardUtil.isSoftShowing(context)) {
-                    KeyboardUtil.showORhideSoftKeyboard(context);
-                }
-                wheelView.setItemsVisibleCount(5);
-                wheelView.setAdapter(lineAdapter);
-                break;
             case 3:
             case 4:
             case 5:
@@ -274,6 +265,9 @@ public class TurnoverDialogControl extends BaseAddInfoDialog implements DialogIn
                     KeyboardUtil.showORhideSoftKeyboard(context);
                 }
                 break;
+            case 1:
+                KeyboardUtil.showSoftInputFromWindow(context, tsItemTwo.getEditText());
+                tsItemTwo.getEditText().setInputType(InputType.TYPE_CLASS_TEXT);
             case 2:
                 KeyboardUtil.showSoftInputFromWindow(context, tsItemThree.getEditText());
                 break;
@@ -305,24 +299,17 @@ public class TurnoverDialogControl extends BaseAddInfoDialog implements DialogIn
         rlDate.setVisibility(position == 3 || position == 4 || position == 5 ? View.VISIBLE : View.GONE);
     }
 
-    public List<Integer> getPlanIdList() {
-        return planIdList;
-    }
-
-    public List<String> getPlanList() {
-        return planList;
-    }
 
     @Override
     public void onDismiss(DialogInterface dialog) {
         if (KeyboardUtil.isSoftShowing(context)) {
             KeyboardUtil.showORhideSoftKeyboard(context);
         }
-        listening.callInfo(plan, planStr, use_count, start_date, entry_time, exit_time, accumulated_amortization, original_price, net_worth);
+        listening.callInfo(planStr, use_count, start_date, entry_time, exit_time, accumulated_amortization, original_price, net_worth);
     }
 
     public interface TurnoverDetailListening {
-        void callInfo(int plan, String planStr, String use_count, String start_date, String entry_time,
+        void callInfo(String planStr, String use_count, String start_date, String entry_time,
                       String exit_time, String accumulated_amortization, String original_price, String net_worth);
     }
 }

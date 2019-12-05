@@ -896,7 +896,7 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
             turnoverAddVm.net_worth = String.valueOf(turnoverDetailEditBean.getNet_worth());
             tsValue.setValue(String.valueOf(turnoverDetailEditBean.getNet_worth()));
 
-            dialogControl.setDetail(turnoverDetailEditBean.getPlan(), turnoverDetailEditBean.getPlan_name()
+            dialogControl.setDetail(turnoverDetailEditBean.getPlan_name()
                     , String.valueOf(turnoverDetailEditBean.getUse_count()), turnoverDetailEditBean.getStart_date(),
                     turnoverDetailEditBean.getEntry_time(), turnoverDetailEditBean.getExit_time()
                     , String.valueOf(turnoverDetailEditBean.getAccumulated_amortization()), String.valueOf(turnoverDetailEditBean.getOriginal_price()),
@@ -921,10 +921,9 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
     }
 
     @Override
-    public void callInfo(int plan, String planStr, String use_count, String start_date, String entry_time, String exit_time,
+    public void callInfo(String planStr, String use_count, String start_date, String entry_time, String exit_time,
                          String accumulated_amortization, String original_price, String net_worth) {
 
-        turnoverAddVm.plan = plan;
         turnoverAddVm.use_count = use_count;
         turnoverAddVm.start_date = start_date;
         turnoverAddVm.entry_time = entry_time;

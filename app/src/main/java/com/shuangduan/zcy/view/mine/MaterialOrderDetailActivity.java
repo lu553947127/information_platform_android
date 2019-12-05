@@ -126,7 +126,6 @@ public class MaterialOrderDetailActivity extends BaseActivity {
         tvUnit.setVisibility(type == CustomConfig.EQUIPMENT ? View.INVISIBLE : View.VISIBLE);
 
 
-
         materialVm = ViewModelProviders.of(this).get(MaterialDetailVm.class);
         materialVm.orderDetailLiveData.observe(this, item -> {
             if (item == null) {
