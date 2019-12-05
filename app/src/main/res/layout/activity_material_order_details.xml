@@ -80,7 +80,7 @@
                     android:textSize="14sp"
                     app:layout_constraintLeft_toRightOf="@+id/iv_icon"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/iv_icon"/>
+                    app:layout_constraintTop_toTopOf="@id/iv_icon" />
 
                 <TextView
                     android:id="@+id/tv_price"
@@ -91,7 +91,7 @@
                     android:textSize="13sp"
                     app:layout_constraintLeft_toLeftOf="@+id/tv_title"
                     app:layout_constraintTop_toBottomOf="@+id/tv_title"
-                    tools:ignore="MissingConstraints"/>
+                    tools:ignore="MissingConstraints" />
 
                 <TextView
                     android:id="@+id/tv_spec"
@@ -103,7 +103,7 @@
                     app:layout_constraintLeft_toLeftOf="@+id/tv_title"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_price"
-                    tools:ignore="MissingConstraints"/>
+                    tools:ignore="MissingConstraints" />
 
                 <TextView
                     android:id="@+id/tv_supplier"
@@ -114,7 +114,7 @@
                     android:textSize="13sp"
                     app:layout_constraintLeft_toLeftOf="@+id/tv_title"
                     app:layout_constraintTop_toBottomOf="@+id/tv_spec"
-                    tools:ignore="MissingConstraints"/>
+                    tools:ignore="MissingConstraints" />
 
                 <TextView
                     android:id="@+id/tv_unit"
@@ -130,17 +130,14 @@
                     android:id="@+id/tv_lease_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/color_666666"
                     android:layout_marginTop="20dp"
-                    app:layout_constraintTop_toBottomOf="@id/tv_supplier"
-                    android:textSize="12sp"/>
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/tv_lease_time"
-                    app:layout_goneMarginTop="10dp"
-                    tools:ignore="MissingConstraints" />
+                    android:textColor="@color/color_666666"
+                    android:textSize="12sp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_supplier" />
+
+
+                <include layout="@layout/item_material_details_address" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -180,15 +177,16 @@
                     android:layout_marginTop="2dp"
                     android:src="@drawable/icon_mine_default_material"
                     android:visibility="invisible"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/tv_order_info" />
+                    android:layout_marginLeft="7dp"
+                    app:layout_constraintLeft_toRightOf="@id/tv_order_info"
+                    app:layout_constraintTop_toTopOf="@id/tv_order_info"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_order_info"/>
 
                 <com.shuangduan.zcy.weight.FlowViewHorizontal
                     android:id="@+id/fh_progress"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginTop="17dp"
-                    app:layout_constraintTop_toBottomOf="@id/tv_order_info"
                     android:paddingLeft="20dp"
                     android:paddingRight="10dp"
                     app:h_bg_radius="6dp"
@@ -197,7 +195,8 @@
                     app:h_pro_radius='6dp'
                     app:h_pro_width="4dp"
                     app:h_text_padding='10dp'
-                    app:h_textsize='12sp'/>
+                    app:h_textsize='12sp'
+                    app:layout_constraintTop_toBottomOf="@id/tv_order_info" />
 
                 <TextView
                     android:id="@+id/tv_state_tip"
@@ -207,8 +206,8 @@
                     android:text="@string/state"
                     android:textColor="@color/color_666666"
                     android:textSize="12sp"
-                    app:layout_constraintTop_toBottomOf="@id/fh_progress"
-                    android:visibility="gone"/>
+                    android:visibility="gone"
+                    app:layout_constraintTop_toBottomOf="@id/fh_progress" />
 
                 <TextView
                     android:id="@+id/tv_state"
@@ -216,9 +215,9 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/color_666666"
                     android:textSize="13sp"
+                    android:visibility="gone"
                     app:layout_constraintLeft_toLeftOf="@id/tv_buyer_value"
-                    app:layout_constraintTop_toTopOf="@id/tv_state_tip"
-                    android:visibility="gone"/>
+                    app:layout_constraintTop_toTopOf="@id/tv_state_tip" />
 
 
                 <TextView
@@ -330,8 +329,8 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/color_666666"
                     android:textSize="12sp"
-                    app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintLeft_toLeftOf="@id/tv_buyer_value"
+                    app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="@id/tv_order_date" />
 
                 <TextView
@@ -351,8 +350,8 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/color_666666"
                     android:textSize="12sp"
-                    app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintLeft_toLeftOf="@id/tv_buyer_value"
+                    app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="@id/tv_company_name" />
 
                 <TextView
@@ -372,8 +371,8 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/color_666666"
                     android:textSize="12sp"
-                    app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintLeft_toLeftOf="@id/tv_buyer_value"
+                    app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="@id/tv_order_address" />
 
                 <TextView

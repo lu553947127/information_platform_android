@@ -72,7 +72,7 @@ public class MaterialOrderAdapter extends BaseQuickAdapter<MaterialOrderBean.Lis
                 .setText(R.id.tv_order_num, "订单号:" + item.orderSn)
                 .setText(R.id.tv_supply_method, item.method == 1 ? "出租" : "出售");
 
-        if (item.status.equals("驳回")) {
+        if (item.status.equals("驳回")||item.status.equals("已取消")) {
             helper.setTextColor(R.id.tv_state, mContext.getResources().getColor(R.color.text2));
             helper.setText(R.id.tv_state, item.status);
         } else {

@@ -5,12 +5,15 @@ import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.MaterialOrderAddressAdapter;
@@ -47,8 +50,7 @@ public class MaterialOrderDetailActivity extends BaseActivity {
     Toolbar toolbar;
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
-    @BindView(R.id.rv)
-    RecyclerView rv;
+
     @BindView(R.id.iv_icon)
     ImageView ivIcon;
     @BindView(R.id.tv_title)
@@ -91,6 +93,12 @@ public class MaterialOrderDetailActivity extends BaseActivity {
     TextView tvLeaseTime;
     @BindView(R.id.fh_progress)
     FlowViewHorizontal flowViewHorizontal;
+    @BindView(R.id.tv_reserve_num)
+    TextView tvResrveNum;
+    @BindView(R.id.tv_address)
+    TextView tvAddress;
+
+
     private MaterialDetailVm materialVm;
     private OrderTurnoverVm orderVm;
     private int type;
@@ -117,15 +125,11 @@ public class MaterialOrderDetailActivity extends BaseActivity {
 
         tvUnit.setVisibility(type == CustomConfig.EQUIPMENT ? View.INVISIBLE : View.VISIBLE);
 
-        rv.setLayoutManager(new LinearLayoutManager(this));
-        rv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
-        MaterialOrderAddressAdapter adapter = new MaterialOrderAddressAdapter(R.layout.item_material_details_address, null,type);
-        adapter.setEmptyView(R.layout.layout_empty, rv);
-        rv.setAdapter(adapter);
+
 
         materialVm = ViewModelProviders.of(this).get(MaterialDetailVm.class);
         materialVm.orderDetailLiveData.observe(this, item -> {
-            if (item==null){
+            if (item == null) {
                 return;
             }
             try {
@@ -139,7 +143,7 @@ public class MaterialOrderDetailActivity extends BaseActivity {
                 e.printStackTrace();
                 ivIcon.setImageResource(R.drawable.wuzhi_default);
             }
-            tvTitle.setText(item.category);
+            tvTitle.setText(item.materialName);
             if (type == CustomConfig.FRP) {
                 tvPrice.setText(item.method == 1 ?
                         Html.fromHtml("商品单价：<font color=#EF583E>¥" + item.price + "<font/>/天") :
@@ -147,14 +151,16 @@ public class MaterialOrderDetailActivity extends BaseActivity {
             } else if (type == CustomConfig.EQUIPMENT) {
                 tvPrice.setText(item.method == 1 ?
                         Html.fromHtml("商品单价：<font color=#EF583E>¥" + item.price + "<font/>/天") :
-                        Html.fromHtml("商品单价：<font color=#EF583E>¥" + item.price + "<font/>" ));
+                        Html.fromHtml("商品单价：<font color=#EF583E>¥" + item.price + "<font/>"));
             }
 
             tvSpec.setText("规格：" + item.spec);
-            tvSupplier.setText("供应商：" + item.supplier);
+            tvSupplier.setText("供应商：" + item.supplierCompany);
             tvUnit.setText("单位：" + item.unit);
-            adapter.setUnit(item.unit);
-            adapter.setNewData(item.addressList);
+
+            tvResrveNum.setText(String.valueOf(item.number));
+            tvAddress.setText("存放地：" + item.scienceAddress);
+
             tvBuyerValue.setText(item.user);
             tvContactValue.setText(item.realName);
             tvContactTelValue.setText(item.tel);
@@ -195,10 +201,10 @@ public class MaterialOrderDetailActivity extends BaseActivity {
         orderVm = ViewModelProviders.of(this).get(OrderTurnoverVm.class);
         //获取搜索筛选条件数据
         orderVm.orderSearchLiveData.observe(this, orderSearchBean -> {
-            List<String> list= new ArrayList<>();
+            List<String> list = new ArrayList<>();
             //获取当前名称字符串列表
             int index = 0;
-            for(int i = 0; i < orderSearchBean.getOrder_phases().size(); i++){
+            for (int i = 0; i < orderSearchBean.getOrder_phases().size(); i++) {
                 list.add(orderSearchBean.getOrder_phases().get(i).getName());
                 //获取当前订单状态的角标值
                 if (phases.equals(orderSearchBean.getOrder_phases().get(i).getName())) {
@@ -207,7 +213,7 @@ public class MaterialOrderDetailActivity extends BaseActivity {
             }
             //转换成数组
             String[] array = list.toArray(new String[list.size()]);
-            flowViewHorizontal.setProgress(index+1,orderSearchBean.getOrder_phases().size(),array);
+            flowViewHorizontal.setProgress(index + 1, orderSearchBean.getOrder_phases().size(), array);
         });
     }
 
@@ -243,9 +249,9 @@ public class MaterialOrderDetailActivity extends BaseActivity {
     private void cancelOrder() {
         MaterialOrderBean.ListBean order = materialVm.orderDetailLiveData.getValue();
         if (type == CustomConfig.FRP) {
-            materialVm.materialOrderCancel(order.id);
+            materialVm.materialOrderCancel(order.orderId);
         } else if (type == CustomConfig.EQUIPMENT) {
-            materialVm.cancelEquipmentOrder(order.id);
+            materialVm.cancelEquipmentOrder(order.orderId);
         }
     }
 }

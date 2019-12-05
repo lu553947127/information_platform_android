@@ -43,13 +43,13 @@ public class MaterialOrderBean {
     }
 
     public class ListBean {
-        public int id;
-        //物资id
-        @SerializedName("science_id")
-        public int scienceId;
+
         //订单ID
         @SerializedName("order_id")
         public int orderId;
+        //物资id
+        @SerializedName("science_id")
+        public int scienceId;
         //分类名称
         @SerializedName("cate_name")
         public String cateName;
@@ -62,6 +62,9 @@ public class MaterialOrderBean {
         //供应商名称
         @SerializedName("supplier")
         public String supplier;
+        @SerializedName("supplier_company")
+        public String supplierCompany;
+
         //订单号
         @SerializedName("order_sn")
         public String orderSn;
@@ -113,12 +116,15 @@ public class MaterialOrderBean {
         public String leaseStartTime;
         @SerializedName("lease_end_time")
         public String leaseEndTime;
+        //订单数量
+        public int number;
+        //物资详细地址
+        @SerializedName("science_address")
+        public String scienceAddress;
 
         @Override
         public String toString() {
-            return "ListBean{" +
-                    "id=" + id +
-                    ", scienceId=" + scienceId +
+            return "ListBean{" + "scienceId=" + scienceId +
                     ", orderId=" + orderId +
                     ", cateName='" + cateName + '\'' +
                     ", materialName='" + materialName + '\'' +

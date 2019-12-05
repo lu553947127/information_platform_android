@@ -130,7 +130,7 @@ public class HomeFragment extends BaseFragment {
         return false;
     }
 
-    @SuppressLint("SetTextI18n")
+
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState, View v) {
 
