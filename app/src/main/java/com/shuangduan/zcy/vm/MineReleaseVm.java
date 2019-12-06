@@ -54,6 +54,7 @@ public class MineReleaseVm extends BaseViewModel {
     }
 
     public void moreMyProjectTract(){
+        tractPage ++;
         pageStateLiveData.setValue(PageState.PAGE_REFRESH);
         new ProjectRepository().myProjectTrack(trackLiveData, pageStateLiveData, userId, tractPage);
     }

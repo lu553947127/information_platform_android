@@ -223,13 +223,7 @@ public class CircleFragment extends BaseFragment {
         refresh.setOnRefreshLoadMoreListener(new SimpleMultiPurposeListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                RongIM.getInstance().addUnReadMessageCountChangedObserver(i -> {
-                    LogUtils.e(i);
-                    // i 是未读数量
-                    imAddVm.count=i;
-                    LogUtils.e(imAddVm.count);
-                    imAddVm.applyCount();
-                }, Conversation.ConversationType.PRIVATE,Conversation.ConversationType.GROUP,Conversation.ConversationType.SYSTEM);
+                imAddVm.applyCount();
                 homeVm.getSupplierRole();
                 refreshLayout.finishRefresh(1000);
             }
@@ -298,6 +292,7 @@ public class CircleFragment extends BaseFragment {
     protected void initDataFromService() {
         userInfoVm.userInfo();
         homeVm.getSupplierRole();
+        imAddVm.applyCount();
     }
 
     @Subscribe

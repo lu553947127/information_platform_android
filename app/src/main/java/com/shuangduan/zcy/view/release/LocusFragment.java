@@ -90,7 +90,6 @@ public class LocusFragment extends BaseLazyFragment {
         refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                mineReleaseVm.projectPage++;
                 mineReleaseVm.moreMyProjectTract();
             }
 

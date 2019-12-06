@@ -682,7 +682,7 @@
     <string name="empty_material_order_device">您当前没有设备物资订单</string>
 
     <string name="empty_project_subscribe_info">您的业务地区暂时没有\n相关工程信息,我们已经尽力了</string>
-    <string name="empty_material_subscribe_info">您的业务地区暂时没有\n相关基建物资信息,我们已经尽力了</string>
+    <string name="empty_material_subscribe_info">暂无闲置物资提醒,我们已经尽力了</string>
 
     <string name="empty_deal_info">暂无交易记录</string>
     <string name="empty_contacts_msg_info">暂无消息</string>

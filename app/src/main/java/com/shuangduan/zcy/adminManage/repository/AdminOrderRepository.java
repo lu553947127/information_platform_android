@@ -23,9 +23,9 @@ public class AdminOrderRepository extends BaseRepository {
 
 
     //后台管理 --- 周转材料订单列表
-    public void orderListData(MutableLiveData<AdminOrderBean> liveData, MutableLiveData<String> pageState, int userId, int unitId, int supplierId, int pCategoryId,
-                              int categoryId, int phases, int inside, String orderNumber, int page) {
-        request(apiService.orderListData(userId, unitId, supplierId, pCategoryId, categoryId, phases, inside, orderNumber, page)).setData(liveData).setPageState(pageState).send();
+    public void orderListData(MutableLiveData<AdminOrderBean> liveData, MutableLiveData<String> pageState, int userId, int unitId, int supplierId, String material_name
+            , int phases, int inside, String orderNumber, int page) {
+        request(apiService.orderListData(userId, unitId, supplierId, material_name, phases, inside, orderNumber, page)).setData(liveData).setPageState(pageState).send();
     }
 
     //后台管理 --- 周转材料订单驳回
@@ -46,8 +46,8 @@ public class AdminOrderRepository extends BaseRepository {
 
     //后台管理 --- 设备订单列表
     public void orderDeviceListData(MutableLiveData<AdminOrderBean> liveData, MutableLiveData<String> pageState, int userId, int unitId, int supplierId,
-                                    int categoryId, int phases, int inside, String orderNumber, int page) {
-        request(apiService.orderDeviceListData(userId, unitId, supplierId, categoryId, phases, inside, orderNumber, page)).setData(liveData).setPageState(pageState).send();
+                                    String material_name, int phases, int inside, String orderNumber, int page) {
+        request(apiService.orderDeviceListData(userId, unitId, supplierId, material_name, phases, inside, orderNumber, page)).setData(liveData).setPageState(pageState).send();
     }
 
     //后台管理 --- 设备订单驳回

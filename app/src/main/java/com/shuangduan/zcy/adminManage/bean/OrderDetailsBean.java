@@ -18,7 +18,7 @@ public class OrderDetailsBean {
     @SerializedName("category_name")
     public String categoryName;
     //物质名称
-    @SerializedName("material_id_name")
+    @SerializedName("material_name")
     public String materialIdName;
     //商品价格
     @SerializedName("price")

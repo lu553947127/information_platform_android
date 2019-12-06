@@ -29,7 +29,6 @@ import java.util.List;
  * @Version: 1.0
  */
 public class OrderDeviceVm extends BaseViewModel {
-
     public int userId;
     //选择弹窗区分类别
     public String type;
@@ -42,12 +41,11 @@ public class OrderDeviceVm extends BaseViewModel {
     public String supplier_name;
     //项目id
     public int unit_id;
-    //周转材料子类型ID
-    public int categoryId;
+    //设备名称
+    public String material_name;
     //订单进度
     public int phases;
     public int phasesId;
-
     //修改订单进度ID
     public int updatePhasesId;
     //订单进度名称
@@ -83,13 +81,13 @@ public class OrderDeviceVm extends BaseViewModel {
     public void orderDeviceListData(String orderNumber) {
         page = 1;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
-        new AdminOrderRepository().orderDeviceListData(orderListLiveData, pageStateLiveData, userId, unit_id, supplier_id, categoryId, phases, inside, orderNumber, page);
+        new AdminOrderRepository().orderDeviceListData(orderListLiveData, pageStateLiveData, userId, unit_id, supplier_id, material_name, phases, inside, orderNumber, page);
     }
 
     public void moreDeviceOrderListData(String orderNumber) {
         page++;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
-        new AdminOrderRepository().orderDeviceListData(orderListLiveData, pageStateLiveData, userId, unit_id, supplier_id, categoryId, phases, inside, orderNumber, page);
+        new AdminOrderRepository().orderDeviceListData(orderListLiveData, pageStateLiveData, userId, unit_id, supplier_id, material_name, phases, inside, orderNumber, page);
     }
 
     //后台管理 --- 设备订单驳回

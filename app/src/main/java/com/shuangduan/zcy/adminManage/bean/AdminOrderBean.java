@@ -60,7 +60,7 @@ public class AdminOrderBean {
         @SerializedName("category_name")
         public String categoryName;
         //材料名称
-        @SerializedName("material_id_name")
+        @SerializedName("material_name")
         public String materialIdName;
         //订单描述
         @SerializedName("inside_name")

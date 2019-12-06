@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.shuangduan.zcy.R;
@@ -90,7 +89,6 @@ public class MineLocusActivity extends BaseActivity implements BaseQuickAdapter.
 
         projectDetailVm.trackDateilLiveDate.observe(this, item -> {
             this.item = item;
-            LogUtils.json(LogUtils.E, item);
             tvTitle.setText(item.title);
             tvDate.setText(getString(R.string.format_release_time, item.createTime));
             tvVisit.setText(getString(R.string.format_locus_visit, item.name));

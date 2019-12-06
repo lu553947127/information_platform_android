@@ -1,11 +1,9 @@
 package com.shuangduan.zcy.adminManage.view;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 
 import androidx.appcompat.widget.AppCompatTextView;
@@ -30,6 +28,7 @@ import com.shuangduan.zcy.adminManage.vm.TurnoverVm;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.listener.TextWatcherWrapper;
+import com.shuangduan.zcy.utils.KeyboardUtil;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 import com.shuangduan.zcy.weight.XEditText;
 
@@ -192,10 +191,7 @@ public class SelectTypeActivity extends BaseActivity {
         etSearch.setOnEditorActionListener((textView, i, keyEvent) -> {
             if (i == EditorInfo.IME_ACTION_SEARCH) {
                 // 先隐藏键盘
-                ((InputMethodManager) Objects.requireNonNull(etSearch.getContext()
-                        .getSystemService(Context.INPUT_METHOD_SERVICE)))
-                        .hideSoftInputFromWindow(Objects.requireNonNull(SelectTypeActivity.this.getCurrentFocus()).getWindowToken(),
-                                InputMethodManager.HIDE_NOT_ALWAYS);
+                KeyboardUtil.closeKeyboard(this);
                 // 搜索，进行自己要的操作...
                 switch (type){
                     case ADMIN_MANAGE_CONSTRUCTION://选择周转材料

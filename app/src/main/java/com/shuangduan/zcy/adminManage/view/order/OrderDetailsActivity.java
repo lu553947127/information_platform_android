@@ -1,5 +1,6 @@
 package com.shuangduan.zcy.adminManage.view.order;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.Spanned;
@@ -39,10 +40,8 @@ import butterknife.OnClick;
  * @class describe
  */
 public class OrderDetailsActivity extends BaseActivity {
-
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
-
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.tv_supply_method)
@@ -115,14 +114,10 @@ public class OrderDetailsActivity extends BaseActivity {
     TextView tvBuyRemarkValue;
     @BindView(R.id.tv_reject)
     CheckBox tvReject;
-
     @BindView(R.id.group_visible)
     Group groupVisible;
-    //订单ID
-    private int orderId;
     //账号角色ID
     private int manageStatus;
-
     //订单类型 0:周转物资 1：设备
     private int orderType;
 
@@ -141,7 +136,8 @@ public class OrderDetailsActivity extends BaseActivity {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.admin_order_details));
 
-        orderId = getIntent().getIntExtra(CustomConfig.ADMIN_ORDER_ID, 0);
+        //订单ID
+        int orderId = getIntent().getIntExtra(CustomConfig.ADMIN_ORDER_ID, 0);
         manageStatus = getIntent().getIntExtra("manage_status", 0);
         orderType = getIntent().getIntExtra("order_type", 0);
 
@@ -162,6 +158,7 @@ public class OrderDetailsActivity extends BaseActivity {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private void initViewData(OrderDetailsBean orderItem) {
         Glide.with(this).load(orderItem.images.get(0).url).into(ivIcon);
         tvTitle.setText(orderItem.materialIdName);

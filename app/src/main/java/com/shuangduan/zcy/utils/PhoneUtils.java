@@ -31,7 +31,7 @@ public class PhoneUtils {
             case "Coolpad":
                 return false;
             case "Meizu":
-                return false;
+                return true;
             case "Xiaomi":
                 return true;
             case "samsung":

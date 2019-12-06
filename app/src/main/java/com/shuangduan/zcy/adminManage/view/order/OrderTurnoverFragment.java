@@ -36,10 +36,9 @@ import com.shuangduan.zcy.adminManage.bean.AdminOrderBean;
 import com.shuangduan.zcy.adminManage.bean.OrderSearchBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverCompanyBean;
 import com.shuangduan.zcy.adminManage.bean.TurnoverNameBean;
-import com.shuangduan.zcy.adminManage.event.OrderTurnoverEvent;
-import com.shuangduan.zcy.adminManage.view.SelectTypeActivity;
 import com.shuangduan.zcy.adminManage.vm.OrderTurnoverVm;
 import com.shuangduan.zcy.app.CustomConfig;
+import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.base.BaseNoRefreshFragment;
 import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.BottomSheetDialogs;
@@ -47,9 +46,8 @@ import com.shuangduan.zcy.dialog.CustomDialog;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.utils.DrawableUtils;
 import com.shuangduan.zcy.utils.KeyboardUtil;
+import com.shuangduan.zcy.utils.PhoneUtils;
 import com.shuangduan.zcy.weight.XEditText;
-
-import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,7 +69,6 @@ import butterknife.OnClick;
  * @Version: 1.0
  */
 public class OrderTurnoverFragment extends BaseNoRefreshFragment implements BaseQuickAdapter.OnItemChildClickListener {
-
     @BindView(R.id.tv_project)
     AppCompatTextView tvProject;
     @BindView(R.id.tv_name)
@@ -119,7 +116,7 @@ public class OrderTurnoverFragment extends BaseNoRefreshFragment implements Base
 
     @Override
     public boolean isUseEventBus() {
-        return true;
+        return false;
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -192,7 +189,7 @@ public class OrderTurnoverFragment extends BaseNoRefreshFragment implements Base
             turnoverProjectAdapter.setNewData(projectList);
         });
 
-        //订单驳回
+        //订单驳回成功返回结果
         orderVm.rejectLiveData.observe(this, rejectItem -> {
             AdminOrderBean.OrderList orderItem = adminOrderListAdapter.getData().get(orderVm.position);
             orderItem.statusId = 3;
@@ -342,7 +339,6 @@ public class OrderTurnoverFragment extends BaseNoRefreshFragment implements Base
     @OnClick({R.id.tv_project, R.id.tv_name, R.id.tv_order_phases, R.id.tv_order_type
             , R.id.tv_reset, R.id.tv_company_children, R.id.tv_name_second, R.id.tv_is_shelf, R.id.tv_use_status})
     void onClick(View view) {
-        Bundle bundle = new Bundle();
         switch (view.getId()) {
             case R.id.tv_project://选择子公司/项目
                 if (manage_status == 3 || manage_status == 5) {
@@ -353,8 +349,7 @@ public class OrderTurnoverFragment extends BaseNoRefreshFragment implements Base
                 getDrawableRightView(tvProject, R.drawable.icon_pullup_arrow, R.color.color_5C54F4);
                 break;
             case R.id.tv_name://选择材料名称
-                bundle.putInt(CustomConfig.ADMIN_MANAGE_TYPE, CustomConfig.ADMIN_MANAGE_CONSTRUCTION_ORDER);
-                ActivityUtils.startActivity(bundle, SelectTypeActivity.class);
+                getBottomSheetDialog(R.layout.dialog_search_edit,"edit",0);
                 break;
             case R.id.tv_order_phases://选择订单进度
                 orderVm.phasesId = 0;
@@ -376,7 +371,7 @@ public class OrderTurnoverFragment extends BaseNoRefreshFragment implements Base
                 tvFour.setVisibility(View.GONE);
                 orderVm.supplier_id = 0;
                 orderVm.unit_id = 0;
-                orderVm.categoryId = 0;
+                orderVm.material_name = "";
                 orderVm.phases = 0;
                 orderVm.inside = 0;
                 orderVm.orderListData("");
@@ -387,7 +382,7 @@ public class OrderTurnoverFragment extends BaseNoRefreshFragment implements Base
                 getDeleteView(tvOne);
                 break;
             case R.id.tv_name_second://材料名称
-                orderVm.categoryId = 0;
+                orderVm.material_name = "";
                 getDeleteView(tvTwo);
                 break;
             case R.id.tv_is_shelf://订单进度
@@ -555,6 +550,36 @@ public class OrderTurnoverFragment extends BaseNoRefreshFragment implements Base
                     orderInsideAdapter.setIsSelect(orderVm.inside);
                 }
                 break;
+            case "edit"://材料名称搜索
+                XEditText xEditText = dialog_view.findViewById(R.id.edit);
+                TextView tvSearch = dialog_view.findViewById(R.id.tv_search);
+                View view = dialog_view.findViewById(R.id.view);
+                if(PhoneUtils.isPhone()) {
+                    view.setVisibility(View.VISIBLE);
+                }else {
+                    view.setVisibility(View.GONE);
+                }
+                KeyboardUtil.showSoftInputFromWindow((BaseActivity) getActivity(), xEditText);
+                tvSearch.setOnClickListener(v -> {
+                    orderVm.material_name = xEditText.getText().toString();
+                    orderVm.orderListData("");
+                    getAddTopScreenView(tvTwo, xEditText.getText().toString());
+                    btn_dialog.dismiss();
+                });
+                //EditTextView 搜索
+                xEditText.setOnEditorActionListener((v, actionId, event) -> {
+                    if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                        //关闭软键盘
+                        KeyboardUtil.closeKeyboard(mActivity);
+                        orderVm.material_name = xEditText.getText().toString();
+                        orderVm.orderListData("");
+                        getAddTopScreenView(tvTwo, xEditText.getText().toString());
+                        btn_dialog.dismiss();
+                        return true;
+                    }
+                    return false;
+                });
+                break;
         }
         btn_dialog.show();
     }
@@ -585,13 +610,6 @@ public class OrderTurnoverFragment extends BaseNoRefreshFragment implements Base
             llAdminManageScreen.setVisibility(View.GONE);
         }
         orderVm.orderListData("");
-    }
-
-    @Subscribe
-    public void onEventOrderTurnover(OrderTurnoverEvent event) {
-        orderVm.categoryId = event.material_id;
-        orderVm.orderListData("");
-        getAddTopScreenView(tvTwo, event.material_name);
     }
 
     //权限显示判断

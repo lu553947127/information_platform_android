@@ -26,7 +26,6 @@ import java.util.List;
  * @class describe
  */
 public class OrderTurnoverVm extends BaseViewModel {
-
     public int userId;
     public int page = 1;
     //选择弹窗区分类别
@@ -35,19 +34,15 @@ public class OrderTurnoverVm extends BaseViewModel {
     public int supplier_id;
     //子公司名称
     public String supplier_name;
+    //材料名称
+    public String material_name;
     //项目id
     public int unit_id;
-    //周转材料父类型ID
-    public int pCategoryId;
-    //周转材料子类型ID
-    public int categoryId;
     //订单进度
     public int phases;
     public int phasesId;
     //修改订单进度Id
     public int updatePhasesId;
-
-
     //订单进度名称
     public String phasesName;
     //订单类型
@@ -83,14 +78,14 @@ public class OrderTurnoverVm extends BaseViewModel {
     public void orderListData(String orderNumber) {
         page = 1;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
-        new AdminOrderRepository().orderListData(orderListLiveData, pageStateLiveData, userId, unit_id, supplier_id, pCategoryId, categoryId, phases, inside, orderNumber, page);
+        new AdminOrderRepository().orderListData(orderListLiveData, pageStateLiveData, userId, unit_id, supplier_id,material_name, phases, inside, orderNumber, page);
     }
 
     //后台管理 --- 周转材料订单列表
     public void moreOrderListData(String orderNumber) {
         page++;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
-        new AdminOrderRepository().orderListData(orderListLiveData, pageStateLiveData, userId, unit_id, supplier_id, pCategoryId, categoryId, phases, inside, orderNumber, page);
+        new AdminOrderRepository().orderListData(orderListLiveData, pageStateLiveData, userId, unit_id, supplier_id, material_name, phases, inside, orderNumber, page);
     }
 
     //后台管理 --- 子公司列表
