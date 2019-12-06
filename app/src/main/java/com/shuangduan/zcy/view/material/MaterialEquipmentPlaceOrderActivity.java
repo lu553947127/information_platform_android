@@ -136,7 +136,7 @@ public class MaterialEquipmentPlaceOrderActivity extends BaseActivity {
         tvBarTitle.setText(getString(R.string.material_place_order));
 
         tvAddressStar.setVisibility(View.INVISIBLE);
-        etNum.setInputType(InputType.TYPE_CLASS_NUMBER);
+
 
         materialDetailVm = ViewModelProviders.of(this).get(MaterialDetailVm.class);
         materialDetailVm.id = getIntent().getIntExtra(CustomConfig.MATERIAL_ID, 0);

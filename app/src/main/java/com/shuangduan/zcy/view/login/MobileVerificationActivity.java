@@ -19,6 +19,7 @@ import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.PageState;
+import com.shuangduan.zcy.utils.KeyboardUtil;
 import com.shuangduan.zcy.view.mine.UpdateEmailActivity;
 import com.shuangduan.zcy.view.mine.UpdateMobileActivity;
 import com.shuangduan.zcy.vm.LoginVm;
@@ -130,6 +131,12 @@ public class MobileVerificationActivity extends BaseActivity {
                         break;
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        KeyboardUtil.showSoftInputFromWindow(this, edtPwd);
     }
 
     @OnClick({R.id.iv_bar_back, R.id.tv_send_verification_code, R.id.tv_confirm})

@@ -212,7 +212,6 @@ public class MainActivity extends BaseActivity {
                     counts = imAddVm.count+friendApplyCountBean.getCount()+friendApplyCountBean.getSubscribe()+friendApplyCountBean.getMaterial();
                     break;
             }
-            LogUtils.e(counts);
 
             //设置底部角标显示状态
             if (counts < 1) {

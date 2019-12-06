@@ -165,6 +165,8 @@ public class MaterialPlaceOrderActivity extends BaseActivity {
         materialDetailVm = ViewModelProviders.of(this).get(MaterialDetailVm.class);
         materialDetailVm.id = getIntent().getIntExtra(CustomConfig.MATERIAL_ID, 0);
 
+
+        KeyboardUtil.RemoveDecimalPoints(etNum);
         materialDetailVm.detailLiveData.observe(this, materialDetailBean -> {
             this.materialDetail = materialDetailBean;
             if (materialDetailBean.getImages() != null && materialDetailBean.getImages().size() != 0) {

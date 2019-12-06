@@ -147,17 +147,20 @@ public class MaterialOrderDetailActivity extends BaseActivity {
                 tvPrice.setText(item.method == 1 ?
                         Html.fromHtml("商品单价：<font color=#EF583E>¥" + item.price + "<font/>/天") :
                         Html.fromHtml("商品单价：<font color=#EF583E>¥" + item.price + "<font/>/" + item.unit));
+
+                tvResrveNum.setText(item.number + item.unit);
             } else if (type == CustomConfig.EQUIPMENT) {
                 tvPrice.setText(item.method == 1 ?
                         Html.fromHtml("商品单价：<font color=#EF583E>¥" + item.price + "<font/>/天") :
                         Html.fromHtml("商品单价：<font color=#EF583E>¥" + item.price + "<font/>"));
+                tvResrveNum.setText(String.valueOf(item.number));
             }
 
             tvSpec.setText("规格：" + item.spec);
             tvSupplier.setText("供应商：" + item.supplierCompany);
             tvUnit.setText("单位：" + item.unit);
 
-            tvResrveNum.setText(String.valueOf(item.number));
+
             tvAddress.setText("存放地：" + item.scienceAddress);
 
             tvBuyerValue.setText(item.user);

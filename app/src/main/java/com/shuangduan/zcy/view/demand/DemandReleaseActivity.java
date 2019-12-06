@@ -13,11 +13,15 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.lifecycle.ViewModelProviders;
+
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.huawei.android.hms.agent.common.UIUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
@@ -25,6 +29,7 @@ import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BottomSheetDialogs;
 import com.shuangduan.zcy.dialog.UnitDialog;
 import com.shuangduan.zcy.model.api.PageState;
+import com.shuangduan.zcy.utils.DateUtils;
 import com.shuangduan.zcy.utils.KeyboardUtil;
 import com.shuangduan.zcy.view.mine.AuthenticationActivity;
 import com.shuangduan.zcy.vm.DemandReleaseVm;
@@ -43,7 +48,7 @@ import butterknife.OnClick;
  * @author 徐玉 QQ:876885613
  * @name information_platform_android
  * @class name：com.shuangduan.zcy.view.demand
- * @class   需求广场
+ * @class 需求广场
  * @time 2019/8/19 9:01
  * @change
  * @chang time
@@ -131,6 +136,8 @@ public class DemandReleaseActivity extends BaseActivity {
     int demand_num = 0;
     int supply_num = 0;
     private String type;
+    private CustomDatePicker customDatePicker;
+    private String tomorrow;
 
     @Override
     protected int initLayoutRes() {
@@ -149,6 +156,16 @@ public class DemandReleaseActivity extends BaseActivity {
         type = getIntent().getStringExtra("type");
 
         cbSell.setChecked(true);
+
+
+        SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar c = Calendar.getInstance();
+        c.setTime(new Date());
+        c.add(Calendar.DAY_OF_MONTH, 1);
+        Date tomorrowDate = c.getTime();
+        tomorrow = f.format(tomorrowDate);
+
+
         demandReleaseVm = ViewModelProviders.of(this).get(DemandReleaseVm.class);
         tvTimeStart.setText(demandReleaseVm.startTime + " 至");
         demandReleaseVm.releaseLiveData.observe(this, demandReleaseBean -> {
@@ -314,7 +331,7 @@ public class DemandReleaseActivity extends BaseActivity {
                             return;
                         }
                         demandReleaseVm.releaseSubstance(edtMaterialName.getText().toString(), edtDemandNum.getText().toString(), edtDemandProject.getText().toString(),
-                                edtProjectAddress.getText().toString(), edtPriceAccept.getText().toString(), edtContactsInfo.getText().toString(), edtOwner.getText().toString(), demand_num,edtDes.getText().toString());
+                                edtProjectAddress.getText().toString(), edtPriceAccept.getText().toString(), edtContactsInfo.getText().toString(), edtOwner.getText().toString(), demand_num, edtDes.getText().toString());
                         break;
                     case DemandReleaseVm.RELEASE_TYPE_BUYER://找买家
                         if (TextUtils.isEmpty(edtMaterialName.getText())) {
@@ -342,7 +359,7 @@ public class DemandReleaseActivity extends BaseActivity {
                             return;
                         }
                         demandReleaseVm.releaseBuyer(edtMaterialName.getText().toString(), edtSupplyNum.getText().toString(), edtSupplyAddress.getText().toString(),
-                                edtSupplyPrice.getText().toString(), edtContactsInfo.getText().toString(), edtOwner.getText().toString(), supply_num,edtDes.getText().toString());
+                                edtSupplyPrice.getText().toString(), edtContactsInfo.getText().toString(), edtOwner.getText().toString(), supply_num, edtDes.getText().toString());
                         break;
                 }
                 break;
@@ -372,40 +389,27 @@ public class DemandReleaseActivity extends BaseActivity {
     @SuppressLint("SimpleDateFormat")
     private void showTimeDialog() {
 
-        SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
-        Calendar c = Calendar.getInstance();
-        c.setTime(new Date());
-        c.add(Calendar.DAY_OF_MONTH, 1);
-        Date tomorrow = c.getTime();
-        f.format(tomorrow);
-
-        CustomDatePicker customDatePicker = new CustomDatePicker(this, time -> {
-
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-            try {
-                Date dd = df.parse(time);
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTime(dd);
-                calendar.add(Calendar.DAY_OF_MONTH, 1);//加一天
-                String times = df.format(calendar.getTime());
-                demandReleaseVm.endTime = time;
-                if (time.equals(demandReleaseVm.startTime)) {
-                    tvTimeEnd.setText(times);
-                } else {
-                    tvTimeEnd.setText(time);
+        String tomorrowDay = StringUtils.isTrimEmpty(tvTimeEnd.getText().toString()) ? tomorrow : tvTimeEnd.getText().toString();
+        if (customDatePicker == null) {
+            customDatePicker = new CustomDatePicker(this, time -> {
+                int gapDay = DateUtils.getGapCount(demandReleaseVm.startTime, time);
+                if (gapDay > 30) {
+                    ToastUtils.showShort("有效期不能超过30天");
+                    return;
                 }
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }, "yyyy-MM-dd", f.format(tomorrow), "2100-12-31");
-        customDatePicker.showSpecificTime(false);
-        customDatePicker.show(f.format(c.getTime()));
+                tvTimeEnd.setText(time);
+            }, "yyyy-MM-dd", tomorrowDay, "2100-12-31");
+            customDatePicker.showSpecificTime(false);
+        }
+
+        customDatePicker.show(tomorrowDay);
     }
 
     //底部弹出框
     private TextView tv_find_relationship;
     private TextView tv_find_substance;
     private TextView tv_find_buyer;
+
     @SuppressLint("RestrictedApi")
     private void getBottomWindow() {
         //底部滑动对话框
@@ -496,7 +500,7 @@ public class DemandReleaseActivity extends BaseActivity {
         });
 
         //增加选择状态
-        switch (type){
+        switch (type) {
             case "0":
                 tv_find_relationship.setTextColor(getResources().getColor(R.color.colorPrimary));
                 tv_find_substance.setTextColor(getResources().getColor(R.color.color_666666));
