@@ -67,7 +67,6 @@ import butterknife.OnClick;
  * @class describe
  */
 public class SupplierJoinActivity extends BaseActivity implements BaseDialog.PhotoCallBack {
-
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
     @BindView(R.id.toolbar)
@@ -90,14 +89,12 @@ public class SupplierJoinActivity extends BaseActivity implements BaseDialog.Pho
     TextView tvServiceArea;
     @BindView(R.id.edt_production)
     AppCompatEditText edtProduction;
-
     @BindView(R.id.iv_authorization)
     ImageView ivAuthorization;
     @BindView(R.id.tv_authorization)
     TextView tvAuthorization;
     @BindView(R.id.iv_logo)
     ImageView ivLogo;
-
     @BindView(R.id.tv_pic_content)
     TextView tvPicContent;
     @BindView(R.id.tv_logo)
@@ -292,6 +289,8 @@ public class SupplierJoinActivity extends BaseActivity implements BaseDialog.Pho
         // 从相机返回的数据
         if (resultCode == 101) {
             String path = data.getStringExtra("path");
+
+            LogUtils.e(path);
             switch (type){
                 case "images"://营业执照
                     break;

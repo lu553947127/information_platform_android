@@ -13,6 +13,7 @@ import com.shuangduan.zcy.model.api.repository.SupplierRepository;
 import com.shuangduan.zcy.model.bean.SupplierBean;
 import com.shuangduan.zcy.model.bean.SupplierDetailBean;
 import com.shuangduan.zcy.model.bean.SupplierJoinImageBean;
+import com.shuangduan.zcy.model.bean.SupplierStatusBean;
 import com.shuangduan.zcy.model.event.MultiAreaEvent;
 
 import java.util.ArrayList;
@@ -42,6 +43,7 @@ public class SupplierVm extends BaseViewModel {
     public int cityId;
     public int provinceId;
     public MutableLiveData<MultiAreaEvent> serviceArea;
+    public MutableLiveData<SupplierStatusBean> supplierStatusLiveData;
 
     public SupplierVm() {
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
@@ -50,6 +52,7 @@ public class SupplierVm extends BaseViewModel {
         joinLiveData = new MutableLiveData<>();
         pageStateLiveData = new MutableLiveData<>();
         serviceArea = new MutableLiveData<>();
+        supplierStatusLiveData = new MutableLiveData<>();
     }
 
     public void getSupplier(){
@@ -66,6 +69,11 @@ public class SupplierVm extends BaseViewModel {
 
     public void getDetail(int id){
         new SupplierRepository().getSupplierDetail(detailLiveData, pageStateLiveData, userId, id);
+    }
+
+    //获取供应商审核状态
+    public void supplierStatus(){
+        new SupplierRepository().supplierStatus(supplierStatusLiveData, pageStateLiveData, userId);
     }
 
     /**

@@ -65,7 +65,7 @@ public class FindMineBuyerFragment extends BaseLazyFragment implements EmptyView
         View emptyView = createEmptyView(R.drawable.icon_empty_project, R.string.empty_mine_buyer_info, R.string.go_release, this);
         rv.setLayoutManager(new LinearLayoutManager(mContext));
         rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
-        DemandMineBuyerAdapter buyerAdapter = new DemandMineBuyerAdapter(R.layout.item_demand_buyer, null);
+        DemandMineBuyerAdapter buyerAdapter = new DemandMineBuyerAdapter(R.layout.item_demand_buyer_need, null);
         buyerAdapter.setEmptyView(R.layout.layout_loading, rv);
         rv.setAdapter(buyerAdapter);
         buyerAdapter.setOnItemClickListener((adapter1, view, position) -> {

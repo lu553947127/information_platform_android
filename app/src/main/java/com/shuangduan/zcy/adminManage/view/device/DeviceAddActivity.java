@@ -33,8 +33,6 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adminManage.adapter.GroundingAdapter;
 import com.shuangduan.zcy.adminManage.adapter.ImagesAdapter;
 import com.shuangduan.zcy.adminManage.adapter.MaterialStatusAdapter;
-import com.shuangduan.zcy.adminManage.adapter.PlanAdapter;
-import com.shuangduan.zcy.adminManage.adapter.SelectorCategoryFirstAdapter;
 import com.shuangduan.zcy.adminManage.adapter.SelectorMaterialSecondAdapter;
 import com.shuangduan.zcy.adminManage.adapter.TurnoverProjectAdapter;
 import com.shuangduan.zcy.adminManage.adapter.UnitAdapter;

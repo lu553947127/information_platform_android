@@ -1,14 +1,9 @@
 package com.shuangduan.zcy.adapter;
 
-import android.text.Layout;
-import android.text.StaticLayout;
-import android.text.TextPaint;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
-
-import com.blankj.utilcode.util.StringUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.shuangduan.zcy.R;
@@ -71,6 +66,4 @@ public class SellAdapter extends BaseQuickAdapter<MaterialBean.ListBean, BaseVie
         }
 
     }
-
-
 }

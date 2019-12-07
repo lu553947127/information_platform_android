@@ -29,7 +29,6 @@ import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.pop.CommonPopupWindow;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.SupplierCliqueBean;
-import com.shuangduan.zcy.model.event.MaterialEvent;
 import com.shuangduan.zcy.model.event.SupplierEvent;
 import com.shuangduan.zcy.utils.DensityUtil;
 import com.shuangduan.zcy.vm.HomeVm;
@@ -63,8 +62,6 @@ public class MaterialActivity extends BaseActivity {
     TextView tvOpen;
     @BindView(R.id.tv_default)
     TextView tvDefault;
-
-
     @BindView(R.id.tab_layout)
     TabLayout tabLayout;
     @BindView(R.id.vp)
@@ -73,7 +70,6 @@ public class MaterialActivity extends BaseActivity {
     View over;
     @BindView(R.id.cl_filter)
     ConstraintLayout clFilter;
-
     @BindView(R.id.ll_name)
     LinearLayout llName;
     @BindView(R.id.ll_spec)
@@ -82,7 +78,6 @@ public class MaterialActivity extends BaseActivity {
     LinearLayout llSupplier;
     @BindView(R.id.ll_supplier_method)
     LinearLayout llSupplierMethod;
-
     @BindView(R.id.cb_filter_name)
     CheckBox cbFilterName;
     @BindView(R.id.cb_filter_spec)
@@ -97,7 +92,6 @@ public class MaterialActivity extends BaseActivity {
     private TextView tvSupplier;
     private EditText etSpecification;
     private RadioGroup radioGroup;
-
 
     @Override
     protected int initLayoutRes() {
@@ -119,7 +113,6 @@ public class MaterialActivity extends BaseActivity {
         });
         homeVm.getSupplierClique();
     }
-
 
     private void initViewAndData(SupplierCliqueBean supplierClique) {
 
@@ -212,8 +205,6 @@ public class MaterialActivity extends BaseActivity {
                 break;
         }
     }
-
-
 
     private CommonPopupWindow popupWindowCategory;
 
@@ -391,8 +382,6 @@ public class MaterialActivity extends BaseActivity {
         view.findViewById(R.id.rl_filter_supplier).setVisibility(supplierVisible);
         view.findViewById(R.id.rl_filter_supply_method).setVisibility(supplyMethodVisible);
     }
-
-
 
     @Subscribe
     public void onEventUpdateSupplier(SupplierEvent event) {

@@ -35,5 +35,4 @@ public class UploadPhotoVm extends BaseViewModel {
     public void upload(String path){
         new UploadRepository().uploadPhoto(uploadLiveData, mPageStateLiveData, userId, path);
     }
-
 }

@@ -26,6 +26,8 @@ import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.utils.KeyboardUtil;
 
+import java.util.Objects;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -142,7 +144,7 @@ public class OrderDetailsActivity extends BaseActivity {
         orderType = getIntent().getIntExtra("order_type", 0);
 
 
-        if (orderType == 0) {
+        if (orderType == 3) {
             OrderTurnoverVm vm = ViewModelProviders.of(this).get(OrderTurnoverVm.class);
             vm.constructionOrderDetail(orderId);
 
@@ -160,7 +162,10 @@ public class OrderDetailsActivity extends BaseActivity {
 
     @SuppressLint("SetTextI18n")
     private void initViewData(OrderDetailsBean orderItem) {
-        Glide.with(this).load(orderItem.images.get(0).url).into(ivIcon);
+
+        if (orderItem.images!=null&&orderItem.images.size()!=0){
+            Glide.with(this).load(orderItem.images.get(0).url).into(ivIcon);
+        }
         tvTitle.setText(orderItem.materialIdName);
         if (orderItem.method == 1) {
             tvPrice.setText(Html.fromHtml("指导单价：<font color=\"#EF583E\">¥" + orderItem.price + "</font>/天"));

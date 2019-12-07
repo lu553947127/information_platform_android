@@ -66,6 +66,7 @@ public class SupplierActivity extends BaseActivity {
 
     private UpdatePwdPayVm updatePwdPayVm;
     private CoinPayVm coinPayVm;
+    private int supplier_status;
 
     @Override
     protected int initLayoutRes() {
@@ -135,6 +136,12 @@ public class SupplierActivity extends BaseActivity {
             setNoMore(supplierBean.getPage(), supplierBean.getCount());
         });
 
+        //获取供应商审核状态
+        supplierVm.supplierStatusLiveData.observe(this,supplierStatusBean -> {
+            SPUtils.getInstance().put(CustomConfig.SUPPLIER_STATUS, supplierStatusBean.getStatus());
+            supplier_status = supplierStatusBean.getStatus();
+        });
+
         refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
@@ -144,9 +151,11 @@ public class SupplierActivity extends BaseActivity {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 supplierVm.getSupplier();
+                supplierVm.supplierStatus();
             }
         });
         supplierVm.getSupplier();
+        supplierVm.supplierStatus();
 
 
         //支付密码状态查询
@@ -245,7 +254,60 @@ public class SupplierActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.iv_bar_right:
-                ActivityUtils.startActivity(SupplierJoinActivity.class);
+                supplier_status = 3;
+                switch (supplier_status){
+                    case 0://未申请
+                        ActivityUtils.startActivity(SupplierJoinActivity.class);
+                        break;
+                    case 1://未通过
+                        new CustomDialog(this)
+                                .setTipLeftIcon(R.drawable.icon_error,"抱歉，您的审核未通过，\n请核对后重新提交！",R.color.colorTv)
+                                .setOk("重新申请")
+                                .setCallBack(new BaseDialog.CallBack() {
+                                    @Override
+                                    public void cancel() {
+
+                                    }
+
+                                    @Override
+                                    public void ok(String s) {
+                                        ActivityUtils.startActivity(SupplierJoinActivity.class);
+                                    }
+                                }).showDialog();
+                        break;
+                    case 2://已通过
+                        new CustomDialog(this)
+                                .setTipLeftIcon(R.drawable.icon_success,"恭喜，您已成为供应商！",R.color.colorTv)
+                                .setOk("查看")
+                                .setCallBack(new BaseDialog.CallBack() {
+                                    @Override
+                                    public void cancel() {
+
+                                    }
+
+                                    @Override
+                                    public void ok(String s) {
+
+                                    }
+                                }).showDialog();
+                        break;
+                    case 3://驳回
+                        new CustomDialog(this)
+                                .setTipLeftIcon(R.drawable.icon_reject_supplier,"我们正在加急核对您的申请，\n请耐心等待！",R.color.colorTv)
+                                .setOk("确定")
+                                .setCallBack(new BaseDialog.CallBack() {
+                                    @Override
+                                    public void cancel() {
+
+                                    }
+
+                                    @Override
+                                    public void ok(String s) {
+
+                                    }
+                                }).showDialog();
+                        break;
+                }
                 break;
         }
     }

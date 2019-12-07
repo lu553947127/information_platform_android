@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.SPUtils;
+import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.dialog.BaseDialog;
@@ -46,7 +47,7 @@ public class AuthenticationUtils {
         int authentication = SPUtils.getInstance().getInt(SpConfig.IS_VERIFIED);
         if (authentication != 2){
             new CustomDialog(activity)
-                    .setTipLeftIcon("抱歉，您还没有实名认证哦！")
+                    .setTipLeftIcon(R.drawable.icon_tips,"抱歉，您还没有实名认证哦！",R.color.colorTv)
                     .setOk("去实名")
                     .setCallBack(new BaseDialog.CallBack() {
                         @Override

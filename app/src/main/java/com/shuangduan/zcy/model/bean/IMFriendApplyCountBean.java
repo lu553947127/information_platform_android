@@ -12,9 +12,10 @@ package com.shuangduan.zcy.model.bean;
  */
 public class IMFriendApplyCountBean {
 
-    private int count;
-    private int subscribe;
-    private int material;
+    private int count;//通讯录有新的好友提醒数量
+    private int subscribe;//订阅信息数量
+    private int material;//闲置提醒数量
+    private int order;//订单提醒数量
 
     public int getCount() {
         return count;
@@ -38,5 +39,13 @@ public class IMFriendApplyCountBean {
 
     public void setMaterial(int material) {
         this.material = material;
+    }
+
+    public int getOrder() {
+        return order;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
     }
 }

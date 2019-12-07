@@ -65,6 +65,9 @@
     <string name="my_income_explain">收益说明</string>
     <string name="my_project">我的工程</string>
     <string name="my_demand">我的需求</string>
+    <string name="my_demand_zgx">我的需求 — 找关系</string>
+    <string name="my_demand_zwz">我的需求 — 找物资</string>
+    <string name="my_demand_zmj">我的需求 — 找买家</string>
     <string name="mine_subscription">信息认购</string>
     <string name="my_material">预定订单</string>
     <string name="transaction_record">交易记录</string>
@@ -216,8 +219,10 @@
 
     <string name="subscribe_message">订阅信息</string>
     <string name="subscribe_message_group">闲置提醒</string>
+    <string name="subscribe_order">订单提醒</string>
     <string name="close_subscribe_message">关闭订阅</string>
     <string name="close_subscribe_message_group">关闭推送</string>
+    <string name="close_subscribe_message_order">关闭订单提醒</string>
     <string name="model_list">切换列表模式</string>
     <string name="collection">收藏</string>
     <string name="collected">已收藏</string>
@@ -683,6 +688,7 @@
 
     <string name="empty_project_subscribe_info">您的业务地区暂时没有\n相关工程信息,我们已经尽力了</string>
     <string name="empty_material_subscribe_info">暂无闲置物资提醒,我们已经尽力了</string>
+    <string name="empty_material_subscribe_order_info">暂无订单提醒,我们已经尽力了</string>
 
     <string name="empty_deal_info">暂无交易记录</string>
     <string name="empty_contacts_msg_info">暂无消息</string>

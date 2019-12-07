@@ -65,12 +65,8 @@ public class SubstanceDetailBean {
         private String start_time;
         private String end_time;
         private int is_pay;
-        //找物资详情描述
-        private String remark;
-
-        public String getRemark() {
-            return remark;
-        }
+        private String remark;//找物资详情描述
+        private int status;
 
         @Override
         public String toString() {
@@ -185,6 +181,22 @@ public class SubstanceDetailBean {
 
         public void setIs_pay(int is_pay) {
             this.is_pay = is_pay;
+        }
+
+        public int getStatus() {
+            return status;
+        }
+
+        public void setStatus(int status) {
+            this.status = status;
+        }
+
+        public void setRemark(String remark) {
+            this.remark = remark;
+        }
+
+        public String getRemark() {
+            return remark;
         }
     }
 

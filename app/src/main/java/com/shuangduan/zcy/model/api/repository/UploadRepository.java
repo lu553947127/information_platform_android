@@ -9,7 +9,6 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.app.MyApplication;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.UploadBean;
-import org.reactivestreams.Subscription;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -17,9 +16,6 @@ import java.util.List;
 
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -42,6 +38,7 @@ public class UploadRepository extends BaseRepository {
     public void uploadPhoto(MutableLiveData<UploadBean> liveData, MutableLiveData<String> pageStateLiveData, final int userId, String path){
         List<File> list = new ArrayList<>();
         list.add(new File(path));
+        LogUtils.e(new File(path));
         //如果uri为空，代表为网络图片，无需压缩，直接增加即可
         Flowable.just(list)
                 .observeOn(Schedulers.io())
@@ -78,5 +75,4 @@ public class UploadRepository extends BaseRepository {
 
         request(apiService.upload(userId, body)).setData(liveData).setPageState(pageStateLiveData).send();
     }
-
 }

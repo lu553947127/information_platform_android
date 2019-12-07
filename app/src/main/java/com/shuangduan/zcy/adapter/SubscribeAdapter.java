@@ -29,7 +29,6 @@ public class SubscribeAdapter extends BaseQuickAdapter<SubscribeBean.ListBean, B
         helper.setText(R.id.tv_time, item.getSend_time())
                 .setText(R.id.tv_title, item.getTitle())
                 .setVisible(R.id.tv_is_view, item.getType()==1&&item.getIs_view()==0)
-                .setText(R.id.tv_title, item.getTitle())
                 .setText(R.id.tv_content, item.getContent());
     }
 }

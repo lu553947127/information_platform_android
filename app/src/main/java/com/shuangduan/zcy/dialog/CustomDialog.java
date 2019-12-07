@@ -1,6 +1,7 @@
 package com.shuangduan.zcy.dialog;
 
 import android.app.Activity;
+import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -43,6 +44,8 @@ public class CustomDialog extends BaseDialog {
     private String tip_left_icon = "";
     private String title ="";
     private int iconRes = 0;
+    private int iconLeft;
+    private int textColor;
 
     public CustomDialog(@NonNull Activity activity) {
         super(activity);
@@ -60,8 +63,7 @@ public class CustomDialog extends BaseDialog {
         DialogUtils.enterCustomAnim(this);
         tvTip.setText(tip);
         if (!TextUtils.isEmpty(tip_left_icon)){
-            tvTipLeftIcon.setText(tip_left_icon);
-            tvTipLeftIcon.setVisibility(View.VISIBLE);
+            getDrawableLeftView(tvTipLeftIcon,iconLeft,textColor);
         }
         if (ok.equals("")){
             tvOk.setText(getString(R.string.positive));
@@ -94,8 +96,10 @@ public class CustomDialog extends BaseDialog {
         return this;
     }
 
-    public CustomDialog setTipLeftIcon(String tip_left_icon){
+    public CustomDialog setTipLeftIcon(int iconLeft,String tip_left_icon,int textColor){
+        this.iconLeft = iconLeft;
         this.tip_left_icon = tip_left_icon;
+        this.textColor = textColor;
         return this;
     }
 
@@ -107,6 +111,17 @@ public class CustomDialog extends BaseDialog {
     public CustomDialog setIcon(int icon){
         this.iconRes = icon;
         return this;
+    }
+
+    //给textView设置drawableLeft图片
+    private void getDrawableLeftView(TextView textView,int icon,int color) {
+        Drawable drawable = mActivity.getResources().getDrawable(icon);
+        // 这一步必须要做,否则不会显示.
+        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+        textView.setCompoundDrawables(drawable, null, null, null);
+        textView.setTextColor(mActivity.getResources().getColor(color));
+        textView.setText(tip_left_icon);
+        textView.setVisibility(View.VISIBLE);
     }
 
     @OnClick({R.id.tv_positive, R.id.tv_negative})

@@ -55,8 +55,20 @@ public class MineDemandActivity extends BaseActivity {
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
-        tvBarTitle.setText(getString(R.string.my_demand));
+
         tvBarRight.setText(getString(R.string.filter));
+
+        switch (vp.getCurrentItem()){
+            case 0:
+                tvBarTitle.setText(getString(R.string.my_demand_zgx));
+                break;
+            case 1:
+                tvBarTitle.setText(getString(R.string.my_demand_zwz));
+                break;
+            case 2:
+                tvBarTitle.setText(getString(R.string.my_demand_zmj));
+                break;
+        }
 
         Fragment[] fragments = new Fragment[]{
                 FindMineRelationshipFragment.newInstance(),
@@ -91,6 +103,7 @@ public class MineDemandActivity extends BaseActivity {
                                     tvFindSubstance.setTextColor(getResources().getColor(R.color.color_666666));
                                     tvFindBuyer.setTextColor(getResources().getColor(R.color.color_666666));
                                     vp.setCurrentItem(0);
+                                    tvBarTitle.setText(getString(R.string.my_demand_zgx));
                                     popupWindow.dismiss();
                                 });
                                 tvFindSubstance.setOnClickListener(l ->{
@@ -98,6 +111,7 @@ public class MineDemandActivity extends BaseActivity {
                                     tvFindSubstance.setTextColor(getResources().getColor(R.color.colorPrimary));
                                     tvFindBuyer.setTextColor(getResources().getColor(R.color.color_666666));
                                     vp.setCurrentItem(1);
+                                    tvBarTitle.setText(getString(R.string.my_demand_zwz));
                                     popupWindow.dismiss();
                                 });
                                 tvFindBuyer.setOnClickListener(l ->{
@@ -105,6 +119,7 @@ public class MineDemandActivity extends BaseActivity {
                                     tvFindSubstance.setTextColor(getResources().getColor(R.color.color_666666));
                                     tvFindBuyer.setTextColor(getResources().getColor(R.color.colorPrimary));
                                     vp.setCurrentItem(2);
+                                    tvBarTitle.setText(getString(R.string.my_demand_zmj));
                                     popupWindow.dismiss();
                                 });
                             })

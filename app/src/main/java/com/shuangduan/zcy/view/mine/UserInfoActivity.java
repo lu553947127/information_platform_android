@@ -1,8 +1,16 @@
 package com.shuangduan.zcy.view.mine;
 
+import android.annotation.SuppressLint;
+import android.content.ContentResolver;
+import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -15,9 +23,14 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.model.Response;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
@@ -27,6 +40,8 @@ import com.shuangduan.zcy.dialog.BusinessExpDialog;
 import com.shuangduan.zcy.dialog.PhotoDialog;
 import com.shuangduan.zcy.dialog.SexDialog;
 import com.shuangduan.zcy.model.api.PageState;
+import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
+import com.shuangduan.zcy.model.bean.UploadBean;
 import com.shuangduan.zcy.model.event.CompanyEvent;
 import com.shuangduan.zcy.model.event.EmailEvent;
 import com.shuangduan.zcy.model.event.MobileEvent;
@@ -51,6 +66,7 @@ import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
 import org.greenrobot.eventbus.Subscribe;
 
+import java.io.File;
 import java.util.List;
 import java.util.Objects;
 
@@ -118,6 +134,7 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
         return R.layout.activity_user_info;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
@@ -247,8 +264,7 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
         permissionVm = ViewModelProviders.of(this).get(PermissionVm.class);
         permissionVm.getLiveData().observe(this, integer -> {
             if (integer == PermissionVm.PERMISSION_CAMERA) {
-                MatisseCamera.from(this)
-                        .forResult(PermissionVm.REQUEST_CODE_HEAD, "com.shuangduan.zcy.fileprovider");
+                MatisseCamera.from(this).forResult(PermissionVm.REQUEST_CODE_HEAD, "com.shuangduan.zcy.fileprovider");
             } else if (integer == PermissionVm.PERMISSION_STORAGE) {
                 Matisse.from(this)
                         .choose(MimeType.ofImage())
@@ -382,13 +398,54 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PermissionVm.REQUEST_CODE_CHOOSE_HEAD && resultCode == RESULT_OK) {
             List<String> mSelected = Matisse.obtainPathResult(data);
+            LogUtils.e(mSelected.get(0));
             uploadPhotoVm.upload(mSelected.get(0));
         }
 
         if (requestCode == PermissionVm.REQUEST_CODE_HEAD && resultCode == RESULT_OK) {
-            uploadPhotoVm.upload(MatisseCamera.obtainPathResult());
+            if (MatisseCamera.isAndroidQ){
+                LogUtils.e(MatisseCamera.obtainUriResult());
+                LogUtils.e(getRealFilePath(this,MatisseCamera.obtainUriResult()));
+
+                ivUser.setImageURI(MatisseCamera.obtainUriResult());
+//                uploadPhotoVm.upload(getRealFilePath(this,MatisseCamera.obtainUriResult()));
+                getFileUpload(new File(getRealFilePath(this,MatisseCamera.obtainUriResult())));
+            }else {
+                uploadPhotoVm.upload(MatisseCamera.obtainPathResult());
+            }
         }
 
+    }
+
+
+    /**
+     * Try to return the absolute file path from the given Uri
+     *
+     * @param context
+     * @param uri
+     * @return the file path or null
+     */
+    public static String getRealFilePath(final Context context, final Uri uri ) {
+        if ( null == uri ) return null;
+        final String scheme = uri.getScheme();
+        String data = null;
+        if ( scheme == null )
+            data = uri.getPath();
+        else if ( ContentResolver.SCHEME_FILE.equals( scheme ) ) {
+            data = uri.getPath();
+        } else if ( ContentResolver.SCHEME_CONTENT.equals( scheme ) ) {
+            Cursor cursor = context.getContentResolver().query( uri, new String[] { MediaStore.Images.ImageColumns.DATA }, null, null, null );
+            if ( null != cursor ) {
+                if ( cursor.moveToFirst() ) {
+                    int index = cursor.getColumnIndex( MediaStore.Images.ImageColumns.DATA );
+                    if ( index > -1 ) {
+                        data = cursor.getString( index );
+                    }
+                }
+                cursor.close();
+            }
+        }
+        return data;
     }
 
     @Override
@@ -436,4 +493,31 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
         tvProduction.setText(event.production);
     }
 
+    //上传附件接口
+    private void getFileUpload(File file) {
+
+        OkGo.<String>post(RetrofitHelper.BASE_TEST_URL+ "api/Upload/uploadImage")
+                .tag(this)
+                .params("user_id",SPUtils.getInstance().getInt(SpConfig.USER_ID))
+                .params("file",file)//拍照/照片获取的文件流
+                .execute(new com.lzy.okgo.callback.StringCallback() {//返回值
+
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+                        LogUtils.e("上传附件接口请求失败");
+                    }
+
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        LogUtils.e("上传附件接口请求成功");
+                        try {
+                            UploadBean bean=new Gson().fromJson(response.body(),UploadBean.class);
+                            LogUtils.e(bean.getSource());
+                        }catch (JsonSyntaxException | IllegalStateException ignored){
+
+                        }
+                    }
+                });
+    }
 }

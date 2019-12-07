@@ -562,6 +562,14 @@ public interface ApiService {
             @Field("page") int page
     );
 
+    //订单提醒列表
+    @FormUrlEncoded
+    @POST("api/Subscription/order")
+    Flowable<BaseResponse<SubscribeOrderBean>> subscribeOrder(
+            @Field("user_id") int user_id,
+            @Field("page") int page
+    );
+
     //订阅消息开关状态返回
     @FormUrlEncoded
     @POST("api/Userinfo/msgPush")
@@ -855,6 +863,13 @@ public interface ApiService {
             @Query("authorization") String authorization,
             @Query("headimg") String headimg,
             @Body SupplierJoinImageBean joinImageBean
+    );
+
+    //获取供应商审核状态
+    @FormUrlEncoded
+    @POST("api/Supplier/supplierStatus")
+    Flowable<BaseResponse<SupplierStatusBean>> supplierStatus(
+            @Field("user_id") int user_id
     );
 
     @FormUrlEncoded

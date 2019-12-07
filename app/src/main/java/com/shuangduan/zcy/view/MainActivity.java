@@ -21,8 +21,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.FragmentAdapter;
+import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
+import com.shuangduan.zcy.model.bean.SupplierRoleBean;
 import com.shuangduan.zcy.rongyun.view.CircleFragment;
 import com.shuangduan.zcy.vm.HomeVm;
 import com.shuangduan.zcy.vm.IMAddVm;
@@ -61,7 +63,7 @@ public class MainActivity extends BaseActivity {
     private HomeVm homeVm;
     private IMAddVm imAddVm;
     private IUnReadMessageObserver observer;
-    private int manage_status;
+    private int manage_status,order_turnover,order_device;
 
     @Override
     protected int initLayoutRes() {
@@ -194,6 +196,17 @@ public class MainActivity extends BaseActivity {
         homeVm.supplierRoleLiveData.observe(this, supplierRoleBean -> {
             //获取用户身份 0普通用户 1普通供应商 2子公司 3集团 4子账号
             manage_status = supplierRoleBean.getManage_status();
+            //获取订单权限
+            for (SupplierRoleBean.RoleBean bean : supplierRoleBean.getRole()) {
+                switch (bean.getMenu()){
+                    case CustomConfig.EQIPMENT_ORDER_LIST://设备订单列表
+                        order_device = bean.getStatus();
+                        break;
+                    case CustomConfig.CONSTRUCTION_ORDER_LIST://周转材料订单列表
+                        order_turnover = bean.getStatus();
+                        break;
+                }
+            }
         });
 
         //获取角标数量接口
@@ -202,12 +215,22 @@ public class MainActivity extends BaseActivity {
             int counts = 0;
             switch (manage_status){
                 case 0://普通用户
-                case 1://普通供应商
                     counts = imAddVm.count+friendApplyCountBean.getCount()+friendApplyCountBean.getSubscribe();
                     break;
+                case 1://普通供应商
+                    counts = imAddVm.count+friendApplyCountBean.getCount()+friendApplyCountBean.getSubscribe()+friendApplyCountBean.getOrder();
+                    break;
                 case 2://子公司
-                case 3://集团
+                    counts = imAddVm.count+friendApplyCountBean.getCount()+friendApplyCountBean.getSubscribe()+friendApplyCountBean.getMaterial()+friendApplyCountBean.getOrder();
+                    break;
                 case 4://子公司子账号
+                    if (order_device == 1 || order_turnover == 1){
+                        counts = imAddVm.count+friendApplyCountBean.getCount()+friendApplyCountBean.getSubscribe()+friendApplyCountBean.getMaterial()+friendApplyCountBean.getOrder();
+                    }else {
+                        counts = imAddVm.count+friendApplyCountBean.getCount()+friendApplyCountBean.getSubscribe()+friendApplyCountBean.getMaterial();
+                    }
+                    break;
+                case 3://集团
                 case 5://集团子账号
                     counts = imAddVm.count+friendApplyCountBean.getCount()+friendApplyCountBean.getSubscribe()+friendApplyCountBean.getMaterial();
                     break;

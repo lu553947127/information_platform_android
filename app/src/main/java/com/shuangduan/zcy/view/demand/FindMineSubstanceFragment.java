@@ -42,9 +42,7 @@ public class FindMineSubstanceFragment extends BaseLazyFragment implements Empty
     private DemandSubstanceVm demandSubstanceVm;
 
     public static FindMineSubstanceFragment newInstance() {
-
         Bundle args = new Bundle();
-
         FindMineSubstanceFragment fragment = new FindMineSubstanceFragment();
         fragment.setArguments(args);
         return fragment;
@@ -66,7 +64,7 @@ public class FindMineSubstanceFragment extends BaseLazyFragment implements Empty
 
         rv.setLayoutManager(new LinearLayoutManager(mContext));
         rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
-        FindMineSubstanceAdapter substanceAdapter = new FindMineSubstanceAdapter(R.layout.item_demand_substance, null);
+        FindMineSubstanceAdapter substanceAdapter = new FindMineSubstanceAdapter(R.layout.item_demand_substance_need, null);
         substanceAdapter.setEmptyView(R.layout.layout_loading, rv);
         rv.setAdapter(substanceAdapter);
         substanceAdapter.setOnItemClickListener((adapter, view, position) -> {

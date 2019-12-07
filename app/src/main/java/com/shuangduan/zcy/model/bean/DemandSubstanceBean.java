@@ -64,6 +64,7 @@ public class DemandSubstanceBean {
         private String acceptance_price;
         private String start_time;
         private String end_time;
+        private int status;
 
         public int getId() {
             return id;
@@ -111,6 +112,14 @@ public class DemandSubstanceBean {
 
         public void setEnd_time(String end_time) {
             this.end_time = end_time;
+        }
+
+        public int getStatus() {
+            return status;
+        }
+
+        public void setStatus(int status) {
+            this.status = status;
         }
     }
 }

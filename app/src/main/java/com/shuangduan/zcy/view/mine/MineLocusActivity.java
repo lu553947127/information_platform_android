@@ -112,16 +112,16 @@ public class MineLocusActivity extends BaseActivity implements BaseQuickAdapter.
                 case 0:
                     tvTitle.setTextColor(getResources().getColor(R.color.color_646464));
                     tvTitle.setEnabled(false);
-                    ivState.setImageResource(R.drawable.icon_project_audit);
+                    ivState.setImageResource(R.drawable.icon_review);
                     break;
                 case 1:
                     tvTitle.setTextColor(getResources().getColor(R.color.text1));
-                    ivState.setImageResource(R.drawable.icon_check_succeed);
+                    ivState.setImageResource(R.drawable.icon_pass);
                     break;
                 case 2:
                     tvTitle.setEnabled(false);
                     tvTitle.setTextColor(getResources().getColor(R.color.color_646464));
-                    ivState.setImageResource(R.drawable.icon_project_failure);
+                    ivState.setImageResource(R.drawable.icon_reject);
                     break;
             }
         });

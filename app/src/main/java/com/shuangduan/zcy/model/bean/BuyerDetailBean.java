@@ -60,13 +60,8 @@ public class BuyerDetailBean {
         private String start_time;
         private String end_time;
         private int is_pay;
-
-        //找买家详情
-        private String remark;
-
-        public String getRemark() {
-            return remark;
-        }
+        private String remark;//找买家详情
+        private int status;
 
         public int getId() {
             return id;
@@ -170,6 +165,22 @@ public class BuyerDetailBean {
 
         public void setIs_pay(int is_pay) {
             this.is_pay = is_pay;
+        }
+
+        public String getRemark() {
+            return remark;
+        }
+
+        public void setRemark(String remark) {
+            this.remark = remark;
+        }
+
+        public int getStatus() {
+            return status;
+        }
+
+        public void setStatus(int status) {
+            this.status = status;
         }
     }
 

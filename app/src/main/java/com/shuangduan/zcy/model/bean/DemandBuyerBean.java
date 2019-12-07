@@ -64,6 +64,8 @@ public class DemandBuyerBean {
         private String acceptance_price;
         private String start_time;
         private String end_time;
+        private int status;
+        private int way;
 
         public int getId() {
             return id;
@@ -111,6 +113,22 @@ public class DemandBuyerBean {
 
         public void setEnd_time(String end_time) {
             this.end_time = end_time;
+        }
+
+        public int getStatus() {
+            return status;
+        }
+
+        public void setStatus(int status) {
+            this.status = status;
+        }
+
+        public int getWay() {
+            return way;
+        }
+
+        public void setWay(int way) {
+            this.way = way;
         }
     }
 }

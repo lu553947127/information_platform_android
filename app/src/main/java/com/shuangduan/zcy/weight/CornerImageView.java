@@ -1,5 +1,6 @@
 package com.shuangduan.zcy.weight;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -53,6 +54,7 @@ public class CornerImageView extends AppCompatImageView {
         init(context, attrs);
     }
 
+    @SuppressLint("CustomViewStyleable")
     private void init(Context context, AttributeSet attrs){
         // 读取配置
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.Custom_Round_Image_View);

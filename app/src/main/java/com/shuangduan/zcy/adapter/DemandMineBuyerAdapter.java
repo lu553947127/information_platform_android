@@ -27,13 +27,28 @@ public class DemandMineBuyerAdapter extends BaseQuickAdapter<DemandBuyerBean.Lis
     @Override
     protected void convert(BaseViewHolder helper, DemandBuyerBean.ListBean item) {
         helper.setText(R.id.tv_title, item.getMaterial_name())
+                .setText(R.id.tv_acceptance_price,item.getAcceptance_price().equals("面议") ? item.getAcceptance_price() : String.format(mContext.getString(R.string.format_price_accept), item.getAcceptance_price()))
                 .setText(R.id.tv_time, String.format(mContext.getString(R.string.format_validity_period), item.getStart_time(), item.getEnd_time()))
-                .setText(R.id.tv_demand_num, String.format(mContext.getString(R.string.format_demand_num), item.getCount()));
+                .setText(R.id.tv_count, String.format(mContext.getString(R.string.format_demand_num), item.getCount()))
+                .setText(R.id.tv_way, item.getWay() == 1 ? "出售" : "出租");
 
-        if(item.getAcceptance_price().equals("面议")){
-            helper.setText(R.id.tv_price,item.getAcceptance_price());
-        }else {
-            helper.setText(R.id.tv_price, String.format(mContext.getString(R.string.format_supply_accept), item.getAcceptance_price()));
+        switch (item.getStatus()){
+            case 1:
+                helper.setText(R.id.tv_status, "审核中")
+                        .setTextColor(R.id.tv_status,mContext.getResources().getColor(R.color.color_F88037));
+                break;
+            case 2:
+                helper.setText(R.id.tv_status, "审核通过")
+                        .setTextColor(R.id.tv_status,mContext.getResources().getColor(R.color.color_EF583E));
+                break;
+            case 3:
+                helper.setText(R.id.tv_status, "驳回")
+                        .setTextColor(R.id.tv_status,mContext.getResources().getColor(R.color.colorTvHint));
+                break;
+            case 4:
+                helper.setText(R.id.tv_status, "失效")
+                        .setTextColor(R.id.tv_status,mContext.getResources().getColor(R.color.colorTvHint));
+                break;
         }
     }
 }

@@ -16,6 +16,7 @@ import com.shuangduan.zcy.weight.SwitchView;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+import static com.shuangduan.zcy.app.CustomConfig.ORDER_TYPE;
 import static com.shuangduan.zcy.app.CustomConfig.SUBSCRIBE;
 import static com.shuangduan.zcy.app.CustomConfig.UNUSED;
 
@@ -65,6 +66,9 @@ public class NoticeSetActivity extends BaseActivity {
                 tvBarTitle.setText(getString(R.string.close_subscribe_message_group));
                 mineSubVm.msgPush(2);
                 break;
+            case ORDER_TYPE://订单提醒
+                tvBarTitle.setText(getString(R.string.close_subscribe_message_order));
+                break;
         }
 
         //订阅消息开关状态返回结果
@@ -91,7 +95,6 @@ public class NoticeSetActivity extends BaseActivity {
                             mineSubVm.msgPushStatus(1,0);
                             break;
                         case UNUSED://闲置提醒
-                            tvBarTitle.setText(getString(R.string.close_subscribe_message_group));
                             mineSubVm.msgPushStatus(2,0);
                             break;
                     }
@@ -107,7 +110,6 @@ public class NoticeSetActivity extends BaseActivity {
                             mineSubVm.msgPushStatus(1,1);
                             break;
                         case UNUSED://闲置提醒
-                            tvBarTitle.setText(getString(R.string.close_subscribe_message_group));
                             mineSubVm.msgPushStatus(2,1);
                             break;
                     }

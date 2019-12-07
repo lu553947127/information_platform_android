@@ -1,8 +1,10 @@
 package com.shuangduan.zcy.utils.matisse;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 
@@ -16,6 +18,7 @@ import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * <pre>
@@ -31,7 +34,8 @@ public class MatisseCamera {
 
     private final WeakReference<Activity> mContext;
     private final WeakReference<Fragment> mFragment;
-    public static final int REQUEST_CODE = 606;
+    // 是否是Android 10以上手机
+    public static boolean isAndroidQ = Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q;
 
     private MatisseCamera(Activity activity) {
         this(activity, null);
@@ -65,7 +69,7 @@ public class MatisseCamera {
     public void forResult(int requestCode, String authority) {
         Fragment fragment = mFragment.get();
         if (fragment != null) {
-            dispatchTakePictureIntent(requestCode, fragment.getActivity(), authority);
+            dispatchTakePictureIntent(requestCode, Objects.requireNonNull(fragment.getActivity()), authority);
         } else {
             dispatchTakePictureIntent(requestCode, mContext.get(), authority);
         }
@@ -78,33 +82,41 @@ public class MatisseCamera {
         if (takePictureIntent.resolveActivity(activity.getPackageManager()) != null) {
             // Create the File where the photo should go
             File photoFile = null;
-            photoFile = createImageFile();
-            // Continue only if the File was successfully created
-            if (photoFile != null) {
-                photoURI = FileProvider.getUriForFile(activity, authority, photoFile);
+            if (isAndroidQ) {
+                // 适配android 10
+                photoURI = createImageUri(activity);
+            } else {
+                photoFile = createImageFile();
+                if (photoFile != null) {
+                    mCurrentPhotoPath = photoFile.getAbsolutePath();
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        //适配Android 7.0文件权限，通过FileProvider创建一个content类型的Uri
+                        photoURI = FileProvider.getUriForFile(activity, authority, photoFile);
+                    } else {
+                        photoURI = Uri.fromFile(photoFile);
+                    }
+                }
+            }
+            if (photoURI != null) {
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                takePictureIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
                 activity.startActivityForResult(takePictureIntent, requestCode);
             }
         }
     }
 
+    /**
+     * 创建保存图片的文件
+     */
     private static String mCurrentPhotoPath;
-
-    private File createImageFile() {
+    private File createImageFile(){
         // Create an image file name
-        String timeStamp =
-                new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
         String imageFileName = String.format("JPEG_%s.jpg", timeStamp);
-        File storageDir;
-        storageDir = Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_PICTURES);
-        if (!storageDir.exists()) storageDir.mkdirs();
-
+        File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        if (!Objects.requireNonNull(storageDir).exists()) storageDir.mkdirs();
         // Avoid joining path components manually
         File tempFile = new File(storageDir, imageFileName);
-
-        mCurrentPhotoPath = tempFile.getAbsolutePath();
-
         // Handle the situation that user's external storage is not ready
         if (!Environment.MEDIA_MOUNTED.equals(EnvironmentCompat.getStorageState(tempFile))) {
             return null;
@@ -112,4 +124,16 @@ public class MatisseCamera {
         return tempFile;
     }
 
+    /**
+     * 创建图片地址uri,用于保存拍照后的照片 Android 10以后使用这种方法
+     */
+    private Uri createImageUri(Activity activity) {
+        String status = Environment.getExternalStorageState();
+        // 判断是否有SD卡,优先使用SD卡存储,当没有SD卡时使用手机存储
+        if (status.equals(Environment.MEDIA_MOUNTED)) {
+            return activity.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, new ContentValues());
+        } else {
+            return activity.getContentResolver().insert(MediaStore.Images.Media.INTERNAL_CONTENT_URI, new ContentValues());
+        }
+    }
 }

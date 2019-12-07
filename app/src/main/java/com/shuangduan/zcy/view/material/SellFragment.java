@@ -42,9 +42,7 @@ public class SellFragment extends BaseLazyFragment implements EmptyViewFactory.E
     private MaterialVm materialVm;
     private View emptyView;
 
-
     public static SellFragment newInstance() {
-
         Bundle args = new Bundle();
         SellFragment fragment = new SellFragment();
         fragment.setArguments(args);

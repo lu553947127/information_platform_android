@@ -34,7 +34,6 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adminManage.adapter.GroundingAdapter;
 import com.shuangduan.zcy.adminManage.adapter.ImagesAdapter;
 import com.shuangduan.zcy.adminManage.adapter.MaterialStatusAdapter;
-import com.shuangduan.zcy.adminManage.adapter.SelectorCategoryFirstAdapter;
 import com.shuangduan.zcy.adminManage.adapter.SelectorMaterialSecondAdapter;
 import com.shuangduan.zcy.adminManage.adapter.TurnoverProjectAdapter;
 import com.shuangduan.zcy.adminManage.adapter.UnitAdapter;
@@ -98,7 +97,6 @@ import static com.shuangduan.zcy.app.CustomConfig.EDIT;
  */
 @SuppressLint("SimpleDateFormat,UseSparseArrays")
 public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogControl.TurnoverDetailListening {
-
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
     @BindView(R.id.tv_project)

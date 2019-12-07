@@ -3,6 +3,7 @@ package com.shuangduan.zcy.view.demand;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
@@ -73,6 +74,8 @@ public class FindBuyerDetailActivity extends BaseActivity {
     RecyclerView rv;
     @BindView(R.id.tv_details_content)
     TextView tvDetailsContent;
+    @BindView(R.id.iv_state)
+    ImageView ivState;
 
     private DemandBuyerVm demandBuyerVm;
     private UpdatePwdPayVm updatePwdPayVm;
@@ -130,6 +133,20 @@ public class FindBuyerDetailActivity extends BaseActivity {
             tvDetailsContent.setText(info.getRemark());
             buyerAdapter.setNewData(buyerDetailBean.getList());
             buyerAdapter.setEmptyView(emptyView);
+            switch (buyerDetailBean.getInfo().getStatus()){
+                case 1://审核中
+                    ivState.setImageResource(R.drawable.icon_review);
+                    break;
+                case 2://审核通过
+                    ivState.setImageResource(R.drawable.icon_pass_new);
+                    break;
+                case 3://驳回
+                    ivState.setImageResource(R.drawable.icon_reject);
+                    break;
+                case 4://失效
+                    ivState.setImageResource(R.drawable.icon_invalid_new);
+                    break;
+            }
         });
 
         demandBuyerVm.getDetail();

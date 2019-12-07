@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.shuangduan.zcy.model.bean.SupplierBean;
 import com.shuangduan.zcy.model.bean.SupplierDetailBean;
 import com.shuangduan.zcy.model.bean.SupplierJoinImageBean;
+import com.shuangduan.zcy.model.bean.SupplierStatusBean;
 
 /**
  * @author 徐玉 QQ:876885613
@@ -27,5 +28,10 @@ public class SupplierRepository extends BaseRepository {
 
     public void getSupplierJoin(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int userId,String company, String address,int scale,String company_website,String name, String tel,String product,String authorization,String logo, SupplierJoinImageBean joinImageBean){
         request(apiService.supplierJoin(userId ,company,address, scale,company_website, name, tel,product ,authorization, logo,joinImageBean )).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    //获取供应商审核状态
+    public void supplierStatus(MutableLiveData<SupplierStatusBean> liveData, MutableLiveData<String> pageStateLiveData, int userId){
+        request(apiService.supplierStatus(userId)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 }

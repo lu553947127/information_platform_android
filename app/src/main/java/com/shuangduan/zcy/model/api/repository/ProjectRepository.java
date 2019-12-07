@@ -17,6 +17,7 @@ import com.shuangduan.zcy.model.bean.ProjectSubViewBean;
 import com.shuangduan.zcy.model.bean.ProvinceBean;
 import com.shuangduan.zcy.model.bean.MessagePushBean;
 import com.shuangduan.zcy.model.bean.StageBean;
+import com.shuangduan.zcy.model.bean.SubscribeOrderBean;
 import com.shuangduan.zcy.model.bean.TypeBean;
 
 import java.util.List;
@@ -81,6 +82,11 @@ public class ProjectRepository extends BaseRepository {
     //订阅消息列表
     public void subscribe(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int user_id,int type, int page){
         request(apiService.subscribe(user_id,type, page)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    //订单提醒列表
+    public void subscribeOrder(MutableLiveData<SubscribeOrderBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, int page){
+        request(apiService.subscribeOrder(user_id, page)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
     //订阅消息开关状态返回

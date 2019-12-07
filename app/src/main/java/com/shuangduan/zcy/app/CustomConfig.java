@@ -25,10 +25,8 @@ public class CustomConfig {
     public static final String VERIFICATION_CODE = "verification_code";
     /*供应商授权委托书*/
     public static final String SUPPLIER_AUTHORIZATION = "http://information-api.oss-cn-qingdao.aliyuncs.com/doc/供应商授权委托书.docx";
-    /**
-     * 传递预览图片的url
-     */
-    public static final String PHOTO_VIEW_URL_LIST = "photo_view_url_list";
+    //供应商状态
+    public static final String SUPPLIER_STATUS = "SUPPLIER_STATUS";
 
     public static final String updateTypePhone = "phone";
     public static final String updateTypeEmail = "email";
@@ -111,6 +109,7 @@ public class CustomConfig {
     public static final String NEWS_TYPE = "NEWS_TYPE";
     public static final int SUBSCRIBE = 1;
     public static final int UNUSED = 2;
+    public static final int ORDER_TYPE = 3;
 
     public static final String PEOPLE_DEGREE = "people_degree";
     public static final int FIRST_DEGREE = 1;//1°人脉收益

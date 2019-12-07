@@ -46,10 +46,8 @@ public class MineProjectActivity extends BaseActivity implements CompoundButton.
     Toolbar toolbar;
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
-
     @BindView(R.id.iv_state)
     ImageView ivState;
-
     @BindView(R.id.tv_title)
     TextView tvTitle;
     @BindView(R.id.tv_address)
@@ -74,19 +72,16 @@ public class MineProjectActivity extends BaseActivity implements CompoundButton.
     TextView tvMaterial;
     @BindView(R.id.rv_contact)
     RecyclerView rvContact;
-
     @BindView(R.id.cb_load)
     CheckBox cbLoad;
     @BindView(R.id.ll_material)
     LinearLayout llMaterial;
-
     @BindView(R.id.ll_reject)
     LinearLayout llReject;
     @BindView(R.id.tv_reject_intro)
     TextView tvRejectIntro;
 
     private ProjectDetailVm projectDetailVm;
-
     private ContactAdapter contactAdapter;
     private List<ProjectDetailBean.ContactBean> contactList;
 
@@ -137,16 +132,16 @@ public class MineProjectActivity extends BaseActivity implements CompoundButton.
                 case 0:
                     tvTitle.setEnabled(false);
                     tvTitle.setTextColor(getResources().getColor(R.color.color_646464));
-                    ivState.setImageResource(R.drawable.icon_project_audit);
+                    ivState.setImageResource(R.drawable.icon_review);
                     break;
                 case 1:
                     tvTitle.setTextColor(getResources().getColor(R.color.text1));
-                    ivState.setImageResource(R.drawable.icon_check_succeed);
+                    ivState.setImageResource(R.drawable.icon_pass);
                     break;
                 case 2:
                     tvTitle.setEnabled(false);
                     tvTitle.setTextColor(getResources().getColor(R.color.color_646464));
-                    ivState.setImageResource(R.drawable.icon_project_failure);
+                    ivState.setImageResource(R.drawable.icon_reject);
                     break;
             }
 

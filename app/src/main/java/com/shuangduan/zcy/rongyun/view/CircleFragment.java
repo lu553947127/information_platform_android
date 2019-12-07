@@ -146,6 +146,7 @@ public class CircleFragment extends BaseFragment {
             }
             //获取用户身份 0普通用户 1普通供应商 2子公司 3集团 4子账号
             manage_status=supplierRoleBean.getManage_status();
+            SPUtils.getInstance().put(CustomConfig.MANAGE_STATUS, supplierRoleBean.getManage_status());
             switch (manage_status){
                 case 0://普通用户
                     rlSubscribeChildren.setVisibility(View.VISIBLE);
@@ -155,7 +156,7 @@ public class CircleFragment extends BaseFragment {
                     rlSubscribeChildren.setVisibility(View.GONE);
                     rlIdleReminder.setVisibility(View.VISIBLE);
                     rlOrder.setVisibility(View.VISIBLE);
-                    rlUnused.setVisibility(View.GONE);
+                    rlUnused.setVisibility(View.INVISIBLE);
                     break;
                 case 2://子公司
                     rlSubscribeChildren.setVisibility(View.GONE);
@@ -175,7 +176,7 @@ public class CircleFragment extends BaseFragment {
                 case 5://集团子账号
                     rlSubscribeChildren.setVisibility(View.GONE);
                     rlIdleReminder.setVisibility(View.VISIBLE);
-                    rlOrder.setVisibility(View.GONE);
+                    rlUnused.setVisibility(View.VISIBLE);
                     break;
             }
         });
@@ -198,6 +199,7 @@ public class CircleFragment extends BaseFragment {
             getCountNumbers(friendApplyCountBean.getSubscribe(),tvSubscribeChildrenNumbers);
             getCountNumbers(friendApplyCountBean.getSubscribe(),tvSubscribeGroupNumber);
             getCountNumbers(friendApplyCountBean.getMaterial(),tvUnusedNumber);
+            getCountNumbers(friendApplyCountBean.getOrder(),tvOrderNumber);
         });
 
         ///会话列表人员头像名称显示
@@ -305,7 +307,7 @@ public class CircleFragment extends BaseFragment {
                 .build());
     }
 
-    @OnClick({R.id.iv_header,R.id.rl_subscribe_children,R.id.rl_message,R.id.rl_subscribe_group,R.id.rl_unused})
+    @OnClick({R.id.iv_header,R.id.rl_subscribe_children,R.id.rl_message,R.id.rl_subscribe_group,R.id.rl_unused,R.id.rl_order})
     void onClick(View view){
         Bundle bundle = new Bundle();
         switch (view.getId()){
@@ -322,6 +324,10 @@ public class CircleFragment extends BaseFragment {
                 break;
             case R.id.rl_unused://闲置提醒
                 bundle.putInt(CustomConfig.NEWS_TYPE,CustomConfig.UNUSED);
+                ActivityUtils.startActivity(bundle,MineSubActivity.class);
+                break;
+            case R.id.rl_order://订单提醒
+                bundle.putInt(CustomConfig.NEWS_TYPE,CustomConfig.ORDER_TYPE);
                 ActivityUtils.startActivity(bundle,MineSubActivity.class);
                 break;
                 default:

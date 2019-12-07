@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.blankj.utilcode.util.SPUtils;
 import com.google.gson.Gson;
+import com.shuangduan.zcy.adminManage.view.order.OrderDetailsActivity;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.model.bean.JPushExtraBean;
 import com.shuangduan.zcy.view.material.MaterialActivity;
@@ -45,10 +47,20 @@ public class MessageReceiver extends JPushMessageReceiver {
         try{
             switch (extraBean.getType()){
                 case 1://工程信息
-                    getStartActivity(context,ProjectDetailActivity.class,CustomConfig.PROJECT_ID,extraBean.getId(),message);
+                    getStartActivity(context,ProjectDetailActivity.class,CustomConfig.PROJECT_ID,extraBean.getId(),"",0,"",0,message);
                     break;
                 case 2://基建物资
-                    getStartActivity(context, MaterialActivity.class,"notice",1,message);
+                    getStartActivity(context, MaterialActivity.class,"notice",1,"",0,"",0,message);
+                    break;
+                case 3://周转材料
+                    getStartActivity(context, OrderDetailsActivity.class,CustomConfig.ADMIN_ORDER_ID,extraBean.getId()
+                            ,"manage_status", SPUtils.getInstance().getInt(CustomConfig.MANAGE_STATUS, 0)
+                            ,"order_type",0,message);
+                    break;
+                case 4://设备管理
+                    getStartActivity(context, OrderDetailsActivity.class,CustomConfig.ADMIN_ORDER_ID,extraBean.getId()
+                            ,"manage_status", SPUtils.getInstance().getInt(CustomConfig.MANAGE_STATUS, 0)
+                            ,"order_type",1,message);
                     break;
             }
         }catch (Throwable ignored){
@@ -57,10 +69,12 @@ public class MessageReceiver extends JPushMessageReceiver {
     }
 
     //点击通知栏跳转
-    private void getStartActivity(Context context,Class<?> cls,String type,int noticeId,NotificationMessage message) {
+    private void getStartActivity(Context context,Class<?> cls,String type,int noticeId,String type2,int noticeId2,String type3,int noticeId3,NotificationMessage message) {
         Intent intent =new Intent(context, cls);
         Bundle bundle = new Bundle();
         bundle.putInt(type, noticeId);
+        bundle.putInt(type2, noticeId2);
+        bundle.putInt(type3, noticeId3);
         bundle.putString(JPushInterface.EXTRA_NOTIFICATION_TITLE,message.notificationTitle);
         bundle.putString(JPushInterface.EXTRA_ALERT,message.notificationContent);
         intent.putExtras(bundle);

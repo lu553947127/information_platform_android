@@ -186,20 +186,6 @@ public class MineFragment extends BaseFragment {
         mineHandler.postDelayed(animatorRun, 500);
     }
 
-
-    class AnimatorRun implements Runnable {
-        @Override
-        public void run() {
-            try {
-                animator = AnimationUtils.tada(ivRedEnvelopes);
-                animator.setRepeatCount(ValueAnimator.INFINITE);
-                animator.start();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
     @Override
     protected void initDataFromService() {
 
@@ -414,6 +400,18 @@ public class MineFragment extends BaseFragment {
         }
     }
 
+    class AnimatorRun implements Runnable {
+        @Override
+        public void run() {
+            try {
+                animator = AnimationUtils.tada(ivRedEnvelopes);
+                animator.setRepeatCount(ValueAnimator.INFINITE);
+                animator.start();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     @Override
     public void onDestroyView() {

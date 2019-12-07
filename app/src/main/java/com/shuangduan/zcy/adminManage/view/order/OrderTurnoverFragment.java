@@ -154,7 +154,7 @@ public class OrderTurnoverFragment extends BaseNoRefreshFragment implements Base
                     if (SPUtils.getInstance().getInt(CustomConfig.CONSTRUCTION_ORDER_DETAIL, 0) == 1) {
                         bundle.putInt(CustomConfig.ADMIN_ORDER_ID, listBean.orderId);
                         bundle.putInt("manage_status", manage_status);
-                        bundle.putInt("order_type", 0);
+                        bundle.putInt("order_type", 3);
                         ActivityUtils.startActivity(bundle, OrderDetailsActivity.class);
                     }
                     break;

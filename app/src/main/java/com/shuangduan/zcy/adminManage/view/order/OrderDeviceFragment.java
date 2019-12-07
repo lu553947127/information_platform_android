@@ -162,7 +162,7 @@ public class OrderDeviceFragment extends BaseNoRefreshFragment implements BaseQu
                     if (SPUtils.getInstance().getInt(CustomConfig.CONSTRUCTION_ORDER_DETAIL, 0) == 1) {
                         bundle.putInt(CustomConfig.ADMIN_ORDER_ID, listBean.id);
                         bundle.putInt("manage_status", manage_status);
-                        bundle.putInt("order_type", 1);
+                        bundle.putInt("order_type", 4);
                         ActivityUtils.startActivity(bundle, OrderDetailsActivity.class);
                     }
                     break;

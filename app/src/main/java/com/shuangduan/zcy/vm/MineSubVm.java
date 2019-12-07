@@ -12,6 +12,7 @@ import com.shuangduan.zcy.model.bean.MessagePushBean;
 import com.shuangduan.zcy.model.bean.MyPhasesBean;
 import com.shuangduan.zcy.model.bean.SubscribeBean;
 import com.shuangduan.zcy.model.bean.SubBean;
+import com.shuangduan.zcy.model.bean.SubscribeOrderBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,7 @@ public class MineSubVm extends BaseViewModel {
     private int userId;
     public int page = 1;
     public int pos;
+    public int posOrder;
     public MutableLiveData<SubscribeBean> subscribeLiveData;
     public MutableLiveData<MessagePushBean> messagePushLiveData;
     public MutableLiveData messagePushStatusLiveData;
@@ -38,6 +40,7 @@ public class MineSubVm extends BaseViewModel {
     public MutableLiveData phasesSetLiveData;
     public MutableLiveData<String> pageStateLiveData;
     public List<Integer> phasesId;
+    public MutableLiveData<SubscribeOrderBean> subscribeOrderLiveData;
 
     public MineSubVm() {
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
@@ -48,6 +51,7 @@ public class MineSubVm extends BaseViewModel {
         phasesLiveData = new MutableLiveData<>();
         phasesSetLiveData = new MutableLiveData<>();
         phasesId = new ArrayList<>();
+        subscribeOrderLiveData = new MutableLiveData<>();
     }
 
     //订阅消息列表
@@ -62,6 +66,20 @@ public class MineSubVm extends BaseViewModel {
         page++;
         pageStateLiveData.setValue(PageState.PAGE_REFRESH);
         new ProjectRepository().subscribe(subscribeLiveData, pageStateLiveData, userId,type, page);
+    }
+
+    //订阅消息列表
+    public void subscribeOrder(){
+        page = 1;
+        pageStateLiveData.setValue(PageState.PAGE_REFRESH);
+        new ProjectRepository().subscribeOrder(subscribeOrderLiveData, pageStateLiveData, userId, page);
+    }
+
+    //订阅消息列表
+    public void moreSubscribeOrder(){
+        page++;
+        pageStateLiveData.setValue(PageState.PAGE_REFRESH);
+        new ProjectRepository().subscribeOrder(subscribeOrderLiveData, pageStateLiveData, userId, page);
     }
 
     //工程信息推送选择

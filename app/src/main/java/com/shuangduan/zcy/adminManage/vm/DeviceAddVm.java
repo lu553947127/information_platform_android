@@ -110,6 +110,14 @@ public class DeviceAddVm extends BaseViewModel {
             ToastUtils.showShort(getString(R.string.admin_selector_no_use_status));
             return;
         }
+        if (province==0) {
+            ToastUtils.showShort(getString(R.string.admin_selector_no_material_city));
+            return;
+        }
+        if (city==0) {
+            ToastUtils.showShort(getString(R.string.admin_selector_no_material_city));
+            return;
+        }
         if (TextUtils.isEmpty(address)){
             ToastUtils.showShort(getString(R.string.admin_selector_no_material_address));
             return;
