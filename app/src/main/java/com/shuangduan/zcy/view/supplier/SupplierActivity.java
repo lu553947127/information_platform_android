@@ -66,7 +66,7 @@ public class SupplierActivity extends BaseActivity {
 
     private UpdatePwdPayVm updatePwdPayVm;
     private CoinPayVm coinPayVm;
-    private int supplier_status;
+    private int supplier_status,id;
 
     @Override
     protected int initLayoutRes() {
@@ -140,6 +140,7 @@ public class SupplierActivity extends BaseActivity {
         supplierVm.supplierStatusLiveData.observe(this,supplierStatusBean -> {
             SPUtils.getInstance().put(CustomConfig.SUPPLIER_STATUS, supplierStatusBean.getStatus());
             supplier_status = supplierStatusBean.getStatus();
+            id = supplierStatusBean.getId();
         });
 
         refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
@@ -287,7 +288,9 @@ public class SupplierActivity extends BaseActivity {
 
                                     @Override
                                     public void ok(String s) {
-
+                                        Bundle bundle = new Bundle();
+                                        bundle.putInt(CustomConfig.SUPPLIER_ID, id);
+                                        ActivityUtils.startActivity(bundle, SupplierDetailActivity.class);
                                     }
                                 }).showDialog();
                         break;

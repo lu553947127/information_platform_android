@@ -2,14 +2,12 @@ package com.shuangduan.zcy.view.mine;
 
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.CheckBox;
@@ -496,7 +494,7 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
     //上传附件接口
     private void getFileUpload(File file) {
 
-        OkGo.<String>post(RetrofitHelper.BASE_TEST_URL+ "api/Upload/uploadImage")
+        OkGo.<String>post(RetrofitHelper.BASE_TEST_URL+ "/api/Upload/uploadImage")
                 .tag(this)
                 .params("user_id",SPUtils.getInstance().getInt(SpConfig.USER_ID))
                 .params("file",file)//拍照/照片获取的文件流

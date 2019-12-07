@@ -14,6 +14,7 @@ package com.shuangduan.zcy.model.bean;
  */
 public class SupplierStatusBean {
     private int status;
+    private int id;
 
     public int getStatus() {
         return status;
@@ -21,5 +22,13 @@ public class SupplierStatusBean {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

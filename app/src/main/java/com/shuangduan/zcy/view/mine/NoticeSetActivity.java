@@ -68,6 +68,7 @@ public class NoticeSetActivity extends BaseActivity {
                 break;
             case ORDER_TYPE://订单提醒
                 tvBarTitle.setText(getString(R.string.close_subscribe_message_order));
+                mineSubVm.msgPush(3);
                 break;
         }
 
@@ -97,6 +98,9 @@ public class NoticeSetActivity extends BaseActivity {
                         case UNUSED://闲置提醒
                             mineSubVm.msgPushStatus(2,0);
                             break;
+                        case ORDER_TYPE://订单提醒
+                            mineSubVm.msgPushStatus(3,0);
+                            break;
                     }
                 }
             }
@@ -111,6 +115,9 @@ public class NoticeSetActivity extends BaseActivity {
                             break;
                         case UNUSED://闲置提醒
                             mineSubVm.msgPushStatus(2,1);
+                            break;
+                        case ORDER_TYPE://订单提醒
+                            mineSubVm.msgPushStatus(3,1);
                             break;
                     }
                 }
