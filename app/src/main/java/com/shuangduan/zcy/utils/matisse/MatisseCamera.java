@@ -13,7 +13,6 @@ import androidx.core.os.EnvironmentCompat;
 import androidx.fragment.app.Fragment;
 
 import java.io.File;
-import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
 import java.util.Date;

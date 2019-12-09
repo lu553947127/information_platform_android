@@ -1,12 +1,19 @@
 package com.shuangduan.zcy.utils.image;
 
+import android.content.Context;
+import android.database.Cursor;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Environment;
+import android.provider.OpenableColumns;
 
 import com.blankj.utilcode.util.LogUtils;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * <pre>
@@ -47,6 +54,34 @@ public class CompressUtils {
         size[1] = options.outHeight;
 
         return size;
+    }
+
+    //Uri转换成path路径
+    public static String getRealFilePath(Context context, Uri uri) {
+        try {
+            Cursor returnCursor = context.getContentResolver().query(uri, null, null, null, null);
+            int nameIndex = Objects.requireNonNull(returnCursor).getColumnIndex(OpenableColumns.DISPLAY_NAME);
+            returnCursor.moveToFirst();
+            String name = (returnCursor.getString(nameIndex));
+            File file = new File(context.getFilesDir(), name);
+            InputStream inputStream = context.getContentResolver().openInputStream(uri);
+            FileOutputStream outputStream = new FileOutputStream(file);
+            int read = 0;
+            int maxBufferSize = 1 * 1024 * 1024;
+            int bytesAvailable = inputStream.available();
+            int bufferSize = Math.min(bytesAvailable, maxBufferSize);
+            final byte[] buffers = new byte[bufferSize];
+            while ((read = inputStream.read(buffers)) != -1) {
+                outputStream.write(buffers, 0, read);
+            }
+            returnCursor.close();
+            inputStream.close();
+            outputStream.close();
+            return file.getPath();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }
