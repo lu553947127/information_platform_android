@@ -2,8 +2,10 @@ package com.shuangduan.zcy.view.demand;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
@@ -76,10 +78,25 @@ public class FindSubstanceDetailActivity extends BaseActivity {
     TextView tvDetailsContent;
     @BindView(R.id.iv_state)
     ImageView ivState;
+    @BindView(R.id.line2)
+    View line2;
+    @BindView(R.id.tv_recommend)
+    TextView tvRecommend;
+    @BindView(R.id.line3)
+    View line3;
+    @BindView(R.id.ll_mine_demand_detail)
+    LinearLayout llMineDemandDetail;
+    @BindView(R.id.iv_icon)
+    ImageView ivIcon;
+    @BindView(R.id.tv_title1)
+    TextView tvTitle1;
+    @BindView(R.id.tv_title2)
+    TextView tvTitle2;
 
     private DemandSubstanceVm demandSubstanceVm;
     private UpdatePwdPayVm updatePwdPayVm;
     private CoinPayVm coinPayVm;
+    private int status;
 
     @Override
     protected int initLayoutRes() {
@@ -131,18 +148,23 @@ public class FindSubstanceDetailActivity extends BaseActivity {
             tvDetailsContent.setText(info.getRemark());
             subOrderAdapter.setNewData(substanceDetailBean.getList());
             subOrderAdapter.setEmptyView(emptyView);
-            switch (substanceDetailBean.getInfo().getStatus()){
+            status = substanceDetailBean.getInfo().getStatus();
+            switch (status){
                 case 1://审核中
                     ivState.setImageResource(R.drawable.icon_review);
+                    getShowDemand(View.GONE,View.VISIBLE,"您发布的需求正在审核中，",R.drawable.icon_tips,"请耐心等待!");
                     break;
                 case 2://审核通过
                     ivState.setImageResource(R.drawable.icon_pass_new);
+                    getShowDemand(View.VISIBLE,View.GONE,"",0,"");
                     break;
                 case 3://驳回
                     ivState.setImageResource(R.drawable.icon_reject);
+                    getShowDemand(View.GONE,View.VISIBLE,"抱歉，您发布的需求未通过审核",R.drawable.icon_invalid, Html.fromHtml("请认真核对后重新<font color=\"#6a5ff8\">发布</font>！"));
                     break;
                 case 4://失效
                     ivState.setImageResource(R.drawable.icon_invalid_new);
+                    getShowDemand(View.VISIBLE,View.GONE,"",0,"");
                     break;
             }
         });
@@ -150,7 +172,19 @@ public class FindSubstanceDetailActivity extends BaseActivity {
         demandSubstanceVm.getDetail();
     }
 
-    @OnClick({R.id.iv_bar_back, R.id.tv_read_detail})
+    //根据状态显示推荐物资和状态布局
+    private void getShowDemand(int visibility,int visibility2,String str,int drawable,CharSequence str2) {
+        line2.setVisibility(visibility);
+        tvRecommend.setVisibility(visibility);
+        line3.setVisibility(visibility);
+        rv.setVisibility(visibility);
+        llMineDemandDetail.setVisibility(visibility2);
+        ivIcon.setImageResource(drawable);
+        tvTitle1.setText(str);
+        tvTitle2.setText(str2);
+    }
+
+    @OnClick({R.id.iv_bar_back, R.id.tv_read_detail,R.id.tv_title2})
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_bar_back:
@@ -160,6 +194,13 @@ public class FindSubstanceDetailActivity extends BaseActivity {
                 coinPayVm.findSubstanceId = getIntent().getIntExtra(CustomConfig.DEMAND_ID, 0);
                 demandSubstanceVm.currentPay = 1;
                 showPayDialog(demandSubstanceVm.detailLiveData.getValue().getInfo().getPrice());
+                break;
+            case R.id.tv_title2://发布找物资
+                if (status == 3){
+                    Bundle bundle = new Bundle();
+                    bundle.putString("type", "1");
+                    ActivityUtils.startActivity(bundle, DemandReleaseActivity.class);
+                }
                 break;
         }
     }

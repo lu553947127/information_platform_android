@@ -3,6 +3,7 @@ package com.shuangduan.zcy.adminManage.dialog;
 import android.content.DialogInterface;
 import android.text.Editable;
 import android.text.InputType;
+import android.text.method.DigitsKeyListener;
 import android.view.View;
 
 import com.blankj.utilcode.util.StringUtils;
@@ -252,15 +253,23 @@ public class TurnoverDialogControl extends BaseAddInfoDialog implements DialogIn
                 tsItemTwo.getEditText().setInputType(InputType.TYPE_CLASS_TEXT);
             case 2:
                 KeyboardUtil.showSoftInputFromWindow(context, tsItemThree.getEditText());
+                KeyboardUtil.RemoveDecimalPoints(tsItemThree.getEditText());
+                tsItemThree.getEditText().setKeyListener(DigitsKeyListener.getInstance("0123456789."));
                 break;
             case 6:
                 KeyboardUtil.showSoftInputFromWindow(context, tsItemSeven.getEditText());
+                KeyboardUtil.RemoveDecimalPoints(tsItemSeven.getEditText());
+                tsItemSeven.getEditText().setKeyListener(DigitsKeyListener.getInstance("0123456789."));
                 break;
             case 7:
                 KeyboardUtil.showSoftInputFromWindow(context, tsItemEight.getEditText());
+                KeyboardUtil.RemoveDecimalPoints(tsItemEight.getEditText());
+                tsItemEight.getEditText().setKeyListener(DigitsKeyListener.getInstance("0123456789."));
                 break;
             case 8:
                 KeyboardUtil.showSoftInputFromWindow(context, tsItemNine.getEditText());
+                KeyboardUtil.RemoveDecimalPoints(tsItemNine.getEditText());
+                tsItemNine.getEditText().setKeyListener(DigitsKeyListener.getInstance("0123456789."));
                 break;
         }
 

@@ -253,6 +253,7 @@
         app:layout_constraintTop_toBottomOf="@+id/line2" />
 
     <View
+        android:id="@+id/line3"
         android:layout_width="54dp"
         android:layout_height="3dp"
         android:layout_marginTop="2dp"

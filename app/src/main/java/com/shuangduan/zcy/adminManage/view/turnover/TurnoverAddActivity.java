@@ -51,6 +51,7 @@ import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BottomSheetDialogs;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.event.LocationEvent;
+import com.shuangduan.zcy.utils.KeyboardUtil;
 import com.shuangduan.zcy.utils.image.PictureEnlargeUtils;
 import com.shuangduan.zcy.utils.matisse.Glide4Engine;
 import com.shuangduan.zcy.view.photo.CameraActivity;
@@ -306,6 +307,8 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
         turnoverVm.constructionSearch();
         turnoverVm.getUnitInfo();
         turnoverVm.constructionCategoryParent();
+        KeyboardUtil.RemoveDecimalPoints(etStock);
+        KeyboardUtil.RemoveDecimalPoints(etUnitPrice);
     }
 
     @OnClick({R.id.iv_bar_back, R.id.tv_project, R.id.tv_category_material_id, R.id.tv_unit, R.id.tv_use_status, R.id.tv_material_status

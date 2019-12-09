@@ -121,6 +121,7 @@
                 <com.shuangduan.zcy.weight.XEditText
                     android:id="@+id/et_stock"
                     style="@style/AdminManageSecondHint"
+                    android:digits="0123456789."
                     android:maxLength="8"
                     android:hint="@string/admin_turnover_add_stock_et"
                     android:inputType="number" />

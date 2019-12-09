@@ -3,9 +3,9 @@ package com.shuangduan.zcy.adminManage.dialog;
 import android.content.DialogInterface;
 import android.text.Editable;
 import android.text.InputType;
+import android.text.method.DigitsKeyListener;
 import android.view.View;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ArrayWheelAdapter;
 import com.shuangduan.zcy.adminManage.vm.TurnoverVm;
@@ -199,19 +199,14 @@ public class DeviceDialogControl extends BaseAddInfoDialog implements DialogInte
             case 0:
                 showView(0, R.string.admin_selector_material_project);
                 break;
-            case 1:
-
-                break;
             case 2:
                 start_date = sdf.format(selectedCalender.getTime());
                 tsItemTwo.setValue(start_date);
                 showView(8, R.string.admin_input_device_material_operator_name);
-
 //                showView(2, R.string.admin_input_material_brand);
                 break;
             case 3:
                 showView(1, R.string.admin_selector_material_start_time);
-
                 break;
             case 4:
                 showView(4, R.string.admin_input_material_main_params);
@@ -258,6 +253,8 @@ public class DeviceDialogControl extends BaseAddInfoDialog implements DialogInte
                 break;
             case 3:
                 KeyboardUtil.showSoftInputFromWindow(context, tsItemFour.getEditText());
+                KeyboardUtil.RemoveDecimalPoints(tsItemFour.getEditText());
+                tsItemFour.getEditText().setKeyListener(DigitsKeyListener.getInstance("0123456789."));
                 break;
             case 4:
                 KeyboardUtil.showSoftInputFromWindow(context, tsItemFive.getEditText());
@@ -265,7 +262,8 @@ public class DeviceDialogControl extends BaseAddInfoDialog implements DialogInte
                 break;
             case 5:
                 KeyboardUtil.showSoftInputFromWindow(context, tsItemSix.getEditText());
-//                tsItemSix.getEditText().setInputType(InputType.TYPE_CLASS_TEXT);
+                KeyboardUtil.RemoveDecimalPoints(tsItemSix.getEditText());
+                tsItemSix.getEditText().setKeyListener(DigitsKeyListener.getInstance("0123456789."));
                 break;
             case 2:
                 KeyboardUtil.showSoftInputFromWindow(context, tsItemThree.getEditText());

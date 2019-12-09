@@ -42,9 +42,7 @@ public class FindMineBuyerFragment extends BaseLazyFragment implements EmptyView
     private DemandBuyerVm demandBuyerVm;
 
     public static FindMineBuyerFragment newInstance() {
-
         Bundle args = new Bundle();
-
         FindMineBuyerFragment fragment = new FindMineBuyerFragment();
         fragment.setArguments(args);
         return fragment;
