@@ -39,7 +39,8 @@
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
+                android:minHeight="50dp"
                 android:background="@drawable/selector_bg_custom"
                 android:layout_marginTop="10dp"
                 android:paddingLeft="14dp"
@@ -71,7 +72,8 @@
             </FrameLayout>
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
+                android:minHeight="50dp"
                 android:background="@drawable/selector_bg_custom"
                 android:paddingLeft="14dp"
                 android:paddingRight="14dp">

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.os.Environment;
 
 import androidx.lifecycle.MutableLiveData;
+
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.app.MyApplication;
@@ -35,10 +36,12 @@ import top.zibin.luban.Luban;
 public class UploadRepository extends BaseRepository {
 
     @SuppressLint("CheckResult")
-    public void uploadPhoto(MutableLiveData<UploadBean> liveData, MutableLiveData<String> pageStateLiveData, final int userId, String path){
+    public void uploadPhoto(MutableLiveData<UploadBean> liveData, MutableLiveData<String> pageStateLiveData, final int userId, String path) {
         List<File> list = new ArrayList<>();
         list.add(new File(path));
         LogUtils.e(new File(path));
+
+
         //如果uri为空，代表为网络图片，无需压缩，直接增加即可
         Flowable.just(list)
                 .observeOn(Schedulers.io())
@@ -58,7 +61,7 @@ public class UploadRepository extends BaseRepository {
     }
 
     private String getPath() {
-        String path = Environment.getExternalStorageDirectory() + "/Luban/image/";
+        String path = MyApplication.getInstance().getFilesDir() + "/Luban/image/";
         File file = new File(path);
         if (file.mkdirs()) {
             return path;
@@ -66,7 +69,7 @@ public class UploadRepository extends BaseRepository {
         return path;
     }
 
-    private void upload(MutableLiveData<UploadBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, File file){
+    private void upload(MutableLiveData<UploadBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, File file) {
         // 创建 RequestBody，用于封装 请求RequestBody
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
 

@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.OpenableColumns;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -23,6 +24,7 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.SpanUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.gson.Gson;
@@ -65,6 +67,8 @@ import com.zhihu.matisse.internal.entity.CaptureStrategy;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Objects;
 
@@ -125,7 +129,7 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
     private RxPermissions rxPermissions;
     private UserInfoVm userInfoVm;
     private UploadPhotoVm uploadPhotoVm;
-    private String apply_status,id,user_name,company,image;
+    private String apply_status, id, user_name, company, image;
 
     @Override
     protected int initLayoutRes() {
@@ -170,8 +174,8 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
         userInfoVm = ViewModelProviders.of(this).get(UserInfoVm.class);
         userInfoVm.uid = uid;
         userInfoVm.informationLiveData.observe(this, userInfoBean -> {
-            SPUtils.getInstance().put(SpConfig.USERNAME, userInfoBean.getUsername(),true);
-            SPUtils.getInstance().put(SpConfig.MOBILE, userInfoBean.getTel(),true);
+            SPUtils.getInstance().put(SpConfig.USERNAME, userInfoBean.getUsername(), true);
+            SPUtils.getInstance().put(SpConfig.MOBILE, userInfoBean.getTel(), true);
             tvName.setText(userInfoBean.getUsername());
             tvMobile.setText(userInfoBean.getTel());
 
@@ -184,17 +188,17 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
             //用户认证标识状态显示
             ivSgs.setVisibility(userInfoBean.getCardStatus() == 2 ? View.VISIBLE : View.INVISIBLE);
             cbState.setChecked(userInfoBean.getCardStatus() == 2);
-            cbState.setText(userInfoBean.getCardStatus() == 2 ? R.string.real_name :R.string.un_real_name);
+            cbState.setText(userInfoBean.getCardStatus() == 2 ? R.string.real_name : R.string.un_real_name);
 
             if (userInfoBean.getExperience() >= 1 && userInfoBean.getExperience() <= 5)
                 tvBusinessExp.setText(getResources().getStringArray(R.array.experience_list)[userInfoBean.getExperience() - 1] + "年");
             tvProduction.setText(userInfoBean.getManaging_products());
 
-            apply_status=userInfoBean.getApply_status();
-            id= String.valueOf(userInfoBean.getId());
-            user_name=userInfoBean.getUsername();
-            company=userInfoBean.getCompany();
-            image=userInfoBean.getImage();
+            apply_status = userInfoBean.getApply_status();
+            id = String.valueOf(userInfoBean.getId());
+            user_name = userInfoBean.getUsername();
+            company = userInfoBean.getCompany();
+            image = userInfoBean.getImage();
             if (apply_status != null && apply_status.equals("1")) {
                 if (SPUtils.getInstance().getInt(SpConfig.USER_ID) != uid) {
                     tvAddFriend.setText(getString(R.string.im_add_friend));
@@ -382,10 +386,10 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
                     bundle.putString("id", id);
                     bundle.putString("name", user_name);
                     bundle.putString("msg", company);
-                    bundle.putString("image",image);
+                    bundle.putString("image", image);
                     ActivityUtils.startActivity(bundle, IMAddFriendActivity.class);
                 } else {
-                    RongIM.getInstance().startPrivateChat(UserInfoActivity.this,id,user_name);
+                    RongIM.getInstance().startPrivateChat(UserInfoActivity.this, id, user_name);
                 }
                 break;
         }
@@ -401,18 +405,47 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
         }
 
         if (requestCode == PermissionVm.REQUEST_CODE_HEAD && resultCode == RESULT_OK) {
-            if (MatisseCamera.isAndroidQ){
+            if (MatisseCamera.isAndroidQ) {
                 LogUtils.e(MatisseCamera.obtainUriResult());
-                LogUtils.e(getRealFilePath(this,MatisseCamera.obtainUriResult()));
+                LogUtils.e(getRealFilePath(this, MatisseCamera.obtainUriResult()));
 
                 ivUser.setImageURI(MatisseCamera.obtainUriResult());
-//                uploadPhotoVm.upload(getRealFilePath(this,MatisseCamera.obtainUriResult()));
-                getFileUpload(new File(getRealFilePath(this,MatisseCamera.obtainUriResult())));
-            }else {
+
+                uploadPhotoVm.upload(getFilePathForN(this,MatisseCamera.obtainUriResult()));
+
+            } else {
                 uploadPhotoVm.upload(MatisseCamera.obtainPathResult());
             }
         }
 
+    }
+
+
+    private static String getFilePathForN(Context context, Uri uri) {
+        try {
+            Cursor returnCursor = context.getContentResolver().query(uri, null, null, null, null);
+            int nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+            returnCursor.moveToFirst();
+            String name = (returnCursor.getString(nameIndex));
+            File file = new File(context.getFilesDir(), name);
+            InputStream inputStream = context.getContentResolver().openInputStream(uri);
+            FileOutputStream outputStream = new FileOutputStream(file);
+            int read = 0;
+            int maxBufferSize = 1 * 1024 * 1024;
+            int bytesAvailable = inputStream.available();
+            int bufferSize = Math.min(bytesAvailable, maxBufferSize);
+            final byte[] buffers = new byte[bufferSize];
+            while ((read = inputStream.read(buffers)) != -1) {
+                outputStream.write(buffers, 0, read);
+            }
+            returnCursor.close();
+            inputStream.close();
+            outputStream.close();
+            return file.getPath();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 
@@ -423,21 +456,21 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
      * @param uri
      * @return the file path or null
      */
-    public static String getRealFilePath(final Context context, final Uri uri ) {
-        if ( null == uri ) return null;
+    public static String getRealFilePath(final Context context, final Uri uri) {
+        if (null == uri) return null;
         final String scheme = uri.getScheme();
         String data = null;
-        if ( scheme == null )
+        if (scheme == null)
             data = uri.getPath();
-        else if ( ContentResolver.SCHEME_FILE.equals( scheme ) ) {
+        else if (ContentResolver.SCHEME_FILE.equals(scheme)) {
             data = uri.getPath();
-        } else if ( ContentResolver.SCHEME_CONTENT.equals( scheme ) ) {
-            Cursor cursor = context.getContentResolver().query( uri, new String[] { MediaStore.Images.ImageColumns.DATA }, null, null, null );
-            if ( null != cursor ) {
-                if ( cursor.moveToFirst() ) {
-                    int index = cursor.getColumnIndex( MediaStore.Images.ImageColumns.DATA );
-                    if ( index > -1 ) {
-                        data = cursor.getString( index );
+        } else if (ContentResolver.SCHEME_CONTENT.equals(scheme)) {
+            Cursor cursor = context.getContentResolver().query(uri, new String[]{MediaStore.Images.ImageColumns.DATA}, null, null, null);
+            if (null != cursor) {
+                if (cursor.moveToFirst()) {
+                    int index = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+                    if (index > -1) {
+                        data = cursor.getString(index);
                     }
                 }
                 cursor.close();
@@ -493,26 +526,29 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
 
     //上传附件接口
     private void getFileUpload(File file) {
-
-        OkGo.<String>post(RetrofitHelper.BASE_TEST_URL+ "/api/Upload/uploadImage")
+        LogUtils.e("上传的图片：" + file);
+        OkGo.<String>post(RetrofitHelper.BASE_TEST_URL + "/api/Upload/uploadImage")
                 .tag(this)
-                .params("user_id",SPUtils.getInstance().getInt(SpConfig.USER_ID))
-                .params("file",file)//拍照/照片获取的文件流
+                .isMultipart(true)
+                .headers("token", SPUtils.getInstance().getString(SpConfig.TOKEN))
+                .params("user_id", SPUtils.getInstance().getInt(SpConfig.USER_ID))
+                .params("file", file)//拍照/照片获取的文件流
                 .execute(new com.lzy.okgo.callback.StringCallback() {//返回值
 
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
                         LogUtils.e("上传附件接口请求失败");
+                        LogUtils.e(response.getException());
                     }
 
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
                         LogUtils.e("上传附件接口请求成功");
                         try {
-                            UploadBean bean=new Gson().fromJson(response.body(),UploadBean.class);
+                            UploadBean bean = new Gson().fromJson(response.body(), UploadBean.class);
                             LogUtils.e(bean.getSource());
-                        }catch (JsonSyntaxException | IllegalStateException ignored){
+                        } catch (JsonSyntaxException | IllegalStateException ignored) {
 
                         }
                     }

@@ -27,6 +27,7 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.TimeUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
@@ -289,7 +290,7 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
         });
 
         //判断显示工程信息或动态信息
-        switch (release_type){
+        switch (release_type) {
             case 0://工程信息
                 projectLocus();
                 break;
@@ -436,7 +437,8 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
                 ActivityUtils.startActivity(ReleaseTypeSelectActivity.class);
                 break;
             case R.id.tv_time_start:
-                showTimeDialog(tvTimeStart, 0, releaseVm.todayTime);
+                String startTime = StringUtils.isTrimEmpty(releaseVm.start_time) ? releaseVm.todayTime : releaseVm.start_time;
+                showTimeDialog(tvTimeStart, 0, startTime);
                 break;
             case R.id.tv_time_end:
                 if (TextUtils.isEmpty(releaseVm.start_time)) {
@@ -446,7 +448,9 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
                 try {
                     c.setTime(Objects.requireNonNull(f.parse(releaseVm.todayTime)));
                     c.add(Calendar.DAY_OF_MONTH, 1);
-                    showTimeDialog(tvTimeEnd, 1, f.format(c.getTime()));
+
+                    String endTime = StringUtils.isTrimEmpty(releaseVm.end_time) ? f.format(c.getTime()) : releaseVm.end_time;
+                    showTimeDialog(tvTimeEnd, 1,endTime );
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -631,6 +635,7 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
     //底部弹出框
     private TextView tv_project;
     private TextView tv_locus;
+
     @SuppressLint({"RestrictedApi", "InflateParams"})
     private void getBottomWindow() {
         //底部滑动对话框
@@ -664,7 +669,7 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
             btn_dialog.cancel();
         });
 
-        switch (release_type){
+        switch (release_type) {
             case 0://工程信息
                 tv_project.setTextColor(getResources().getColor(R.color.colorPrimary));
                 tv_locus.setTextColor(getResources().getColor(R.color.color_666666));
