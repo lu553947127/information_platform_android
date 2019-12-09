@@ -255,7 +255,7 @@ public class SupplierActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.iv_bar_right:
-                supplier_status = 3;
+//                supplier_status = 3;
                 switch (supplier_status){
                     case 0://未申请
                         ActivityUtils.startActivity(SupplierJoinActivity.class);

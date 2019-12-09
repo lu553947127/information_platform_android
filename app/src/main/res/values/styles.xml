@@ -7,23 +7,27 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <!-- enable window content transitions -->
-        <item name="android:windowActivityTransitions" tools:targetApi="lollipop">true</item>
-        <item name="android:windowBackground">@color/colorFFF</item>
+        <item name="android:windowAnimationStyle">@style/AnimationActivity</item>
         <!--（第一级页面不让Activity透明）解决右滑退出黑屏问题,但是并不适用所有系统-->
         <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowSoftInputMode" tools:ignore="NewApi">adjustPan</item>
-        <!--设置竖屏-->
-        <item name="android:screenOrientation">portrait</item>
+        <item name="android:windowSoftInputMode">adjustPan</item>
+    </style>
+
+    <!--Activity进场/出场动画-->
+    <style name="AnimationActivity" parent="@android:style/Animation.Activity">
+        <!--用于设置打开新的Activity并进入新的Activity展示的动画-->
+        <item name="android:activityOpenEnterAnimation">@anim/slide_in_right</item>
+        <!--用于设置打开新的Activity并销毁之前的Activity展示的动画-->
+        <item name="android:activityOpenExitAnimation">@anim/slide_out_left</item>
+        <!--用于设置关闭当前Activity进入上一个Activity展示的动画-->
+        <item name="android:activityCloseEnterAnimation">@anim/slide_in_left</item>
+        <!--用于设置关闭当前Activity时展示的动画-->
+        <item name="android:activityCloseExitAnimation">@anim/slide_out_right</item>
     </style>
 
     <!--启动页theme-->
-    <style name="SplashTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+    <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-<!--        <item name="colorPrimary">@color/colorFFF</item>-->
-<!--        <item name="colorPrimaryDark">@color/colorFFF</item>-->
-<!--        <item name="colorAccent">@color/colorFFF</item>-->
         <!-- enable window content transitions -->
         <item name="android:windowActivityTransitions" tools:targetApi="lollipop">true</item>
 <!--        <item name="android:windowBackground">@drawable/splash_start</item>-->
@@ -70,6 +74,7 @@
         <item name="android:popupBackground">@color/colorPrimary</item>
     </style>
 
+    <!--设置导航页滑动小球属性-->
     <declare-styleable name="MaterialIndicator">
         <attr name="mi_indicatorRadius" format="dimension|reference" /> <!--半径-->
         <attr name="mi_indicatorPadding" format="dimension|reference" /><!--间距-->
@@ -83,7 +88,7 @@
         <item name="mi_indicatorRadius">4dp</item><!--半径-->
     </style>
 
-    <!--解决键盘遮挡问题-->
+    <!--解决BottomSheetDialog弹窗键盘遮挡问题-->
     <style name="BottomSheetStyle" parent="Theme.Design.Light.BottomSheetDialog">
         <item name="android:windowIsFloating">false</item>
         <item name="android:windowSoftInputMode">adjustResize</item>

@@ -23,22 +23,19 @@
     <!--允许程序访问CellID或WiFi热点来获取粗略的位置-->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <!-- Required -->
-    <permission
-        android:name="com.shuangduan.zcy.permission.JPUSH_MESSAGE"
-        android:protectionLevel="signature" />
+    <permission android:name="com.shuangduan.zcy.permission.JPUSH_MESSAGE" android:protectionLevel="signature" />
     <!-- Required -->
     <uses-permission android:name="com.shuangduan.zcy.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
-    <uses-permission
-        android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
-        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" tools:ignore="ProtectedPermissions" />
+
     <!-- 小米 配置开始 -->
-    <permission
-        android:name="com.shuangduan.zcy.permission.MIPUSH_RECEIVE"
-        android:protectionLevel="signature" />
+    <permission android:name="com.shuangduan.zcy.permission.MIPUSH_RECEIVE" android:protectionLevel="signature" />
     <uses-permission android:name="com.shuangduan.zcy.permission.MIPUSH_RECEIVE" />
     <!-- 小米 配置结束  -->
+
     <application
         android:name="com.shuangduan.zcy.app.MyApplication"
         android:allowBackup="true"

@@ -21,7 +21,6 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.huawei.android.hms.agent.common.UIUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
@@ -35,8 +34,6 @@ import com.shuangduan.zcy.view.mine.AuthenticationActivity;
 import com.shuangduan.zcy.vm.DemandReleaseVm;
 import com.shuangduan.zcy.weight.datepicker.CustomDatePicker;
 
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -149,7 +146,7 @@ public class DemandReleaseActivity extends BaseActivity {
         return false;
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint("SetTextI18n,SimpleDateFormat")
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         tvBarTitle.setText("我要找关系");
@@ -388,7 +385,6 @@ public class DemandReleaseActivity extends BaseActivity {
      */
     @SuppressLint("SimpleDateFormat")
     private void showTimeDialog() {
-
         String tomorrowDay = StringUtils.isTrimEmpty(tvTimeEnd.getText().toString()) ? tomorrow : tvTimeEnd.getText().toString();
         if (customDatePicker == null) {
             customDatePicker = new CustomDatePicker(this, time -> {
@@ -397,11 +393,11 @@ public class DemandReleaseActivity extends BaseActivity {
                     ToastUtils.showShort("有效期不能超过30天");
                     return;
                 }
+                demandReleaseVm.endTime = time;
                 tvTimeEnd.setText(time);
             }, "yyyy-MM-dd", tomorrowDay, "2100-12-31");
             customDatePicker.showSpecificTime(false);
         }
-
         customDatePicker.show(tomorrowDay);
     }
 
@@ -409,7 +405,6 @@ public class DemandReleaseActivity extends BaseActivity {
     private TextView tv_find_relationship;
     private TextView tv_find_substance;
     private TextView tv_find_buyer;
-
     @SuppressLint("RestrictedApi")
     private void getBottomWindow() {
         //底部滑动对话框

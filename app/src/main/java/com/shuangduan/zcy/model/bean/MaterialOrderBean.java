@@ -117,7 +117,7 @@ public class MaterialOrderBean {
         @SerializedName("lease_end_time")
         public String leaseEndTime;
         //订单数量
-        public int number;
+        public String number;
         //物资详细地址
         @SerializedName("science_address")
         public String scienceAddress;

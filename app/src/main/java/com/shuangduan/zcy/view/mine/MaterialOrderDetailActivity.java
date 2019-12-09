@@ -1,5 +1,6 @@
 package com.shuangduan.zcy.view.mine;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
@@ -9,14 +10,11 @@ import android.widget.TextView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.BarUtils;
-import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
-import com.shuangduan.zcy.adapter.MaterialOrderAddressAdapter;
+import com.shuangduan.zcy.adminManage.bean.OrderSearchBean;
 import com.shuangduan.zcy.adminManage.vm.OrderTurnoverVm;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
@@ -27,7 +25,6 @@ import com.shuangduan.zcy.utils.KeyboardUtil;
 import com.shuangduan.zcy.utils.image.ImageConfig;
 import com.shuangduan.zcy.utils.image.ImageLoader;
 import com.shuangduan.zcy.vm.MaterialDetailVm;
-import com.shuangduan.zcy.weight.DividerItemDecoration;
 import com.shuangduan.zcy.weight.FlowViewHorizontal;
 
 import java.util.ArrayList;
@@ -50,7 +47,6 @@ public class MaterialOrderDetailActivity extends BaseActivity {
     Toolbar toolbar;
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
-
     @BindView(R.id.iv_icon)
     ImageView ivIcon;
     @BindView(R.id.tv_title)
@@ -98,11 +94,11 @@ public class MaterialOrderDetailActivity extends BaseActivity {
     @BindView(R.id.tv_address)
     TextView tvAddress;
 
-
     private MaterialDetailVm materialVm;
     private OrderTurnoverVm orderVm;
-    private int type;
+    private int type,inside,method;
     private String phases;
+    private List<OrderSearchBean.OrderPhasesBean> orderPhasesBeanList = new ArrayList<>();
 
     @Override
     protected int initLayoutRes() {
@@ -114,6 +110,7 @@ public class MaterialOrderDetailActivity extends BaseActivity {
         return false;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         //订单Id
@@ -153,13 +150,12 @@ public class MaterialOrderDetailActivity extends BaseActivity {
                 tvPrice.setText(item.method == 1 ?
                         Html.fromHtml("商品单价：<font color=#EF583E>¥" + item.price + "<font/>/天") :
                         Html.fromHtml("商品单价：<font color=#EF583E>¥" + item.price + "<font/>"));
-                tvResrveNum.setText(String.valueOf(item.number));
+                tvResrveNum.setText(item.number);
             }
 
             tvSpec.setText("规格：" + item.spec);
             tvSupplier.setText("供应商：" + item.supplierCompany);
             tvUnit.setText("单位：" + item.unit);
-
 
             tvAddress.setText("存放地：" + item.scienceAddress);
 
@@ -187,6 +183,8 @@ public class MaterialOrderDetailActivity extends BaseActivity {
             tvLeaseTime.setText(String.format(getResources().getString(R.string.format_material_lease_time), item.leaseStartTime, item.leaseEndTime));
 
             orderVm.orderSearch();
+            inside = item.inside;
+            method = item.method;
         });
 
         materialVm.mutableLiveDataCancel.observe(this, item -> {
@@ -204,18 +202,27 @@ public class MaterialOrderDetailActivity extends BaseActivity {
         //获取搜索筛选条件数据
         orderVm.orderSearchLiveData.observe(this, orderSearchBean -> {
             List<String> list = new ArrayList<>();
+
+            //非公开出售物资 没有投标报价
+            if (inside == 1 && method == 2){
+                orderPhasesBeanList = orderSearchBean.getOrder_phases();
+            }else {
+                orderPhasesBeanList = orderSearchBean.getOrder_phases();
+                orderPhasesBeanList.remove(2);
+            }
+
             //获取当前名称字符串列表
             int index = 0;
-            for (int i = 0; i < orderSearchBean.getOrder_phases().size(); i++) {
-                list.add(orderSearchBean.getOrder_phases().get(i).getName());
+            for (int i = 0; i < orderPhasesBeanList.size(); i++) {
+                list.add(orderPhasesBeanList.get(i).getName());
                 //获取当前订单状态的角标值
-                if (phases.equals(orderSearchBean.getOrder_phases().get(i).getName())) {
+                if (phases.equals(orderPhasesBeanList.get(i).getName())) {
                     index = i;
                 }
             }
             //转换成数组
             String[] array = list.toArray(new String[list.size()]);
-            flowViewHorizontal.setProgress(index + 1, orderSearchBean.getOrder_phases().size(), array);
+            flowViewHorizontal.setProgress(index + 1, orderPhasesBeanList.size(), array);
         });
     }
 

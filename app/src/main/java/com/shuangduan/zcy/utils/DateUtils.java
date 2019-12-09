@@ -1,10 +1,11 @@
 package com.shuangduan.zcy.utils;
 
+import android.annotation.SuppressLint;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Objects;
 
 /**
  * @author 徐玉 QQ:876885613
@@ -17,6 +18,7 @@ import java.util.GregorianCalendar;
  * @class describe
  */
 public class DateUtils {
+
     public static String formatTime(int year, int month, int day) {
         String monthString;
         String dayString;
@@ -34,22 +36,21 @@ public class DateUtils {
     }
 
     /**
-     *     * 获取两个日期之间的间隔天数
-     *     * @return
-     *     
+     * 获取两个日期之间的间隔天数
+    `* @return 
      */
+    @SuppressLint("SimpleDateFormat")
     public static int getGapCount(String startDate, String endDate) {
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             GregorianCalendar cal1 = new GregorianCalendar();
             GregorianCalendar cal2 = new GregorianCalendar();
-            cal1.setTime(sdf.parse(startDate));
-            cal2.setTime(sdf.parse(endDate));
+            cal1.setTime(Objects.requireNonNull(sdf.parse(startDate)));
+            cal2.setTime(Objects.requireNonNull(sdf.parse(endDate)));
             return (int) ((cal2.getTimeInMillis() - cal1.getTimeInMillis()) / (1000 * 3600 * 24));// 从间隔毫秒变成间隔天数
         } catch (ParseException e) {
             e.printStackTrace();
         }
         return 0;
     }
-
 }
