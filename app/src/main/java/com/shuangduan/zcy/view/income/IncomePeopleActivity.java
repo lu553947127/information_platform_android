@@ -31,6 +31,11 @@ import com.shuangduan.zcy.weight.DividerItemDecoration;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+import static com.shuangduan.zcy.app.CustomConfig.FIRST_DEGREE;
+import static com.shuangduan.zcy.app.CustomConfig.SECOND_DEGREE;
+import static com.shuangduan.zcy.app.CustomConfig.SEVEN_DEGREE;
+import static com.shuangduan.zcy.app.CustomConfig.THREE_DEGREE;
+
 /**
  * @author 徐玉 QQ:876885613
  * @name information_platform_android
@@ -50,7 +55,7 @@ public class IncomePeopleActivity extends BaseActivity implements BaseQuickAdapt
     RecyclerView rv;
     @BindView(R.id.refresh)
     SmartRefreshLayout refresh;
-    private IncomePeopleVm incomeReleaseVm;
+    private IncomePeopleVm incomePeopleVm;
     private IncomePeopleAdapter incomePeopleAdapter;
     private View emptyView;
 
@@ -67,40 +72,44 @@ public class IncomePeopleActivity extends BaseActivity implements BaseQuickAdapt
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
-        int degree = getIntent().getIntExtra(CustomConfig.PEOPLE_DEGREE, CustomConfig.FIRST_DEGREE);
 
+        incomePeopleVm = ViewModelProviders.of(this).get(IncomePeopleVm.class);
+        incomePeopleVm.type = getIntent().getIntExtra(CustomConfig.PEOPLE_DEGREE, FIRST_DEGREE);
 
-        if (degree == 7) {
-            emptyView = emptyViewFactory.createEmptyView(R.drawable.icon_empty_income, R.string.empty_people_income_info, R.string.to_recommend, this);
-            tvBarTitle.setText(getString(R.string.income_people));
-        } else if (degree == 1) {
-            tvBarTitle.setText(String.format(getString(R.string.format_income_degree), degree));
-            emptyView = emptyViewFactory.createEmptyView(R.drawable.icon_empty_income, R.string.empty_recommend_friends_info, R.string.to_recommend, this);
-        } else {
-            emptyView = emptyViewFactory.createEmptyView(R.drawable.icon_empty_income, R.string.empty_income_info, R.string.to_recommend, this);
-            tvBarTitle.setText(String.format(getString(R.string.format_income_degree), degree));
+        switch (incomePeopleVm.type){
+            case FIRST_DEGREE://熟识人脉
+                tvBarTitle.setText("熟识人脉");
+                emptyView = emptyViewFactory.createEmptyView(R.drawable.icon_empty_income, R.string.empty_recommend_friends_info, R.string.to_recommend, this);
+                break;
+            case SECOND_DEGREE://相识人脉
+                tvBarTitle.setText("相识人脉");
+                emptyView = emptyViewFactory.createEmptyView(R.drawable.icon_empty_income, R.string.empty_recommend_friends_info, R.string.to_recommend, this);
+                break;
+            case THREE_DEGREE://初识人脉
+                tvBarTitle.setText("初识人脉");
+                emptyView = emptyViewFactory.createEmptyView(R.drawable.icon_empty_income, R.string.empty_recommend_friends_info, R.string.to_recommend, this);
+                break;
+            case SEVEN_DEGREE://全部人脉
+                emptyView = emptyViewFactory.createEmptyView(R.drawable.icon_empty_income, R.string.empty_people_income_info, R.string.to_recommend, this);
+                tvBarTitle.setText(getString(R.string.income_people));
+                break;
         }
-
-        incomeReleaseVm = ViewModelProviders.of(this).get(IncomePeopleVm.class);
-        incomeReleaseVm.type = degree;
 
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
-        incomePeopleAdapter = new IncomePeopleAdapter(R.layout.item_income_people, null, degree);
+        incomePeopleAdapter = new IncomePeopleAdapter(R.layout.item_income_people, null, incomePeopleVm.type);
         incomePeopleAdapter.setEmptyView(R.layout.layout_loading, rv);
         rv.setAdapter(incomePeopleAdapter);
 
         incomePeopleAdapter.setOnItemChildClickListener(this);
-        // if (degree == 1){ 只有一度人脉可以查看
         incomePeopleAdapter.setOnItemClickListener((helper, view, position) -> {
             IncomePeopleBean.ListBean listBean = incomePeopleAdapter.getData().get(position);
             Bundle bundle = new Bundle();
             bundle.putInt(CustomConfig.UID, listBean.getUser_id());
             ActivityUtils.startActivity(bundle, PeopleInfoActivity.class);
         });
-//        }
 
-        incomeReleaseVm.liveData.observe(this, incomePeopleBean -> {
+        incomePeopleVm.liveData.observe(this, incomePeopleBean -> {
             if (incomePeopleBean.getPage() == 1) {
                 incomePeopleAdapter.setNewData(incomePeopleBean.getList());
                 incomePeopleAdapter.setEmptyView(emptyView);
@@ -113,16 +122,16 @@ public class IncomePeopleActivity extends BaseActivity implements BaseQuickAdapt
         refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                incomeReleaseVm.getMoreData();
+                incomePeopleVm.getMoreData();
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                incomeReleaseVm.getData();
+                incomePeopleVm.getData();
             }
         });
 
-        incomeReleaseVm.getData();
+        incomePeopleVm.getData();
     }
 
     private void setNoMore(int page, int count) {
@@ -152,7 +161,6 @@ public class IncomePeopleActivity extends BaseActivity implements BaseQuickAdapt
 
     @Override
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-
         IncomePeopleBean.ListBean listBean = incomePeopleAdapter.getData().get(position);
         Bundle bundle = new Bundle();
         bundle.putInt(CustomConfig.UID, listBean.getUser_id());

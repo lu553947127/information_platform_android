@@ -115,10 +115,7 @@ public class CustomConfig {
     public static final int FIRST_DEGREE = 1;//1°人脉收益
     public static final int SECOND_DEGREE = 2;//2°人脉收益
     public static final int THREE_DEGREE = 3;//3°人脉收益
-    public static final int FOUR_DEGREE = 4;//4°人脉收益
-    public static final int FIVE_DEGREE = 5;//5°人脉收益
-    public static final int SIX_DEGREE = 6;//6°人脉收益
-    public static final int SEVEN_DEGREE = 7;//1~6°人脉收益
+    public static final int SEVEN_DEGREE = 7;//全部人脉收益
 
     //获取验证码 type参数
     public static final String SMS_TYPE = "sms_type";

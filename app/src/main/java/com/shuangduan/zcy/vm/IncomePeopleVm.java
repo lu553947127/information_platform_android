@@ -1,6 +1,5 @@
 package com.shuangduan.zcy.vm;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.blankj.utilcode.util.SPUtils;
@@ -9,7 +8,6 @@ import com.shuangduan.zcy.base.BaseViewModel;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.api.repository.IncomeRepository;
 import com.shuangduan.zcy.model.api.repository.PeopleRepository;
-import com.shuangduan.zcy.model.bean.IncomeLocusBean;
 import com.shuangduan.zcy.model.bean.IncomePeopleBean;
 import com.shuangduan.zcy.model.bean.IncomeRecordBean;
 import com.shuangduan.zcy.model.bean.PeopleBean;
