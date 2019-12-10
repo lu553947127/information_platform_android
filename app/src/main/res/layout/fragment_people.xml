@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@drawable/icon_people_background">
 
     <View
@@ -16,7 +16,7 @@
     <ImageView
         android:layout_width="173dp"
         android:layout_height="182dp"
-        android:layout_marginTop="178dp"
+        android:layout_marginTop="118dp"
         android:scaleType="centerCrop"
         android:layout_gravity="center_horizontal"
         android:src="@drawable/bg_head_people"/>
@@ -55,7 +55,7 @@
         android:background="@drawable/selector_bg_custom"
         android:textColor="@color/color_666666"
         android:textSize="14sp"
-        android:text="熟识人脉"/>
+        android:text="相识人脉"/>
 
     <View
         android:layout_width="match_parent"
@@ -75,11 +75,15 @@
         android:background="@drawable/selector_bg_custom"
         android:textColor="@color/color_666666"
         android:textSize="14sp"
-        android:text="熟识人脉"/>
+        android:text="初识人脉"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@drawable/divider_15"/>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="60dp"/>
 
 </LinearLayout>

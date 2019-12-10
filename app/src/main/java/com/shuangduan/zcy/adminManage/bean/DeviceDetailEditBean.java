@@ -97,8 +97,8 @@ public class DeviceDetailEditBean {
     private String plan_name;
     private String brand;
     private String main_params;
-    private int power;
-    private int original_price;
+    private String power;
+    private String original_price;
     private String start_date;
     private String entry_time;
     private String exit_time;
@@ -381,19 +381,19 @@ public class DeviceDetailEditBean {
         this.main_params = main_params;
     }
 
-    public int getPower() {
+    public String getPower() {
         return power;
     }
 
-    public void setPower(int power) {
+    public void setPower(String power) {
         this.power = power;
     }
 
-    public int getOriginal_price() {
+    public String getOriginal_price() {
         return original_price;
     }
 
-    public void setOriginal_price(int original_price) {
+    public void setOriginal_price(String original_price) {
         this.original_price = original_price;
     }
 

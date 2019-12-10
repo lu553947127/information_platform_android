@@ -882,20 +882,20 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
 
             turnoverAddVm.plan = turnoverDetailEditBean.getPlan();
             tsPlan.setValue(turnoverDetailEditBean.getPlan());
-            turnoverAddVm.use_count = String.valueOf(turnoverDetailEditBean.getUse_count());
-            tsNum.setValue(String.valueOf(turnoverDetailEditBean.getUse_count()));
+            turnoverAddVm.use_count = turnoverDetailEditBean.getUse_count();
+            tsNum.setValue(turnoverDetailEditBean.getUse_count());
             turnoverAddVm.start_date = turnoverDetailEditBean.getStart_date();
             tsStartTime.setValue(turnoverDetailEditBean.getStart_date());
             turnoverAddVm.entry_time = turnoverDetailEditBean.getEntry_time();
             tsEnterTime.setValue(turnoverDetailEditBean.getEntry_time());
             turnoverAddVm.exit_time = turnoverDetailEditBean.getExit_time();
             tsExitTime.setValue(turnoverDetailEditBean.getExit_time());
-            turnoverAddVm.accumulated_amortization = String.valueOf(turnoverDetailEditBean.getAccumulated_amortization());
-            tsAmortize.setValue(String.valueOf(turnoverDetailEditBean.getAccumulated_amortization()));
-            turnoverAddVm.original_price = String.valueOf(turnoverDetailEditBean.getOriginal_price());
-            tsOriginal.setValue(String.valueOf(turnoverDetailEditBean.getOriginal_price()));
-            turnoverAddVm.net_worth = String.valueOf(turnoverDetailEditBean.getNet_worth());
-            tsValue.setValue(String.valueOf(turnoverDetailEditBean.getNet_worth()));
+            turnoverAddVm.accumulated_amortization = turnoverDetailEditBean.getAccumulated_amortization();
+            tsAmortize.setValue(turnoverDetailEditBean.getAccumulated_amortization());
+            turnoverAddVm.original_price = turnoverDetailEditBean.getOriginal_price();
+            tsOriginal.setValue(turnoverDetailEditBean.getOriginal_price());
+            turnoverAddVm.net_worth = turnoverDetailEditBean.getNet_worth();
+            tsValue.setValue(turnoverDetailEditBean.getNet_worth());
 
             dialogControl.setDetail(turnoverDetailEditBean.getPlan()
                     , String.valueOf(turnoverDetailEditBean.getUse_count()), turnoverDetailEditBean.getStart_date(),
@@ -904,10 +904,10 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
                     String.valueOf(turnoverDetailEditBean.getNet_worth()));
 
             etRemark.setText(turnoverDetailEditBean.getRemark());
-            if (!StringUtils.isTrimEmpty(turnoverAddVm.plan) || turnoverDetailEditBean.getUse_count() != 0
+            if (!StringUtils.isTrimEmpty(turnoverAddVm.plan) || !StringUtils.isTrimEmpty(turnoverAddVm.use_count)
                     || !StringUtils.isTrimEmpty(turnoverAddVm.start_date) || !StringUtils.isTrimEmpty(turnoverAddVm.entry_time)
-                    || !StringUtils.isTrimEmpty(turnoverAddVm.exit_time) || turnoverDetailEditBean.getAccumulated_amortization() != 0
-                    || turnoverDetailEditBean.getOriginal_price() != 0 || turnoverDetailEditBean.getNet_worth() != 0) {
+                    || !StringUtils.isTrimEmpty(turnoverAddVm.exit_time) || !StringUtils.isTrimEmpty(turnoverAddVm.accumulated_amortization)
+                    || !StringUtils.isTrimEmpty(turnoverAddVm.original_price) || !StringUtils.isTrimEmpty(turnoverAddVm.net_worth)) {
                 svOtherDetails.setOpened(true);
                 llTurnoverDetail.setVisibility(View.VISIBLE);
             }

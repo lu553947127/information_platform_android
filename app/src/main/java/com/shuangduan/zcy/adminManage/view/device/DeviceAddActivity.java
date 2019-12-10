@@ -51,7 +51,6 @@ import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BottomSheetDialogs;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.event.LocationEvent;
-import com.shuangduan.zcy.utils.KeyboardUtil;
 import com.shuangduan.zcy.utils.image.PictureEnlargeUtils;
 import com.shuangduan.zcy.utils.matisse.Glide4Engine;
 import com.shuangduan.zcy.view.photo.CameraActivity;
@@ -311,7 +310,6 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
         deviceVm.constructionSearch();
         deviceVm.getUnitInfo();
         deviceVm.equipmentCategoryParent();
-        KeyboardUtil.RemoveDecimalPoints(etStock);
     }
 
     @OnClick({R.id.iv_bar_back, R.id.tv_project, R.id.tv_category_material_id, R.id.tv_unit, R.id.tv_use_status
@@ -860,12 +858,12 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
             tsStartTime.setValue(deviceDetailEditBean.getStart_date());
             deviceAddVm.brand = deviceDetailEditBean.getBrand();
             tsBrand.setValue(deviceDetailEditBean.getBrand());
-            deviceAddVm.original_price = String.valueOf(deviceDetailEditBean.getOriginal_price());
-            tsOriginalPrice.setValue(String.valueOf(deviceDetailEditBean.getOriginal_price()));
+            deviceAddVm.original_price = deviceDetailEditBean.getOriginal_price();
+            tsOriginalPrice.setValue(deviceDetailEditBean.getOriginal_price());
             deviceAddVm.main_params = deviceDetailEditBean.getMain_params();
             tsMainParams.setValue(deviceDetailEditBean.getMain_params());
-            deviceAddVm.power = String.valueOf(deviceDetailEditBean.getPower());
-            tsPower.setValue(String.valueOf(deviceDetailEditBean.getPower()));
+            deviceAddVm.power = deviceDetailEditBean.getPower();
+            tsPower.setValue(deviceDetailEditBean.getPower());
             deviceAddVm.entry_time = deviceDetailEditBean.getEntry_time();
             tsEntryTime.setValue(deviceDetailEditBean.getEntry_time());
             deviceAddVm.exit_time = deviceDetailEditBean.getExit_time();
@@ -878,8 +876,8 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
                     , deviceDetailEditBean.getEntry_time(), deviceDetailEditBean.getExit_time(), deviceDetailEditBean.getOperator_name());
 
             if (!StringUtils.isTrimEmpty(deviceDetailEditBean.getStart_date()) || !StringUtils.isTrimEmpty(deviceDetailEditBean.getBrand())
-                    || deviceDetailEditBean.getOriginal_price() != 0 || !StringUtils.isTrimEmpty(deviceDetailEditBean.getMain_params())
-                    || deviceDetailEditBean.getPower() != 0 || !StringUtils.isTrimEmpty(deviceDetailEditBean.getEntry_time())
+                    || !StringUtils.isTrimEmpty(deviceDetailEditBean.getOriginal_price()) || !StringUtils.isTrimEmpty(deviceDetailEditBean.getMain_params())
+                    || !StringUtils.isTrimEmpty(deviceDetailEditBean.getPower()) || !StringUtils.isTrimEmpty(deviceDetailEditBean.getEntry_time())
                     || !StringUtils.isTrimEmpty(deviceDetailEditBean.getExit_time()) || !StringUtils.isTrimEmpty(deviceDetailEditBean.getOperator_name())) {
                 svOtherDetails.setOpened(true);
                 llTurnoverDetail.setVisibility(View.VISIBLE);
