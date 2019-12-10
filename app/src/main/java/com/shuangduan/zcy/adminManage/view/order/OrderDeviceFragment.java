@@ -392,6 +392,9 @@ public class OrderDeviceFragment extends BaseNoRefreshFragment implements BaseQu
             getDrawableRightView(tvProject, R.drawable.icon_pulldown_arrow, R.color.color_666666);
             getDrawableRightView(tvOrderPhases, R.drawable.icon_pulldown_arrow, R.color.color_666666);
             getDrawableRightView(tvOrderType, R.drawable.icon_pulldown_arrow, R.color.color_666666);
+            if (KeyboardUtil.isSoftShowing(mActivity)){
+                KeyboardUtil.showORhideSoftKeyboard(mActivity);
+            }
         });
         orderVm.type = type;
         switch (type) {

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="270dp"
@@ -27,7 +28,7 @@
                     android:layout_marginLeft="20dp"
                     android:text="拆分"
                     android:textColor="@color/colorTv"
-                    android:textSize="15sp" />
+                    android:textSize="17sp" />
 
                 <TextView
                     android:id="@+id/tv_save"
@@ -63,7 +64,7 @@
                     android:layout_height="wrap_content"
                     android:text="数&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;量："
                     android:textColor="@color/colorTv"
-                    android:textSize="14sp" />
+                    android:textSize="16sp" />
 
                 <EditText
                     android:id="@+id/et_num"
@@ -78,7 +79,44 @@
                     android:singleLine="true"
                     android:textColor="@color/colorTv"
                     android:textColorHint="@color/colorTvHint"
-                    android:textSize="14sp" />
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:text="*"
+                    android:textColor="@color/color_F83425"
+                    tools:ignore="HardcodedText,RtlHardcoded" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="单&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;价："
+                    android:textColor="@color/colorTv"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/et_unit_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="33dp"
+                    android:background="@null"
+                    android:digits="0123456789."
+                    android:hint="请输入单价"
+                    android:inputType="number"
+                    android:maxLength="10"
+                    android:singleLine="true"
+                    android:textColor="@color/colorTv"
+                    android:textColorHint="@color/colorTvHint"
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -100,7 +138,7 @@
                     android:layout_height="wrap_content"
                     android:text="使用状态："
                     android:textColor="@color/colorTv"
-                    android:textSize="14sp" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/tv_use_statue"
@@ -111,7 +149,7 @@
                     android:paddingRight="15dp"
                     android:text="请选择使用状态"
                     android:textColor="@color/colorTvHint"
-                    android:textSize="14sp"
+                    android:textSize="16sp"
                     tools:ignore="RtlHardcoded" />
             </LinearLayout>
 
@@ -134,7 +172,7 @@
                     android:layout_height="wrap_content"
                     android:text="存&#160;&#160;放&#160;&#160;地："
                     android:textColor="@color/colorTv"
-                    android:textSize="14sp" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/tv_material_id"
@@ -145,7 +183,7 @@
                     android:paddingRight="15dp"
                     android:text="请选择存放地"
                     android:textColor="@color/colorTvHint"
-                    android:textSize="14sp"
+                    android:textSize="16sp"
                     tools:ignore="RtlHardcoded" />
             </LinearLayout>
         </LinearLayout>

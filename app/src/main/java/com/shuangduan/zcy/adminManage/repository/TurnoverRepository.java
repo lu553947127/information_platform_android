@@ -69,8 +69,8 @@ public class TurnoverRepository extends BaseRepository {
     }
 
     //后台管理 --- 周转材料拆分
-    public void constructionSplit(MutableLiveData<String> liveData, int userId, int id, String stock, int use_status, int province, int city, String address, double longitude, double latitude) {
-        request(apiService.constructionSplit(userId, id, stock, use_status, province, city, address, longitude, latitude)).setData(liveData).send();
+    public void constructionSplit(MutableLiveData<String> liveData, int userId, int id, String stock,String unit_price, int use_status, int province, int city, String address, double longitude, double latitude) {
+        request(apiService.constructionSplit(userId, id, stock,unit_price, use_status, province, city, address, longitude, latitude)).setData(liveData).send();
     }
 
     //后台管理 --- 周转材料添加--选择项目

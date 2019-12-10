@@ -121,8 +121,8 @@ public class TurnoverVm extends BaseViewModel{
     }
 
     //后台管理 --- 周转材料拆分
-    public void constructionSplit(int id,String stock,int use_status,int province,int city,String address,double longitude,double latitude){
-        new TurnoverRepository().constructionSplit(turnoverSplitData,userId,id,stock,use_status,province,city,address,longitude,latitude);
+    public void constructionSplit(int id,String stock,String unit_price,int use_status,int province,int city,String address,double longitude,double latitude){
+        new TurnoverRepository().constructionSplit(turnoverSplitData,userId,id,stock,unit_price,use_status,province,city,address,longitude,latitude);
     }
 
     //后台管理 --- 周转材料详情

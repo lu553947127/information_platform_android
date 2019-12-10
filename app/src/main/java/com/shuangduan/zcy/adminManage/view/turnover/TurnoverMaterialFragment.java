@@ -452,6 +452,9 @@ public class TurnoverMaterialFragment extends BaseNoRefreshFragment {
             getDrawableRightView(tvGrounding,R.drawable.icon_pulldown_arrow,R.color.color_666666);
             getDrawableRightView(tvUseStatue,R.drawable.icon_pulldown_arrow,R.color.color_666666);
             getDrawableRightView(tvCompany,R.drawable.icon_pulldown_arrow,R.color.color_666666);
+            if (KeyboardUtil.isSoftShowing(mActivity)){
+                KeyboardUtil.showORhideSoftKeyboard(mActivity);
+            }
         });
         turnoverVm.type=type;
         switch (type){
@@ -596,9 +599,12 @@ public class TurnoverMaterialFragment extends BaseNoRefreshFragment {
             case "split"://拆分弹窗
                 TextView tvSave=dialog_view.findViewById(R.id.tv_save);
                 EditText etNum=dialog_view.findViewById(R.id.et_num);
+                EditText et_unit_price=dialog_view.findViewById(R.id.et_unit_price);
                 tvSplitUseStatue=dialog_view.findViewById(R.id.tv_use_statue);
                 tvSplitAddress = dialog_view.findViewById(R.id.tv_material_id);
                 KeyboardUtil.RemoveDecimalPoints(etNum);
+                KeyboardUtil.RemoveDecimalPoints(et_unit_price);
+                KeyboardUtil.showSoftInputFromWindow((BaseActivity) getActivity(), etNum);
                 tvSave.setOnClickListener(v -> {
                     if (TextUtils.isEmpty(etNum.getText().toString())) {
                         ToastUtils.showShort(getString(R.string.no_mun));
@@ -606,6 +612,10 @@ public class TurnoverMaterialFragment extends BaseNoRefreshFragment {
                     }
                     if (Double.valueOf(etNum.getText().toString()) == 0) {
                         ToastUtils.showShort("数量不能为0");
+                        return;
+                    }
+                    if (TextUtils.isEmpty(et_unit_price.getText().toString())) {
+                        ToastUtils.showShort("单价输入不能为空");
                         return;
                     }
                     if (splitUseStatue==0) {
@@ -616,7 +626,7 @@ public class TurnoverMaterialFragment extends BaseNoRefreshFragment {
                         ToastUtils.showShort("存放地不能为空");
                         return;
                     }
-                    turnoverVm.constructionSplit(id,etNum.getText().toString(),splitUseStatue,splitProvince,splitCity,splitAddress,longitude,latitude);
+                    turnoverVm.constructionSplit(id,etNum.getText().toString(),et_unit_price.getText().toString(),splitUseStatue,splitProvince,splitCity,splitAddress,longitude,latitude);
                     btn_dialog.dismiss();
                 });
                 tvSplitUseStatue.setOnClickListener(v -> {

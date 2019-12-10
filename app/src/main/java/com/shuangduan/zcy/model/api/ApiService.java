@@ -1733,6 +1733,7 @@ public interface ApiService {
             @Field("user_id") int userId,
             @Field("id") int id,
             @Field("stock") String stock,
+            @Field("unit_price") String unit_price,
             @Field("use_status") int use_status,
             @Field("province") int province,
             @Field("city") int city,

@@ -421,6 +421,9 @@ public class DeviceManagementFragment extends BaseNoRefreshFragment {
             getDrawableRightView(tvGrounding,R.drawable.icon_pulldown_arrow,R.color.color_666666);
             getDrawableRightView(tvUseStatue,R.drawable.icon_pulldown_arrow,R.color.color_666666);
             getDrawableRightView(tvCompany,R.drawable.icon_pulldown_arrow,R.color.color_666666);
+            if (KeyboardUtil.isSoftShowing(mActivity)){
+                KeyboardUtil.showORhideSoftKeyboard(mActivity);
+            }
         });
         deviceVm.type=type;
         switch (type){
