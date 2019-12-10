@@ -148,6 +148,8 @@ public class FindSubstanceDetailActivity extends BaseActivity {
             tvDetailsContent.setText(info.getRemark());
             subOrderAdapter.setNewData(substanceDetailBean.getList());
             subOrderAdapter.setEmptyView(emptyView);
+
+            if (getIntent().getIntExtra("type",0)!=1)ivState.setVisibility(View.GONE);
             status = substanceDetailBean.getInfo().getStatus();
             switch (status){
                 case 1://审核中

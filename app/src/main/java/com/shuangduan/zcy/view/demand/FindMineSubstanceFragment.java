@@ -71,6 +71,7 @@ public class FindMineSubstanceFragment extends BaseLazyFragment implements Empty
             DemandSubstanceBean.ListBean listBean = substanceAdapter.getData().get(position);
             Bundle bundle = new Bundle();
             bundle.putInt(CustomConfig.DEMAND_ID, listBean.getId());
+            bundle.putInt("type", 1);
             ActivityUtils.startActivity(bundle, FindSubstanceDetailActivity.class);
         });
 

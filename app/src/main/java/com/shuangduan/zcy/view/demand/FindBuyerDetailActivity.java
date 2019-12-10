@@ -150,6 +150,8 @@ public class FindBuyerDetailActivity extends BaseActivity {
             tvDetailsContent.setText(info.getRemark());
             buyerAdapter.setNewData(buyerDetailBean.getList());
             buyerAdapter.setEmptyView(emptyView);
+
+            if (getIntent().getIntExtra("type",0)!=1)ivState.setVisibility(View.GONE);
             status = buyerDetailBean.getInfo().getStatus();
             switch (status){
                 case 1://审核中

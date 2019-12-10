@@ -70,6 +70,7 @@ public class FindMineBuyerFragment extends BaseLazyFragment implements EmptyView
             DemandBuyerBean.ListBean listBean = buyerAdapter.getData().get(position);
             Bundle bundle = new Bundle();
             bundle.putInt(CustomConfig.DEMAND_ID, listBean.getId());
+            bundle.putInt("type",1);
             ActivityUtils.startActivity(bundle, FindBuyerDetailActivity.class);
         });
 
