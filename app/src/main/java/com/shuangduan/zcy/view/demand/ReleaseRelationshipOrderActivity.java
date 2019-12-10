@@ -34,7 +34,7 @@ import butterknife.OnClick;
  * @author 徐玉 QQ:876885613
  * @name information_platform_android
  * @class name：com.shuangduan.zcy.view.demand
- * @class describe  发布找关系支付界面
+ * @class 发布找关系支付界面
  * @time 2019/8/21 16:16
  * @change
  * @chang time

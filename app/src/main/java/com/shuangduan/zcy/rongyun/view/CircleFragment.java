@@ -156,7 +156,7 @@ public class CircleFragment extends BaseFragment {
                     rlSubscribeChildren.setVisibility(View.GONE);
                     rlIdleReminder.setVisibility(View.VISIBLE);
                     rlOrder.setVisibility(View.VISIBLE);
-                    rlUnused.setVisibility(View.INVISIBLE);
+                    rlUnused.setVisibility(View.GONE);
                     break;
                 case 2://子公司
                     rlSubscribeChildren.setVisibility(View.GONE);
@@ -292,9 +292,7 @@ public class CircleFragment extends BaseFragment {
 
     @Override
     protected void initDataFromService() {
-        userInfoVm.userInfo();
-        homeVm.getSupplierRole();
-        imAddVm.applyCount();
+
     }
 
     @Subscribe
@@ -333,5 +331,13 @@ public class CircleFragment extends BaseFragment {
                 default:
                     break;
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        userInfoVm.userInfo();
+        homeVm.getSupplierRole();
+        imAddVm.applyCount();
     }
 }

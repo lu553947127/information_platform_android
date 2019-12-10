@@ -18,6 +18,7 @@ import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.PageState;
+import com.shuangduan.zcy.utils.KeyboardUtil;
 import com.shuangduan.zcy.vm.SmsCodeVm;
 import com.shuangduan.zcy.vm.UpdatePwdPayVm;
 
@@ -145,5 +146,11 @@ public class ForgetPwdPayActivity extends BaseActivity {
                 updatePwdPayVm.forgetPwdPay(mobile, code, pwd);
                 break;
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        KeyboardUtil.showSoftInputFromWindow(this, edtSMSCode);
     }
 }

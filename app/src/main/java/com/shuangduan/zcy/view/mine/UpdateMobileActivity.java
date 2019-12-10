@@ -18,6 +18,7 @@ import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.event.MobileEvent;
+import com.shuangduan.zcy.utils.KeyboardUtil;
 import com.shuangduan.zcy.vm.LoginVm;
 import com.shuangduan.zcy.vm.UserInfoVm;
 
@@ -137,5 +138,11 @@ public class UpdateMobileActivity extends BaseActivity {
                 userInfoVm.updateTel(mobile, verificationCode, getIntent().getStringExtra(CustomConfig.VERIFICATION_CODE));
                 break;
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        KeyboardUtil.showSoftInputFromWindow(this, edtPwd);
     }
 }

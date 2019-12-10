@@ -42,9 +42,7 @@ public class DemandMineAcceptFragment extends BaseLazyFragment implements EmptyV
     private DemandRelationshipVm demandRelationshipVm;
 
     public static DemandMineAcceptFragment newInstance() {
-
         Bundle args = new Bundle();
-
         DemandMineAcceptFragment fragment = new DemandMineAcceptFragment();
         fragment.setArguments(args);
         return fragment;

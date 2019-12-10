@@ -29,6 +29,7 @@ import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.bean.ProjectSearchBean;
 import com.shuangduan.zcy.model.event.ProjectNameEvent;
+import com.shuangduan.zcy.utils.KeyboardUtil;
 import com.shuangduan.zcy.vm.ProjectSearchVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
@@ -61,7 +62,6 @@ public class ProjectSearchActivity extends BaseActivity {
     @BindView(R.id.refresh)
     SmartRefreshLayout refresh;
 
-    private String type;
     private ProjectSearchVm projectSearchVm;
     private ProjectSearchAdapter projectSearchAdapter;
 
@@ -78,7 +78,7 @@ public class ProjectSearchActivity extends BaseActivity {
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
-        type = getIntent().getStringExtra(CustomConfig.SEARCH_TYPE);
+        String type = getIntent().getStringExtra(CustomConfig.SEARCH_TYPE);
         tvBarTitle.setText(getString(R.string.project_names));
 
         projectSearchVm = ViewModelProviders.of(this).get(ProjectSearchVm.class);
@@ -201,4 +201,9 @@ public class ProjectSearchActivity extends BaseActivity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        KeyboardUtil.showSoftInputFromWindow(this, edtKeyword);
+    }
 }

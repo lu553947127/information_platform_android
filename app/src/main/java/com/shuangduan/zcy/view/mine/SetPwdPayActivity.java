@@ -19,6 +19,7 @@ import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.event.PwdPaySetEvent;
+import com.shuangduan.zcy.utils.KeyboardUtil;
 import com.shuangduan.zcy.vm.SmsCodeVm;
 import com.shuangduan.zcy.vm.UpdatePwdPayVm;
 
@@ -146,5 +147,11 @@ public class SetPwdPayActivity extends BaseActivity {
                 updatePwdPayVm.setPwdPay(pwd, mobile, code);
                 break;
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        KeyboardUtil.showSoftInputFromWindow(this, edtSMSCode);
     }
 }

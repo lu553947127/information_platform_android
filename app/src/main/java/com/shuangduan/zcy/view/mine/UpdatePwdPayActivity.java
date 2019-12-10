@@ -14,6 +14,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.PageState;
+import com.shuangduan.zcy.utils.KeyboardUtil;
 import com.shuangduan.zcy.vm.UpdatePwdPayVm;
 
 import butterknife.BindView;
@@ -90,5 +91,11 @@ public class UpdatePwdPayActivity extends BaseActivity {
                 updatePwdPayVm.updatePwd(edtPwdOld.getText().toString(), edtPwdNew.getText().toString());
                 break;
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        KeyboardUtil.showSoftInputFromWindow(this, edtPwdOld);
     }
 }

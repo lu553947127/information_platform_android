@@ -15,6 +15,7 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.PageState;
+import com.shuangduan.zcy.utils.KeyboardUtil;
 import com.shuangduan.zcy.vm.ProjectDetailVm;
 
 import butterknife.BindView;
@@ -88,5 +89,11 @@ public class ProjectErrorActivity extends BaseActivity {
                 });
                 break;
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        KeyboardUtil.showSoftInputFromWindow(this, edtError);
     }
 }

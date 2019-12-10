@@ -13,6 +13,7 @@ import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.base.BaseActivity;
+import com.shuangduan.zcy.utils.KeyboardUtil;
 import com.shuangduan.zcy.vm.UpdatePwdVm;
 
 import butterknife.BindView;
@@ -94,5 +95,11 @@ public class UpdatePwdActivity extends BaseActivity {
                 updatePwdVm.update(edtPwdOld.getText().toString(), pwd);
                 break;
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        KeyboardUtil.showSoftInputFromWindow(this, edtPwdOld);
     }
 }

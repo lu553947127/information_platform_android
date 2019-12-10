@@ -14,6 +14,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.PageState;
+import com.shuangduan.zcy.utils.KeyboardUtil;
 import com.shuangduan.zcy.vm.FeedbackVm;
 
 import butterknife.BindView;
@@ -83,5 +84,11 @@ public class FeedbackActivity extends BaseActivity {
                 feedbackVm.submit(edtFeedback.getText().toString());
                 break;
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        KeyboardUtil.showSoftInputFromWindow(this, edtFeedback);
     }
 }
