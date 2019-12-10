@@ -34,7 +34,7 @@ public class MatisseCamera {
     private final WeakReference<Activity> mContext;
     private final WeakReference<Fragment> mFragment;
     // 是否是Android 10以上手机
-    public static boolean isAndroidQ = Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q;
+//    public static boolean isAndroidQ = Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q;
 
     private MatisseCamera(Activity activity) {
         this(activity, null);
@@ -81,19 +81,30 @@ public class MatisseCamera {
         if (takePictureIntent.resolveActivity(activity.getPackageManager()) != null) {
             // Create the File where the photo should go
             File photoFile = null;
-            if (isAndroidQ) {
-                // 适配android 10
-                photoURI = createImageUri(activity);
-            } else {
-                photoFile = createImageFile();
-                if (photoFile != null) {
-                    mCurrentPhotoPath = photoFile.getAbsolutePath();
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        //适配Android 7.0文件权限，通过FileProvider创建一个content类型的Uri
-                        photoURI = FileProvider.getUriForFile(activity, authority, photoFile);
-                    } else {
-                        photoURI = Uri.fromFile(photoFile);
-                    }
+//            if (isAndroidQ) {
+//                // 适配android 10
+//                photoURI = createImageUri(activity);
+//            } else {
+//                photoFile = createImageFile();
+//                if (photoFile != null) {
+//                    mCurrentPhotoPath = photoFile.getAbsolutePath();
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//                        //适配Android 7.0文件权限，通过FileProvider创建一个content类型的Uri
+//                        photoURI = FileProvider.getUriForFile(activity, authority, photoFile);
+//                    } else {
+//                        photoURI = Uri.fromFile(photoFile);
+//                    }
+//                }
+//            }
+
+            photoFile = createImageFile();
+            if (photoFile != null) {
+                mCurrentPhotoPath = photoFile.getAbsolutePath();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    //适配Android 7.0文件权限，通过FileProvider创建一个content类型的Uri
+                    photoURI = FileProvider.getUriForFile(activity, authority, photoFile);
+                } else {
+                    photoURI = Uri.fromFile(photoFile);
                 }
             }
             if (photoURI != null) {

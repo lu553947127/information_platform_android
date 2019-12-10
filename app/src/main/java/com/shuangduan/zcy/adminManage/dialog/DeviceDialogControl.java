@@ -262,8 +262,7 @@ public class DeviceDialogControl extends BaseAddInfoDialog implements DialogInte
                 break;
             case 5:
                 KeyboardUtil.showSoftInputFromWindow(context, tsItemSix.getEditText());
-                KeyboardUtil.RemoveDecimalPoints(tsItemSix.getEditText());
-                tsItemSix.getEditText().setKeyListener(DigitsKeyListener.getInstance("0123456789."));
+                tsItemSix.getEditText().setInputType(InputType.TYPE_CLASS_TEXT);
                 break;
             case 2:
                 KeyboardUtil.showSoftInputFromWindow(context, tsItemThree.getEditText());

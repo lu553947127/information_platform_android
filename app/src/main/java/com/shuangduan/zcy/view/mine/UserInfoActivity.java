@@ -54,7 +54,6 @@ import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
 import org.greenrobot.eventbus.Subscribe;
 
-import java.util.List;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -383,22 +382,26 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PermissionVm.REQUEST_CODE_CHOOSE_HEAD && resultCode == RESULT_OK) {
 
-            if (MatisseCamera.isAndroidQ) {
-                LogUtils.e(Matisse.obtainResult(data).get(0));
-                uploadPhotoVm.upload(CompressUtils.getRealFilePath(this,Matisse.obtainResult(data).get(0)));
-            }else {
-                LogUtils.e(Matisse.obtainPathResult(data).get(0));
-                uploadPhotoVm.upload(Matisse.obtainPathResult(data).get(0));
-            }
+//            if (MatisseCamera.isAndroidQ) {
+//                LogUtils.e(Matisse.obtainResult(data).get(0));
+//                uploadPhotoVm.upload(CompressUtils.getRealFilePath(this,Matisse.obtainResult(data).get(0)));
+//            }else {
+//                LogUtils.e(Matisse.obtainPathResult(data).get(0));
+//                uploadPhotoVm.upload(Matisse.obtainPathResult(data).get(0));
+//            }
+
+            uploadPhotoVm.upload(Matisse.obtainPathResult(data).get(0));
         }
 
         if (requestCode == PermissionVm.REQUEST_CODE_HEAD && resultCode == RESULT_OK) {
-            if (MatisseCamera.isAndroidQ) {
-                LogUtils.e(MatisseCamera.obtainUriResult());
-                uploadPhotoVm.upload(CompressUtils.getRealFilePath(this,MatisseCamera.obtainUriResult()));
-            } else {
-                uploadPhotoVm.upload(MatisseCamera.obtainPathResult());
-            }
+//            if (MatisseCamera.isAndroidQ) {
+//                LogUtils.e(MatisseCamera.obtainUriResult());
+//                uploadPhotoVm.upload(CompressUtils.getRealFilePath(this,MatisseCamera.obtainUriResult()));
+//            } else {
+//                uploadPhotoVm.upload(MatisseCamera.obtainPathResult());
+//            }
+
+            uploadPhotoVm.upload(MatisseCamera.obtainPathResult());
         }
     }
 

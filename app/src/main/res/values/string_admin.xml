@@ -86,7 +86,7 @@
     <string name="admin_turnover_add_material_status">材料状态</string>
     <string name="admin_turnover_add_material_status_et">请选择材料状态</string>
     <string name="admin_turnover_add_address">存放地点</string>
-    <string name="admin_turnover_add_address_et">请请输入存放地点</string>
+    <string name="admin_turnover_add_address_et">请输入存放地点</string>
     <string name="admin_turnover_add_person_liable">责任人</string>
     <string name="admin_turnover_add_person_liable_et">请输入责任人</string>
     <string name="admin_turnover_add_tel">联系电话</string>
