@@ -7,6 +7,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.blankj.utilcode.util.StringUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.shuangduan.zcy.R;
@@ -41,8 +42,8 @@ public class MaterialOrderAdapter extends BaseQuickAdapter<MaterialOrderBean.Lis
         if (item.inside == 3) {
             lp.rightMargin = DensityUtil.dp2px(10);
 
-            if (item.materialName.length() > 9) {
-                TextViewUtils.addDrawableInEnd(tvTitle, mContext.getResources().getDrawable(R.drawable.icon_mine_default_material), item.materialName.substring(0,9) + "...");
+            if (!StringUtils.isTrimEmpty(item.materialName) && item.materialName.length() > 9) {
+                TextViewUtils.addDrawableInEnd(tvTitle, mContext.getResources().getDrawable(R.drawable.icon_mine_default_material), item.materialName.substring(0, 9) + "...");
             } else {
                 TextViewUtils.addDrawableInEnd(tvTitle, mContext.getResources().getDrawable(R.drawable.icon_mine_default_material), item.materialName);
             }
@@ -72,7 +73,7 @@ public class MaterialOrderAdapter extends BaseQuickAdapter<MaterialOrderBean.Lis
                 .setText(R.id.tv_order_num, "订单号:" + item.orderSn)
                 .setText(R.id.tv_supply_method, item.method == 1 ? "出租" : "出售");
 
-        if (item.status.equals("驳回")||item.status.equals("已取消")) {
+        if (item.status.equals("驳回") || item.status.equals("已取消")) {
             helper.setTextColor(R.id.tv_state, mContext.getResources().getColor(R.color.text2));
             helper.setText(R.id.tv_state, item.status);
         } else {

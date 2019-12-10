@@ -23,6 +23,7 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.SearchMaterialAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
+import com.shuangduan.zcy.listener.TextWatcherWrapper;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.event.MaterialEvent;
 import com.shuangduan.zcy.model.event.SupplierEvent;
@@ -80,35 +81,43 @@ public class MaterialSearchActivity extends BaseActivity {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         SearchVm searchVm = ViewModelProviders.of(this).get(SearchVm.class);
 
-        searchVm.materialLiveData.observe(this, list -> {
-            if (searchAdapter == null) {
-                rvMaterial.setLayoutManager(new LinearLayoutManager(this));
-                rvMaterial.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
-                searchAdapter = new SearchMaterialAdapter(R.layout.item_project_search, list);
-                View emptyView = LayoutInflater.from(this).inflate(R.layout.layout_empty, null);
-                searchAdapter.setEmptyView(emptyView);
-                searchAdapter.setKeyword(edtKeyword.getText().toString());
-                rvMaterial.setAdapter(searchAdapter);
-                searchAdapter.setOnItemClickListener((adapter, view, position) -> {
-                    int id = searchAdapter.getData().get(position).id;
-                    String s = searchAdapter.getData().get(position).name;
-                    if (searchType == CustomConfig.MATERIAL_TYPE) {
-                        EventBus.getDefault().post(new MaterialEvent(id, s));
-                    } else if (searchType == CustomConfig.SUPPLIER_TYPE) {
-                        EventBus.getDefault().post(new SupplierEvent(id, s));
-                    }
-                    finish();
-                });
-            } else {
-                searchAdapter.setNewData(list);
+
+        rvMaterial.setLayoutManager(new LinearLayoutManager(this));
+        rvMaterial.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
+        searchAdapter = new SearchMaterialAdapter(R.layout.item_project_search, null);
+        View emptyView = LayoutInflater.from(this).inflate(R.layout.layout_empty, null);
+        searchAdapter.setEmptyView(emptyView);
+        rvMaterial.setAdapter(searchAdapter);
+
+        searchAdapter.setOnItemClickListener((adapter, view, position) -> {
+            int id = searchAdapter.getData().get(position).id;
+            String s = searchAdapter.getData().get(position).name;
+            if (searchType == CustomConfig.MATERIAL_TYPE) {
+                EventBus.getDefault().post(new MaterialEvent(id, s));
+            } else if (searchType == CustomConfig.SUPPLIER_TYPE) {
+                EventBus.getDefault().post(new SupplierEvent(id, s));
             }
+            finish();
         });
+
+
+        searchVm.materialLiveData.observe(this, list -> {
+            searchAdapter.setKeyword(edtKeyword.getText().toString());
+            searchAdapter.setNewData(list);
+        });
+
 
         searchVm.pageStateLiveData.observe(this, this::showHideLoad);
 
         //重新键盘，改成搜索键盘，点击搜索键即可完成搜索
         edtKeyword.setOnEditorActionListener((textView, i, keyEvent) -> {
             if (i == EditorInfo.IME_ACTION_SEARCH) {
+
+                if (StringUtils.isTrimEmpty(edtKeyword.getText().toString())) {
+                    ToastUtils.showShort(getString(R.string.hint_keyword));
+                    return true;
+                }
+
                 // 先隐藏键盘
                 ((InputMethodManager) Objects.requireNonNull(edtKeyword.getContext()
                         .getSystemService(Context.INPUT_METHOD_SERVICE)))
@@ -128,36 +137,26 @@ public class MaterialSearchActivity extends BaseActivity {
             return false;
         });
 
-        //监听键盘开始搜索
-        edtKeyword.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                if (null != editable) {
-                    if (StringUtils.isTrimEmpty(editable.toString())) {
-                        ToastUtils.showShort(getString(R.string.hint_keyword));
-                        return;
-                    }
-                    ivClear.setVisibility(edtKeyword.getText().length() > 0 ? View.VISIBLE : View.INVISIBLE);
-                    if (edtKeyword.getText().length() > 0) {
-                        if (materialsType == CustomConfig.FRP) {
-                            searchVm.searchMaterial(searchType, edtKeyword.getText().toString());
-                        } else if (materialsType == CustomConfig.EQUIPMENT) {
-                            searchVm.searchEquipment(searchType, edtKeyword.getText().toString());
-                        }
-                    }
-                }
-            }
-        });
+//        监听键盘开始搜索
+//        edtKeyword.addTextChangedListener(new TextWatcherWrapper() {
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//                if (null != editable) {
+//                    if (StringUtils.isTrimEmpty(editable.toString())) {
+//                        ToastUtils.showShort(getString(R.string.hint_keyword));
+//                        return;
+//                    }
+//                    ivClear.setVisibility(edtKeyword.getText().length() > 0 ? View.VISIBLE : View.INVISIBLE);
+//                    if (edtKeyword.getText().length() > 0) {
+//                        if (materialsType == CustomConfig.FRP) {
+//                            searchVm.searchMaterial(searchType, edtKeyword.getText().toString());
+//                        } else if (materialsType == CustomConfig.EQUIPMENT) {
+//                            searchVm.searchEquipment(searchType, edtKeyword.getText().toString());
+//                        }
+//                    }
+//                }
+//            }
+//        });
     }
 
     private void showHideLoad(String s) {
@@ -188,6 +187,6 @@ public class MaterialSearchActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        KeyboardUtil.showSoftInputFromWindow(this,edtKeyword);
+        KeyboardUtil.showSoftInputFromWindow(this, edtKeyword);
     }
 }

@@ -92,3 +92,8 @@
 -keep class com.shuangduan.zcy.adminManage.** {
      *;
 }
+
+-keep class com.shuangduan.zcy.rongyun.** {
+     *;
+}
+
