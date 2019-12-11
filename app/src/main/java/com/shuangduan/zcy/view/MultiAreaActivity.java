@@ -1,5 +1,6 @@
 package com.shuangduan.zcy.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -8,7 +9,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.blankj.utilcode.util.BarUtils;
+import com.google.gson.Gson;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.SelectorFirstAdapter;
 import com.shuangduan.zcy.adapter.SelectorSecondAdapter;
@@ -16,7 +19,10 @@ import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.event.MultiAreaEvent;
 import com.shuangduan.zcy.vm.MultiAreaVm;
+
 import org.greenrobot.eventbus.EventBus;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -111,7 +117,13 @@ public class MultiAreaActivity extends BaseActivity {
             case R.id.tv_bar_right:
                 List<Integer> cityResult = areaVm.getProvinceCityIds();
                 String stringResult = areaVm.getStringResult();
-                EventBus.getDefault().post(new MultiAreaEvent(cityResult, stringResult));
+
+                Intent intent = new Intent();
+                intent.putExtra("citys", new Gson().toJson(cityResult));
+                intent.putExtra("citystr", stringResult);
+                setResult(200, intent);
+
+//                EventBus.getDefault().post(new MultiAreaEvent(cityResult, stringResult));
                 finish();
                 break;
             default:

@@ -101,7 +101,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        LogUtils.json(response.body());
+                        LogUtils.json(response.getException());
                     }
 
                     @Override
