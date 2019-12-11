@@ -105,7 +105,6 @@ public class UserInfoInputActivity extends BaseActivity {
         tvBarTitle.setText(getString(R.string.base_info));
         tvBarRight.setText(getString(R.string.save));
 
-        LogUtils.e("启动次数...UserInfoInputActivity");
 
         IMConnectVm imConnectVm;
         //初始化，融云链接服务器
@@ -235,16 +234,10 @@ public class UserInfoInputActivity extends BaseActivity {
                 String citys = data.getStringExtra("citys");
                 String citystr = data.getStringExtra("citystr");
                 cityList = new Gson().fromJson(citys, List.class);
-
-                if (cityList.size() <= 5) {
-                    userInfoVm.multiAreaLiveData.postValue(new MultiAreaEvent(cityList,citystr));
-                    tvBusinessArea.setText(citystr);
-                } else {
-                    ToastUtils.showShort("业务地区最多只能选择5个");
-                }
+                userInfoVm.multiAreaLiveData.postValue(new MultiAreaEvent(cityList,citystr));
+                tvBusinessArea.setText(citystr);
             }
         }
-
 
     }
 }

@@ -435,9 +435,7 @@ public class LoginActivity extends BaseActivity {
     public void onEventWxLogin(WxLoginEvent event) {
         openid = event.getOpenId();
         unionid = event.getUnionId();
-
-        LogUtils.e("onEventWxLogin");
-
+        
         loginVm.getWeChatVerification(unionid, openid);
     }
 }

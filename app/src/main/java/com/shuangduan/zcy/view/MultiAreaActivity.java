@@ -122,8 +122,7 @@ public class MultiAreaActivity extends BaseActivity {
                 intent.putExtra("citys", new Gson().toJson(cityResult));
                 intent.putExtra("citystr", stringResult);
                 setResult(200, intent);
-
-//                EventBus.getDefault().post(new MultiAreaEvent(cityResult, stringResult));
+                EventBus.getDefault().post(new MultiAreaEvent(cityResult, stringResult));
                 finish();
                 break;
             default:
