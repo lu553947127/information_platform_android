@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -74,7 +75,7 @@ public class IncomePeopleActivity extends BaseActivity implements BaseQuickAdapt
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
 
         incomePeopleVm = ViewModelProviders.of(this).get(IncomePeopleVm.class);
-        incomePeopleVm.type = getIntent().getIntExtra(CustomConfig.PEOPLE_DEGREE, FIRST_DEGREE);
+        incomePeopleVm.type = getIntent().getIntExtra(CustomConfig.PEOPLE_DEGREE, 0);
 
         switch (incomePeopleVm.type){
             case FIRST_DEGREE://熟识关系
@@ -90,8 +91,8 @@ public class IncomePeopleActivity extends BaseActivity implements BaseQuickAdapt
                 emptyView = emptyViewFactory.createEmptyView(R.drawable.icon_empty_contacts, R.string.empty_recommend_friends_no1, 0, null);
                 break;
             case SEVEN_DEGREE://全部关系
-                emptyView = emptyViewFactory.createEmptyView(R.drawable.icon_empty_contacts, R.string.empty_people_income_info, 0, this);
                 tvBarTitle.setText(getString(R.string.income_people));
+                emptyView = emptyViewFactory.createEmptyView(R.drawable.icon_empty_contacts, R.string.empty_people_income_info, R.string.to_recommend, this);
                 break;
         }
 

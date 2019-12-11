@@ -680,7 +680,7 @@
     <string name="empty_project_income_info">您还没有信息\n收益,去发布工程信息吧</string>
     <string name="empty_dynamics_income_info">您还没有动态\n收益,去发布动态信息吧 </string>
     <string name="empty_subscribe_income_info">您还没有认购\n收益,去认购信息吧</string>
-    <string name="empty_people_income_info">您还没有关系\n收益,去拓展关系吧</string>
+    <string name="empty_people_income_info">您还没有关系收益,\n去拓展关系吧</string>
     <string name="empty_recommend_friends_info">邀请好友，获取收益</string>
     <string name="empty_recommend_friends_no">您的熟识关系，还暂未邀请好友哦</string>
     <string name="empty_recommend_friends_no1">您的相识关系，还暂未邀请好友哦</string>
