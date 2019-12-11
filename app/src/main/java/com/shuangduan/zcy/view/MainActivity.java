@@ -290,7 +290,6 @@ public class MainActivity extends BaseActivity {
         super.onResume();
         homeVm.getSupplierRole();
         observer = i -> {
-            LogUtils.e(i);
             // i 是未读数量
             imAddVm.count = i;
             imAddVm.applyCount();

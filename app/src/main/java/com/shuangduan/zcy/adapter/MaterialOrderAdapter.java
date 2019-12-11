@@ -82,21 +82,5 @@ public class MaterialOrderAdapter extends BaseQuickAdapter<MaterialOrderBean.Lis
         }
     }
 
-    /**
-     * 获取textview一行最大能显示几个字(需要在TextView测量完成之后)
-     *
-     * @param text     文本内容
-     * @param paint    textview.getPaint()
-     * @param maxWidth textview.getMaxWidth()/或者是指定的数值,如200dp
-     */
-    private int getLineMaxNumber(String text, TextPaint paint, int maxWidth) {
-        if (null == text || "".equals(text)) {
-            return 0;
-        }
-        //得到文本内容总体长度
-        float textWidth = paint.measureText(text);
-        // textWidth
-        float width = textWidth / text.length();
-        return (int) (maxWidth / width);
-    }
+
 }

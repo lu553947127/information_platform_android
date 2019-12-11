@@ -277,7 +277,7 @@ public class MaterialPlaceOrderActivity extends BaseActivity {
                     return;
                 }
 
-                if (String.valueOf(price).length() > 8) {
+                if (price > 100000000) {
                     ToastUtils.showShort("订单金额过大，不支持线上交易");
                     return;
                 }

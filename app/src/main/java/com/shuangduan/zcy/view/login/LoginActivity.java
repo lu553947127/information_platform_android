@@ -119,6 +119,9 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
+
+        LogUtils.e("启动次数：" + loginStyle);
+
         sharesUtils = new SharesUtils(this);
         loginVm = ViewModelProviders.of(this).get(LoginVm.class);
 
@@ -221,6 +224,10 @@ public class LoginActivity extends BaseActivity {
                 case REGISTER://注册
                     break;
             }
+
+
+            LogUtils.e("登录类型：" + loginStyle);
+
             //获取融云登录token
             if (loginBean.getInfo_status() == 1) {
                 imConnectVm.userId = loginBean.getUser_id();
@@ -386,6 +393,8 @@ public class LoginActivity extends BaseActivity {
         //注册
         loginVm.register(edtMobile.getText().toString(), edtVerificationCodeRegister.getText().toString(), edtPwdRegister.getText().toString(), Objects.requireNonNull(edtMobileInvite.getText()).toString());
         loginVm.registerLiveData.observe(this, registerBean -> {
+            LogUtils.e("当前登录111");
+
             //注册成功走一遍登录
             loginVm.accountLogin(edtMobile.getText().toString(), edtPwdRegister.getText().toString(), DeviceUtils.getAndroidID());
         });
@@ -393,6 +402,7 @@ public class LoginActivity extends BaseActivity {
 
     /**
      * 切换登录和注册
+     *
      * @param type
      */
     private void changeLoginStyle(int type) {
@@ -422,6 +432,8 @@ public class LoginActivity extends BaseActivity {
     public void onEventWxLogin(WxLoginEvent event) {
         openid = event.getOpenId();
         unionid = event.getUnionId();
+
+
         loginVm.getWeChatVerification(unionid, openid);
     }
 }

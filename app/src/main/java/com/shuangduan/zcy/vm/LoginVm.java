@@ -1,7 +1,10 @@
 package com.shuangduan.zcy.vm;
 
 import android.annotation.SuppressLint;
+
 import androidx.lifecycle.MutableLiveData;
+
+import com.blankj.utilcode.util.LogUtils;
 import com.shuangduan.zcy.base.BaseViewModel;
 import com.shuangduan.zcy.model.api.repository.LoginRepository;
 import com.shuangduan.zcy.model.bean.LoginBean;
@@ -11,6 +14,7 @@ import com.shuangduan.zcy.model.bean.WXLoginBindingBean;
 import com.shuangduan.zcy.model.bean.WXLoginVerificationBean;
 
 import java.util.concurrent.TimeUnit;
+
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -53,7 +57,7 @@ public class LoginVm extends BaseViewModel {
      * 获取验证码倒计时
      */
     @SuppressLint("CheckResult")
-    public void sendVerificationCode(){
+    public void sendVerificationCode() {
         Observable.interval(0, 1, TimeUnit.SECONDS)
                 .take(60)
                 .map(aLong -> 59 - aLong)
@@ -69,7 +73,7 @@ public class LoginVm extends BaseViewModel {
     }
 
     @SuppressLint("CheckResult")
-    public void sendVerificationCodeRegister(){
+    public void sendVerificationCodeRegister() {
         Observable.interval(0, 1, TimeUnit.SECONDS)
                 .take(60)
                 .map(aLong -> 59 - aLong)
@@ -84,33 +88,34 @@ public class LoginVm extends BaseViewModel {
                 });
     }
 
-    public void smsCode(String tel, int type){
+    public void smsCode(String tel, int type) {
         new LoginRepository().smsCode(smsDataLiveData, pageStateLiveData, tel, type);
     }
 
-    public void codeLogin(String tel, String code, String client_id){
+    public void codeLogin(String tel, String code, String client_id) {
         new LoginRepository().codeLogin(accountLoginLiveData, pageStateLiveData, tel, code, client_id);
     }
 
-    public void accountLogin(String tel, String pwd, String client_id){
+    public void accountLogin(String tel, String pwd, String client_id) {
+        LogUtils.e("登录接口：" + tel + "---" + pwd + "---" + client_id);
         new LoginRepository().accountLogin(accountLoginLiveData, pageStateLiveData, tel, pwd, client_id);
     }
 
-    public void register(String tel, String code, String pwd, String invite_tel){
+    public void register(String tel, String code, String pwd, String invite_tel) {
         new LoginRepository().register(registerLiveData, pageStateLiveData, tel, code, pwd, invite_tel);
     }
 
-    public void resetPwd(String tel, String code, String pwd){
+    public void resetPwd(String tel, String code, String pwd) {
         new LoginRepository().setPassword(resetPwdLiveData, pageStateLiveData, tel, code, pwd);
     }
 
     //微信登录验证
-    public void getWeChatVerification(String unionid, String openid){
+    public void getWeChatVerification(String unionid, String openid) {
         new LoginRepository().getWeChatVerification(wxLoginVerificationBeanMutableLiveData, unionid, openid);
     }
 
     //微信登录绑定
-    public void getWeChatBinding(String unionid, String openid,String tel,String code,String invite_tel){
-        new LoginRepository().getWeChatBinding(wxLoginBindingBeanMutableLiveData,pageStateLiveData, unionid, openid,tel,code,invite_tel);
+    public void getWeChatBinding(String unionid, String openid, String tel, String code, String invite_tel) {
+        new LoginRepository().getWeChatBinding(wxLoginBindingBeanMutableLiveData, pageStateLiveData, unionid, openid, tel, code, invite_tel);
     }
 }
