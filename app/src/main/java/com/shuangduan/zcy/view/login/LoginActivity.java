@@ -178,6 +178,7 @@ public class LoginActivity extends BaseActivity {
 
         //微信验证是否绑定过返回结果
         loginVm.wxLoginVerificationBeanMutableLiveData.observe(this, wxLoginVerificationBean -> {
+
             //判断是否绑定
             if (wxLoginVerificationBean.getWechat_status() == 1) {
 
@@ -248,6 +249,14 @@ public class LoginActivity extends BaseActivity {
                     hideLoading();
                     break;
             }
+        });
+
+        loginVm.registerLiveData.observe(this, registerBean -> {
+            LogUtils.e("当前登录111");
+
+            SPUtils.getInstance().clear(true);
+            //注册成功走一遍登录
+            loginVm.accountLogin(edtMobile.getText().toString(), edtPwdRegister.getText().toString(), DeviceUtils.getAndroidID());
         });
     }
 
@@ -392,12 +401,6 @@ public class LoginActivity extends BaseActivity {
         }
         //注册
         loginVm.register(edtMobile.getText().toString(), edtVerificationCodeRegister.getText().toString(), edtPwdRegister.getText().toString(), Objects.requireNonNull(edtMobileInvite.getText()).toString());
-        loginVm.registerLiveData.observe(this, registerBean -> {
-            LogUtils.e("当前登录111");
-
-            //注册成功走一遍登录
-            loginVm.accountLogin(edtMobile.getText().toString(), edtPwdRegister.getText().toString(), DeviceUtils.getAndroidID());
-        });
     }
 
     /**
@@ -433,6 +436,7 @@ public class LoginActivity extends BaseActivity {
         openid = event.getOpenId();
         unionid = event.getUnionId();
 
+        LogUtils.e("onEventWxLogin");
 
         loginVm.getWeChatVerification(unionid, openid);
     }

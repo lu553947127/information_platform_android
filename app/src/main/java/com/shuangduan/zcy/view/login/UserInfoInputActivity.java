@@ -1,9 +1,11 @@
 package com.shuangduan.zcy.view.login;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
@@ -11,9 +13,11 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.google.gson.Gson;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
@@ -32,6 +36,7 @@ import com.shuangduan.zcy.vm.UserInfoVm;
 
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.List;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -90,7 +95,7 @@ public class UserInfoInputActivity extends BaseActivity {
 
     @Override
     public boolean isUseEventBus() {
-        return true;
+        return false;
     }
 
     @Override
@@ -99,6 +104,8 @@ public class UserInfoInputActivity extends BaseActivity {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.base_info));
         tvBarRight.setText(getString(R.string.save));
+
+        LogUtils.e("启动次数...UserInfoInputActivity");
 
         IMConnectVm imConnectVm;
         //初始化，融云链接服务器
@@ -116,7 +123,7 @@ public class UserInfoInputActivity extends BaseActivity {
             mineSubVm.myPhases();
         });
         userInfoVm.pageStateLiveData.observe(this, s -> {
-            switch (s){
+            switch (s) {
                 case PageState.PAGE_LOADING:
                     showLoading();
                     break;
@@ -148,7 +155,7 @@ public class UserInfoInputActivity extends BaseActivity {
             finish();
         });
         mineSubVm.pageStateLiveData.observe(this, s -> {
-            switch (s){
+            switch (s) {
                 case PageState.PAGE_LOADING:
                     showLoading();
                     break;
@@ -160,13 +167,13 @@ public class UserInfoInputActivity extends BaseActivity {
     }
 
     @OnClick({R.id.iv_bar_back, R.id.tv_bar_right, R.id.tv_sex, R.id.tv_business_area, R.id.tv_business_exp})
-    void onClick(View view){
-        switch (view.getId()){
+    void onClick(View view) {
+        switch (view.getId()) {
             case R.id.iv_bar_back:
                 finish();
                 break;
             case R.id.tv_bar_right:
-                if (StringUtils.isTrimEmpty(edtName.getText().toString())){
+                if (StringUtils.isTrimEmpty(edtName.getText().toString())) {
                     ToastUtils.showShort("请输入姓名");
                     return;
                 }
@@ -196,7 +203,7 @@ public class UserInfoInputActivity extends BaseActivity {
                         }).showDialog());
                 break;
             case R.id.tv_business_area:
-                ActivityUtils.startActivity(MultiAreaActivity.class);
+                ActivityUtils.startActivityForResult(this, MultiAreaActivity.class, 200);
                 break;
             case R.id.tv_business_exp:
                 new BusinessExpDialog(this)
@@ -209,13 +216,35 @@ public class UserInfoInputActivity extends BaseActivity {
         }
     }
 
-    @Subscribe
-    public void onEventServiceCity(MultiAreaEvent event) {
-        if (event.getCityResult().size()<=5){
-            userInfoVm.multiAreaLiveData.postValue(event);
-            tvBusinessArea.setText(event.getStringResult());
-        }else {
-            ToastUtils.showShort("业务地区最多只能选择5个");
+//    @Subscribe
+//    public void onEventServiceCity(MultiAreaEvent event) {
+//        if (event.getCityResult().size()<=5){
+//            userInfoVm.multiAreaLiveData.postValue(event);
+//            tvBusinessArea.setText(event.getStringResult());
+//        }else {
+//            ToastUtils.showShort("业务地区最多只能选择5个");
+//        }
+//    }
+
+    private List<Integer> cityList;
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 200 && resultCode == 200) {
+            if (data != null) {
+                String citys = data.getStringExtra("citys");
+                String citystr = data.getStringExtra("citystr");
+                cityList = new Gson().fromJson(citys, List.class);
+
+                if (cityList.size() <= 5) {
+                    userInfoVm.multiAreaLiveData.postValue(new MultiAreaEvent(cityList,citystr));
+                    tvBusinessArea.setText(citystr);
+                } else {
+                    ToastUtils.showShort("业务地区最多只能选择5个");
+                }
+            }
         }
+
+
     }
 }
