@@ -12,6 +12,11 @@ import com.shuangduan.zcy.model.bean.FindRelationshipReleaseBean;
 import com.shuangduan.zcy.model.bean.RelationshipDetailBean;
 import com.shuangduan.zcy.model.bean.RelationshipOrderBean;
 import com.shuangduan.zcy.model.bean.SubstanceDetailBean;
+import com.shuangduan.zcy.model.bean.UnitBean;
+
+import java.util.List;
+
+import io.rong.imageloader.utils.L;
 
 /**
  * @author 徐玉 QQ:876885613
@@ -37,6 +42,11 @@ public class DemandRepository extends BaseRepository {
     }
     public void relationshipReleaseOrder(MutableLiveData<RelationshipOrderBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, int id){
         request(apiService.relationshipReleaseOrder(user_id, id)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    //获取数量单位
+    public void getUnit(MutableLiveData<List<UnitBean>> liveData, MutableLiveData<String> pageStateLiveData, int user_id){
+        request(apiService.getUnit(user_id)).setDataList(liveData).setPageState(pageStateLiveData).send();
     }
     public void demandRelationship(MutableLiveData<DemandRelationshipBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, int page){
         request(apiService.demandRelationship(user_id, page)).setData(liveData).setPageState(pageStateLiveData).send();

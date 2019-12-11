@@ -11,9 +11,11 @@ import com.shuangduan.zcy.base.BaseViewModel;
 import com.shuangduan.zcy.model.api.repository.DemandRepository;
 import com.shuangduan.zcy.model.bean.DemandReleaseBean;
 import com.shuangduan.zcy.model.bean.RelationshipOrderBean;
+import com.shuangduan.zcy.model.bean.UnitBean;
 import com.shuangduan.zcy.utils.DateUtils;
 
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * @author 徐玉 QQ:876885613
@@ -31,6 +33,8 @@ public class DemandReleaseVm extends BaseViewModel {
     public static final int RELEASE_TYPE_BUYER = 3;//找买家发布
     public MutableLiveData<DemandReleaseBean> releaseLiveData;
     public MutableLiveData<RelationshipOrderBean> relationshipOrderLiveData;
+
+    public MutableLiveData<List<UnitBean>> unitLiveData;
     public MutableLiveData<String> pageStateLiveData;
     private int userId;
     public int releaseType = RELEASE_TYPE_RELATIONSHIP;
@@ -43,6 +47,7 @@ public class DemandReleaseVm extends BaseViewModel {
         releaseLiveData = new MutableLiveData<>();
         relationshipOrderLiveData = new MutableLiveData<>();
         pageStateLiveData = new MutableLiveData<>();
+        unitLiveData = new MutableLiveData<>();
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH) + 1;
@@ -71,5 +76,10 @@ public class DemandReleaseVm extends BaseViewModel {
 
     public void relationshipReleaseOrder(int id){
         new DemandRepository().relationshipReleaseOrder(relationshipOrderLiveData, pageStateLiveData, userId, id);
+    }
+
+    //获取数量单位
+    public void getUnit(){
+        new DemandRepository().getUnit(unitLiveData, pageStateLiveData, userId);
     }
 }

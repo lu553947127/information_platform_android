@@ -399,6 +399,7 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
                 getBottomSheetDialog(R.layout.dialog_is_grounding, "material_status");
                 break;
             case R.id.tv_reserve://提交
+                deviceAddVm.address = etAddress.getText().toString();
                 switch (getIntent().getIntExtra(CustomConfig.HANDLE_TYPE, 0)) {
                     case ADD://添加
                         deviceAddVm.equipmentAdd("add",etMaterialName.getText().toString(), etEncoding.getText().toString(), etStock.getText().toString()

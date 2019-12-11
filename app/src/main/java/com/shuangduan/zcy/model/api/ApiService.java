@@ -1186,6 +1186,13 @@ public interface ApiService {
             @Field("id") int id
     );
 
+    //获取数量单位
+    @FormUrlEncoded
+    @POST("api/Relation/getUnit")
+    Flowable<BaseListResponse<UnitBean>> getUnit(
+            @Field("user_id") int user_id
+    );
+
     @FormUrlEncoded
     @POST("api/Relation/relationList")
     Flowable<BaseResponse<DemandRelationshipBean>> demandRelationship(

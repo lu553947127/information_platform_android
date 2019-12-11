@@ -16,18 +16,21 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
+import com.shuangduan.zcy.adapter.DemandReleaseUnitAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BottomSheetDialogs;
-import com.shuangduan.zcy.dialog.UnitDialog;
 import com.shuangduan.zcy.model.api.PageState;
+import com.shuangduan.zcy.model.bean.UnitBean;
 import com.shuangduan.zcy.utils.DateUtils;
 import com.shuangduan.zcy.utils.KeyboardUtil;
 import com.shuangduan.zcy.view.mine.AuthenticationActivity;
@@ -35,8 +38,11 @@ import com.shuangduan.zcy.vm.DemandReleaseVm;
 import com.shuangduan.zcy.weight.datepicker.CustomDatePicker;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -176,6 +182,11 @@ public class DemandReleaseActivity extends BaseActivity {
                 finish();
             }
         });
+
+        //获取数量单位返回数据
+        demandReleaseVm.unitLiveData.observe(this,unitBean -> {
+            unitList = unitBean;
+        });
         demandReleaseVm.pageStateLiveData.observe(this, s -> {
             switch (s) {
                 case PageState.PAGE_LOADING:
@@ -253,6 +264,8 @@ public class DemandReleaseActivity extends BaseActivity {
                 }
             }
         });
+
+        demandReleaseVm.getUnit();
     }
 
     @OnClick({R.id.iv_bar_back, R.id.tv_release_type, R.id.cb_lease, R.id.cb_sell, R.id.tv_time_end, R.id.tv_release, R.id.tv_demand_num, R.id.tv_supply_num, R.id.tv_authentication})
@@ -361,16 +374,10 @@ public class DemandReleaseActivity extends BaseActivity {
                 }
                 break;
             case R.id.tv_demand_num:
-                new UnitDialog(this, 2f, 5f).setSelected(0).setSingleCallBack((item, position) -> {
-                    demand_num = position + 1;
-                    tvDemandNum.setText(item);
-                }).showDialog();
+                getBottomSheetDialog(R.layout.dialog_is_grounding, "demand_num");
                 break;
             case R.id.tv_supply_num:
-                new UnitDialog(this, 2f, 5f).setSelected(0).setSingleCallBack((item, position) -> {
-                    supply_num = position + 1;
-                    tvSupplyNum.setText(item);
-                }).showDialog();
+                getBottomSheetDialog(R.layout.dialog_is_grounding, "supply_num");
                 break;
             case R.id.tv_authentication:
                 bundle.putString(CustomConfig.UPLOAD_TYPE, CustomConfig.uploadTypeIdCard);
@@ -379,6 +386,67 @@ public class DemandReleaseActivity extends BaseActivity {
                 break;
         }
     }
+
+
+    private DemandReleaseUnitAdapter unitAdapter;
+    private List<UnitBean> unitList = new ArrayList<>();
+    @SuppressLint({"RestrictedApi,InflateParams", "SetTextI18n"})
+    private void getBottomSheetDialog(int layout, String type) {
+        //底部滑动对话框
+        BottomSheetDialogs btn_dialog = new BottomSheetDialogs(this, R.style.BottomSheetStyle);
+        //设置自定view
+        View dialog_view = this.getLayoutInflater().inflate(layout, null);
+        //把布局添加进去
+        btn_dialog.setContentView(dialog_view);
+        //去除系统默认的背景色
+        try {
+            // hack bg color of the BottomSheetDialog
+            ViewGroup parent = (ViewGroup) dialog_view.getParent();
+            parent.setBackgroundResource(android.R.color.transparent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        switch (type) {
+            case "demand_num"://选择找物资单位
+                TextView tvUnits = btn_dialog.findViewById(R.id.tv_title);
+                Objects.requireNonNull(tvUnits).setText("选择单位");
+                RecyclerView rvUnit = btn_dialog.findViewById(R.id.rv);
+                Objects.requireNonNull(rvUnit).setLayoutManager(new LinearLayoutManager(this));
+                unitAdapter = new DemandReleaseUnitAdapter(R.layout.adapter_selector_area_second, unitList);
+                rvUnit.setAdapter(unitAdapter);
+                unitAdapter.setOnItemClickListener((adapter, view, position) -> {
+                    demand_num = unitList.get(position).getUnit_id();
+                    tvDemandNum.setText(unitList.get(position).getUnit_name());
+                    tvDemandNum.setTextColor(getResources().getColor(R.color.colorTv));
+                    unitAdapter.setIsSelect(demand_num);
+                    btn_dialog.dismiss();
+                });
+                if (demand_num != 0) {
+                    unitAdapter.setIsSelect(demand_num);
+                }
+                break;
+            case "supply_num"://选择找买家单位
+                TextView tvUnit = btn_dialog.findViewById(R.id.tv_title);
+                Objects.requireNonNull(tvUnit).setText("选择单位");
+                RecyclerView rvUnits = btn_dialog.findViewById(R.id.rv);
+                Objects.requireNonNull(rvUnits).setLayoutManager(new LinearLayoutManager(this));
+                unitAdapter = new DemandReleaseUnitAdapter(R.layout.adapter_selector_area_second, unitList);
+                rvUnits.setAdapter(unitAdapter);
+                unitAdapter.setOnItemClickListener((adapter, view, position) -> {
+                    supply_num = unitList.get(position).getUnit_id();
+                    tvSupplyNum.setText(unitList.get(position).getUnit_name());
+                    tvSupplyNum.setTextColor(getResources().getColor(R.color.colorTv));
+                    unitAdapter.setIsSelect(supply_num);
+                    btn_dialog.dismiss();
+                });
+                if (supply_num != 0) {
+                    unitAdapter.setIsSelect(supply_num);
+                }
+                break;
+        }
+        btn_dialog.show();
+    }
+
 
     /**
      * 时间选择器

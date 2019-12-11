@@ -27,7 +27,6 @@ import butterknife.BindView;
  * @Version: 1.0
  */
 public class UnitDialog extends BaseDialog {
-
     @BindView(R.id.dp_exp)
     DatePickerView dpExp;
     private int selected = 0;
@@ -50,8 +49,6 @@ public class UnitDialog extends BaseDialog {
     @Override
     void initData() {
         setWidth(ConvertUtils.dp2px(260));
-
-
         List<String> data = new ArrayList<>();
         String[] stringArray = mActivity.getResources().getStringArray(R.array.unit_list);
         Collections.addAll(data, stringArray);

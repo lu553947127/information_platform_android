@@ -164,7 +164,7 @@ public class FindBuyerDetailActivity extends BaseActivity {
                     break;
                 case 3://驳回
                     ivState.setImageResource(R.drawable.icon_reject);
-                    getShowDemand(View.GONE,View.VISIBLE,"抱歉，您发布的需求未通过审核",R.drawable.icon_invalid, String.valueOf(Html.fromHtml("请认真核对后重新<font color=\"#6a5ff8\">发布</font>!")));
+                    getShowDemand(View.GONE,View.VISIBLE,"抱歉，您发布的需求未通过审核",R.drawable.icon_invalid, Html.fromHtml("请认真核对后重新<font color=\"#6a5ff8\">发布</font>！"));
                     break;
                 case 4://失效
                     ivState.setImageResource(R.drawable.icon_invalid_new);
@@ -177,7 +177,7 @@ public class FindBuyerDetailActivity extends BaseActivity {
     }
 
     //根据状态显示推荐物资和状态布局
-    private void getShowDemand(int visibility,int visibility2,String str,int drawable,String str2) {
+    private void getShowDemand(int visibility,int visibility2,String str,int drawable,CharSequence str2) {
         line2.setVisibility(visibility);
         tvRecommend.setVisibility(visibility);
         line3.setVisibility(visibility);

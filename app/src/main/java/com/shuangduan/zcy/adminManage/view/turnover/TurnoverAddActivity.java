@@ -398,6 +398,7 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
                 dialogControl.showDialog(8, R.string.admin_input_material_value);
                 break;
             case R.id.tv_reserve://提交
+                turnoverAddVm.address = etAddress.getText().toString();
                 switch (getIntent().getIntExtra(CustomConfig.HANDLE_TYPE, 0)) {
                     case ADD://添加
                         turnoverAddVm.constructionAdd("add", etMaterialName.getText().toString(),etStock.getText().toString(), etUnitPrice.getText().toString()

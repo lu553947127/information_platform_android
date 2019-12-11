@@ -80,7 +80,6 @@ import butterknife.OnClick;
  * @Version: 1.0
  */
 public class TurnoverMaterialFragment extends BaseNoRefreshFragment {
-
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
     @BindView(R.id.toolbar)
@@ -422,7 +421,8 @@ public class TurnoverMaterialFragment extends BaseNoRefreshFragment {
     private int splitUseStatue,splitProvince,splitCity;
     private String splitAddress;
     private double latitude,longitude;
-    private TextView tvSplitUseStatue,tvSplitAddress;
+    private TextView tvSplitUseStatue;
+    private XEditText etSplitAddress;
     @SuppressLint("RestrictedApi,InflateParams")
     private void getBottomSheetDialog(int layout, String type,int id,int use) {
         //底部滑动对话框
@@ -598,14 +598,16 @@ public class TurnoverMaterialFragment extends BaseNoRefreshFragment {
                 break;
             case "split"://拆分弹窗
                 TextView tvSave=dialog_view.findViewById(R.id.tv_save);
-                EditText etNum=dialog_view.findViewById(R.id.et_num);
+                EditText etNum=dialog_view.findViewById(R.id.et_stock);
                 EditText et_unit_price=dialog_view.findViewById(R.id.et_unit_price);
-                tvSplitUseStatue=dialog_view.findViewById(R.id.tv_use_statue);
-                tvSplitAddress = dialog_view.findViewById(R.id.tv_material_id);
+                tvSplitUseStatue=dialog_view.findViewById(R.id.tv_use_status);
+                etSplitAddress = dialog_view.findViewById(R.id.et_address);
+                ImageView ivAddress = dialog_view.findViewById(R.id.iv_address);
                 KeyboardUtil.RemoveDecimalPoints(etNum);
                 KeyboardUtil.RemoveDecimalPoints(et_unit_price);
                 KeyboardUtil.showSoftInputFromWindow((BaseActivity) getActivity(), etNum);
                 tvSave.setOnClickListener(v -> {
+                    splitAddress = etSplitAddress.getText().toString();
                     if (TextUtils.isEmpty(etNum.getText().toString())) {
                         ToastUtils.showShort(getString(R.string.no_mun));
                         return;
@@ -622,8 +624,12 @@ public class TurnoverMaterialFragment extends BaseNoRefreshFragment {
                         ToastUtils.showShort("使用状态不能为空");
                         return;
                     }
-                    if (splitProvince==0&&splitCity==0&&TextUtils.isEmpty(splitAddress)) {
-                        ToastUtils.showShort("存放地不能为空");
+                    if (splitProvince==0&&splitCity==0) {
+                        ToastUtils.showShort("存放地省市选择不能为空");
+                        return;
+                    }
+                    if (TextUtils.isEmpty(splitAddress)) {
+                        ToastUtils.showShort("存放地输入不能为空");
                         return;
                     }
                     turnoverVm.constructionSplit(id,etNum.getText().toString(),et_unit_price.getText().toString(),splitUseStatue,splitProvince,splitCity,splitAddress,longitude,latitude);
@@ -632,7 +638,7 @@ public class TurnoverMaterialFragment extends BaseNoRefreshFragment {
                 tvSplitUseStatue.setOnClickListener(v -> {
                     getBottomSheetDialog(R.layout.dialog_is_grounding,"use_statue",0,2);
                 });
-                tvSplitAddress.setOnClickListener(v -> {
+                ivAddress.setOnClickListener(v -> {
                     Bundle bundle = new Bundle();
                     bundle.putInt(CustomConfig.PROJECT_ADDRESS, 3);
                     ActivityUtils.startActivity(bundle, ReleaseAreaSelectActivity.class);
@@ -694,8 +700,7 @@ public class TurnoverMaterialFragment extends BaseNoRefreshFragment {
         splitAddress=event.getAddress();
         latitude=event.getLatitude();
         longitude=event.getLongitude();
-        tvSplitAddress.setText(event.getProvince()+event.getCity()+event.getAddress());
-        tvSplitAddress.setTextColor(getResources().getColor(R.color.colorTv));
+        etSplitAddress.setText(event.getProvince()+event.getCity()+event.getAddress());
     }
 
     //添加头部筛选布局view
