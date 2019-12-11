@@ -165,13 +165,13 @@
         <activity android:name="com.shuangduan.zcy.view.income.IncomeReleaseActivity" />
         <!-- 认购品权收益-->
         <activity android:name="com.shuangduan.zcy.view.income.IncomeProductRightsActivity" />
-        <!-- 人脉收益-->
+        <!-- 关系收益-->
         <activity android:name="com.shuangduan.zcy.view.income.IncomePeopleActivity" />
         <!-- 发布动态收益-->
         <activity android:name="com.shuangduan.zcy.view.income.IncomeLocusActivity" />
         <!-- 认购信息收益-->
         <activity android:name="com.shuangduan.zcy.view.income.IncomeMsgActivity" />
-        <!-- 人脉个人详情-->
+        <!-- 关系个人详情-->
         <activity android:name="com.shuangduan.zcy.view.people.PeopleInfoActivity" />
         <!-- 收益记录-->
         <activity android:name="com.shuangduan.zcy.view.people.IncomeRecordActivity" />
@@ -271,10 +271,10 @@
         <activity android:name="com.shuangduan.zcy.rongyun.view.IMAddFriendActivity" />
         <!--物资预定列表-->
         <activity android:name=".view.mine.MaterialOrderActivity" />
-        <!--  物资预定详情 -->
+        <!--物资预定详情 -->
         <activity android:name=".view.mine.MaterialOrderDetailActivity" />
         <!-- 融云单聊页-->
-        <activity android:name="com.shuangduan.zcy.rongyun.view.IMPrivateChatActivity" android:configChanges="orientation|screenSize">
+        <activity android:name="com.shuangduan.zcy.rongyun.view.IMPrivateChatActivity" android:configChanges="orientation|screenSize" android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -285,7 +285,7 @@
             </intent-filter>
         </activity>
         <!--融云聚合消息页面-->
-        <activity android:name="com.shuangduan.zcy.rongyun.view.IMSubConversationListActivity" android:configChanges="orientation|screenSize">
+        <activity android:name="com.shuangduan.zcy.rongyun.view.IMSubConversationListActivity" android:configChanges="orientation|screenSize" android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />

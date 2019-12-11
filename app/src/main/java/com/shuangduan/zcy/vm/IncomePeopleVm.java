@@ -42,21 +42,21 @@ public class IncomePeopleVm extends BaseViewModel {
     }
 
     /**
-     * 人脉首页展示
+     * 关系首页展示
      */
     public void show(){
         new PeopleRepository().peopleShow(showLiveData, pageStateLiveData, userId);
     }
 
     /**
-     * 人脉详情
+     * 关系详情
      */
     public void getDetail(){
         new PeopleRepository().peopleDetail(detailLiveData, pageStateLiveData, userId, uid);
     }
 
     /**
-     * 人脉列表
+     * 关系列表
      */
     public void getData(){
         page = 1;

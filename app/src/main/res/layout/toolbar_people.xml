@@ -37,7 +37,7 @@
             android:singleLine="true"
             android:textColor="@color/colorFFF"
             android:textSize="18sp"
-            android:text="人脉"/>
+            android:text="关系"/>
 
 
         <androidx.appcompat.widget.AppCompatImageView

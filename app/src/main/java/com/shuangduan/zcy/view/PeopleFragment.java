@@ -21,7 +21,7 @@ import butterknife.OnClick;
  * @author 徐玉 QQ:876885613
  * @name ZICAICloudPlatform
  * @class name：com.example.zicaicloudplatform.view.fragment
- * @class 人脉
+ * @class 关系
  * @time 2019/7/5 13:29
  * @change
  * @chang time

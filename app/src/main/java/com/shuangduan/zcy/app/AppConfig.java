@@ -96,13 +96,12 @@ public class AppConfig {
 
     /**
      * 初始化Utils工具
-     *
      * @param context
      */
     private static void initUtils(Application context) {
         Utils.init(context);
         LogUtils.getConfig().setGlobalTag(context.getString(R.string.app_name)).setLogSwitch(BuildConfig.IS_SHOW_LOG);
-        ToastUtils.setGravity(Gravity.BOTTOM, 0, ConvertUtils.dp2px(40));
+        ToastUtils.setGravity(Gravity.BOTTOM, 0, ConvertUtils.dp2px(100));
         ToastUtils.setMsgTextSize(13);
         ToastUtils.setMsgColor(Color.parseColor("#ffffff"));
         ToastUtils.setBgResource(R.drawable.shape_bg_toast);

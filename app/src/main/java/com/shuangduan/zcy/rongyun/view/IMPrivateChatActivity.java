@@ -230,7 +230,7 @@ public class IMPrivateChatActivity extends BaseActivity implements RongIM.Conver
                 case 12://发布的工程有新的收益
                 case 13://发布的工程动态有新的收益
                 case 14://认购的工程信息有新的收益
-                case 16://人脉有新的收益
+                case 16://关系有新的收益
                 case 17://回答的找关系已被采纳，有一笔收益到账
                 case 21://您查看了一条供应商信息消费
                 case 22://您查看了一条找买家需求信息消费

@@ -5,7 +5,7 @@
         android:id="@+id/menu_home"
         android:icon="@drawable/icon_home_normal"
         android:title="@string/home" />
-    <!--人脉-->
+    <!--关系-->
     <item
         android:id="@+id/menu_people"
         android:icon="@drawable/icon_people_normal"

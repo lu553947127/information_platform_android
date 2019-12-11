@@ -35,7 +35,7 @@
         android:background="@drawable/selector_bg_custom"
         android:textColor="@color/color_666666"
         android:textSize="14sp"
-        android:text="熟识人脉"/>
+        android:text="熟识关系"/>
 
     <View
         android:layout_width="match_parent"
@@ -55,7 +55,7 @@
         android:background="@drawable/selector_bg_custom"
         android:textColor="@color/color_666666"
         android:textSize="14sp"
-        android:text="相识人脉"/>
+        android:text="相识关系"/>
 
     <View
         android:layout_width="match_parent"
@@ -75,7 +75,7 @@
         android:background="@drawable/selector_bg_custom"
         android:textColor="@color/color_666666"
         android:textSize="14sp"
-        android:text="初识人脉"/>
+        android:text="初识关系"/>
 
     <View
         android:layout_width="match_parent"

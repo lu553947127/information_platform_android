@@ -26,8 +26,6 @@ import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.utils.KeyboardUtil;
 
-import java.util.Objects;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -143,20 +141,14 @@ public class OrderDetailsActivity extends BaseActivity {
         manageStatus = getIntent().getIntExtra("manage_status", 0);
         orderType = getIntent().getIntExtra("order_type", 0);
 
-
         if (orderType == 3) {
             OrderTurnoverVm vm = ViewModelProviders.of(this).get(OrderTurnoverVm.class);
             vm.constructionOrderDetail(orderId);
-
-            vm.orderDetailsLiveData.observe(this, orderItem -> {
-                initViewData(orderItem);
-            });
+            vm.orderDetailsLiveData.observe(this, this::initViewData);
         } else {
             OrderDeviceVm vm = ViewModelProviders.of(this).get(OrderDeviceVm.class);
             vm.equipmentOrderDetail(orderId);
-            vm.orderDetailsLiveData.observe(this, orderItem -> {
-                initViewData(orderItem);
-            });
+            vm.orderDetailsLiveData.observe(this, this::initViewData);
         }
     }
 

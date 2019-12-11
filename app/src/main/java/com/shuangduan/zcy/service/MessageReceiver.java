@@ -46,21 +46,21 @@ public class MessageReceiver extends JPushMessageReceiver {
         JPushExtraBean extraBean = new Gson().fromJson(extras, JPushExtraBean.class);
         try{
             switch (extraBean.getType()){
-                case 1://工程信息
+                case 1://工程信息订阅
                     getStartActivity(context,ProjectDetailActivity.class,CustomConfig.PROJECT_ID,extraBean.getId(),"",0,"",0,message);
                     break;
-                case 2://基建物资
+                case 2://闲置基建物资
                     getStartActivity(context, MaterialActivity.class,"notice",1,"",0,"",0,message);
                     break;
-                case 3://周转材料
+                case 3://周转材料订单
                     getStartActivity(context, OrderDetailsActivity.class,CustomConfig.ADMIN_ORDER_ID,extraBean.getId()
                             ,"manage_status", SPUtils.getInstance().getInt(CustomConfig.MANAGE_STATUS, 0)
-                            ,"order_type",0,message);
+                            ,"order_type",3,message);
                     break;
-                case 4://设备管理
+                case 4://设备管理订单
                     getStartActivity(context, OrderDetailsActivity.class,CustomConfig.ADMIN_ORDER_ID,extraBean.getId()
                             ,"manage_status", SPUtils.getInstance().getInt(CustomConfig.MANAGE_STATUS, 0)
-                            ,"order_type",1,message);
+                            ,"order_type",4,message);
                     break;
             }
         }catch (Throwable ignored){

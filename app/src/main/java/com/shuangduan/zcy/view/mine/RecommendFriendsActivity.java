@@ -28,12 +28,10 @@ import butterknife.OnClick;
  * @class describe
  */
 public class RecommendFriendsActivity extends BaseActivity {
-
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-
     //分享控制器
     private ShareManage shareManage;
 
@@ -73,7 +71,4 @@ public class RecommendFriendsActivity extends BaseActivity {
                 break;
         }
     }
-
-
-
 }

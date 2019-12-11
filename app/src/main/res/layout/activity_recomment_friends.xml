@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorFFF"
@@ -9,121 +8,19 @@
 
     <include layout="@layout/toolbar" />
 
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar"
-        android:scrollbars="none">
+        android:background="@drawable/icon_invite_friends">
 
-        <LinearLayout
+        <ImageView
+            android:id="@+id/iv_share"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="70dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="52dp"
+            android:src="@drawable/icon_invite_friends_btn" />
 
-            android:orientation="vertical">
+    </RelativeLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:id="@+id/iv_invite"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:src="@drawable/icon_invite_friends"
-                    app:layout_constraintDimensionRatio="1407:1086"
-                    tools:ignore="MissingConstraints" />
-
-                <ImageView
-                    android:id="@+id/iv_share"
-                    android:layout_width="match_parent"
-                    android:layout_height="70dp"
-                    android:layout_marginTop="7dp"
-                    android:src="@drawable/icon_invite_friends_btn"
-                    app:layout_constraintTop_toBottomOf="@id/iv_invite" />
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
-                android:layout_marginTop="25dp"
-                android:layout_marginRight="40dp"
-                android:orientation="horizontal">
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:background="@color/color_D2D2D2" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:text="活动规则"
-                    android:textColor="@color/color_555555"
-                    android:textSize="15sp" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:background="@color/color_D2D2D2" />
-            </LinearLayout>
-
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="44dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginRight="44dp"
-                android:lineSpacingExtra="5dp"
-                android:text="1.成为平台用户后，推荐好友注册成为平台新用户时，就拥有了一度人脉，一度人脉在平台查看信息后，系统会奖励给您推广费。"
-                android:textColor="@color/color_999999"
-                android:textSize="13sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="44dp"
-                android:layout_marginTop="9dp"
-                android:layout_marginRight="44dp"
-                android:lineSpacingExtra="5dp"
-                android:text="2.当一度人脉继续推荐好友注册成为平台新用户时，这样就拥有了二度人脉，当二度人脉在平台查看信息后，系统同样会奖励给您推广费。"
-                android:textColor="@color/color_999999"
-                android:textSize="13sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="44dp"
-                android:layout_marginTop="9dp"
-                android:layout_marginRight="44dp"
-                android:lineSpacingExtra="5dp"
-                android:text="3.二度人脉继续推荐好友注册成为平台用户时，就拥有了三度人脉，当三度人脉在平台查看信息后，也能够获得系统奖励的推广费。"
-                android:textColor="@color/color_999999"
-                android:textSize="13sp" />
-
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="44dp"
-                android:layout_marginTop="9dp"
-                android:layout_marginRight="44dp"
-                android:lineSpacingExtra="5dp"
-                android:layout_marginBottom="20dp"
-                android:text="您推广的人脉以后每次查看信息，系统都会给您奖励，奖励是可以累加的哦！"
-                android:textColor="@color/color_F6834D"
-                android:textSize="13sp" />
-        </LinearLayout>
-
-    </ScrollView>
-</RelativeLayout>
+</LinearLayout>

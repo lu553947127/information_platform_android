@@ -40,7 +40,7 @@ import static com.shuangduan.zcy.app.CustomConfig.THREE_DEGREE;
  * @author 徐玉 QQ:876885613
  * @name information_platform_android
  * @class name：com.shuangduan.zcy.view.income
- * @class describe  人脉收益
+ * @class describe  关系收益
  * @time 2019/8/9 14:37
  * @change
  * @chang time
@@ -77,20 +77,20 @@ public class IncomePeopleActivity extends BaseActivity implements BaseQuickAdapt
         incomePeopleVm.type = getIntent().getIntExtra(CustomConfig.PEOPLE_DEGREE, FIRST_DEGREE);
 
         switch (incomePeopleVm.type){
-            case FIRST_DEGREE://熟识人脉
-                tvBarTitle.setText("熟识人脉");
-                emptyView = emptyViewFactory.createEmptyView(R.drawable.icon_empty_income, R.string.empty_recommend_friends_info, R.string.to_recommend, this);
+            case FIRST_DEGREE://熟识关系
+                tvBarTitle.setText("熟识关系");
+                emptyView = emptyViewFactory.createEmptyView(R.drawable.icon_empty_contacts, R.string.empty_recommend_friends_info, R.string.to_recommend, this);
                 break;
-            case SECOND_DEGREE://相识人脉
-                tvBarTitle.setText("相识人脉");
-                emptyView = emptyViewFactory.createEmptyView(R.drawable.icon_empty_income, R.string.empty_recommend_friends_info, R.string.to_recommend, this);
+            case SECOND_DEGREE://相识关系
+                tvBarTitle.setText("相识关系");
+                emptyView = emptyViewFactory.createEmptyView(R.drawable.icon_empty_contacts, R.string.empty_recommend_friends_no, 0, null);
                 break;
-            case THREE_DEGREE://初识人脉
-                tvBarTitle.setText("初识人脉");
-                emptyView = emptyViewFactory.createEmptyView(R.drawable.icon_empty_income, R.string.empty_recommend_friends_info, R.string.to_recommend, this);
+            case THREE_DEGREE://初识关系
+                tvBarTitle.setText("初识关系");
+                emptyView = emptyViewFactory.createEmptyView(R.drawable.icon_empty_contacts, R.string.empty_recommend_friends_no1, 0, null);
                 break;
-            case SEVEN_DEGREE://全部人脉
-                emptyView = emptyViewFactory.createEmptyView(R.drawable.icon_empty_income, R.string.empty_people_income_info, R.string.to_recommend, this);
+            case SEVEN_DEGREE://全部关系
+                emptyView = emptyViewFactory.createEmptyView(R.drawable.icon_empty_contacts, R.string.empty_people_income_info, 0, this);
                 tvBarTitle.setText(getString(R.string.income_people));
                 break;
         }
