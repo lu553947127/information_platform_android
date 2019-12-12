@@ -198,11 +198,11 @@ public class MaterialEquipmentPlaceOrderActivity extends BaseActivity {
                 if (materialDetail.getMethod() == 1) {
                     price = num * day * guidance_price;
                     tvNumber.setText("共租赁" + day + "天，共计");
-                    tvPrice.setText(String.valueOf(price));
+                    tvPrice.setText(DigitUtils.doubleToString(price));
                 } else {
                     price = num * guidance_price;
                     tvNumber.setText("共采购" + num + "，共计");
-                    tvPrice.setText(String.valueOf(price));
+                    tvPrice.setText(DigitUtils.doubleToString(price));
                 }
             }
         });
@@ -264,7 +264,7 @@ public class MaterialEquipmentPlaceOrderActivity extends BaseActivity {
                     return;
                 }
 
-                if (String.valueOf(price).length() > 8) {
+                if (price > 100000000) {
                     ToastUtils.showShort("订单金额过大，不支持线上交易");
                     return;
                 }
@@ -322,7 +322,7 @@ public class MaterialEquipmentPlaceOrderActivity extends BaseActivity {
                 if (materialDetail.getMethod() == 1) {
                     price = num * day * guidance_price;
                     tvNumber.setText("共租赁" + day + "天，共计");
-                    tvPrice.setText(String.valueOf(price));
+                    tvPrice.setText(DigitUtils.doubleToString(price));
                 }
             }
         }, "yyyy-MM-dd", TimeUtils.getNowString(), "2040-12-31");
