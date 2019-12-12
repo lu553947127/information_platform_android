@@ -20,7 +20,8 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ConsumptionAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
-import com.shuangduan.zcy.base.BaseNoRefreshFragment;
+import com.shuangduan.zcy.base.BaseFragment;
+import com.shuangduan.zcy.base.BaseLazyFragment;
 import com.shuangduan.zcy.model.bean.ConsumeBean;
 import com.shuangduan.zcy.view.mine.UserInfoActivity;
 import com.shuangduan.zcy.vm.ProjectDetailVm;
@@ -38,7 +39,7 @@ import butterknife.BindView;
  * @chang time
  * @class describe
  */
-public class ProjectConsumptionFragment extends BaseNoRefreshFragment {
+public class ProjectConsumptionFragment extends BaseFragment {
     @BindView(R.id.refresh)
     SmartRefreshLayout refresh;
     @BindView(R.id.rv_consumption)
@@ -47,7 +48,9 @@ public class ProjectConsumptionFragment extends BaseNoRefreshFragment {
     private ConsumptionAdapter consumptionAdapter;
 
     public static ProjectConsumptionFragment newInstance() {
+
         Bundle args = new Bundle();
+
         ProjectConsumptionFragment fragment = new ProjectConsumptionFragment();
         fragment.setArguments(args);
         return fragment;
@@ -64,7 +67,7 @@ public class ProjectConsumptionFragment extends BaseNoRefreshFragment {
     }
 
     @Override
-    protected void initDataAndEvent(Bundle savedInstanceState) {
+    protected void initDataAndEvent(Bundle savedInstanceState, View view) {
         rvConsumption.setLayoutManager(new LinearLayoutManager(mContext));
         rvConsumption.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
         consumptionAdapter = new ConsumptionAdapter(R.layout.item_consumption, null);
@@ -135,4 +138,5 @@ public class ProjectConsumptionFragment extends BaseNoRefreshFragment {
             }
         }
     }
+
 }

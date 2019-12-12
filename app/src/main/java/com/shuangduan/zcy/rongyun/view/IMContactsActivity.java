@@ -163,7 +163,7 @@ public class IMContactsActivity extends BaseActivity {
         imAddVm.pageStateLiveData.observe(this, s -> {
             switch (s) {
                 case PageState.PAGE_LOADING:
-                    showLoading();
+//                    showLoading();
                     break;
                 default:
                     hideLoading();

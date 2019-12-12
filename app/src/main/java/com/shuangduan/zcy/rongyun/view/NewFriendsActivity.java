@@ -126,7 +126,7 @@ public class NewFriendsActivity extends BaseActivity implements EmptyViewFactory
         imAddVm.pageStateLiveData.observe(this, s -> {
             switch (s) {
                 case PageState.PAGE_LOADING:
-                    showLoading();
+//                    showLoading();
                     break;
                 default:
                     hideLoading();

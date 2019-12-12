@@ -27,7 +27,7 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ContactAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
-import com.shuangduan.zcy.base.BaseNoRefreshFragment;
+import com.shuangduan.zcy.base.BaseFragment;
 import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.CustomDialog;
 import com.shuangduan.zcy.dialog.PayDialog;
@@ -55,7 +55,7 @@ import butterknife.OnClick;
  * @chang time
  * @class describe
  */
-public class ProjectContentFragment extends BaseNoRefreshFragment implements BaseQuickAdapter.OnItemChildClickListener {
+public class ProjectContentFragment extends BaseFragment implements BaseQuickAdapter.OnItemChildClickListener {
 
     @BindView(R.id.tv_update_time)
     TextView tvUpdateTime;
@@ -109,19 +109,17 @@ public class ProjectContentFragment extends BaseNoRefreshFragment implements Bas
     }
 
     @Override
-    protected void initDataAndEvent(Bundle savedInstanceState) {
-
-        projectDetailVm = ViewModelProviders.of(mActivity).get(ProjectDetailVm.class);
-        updatePwdPayVm = ViewModelProviders.of(this).get(UpdatePwdPayVm.class);
-        coinPayVm = ViewModelProviders.of(mActivity).get(CoinPayVm.class);
+    protected void initDataAndEvent(Bundle savedInstanceState, View v) {
 
         rvContact.setLayoutManager(new LinearLayoutManager(mContext));
         contactAdapter = new ContactAdapter(R.layout.item_contact, null, 0);
         contactAdapter.setEmptyView(R.layout.layout_loading_top, rvContact);
         contactAdapter.setOnItemChildClickListener(this);
+
         rvContact.setAdapter(contactAdapter);
 
-        //工程信息详情获取
+        //基本信息设置
+        projectDetailVm = ViewModelProviders.of(mActivity).get(ProjectDetailVm.class);
         projectDetailVm.detailLiveData.observe(this, projectDetailBean -> {
             detail = projectDetailBean.getDetail();
             projectDetailVm.titleLiveData.postValue(detail.getTitle());
@@ -137,7 +135,8 @@ public class ProjectContentFragment extends BaseNoRefreshFragment implements Bas
             tvType.setText(String.format(getString(R.string.format_type), detail.getType()));
             tvCycle.setText(String.format(getString(R.string.format_cycle), detail.getCycle()));
 
-            tvAcreage.setText(detail.getAcreage().equals("未确定") ? String.format(getString(R.string.format_no_acreage), detail.getAcreage()) : String.format(getString(R.string.format_acreage), detail.getAcreage()));
+            tvAcreage.setText(detail.getAcreage().equals("未确定") ? String.format(getString(R.string.format_no_acreage), detail.getAcreage()) :
+                    String.format(getString(R.string.format_acreage), detail.getAcreage()));
 
             tvPrice.setText(String.format(getString(R.string.format_valuation), detail.getValuation()));
 
@@ -174,10 +173,9 @@ public class ProjectContentFragment extends BaseNoRefreshFragment implements Bas
 
         //加入群聊返回结果
         projectDetailVm.joinGroupData.observe(this, item -> {
-            ToastUtils.showShort(getString(R.string.buy_success));
+//            ToastUtils.showShort(getString(R.string.buy_success));
             projectDetailVm.getDetail();
         });
-
         initPay();
     }
 
@@ -204,6 +202,7 @@ public class ProjectContentFragment extends BaseNoRefreshFragment implements Bas
 
     private void initPay() {
         //支付密码状态查询
+        updatePwdPayVm = ViewModelProviders.of(this).get(UpdatePwdPayVm.class);
         updatePwdPayVm.stateLiveData.observe(this, pwdPayStateBean -> {
             int status = pwdPayStateBean.getStatus();
             SPUtils.getInstance().put(SpConfig.PWD_PAY_STATUS, status);
@@ -224,7 +223,7 @@ public class ProjectContentFragment extends BaseNoRefreshFragment implements Bas
             }
         });
 
-        //付款成功返回结果
+        coinPayVm = ViewModelProviders.of(mActivity).get(CoinPayVm.class);
         coinPayVm.projectId = mActivity.getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0);
         coinPayVm.contentPayLiveData.observe(this, coinPayResultBean -> {
             if (coinPayResultBean.getPay_status() == 1) {

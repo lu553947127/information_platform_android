@@ -188,6 +188,8 @@ public class ProjectDetailActivity extends BaseActivity {
             }
         });
 
+
+
         PermissionVm permissionVm = ViewModelProviders.of(this).get(PermissionVm.class);
         permissionVm.getLiveData().observe(this, integer -> {
             if (integer == PermissionVm.PERMISSION_LOCATION) {
@@ -278,6 +280,8 @@ public class ProjectDetailActivity extends BaseActivity {
         if (aMap == null) {
             aMap = mapView.getMap();
             setUpMap();
+
+
             aMap.setOnCameraChangeListener(new AMap.OnCameraChangeListener() {
                 @Override
                 public void onCameraChange(CameraPosition cameraPosition) {
@@ -289,7 +293,8 @@ public class ProjectDetailActivity extends BaseActivity {
                     startJumpAnimation();
                 }
             });
-            aMap.setOnMapLoadedListener(this::addMarkerInScreenCenter);
+
+            aMap.setOnMapLoadedListener(() -> addMarkerInScreenCenter(null));
         }
     }
 
@@ -307,7 +312,8 @@ public class ProjectDetailActivity extends BaseActivity {
     }
 
     private Marker locationMarker;
-    private void addMarkerInScreenCenter() {
+
+    private void addMarkerInScreenCenter(LatLng locationLatLng) {
         LatLng latLng = aMap.getCameraPosition().target;
         Point screenPosition = aMap.getProjection().toScreenLocation(latLng);
         locationMarker = aMap.addMarker(new MarkerOptions()
@@ -321,6 +327,7 @@ public class ProjectDetailActivity extends BaseActivity {
      * 屏幕中心marker 跳动
      */
     public void startJumpAnimation() {
+
         if (locationMarker != null) {
             //根据屏幕距离计算需要移动的目标点
             final LatLng latLng = locationMarker.getPosition();
@@ -344,6 +351,7 @@ public class ProjectDetailActivity extends BaseActivity {
             locationMarker.setAnimation(animation);
             //开始动画
             locationMarker.startAnimation();
+
         } else {
             LogUtils.i("ama", "screenMarker is null");
         }
@@ -352,21 +360,24 @@ public class ProjectDetailActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         //在activity执行onDestroy时执行mMapView.onDestroy()，销毁地图
-        if (mapView != null) mapView.onDestroy();
+        if (mapView != null)
+            mapView.onDestroy();
         super.onDestroy();
     }
 
     @Override
     protected void onResume() {
         //在activity执行onResume时执行mMapView.onResume ()，重新绘制加载地图
-        if (mapView != null) mapView.onResume();
+        if (mapView != null)
+            mapView.onResume();
         super.onResume();
     }
 
     @Override
     protected void onPause() {
         //在activity执行onPause时执行mMapView.onPause ()，暂停地图的绘制
-        if (mapView != null) mapView.onPause();
+        if (mapView != null)
+            mapView.onPause();
         super.onPause();
     }
 
@@ -374,6 +385,7 @@ public class ProjectDetailActivity extends BaseActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         //在activity执行onSaveInstanceState时执行mMapView.onSaveInstanceState (outState)，保存地图当前的状态
-        if (mapView != null) mapView.onSaveInstanceState(outState);
+        if (mapView != null)
+            mapView.onSaveInstanceState(outState);
     }
 }

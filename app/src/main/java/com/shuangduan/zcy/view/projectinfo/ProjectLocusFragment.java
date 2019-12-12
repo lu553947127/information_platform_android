@@ -18,7 +18,7 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.LocusAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
-import com.shuangduan.zcy.base.BaseNoRefreshFragment;
+import com.shuangduan.zcy.base.BaseLazyFragment;
 import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.CustomDialog;
 import com.shuangduan.zcy.dialog.PayDialog;
@@ -50,7 +50,8 @@ import butterknife.OnClick;
  * @chang time
  * @class describe
  */
-public class ProjectLocusFragment extends BaseNoRefreshFragment {
+public class ProjectLocusFragment extends BaseLazyFragment {
+
     @BindView(R.id.tv_filter)
     TextView tvFilter;
     @BindView(R.id.refresh)
@@ -62,7 +63,8 @@ public class ProjectLocusFragment extends BaseNoRefreshFragment {
     private UpdatePwdPayVm updatePwdPayVm;
     private CoinPayVm coinPayVm;
     private static int project_id;
-    private String title;
+
+    private String title ;
 
     public static ProjectLocusFragment newInstance(int id) {
         Bundle args = new Bundle();
@@ -89,7 +91,6 @@ public class ProjectLocusFragment extends BaseNoRefreshFragment {
 
         projectDetailVm = ViewModelProviders.of(mActivity).get(ProjectDetailVm.class);
 
-        //获取工程信息名称
         projectDetailVm.titleLiveData.observe(this, s -> title = s);
 
         rvLocus.setLayoutManager(new LinearLayoutManager(mContext));
@@ -151,6 +152,7 @@ public class ProjectLocusFragment extends BaseNoRefreshFragment {
 
         refresh.setOnLoadMoreListener(refreshLayout -> projectDetailVm.getMoreViewTrack());
 
+
         projectDetailVm.locusTypeLiveData.observe(this, type -> {
             if (type == 1) {
                 tvFilter.setText(getString(R.string.release_by_me));
@@ -158,8 +160,6 @@ public class ProjectLocusFragment extends BaseNoRefreshFragment {
                 tvFilter.setText(getString(R.string.all));
             }
         });
-
-        //获取动态信息列表数据
         projectDetailVm.trackLiveData.observe(this, trackBean -> {
             isInited = true;
             if (trackBean.getPage() == 1) {
@@ -173,7 +173,7 @@ public class ProjectLocusFragment extends BaseNoRefreshFragment {
 
         //加入群聊返回结果
         projectDetailVm.joinGroupData.observe(this,item ->{
-            ToastUtils.showShort(getString(R.string.buy_success));
+//            ToastUtils.showShort(getString(R.string.buy_success));
             projectDetailVm.getTrack();
             //刷新已查看列表
             EventBus.getDefault().post(new RefreshViewLocusEvent());
@@ -188,6 +188,7 @@ public class ProjectLocusFragment extends BaseNoRefreshFragment {
 
     private void setEmpty() {
         int id = getArguments().getInt("id", 0);
+
         View empty = LayoutInflater.from(mContext).inflate(R.layout.layout_empty_top, null);
         TextView tvTip = empty.findViewById(R.id.tv_tip);
         TextView tvGo = empty.findViewById(R.id.tv_goto);
