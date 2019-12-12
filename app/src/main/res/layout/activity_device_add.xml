@@ -99,7 +99,6 @@
                 <com.shuangduan.zcy.weight.XEditText
                     android:id="@+id/et_encoding"
                     style="@style/AdminManageSecondHint"
-                    android:maxLength="27"
                     android:hint="@string/admin_device_add_encoding_et" />
             </LinearLayout>
 

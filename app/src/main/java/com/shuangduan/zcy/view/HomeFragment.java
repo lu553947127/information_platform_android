@@ -370,4 +370,11 @@ public class HomeFragment extends BaseFragment {
             toolbar.setVisibility(View.VISIBLE);
         }
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        sColor = 0;
+        sAlpha = 0;
+    }
 }

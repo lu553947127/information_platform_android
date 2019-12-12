@@ -652,7 +652,7 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
         deviceAddVm.address = event.getAddress();
         deviceAddVm.latitude = event.getLatitude();
         deviceAddVm.longitude = event.getLongitude();
-        etAddress.setText(event.getProvince() + event.getCity() + event.getAddress());
+        etAddress.setText(event.getAddress());
     }
 
     //时间选择器
@@ -791,7 +791,7 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
             deviceAddVm.address = deviceDetailEditBean.getAddress();
             deviceAddVm.latitude = deviceDetailEditBean.getLatitude();
             deviceAddVm.longitude = deviceDetailEditBean.getLongitude();
-            etAddress.setText(deviceDetailEditBean.getProvince_name() + deviceDetailEditBean.getCity_name() + deviceDetailEditBean.getAddress());
+            etAddress.setText(deviceDetailEditBean.getAddress());
             etPersonLiable.setText(deviceDetailEditBean.getPerson_liable());
             etTel.setText(deviceDetailEditBean.getTel());
             deviceAddVm.is_shelf = deviceDetailEditBean.getIs_shelf();

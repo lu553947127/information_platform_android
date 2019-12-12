@@ -142,10 +142,8 @@ public class DeviceDetailActivity extends BaseActivity {
             tvStockNum.setText(deviceDetailBean.getStock()+deviceDetailBean.getUnit_name());
             tvGuidePrice.setText(deviceDetailBean.getGuidance_price()+"/"+deviceDetailBean.getUnit_name());
             tvSpec.setText(deviceDetailBean.getSpec());
-            tvUseStatus.setVisibility(StringUtils.isTrimEmpty(deviceDetailBean.getUse_status_name()) ? View.GONE : View.VISIBLE);
-            tvUseStatus.setText(deviceDetailBean.getUse_status_name());
-            tvMaterialStatus.setVisibility(StringUtils.isTrimEmpty(deviceDetailBean.getMaterial_status_name()) ? View.GONE : View.VISIBLE);
-            tvMaterialStatus.setText(deviceDetailBean.getMaterial_status_name());
+            tvUseStatus.setText(StringUtils.isTrimEmpty(deviceDetailBean.getUse_status_name()) ? "无" : deviceDetailBean.getUse_status_name());
+            tvMaterialStatus.setText(StringUtils.isTrimEmpty(deviceDetailBean.getMaterial_status_name()) ? "无" : deviceDetailBean.getMaterial_status_name());
             tvDeviceCoding.setText(deviceDetailBean.getEncoding());
             tvPutAddress.setText(deviceDetailBean.getProvince_name() + deviceDetailBean.getCity_name() + deviceDetailBean.getAddress());
             tvName.setText(deviceDetailBean.getPerson_liable());

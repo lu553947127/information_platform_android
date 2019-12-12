@@ -668,7 +668,7 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
         turnoverAddVm.address = event.getAddress();
         turnoverAddVm.latitude = event.getLatitude();
         turnoverAddVm.longitude = event.getLongitude();
-        etAddress.setText(event.getProvince() + event.getCity() + event.getAddress());
+        etAddress.setText(event.getAddress());
     }
 
     //时间选择器
@@ -809,7 +809,7 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
             turnoverAddVm.address = turnoverDetailEditBean.getAddress();
             turnoverAddVm.latitude = turnoverDetailEditBean.getLatitude();
             turnoverAddVm.longitude = turnoverDetailEditBean.getLongitude();
-            etAddress.setText(turnoverDetailEditBean.getProvince_name() + turnoverDetailEditBean.getCity_name() + turnoverDetailEditBean.getAddress());
+            etAddress.setText(turnoverDetailEditBean.getAddress());
             etPersonLiable.setText(turnoverDetailEditBean.getPerson_liable());
             etTel.setText(turnoverDetailEditBean.getTel());
             turnoverAddVm.is_vulnerable = turnoverDetailEditBean.getRapid_wear();

@@ -427,7 +427,13 @@ public class MineFragment extends BaseFragment {
         if (animatorRun != null) {
             animatorRun = null;
         }
-
         super.onDestroyView();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        sColor = 0;
+        sAlpha = 0;
     }
 }

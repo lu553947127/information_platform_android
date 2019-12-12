@@ -136,10 +136,8 @@ public class TurnoverDetailActivity extends BaseActivity {
             tvStockNum.setText(turnover.stock+turnover.unitName);
             tvGuidePrice.setText(turnover.guidancePrice+"/"+turnover.unitName);
             tvSpec.setText(turnover.spec);
-            tvUseStatus.setVisibility(StringUtils.isTrimEmpty(turnover.useStatusName) ? View.GONE : View.VISIBLE);
-            tvUseStatus.setText(turnover.useStatusName);
-            tvMaterialStatus.setVisibility(StringUtils.isTrimEmpty(turnover.materialStatusName) ? View.GONE : View.VISIBLE);
-            tvMaterialStatus.setText(turnover.materialStatusName);
+            tvUseStatus.setText(StringUtils.isTrimEmpty(turnover.useStatusName) ? "无" : turnover.useStatusName);
+            tvMaterialStatus.setText(StringUtils.isTrimEmpty(turnover.materialStatusName) ? "无" : turnover.materialStatusName);
             tvPutAddress.setText(turnover.provinceName + turnover.cityName + turnover.address);
             tvName.setText(turnover.personLiable);
             tvVulnerableValue.setText(turnover.rapidWear);
