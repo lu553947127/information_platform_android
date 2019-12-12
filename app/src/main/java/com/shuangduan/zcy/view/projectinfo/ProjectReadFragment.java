@@ -18,12 +18,13 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.LocusReadAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
-import com.shuangduan.zcy.base.BaseLazyFragment;
+import com.shuangduan.zcy.base.BaseNoRefreshFragment;
 import com.shuangduan.zcy.model.bean.TrackBean;
 import com.shuangduan.zcy.model.event.RefreshViewLocusEvent;
 import com.shuangduan.zcy.utils.image.PictureEnlargeUtils;
 import com.shuangduan.zcy.vm.ProjectDetailVm;
 import com.shuangduan.zcy.weight.RichText;
+
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -41,8 +42,7 @@ import butterknife.BindView;
  * @chang time
  * @class describe
  */
-public class ProjectReadFragment extends BaseLazyFragment {
-
+public class ProjectReadFragment extends BaseNoRefreshFragment {
     @BindView(R.id.tv_detail)
     RichText tvDetail;
     @BindView(R.id.tv_material)
@@ -55,9 +55,7 @@ public class ProjectReadFragment extends BaseLazyFragment {
     private LocusReadAdapter locusAdapter;
 
     public static ProjectReadFragment newInstance() {
-
         Bundle args = new Bundle();
-
         ProjectReadFragment fragment = new ProjectReadFragment();
         fragment.setArguments(args);
         return fragment;
