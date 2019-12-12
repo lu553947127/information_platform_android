@@ -700,7 +700,7 @@ public class TurnoverMaterialFragment extends BaseNoRefreshFragment {
         splitAddress=event.getAddress();
         latitude=event.getLatitude();
         longitude=event.getLongitude();
-        etSplitAddress.setText(event.getProvince()+event.getCity()+event.getAddress());
+        etSplitAddress.setText(event.getAddress());
     }
 
     //添加头部筛选布局view

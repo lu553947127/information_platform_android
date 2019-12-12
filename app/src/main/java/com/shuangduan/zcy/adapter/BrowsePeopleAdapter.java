@@ -30,8 +30,8 @@ import java.util.List;
  */
 public class BrowsePeopleAdapter extends BaseQuickAdapter<MaterialDetailBean.User, BaseViewHolder> {
 
-    private String count;
-    public BrowsePeopleAdapter(int layoutResId, @Nullable List<MaterialDetailBean.User> data,String count) {
+    private int count;
+    public BrowsePeopleAdapter(int layoutResId, @Nullable List<MaterialDetailBean.User> data,int count) {
         super(layoutResId, data);
         this.count=count;
     }

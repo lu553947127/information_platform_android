@@ -186,8 +186,7 @@ public class MaterialDetailActivity extends BaseActivity {
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
                 linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
                 rvBrowse.setLayoutManager(linearLayoutManager);
-                BrowsePeopleAdapter adapter = new BrowsePeopleAdapter(R.layout.adapter_browse_people, materialDetailBean.getUser(), String.valueOf(materialDetailBean.getBrowseCount()));
-                adapter.setEmptyView(R.layout.layout_loading, rvBrowse);
+                BrowsePeopleAdapter adapter = new BrowsePeopleAdapter(R.layout.adapter_browse_people, materialDetailBean.getUser(), materialDetailBean.getBrowseCount());
                 rvBrowse.setAdapter(adapter);
             } else {
                 rvBrowse.setVisibility(View.GONE);

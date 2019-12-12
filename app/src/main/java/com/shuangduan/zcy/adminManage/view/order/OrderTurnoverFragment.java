@@ -146,7 +146,7 @@ public class OrderTurnoverFragment extends BaseNoRefreshFragment implements Base
                 case 3://集团
                     bundle.putInt(CustomConfig.ADMIN_ORDER_ID, listBean.orderId);
                     bundle.putInt("manage_status", manage_status);
-                    bundle.putInt("order_type", 0);
+                    bundle.putInt("order_type", 3);
                     ActivityUtils.startActivity(bundle, OrderDetailsActivity.class);
                     break;
                 case 4://子公司子账号
