@@ -18,6 +18,7 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.LocusReadAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
+import com.shuangduan.zcy.base.BaseFragment;
 import com.shuangduan.zcy.base.BaseLazyFragment;
 import com.shuangduan.zcy.model.bean.TrackBean;
 import com.shuangduan.zcy.model.event.RefreshViewLocusEvent;
@@ -41,7 +42,7 @@ import butterknife.BindView;
  * @chang time
  * @class describe
  */
-public class ProjectReadFragment extends BaseLazyFragment {
+public class ProjectReadFragment extends BaseFragment {
 
     @BindView(R.id.tv_detail)
     RichText tvDetail;
@@ -74,12 +75,12 @@ public class ProjectReadFragment extends BaseLazyFragment {
     }
 
     @Override
-    protected void initDataAndEvent(Bundle savedInstanceState) {
+    protected void initDataAndEvent(Bundle savedInstanceState,View view) {
         rvLocus.setLayoutManager(new LinearLayoutManager(mContext));
         locusAdapter = new LocusReadAdapter(R.layout.item_locus, null);
         locusAdapter.setEmptyView(R.layout.layout_loading_top, rvLocus);
         rvLocus.setAdapter(locusAdapter);
-        locusAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+        locusAdapter.setOnItemChildClickListener((adapter, v, position) -> {
             TrackBean.ListBean listBean = locusAdapter.getData().get(position);
             ArrayList<String> list = new ArrayList<>();
             for (TrackBean.ListBean.ImageBean img: listBean.getImage()) {
@@ -116,7 +117,6 @@ public class ProjectReadFragment extends BaseLazyFragment {
             tvMaterial.setText(materials);
         });
         projectDetailVm.viewTrackLiveData.observe(this, trackBean -> {
-            isInited = true;
             if (trackBean.getPage() == 1) {
                 locusAdapter.setNewData(trackBean.getList());
                 setEmpty();
