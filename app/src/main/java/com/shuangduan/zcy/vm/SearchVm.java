@@ -3,6 +3,7 @@ package com.shuangduan.zcy.vm;
 import androidx.lifecycle.MutableLiveData;
 
 import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.StringUtils;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseViewModel;
 import com.shuangduan.zcy.model.api.PageState;
@@ -94,11 +95,13 @@ public class SearchVm extends BaseViewModel {
     }
 
     public void getHistory() {
-        String history = SPUtils.getInstance().getString(SpConfig.SEARCH_HISTORY);
-        String[] split = history.split(",");
-        List<String> historyList = new ArrayList<>();
-        Collections.addAll(historyList, split);
-        historyLiveData.postValue(historyList);
+        String history = SPUtils.getInstance().getString(SpConfig.SEARCH_HISTORY,null);
+        if(!StringUtils.isTrimEmpty(history)){
+            String[] split = history.split(",");
+            List<String> historyList = new ArrayList<>();
+            Collections.addAll(historyList, split);
+            historyLiveData.postValue(historyList);
+        }
     }
 
     public void delHistory() {
