@@ -200,7 +200,6 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
-        tvBarTitle.setText(R.string.admin_turnover_material_add);
 
         int constructionId = getIntent().getIntExtra(CustomConfig.CONSTRUCTION_ID, 0);
         turnoverVm = ViewModelProviders.of(this).get(TurnoverVm.class);
@@ -210,8 +209,10 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
         //判断时添加还是编辑
         switch (getIntent().getIntExtra(CustomConfig.HANDLE_TYPE, 0)) {
             case ADD://添加
+                tvBarTitle.setText(R.string.admin_turnover_material_add);
                 break;
             case EDIT://编辑
+                tvBarTitle.setText(R.string.admin_turnover_material_edit);
                 getEditDetail(constructionId);
                 break;
         }

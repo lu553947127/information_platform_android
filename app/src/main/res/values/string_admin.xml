@@ -38,6 +38,7 @@
     <string name="admin_entry_person">录入人</string>
 
     <string name="admin_device_material_add">设备添加</string>
+    <string name="admin_device_material_edit">设备编辑</string>
     <string name="admin_material_brand">品牌</string>
     <string name="admin_material_main_params">主要参数</string>
     <string name="admin_material_power">功率</string>
@@ -67,6 +68,7 @@
     <string name="admin_turnover_delete">确定删除吗？</string>
     <string name="admin_turnover_reject">确定驳回吗？</string>
     <string name="admin_turnover_material_add">周转材料添加</string>
+    <string name="admin_turnover_material_edit">周转材料编辑</string>
     <string name="admin_turnover_add_project">项目名称</string>
     <string name="admin_turnover_add_project_et">请选择项目名称</string>
     <string name="admin_turnover_add_category_material_id">材料类别</string>

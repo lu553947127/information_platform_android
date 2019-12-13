@@ -196,16 +196,18 @@ public class MineFragment extends BaseFragment {
         return true;
     }
 
-    @OnClick({R.id.iv_help, R.id.iv_set, R.id.cl_user, R.id.tv_authentication, R.id.tv_wallet, R.id.rl_recommend_friends,
+    @OnClick({R.id.iv_help_top,R.id.iv_help, R.id.iv_set_top,R.id.iv_set, R.id.cl_user, R.id.tv_authentication, R.id.tv_wallet, R.id.rl_recommend_friends,
             R.id.tv_income, R.id.tv_mine_subscription, R.id.tv_read_history, R.id.tv_my_project, R.id.tv_my_demand,
             R.id.tv_my_collection, R.id.tv_my_material, R.id.tv_turnover_material, R.id.tv_device_management, R.id.tv_order_management})
     void onClick(View view) {
         Bundle bundle = new Bundle();
         switch (view.getId()) {
             case R.id.iv_help://帮助
+            case R.id.iv_help_top:
                 ActivityUtils.startActivity(HelperActivity.class);
                 break;
             case R.id.iv_set://设置
+            case R.id.iv_set_top:
                 ActivityUtils.startActivity(SetActivity.class);
                 break;
             case R.id.cl_user://用户详情

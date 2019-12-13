@@ -30,34 +30,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="-185dp">
 
-                <!--右上角设置和帮助-->
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:layout_marginTop="39dp">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/iv_set"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/icon_set"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="19dp"
-                        tools:ignore="RtlHardcoded" />
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/iv_help"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/icon_help_white"
-                        android:layout_toLeftOf="@+id/iv_set"
-                        android:layout_marginRight="24dp"
-                        tools:ignore="RtlHardcoded" />
-
-                </RelativeLayout>
-
                 <!--个人信息面板-->
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -160,6 +132,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:background="@drawable/circular_background_friend"
+                android:layout_marginTop="10dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp">
 
@@ -446,10 +419,38 @@
         </LinearLayout>
     </com.shuangduan.zcy.weight.HeadZoomScrollView>
 
+    <!--右上角设置和帮助-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="35dp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_set"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            android:src="@drawable/icon_set"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="19dp"
+            tools:ignore="RtlHardcoded" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_help"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            android:src="@drawable/icon_help_white"
+            android:layout_toLeftOf="@+id/iv_set"
+            android:layout_marginRight="24dp"
+            tools:ignore="RtlHardcoded" />
+
+    </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/rl_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="64dp"
+        android:layout_height="74dp"
         android:alpha="0"
         android:visibility="gone">
 
@@ -463,6 +464,28 @@
             android:textColor="@color/colorFFF"
             android:textSize="18sp"
             android:text="@string/mine" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_set_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/icon_set"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="19dp"
+            tools:ignore="RtlHardcoded" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_help_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/icon_help_white"
+            android:layout_toLeftOf="@+id/iv_set_top"
+            android:layout_marginRight="24dp"
+            tools:ignore="RtlHardcoded" />
 
     </RelativeLayout>
 

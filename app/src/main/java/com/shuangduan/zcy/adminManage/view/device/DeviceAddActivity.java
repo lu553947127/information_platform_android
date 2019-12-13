@@ -202,7 +202,6 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
-        tvBarTitle.setText(R.string.admin_device_material_add);
 
         int eqipmentId = getIntent().getIntExtra(CustomConfig.EQIPMENT_ID, 0);
 
@@ -215,8 +214,10 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
         //判断时添加还是编辑
         switch (getIntent().getIntExtra(CustomConfig.HANDLE_TYPE, 0)) {
             case ADD://添加
+                tvBarTitle.setText(R.string.admin_device_material_add);
                 break;
             case EDIT://编辑
+                tvBarTitle.setText(R.string.admin_device_material_edit);
                 getEditDetail(eqipmentId);
                 break;
         }

@@ -30,6 +30,7 @@ import com.shuangduan.zcy.dialog.CustomDialog;
 import com.shuangduan.zcy.dialog.PayDialog;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.SupplierBean;
+import com.shuangduan.zcy.utils.SupplierUtils;
 import com.shuangduan.zcy.view.mine.SetPwdPayActivity;
 import com.shuangduan.zcy.view.recharge.RechargeActivity;
 import com.shuangduan.zcy.vm.CoinPayVm;
@@ -256,61 +257,7 @@ public class SupplierActivity extends BaseActivity {
                 break;
             case R.id.iv_bar_right:
 //                supplier_status = 3;
-                switch (supplier_status){
-                    case 0://未申请
-                        ActivityUtils.startActivity(SupplierJoinActivity.class);
-                        break;
-                    case 1://未通过
-                        new CustomDialog(this)
-                                .setTipLeftIcon(R.drawable.icon_error,"抱歉，您的审核未通过，\n请核对后重新提交！",R.color.colorTv)
-                                .setOk("重新申请")
-                                .setCallBack(new BaseDialog.CallBack() {
-                                    @Override
-                                    public void cancel() {
-
-                                    }
-
-                                    @Override
-                                    public void ok(String s) {
-                                        ActivityUtils.startActivity(SupplierJoinActivity.class);
-                                    }
-                                }).showDialog();
-                        break;
-                    case 2://已通过
-                        new CustomDialog(this)
-                                .setTipLeftIcon(R.drawable.icon_success,"恭喜，您已成为供应商！",R.color.colorTv)
-                                .setOk("查看")
-                                .setCallBack(new BaseDialog.CallBack() {
-                                    @Override
-                                    public void cancel() {
-
-                                    }
-
-                                    @Override
-                                    public void ok(String s) {
-                                        Bundle bundle = new Bundle();
-                                        bundle.putInt(CustomConfig.SUPPLIER_ID, id);
-                                        ActivityUtils.startActivity(bundle, SupplierDetailActivity.class);
-                                    }
-                                }).showDialog();
-                        break;
-                    case 3://驳回
-                        new CustomDialog(this)
-                                .setTipLeftIcon(R.drawable.icon_reject_supplier,"我们正在加急核对您的申请，\n请耐心等待！",R.color.colorTv)
-                                .setOk("确定")
-                                .setCallBack(new BaseDialog.CallBack() {
-                                    @Override
-                                    public void cancel() {
-
-                                    }
-
-                                    @Override
-                                    public void ok(String s) {
-
-                                    }
-                                }).showDialog();
-                        break;
-                }
+                SupplierUtils.SupplierCustom(this,supplier_status,id);
                 break;
         }
     }

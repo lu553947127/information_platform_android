@@ -261,7 +261,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     @OnClick({R.id.tv_login, R.id.tv_register, R.id.tv_login_account, R.id.tv_send_verification_code, R.id.tv_login_home, R.id.tv_forget_pwd
-            , R.id.tv_send_verification_code_register, R.id.tv_register_home, R.id.tv_privacy_text, R.id.tv_register_text, R.id.iv_wechat})
+            , R.id.tv_send_verification_code_register,R.id.tv_privacy, R.id.tv_register_home,R.id.tv_register_agreement, R.id.tv_privacy_text, R.id.tv_register_text, R.id.iv_wechat})
     void onClick(View view) {
         Bundle bundle = new Bundle();
         switch (view.getId()) {
@@ -297,10 +297,12 @@ public class LoginActivity extends BaseActivity {
             case R.id.tv_register_home://注册
                 register();
                 break;
+            case R.id.tv_privacy:
             case R.id.tv_privacy_text://隐私协议
                 bundle.putString("register", "privacy");
                 ActivityUtils.startActivity(bundle, WebViewActivity.class);
                 break;
+            case R.id.tv_register_agreement:
             case R.id.tv_register_text://用户注册协议
                 bundle.putString("register", "register");
                 ActivityUtils.startActivity(bundle, WebViewActivity.class);

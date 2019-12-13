@@ -165,7 +165,7 @@ dependencies {
     implementation 'com.yanzhenjie.recyclerview:x:1.3.2'
 
     //app版本更新 后台通知下载
-    implementation 'com.king.app:app-updater:1.0.4'
+    implementation 'com.king.app:app-updater:1.0.6-androidx'
 
     //仿微信小视频拍照
     implementation 'cjt.library.wheel:camera:1.1.9'

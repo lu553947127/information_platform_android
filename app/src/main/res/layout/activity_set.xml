@@ -8,73 +8,6 @@
 
     <include layout="@layout/toolbar"/>
 
-    <FrameLayout
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/colorFFF">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="16dp"
-            android:textColor="@color/colorTv"
-            android:textSize="14sp"
-            android:text="@string/sounds_set"/>
-        
-        <Switch
-            android:id="@+id/switch_sound"
-            android:layout_width="55dp"
-            android:layout_height="27dp"
-            android:layout_marginRight="15dp"
-            android:layout_gravity="center_vertical|end"
-            android:switchMinWidth="55dp"
-            android:showText="false"
-            android:track="@drawable/selector_switch"
-            android:thumb="@drawable/icon_switch_thumb" />
-
-    </FrameLayout>
-
-    <View
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@drawable/divider_15"/>
-
-    <FrameLayout
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/colorFFF">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="16dp"
-            android:textColor="@color/colorTv"
-            android:textSize="14sp"
-            android:text="@string/dark_model"/>
-
-        <Switch
-            android:id="@+id/switch_model"
-            android:layout_width="55dp"
-            android:layout_height="27dp"
-            android:layout_marginRight="15dp"
-            android:layout_gravity="center_vertical|end"
-            android:switchMinWidth="55dp"
-            android:showText="false"
-            android:track="@drawable/selector_switch"
-            android:thumb="@drawable/icon_switch_thumb"/>
-
-    </FrameLayout>
-
-    <Space
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="10dp" />
-
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_update_pwd"
         android:layout_width="match_parent"
@@ -88,10 +21,7 @@
         android:textSize="16sp"
         android:text="@string/update_login_pwd"/>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@drawable/divider_15"/>
+    <include layout="@layout/divider_15"/>
 
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -110,7 +40,7 @@
     <include layout="@layout/divider_15"/>
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_about_ours"
+        android:id="@+id/tv_third_login"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@drawable/selector_bg_custom"
@@ -120,12 +50,41 @@
         android:gravity="center_vertical"
         android:textColor="@color/color_666666"
         android:textSize="16sp"
-        android:text="@string/about_ours"/>
+        android:text="@string/third_login"/>
 
-    <View
+    <Space
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@drawable/divider_15"/>
+        android:layout_height="10dp" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_receiving_address"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/selector_bg_custom"
+        android:drawableRight="@drawable/icon_next"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/color_666666"
+        android:textSize="16sp"
+        android:text="@string/receiving_address"/>
+
+    <include layout="@layout/divider_15"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_supplier_msg"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/selector_bg_custom"
+        android:drawableRight="@drawable/icon_next"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/color_666666"
+        android:textSize="16sp"
+        android:text="@string/supplier_msg"/>
+
+    <include layout="@layout/divider_15"/>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_feedback"
@@ -140,10 +99,54 @@
         android:textSize="16sp"
         android:text="意见反馈"/>
 
-    <View
+    <Space
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@drawable/divider_15"/>
+        android:layout_height="10dp" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_register_agreement"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/selector_bg_custom"
+        android:drawableRight="@drawable/icon_next"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/color_666666"
+        android:textSize="16sp"
+        android:text="@string/register_register"/>
+
+    <include layout="@layout/divider_15"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_privacy_text"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/selector_bg_custom"
+        android:drawableRight="@drawable/icon_next"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/color_666666"
+        android:textSize="16sp"
+        android:text="@string/register_privacy"/>
+
+    <include layout="@layout/divider_15"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_about_ours"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/selector_bg_custom"
+        android:drawableRight="@drawable/icon_next"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/color_666666"
+        android:textSize="16sp"
+        android:text="@string/about_ours"/>
+
+    <include layout="@layout/divider_15"/>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_exit"

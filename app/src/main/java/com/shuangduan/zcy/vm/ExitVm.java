@@ -23,7 +23,7 @@ public class ExitVm extends BaseViewModel {
     public MutableLiveData exitLiveData;
     public MutableLiveData<String> pageStateLiveData;
 
-    public void init(){
+    public ExitVm(){
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
         exitLiveData = new MutableLiveData();
         pageStateLiveData = new MutableLiveData<>();

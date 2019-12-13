@@ -257,9 +257,9 @@ public class MaterialOrderDetailActivity extends BaseActivity {
     //取消预定订单
     private void cancelOrder() {
         MaterialOrderBean.ListBean order = materialVm.orderDetailLiveData.getValue();
-        if (type == CustomConfig.FRP) {
+        if (order!=null && type == CustomConfig.FRP) {
             materialVm.materialOrderCancel(order.orderId);
-        } else if (type == CustomConfig.EQUIPMENT) {
+        } else if (order!=null && type == CustomConfig.EQUIPMENT) {
             materialVm.cancelEquipmentOrder(order.orderId);
         }
     }

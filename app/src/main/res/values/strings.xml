@@ -126,8 +126,8 @@
     <string name="please_be_accurate_to_the_branch">请准确到支行</string>
     <string name="hint_bank_card_number">请填写银行卡号</string>
     <string name="hint_identity_number">请填写18位身份证号</string>
-    <string name="sounds_set">声音设置</string>
-    <string name="dark_model">夜间模式</string>
+    <string name="third_login">第三方登录账号绑定</string>
+    <string name="receiving_address">收货地址管理</string>
     <string name="update_pwd">修改密码</string>
     <string name="update_login_pwd">修改登录密码</string>
     <string name="forget_pwd_title">忘记密码</string>
@@ -388,7 +388,7 @@
     <string name="hint_relationship_remarks">为了您的信息能尽快通过审核，请按照需求详细填写</string>
     <string name="explain">收益说明书</string>
     <string name="register_privacy">隐私协议</string>
-    <string name="register_register">用户注册协议</string>
+    <string name="register_register">用户协议</string>
     <string name="material_depositing_place">选择存放地</string>
     <string name="material_place_order">提交预定单</string>
     <string name="material_real_name">联系人：</string>
