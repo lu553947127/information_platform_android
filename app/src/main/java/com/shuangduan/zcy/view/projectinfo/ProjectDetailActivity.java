@@ -28,21 +28,35 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.tabs.TabLayout;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ViewPagerAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
+import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
+import com.shuangduan.zcy.dialog.BaseDialog;
+import com.shuangduan.zcy.dialog.CustomDialog;
+import com.shuangduan.zcy.dialog.PayDialog;
 import com.shuangduan.zcy.manage.ShareManage;
+import com.shuangduan.zcy.model.api.PageState;
+import com.shuangduan.zcy.model.bean.ProjectDetailBean;
 import com.shuangduan.zcy.model.event.LocusRefreshEvent;
+import com.shuangduan.zcy.model.event.RefreshViewLocusEvent;
 import com.shuangduan.zcy.model.event.WarrantSuccessEvent;
+import com.shuangduan.zcy.view.mine.SetPwdPayActivity;
+import com.shuangduan.zcy.view.recharge.RechargeActivity;
 import com.shuangduan.zcy.view.release.ReleaseProjectActivity;
+import com.shuangduan.zcy.vm.CoinPayVm;
 import com.shuangduan.zcy.vm.PermissionVm;
 import com.shuangduan.zcy.vm.ProjectDetailVm;
+import com.shuangduan.zcy.vm.UpdatePwdPayVm;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.tencent.tauth.Tencent;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
@@ -95,9 +109,15 @@ public class ProjectDetailActivity extends BaseActivity {
     @BindView(R.id.ll_operate)
     LinearLayout llOperate;
     private AMap aMap = null;
-    private ProjectDetailVm projectDetailVm;
+    public ProjectDetailVm projectDetailVm;
     //分享管理
     private ShareManage shareManage;
+
+    //更新修改密码
+    public UpdatePwdPayVm updatePwdPayVm;
+
+    //支付
+    public CoinPayVm coinPayVm;
 
     @Override
     protected int initLayoutRes() {
@@ -113,45 +133,19 @@ public class ProjectDetailActivity extends BaseActivity {
     protected void initDataAndEvent(Bundle savedInstanceState) {
         mapView.onCreate(savedInstanceState);// 此方法必须重写
 
-        //初始化分享功能
-        shareManage = ShareManage.newInstance(getApplicationContext());
-        shareManage.init(this, ShareManage.SHARE_PROJECT_TYPE, getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0));
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
+
+
         tvBarTitle.setText(getString(R.string.message_detail));
         ivBarRight.setImageResource(R.drawable.icon_share);
         tvBarRight.setVisibility(View.GONE);
 
-        projectDetailVm = ViewModelProviders.of(this).get(ProjectDetailVm.class);
-        projectDetailVm.init(getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0));
-        projectDetailVm.titleLiveData.observe(this, s -> tvTitle.setText(s));
-        projectDetailVm.locationLiveData.observe(this, s -> tvLocation.setText(s));
-        projectDetailVm.collectionLiveData.observe(this, i -> {
-            tvCollect.setText(getString(i == 1 ? R.string.collected : R.string.collection));
-            ivCollect.setImageResource(i == 1 ? R.drawable.icon_collected : R.drawable.icon_collection);
-        });
-        projectDetailVm.subscribeLiveData.observe(this, i -> {
-            tvSubscribe.setText(getString(i == 1 ? R.string.subscribed : R.string.unsubscribe));
-            ivSubscribe.setImageResource(i == 1 ? R.drawable.icon_shopping_cart_select : R.drawable.icon_shopping_cart);
-        });
-        projectDetailVm.latitudeLiveData.observe(this, s -> {
-            aMap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(s.latitude, s.longitude)));
-        });
-
-        //查询是否可以进入讨论组返回结果
-        projectDetailVm.projectMembersStatusData.observe(this, projectMembersStatusBean -> {
-            RongIM.getInstance().startGroupChat(ProjectDetailActivity.this, projectMembersStatusBean.getGroupId(), projectMembersStatusBean.getGroupName());
-        });
 
         Fragment[] fragments = new Fragment[4];
-        fragments[0] = ProjectContentFragment.newInstance(getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0));
-        fragments[1] = ProjectLocusFragment.newInstance(getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0));
+        fragments[0] = ProjectContentFragment.newInstance();
+        fragments[1] = ProjectLocusFragment.newInstance();
         fragments[2] = ProjectReadFragment.newInstance();
         fragments[3] = ProjectConsumptionFragment.newInstance();
-
-        tabLayout.addTab(tabLayout.newTab());
-        tabLayout.addTab(tabLayout.newTab());
-        tabLayout.addTab(tabLayout.newTab());
-        tabLayout.addTab(tabLayout.newTab());
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), fragments, getResources().getStringArray(R.array.project_detail));
         vp.setAdapter(adapter);
         tabLayout.setupWithViewPager(vp);
@@ -189,6 +183,132 @@ public class ProjectDetailActivity extends BaseActivity {
         });
 
 
+        //初始化分享功能
+        shareManage = ShareManage.newInstance(getApplicationContext());
+        shareManage.init(this, ShareManage.SHARE_PROJECT_TYPE, getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0));
+
+        //支付密码状态查询
+        updatePwdPayVm = ViewModelProviders.of(this).get(UpdatePwdPayVm.class);
+        coinPayVm = ViewModelProviders.of(this).get(CoinPayVm.class);
+        coinPayVm.projectId = getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0);
+
+        updatePwdPayVm.stateLiveData.observe(this, pwdPayStateBean -> {
+            int status = pwdPayStateBean.getStatus();
+            SPUtils.getInstance().put(SpConfig.PWD_PAY_STATUS, status);
+            if (status == 1) {
+                goToPay();
+            } else {
+                ActivityUtils.startActivity(SetPwdPayActivity.class);
+            }
+        });
+
+        updatePwdPayVm.pageStateLiveData.observe(this, s -> {
+            switch (s) {
+                case PageState.PAGE_LOADING:
+                    showLoading();
+                    break;
+                default:
+                    hideLoading();
+                    break;
+            }
+        });
+
+        //工程支付
+        coinPayVm.contentPayLiveData.observe(this, coinPayResultBean -> {
+            if (coinPayResultBean.getPay_status() == 1) {
+                //加入工程圈讨论组（群聊）
+                projectDetailVm.joinGroup(coinPayVm.projectId);
+            } else {
+                //余额不足
+                addDialog(new CustomDialog(this)
+                        .setIcon(R.drawable.icon_error)
+                        .setTip("余额不足")
+                        .setCallBack(new BaseDialog.CallBack() {
+                            @Override
+                            public void cancel() {
+                            }
+
+                            @Override
+                            public void ok(String s) {
+                                ActivityUtils.startActivity(RechargeActivity.class);
+                            }
+                        })
+                        .showDialog());
+            }
+        });
+
+        //动态支付成功
+        coinPayVm.locusPayLiveData.observe(this, coinPayResultBean -> {
+            if (coinPayResultBean.getPay_status() == 1) {
+                //加入工程圈讨论组（群聊）
+                projectDetailVm.joinGroup(coinPayVm.projectId);
+            } else {
+                //余额不足
+                addDialog(new CustomDialog(this)
+                        .setIcon(R.drawable.icon_error)
+                        .setTip("余额不足")
+                        .setCallBack(new BaseDialog.CallBack() {
+                            @Override
+                            public void cancel() {
+
+                            }
+
+                            @Override
+                            public void ok(String s) {
+                                ActivityUtils.startActivity(RechargeActivity.class);
+                            }
+                        })
+                        .showDialog());
+            }
+        });
+
+
+        coinPayVm.pageStateLiveData.observe(this, s -> {
+            switch (s) {
+                case PageState.PAGE_LOADING:
+                    showLoading();
+                    break;
+                default:
+                    hideLoading();
+                    break;
+            }
+        });
+
+
+        projectDetailVm = ViewModelProviders.of(this).get(ProjectDetailVm.class);
+        projectDetailVm.init(getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0));
+        projectDetailVm.titleLiveData.observe(this, s -> tvTitle.setText(s));
+        projectDetailVm.locationLiveData.observe(this, s -> tvLocation.setText(s));
+        projectDetailVm.collectionLiveData.observe(this, i -> {
+            tvCollect.setText(getString(i == 1 ? R.string.collected : R.string.collection));
+            ivCollect.setImageResource(i == 1 ? R.drawable.icon_collected : R.drawable.icon_collection);
+        });
+        projectDetailVm.subscribeLiveData.observe(this, i -> {
+            tvSubscribe.setText(getString(i == 1 ? R.string.subscribed : R.string.unsubscribe));
+            ivSubscribe.setImageResource(i == 1 ? R.drawable.icon_shopping_cart_select : R.drawable.icon_shopping_cart);
+        });
+        projectDetailVm.latitudeLiveData.observe(this, s -> {
+            aMap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(s.latitude, s.longitude)));
+        });
+
+        //查询是否可以进入讨论组返回结果
+        projectDetailVm.projectMembersStatusData.observe(this, projectMembersStatusBean -> {
+            RongIM.getInstance().startGroupChat(ProjectDetailActivity.this, projectMembersStatusBean.getGroupId(), projectMembersStatusBean.getGroupName());
+        });
+
+
+        //加入群聊返回结果
+        projectDetailVm.joinGroupData.observe(this, item -> {
+            ToastUtils.showShort(getString(R.string.buy_success));
+           if( vp.getCurrentItem()==0){
+               projectDetailVm.getDetail();
+           }else {
+               projectDetailVm.getTrack();
+               //刷新已查看列表
+               EventBus.getDefault().post(new RefreshViewLocusEvent());
+           }
+        });
+
 
         PermissionVm permissionVm = ViewModelProviders.of(this).get(PermissionVm.class);
         permissionVm.getLiveData().observe(this, integer -> {
@@ -204,6 +324,31 @@ public class ProjectDetailActivity extends BaseActivity {
             tabLayout.getTabAt(position).select();
         }
     }
+
+    /**
+     * 去支付
+     */
+    public void goToPay() {
+        try {
+            addDialog(new PayDialog(this)
+                    .setSingleCallBack((item, position) -> {
+                        coinPayVm.payProject(item);
+                    })
+                    .showDialog());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void payLocus() {
+        addDialog(new PayDialog(this)
+                .setSingleCallBack((item, position) -> {
+                    coinPayVm.payLocus(item);
+                })
+                .showDialog());
+
+    }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

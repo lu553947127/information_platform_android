@@ -59,20 +59,15 @@ public class ProjectLocusFragment extends BaseFragment {
     SmartRefreshLayout refresh;
     @BindView(R.id.rv_locus)
     RecyclerView rvLocus;
-    private ProjectDetailVm projectDetailVm;
+
     private LocusAdapter locusAdapter;
-    private UpdatePwdPayVm updatePwdPayVm;
-    private CoinPayVm coinPayVm;
-    private static int project_id;
 
-    private String title ;
 
-    public static ProjectLocusFragment newInstance(int id) {
-        Bundle args = new Bundle();
-        args.putInt("id", id);
-        project_id = id;
+    private String title;
+    private ProjectDetailActivity activity;
+
+    public static ProjectLocusFragment newInstance() {
         ProjectLocusFragment fragment = new ProjectLocusFragment();
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -87,19 +82,20 @@ public class ProjectLocusFragment extends BaseFragment {
     }
 
     @Override
-    protected void initDataAndEvent(Bundle savedInstanceState,View view) {
+    protected void initDataAndEvent(Bundle savedInstanceState, View view) {
         tvFilter.setText(getString(R.string.release_by_me));
 
-        projectDetailVm = ViewModelProviders.of(mActivity).get(ProjectDetailVm.class);
+        activity = (ProjectDetailActivity) mActivity;
 
-        projectDetailVm.titleLiveData.observe(this, s -> title = s);
+
+        title = activity.projectDetailVm.titleLiveData.getValue();
 
         rvLocus.setLayoutManager(new LinearLayoutManager(mContext));
         locusAdapter = new LocusAdapter(R.layout.item_locus, null) {
             @Override
             public void readDetail(int position, String price) {
                 TrackBean.ListBean listBean = locusAdapter.getData().get(position);
-                coinPayVm.locusId = listBean.getId();
+                activity.coinPayVm.locusId = listBean.getId();
                 new CustomDialog(mActivity)
                         .setTip(String.format(getString(R.string.format_pay_price), price))
                         .setCallBack(new BaseDialog.CallBack() {
@@ -112,10 +108,10 @@ public class ProjectLocusFragment extends BaseFragment {
                             public void ok(String s) {
                                 int status = SPUtils.getInstance().getInt(SpConfig.PWD_PAY_STATUS, 0);
                                 if (status == 1) {
-                                    goToPay();
+                                   activity.payLocus();
                                 } else {
                                     //查询是否设置支付密码
-                                    updatePwdPayVm.payPwdState();
+                                    activity.updatePwdPayVm.payPwdState();
                                 }
                             }
                         })
@@ -130,19 +126,19 @@ public class ProjectLocusFragment extends BaseFragment {
             for (TrackBean.ListBean.ImageBean img : listBean.getImage()) {
                 list.add(img.getSource());
             }
-            switch (view.getId()) {
+            switch (v.getId()) {
                 case R.id.iv_pic_first:
-                    PictureEnlargeUtils.getPictureEnlargeList(getActivity(),list,0);
+                    PictureEnlargeUtils.getPictureEnlargeList(getActivity(), list, 0);
                     break;
                 case R.id.iv_pic_second:
-                    PictureEnlargeUtils.getPictureEnlargeList(getActivity(),list,1);
+                    PictureEnlargeUtils.getPictureEnlargeList(getActivity(), list, 1);
                     break;
                 case R.id.iv_pic_third:
                 case R.id.tv_more:
-                    PictureEnlargeUtils.getPictureEnlargeList(getActivity(),list,2);
+                    PictureEnlargeUtils.getPictureEnlargeList(getActivity(), list, 2);
                     break;
                 case R.id.iv_mark:
-                    if (listBean.getUser_id()!=SPUtils.getInstance().getInt(SpConfig.USER_ID)){
+                    if (listBean.getUser_id() != SPUtils.getInstance().getInt(SpConfig.USER_ID)) {
                         Bundle bundle = new Bundle();
                         bundle.putInt(CustomConfig.UID, listBean.getUser_id());
                         ActivityUtils.startActivity(bundle, LocusOwnerDetailActivity.class);
@@ -151,18 +147,17 @@ public class ProjectLocusFragment extends BaseFragment {
             }
         });
 
-        refresh.setOnLoadMoreListener(refreshLayout -> projectDetailVm.getMoreViewTrack());
+        refresh.setOnLoadMoreListener(refreshLayout -> activity.projectDetailVm.getMoreViewTrack());
 
-
-        projectDetailVm.locusTypeLiveData.observe(this, type -> {
+        activity.projectDetailVm.locusTypeLiveData.observe(this, type -> {
             if (type == 1) {
                 tvFilter.setText(getString(R.string.release_by_me));
             } else {
                 tvFilter.setText(getString(R.string.all));
             }
         });
-        projectDetailVm.trackLiveData.observe(this, trackBean -> {
 
+        activity.projectDetailVm.trackLiveData.observe(this, trackBean -> {
             if (trackBean.getPage() == 1) {
                 locusAdapter.setNewData(trackBean.getList());
                 setEmpty();
@@ -172,23 +167,14 @@ public class ProjectLocusFragment extends BaseFragment {
             setNoMore(trackBean.getPage(), trackBean.getCount());
         });
 
-        //加入群聊返回结果
-        projectDetailVm.joinGroupData.observe(this,item ->{
-//            ToastUtils.showShort(getString(R.string.buy_success));
-            projectDetailVm.getTrack();
-            //刷新已查看列表
-            EventBus.getDefault().post(new RefreshViewLocusEvent());
-        });
-        initPay();
     }
 
     @Override
     protected void initDataFromService() {
-        projectDetailVm.getTrack();
+        activity.projectDetailVm.getTrack();
     }
 
     private void setEmpty() {
-        int id = getArguments().getInt("id", 0);
 
         View empty = LayoutInflater.from(mContext).inflate(R.layout.layout_empty_top, null);
         TextView tvTip = empty.findViewById(R.id.tv_tip);
@@ -199,7 +185,7 @@ public class ProjectLocusFragment extends BaseFragment {
         empty.findViewById(R.id.tv_goto).setOnClickListener(v -> {
             Bundle bundle = new Bundle();
             bundle.putInt(CustomConfig.RELEASE_TYPE, 2);
-            bundle.putInt(CustomConfig.PROJECT_ID, id);
+            bundle.putInt(CustomConfig.PROJECT_ID, activity.coinPayVm.projectId );
             bundle.putString(CustomConfig.PROJECT_NAME, title);
             ActivityUtils.startActivity(bundle, ReleaseProjectActivity.class);
         });
@@ -210,7 +196,7 @@ public class ProjectLocusFragment extends BaseFragment {
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_filter:
-                projectDetailVm.switchLocusList();
+                activity.projectDetailVm.switchLocusList();
                 break;
         }
     }
@@ -235,74 +221,5 @@ public class ProjectLocusFragment extends BaseFragment {
         }
     }
 
-    private void initPay() {
-        //支付密码状态查询
-        updatePwdPayVm = ViewModelProviders.of(this).get(UpdatePwdPayVm.class);
-        updatePwdPayVm.stateLiveData.observe(this, pwdPayStateBean -> {
-            int status = pwdPayStateBean.getStatus();
-            SPUtils.getInstance().put(SpConfig.PWD_PAY_STATUS, status);
-            if (status == 1) {
-                goToPay();
-            } else {
-                ActivityUtils.startActivity(SetPwdPayActivity.class);
-            }
-        });
-        updatePwdPayVm.pageStateLiveData.observe(this, s -> {
-            switch (s) {
-                case PageState.PAGE_LOADING:
-                    showLoading();
-                    break;
-                default:
-                    hideLoading();
-                    break;
-            }
-        });
 
-        //元支付
-        coinPayVm = ViewModelProviders.of(this).get(CoinPayVm.class);
-        coinPayVm.locusPayLiveData.observe(this, coinPayResultBean -> {
-            if (coinPayResultBean.getPay_status() == 1) {
-                //加入工程圈讨论组（群聊）
-                projectDetailVm.joinGroup(project_id);
-            } else {
-                //余额不足
-                addDialog(new CustomDialog(mActivity)
-                        .setIcon(R.drawable.icon_error)
-                        .setTip("余额不足")
-                        .setCallBack(new BaseDialog.CallBack() {
-                            @Override
-                            public void cancel() {
-
-                            }
-
-                            @Override
-                            public void ok(String s) {
-                                ActivityUtils.startActivity(RechargeActivity.class);
-                            }
-                        })
-                        .showDialog());
-            }
-        });
-        coinPayVm.pageStateLiveData.observe(this, s -> {
-            switch (s) {
-                case PageState.PAGE_LOADING:
-                    showLoading();
-                    break;
-                default:
-                    hideLoading();
-                    break;
-            }
-        });
-    }
-
-    /**
-     * 去支付
-     */
-    private void goToPay() {
-        addDialog(new PayDialog(mActivity)
-                .setSingleCallBack((item, position) -> {
-                    coinPayVm.payLocus(item);
-                })
-                .showDialog());
-    }
 }

@@ -44,8 +44,9 @@ public class ProjectConsumptionFragment extends BaseFragment {
     SmartRefreshLayout refresh;
     @BindView(R.id.rv_consumption)
     RecyclerView rvConsumption;
-    private ProjectDetailVm projectDetailVm;
+
     private ConsumptionAdapter consumptionAdapter;
+    private ProjectDetailActivity activity;
 
     public static ProjectConsumptionFragment newInstance() {
 
@@ -68,6 +69,9 @@ public class ProjectConsumptionFragment extends BaseFragment {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState, View view) {
+
+        activity = (ProjectDetailActivity) mActivity;
+
         rvConsumption.setLayoutManager(new LinearLayoutManager(mContext));
         rvConsumption.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
         consumptionAdapter = new ConsumptionAdapter(R.layout.item_consumption, null);
@@ -86,17 +90,16 @@ public class ProjectConsumptionFragment extends BaseFragment {
         refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                projectDetailVm.getMoreConsume();
+                activity.projectDetailVm.getMoreConsume();
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                projectDetailVm.getConsume();
+                activity.projectDetailVm.getConsume();
             }
         });
 
-        projectDetailVm = ViewModelProviders.of(mActivity).get(ProjectDetailVm.class);
-        projectDetailVm.consumeLiveData.observe(this, consumeBean -> {
+        activity.projectDetailVm.consumeLiveData.observe(this, consumeBean -> {
             if (consumeBean.getPage() == 1) {
                 consumptionAdapter.setNewData(consumeBean.getList());
                 setEmpty(consumptionAdapter);
@@ -109,7 +112,7 @@ public class ProjectConsumptionFragment extends BaseFragment {
 
     @Override
     protected void initDataFromService() {
-        projectDetailVm.getConsume();
+        activity.projectDetailVm.getConsume();
     }
 
     private void setEmpty(ConsumptionAdapter consumptionAdapter) {

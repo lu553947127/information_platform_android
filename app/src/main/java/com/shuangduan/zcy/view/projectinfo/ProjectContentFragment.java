@@ -82,19 +82,15 @@ public class ProjectContentFragment extends BaseFragment implements BaseQuickAda
     @BindView(R.id.iv_attn)
     ImageView ivAttn;
 
-    private ProjectDetailVm projectDetailVm;
+
     private ContactAdapter contactAdapter;
-    private UpdatePwdPayVm updatePwdPayVm;
-    private CoinPayVm coinPayVm;
-    private static int project_id;
+
+
+    private ProjectDetailActivity activity;
     private ProjectDetailBean.DetailBean detail;
 
-    public static ProjectContentFragment newInstance(int id) {
-        Bundle args = new Bundle();
-        args.putInt("id", id);
-        project_id = id;
+    public static ProjectContentFragment newInstance() {
         ProjectContentFragment fragment = new ProjectContentFragment();
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -111,25 +107,26 @@ public class ProjectContentFragment extends BaseFragment implements BaseQuickAda
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState, View v) {
 
+        activity = (ProjectDetailActivity) mActivity;
         rvContact.setLayoutManager(new LinearLayoutManager(mContext));
         contactAdapter = new ContactAdapter(R.layout.item_contact, null, 0);
         contactAdapter.setEmptyView(R.layout.layout_loading_top, rvContact);
         contactAdapter.setOnItemChildClickListener(this);
-
         rvContact.setAdapter(contactAdapter);
 
-        //基本信息设置
-        projectDetailVm = ViewModelProviders.of(mActivity).get(ProjectDetailVm.class);
-        projectDetailVm.detailLiveData.observe(this, projectDetailBean -> {
-            detail = projectDetailBean.getDetail();
-            projectDetailVm.titleLiveData.postValue(detail.getTitle());
-            projectDetailVm.locationLiveData.postValue(detail.getProvince() + detail.getCity());
-            projectDetailVm.latitudeLiveData.postValue(new LatLng(detail.getLatitude(), detail.getLongitude()));
-            projectDetailVm.introLiveData.postValue(detail.getIntro());
-            projectDetailVm.materialLiveData.postValue(detail.getMaterials());
-            projectDetailVm.collectionLiveData.postValue(projectDetailBean.getDetail().getCollection());
-            projectDetailVm.subscribeLiveData.postValue(projectDetailBean.getDetail().getWarrant_status());
 
+        //基本信息设置
+        activity.projectDetailVm.detailLiveData.observe(this, projectDetailBean -> {
+            detail = projectDetailBean.getDetail();
+            activity.projectDetailVm.titleLiveData.postValue(detail.getTitle());
+            activity.projectDetailVm.locationLiveData.postValue(detail.getProvince() + detail.getCity());
+            activity.projectDetailVm.latitudeLiveData.postValue(new LatLng(detail.getLatitude(), detail.getLongitude()));
+            activity.projectDetailVm.introLiveData.postValue(detail.getIntro());
+            activity.projectDetailVm.materialLiveData.postValue(detail.getMaterials());
+            activity.projectDetailVm.collectionLiveData.postValue(projectDetailBean.getDetail().getCollection());
+            activity.projectDetailVm.subscribeLiveData.postValue(projectDetailBean.getDetail().getWarrant_status());
+
+            detail = projectDetailBean.getDetail();
             tvUpdateTime.setText(String.format(getString(R.string.format_update), detail.getUpdate_time()));
             tvStage.setText(String.format(getString(R.string.format_stage), detail.getPhases()));
             tvType.setText(String.format(getString(R.string.format_type), detail.getType()));
@@ -171,17 +168,12 @@ public class ProjectContentFragment extends BaseFragment implements BaseQuickAda
             contactAdapter.setNewData(projectDetailBean.getContact());
         });
 
-        //加入群聊返回结果
-        projectDetailVm.joinGroupData.observe(this, item -> {
-//            ToastUtils.showShort(getString(R.string.buy_success));
-            projectDetailVm.getDetail();
-        });
-        initPay();
     }
+
 
     @Override
     protected void initDataFromService() {
-        projectDetailVm.getDetail();
+        activity.projectDetailVm.getDetail();
     }
 
     private void setEmpty() {
@@ -200,80 +192,6 @@ public class ProjectContentFragment extends BaseFragment implements BaseQuickAda
         }
     }
 
-    private void initPay() {
-        //支付密码状态查询
-        updatePwdPayVm = ViewModelProviders.of(this).get(UpdatePwdPayVm.class);
-        updatePwdPayVm.stateLiveData.observe(this, pwdPayStateBean -> {
-            int status = pwdPayStateBean.getStatus();
-            SPUtils.getInstance().put(SpConfig.PWD_PAY_STATUS, status);
-            if (status == 1) {
-                goToPay();
-            } else {
-                ActivityUtils.startActivity(SetPwdPayActivity.class);
-            }
-        });
-        updatePwdPayVm.pageStateLiveData.observe(this, s -> {
-            switch (s) {
-                case PageState.PAGE_LOADING:
-                    showLoading();
-                    break;
-                default:
-                    hideLoading();
-                    break;
-            }
-        });
-
-        coinPayVm = ViewModelProviders.of(mActivity).get(CoinPayVm.class);
-        coinPayVm.projectId = mActivity.getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0);
-        coinPayVm.contentPayLiveData.observe(this, coinPayResultBean -> {
-            if (coinPayResultBean.getPay_status() == 1) {
-                //加入工程圈讨论组（群聊）
-                projectDetailVm.joinGroup(project_id);
-            } else {
-                //余额不足
-                addDialog(new CustomDialog(mActivity)
-                        .setIcon(R.drawable.icon_error)
-                        .setTip("余额不足")
-                        .setCallBack(new BaseDialog.CallBack() {
-                            @Override
-                            public void cancel() {
-
-                            }
-
-                            @Override
-                            public void ok(String s) {
-                                ActivityUtils.startActivity(RechargeActivity.class);
-                            }
-                        })
-                        .showDialog());
-            }
-        });
-        coinPayVm.pageStateLiveData.observe(this, s -> {
-            switch (s) {
-                case PageState.PAGE_LOADING:
-                    showLoading();
-                    break;
-                default:
-                    hideLoading();
-                    break;
-            }
-        });
-    }
-
-    /**
-     * 去支付
-     */
-    private void goToPay() {
-        try {
-            addDialog(new PayDialog(mActivity)
-                    .setSingleCallBack((item, position) -> {
-                        coinPayVm.payProject(item);
-                    })
-                    .showDialog());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     @Override
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
@@ -293,10 +211,10 @@ public class ProjectContentFragment extends BaseFragment implements BaseQuickAda
 
                                 @Override
                                 public void ok(String s) {
-                                    PhoneFormatCheckUtils.getCallPhone(mActivity.getApplicationContext(),listBean.getTel());
+                                    PhoneFormatCheckUtils.getCallPhone(mActivity.getApplicationContext(), listBean.getTel());
                                 }
                             }).showDialog();
-                }else {
+                } else {
                     addPayDialog();
                 }
                 break;
@@ -305,8 +223,8 @@ public class ProjectContentFragment extends BaseFragment implements BaseQuickAda
 
     private void addPayDialog() {
         try {
-            addDialog(new CustomDialog(mActivity)
-                    .setTip(String.format(getString(R.string.format_pay_price_project), Objects.requireNonNull(projectDetailVm.detailLiveData.getValue()).getDetail().getDetail_price()))
+            addDialog(new CustomDialog(activity)
+                    .setTip(String.format(getString(R.string.format_pay_price_project), Objects.requireNonNull(activity.projectDetailVm.detailLiveData.getValue()).getDetail().getDetail_price()))
                     .setCallBack(new BaseDialog.CallBack() {
                         @Override
                         public void cancel() {
@@ -316,10 +234,10 @@ public class ProjectContentFragment extends BaseFragment implements BaseQuickAda
                         public void ok(String s) {
                             int status = SPUtils.getInstance().getInt(SpConfig.PWD_PAY_STATUS, 0);
                             if (status == 1) {
-                                goToPay();
+                                activity.goToPay();
                             } else {
                                 //查询是否设置支付密码
-                                updatePwdPayVm.payPwdState();
+                                activity.updatePwdPayVm.payPwdState();
                             }
                         }
                     })

@@ -52,8 +52,9 @@ public class ProjectReadFragment extends BaseFragment {
     SmartRefreshLayout refresh;
     @BindView(R.id.rv_locus)
     RecyclerView rvLocus;
-    private ProjectDetailVm projectDetailVm;
+
     private LocusReadAdapter locusAdapter;
+    private ProjectDetailActivity activity;
 
     public static ProjectReadFragment newInstance() {
 
@@ -76,6 +77,8 @@ public class ProjectReadFragment extends BaseFragment {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState,View view) {
+        activity = (ProjectDetailActivity) mActivity;
+
         rvLocus.setLayoutManager(new LinearLayoutManager(mContext));
         locusAdapter = new LocusReadAdapter(R.layout.item_locus, null);
         locusAdapter.setEmptyView(R.layout.layout_loading_top, rvLocus);
@@ -86,7 +89,7 @@ public class ProjectReadFragment extends BaseFragment {
             for (TrackBean.ListBean.ImageBean img: listBean.getImage()) {
                 list.add(img.getSource());
             }
-            switch (view.getId()){
+            switch (v.getId()){
                 case R.id.iv_pic_first:
                     PictureEnlargeUtils.getPictureEnlargeList(getActivity(),list,0);
                     break;
@@ -106,17 +109,17 @@ public class ProjectReadFragment extends BaseFragment {
                     break;
             }
         });
-        refresh.setOnLoadMoreListener(refreshLayout -> projectDetailVm.getMoreTract());
+        refresh.setOnLoadMoreListener(refreshLayout -> activity.projectDetailVm.getMoreTract());
 
-        projectDetailVm = ViewModelProviders.of(mActivity).get(ProjectDetailVm.class);
-        projectDetailVm.introLiveData.observe(this, intro ->{
+
+        activity.projectDetailVm.introLiveData.observe(this, intro ->{
             tvDetail.setGlide(Glide.with(this));
             tvDetail.setHtml(intro);
         });
-        projectDetailVm.materialLiveData.observe(this, materials -> {
+        activity.projectDetailVm.materialLiveData.observe(this, materials -> {
             tvMaterial.setText(materials);
         });
-        projectDetailVm.viewTrackLiveData.observe(this, trackBean -> {
+        activity.projectDetailVm.viewTrackLiveData.observe(this, trackBean -> {
             if (trackBean.getPage() == 1) {
                 locusAdapter.setNewData(trackBean.getList());
                 setEmpty();
@@ -136,7 +139,7 @@ public class ProjectReadFragment extends BaseFragment {
 
     @Override
     protected void initDataFromService() {
-        projectDetailVm.getViewTrack();
+        activity.projectDetailVm.getViewTrack();
     }
 
     private void setNoMore(int page, int count){
@@ -161,6 +164,6 @@ public class ProjectReadFragment extends BaseFragment {
 
     @Subscribe
     public void onEventPayDone(RefreshViewLocusEvent event){
-        projectDetailVm.getViewTrack();
+        activity.projectDetailVm.getViewTrack();
     }
 }
