@@ -179,8 +179,18 @@ dependencies {
     //RecyclerView 流式布局
     implementation 'com.github.1002326270xc:LayoutManager-FlowLayout:v1.7'
 
+    //条件选择器
+    implementation 'com.contrarywind:wheelview:4.1.0'
+
+    //Android Activity 滑动返回。支持微信滑动返回样式、横屏滑动返回、全屏滑动返回
+    implementation 'cn.bingoogolapple:bga-swipebacklayout:2.0.1'
+
     //极光推送
     implementation 'cn.jiguang.sdk:jpush:3.3.4'
+
+    //华为推送模块
+    implementation 'com.huawei.android.hms:base:2.6.1.301'
+    implementation 'com.huawei.android.hms:push:2.6.1.301'
 
     //noinspection GradleDependency
     api 'com.android.support:support-v4:26.0.0'
@@ -193,12 +203,6 @@ dependencies {
 
     //im_kit必须依赖im_lib，所以需要加入对应依赖
     api 'cn.rongcloud.sdk:im_lib:2.9.22'
-
-    //华为推送模块
-    implementation 'com.huawei.android.hms:base:2.6.1.301'
-    implementation 'com.huawei.android.hms:push:2.6.1.301'
-    //条件选择器
-    implementation 'com.contrarywind:wheelview:4.1.0'
 
     /** 本地架包 **/
 

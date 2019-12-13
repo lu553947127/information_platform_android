@@ -110,7 +110,7 @@ public class IMGroupMembersActivity extends BaseActivity {
             }
         });
 
-        imAddVm.groupList(group_id,9);
+        imAddVm.groupList(group_id,60);
     }
 
     private void setNoMore(int page, int count) {

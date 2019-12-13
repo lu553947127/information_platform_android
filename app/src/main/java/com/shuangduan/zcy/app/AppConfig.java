@@ -10,9 +10,11 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.Process;
 import android.view.Gravity;
+import android.view.View;
 
 import androidx.core.content.ContextCompat;
 
+import com.amap.api.maps.MapView;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.CrashUtils;
 import com.blankj.utilcode.util.LogUtils;
@@ -35,15 +37,19 @@ import com.shuangduan.zcy.callback.TimeOutCallback;
 import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
 import com.shuangduan.zcy.rongyun.provider.CustomPrivateConversationProvider;
 import com.shuangduan.zcy.utils.LoginUtils;
+import com.shuangduan.zcy.view.projectinfo.ProjectInfoActivity;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
+import cn.bingoogolapple.swipebacklayout.BGASwipeBackHelper;
 import cn.jpush.android.api.JPushInterface;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
@@ -92,6 +98,16 @@ public class AppConfig {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             initOkGo(context);
         }
+
+//        /**
+//         * 必须在 Application 的 onCreate 方法中执行 BGASwipeBackHelper.init 来初始化滑动返回
+//         * 第一个参数：应用程序上下文
+//         * 第二个参数：如果发现滑动返回后立即触摸界面时应用崩溃，请把该界面里比较特殊的 View 的 class 添加到该集合中，目前在库中已经添加了 WebView 和 SurfaceView
+//         */
+//        List<Class<? extends View>> problemViewClassList = new ArrayList<>();
+//        problemViewClassList.add(MapView.class);
+//        BGASwipeBackHelper.init(context, problemViewClassList);
+
     }
 
     /**

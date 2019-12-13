@@ -98,6 +98,7 @@ public class ProjectInfoActivity extends BaseActivity {
         mMapView.onCreate(savedInstanceState);// 此方法必须重写
         getLocationPermission();
         projectInfoVm = ViewModelProviders.of(this).get(ProjectInfoVm.class);
+        LogUtils.e("onCreate");
     }
 
     //地图初始化
@@ -321,38 +322,45 @@ public class ProjectInfoActivity extends BaseActivity {
             popupWindow = null;
         }
         //在activity执行onDestroy时执行mMapView.onDestroy()，销毁地图
-        if (mMapView != null)
-            mMapView.onDestroy();
+        if (mMapView != null) mMapView.onDestroy();
         super.onDestroy();
+        LogUtils.e("onDestroy");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        LogUtils.e("onStop");
     }
 
     @Override
     protected void onResume() {
         //在activity执行onResume时执行mMapView.onResume ()，重新绘制加载地图
-        if (mMapView != null)
-            mMapView.onResume();
+        if (mMapView != null) mMapView.onResume();
         super.onResume();
+        LogUtils.e("onResume");
+        LogUtils.e("mMapView"+mMapView);
+        LogUtils.e("aMap"+aMap);
     }
 
     @Override
     protected void onPause() {
         //在activity执行onPause时执行mMapView.onPause ()，暂停地图的绘制
-        if (mMapView != null)
-            mMapView.onPause();
+        if (mMapView != null) mMapView.onPause();
         super.onPause();
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         //在activity执行onSaveInstanceState时执行mMapView.onSaveInstanceState (outState)，保存地图当前的状态
-        if (mMapView != null)
-            mMapView.onSaveInstanceState(outState);
+        if (mMapView != null) mMapView.onSaveInstanceState(outState);
         super.onSaveInstanceState(outState);
+        LogUtils.e("onSaveInstanceState");
     }
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
-
+        LogUtils.e("initDataAndEvent");
     }
 
     //获取定位权限
@@ -414,5 +422,4 @@ public class ProjectInfoActivity extends BaseActivity {
                 break;
         }
     }
-
 }
