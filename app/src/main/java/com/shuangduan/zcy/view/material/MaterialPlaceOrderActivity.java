@@ -169,6 +169,10 @@ public class MaterialPlaceOrderActivity extends BaseActivity {
         KeyboardUtil.RemoveDecimalPoints(etNum);
         materialDetailVm.detailLiveData.observe(this, materialDetailBean -> {
             this.materialDetail = materialDetailBean;
+
+            tvNumber.setText("共采购0"  + materialDetail.getUnit() + "，共计");
+
+
             if (materialDetailBean.getImages() != null && materialDetailBean.getImages().size() != 0) {
                 if (!TextUtils.isEmpty(materialDetailBean.getImages().get(0).getUrl())) {
                     ImageLoader.load(this, new ImageConfig.Builder()
@@ -221,13 +225,12 @@ public class MaterialPlaceOrderActivity extends BaseActivity {
                 num = Double.valueOf(s.toString());
                 if (materialDetail.getMethod() == 1) {
                     price = num * day * guidance_price;
-                    tvNumber.setText("共租赁" + day + "天，共计");
-                    tvPrice.setText(DigitUtils.doubleToString(price));
+//                    tvNumber.setText("共租赁" + day + "天，共计");
                 } else {
                     price = num * guidance_price;
-                    tvNumber.setText("共采购" + num + materialDetail.getUnit() + "，共计");
-                    tvPrice.setText(DigitUtils.doubleToString(price));
                 }
+                tvNumber.setText("共采购" + num + materialDetail.getUnit() + "，共计");
+                tvPrice.setText(DigitUtils.doubleToString(price));
             }
         });
 
@@ -335,7 +338,8 @@ public class MaterialPlaceOrderActivity extends BaseActivity {
                 }
                 price = day * num * guidance_price;
                 if (materialDetail.getMethod() == 1) {
-                    tvNumber.setText("共租赁" + day + "天，共计");
+//                    tvNumber.setText("共租赁" + day + "天，共计");
+                    tvNumber.setText("共采购" + num + materialDetail.getUnit() + "，共计");
                     tvPrice.setText(DigitUtils.doubleToString(price));
                 }
             }

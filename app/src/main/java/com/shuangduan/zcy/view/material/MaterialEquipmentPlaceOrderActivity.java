@@ -197,13 +197,12 @@ public class MaterialEquipmentPlaceOrderActivity extends BaseActivity {
                 num = Long.valueOf(s.toString());
                 if (materialDetail.getMethod() == 1) {
                     price = num * day * guidance_price;
-                    tvNumber.setText("共租赁" + day + "天，共计");
-                    tvPrice.setText(DigitUtils.doubleToString(price));
+//                    tvNumber.setText("共租赁" + day + "天，共计");
                 } else {
                     price = num * guidance_price;
-                    tvNumber.setText("共采购" + num + "，共计");
-                    tvPrice.setText(DigitUtils.doubleToString(price));
                 }
+                tvNumber.setText("采购数量" + num + "，共计");
+                tvPrice.setText(DigitUtils.doubleToString(price));
             }
         });
 
@@ -321,7 +320,9 @@ public class MaterialEquipmentPlaceOrderActivity extends BaseActivity {
 
                 if (materialDetail.getMethod() == 1) {
                     price = num * day * guidance_price;
-                    tvNumber.setText("共租赁" + day + "天，共计");
+//                    tvNumber.setText("共租赁" + day + "天，共计");
+
+                    tvNumber.setText("采购数量" + num + "，共计");
                     tvPrice.setText(DigitUtils.doubleToString(price));
                 }
             }
