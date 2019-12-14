@@ -18,13 +18,11 @@ import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
-import com.shuangduan.zcy.app.AppConfig;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.event.WxLoginEvent;
-import com.shuangduan.zcy.utils.LoginUtils;
 import com.shuangduan.zcy.utils.SharesUtils;
 import com.shuangduan.zcy.view.MainActivity;
 import com.shuangduan.zcy.view.WebViewActivity;
@@ -32,7 +30,7 @@ import com.shuangduan.zcy.view.mine.ForgetPwdActivity;
 import com.shuangduan.zcy.vm.IMConnectVm;
 import com.shuangduan.zcy.vm.LoginVm;
 import com.shuangduan.zcy.weight.XEditText;
-import com.tencent.mm.opensdk.modelmsg.SendAuth;
+import com.shuangduan.zcy.wxapi.WeChatUtils;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -308,14 +306,7 @@ public class LoginActivity extends BaseActivity {
                 ActivityUtils.startActivity(bundle, WebViewActivity.class);
                 break;
             case R.id.iv_wechat://微信登录
-                if (LoginUtils.isWeiXinInstall(this)) {
-                    SendAuth.Req req = new SendAuth.Req();
-                    req.scope = "snsapi_userinfo";
-                    req.state = "wechat_sdk_shuangduan_zcy";
-                    AppConfig.iwxapi.sendReq(req);
-                } else {
-                    ToastUtils.showShort("您还没有安装微信，请先安装微信客户端");
-                }
+                WeChatUtils.getWeChatLogin(this,"we_chat_login");
                 break;
         }
     }

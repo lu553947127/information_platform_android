@@ -79,11 +79,13 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                     //登录
                     String code = ((SendAuth.Resp) baseResp).code;
                     String state = ((SendAuth.Resp) baseResp).state;
-                    if ("wechat_sdk_shuangduan_zcy".equals(state)){
-                        //绑定微信
-                        getWeChatLogin(code);
-                    } else {
-                        getWeChatLogin(code);
+                    switch (state){
+                        case "we_chat_login"://微信登录
+                            getWeChatLogin(code);
+                            break;
+                        case "we_chat_set"://微信设置绑定
+                            ToastUtils.showShort("绑定微信开始了");
+                            break;
                     }
                 }
                 break;
@@ -92,7 +94,6 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 
     //微信登录获取openid
     private void getWeChatLogin(String code) {
-
         OkGo.<String>post(Common.WECHAT_LOGIN)
                 .tag(this)
                 .params("appid", AppConfig.APP_ID)//微信的appId

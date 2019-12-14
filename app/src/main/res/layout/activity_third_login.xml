@@ -20,10 +20,10 @@
 
             <com.shuangduan.zcy.weight.CircleImageView
                 android:id="@+id/iv_wechat_circle"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/icon_wechat"/>
+                android:src="@drawable/icon_set_wechat"/>
 
             <TextView
                 android:id="@+id/tv_wechat_name"
@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="5dp"
-                android:textColor="@color/color_666666"
+                android:textColor="@color/colorTv"
                 android:textSize="16sp"
                 android:text="微信昵称"/>
 
@@ -47,8 +47,8 @@
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:gravity="center_vertical"
-            android:textColor="@color/color_666666"
-            android:textSize="16sp"
+            android:textColor="@color/colorTvHint"
+            android:textSize="13sp"
             android:text="未绑定"/>
 
     </RelativeLayout>

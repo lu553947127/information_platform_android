@@ -88,7 +88,7 @@ public class SetActivity extends BaseActivity {
         supplierVm.supplierStatus();
     }
 
-    @OnClick({R.id.iv_bar_back, R.id.tv_update_pwd,R.id.tv_pwd_pay,R.id.tv_third_login
+    @OnClick({R.id.iv_bar_back, R.id.tv_update_pwd,R.id.tv_pwd_pay,R.id.rl_third_login
             ,R.id.tv_receiving_address,R.id.tv_supplier_msg,R.id.tv_feedback
             ,R.id.tv_register_agreement,R.id.tv_privacy_text, R.id.tv_about_ours, R.id.tv_exit})
     void onClick(View view) {
@@ -103,7 +103,7 @@ public class SetActivity extends BaseActivity {
             case R.id.tv_pwd_pay://支付密码
                 ActivityUtils.startActivity(PwdPayActivity.class);
                 break;
-            case R.id.tv_third_login://微信登录账号绑定
+            case R.id.rl_third_login://微信登录账号绑定
                 ActivityUtils.startActivity(ThirdLoginActivity.class);
                 break;
             case R.id.tv_receiving_address://收货地址管理

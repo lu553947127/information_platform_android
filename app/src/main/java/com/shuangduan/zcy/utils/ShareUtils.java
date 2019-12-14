@@ -1,7 +1,6 @@
 package com.shuangduan.zcy.utils;
 
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -9,7 +8,7 @@ import android.os.Bundle;
 import com.blankj.utilcode.util.LogUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.AppConfig;
-import com.shuangduan.zcy.wxapi.WXUtils;
+import com.shuangduan.zcy.wxapi.WeChatUtils;
 import com.tencent.connect.share.QQShare;
 import com.tencent.connect.share.QzoneShare;
 import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
@@ -56,7 +55,7 @@ public class ShareUtils {
         if (bitmap!=null){
             LogUtils.i(bitmap);
             Bitmap thumbBmp = Bitmap.createScaledBitmap(bitmap, THUMB_SIZE, THUMB_SIZE, true);
-            msg.thumbData = WXUtils.bmpToByteArray(thumbBmp, true);
+            msg.thumbData = WeChatUtils.bmpToByteArray(thumbBmp, true);
         }
         SendMessageToWX.Req req = new SendMessageToWX.Req();
         req.transaction = buildTransaction("webPage");

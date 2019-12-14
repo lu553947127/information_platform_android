@@ -16,6 +16,7 @@ import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.utils.image.ImageConfig;
 import com.shuangduan.zcy.utils.image.ImageLoader;
 import com.shuangduan.zcy.weight.CircleImageView;
+import com.shuangduan.zcy.wxapi.WeChatUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -57,11 +58,11 @@ public class ThirdLoginActivity extends BaseActivity {
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
-        tvBarTitle.setText("微信登录账号绑定");
+        tvBarTitle.setText("社交账号绑定");
         ImageLoader.load(this, new ImageConfig.Builder()
                 .url(SPUtils.getInstance().getString(SpConfig.HEAD_IMG_URL))
-                .placeholder(R.drawable.icon_wechat)
-                .errorPic(R.drawable.icon_wechat)
+                .placeholder(R.drawable.icon_set_wechat)
+                .errorPic(R.drawable.icon_set_wechat)
                 .imageView(ivWechatCircle)
                 .build());
         tvWechatName.setText(StringUtils.isTrimEmpty(SPUtils.getInstance().getString(SpConfig.NICKNAME)) ? "微信昵称" : SPUtils.getInstance().getString(SpConfig.NICKNAME));
@@ -75,6 +76,7 @@ public class ThirdLoginActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.rl_wechat://微信绑定/解绑
+                WeChatUtils.getWeChatLogin(this,"we_chat_set");
                 break;
         }
     }
