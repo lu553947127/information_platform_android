@@ -63,7 +63,7 @@ public class ProjectLocusFragment extends BaseFragment {
     private LocusAdapter locusAdapter;
 
 
-    private String title;
+
     private ProjectDetailActivity activity;
 
     public static ProjectLocusFragment newInstance() {
@@ -88,7 +88,7 @@ public class ProjectLocusFragment extends BaseFragment {
         activity = (ProjectDetailActivity) mActivity;
 
 
-        title = activity.projectDetailVm.titleLiveData.getValue();
+
 
         rvLocus.setLayoutManager(new LinearLayoutManager(mContext));
         locusAdapter = new LocusAdapter(R.layout.item_locus, null) {
@@ -186,7 +186,7 @@ public class ProjectLocusFragment extends BaseFragment {
             Bundle bundle = new Bundle();
             bundle.putInt(CustomConfig.RELEASE_TYPE, 2);
             bundle.putInt(CustomConfig.PROJECT_ID, activity.coinPayVm.projectId );
-            bundle.putString(CustomConfig.PROJECT_NAME, title);
+            bundle.putString(CustomConfig.PROJECT_NAME, activity.projectDetailVm.titleLiveData.getValue());
             ActivityUtils.startActivity(bundle, ReleaseProjectActivity.class);
         });
         locusAdapter.setEmptyView(empty);
