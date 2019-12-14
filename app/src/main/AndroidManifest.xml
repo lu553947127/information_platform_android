@@ -107,6 +107,8 @@
         <activity android:name="com.shuangduan.zcy.view.mine.HelperActivity" />
         <!-- 设置页-->
         <activity android:name="com.shuangduan.zcy.view.mine.SetActivity" />
+        <!-- 第三方登录账号绑定-->
+        <activity android:name="com.shuangduan.zcy.view.mine.ThirdLoginActivity" />
         <!-- 关于页-->
         <activity android:name="com.shuangduan.zcy.view.mine.AboutOursActivity" />
         <!-- 推荐好友页-->

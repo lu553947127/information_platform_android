@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat;
 
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
 import com.google.gson.Gson;
@@ -17,7 +18,9 @@ import com.lzy.okgo.model.Response;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.AppConfig;
 import com.shuangduan.zcy.app.Common;
+import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.model.bean.WXLoginBean;
+import com.shuangduan.zcy.model.bean.WXUserInfoBean;
 import com.shuangduan.zcy.model.event.WxLoginEvent;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
@@ -110,12 +113,50 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                         try {
                             WXLoginBean bean=new Gson().fromJson(response.body(), WXLoginBean.class);
                             if (bean!=null){
+                                getWeChatLoginUserInfo(bean.getOpenid(),bean.getAccess_token());
                                 LogUtils.i(bean.getOpenid());
                                 LogUtils.i(bean.getUnionid());
+                                LogUtils.i(bean.getAccess_token());
                                 EventBus.getDefault().post(new WxLoginEvent(bean.getUnionid(),bean.getOpenid()));
                                 finish();
+
                             }else {
                                 ToastUtils.showShort("微信登录失败");
+                            }
+                        }catch (JsonSyntaxException | IllegalStateException ignored){
+                            ToastUtils.showShort(getString(R.string.request_error));
+                        }
+                    }
+                });
+    }
+
+    //获取微信用户的详情信息
+    private void getWeChatLoginUserInfo(String openid,String access_token) {
+
+        OkGo.<String>post(Common.WECHAT_LOGIN_USER_INFO)
+                .tag(this)
+                .params("access_token", access_token)
+                .params("openid",openid)
+                .execute(new com.lzy.okgo.callback.StringCallback() {
+
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+                        LogUtils.json(response.getException());
+                    }
+
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        LogUtils.json(response.body());
+                        try {
+                            WXUserInfoBean bean=new Gson().fromJson(response.body(), WXUserInfoBean.class);
+                            if (bean!=null){
+                                LogUtils.i(bean.getNickname());
+                                LogUtils.i(bean.getHeadimgurl());
+                                SPUtils.getInstance().put(SpConfig.NICKNAME, bean.getNickname(), true);
+                                SPUtils.getInstance().put(SpConfig.HEAD_IMG_URL, bean.getHeadimgurl(), true);
+                            }else {
+                                ToastUtils.showShort("获取微信用户信息失败");
                             }
                         }catch (JsonSyntaxException | IllegalStateException ignored){
                             ToastUtils.showShort(getString(R.string.request_error));

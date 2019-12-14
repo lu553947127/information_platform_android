@@ -126,7 +126,7 @@
     <string name="please_be_accurate_to_the_branch">请准确到支行</string>
     <string name="hint_bank_card_number">请填写银行卡号</string>
     <string name="hint_identity_number">请填写18位身份证号</string>
-    <string name="third_login">第三方登录账号绑定</string>
+    <string name="third_login">微信登录账号绑定</string>
     <string name="receiving_address">收货地址管理</string>
     <string name="update_pwd">修改密码</string>
     <string name="update_login_pwd">修改登录密码</string>

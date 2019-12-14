@@ -103,7 +103,8 @@ public class SetActivity extends BaseActivity {
             case R.id.tv_pwd_pay://支付密码
                 ActivityUtils.startActivity(PwdPayActivity.class);
                 break;
-            case R.id.tv_third_login://第三方登录账号绑定
+            case R.id.tv_third_login://微信登录账号绑定
+                ActivityUtils.startActivity(ThirdLoginActivity.class);
                 break;
             case R.id.tv_receiving_address://收货地址管理
                 break;

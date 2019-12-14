@@ -21,7 +21,7 @@ public class SpConfig {
     /*用户密码*/
     public static final String PASSWORD = "password";
 
-    /*用户唯一标识*/
+    /*登录验签*/
     public static final String TOKEN = "token";
 
     /*用户唯一标识*/
@@ -39,11 +39,11 @@ public class SpConfig {
     /*用户名*/
     public static final String USERNAME = "username";
 
-    /*用户昵称*/
+    /*微信用户昵称*/
     public static final String NICKNAME = "nickname";
 
-    /*实名*/
-    public static final String REAL_NAME = "real_name";
+    /*微信用户头像*/
+    public static final String HEAD_IMG_URL = "head_img_url";
 
     /*用户邮箱*/
     public static final String EMAIL = "email";
