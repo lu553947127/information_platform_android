@@ -24,7 +24,7 @@ import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.factory.EmptyViewFactory;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.IMFriendApplyListBean;
-import com.shuangduan.zcy.view.mine.UserInfoActivity;
+import com.shuangduan.zcy.view.mine.user.UserInfoActivity;
 import com.shuangduan.zcy.view.projectinfo.ProjectInfoListActivity;
 import com.shuangduan.zcy.vm.IMAddVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;

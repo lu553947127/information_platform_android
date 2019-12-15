@@ -26,7 +26,7 @@ import com.shuangduan.zcy.model.event.WxLoginEvent;
 import com.shuangduan.zcy.utils.SharesUtils;
 import com.shuangduan.zcy.view.MainActivity;
 import com.shuangduan.zcy.view.WebViewActivity;
-import com.shuangduan.zcy.view.mine.ForgetPwdActivity;
+import com.shuangduan.zcy.view.mine.set.ForgetPwdActivity;
 import com.shuangduan.zcy.vm.IMConnectVm;
 import com.shuangduan.zcy.vm.LoginVm;
 import com.shuangduan.zcy.weight.XEditText;

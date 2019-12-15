@@ -32,19 +32,19 @@ import com.shuangduan.zcy.utils.DensityUtil;
 import com.shuangduan.zcy.utils.image.ImageConfig;
 import com.shuangduan.zcy.utils.image.ImageLoader;
 import com.shuangduan.zcy.adminManage.view.AdminManageActivity;
-import com.shuangduan.zcy.view.mine.AuthenticationActivity;
-import com.shuangduan.zcy.view.mine.MineWalletActivity;
+import com.shuangduan.zcy.view.mine.user.AuthenticationActivity;
+import com.shuangduan.zcy.view.mine.wallet.MineWalletActivity;
 import com.shuangduan.zcy.view.mine.HelperActivity;
-import com.shuangduan.zcy.view.mine.MaterialOrderActivity;
-import com.shuangduan.zcy.view.mine.MineCollectionActivity;
+import com.shuangduan.zcy.view.mine.material.MaterialOrderActivity;
+import com.shuangduan.zcy.view.mine.collection.MineCollectionActivity;
 import com.shuangduan.zcy.view.income.MineIncomeActivity;
-import com.shuangduan.zcy.view.mine.MineDemandActivity;
-import com.shuangduan.zcy.view.mine.MineOrderActivity;
-import com.shuangduan.zcy.view.mine.OrderSubActivity;
+import com.shuangduan.zcy.view.mine.demand.MineDemandActivity;
+import com.shuangduan.zcy.view.mine.history.ViewRecordActivity;
+import com.shuangduan.zcy.view.mine.InformationSubActivity;
 import com.shuangduan.zcy.view.mine.RecommendFriendsActivity;
-import com.shuangduan.zcy.view.mine.SetActivity;
-import com.shuangduan.zcy.view.mine.UserInfoActivity;
-import com.shuangduan.zcy.view.release.ReleaseListActivity;
+import com.shuangduan.zcy.view.mine.set.SetActivity;
+import com.shuangduan.zcy.view.mine.user.UserInfoActivity;
+import com.shuangduan.zcy.view.mine.project.MineProjectActivity;
 import com.shuangduan.zcy.vm.HomeVm;
 import com.shuangduan.zcy.vm.UserInfoVm;
 import com.shuangduan.zcy.weight.AdaptationScrollView;
@@ -229,13 +229,13 @@ public class MineFragment extends BaseFragment {
                 ActivityUtils.startActivity(MineIncomeActivity.class);
                 break;
             case R.id.tv_mine_subscription://信息认购
-                ActivityUtils.startActivity(OrderSubActivity.class);
+                ActivityUtils.startActivity(InformationSubActivity.class);
                 break;
             case R.id.tv_read_history://查看记录
-                ActivityUtils.startActivity(MineOrderActivity.class);
+                ActivityUtils.startActivity(ViewRecordActivity.class);
                 break;
             case R.id.tv_my_project://我的工程
-                ActivityUtils.startActivity(ReleaseListActivity.class);
+                ActivityUtils.startActivity(MineProjectActivity.class);
                 break;
             case R.id.tv_my_demand://我的需求
                 ActivityUtils.startActivity(MineDemandActivity.class);

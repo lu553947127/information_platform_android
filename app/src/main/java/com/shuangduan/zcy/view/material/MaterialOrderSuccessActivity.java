@@ -11,7 +11,7 @@ import com.blankj.utilcode.util.BarUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
-import com.shuangduan.zcy.view.mine.MaterialOrderDetailActivity;
+import com.shuangduan.zcy.view.mine.material.MaterialOrderDetailActivity;
 
 import java.util.Objects;
 

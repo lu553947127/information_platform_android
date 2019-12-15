@@ -12,7 +12,7 @@ import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseLazyFragment;
 import com.shuangduan.zcy.utils.BarUtils;
 import com.shuangduan.zcy.view.income.IncomePeopleActivity;
-import com.shuangduan.zcy.view.mine.AboutOursActivity;
+import com.shuangduan.zcy.view.mine.set.AboutOursActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;

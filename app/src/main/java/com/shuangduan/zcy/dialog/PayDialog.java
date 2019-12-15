@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.shuangduan.zcy.R;
-import com.shuangduan.zcy.view.mine.ForgetPwdPayActivity;
+import com.shuangduan.zcy.view.mine.set.ForgetPwdPayActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;

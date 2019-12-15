@@ -31,7 +31,7 @@ import com.shuangduan.zcy.dialog.PayDialog;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.SupplierBean;
 import com.shuangduan.zcy.utils.SupplierUtils;
-import com.shuangduan.zcy.view.mine.SetPwdPayActivity;
+import com.shuangduan.zcy.view.mine.set.SetPwdPayActivity;
 import com.shuangduan.zcy.view.recharge.RechargeActivity;
 import com.shuangduan.zcy.vm.CoinPayVm;
 import com.shuangduan.zcy.vm.SupplierVm;

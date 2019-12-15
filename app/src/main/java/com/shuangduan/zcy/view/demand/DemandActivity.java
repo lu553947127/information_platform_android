@@ -23,7 +23,7 @@ import static com.shuangduan.zcy.app.CustomConfig.FIND_SUBSTANCE_TYPE;
  * @author 徐玉 QQ:876885613
  * @name information_platform_android
  * @class name：com.shuangduan.zcy.view.demand
- * @class describe  需求广场列表
+ * @class 需求资讯查看更多
  * @time 2019/8/16 17:13
  * @change
  * @chang time

@@ -19,6 +19,7 @@ import com.shuangduan.zcy.adapter.DemandBuyerFragmentAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseLazyFragment;
 import com.shuangduan.zcy.model.bean.DemandBuyerBean;
+import com.shuangduan.zcy.view.mine.demand.FindBuyerDetailActivity;
 import com.shuangduan.zcy.vm.DemandBuyerVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
@@ -30,7 +31,7 @@ import butterknife.BindView;
  * @author 徐玉 QQ:876885613
  * @name information_platform_android
  * @class name：com.shuangduan.zcy.view.mine
- * @class describe  我的需求，找买家
+ * @class 需求资讯-找买家
  * @time 2019/8/13 10:42
  * @change
  * @chang time

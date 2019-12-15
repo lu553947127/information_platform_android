@@ -23,7 +23,7 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.MineIncomeBean;
-import com.shuangduan.zcy.view.mine.AboutOursActivity;
+import com.shuangduan.zcy.view.mine.set.AboutOursActivity;
 import com.shuangduan.zcy.vm.MineIncomeVm;
 
 import java.util.ArrayList;

@@ -5,13 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.SPUtils;
-import com.blankj.utilcode.util.ToastUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.shuangduan.zcy.R;
@@ -19,22 +17,11 @@ import com.shuangduan.zcy.adapter.LocusAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseFragment;
-import com.shuangduan.zcy.base.BaseLazyFragment;
 import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.CustomDialog;
-import com.shuangduan.zcy.dialog.PayDialog;
-import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.TrackBean;
-import com.shuangduan.zcy.model.event.RefreshViewLocusEvent;
 import com.shuangduan.zcy.utils.image.PictureEnlargeUtils;
-import com.shuangduan.zcy.view.mine.SetPwdPayActivity;
-import com.shuangduan.zcy.view.recharge.RechargeActivity;
 import com.shuangduan.zcy.view.release.ReleaseProjectActivity;
-import com.shuangduan.zcy.vm.CoinPayVm;
-import com.shuangduan.zcy.vm.ProjectDetailVm;
-import com.shuangduan.zcy.vm.UpdatePwdPayVm;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 

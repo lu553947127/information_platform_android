@@ -2,7 +2,6 @@ package com.shuangduan.zcy.view.recruit;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -30,8 +29,7 @@ import com.shuangduan.zcy.manage.ShareManage;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.RecruitDetailBean;
 import com.shuangduan.zcy.utils.KeyboardUtil;
-import com.shuangduan.zcy.view.material.MaterialDetailActivity;
-import com.shuangduan.zcy.view.mine.SetPwdPayActivity;
+import com.shuangduan.zcy.view.mine.set.SetPwdPayActivity;
 import com.shuangduan.zcy.view.recharge.RechargeActivity;
 import com.shuangduan.zcy.vm.CoinPayVm;
 import com.shuangduan.zcy.vm.RecruitDetailVm;

@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,10 +20,8 @@ import com.shuangduan.zcy.adapter.ConsumptionAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseFragment;
-import com.shuangduan.zcy.base.BaseLazyFragment;
 import com.shuangduan.zcy.model.bean.ConsumeBean;
-import com.shuangduan.zcy.view.mine.UserInfoActivity;
-import com.shuangduan.zcy.vm.ProjectDetailVm;
+import com.shuangduan.zcy.view.mine.user.UserInfoActivity;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
 import butterknife.BindView;

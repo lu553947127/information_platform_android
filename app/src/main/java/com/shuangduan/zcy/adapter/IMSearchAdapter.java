@@ -16,7 +16,7 @@ import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.model.bean.IMFriendSearchBean;
 import com.shuangduan.zcy.utils.image.ImageConfig;
 import com.shuangduan.zcy.utils.image.ImageLoader;
-import com.shuangduan.zcy.view.mine.UserInfoActivity;
+import com.shuangduan.zcy.view.mine.user.UserInfoActivity;
 import com.shuangduan.zcy.weight.CircleImageView;
 
 import java.util.List;

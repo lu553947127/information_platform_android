@@ -33,7 +33,7 @@ import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.UnitBean;
 import com.shuangduan.zcy.utils.DateUtils;
 import com.shuangduan.zcy.utils.KeyboardUtil;
-import com.shuangduan.zcy.view.mine.AuthenticationActivity;
+import com.shuangduan.zcy.view.mine.user.AuthenticationActivity;
 import com.shuangduan.zcy.vm.DemandReleaseVm;
 import com.shuangduan.zcy.weight.datepicker.CustomDatePicker;
 

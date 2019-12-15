@@ -22,7 +22,7 @@ import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.factory.EmptyViewFactory;
 import com.shuangduan.zcy.model.bean.IncomeMsgBean;
-import com.shuangduan.zcy.view.mine.TransRecordDetailActivity;
+import com.shuangduan.zcy.view.mine.wallet.TransRecordDetailActivity;
 import com.shuangduan.zcy.view.projectinfo.ProjectInfoListActivity;
 import com.shuangduan.zcy.vm.IncomeMsgVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;

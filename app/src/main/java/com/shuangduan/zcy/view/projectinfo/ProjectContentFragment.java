@@ -13,32 +13,21 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.amap.api.maps.model.LatLng;
-import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.StringUtils;
-import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ContactAdapter;
-import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseFragment;
 import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.CustomDialog;
-import com.shuangduan.zcy.dialog.PayDialog;
-import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.ProjectDetailBean;
 import com.shuangduan.zcy.utils.PhoneFormatCheckUtils;
-import com.shuangduan.zcy.view.mine.SetPwdPayActivity;
-import com.shuangduan.zcy.view.recharge.RechargeActivity;
-import com.shuangduan.zcy.vm.CoinPayVm;
-import com.shuangduan.zcy.vm.ProjectDetailVm;
-import com.shuangduan.zcy.vm.UpdatePwdPayVm;
 
 import java.util.Objects;
 

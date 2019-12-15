@@ -22,7 +22,7 @@ import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.bean.IMGroupInfoBean;
-import com.shuangduan.zcy.view.mine.UserInfoActivity;
+import com.shuangduan.zcy.view.mine.user.UserInfoActivity;
 import com.shuangduan.zcy.vm.IMAddVm;
 
 import butterknife.BindView;

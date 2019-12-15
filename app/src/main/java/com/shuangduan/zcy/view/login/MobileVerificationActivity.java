@@ -20,8 +20,8 @@ import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.utils.KeyboardUtil;
-import com.shuangduan.zcy.view.mine.UpdateEmailActivity;
-import com.shuangduan.zcy.view.mine.UpdateMobileActivity;
+import com.shuangduan.zcy.view.mine.user.UpdateEmailActivity;
+import com.shuangduan.zcy.view.mine.user.UpdateMobileActivity;
 import com.shuangduan.zcy.vm.LoginVm;
 import com.shuangduan.zcy.vm.UserInfoVm;
 

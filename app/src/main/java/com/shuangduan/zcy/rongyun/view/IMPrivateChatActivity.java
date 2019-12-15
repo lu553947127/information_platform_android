@@ -24,15 +24,14 @@ import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.rongyun.bean.RongExtraBean;
-import com.shuangduan.zcy.view.demand.FindBuyerDetailActivity;
-import com.shuangduan.zcy.view.demand.FindRelationshipReleaseDetailActivity;
-import com.shuangduan.zcy.view.demand.FindSubstanceDetailActivity;
-import com.shuangduan.zcy.view.mine.MaterialOrderDetailActivity;
-import com.shuangduan.zcy.view.mine.TransRecordDetailActivity;
-import com.shuangduan.zcy.view.mine.UserInfoActivity;
+import com.shuangduan.zcy.view.mine.demand.FindBuyerDetailActivity;
+import com.shuangduan.zcy.view.mine.demand.FindRelationshipReleaseDetailActivity;
+import com.shuangduan.zcy.view.mine.demand.FindSubstanceDetailActivity;
+import com.shuangduan.zcy.view.mine.material.MaterialOrderDetailActivity;
+import com.shuangduan.zcy.view.mine.wallet.TransRecordDetailActivity;
+import com.shuangduan.zcy.view.mine.user.UserInfoActivity;
 import com.shuangduan.zcy.view.projectinfo.ProjectDetailActivity;
 import com.shuangduan.zcy.view.recruit.RecruitDetailActivity;
-import com.shuangduan.zcy.view.supplier.SupplierDetailActivity;
 import com.shuangduan.zcy.vm.IMAddVm;
 
 import java.util.Locale;
@@ -45,9 +44,6 @@ import io.rong.imkit.fragment.ConversationFragment;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.UserInfo;
-import io.rong.message.ImageMessage;
-import io.rong.message.LocationMessage;
-import io.rong.message.TextMessage;
 
 /**
  * @author 鹿鸿祥 QQ:553947127

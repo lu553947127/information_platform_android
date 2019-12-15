@@ -21,7 +21,7 @@ import butterknife.OnClick;
  * @author 徐玉 QQ:876885613
  * @name information_platform_android
  * @class name：com.shuangduan.zicaicloudplatform.view.activity
- * @class describe 推荐好友
+ * @class 邀请好友
  * @time 2019/7/10 14:48
  * @change
  * @chang time

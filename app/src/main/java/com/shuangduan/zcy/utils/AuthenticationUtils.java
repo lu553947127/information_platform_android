@@ -10,7 +10,7 @@ import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.CustomDialog;
-import com.shuangduan.zcy.view.mine.AuthenticationActivity;
+import com.shuangduan.zcy.view.mine.user.AuthenticationActivity;
 
 /**
  * @author 徐玉 QQ:876885613
