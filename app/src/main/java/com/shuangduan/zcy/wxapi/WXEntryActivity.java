@@ -61,33 +61,35 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
         switch (baseResp.errCode) {
             case BaseResp.ErrCode.ERR_AUTH_DENIED:
             case BaseResp.ErrCode.ERR_USER_CANCEL:
-                if (baseResp.getType() == 2){
-                    //分享
-                    ToastUtils.showShort(getString(R.string.share_cancel));
-                }else if (baseResp.getType() == 1){
-                    //登录
-                    ToastUtils.showShort("登录取消");
+                switch (baseResp.getType()){
+                    case 1://微信绑定/登录
+                        ToastUtils.showShort("登录取消");
+                        break;
+                    case 2://微信分享
+                        ToastUtils.showShort(getString(R.string.share_cancel));
+                        break;
                 }
                 finish();
                 break;
             case BaseResp.ErrCode.ERR_OK:
-                if (baseResp.getType() == 2){
-                    //分享
-                    ToastUtils.showShort(getString(R.string.share_success));
-                    finish();
-                }else if (baseResp.getType() == 1){
-                    //登录
-                    String code = ((SendAuth.Resp) baseResp).code;
-                    String state = ((SendAuth.Resp) baseResp).state;
-                    switch (state){
-                        case "we_chat_login"://微信登录
-                            getWeChatLogin(code);
-                            break;
-                        case "we_chat_set"://微信设置绑定
-                            ToastUtils.showShort("绑定微信开始了");
-                            break;
-                    }
+                switch (baseResp.getType()){
+                    case 1://微信绑定/登录
+                        String code = ((SendAuth.Resp) baseResp).code;
+                        String state = ((SendAuth.Resp) baseResp).state;
+                        switch (state){
+                            case "we_chat_login"://微信登录
+                                getWeChatLogin(code);
+                                break;
+                            case "we_chat_set"://微信绑定
+                                ToastUtils.showShort("绑定微信开始了");
+                                break;
+                        }
+                        break;
+                    case 2://微信分享
+                        ToastUtils.showShort(getString(R.string.share_success));
+                        break;
                 }
+                finish();
                 break;
         }
     }
@@ -133,7 +135,6 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 
     //获取微信用户的详情信息
     private void getWeChatLoginUserInfo(String openid,String access_token) {
-
         OkGo.<String>post(Common.WECHAT_LOGIN_USER_INFO)
                 .tag(this)
                 .params("access_token", access_token)

@@ -151,7 +151,7 @@ public class MineFragment extends BaseFragment {
         scrollView.setOnScrollChangeListener(new AdaptationScrollView.OnScrollChangeListener() {
             private int mScrollY_2 = 0;
             private int lastScrollY = 0;
-            private int h = DensityUtil.dp2px(65);
+            private int h = DensityUtil.dp2px(50);
 
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {

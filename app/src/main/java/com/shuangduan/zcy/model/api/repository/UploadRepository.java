@@ -47,7 +47,7 @@ public class UploadRepository extends BaseRepository {
                 .observeOn(Schedulers.io())
                 .doOnSubscribe(subscription -> pageStateLiveData.postValue(PageState.PAGE_LOADING))
                 .map(list1 -> Luban.with(MyApplication.getInstance())
-                        .ignoreBy(1024)
+                        .ignoreBy(1024 * 2)
                         .setTargetDir(getPath())
                         .load(list1)
                         .get())

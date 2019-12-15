@@ -21,6 +21,18 @@ import java.util.Objects;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
 
+/**
+ * @ProjectName: information_platform_android
+ * @Package: com.shuangduan.zcy.utils
+ * @ClassName: KeyboardUtil
+ * @Description: 键盘工具类
+ * @Author: 鹿鸿祥
+ * @CreateDate: 2019/9/19 15:57
+ * @UpdateUser: 鹿鸿祥
+ * @UpdateDate: 2019/9/19 15:57
+ * @UpdateRemark: 更新说明
+ * @Version: 1.0
+ */
 public class KeyboardUtil {
 
     /**

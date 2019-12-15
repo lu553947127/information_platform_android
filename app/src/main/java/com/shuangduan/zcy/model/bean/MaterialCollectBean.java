@@ -56,15 +56,15 @@ public class MaterialCollectBean {
         public String spec;
         //供应商公司
         public String company;
-        //        方式 1 出租 2 售卖
+        //方式 1 出租 2 售卖
         public int method;
-        //        单价
+        //单价
         @SerializedName("guidance_price")
         public String guidancePrice;
         //单位
         public String unit;
         //库存
-        public int stock;
+        public String stock;
         //状态 1可预订 0已失效
         public int status;
 
