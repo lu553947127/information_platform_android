@@ -224,7 +224,8 @@ public class RecruitDetailActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.iv_bar_right:
-                shareManage.showDialog();
+                shareManage.initDialog(this, shareManage.getItem().getUrl(), shareManage.getItem().getTitle(),
+                        shareManage.getItem().getDes(), shareManage.getItem().getImage(), shareManage.getBitmap());
                 break;
             case R.id.ll_collect:
                 recruitDetailVm.collect();

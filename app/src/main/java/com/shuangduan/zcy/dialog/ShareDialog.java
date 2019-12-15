@@ -44,7 +44,7 @@ public class ShareDialog extends BaseDialog {
 
     }
 
-    @OnClick({R.id.iv_wechat_friend, R.id.tv_wechat_friend, R.id.tv_wechat_circle, R.id.iv_wechat_circle, R.id.iv_qq_friend, R.id.tv_qq_friend, R.id.iv_qq_stone, R.id.tv_qq_stone, })
+    @OnClick({R.id.iv_wechat_friend, R.id.tv_wechat_friend, R.id.tv_wechat_circle, R.id.iv_wechat_circle, R.id.iv_qq_friend, R.id.tv_qq_friend, R.id.iv_qq_stone, R.id.tv_qq_stone})
     void onClick(View view){
         switch (view.getId()){
             case R.id.iv_wechat_friend:

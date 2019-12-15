@@ -85,7 +85,8 @@ public class HeadlinesDetailActivity extends BaseActivity {
             private int lastScrollY = 0;
             private int h = DensityUtil.dp2px(300);
             //设置折叠标题背景颜色
-            private int color = ContextCompat.getColor(HeadlinesDetailActivity.this, R.color.colorPrimary)&0x00ffffff;
+            private int color = ContextCompat.getColor(HeadlinesDetailActivity.this, R.color.colorPrimary) & 0x00ffffff;
+
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
                 if (lastScrollY < h) {
@@ -94,7 +95,7 @@ public class HeadlinesDetailActivity extends BaseActivity {
                     mScrollY_2 = scrollY > h ? h : scrollY;
                     toolbar.setAlpha(1f * mScrollY_2 / h);
                     toolbar.setBackgroundColor(((255 * mScrollY_2 / h) << 24) | color);
-                }else {
+                } else {
                     toolbar.setVisibility(View.VISIBLE);
                 }
                 lastScrollY = scrollY;
@@ -113,7 +114,7 @@ public class HeadlinesDetailActivity extends BaseActivity {
         headlinesVm.detailLiveData.observe(this, headlinesDetailBean -> {
             tvTitle.setText(headlinesDetailBean.getTitle());
             tvBarTitleNew.setText(headlinesDetailBean.getTitle());
-            tvTime.setText("发布时间："+headlinesDetailBean.getCreate_time());
+            tvTime.setText("发布时间：" + headlinesDetailBean.getCreate_time());
             tvContent.setGlide(Glide.with(this));
             tvContent.setHtml(headlinesDetailBean.getContent());
             tvContent.setOnRichClickListener(new RichText.OnRichClickListener() {
@@ -139,7 +140,7 @@ public class HeadlinesDetailActivity extends BaseActivity {
 
                 @Override
                 public void OnImg(String imgUrl) {
-                    PictureEnlargeUtils.getPictureEnlarge(HeadlinesDetailActivity.this,imgUrl);
+                    PictureEnlargeUtils.getPictureEnlarge(HeadlinesDetailActivity.this, imgUrl);
                 }
             });
         });
@@ -155,7 +156,7 @@ public class HeadlinesDetailActivity extends BaseActivity {
         });
         headlinesVm.getDetail();
         //置顶
-        scrollView.smoothScrollTo(0,0);
+        scrollView.smoothScrollTo(0, 0);
     }
 
     @Override
@@ -164,7 +165,7 @@ public class HeadlinesDetailActivity extends BaseActivity {
         Tencent.onActivityResultData(requestCode, resultCode, data, shareManage.getQQListener());
     }
 
-    @OnClick({R.id.iv_bar_back,R.id.iv_bar_back_new, R.id.iv_bar_right,R.id.iv_bar_right_new})
+    @OnClick({R.id.iv_bar_back, R.id.iv_bar_back_new, R.id.iv_bar_right, R.id.iv_bar_right_new})
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_bar_back:
@@ -173,7 +174,8 @@ public class HeadlinesDetailActivity extends BaseActivity {
                 break;
             case R.id.iv_bar_right:
             case R.id.iv_bar_right_new:
-                shareManage.showDialog();
+                shareManage.initDialog(this, shareManage.getItem().getUrl(), shareManage.getItem().getTitle(),
+                        shareManage.getItem().getDes(), shareManage.getItem().getImage(), shareManage.getBitmap());
                 break;
         }
     }

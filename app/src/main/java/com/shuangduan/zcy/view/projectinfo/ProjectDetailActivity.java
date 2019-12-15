@@ -377,7 +377,8 @@ public class ProjectDetailActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.iv_bar_right://分享
-                shareManage.showDialog();
+                shareManage.initDialog(this, shareManage.getItem().getUrl(), shareManage.getItem().getTitle(),
+                        shareManage.getItem().getDes(), shareManage.getItem().getImage(), shareManage.getBitmap());
                 break;
             case R.id.fl_collect://收藏
                 projectDetailVm.collect();

@@ -10,6 +10,7 @@ import com.blankj.utilcode.util.StringUtils;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.ShareDialog;
 import com.shuangduan.zcy.listener.BaseUiListener;
+import com.shuangduan.zcy.model.bean.ShareBean;
 import com.shuangduan.zcy.model.event.CompanyEvent;
 import com.shuangduan.zcy.model.event.ShareEvent;
 import com.shuangduan.zcy.utils.ShareUtils;
@@ -58,6 +59,10 @@ public class ShareManage {
     private Disposable disposable;
     private ShareVm shareVm;
 
+    private ShareBean.DataBean item;
+
+    private Bitmap bitmap;
+
 
     public static ShareManage newInstance(Context context) {
         if (manage == null) {
@@ -83,7 +88,6 @@ public class ShareManage {
      * @param type     分享类型 1：基建详情
      */
     public void init(BaseActivity activity, int type, int id) {
-
         shareVm = ViewModelProviders.of(activity).get(ShareVm.class);
 
         switch (type) {
@@ -102,18 +106,20 @@ public class ShareManage {
         }
 
         shareVm.shareLiveData.observe(activity, item -> {
+            this.item = item;
             EventBus.getDefault().post(new ShareEvent(item.getUrl()));
-            getNetworkBitmap(activity, item.getUrl(), item.getTitle(), item.getDes(), item.getImage());
+            getNetworkBitmap(item.getImage());
         });
     }
 
-    private void getNetworkBitmap(BaseActivity activity, String url, String title, String des, String image) {
+    private void getNetworkBitmap(String image) {
         Observable.create((ObservableOnSubscribe<Bitmap>) e -> {
             e.onNext(returnBitmap(image));
             e.onComplete();
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Bitmap>() {
+
                     @Override
                     public void onSubscribe(Disposable d) {
                         disposable = d;
@@ -121,7 +127,7 @@ public class ShareManage {
 
                     @Override
                     public void onNext(Bitmap bitmap) {
-                        initDialog(activity, url, title, des, image, bitmap);
+                        ShareManage.this.bitmap = bitmap;
                     }
 
                     @Override
@@ -151,7 +157,7 @@ public class ShareManage {
      * @param des
      * @param image
      */
-    private void initDialog(BaseActivity activity, String url, String title, String des, String image, Bitmap bitmap) {
+    public void initDialog(BaseActivity activity, String url, String title, String des, String image, Bitmap bitmap) {
         dialog = new ShareDialog(activity)
                 .setOnShareListener(new ShareDialog.OnShareListener() {
                     @Override
@@ -175,11 +181,14 @@ public class ShareManage {
                     }
                 });
 
+
+        showDialog();
+
         activity.addDialog(dialog);
     }
 
     //显示分享弹窗
-    public void showDialog() {
+    private void showDialog() {
         if (dialog != null) {
             dialog.showDialog();
         }
@@ -222,5 +231,13 @@ public class ShareManage {
 
     public BaseUiListener getQQListener() {
         return qqListener;
+    }
+
+    public ShareBean.DataBean getItem() {
+        return item;
+    }
+
+    public Bitmap getBitmap() {
+        return bitmap;
     }
 }
