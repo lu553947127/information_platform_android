@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!--后台管理详细信息弹窗文字属性配置-->
     <style name="BaseWrapContentTextStyle">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
-
-
 
     <style name="TextSize12Style" parent="BaseWrapContentTextStyle">
         <item name="android:textSize">12sp</item>

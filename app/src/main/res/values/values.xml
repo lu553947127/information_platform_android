@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <!-- 右滑关闭设置模糊图层 -->
     <!-- From: file:/Users/Issac/workspace/SwipeBackDemoProject/library/src/main/res/values/attrs.xml -->
     <eat-comment/>
@@ -14,6 +15,7 @@
         <item name="shadow_bottom">@drawable/shadow_bottom</item>
     </style>
 
+    <!-- 版本升级弹窗属性设置 -->
     <style name="custom_dialog" parent="@android:style/Theme.Dialog">
         <item name="android:windowFrame">@null</item>
         <item name="android:windowIsFloating">true</item>
@@ -26,7 +28,7 @@
         <item name="android:backgroundDimAmount">0.6</item>
     </style>
 
-
+    /** 融云即时消息 属性设置开始 **/
 
     <!-- 设置聊天室一次拉取消息数目 -->
     <integer name="rc_chatroom_first_pull_message_count">30</integer>
@@ -78,4 +80,7 @@
 
     <!-- 设置发送输入状态 -->
     <bool name="rc_typing_status">true</bool>
+
+    /** 融云即时消息 属性设置结束 **/
+
 </resources>

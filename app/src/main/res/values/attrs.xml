@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!--用于增减图片盛放容器-->
+    <declare-styleable name="PicContentView">
+        <attr name="maxSize" format="integer" />
+    </declare-styleable>
+
+    <!--圆形圆角的ImageView-->
     <declare-styleable name="CircleImageView">
         <attr name="civ_border_width" format="dimension" />
         <attr name="civ_border_color" format="color" />
@@ -10,76 +16,13 @@
         <attr name="civ_circle_background_color" format="color" />
     </declare-styleable>
 
+    <!--自定义圆角的ImageView-->
     <declare-styleable name="Custom_Round_Image_View">
         <attr name="radius" format="dimension" />
         <attr name="left_top_radius" format="dimension" />
         <attr name="right_top_radius" format="dimension" />
         <attr name="right_bottom_radius" format="dimension" />
         <attr name="left_bottom_radius" format="dimension" />
-    </declare-styleable>
-
-    <declare-styleable name="ScoreView">
-        <attr name="sv_border_width" format="dimension" />
-        <attr name="sv_border_color" format="color" />
-        <attr name="sv_border_color_default" format="color" />
-        <attr name="sv_fill_color" format="color" />
-        <attr name="sv_textSize_score" format="dimension" />
-        <attr name="sv_textSize_prompt" format="dimension" />
-        <attr name="sv_textColor" format="color" />
-        <attr name="sv_radius" format="dimension" />
-    </declare-styleable>
-
-    <declare-styleable name="TimeCountDownView">
-        <attr name="tcd_border_width" format="dimension" />
-        <attr name="tcd_border_color" format="color" />
-        <attr name="tcd_border_color_default" format="color" />
-        <attr name="tcd_fill_color" format="color" />
-        <attr name="tcd_textSize" format="dimension" />
-        <attr name="tcd_textColor" format="color" />
-        <attr name="tcd_radius" format="dimension" />
-    </declare-styleable>
-
-    <declare-styleable name="DynamicSoreView">
-        <!--设置选中点-->
-        <attr name="SoreRadioSelect" format="reference" />
-        <!--设置最未选中点-->
-        <attr name="SoreRadioUnselected" format="reference" />
-        <!--设置圆点间距-->
-        <attr name="SoreDistance" format="integer" />
-        <!--设置每页显示几个-->
-        <attr name="SoreNumber" format="integer" />
-    </declare-styleable>
-
-    <declare-styleable name="BGANinePhotoLayout">
-        <!-- Item 条目圆角尺寸，默认值为 0dp -->
-        <attr name="bga_npl_itemCornerRadius" format="dimension|reference" />
-        <!-- 当只有一张图片时，是否显示成大图，默认值为 true -->
-        <attr name="bga_npl_showAsLargeWhenOnlyOne" format="boolean" />
-        <!-- Item 间的水平和垂直间距，默认值为 4dp -->
-        <attr name="bga_npl_itemWhiteSpacing" format="dimension|reference" />
-        <!-- 出去九宫格部分的空白区域的尺寸，默认值为 100dp -->
-        <attr name="bga_npl_otherWhiteSpacing" format="dimension|reference" />
-        <!-- 占位图资源，默认值为 R.mipmap.bga_pp_ic_holder_light -->
-        <attr name="bga_npl_placeholderDrawable" format="reference" />
-        <!-- item 的尺寸，优先级高于 bga_npl_otherWhiteSpacing，默认值为 0dp -->
-        <attr name="bga_npl_itemWidth" format="dimension|reference" />
-        <!-- 列数,默认值为 3，当该值大于 3 并且数据源里只有四张图片时不会显示成 2 列 -->
-        <attr name="bga_npl_itemSpanCount" format="integer" />
-    </declare-styleable>
-
-    <declare-styleable name="BGAImageView">
-        <!-- 默认图片资源，默认值为 null -->
-        <attr name="android:src" />
-        <!-- 是否是圆形，默认值为 false -->
-        <attr name="bga_iv_circle" format="boolean" />
-        <!-- 圆角矩形的半径，默认值为 0dp -->
-        <attr name="bga_iv_cornerRadius" format="reference|dimension" />
-        <!-- 是否是矩形，默认值为 false -->
-        <attr name="bga_iv_square" format="boolean" />
-        <!-- 描边的宽度，默认值为 0dp -->
-        <attr name="bga_iv_borderWidth" format="reference|dimension" />
-        <!-- 描边的颜色，默认值为 Color.WHITE -->
-        <attr name="bga_iv_borderColor" format="reference|color" />
     </declare-styleable>
 
     <!--首页跑马灯文字属性设置-->
@@ -96,10 +39,6 @@
         <attr name="marqueeview_text_size" format="float" /><!-- 文字大小 -->
         <attr name="marqueeview_isclickalbe_stop" format="boolean" /><!--是否点击暂停-->
         <attr name="marqueeview_is_resetLocation" format="boolean" /><!--重新改变内容的时候 ， 是否初始化 位置，默认为true，改变-->
-    </declare-styleable>
-
-    <declare-styleable name="PicContentView">
-        <attr name="maxSize" format="integer" />
     </declare-styleable>
 
     <!--仿苹果选择按钮-->
@@ -160,30 +99,16 @@
         <attr name="x_pattern" format="string" />
     </declare-styleable>
 
-    <!--根据字母选择列表-->
-    <declare-styleable name="FancyIndexer">
-        <attr name="widthOffset" format="dimension" />
-        <attr name="minFontSize" format="integer" />
-        <attr name="maxFontSize" format="integer" />
-        <attr name="tipFontSize" format="integer" />
-        <attr name="maxBezierHeight" format="dimension" />
-        <attr name="maxBezierWidth" format="dimension" />
-        <attr name="maxBezierLines" format="integer" />
-        <attr name="additionalTipOffset" format="dimension" />
-        <attr name="fontColor" format="color" />
-        <attr name="tipFontColor" format="color" />
-    </declare-styleable>
-
-
-    <!--    后台管理 添加周转材料详情 组合布局  -->
+    <!--后台管理 添加周转材料详情 组合布局  -->
     <declare-styleable name="TurnoverSelectView">
-        <attr name="title_text" format="string|reference"></attr>
-        <attr name="value_text" format="string|reference"></attr>
-        <attr name="hind_value_text" format="string|reference"></attr>
-        <attr name="line_show" format="boolean"></attr>
-        <attr name="edit_show" format="boolean"></attr>
+        <attr name="title_text" format="string|reference" />
+        <attr name="value_text" format="string|reference" />
+        <attr name="hind_value_text" format="string|reference" />
+        <attr name="line_show" format="boolean" />
+        <attr name="edit_show" format="boolean" />
     </declare-styleable>
 
+    <!--流程图显示属性设置-->
     <declare-styleable name="FlowViewHorizontal">
         <attr name="h_bg_radius" format="dimension" />
         <attr name="h_pro_radius" format="dimension" />
@@ -197,4 +122,5 @@
         <attr name="h_textsize" format="dimension" />
         <attr name="h_pro_step" format="integer" />
     </declare-styleable>
+
 </resources>

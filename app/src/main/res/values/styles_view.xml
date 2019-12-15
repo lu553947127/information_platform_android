@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!--公共按钮 主色-->
     <style name="BtnConfirm">
         <item name="android:layout_width">295dp</item>
         <item name="android:layout_height">40dp</item>
@@ -11,11 +12,13 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <!--公共按钮 灰色-->
     <style name="BtnConfirmGray" parent="BtnConfirm">
         <item name="android:background">@drawable/shape_btn_confirm_gray_20</item>
         <item name="android:textColor">@color/color_646464</item>
     </style>
 
+    <!--全局输入框 属性配置-->
     <style name="MessageHint">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">46dp</item>
@@ -30,22 +33,21 @@
         <item name="android:textSize">13sp</item>
     </style>
 
+    <!--TabLayout 文字大小配置-->
     <style name="TabLayoutTextStyle">
         <item name="android:textSize">14sp</item>
     </style>
 
-
-<!--    <item name="android:background">@drawable/shape_f5f5f5_14</item>-->
+    <!--基建物资筛选弹窗 属性配置-->
     <style name="MaterialFilterStyle">
         <item name="android:layout_width">82dp</item>
         <item name="android:layout_height">wrap_content</item>
-
         <item name="android:gravity">center_vertical</item>
         <item name="android:paddingTop">5dp</item>
         <item name="android:paddingBottom">5dp</item>
     </style>
 
-
+    <!--基建物资筛选弹窗 属性配置-->
     <style name="MaterialCbFilterStyle">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -121,4 +123,5 @@
         <item name="android:textColorHint">@color/colorTvHint</item>
         <item name="android:textSize">15sp</item>
     </style>
+
 </resources>
