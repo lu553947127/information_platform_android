@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
-import com.blankj.utilcode.util.LogUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -25,7 +24,6 @@ import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.factory.EmptyViewFactory;
 import com.shuangduan.zcy.model.bean.IncomePeopleBean;
 import com.shuangduan.zcy.view.mine.RecommendFriendsActivity;
-import com.shuangduan.zcy.view.people.PeopleInfoActivity;
 import com.shuangduan.zcy.vm.IncomePeopleVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 

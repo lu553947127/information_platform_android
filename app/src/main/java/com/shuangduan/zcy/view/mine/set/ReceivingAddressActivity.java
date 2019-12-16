@@ -2,8 +2,14 @@ package com.shuangduan.zcy.view.mine.set;
 
 import android.os.Bundle;
 
+import androidx.appcompat.widget.AppCompatTextView;
+import androidx.appcompat.widget.Toolbar;
+
+import com.blankj.utilcode.util.BarUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.base.BaseActivity;
+
+import butterknife.BindView;
 
 /**
  * @ProjectName: information_platform_android
@@ -18,6 +24,11 @@ import com.shuangduan.zcy.base.BaseActivity;
  * @Version: 1.0
  */
 public class ReceivingAddressActivity extends BaseActivity {
+    @BindView(R.id.tv_bar_title)
+    AppCompatTextView tvBarTitle;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
     @Override
     protected int initLayoutRes() {
         return R.layout.activity_receiving_address;
@@ -30,6 +41,7 @@ public class ReceivingAddressActivity extends BaseActivity {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
-
+        BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
+        tvBarTitle.setText("收货地址");
     }
 }

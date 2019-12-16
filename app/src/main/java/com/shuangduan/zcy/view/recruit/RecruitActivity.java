@@ -1,7 +1,9 @@
 package com.shuangduan.zcy.view.recruit;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
@@ -40,7 +42,6 @@ import butterknife.OnClick;
  * @class describe
  */
 public class RecruitActivity extends BaseActivity {
-
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
     @BindView(R.id.iv_bar_right)
@@ -53,6 +54,8 @@ public class RecruitActivity extends BaseActivity {
     RecyclerView rv;
     @BindView(R.id.refresh)
     SmartRefreshLayout refresh;
+    @BindView(R.id.tv_number_pages)
+    TextView tvNumberPages;
     private RecruitVm recruitVm;
 
     @Override
@@ -106,8 +109,16 @@ public class RecruitActivity extends BaseActivity {
                 recruitVm.getRecruit();
             }
         });
+
+        rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+            }
+        });
     }
 
+    @SuppressLint("SetTextI18n")
     private void setNoMore(int page, int count) {
         if (page == 1) {
             if (page * 10 >= count) {
@@ -126,6 +137,7 @@ public class RecruitActivity extends BaseActivity {
                 refresh.finishLoadMore();
             }
         }
+        tvNumberPages.setText("第"+page+"/"+ (int)(count % 10 == 0 ? (count / 10) : (Math.floor(count / 10) + 1)) +"页");
     }
 
     @OnClick({R.id.iv_bar_back, R.id.iv_bar_right})

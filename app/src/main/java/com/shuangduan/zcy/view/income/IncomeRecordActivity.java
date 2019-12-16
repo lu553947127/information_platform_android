@@ -1,4 +1,4 @@
-package com.shuangduan.zcy.view.people;
+package com.shuangduan.zcy.view.income;
 
 import android.os.Bundle;
 

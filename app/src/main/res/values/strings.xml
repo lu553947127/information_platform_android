@@ -652,7 +652,7 @@
     <string name="to_reserve">前往预定</string>
     <string name="to_recommend">前往邀请</string>
     <string name="to_look_over">前往查看</string>
-    <string name="empty_project_address_info">您所处的位置周围\n没有工程项目,换个地方吧！</string>
+    <string name="empty_project_address_info">您所处位置周围没有工程项目，换个地方吧！</string>
     <string name="empty_project_info">未找到相关的工程信息\n查看全部工程信息</string>
     <string name="empty_release_project_info">您还没有发布工程信息\n快去发布吧</string>
     <string name="empty_release_dynamics_info">您还没有发布动态信息\n快去发布吧</string>

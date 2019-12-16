@@ -1,10 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include layout="@layout/toolbar"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <include layout="@layout/layout_refresh_rv"/>
+        <include layout="@layout/toolbar"/>
 
-</LinearLayout>
+        <include layout="@layout/layout_refresh_rv"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_number_pages"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="25dp"
+        android:background="@drawable/circular_background_gray3"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:textSize="13sp"
+        android:textColor="@color/colorFFF"
+        android:text="第1/95页"
+        android:visibility="gone"/>
+
+</RelativeLayout>

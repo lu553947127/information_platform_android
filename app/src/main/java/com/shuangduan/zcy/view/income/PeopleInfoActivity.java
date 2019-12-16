@@ -1,8 +1,7 @@
-package com.shuangduan.zcy.view.people;
+package com.shuangduan.zcy.view.income;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.FrameLayout;

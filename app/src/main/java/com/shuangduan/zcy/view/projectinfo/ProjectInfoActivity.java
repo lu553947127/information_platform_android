@@ -179,7 +179,7 @@ public class ProjectInfoActivity extends BaseActivity {
             if (throughPointList.size()!=0){
                 setMarker();
             }else {
-                ToastUtils.showShort("您所处位置周围没有工程项目，换个地方吧！");
+                ToastUtils.showShort(getString(R.string.empty_project_address_info));
             }
         });
         setupLocationStyle();
@@ -339,8 +339,6 @@ public class ProjectInfoActivity extends BaseActivity {
         if (mMapView != null) mMapView.onResume();
         super.onResume();
         LogUtils.e("onResume");
-        LogUtils.e("mMapView"+mMapView);
-        LogUtils.e("aMap"+aMap);
     }
 
     @Override

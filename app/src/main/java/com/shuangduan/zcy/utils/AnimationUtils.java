@@ -81,8 +81,7 @@ public class AnimationUtils {
                 Keyframe.ofFloat(.90f, delta),
                 Keyframe.ofFloat(1f, 0f)
         );
-        return ObjectAnimator.ofPropertyValuesHolder(view, pvhTranslateX).
-                setDuration(500);
+        return ObjectAnimator.ofPropertyValuesHolder(view, pvhTranslateX).setDuration(500);
     }
 
     //红包晃动方法动画
