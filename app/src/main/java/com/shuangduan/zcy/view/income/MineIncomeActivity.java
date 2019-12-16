@@ -114,6 +114,7 @@ public class MineIncomeActivity extends BaseActivity {
 
             LineDataSet lineDataSet = (LineDataSet) chart.getData().getDataSetByIndex(0);
             lineDataSet.setValues(values);
+            lineDataSet.setValueTextSize(10);
 
             chart.getData().notifyDataChanged();
             chart.notifyDataSetChanged();
@@ -121,6 +122,9 @@ public class MineIncomeActivity extends BaseActivity {
             lineDataSet.setValueFormatter(new ValueFormatter() {
                 @Override
                 public String getFormattedValue(float value) {
+                    if (value == 0) {
+                        return "";
+                    }
                     return String.valueOf(value);
                 }
             });
@@ -144,7 +148,7 @@ public class MineIncomeActivity extends BaseActivity {
         LineDataSet set = new LineDataSet(values, "");
 
         Legend legend = chart.getLegend();
-        legend .setEnabled(false);
+        legend.setEnabled(false);
 
         //设置不显示折线图左下角的标签
         chart.animateXY(1500, 1500);
