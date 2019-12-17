@@ -110,7 +110,7 @@ public class SetActivity extends BaseActivity {
                 ActivityUtils.startActivity(ReceivingAddressActivity.class);
                 break;
             case R.id.tv_supplier_msg://供应商信息
-                SupplierUtils.SupplierCustom(this,supplier_status,id);
+                SupplierUtils.SupplierCustom(this,supplier_status,id,"set");
                 break;
             case R.id.tv_feedback://意见反馈
                 ActivityUtils.startActivity(FeedbackActivity.class);

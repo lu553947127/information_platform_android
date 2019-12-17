@@ -29,7 +29,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="10dp"
-        android:background="@color/color_40000000"/>
+        android:background="@color/colorBgDark"/>
 
     <TextView
         android:id="@+id/tv_cancel"

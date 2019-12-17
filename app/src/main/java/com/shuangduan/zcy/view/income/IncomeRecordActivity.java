@@ -1,6 +1,7 @@
 package com.shuangduan.zcy.view.income;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
@@ -60,6 +61,8 @@ public class IncomeRecordActivity extends BaseActivity {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.income_record));
 
+        View emptyView = emptyViewFactory.createEmptyView(R.drawable.icon_empty_project, R.string.empty_income_info, 0,R.color.colorBgDark, null);
+
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
         IncomeRecordAdapter adapter = new IncomeRecordAdapter(R.layout.item_income_record, null);
@@ -71,7 +74,7 @@ public class IncomeRecordActivity extends BaseActivity {
         incomePeopleVm.recordLiveData.observe(this, incomeRecordBean -> {
             if (incomeRecordBean.getPage() == 1) {
                 adapter.setNewData(incomeRecordBean.getList());
-                adapter.setEmptyView(R.layout.layout_empty, rv);
+                adapter.setEmptyView(emptyView);
             }else {
                 adapter.addData(incomeRecordBean.getList());
             }

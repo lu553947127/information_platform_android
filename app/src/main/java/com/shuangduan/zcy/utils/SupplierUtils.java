@@ -26,10 +26,27 @@ import com.shuangduan.zcy.view.supplier.SupplierJoinActivity;
 public class SupplierUtils {
 
     ///供应商信息判断
-    public static void SupplierCustom(Activity activity, int supplier_status,int id){
+    public static void SupplierCustom(Activity activity, int supplier_status,int id,String type){
         switch (supplier_status){
             case 0://未申请
-                ActivityUtils.startActivity(SupplierJoinActivity.class);
+                if (type.equals("set")){
+                    new CustomDialog(activity)
+                            .setTipLeftIcon(R.drawable.icon_error,"抱歉，您还不是供应商！",R.color.colorTv)
+                            .setOk("申请供应商")
+                            .setCallBack(new BaseDialog.CallBack() {
+                                @Override
+                                public void cancel() {
+
+                                }
+
+                                @Override
+                                public void ok(String s) {
+                                    ActivityUtils.startActivity(SupplierJoinActivity.class);
+                                }
+                            }).showDialog();
+                }else {
+                    ActivityUtils.startActivity(SupplierJoinActivity.class);
+                }
                 break;
             case 1://未通过
                 new CustomDialog(activity)
@@ -48,22 +65,28 @@ public class SupplierUtils {
                         }).showDialog();
                 break;
             case 2://已通过
-                new CustomDialog(activity)
-                        .setTipLeftIcon(R.drawable.icon_success,"恭喜，您已成为供应商！",R.color.colorTv)
-                        .setOk("查看")
-                        .setCallBack(new BaseDialog.CallBack() {
-                            @Override
-                            public void cancel() {
+                if (type.equals("set")){
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(CustomConfig.SUPPLIER_ID, id);
+                    ActivityUtils.startActivity(bundle, SupplierDetailActivity.class);
+                }else {
+                    new CustomDialog(activity)
+                            .setTipLeftIcon(R.drawable.icon_success,"恭喜，您已成为供应商！",R.color.colorTv)
+                            .setOk("查看")
+                            .setCallBack(new BaseDialog.CallBack() {
+                                @Override
+                                public void cancel() {
 
-                            }
+                                }
 
-                            @Override
-                            public void ok(String s) {
-                                Bundle bundle = new Bundle();
-                                bundle.putInt(CustomConfig.SUPPLIER_ID, id);
-                                ActivityUtils.startActivity(bundle, SupplierDetailActivity.class);
-                            }
-                        }).showDialog();
+                                @Override
+                                public void ok(String s) {
+                                    Bundle bundle = new Bundle();
+                                    bundle.putInt(CustomConfig.SUPPLIER_ID, id);
+                                    ActivityUtils.startActivity(bundle, SupplierDetailActivity.class);
+                                }
+                            }).showDialog();
+                }
                 break;
             case 3://驳回
                 new CustomDialog(activity)
