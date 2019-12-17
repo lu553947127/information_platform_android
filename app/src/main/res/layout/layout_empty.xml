@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="17dp"
         android:gravity="center"
-        android:lineSpacingExtra="7dp"
+        android:lineSpacingExtra="5dp"
         android:textColor="@color/text2"
         android:textSize="@dimen/dimenTvStates"
         app:layout_constraintTop_toBottomOf="@id/iv_icon"

@@ -11,6 +11,7 @@ import com.shuangduan.zcy.model.bean.MyPhasesBean;
 import com.shuangduan.zcy.model.bean.ProjectCollectBean;
 import com.shuangduan.zcy.model.bean.PwdPayStateBean;
 import com.shuangduan.zcy.model.bean.ReadHistoryBean;
+import com.shuangduan.zcy.model.bean.ReceivingAddressBean;
 import com.shuangduan.zcy.model.bean.RecruitBean;
 import com.shuangduan.zcy.model.bean.SubBean;
 import com.shuangduan.zcy.model.bean.TransRecordBean;
@@ -294,6 +295,22 @@ public class UserRepository extends BaseRepository {
 
     public void transRecordFilter(MutableLiveData<TransRecordFilterBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id) {
         request(apiService.transRecordFilter(user_id)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+
+    //收货地址
+    public void receivingAddress(MutableLiveData<ReceivingAddressBean> liveData, MutableLiveData<String> pageStateLiveData, int userId) {
+        request(apiService.getReceivingAddress(userId)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    //设置地址的默认状态
+    public void setDefaultState(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int id) {
+        request(apiService.setDefaultState(id)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    //删除地址
+    public void deleteAddres(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int id) {
+        request(apiService.deleteAddress(id)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
 }

@@ -25,31 +25,38 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <!-- Required -->
-    <permission android:name="com.shuangduan.zcy.permission.JPUSH_MESSAGE" android:protectionLevel="signature" />
+    <permission
+        android:name="com.shuangduan.zcy.permission.JPUSH_MESSAGE"
+        android:protectionLevel="signature" />
     <!-- Required -->
     <uses-permission android:name="com.shuangduan.zcy.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" tools:ignore="ProtectedPermissions" />
+    <uses-permission
+        android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+        tools:ignore="ProtectedPermissions" />
 
     <!-- 小米 配置开始 -->
-    <permission android:name="com.shuangduan.zcy.permission.MIPUSH_RECEIVE" android:protectionLevel="signature" />
+    <permission
+        android:name="com.shuangduan.zcy.permission.MIPUSH_RECEIVE"
+        android:protectionLevel="signature" />
     <uses-permission android:name="com.shuangduan.zcy.permission.MIPUSH_RECEIVE" />
     <!-- 小米 配置结束  -->
 
     <application
         android:name="com.shuangduan.zcy.app.MyApplication"
         android:allowBackup="true"
-        android:icon="@drawable/app_logo"
-        android:roundIcon="@drawable/app_logo"
-        android:label="@string/app_name"
-        android:networkSecurityConfig="@xml/network_config"
         android:hardwareAccelerated="true"
+        android:icon="@drawable/app_logo"
+        android:label="@string/app_name"
         android:largeHeap="true"
+        android:networkSecurityConfig="@xml/network_config"
+        android:roundIcon="@drawable/app_logo"
         android:supportsRtl="true"
         android:theme="@style/BaseAppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning,UnusedAttribute">
         <!-- 启动页-->
-        <activity android:name="com.shuangduan.zcy.view.login.StartUpActivity"
+        <activity
+            android:name="com.shuangduan.zcy.view.login.StartUpActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -61,11 +68,15 @@
         <!-- 微信身份认证页-->
         <activity android:name="com.shuangduan.zcy.view.login.WeChatBindingActivity" />
         <!-- 登录/注册页-->
-        <activity android:name="com.shuangduan.zcy.view.login.LoginActivity" android:launchMode="singleInstance" />
+        <activity
+            android:name="com.shuangduan.zcy.view.login.LoginActivity"
+            android:launchMode="singleInstance" />
         <!-- 首次登陆需要录入信息页-->
         <activity android:name="com.shuangduan.zcy.view.login.UserInfoInputActivity" />
         <!-- 首页-->
-        <activity android:name="com.shuangduan.zcy.view.MainActivity" android:launchMode="singleTask">
+        <activity
+            android:name="com.shuangduan.zcy.view.MainActivity"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -76,31 +87,45 @@
             </intent-filter>
         </activity>
         <!-- 手机邮箱验证页-->
-        <activity android:name="com.shuangduan.zcy.view.login.MobileVerificationActivity" android:windowSoftInputMode="stateVisible|adjustResize" />
+        <activity
+            android:name="com.shuangduan.zcy.view.login.MobileVerificationActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
         <!-- 用户详情页-->
         <activity android:name="com.shuangduan.zcy.view.mine.user.UserInfoActivity" />
         <!-- 提现页-->
         <activity android:name="com.shuangduan.zcy.view.mine.wallet.WithdrawActivity" />
         <!-- 编辑用户名页-->
-        <activity android:name="com.shuangduan.zcy.view.mine.user.UpdateNameActivity" android:windowSoftInputMode="stateVisible|adjustResize" />
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.user.UpdateNameActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
         <!-- 编辑手机号页-->
-        <activity android:name="com.shuangduan.zcy.view.mine.user.UpdateMobileActivity" android:windowSoftInputMode="stateVisible|adjustResize"/>
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.user.UpdateMobileActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
         <!-- 修改密码页-->
-        <activity android:name="com.shuangduan.zcy.view.mine.set.ForgetPwdActivity" android:windowSoftInputMode="stateVisible|adjustResize"/>
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.set.ForgetPwdActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
         <!-- 修改手机验证-->
         <activity android:name="com.shuangduan.zcy.view.mine.user.UpdateResultActivity" />
         <!-- 修改邮箱-->
         <activity android:name="com.shuangduan.zcy.view.mine.user.UpdateEmailActivity" />
         <!-- 修改用户密码-->
-        <activity android:name="com.shuangduan.zcy.view.mine.set.UpdatePwdActivity" android:windowSoftInputMode="stateVisible|adjustResize"/>
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.set.UpdatePwdActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
         <!-- 经营产品修改-->
-        <activity android:name="com.shuangduan.zcy.view.mine.user.UpdateProductionActivity" android:windowSoftInputMode="stateVisible|adjustResize" />
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.user.UpdateProductionActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
         <!-- 身份证上传页-->
         <activity android:name="com.shuangduan.zcy.view.mine.user.AuthenticationActivity" />
         <!-- 绑定银行卡页-->
         <activity android:name="com.shuangduan.zcy.view.mine.wallet.BindBankCardActivity" />
         <!-- 公司搜索页-->
-        <activity android:name="com.shuangduan.zcy.view.mine.user.CompanySearchActivity" android:windowSoftInputMode="stateVisible|adjustResize" />
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.user.CompanySearchActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
         <!-- 地区选择多选页-->
         <activity android:name="com.shuangduan.zcy.view.mine.user.BusinessAreaActivity" />
         <!-- 帮助页-->
@@ -111,16 +136,20 @@
         <activity android:name="com.shuangduan.zcy.view.mine.set.ThirdLoginActivity" />
         <!-- 收货地址页面-->
         <activity android:name="com.shuangduan.zcy.view.mine.set.ReceivingAddressActivity" />
+        <!-- 编辑收货地址 -->
+        <activity android:name="com.shuangduan.zcy.view.mine.set.EditReceivingAddressActivity" />
         <!-- 关于页-->
         <activity android:name="com.shuangduan.zcy.view.mine.set.AboutOursActivity" />
         <!-- 推荐好友页-->
         <activity android:name="com.shuangduan.zcy.view.mine.RecommendFriendsActivity" />
         <!-- 意见反馈页-->
-        <activity android:name="com.shuangduan.zcy.view.mine.set.FeedbackActivity" android:windowSoftInputMode="stateVisible|adjustResize"/>
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.set.FeedbackActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
         <!-- 订阅消息推送页（工程信息订阅/订单提醒/闲置物资提醒）-->
         <activity android:name="com.shuangduan.zcy.rongyun.view.MineSubActivity" />
         <!-- 订阅通知推送设置-->
-        <activity android:name="com.shuangduan.zcy.rongyun.view.NoticeSetActivity"/>
+        <activity android:name="com.shuangduan.zcy.rongyun.view.NoticeSetActivity" />
         <!-- 我的收藏-->
         <activity android:name="com.shuangduan.zcy.view.mine.collection.MineCollectionActivity" />
         <!-- 我的钱包页面-->
@@ -140,11 +169,17 @@
         <!-- 支付密码页-->
         <activity android:name="com.shuangduan.zcy.view.mine.set.PwdPayActivity" />
         <!-- 修改支付密码-->
-        <activity android:name="com.shuangduan.zcy.view.mine.set.UpdatePwdPayActivity" android:windowSoftInputMode="stateVisible|adjustResize"/>
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.set.UpdatePwdPayActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
         <!-- 忘记支付密码-->
-        <activity android:name="com.shuangduan.zcy.view.mine.set.ForgetPwdPayActivity" android:windowSoftInputMode="stateVisible|adjustResize"/>
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.set.ForgetPwdPayActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
         <!-- 设置支付密码-->
-        <activity android:name="com.shuangduan.zcy.view.mine.set.SetPwdPayActivity" android:windowSoftInputMode="stateVisible|adjustResize"/>
+        <activity
+            android:name="com.shuangduan.zcy.view.mine.set.SetPwdPayActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
         <!-- 收益说明书详情-->
         <activity android:name="com.shuangduan.zcy.view.mine.set.ExplainDetailActivity" />
         <!-- 交易记录-->
@@ -152,7 +187,7 @@
         <!-- 交易记录详情-->
         <activity android:name="com.shuangduan.zcy.view.mine.wallet.TransRecordDetailActivity" />
         <!-- 我的需求-->
-        <activity android:name="com.shuangduan.zcy.view.mine.demand.MineDemandActivity"/>
+        <activity android:name="com.shuangduan.zcy.view.mine.demand.MineDemandActivity" />
         <!-- 充值中心-->
         <activity android:name="com.shuangduan.zcy.view.recharge.RechargeActivity" />
         <!-- 充值记录-->
@@ -192,7 +227,9 @@
         <!-- 认购信息-->
         <activity android:name="com.shuangduan.zcy.view.projectinfo.SubInfoActivity" />
         <!-- 工程信息详情纠错页-->
-        <activity android:name="com.shuangduan.zcy.view.projectinfo.ProjectErrorActivity" android:windowSoftInputMode="stateVisible|adjustResize"/>
+        <activity
+            android:name="com.shuangduan.zcy.view.projectinfo.ProjectErrorActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
         <!-- 动态信息头像查看详情-->
         <activity android:name="com.shuangduan.zcy.view.projectinfo.LocusOwnerDetailActivity" />
         <!-- 招采信息列表-->
@@ -204,9 +241,13 @@
         <!-- 基建物资预定成功页-->
         <activity android:name="com.shuangduan.zcy.view.material.MaterialOrderSuccessActivity" />
         <!-- 周转材料物资提交预定页面-->
-        <activity android:name="com.shuangduan.zcy.view.material.MaterialPlaceOrderActivity" android:windowSoftInputMode="stateHidden|adjustResize"/>
+        <activity
+            android:name="com.shuangduan.zcy.view.material.MaterialPlaceOrderActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <!-- 设备管理物资提交预定页面-->
-        <activity android:name="com.shuangduan.zcy.view.material.MaterialEquipmentPlaceOrderActivity" android:windowSoftInputMode="stateHidden|adjustResize"/>
+        <activity
+            android:name="com.shuangduan.zcy.view.material.MaterialEquipmentPlaceOrderActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <!-- 周转材料基建物资详情页-->
         <activity android:name="com.shuangduan.zcy.view.material.MaterialDetailActivity" />
         <!-- 设备管理基建物资详情页-->
@@ -214,17 +255,23 @@
         <!-- 存放地选择列表-->
         <activity android:name="com.shuangduan.zcy.view.material.DepositingPlaceActivity" />
         <!-- 物资列表搜索页面 -->
-        <activity android:name=".view.material.MaterialSearchActivity" android:windowSoftInputMode="stateVisible|adjustResize"/>
+        <activity
+            android:name=".view.material.MaterialSearchActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
         <!-- 优质供应商列表-->
         <activity android:name="com.shuangduan.zcy.view.supplier.SupplierActivity" />
         <!-- 优质供应商详情-->
         <activity android:name="com.shuangduan.zcy.view.supplier.SupplierDetailActivity" />
         <!-- 加入供应商-->
-        <activity android:name="com.shuangduan.zcy.view.supplier.SupplierJoinActivity" android:windowSoftInputMode="stateHidden|adjustResize"/>
+        <activity
+            android:name="com.shuangduan.zcy.view.supplier.SupplierJoinActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <!-- 发布信息列表-->
         <activity android:name="com.shuangduan.zcy.view.mine.project.MineProjectActivity" />
         <!-- 工程信息 招采信息 发布-->
-        <activity android:name="com.shuangduan.zcy.view.release.ReleaseProjectActivity" android:windowSoftInputMode="stateHidden|adjustResize"/>
+        <activity
+            android:name="com.shuangduan.zcy.view.release.ReleaseProjectActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <!-- 发布类型选择-->
         <activity android:name="com.shuangduan.zcy.view.release.ReleaseTypeSelectActivity" />
         <!-- 发布信息 地区选择-->
@@ -234,11 +281,15 @@
         <!-- 发布信息 联系人类型选择-->
         <activity android:name="com.shuangduan.zcy.view.release.ContactTypeActivity" />
         <!-- 工程搜索-->
-        <activity android:name="com.shuangduan.zcy.view.release.ProjectSearchActivity" android:windowSoftInputMode="stateVisible|adjustResize"/>
+        <activity
+            android:name="com.shuangduan.zcy.view.release.ProjectSearchActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
         <!-- 项目阶段选择-->
         <activity android:name="com.shuangduan.zcy.view.release.ReleaseStageSelectActivity" />
         <!-- 首页搜索-->
-        <activity android:name="com.shuangduan.zcy.view.search.SearchActivity" android:windowSoftInputMode="stateVisible|adjustResize"/>
+        <activity
+            android:name="com.shuangduan.zcy.view.search.SearchActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
         <!-- 工程和招采 分类搜索-->
         <activity android:name="com.shuangduan.zcy.view.search.SearchResultActivity" />
         <!-- 基建头条列表-->
@@ -248,7 +299,9 @@
         <!-- 需求广场列表-->
         <activity android:name="com.shuangduan.zcy.view.demand.DemandActivity" />
         <!-- 需求广场 添加-->
-        <activity android:name="com.shuangduan.zcy.view.demand.DemandReleaseActivity" android:windowSoftInputMode="stateHidden|adjustResize"/>
+        <activity
+            android:name="com.shuangduan.zcy.view.demand.DemandReleaseActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <!-- 找关系详情-->
         <activity android:name="com.shuangduan.zcy.view.demand.FindRelationshipDetailActivity" />
         <!-- 找物资详情-->
@@ -270,7 +323,9 @@
         <!-- 支付页-->
         <activity android:name="com.shuangduan.zcy.view.PayActivity" />
         <!-- 好友群聊搜索页-->
-        <activity android:name="com.shuangduan.zcy.rongyun.view.IMSearchActivity" android:windowSoftInputMode="stateVisible|adjustResize"/>
+        <activity
+            android:name="com.shuangduan.zcy.rongyun.view.IMSearchActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
         <!-- 加好友页-->
         <activity android:name="com.shuangduan.zcy.rongyun.view.IMAddFriendActivity" />
         <!--物资预定列表-->
@@ -278,7 +333,10 @@
         <!--物资预定详情 -->
         <activity android:name=".view.mine.material.MaterialOrderDetailActivity" />
         <!-- 融云单聊页-->
-        <activity android:name="com.shuangduan.zcy.rongyun.view.IMPrivateChatActivity" android:configChanges="orientation|screenSize" android:windowSoftInputMode="stateHidden|adjustResize">
+        <activity
+            android:name="com.shuangduan.zcy.rongyun.view.IMPrivateChatActivity"
+            android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -289,7 +347,10 @@
             </intent-filter>
         </activity>
         <!--融云聚合消息页面-->
-        <activity android:name="com.shuangduan.zcy.rongyun.view.IMSubConversationListActivity" android:configChanges="orientation|screenSize" android:windowSoftInputMode="stateHidden|adjustResize">
+        <activity
+            android:name="com.shuangduan.zcy.rongyun.view.IMSubConversationListActivity"
+            android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -316,7 +377,10 @@
         <!-- h5加载页-->
         <activity android:name="com.shuangduan.zcy.view.WebViewActivity" />
         <!-- 微信支付 返回结果页-->
-        <activity android:name="com.shuangduan.zcy.wxapi.WXPayEntryActivity" android:exported="true" android:launchMode="singleTop" />
+        <activity
+            android:name="com.shuangduan.zcy.wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop" />
         <!-- 微信分享和登录 返回结果页-->
         <activity
             android:name=".wxapi.WXEntryActivity"
@@ -338,11 +402,15 @@
         <!-- 周转材料详情-->
         <activity android:name="com.shuangduan.zcy.adminManage.view.turnover.TurnoverDetailActivity" />
         <!-- 周转材料添加-->
-        <activity android:name="com.shuangduan.zcy.adminManage.view.turnover.TurnoverAddActivity" android:windowSoftInputMode="stateHidden|adjustResize"/>
+        <activity
+            android:name="com.shuangduan.zcy.adminManage.view.turnover.TurnoverAddActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <!-- 设备管理详情-->
         <activity android:name="com.shuangduan.zcy.adminManage.view.device.DeviceDetailActivity" />
         <!-- 设备管理添加-->
-        <activity android:name="com.shuangduan.zcy.adminManage.view.device.DeviceAddActivity" android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name="com.shuangduan.zcy.adminManage.view.device.DeviceAddActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <!-- 订单详情-->
         <activity android:name="com.shuangduan.zcy.adminManage.view.order.OrderDetailsActivity" />
 

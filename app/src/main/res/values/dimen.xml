@@ -12,4 +12,9 @@
     <dimen name="x_design_tab_max_width">264dp</dimen>
 
     <dimen name="spacing_medium">8dp</dimen>
+
+    <dimen name="tvFirstSize">14dp</dimen>
+    <dimen name="tvSecondSize">13dp</dimen>
+    <dimen name="tvThreeSize">12dp</dimen>
+
 </resources>

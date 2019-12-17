@@ -36,15 +36,13 @@
         android:textSize="16sp"
         android:text="@string/pwd_pay"/>
 
-    <include layout="@layout/divider_15"
-        android:visibility="gone"/>
+    <include layout="@layout/divider_15"/>
 
     <RelativeLayout
         android:id="@+id/rl_third_login"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@drawable/selector_bg_custom"
-        android:visibility="gone">
+        android:background="@drawable/selector_bg_custom">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="match_parent"
@@ -85,11 +83,9 @@
         android:gravity="center_vertical"
         android:textColor="@color/colorTv"
         android:textSize="16sp"
-        android:text="@string/receiving_address"
-        android:visibility="gone"/>
+        android:text="@string/receiving_address"/>
 
-    <include layout="@layout/divider_15"
-        android:visibility="gone"/>
+    <include layout="@layout/divider_15" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_supplier_msg"

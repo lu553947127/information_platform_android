@@ -1,5 +1,7 @@
 package com.shuangduan.zcy.model.api;
 
+import androidx.lifecycle.MutableLiveData;
+
 import com.shuangduan.zcy.adminManage.bean.AdminOrderBean;
 import com.shuangduan.zcy.adminManage.bean.DeviceBean;
 import com.shuangduan.zcy.adminManage.bean.DeviceDetailBean;
@@ -1657,6 +1659,27 @@ public interface ApiService {
             @Field("id") int id
     );
 
+    //用户 --- 收货地址列表
+    @FormUrlEncoded
+    @POST()
+    Flowable<BaseResponse<ReceivingAddressBean>> getReceivingAddress(
+            @Field("user_id") int userId
+    );
+
+    //用户 --- 修改地址状态
+    @FormUrlEncoded
+    @POST()
+    Flowable<BaseResponse> setDefaultState(
+            @Field("id") int id
+    );
+
+    //用户 --- 删除地址
+    @FormUrlEncoded
+    @POST()
+    Flowable<BaseResponse> deleteAddress(
+            @Field("id") int id
+    );
+
     //后台管理 --- 周转材料列表
     @FormUrlEncoded
     @POST("api/Manage/constructionList")
@@ -2077,4 +2100,5 @@ public interface ApiService {
             @Field("id") int id,
             @Field("phases") int phases
     );
+
 }

@@ -324,7 +324,7 @@ public class ProjectInfoActivity extends BaseActivity {
         //在activity执行onDestroy时执行mMapView.onDestroy()，销毁地图
         if (mMapView != null) mMapView.onDestroy();
         super.onDestroy();
-        LogUtils.e("onDestroy");
+
     }
 
     @Override

@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorFFF"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar" />
+
+
+    <!--收货人-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/receiving_name"
+            android:textColor="@color/colorTv"
+            android:textSize="@dimen/tvFirstSize" />
+
+        <com.shuangduan.zcy.weight.XEditText
+            android:id="@+id/et_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="50dp"
+            android:background="@null"
+            android:hint="@string/receiving_name_hint"
+            android:textColor="@color/colorTv"
+            android:textColorHint="@color/colorTvHint"
+            android:textSize="@dimen/tvFirstSize" />
+    </LinearLayout>
+
+    <View style="@style/DividingLine" />
+
+
+    <!--手机号-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+
+        <TextView
+            android:id="@+id/tv_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tel_code"
+            android:textColor="@color/colorTv"
+            android:textSize="@dimen/tvFirstSize" />
+
+        <com.shuangduan.zcy.weight.XEditText
+            android:id="@+id/et_phone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="37dp"
+            android:background="@null"
+            android:hint="@string/tel_code_hint"
+            android:textColor="@color/colorTv"
+            android:textColorHint="@color/colorTvHint"
+            android:textSize="@dimen/tvFirstSize" />
+    </LinearLayout>
+
+    <View style="@style/DividingLine" />
+
+
+    <!--所在地区-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/spot_area"
+            android:textColor="@color/colorTv"
+            android:textSize="@dimen/tvFirstSize" />
+
+        <TextView
+            android:id="@+id/tv_area"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="37dp"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:hint="@string/spot_area_hint"
+            android:textColor="@color/colorTv"
+            android:textColorHint="@color/colorTvHint"
+            android:textSize="@dimen/tvFirstSize" />
+    </LinearLayout>
+
+    <View style="@style/DividingLine" />
+
+
+    <!--详细地址-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+
+        <TextView
+            android:id="@+id/tv_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/spot_address"
+            android:textColor="@color/colorTv"
+            android:textSize="@dimen/tvFirstSize" />
+
+        <com.shuangduan.zcy.weight.XEditText
+            android:id="@+id/et_address"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="37dp"
+            android:background="@null"
+            android:hint="@string/spot_address_hint"
+            android:textColor="@color/colorTv"
+            android:textColorHint="@color/colorTvHint"
+            android:textSize="@dimen/tvFirstSize" />
+    </LinearLayout>
+
+
+    <View
+        style="@style/DividingLine"
+        android:layout_marginTop="30dp" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
+        android:paddingTop="18dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="15dp"
+        tools:ignore="MissingConstraints">
+
+        <TextView
+            android:id="@+id/tv_default"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/default_address"
+            android:textColor="@color/colorTv"
+            android:textSize="@dimen/tvFirstSize" />
+
+        <TextView
+            android:id="@+id/tv_default_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/default_address_hint"
+            android:textSize="@dimen/tvThreeSize"
+            app:layout_constraintTop_toBottomOf="@id/tv_default" />
+
+        <com.shuangduan.zcy.weight.SwitchView
+            android:id="@+id/sv_address"
+            android:layout_width="48dp"
+            android:layout_height="25dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="5dp"
+            app:layout_constraintBottom_toTopOf="@id/tv_default_hint"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_default" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View style="@style/DividingLine" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="bottom"
+        android:layout_weight="1"
+        android:gravity="bottom"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_save"
+            style="@style/BtnConfirm"
+            android:layout_width="match_parent"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="20dp"
+            android:text="@string/save" />
+    </LinearLayout>
+</LinearLayout>
