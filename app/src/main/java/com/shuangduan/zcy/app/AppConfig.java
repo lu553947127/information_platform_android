@@ -119,8 +119,12 @@ public class AppConfig {
         LogUtils.getConfig().setGlobalTag(context.getString(R.string.app_name)).setLogSwitch(BuildConfig.IS_SHOW_LOG);
         ToastUtils.setGravity(Gravity.BOTTOM, 0, ConvertUtils.dp2px(100));
         ToastUtils.setMsgTextSize(13);
-        ToastUtils.setMsgColor(Color.parseColor("#ffffff"));
-        ToastUtils.setBgResource(R.drawable.shape_bg_toast);
+        if (Build.VERSION.SDK_INT >= 29){
+            ToastUtils.setBgResource(R.drawable.shape_bg_toast_q);
+        }else {
+            ToastUtils.setBgResource(R.drawable.shape_bg_toast);
+        }
+        ToastUtils.setMsgColor(context.getResources().getColor(R.color.colorFFF));
     }
 
     /**
