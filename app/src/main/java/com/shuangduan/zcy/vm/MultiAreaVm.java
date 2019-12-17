@@ -32,6 +32,9 @@ public class MultiAreaVm extends BaseViewModel {
     public int id;//分类id  0为一级
     public int city_id;
     public String cityResult;
+    //省份名称
+    public String provinceResult;
+
     public boolean provinceInited = false;
     public int currentPosition = 0;//上一个选中的位置
     public int prePosition = 0;//上一个选中的位置
