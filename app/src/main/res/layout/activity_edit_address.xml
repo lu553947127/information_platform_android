@@ -74,6 +74,37 @@
     <View style="@style/DividingLine" />
 
 
+    <!--手机号-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+
+        <TextView
+            android:id="@+id/tv_company"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/company_name"
+            android:textColor="@color/colorTv"
+            android:textSize="@dimen/tvFirstSize" />
+
+        <com.shuangduan.zcy.weight.XEditText
+            android:id="@+id/et_company"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="37dp"
+            android:background="@null"
+            android:hint="@string/optional"
+            android:textColor="@color/colorTv"
+            android:textColorHint="@color/colorTvHint"
+            android:textSize="@dimen/tvFirstSize" />
+    </LinearLayout>
+
+    <View style="@style/DividingLine" />
+
     <!--所在地区-->
     <LinearLayout
         android:layout_width="match_parent"

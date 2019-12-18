@@ -735,6 +735,7 @@
     <string name="default_address_hint">提醒：每次下单会默认推荐使用该地址</string>
     <string name="address_empty_hint">抱歉\n您暂时还没有设置收货地址</string>
     <string name="go_setting">去设置</string>
-
+    <string name="delete">删除</string>
+    <string name="optional">选填</string>
 
 </resources>

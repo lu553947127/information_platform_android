@@ -1,25 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:ignore="MissingConstraints">
 
     <include layout="@layout/toolbar" />
 
+
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar">
 
         <com.yanzhenjie.recyclerview.SwipeRecyclerView
             android:id="@+id/swipe_recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-
-        <include
-            layout="@layout/layout_empty"
-            android:visibility="gone" />
+        <TextView
+            android:id="@+id/tv_save"
+            style="@style/BtnConfirm"
+            android:layout_width="match_parent"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="20dp"
+            android:text="@string/save"
+            android:visibility="invisible" />
 
     </FrameLayout>
-</LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/fl_empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar">
+
+        <include layout="@layout/layout_empty" />
+    </FrameLayout>
+
+</RelativeLayout>

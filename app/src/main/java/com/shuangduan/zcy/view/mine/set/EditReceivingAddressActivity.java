@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adminManage.adapter.SelectorAreaFirstAdapter;
 import com.shuangduan.zcy.adminManage.adapter.SelectorAreaSecondAdapter;
@@ -22,6 +23,7 @@ import com.shuangduan.zcy.model.bean.CityBean;
 import com.shuangduan.zcy.model.bean.ProvinceBean;
 import com.shuangduan.zcy.vm.AddressVm;
 import com.shuangduan.zcy.vm.MultiAreaVm;
+import com.shuangduan.zcy.weight.SwitchView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +37,9 @@ public class EditReceivingAddressActivity extends BaseActivity {
     AppCompatTextView tvBarTitle;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.tv_bar_right)
+    TextView tvBarRight;
+
 
     @BindView(R.id.et_name)
     EditText etName;
@@ -44,7 +49,8 @@ public class EditReceivingAddressActivity extends BaseActivity {
     TextView tvArea;
     @BindView(R.id.et_address)
     EditText etAddress;
-
+    @BindView(R.id.sv_address)
+    SwitchView switchView;
 
     private AddressVm vm;
     private MultiAreaVm areaVm;
@@ -55,6 +61,7 @@ public class EditReceivingAddressActivity extends BaseActivity {
     private SelectorAreaFirstAdapter provinceAdapter;
     private SelectorAreaSecondAdapter cityAdapter;
     private BottomSheetDialogs dialog;
+    private int type;
 
     @Override
     protected int initLayoutRes() {
@@ -70,9 +77,11 @@ public class EditReceivingAddressActivity extends BaseActivity {
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
 
-        int type = getIntent().getIntExtra("type", 0);
+        type = getIntent().getIntExtra("type", 0);
 
         tvBarTitle.setText(type == 0 ? R.string.add_receiving_address : R.string.edit_receiving_address);
+
+        tvBarRight.setText(type == 0 ? "" : "删除");
 
         vm = ViewModelProviders.of(this).get(AddressVm.class);
 
@@ -87,12 +96,22 @@ public class EditReceivingAddressActivity extends BaseActivity {
             cityAdapter.setNewData(cityList);
         });
 
+        //新建地址
+        vm.newAddressLiveData.observe(this, newAddress -> {
+            finish();
+        });
+
+        //编辑地址
+        vm.editAddressLiveData.observe(this, editAddress -> {
+            finish();
+        });
+
 
         getBottomSheetDialog(R.layout.dialog_depositing_place);
     }
 
 
-    @OnClick({R.id.iv_bar_back,R.id.tv_area})
+    @OnClick({R.id.iv_bar_back, R.id.tv_area, R.id.tv_save})
     void OnClick(View view) {
         switch (view.getId()) {
             case R.id.iv_bar_back:
@@ -100,6 +119,18 @@ public class EditReceivingAddressActivity extends BaseActivity {
                 break;
             case R.id.tv_area:
                 dialog.show();
+                break;
+            case R.id.tv_bar_right:
+//                vm.deleteAddress();
+                break;
+            case R.id.tv_save:
+                //默认状态
+                int state = !switchView.isOpened() ? 0 : 1;
+                if (type == 0) {
+//                    vm.newAddress();
+                } else {
+//                    vm.editAddress();
+                }
                 break;
         }
     }
@@ -140,7 +171,7 @@ public class EditReceivingAddressActivity extends BaseActivity {
 
             areaVm.city_id = cityList.get(position).getId();
             cityAdapter.setIsSelect(cityList.get(position).getId());
-            tvArea.setText(areaVm.provinceResult +" "+ cityList.get(position).getName());
+            tvArea.setText(areaVm.provinceResult + " " + cityList.get(position).getName());
 
             dialog.dismiss();
         });

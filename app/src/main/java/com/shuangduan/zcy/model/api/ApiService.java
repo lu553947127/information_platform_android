@@ -1679,7 +1679,8 @@ public interface ApiService {
     @FormUrlEncoded
     @POST()
     Flowable<BaseResponse> setDefaultState(
-            @Field("id") int id
+            @Field("id") int id,
+            @Field("state") int state
     );
 
     //用户 --- 删除地址
@@ -1687,6 +1688,31 @@ public interface ApiService {
     @POST()
     Flowable<BaseResponse> deleteAddress(
             @Field("id") int id
+    );
+
+    //用户 --- 添加地址
+    @FormUrlEncoded
+    @POST()
+    Flowable<BaseResponse> newAddress(
+            @Field("user_id") int userId,
+            @Field("name") String name,
+            @Field("phone") String phone,
+            @Field("company") String company,
+            @Field("address") String address,
+            @Field("state") int state
+    );
+
+    //用户 --- 修改地址
+    @FormUrlEncoded
+    @POST()
+    Flowable<BaseResponse> editAddress(
+            @Field("user_id") int userId,
+            @Field("id") int id,
+            @Field("name") String name,
+            @Field("phone") String phone,
+            @Field("company") String company,
+            @Field("address") String address,
+            @Field("state") int state
     );
 
     //后台管理 --- 周转材料列表

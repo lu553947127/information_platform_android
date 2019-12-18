@@ -3,6 +3,7 @@ package com.shuangduan.zcy.view.mine.set;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,10 +16,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.LogUtils;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.MaterialPlaceOrderAdapter;
 import com.shuangduan.zcy.adapter.ReceivingAddressAdapter;
 import com.shuangduan.zcy.base.BaseActivity;
+import com.shuangduan.zcy.factory.EmptyViewFactory;
 import com.shuangduan.zcy.utils.DensityUtil;
 import com.shuangduan.zcy.vm.AddressVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
@@ -45,7 +48,7 @@ import butterknife.OnClick;
  * @UpdateRemark: 更新说明
  * @Version: 1.0
  */
-public class ReceivingAddressActivity extends BaseActivity implements ReceivingAddressAdapter.OnItemClickListener, OnItemMenuClickListener {
+public class ReceivingAddressActivity extends BaseActivity implements OnItemMenuClickListener, BaseQuickAdapter.OnItemChildClickListener {
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
     @BindView(R.id.toolbar)
@@ -53,9 +56,8 @@ public class ReceivingAddressActivity extends BaseActivity implements ReceivingA
     @BindView(R.id.swipe_recycler)
     SwipeRecyclerView swipeRecycler;
 
-    @BindView(R.id.constraint)
-    ConstraintLayout constraint;
-
+    @BindView(R.id.fl_empty)
+    FrameLayout flEmpty;
     @BindView(R.id.iv_icon)
     ImageView ivIcon;
     @BindView(R.id.tv_tip)
@@ -63,8 +65,8 @@ public class ReceivingAddressActivity extends BaseActivity implements ReceivingA
     @BindView(R.id.tv_goto)
     TextView tvGoto;
 
-    private AddressVm vm;
 
+    private AddressVm vm;
 
     //创建侧滑菜单
     private SwipeMenuCreator creator = (leftMenu, rightMenu, position) -> {
@@ -103,7 +105,6 @@ public class ReceivingAddressActivity extends BaseActivity implements ReceivingA
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(R.string.user_receiving_address);
 
-
         vm = ViewModelProviders.of(this).get(AddressVm.class);
 
         swipeRecycler.setLayoutManager(new LinearLayoutManager(this));
@@ -111,23 +112,27 @@ public class ReceivingAddressActivity extends BaseActivity implements ReceivingA
         swipeRecycler.setSwipeMenuCreator(creator);
         swipeRecycler.setOnItemMenuClickListener(this);
 
-
-        adapter = new ReceivingAddressAdapter(getApplicationContext(), null);
-
-        adapter.setOnItemClickListener(this);
-
+        adapter = new ReceivingAddressAdapter(R.layout.adapter_receiving_address_item, null);
+        adapter.setOnItemChildClickListener(this);
         swipeRecycler.setAdapter(adapter);
 
+        ivIcon.setImageResource(R.drawable.icon_address_empty);
+        tvTip.setText(R.string.address_empty_hint);
+        tvGoto.setText(R.string.go_setting);
+        tvGoto.setVisibility(View.VISIBLE);
+        flEmpty.setVisibility(View.VISIBLE);
 
         vm.addressLiveData.observe(this, item -> {
-            if (item.list == null && item.list.size() == 0) {
-                ivIcon.setImageResource(R.drawable.icon_address_empty);
-                tvTip.setText(R.string.address_empty_hint);
-                tvGoto.setText(R.string.go_setting);
-                tvGoto.setVisibility(View.VISIBLE);
-                constraint.setVisibility(View.VISIBLE);
-            }
             adapter.setNewData(item.list);
+        });
+
+        vm.defaultLiveData.observe(this, item -> {
+            adapter.getItem(vm.position).state = 1;
+            adapter.notifyItemChanged(vm.position, adapter.getItem(vm.position));
+        });
+
+        vm.deleteLiveData.observe(this, item -> {
+            adapter.remove(vm.position);
         });
 
 //        vm.addressList();
@@ -149,19 +154,7 @@ public class ReceivingAddressActivity extends BaseActivity implements ReceivingA
 
 
     @Override
-    public void onItemClick(View view, int position) {
-        switch (view.getId()) {
-            case R.id.iv_edit:
-                Bundle bundle = new Bundle();
-                bundle.putInt("type", 1);
-                ActivityUtils.startActivity(EditReceivingAddressActivity.class, bundle);
-                break;
-        }
-    }
-
-
-    @Override
-    public void onItemClick(SwipeMenuBridge menuBridge, int adapterPosition) {
+    public void onItemClick(SwipeMenuBridge menuBridge, int position) {
         switch (menuBridge.getPosition()) {
 //            case 0:
 //                vm.setDefaultState();
@@ -169,6 +162,18 @@ public class ReceivingAddressActivity extends BaseActivity implements ReceivingA
 //            case 1:
 //                vm.deleteAddress();
 //                break;
+        }
+    }
+
+
+    @Override
+    public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+        switch (view.getId()) {
+            case R.id.iv_edit:
+                Bundle bundle = new Bundle();
+                bundle.putInt("type", 1);
+                ActivityUtils.startActivity(bundle, EditReceivingAddressActivity.class);
+                break;
         }
     }
 }
