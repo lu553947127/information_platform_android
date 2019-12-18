@@ -18,12 +18,11 @@ import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.base.BaseActivity;
-import com.shuangduan.zcy.dialog.BaseDialog;
-import com.shuangduan.zcy.dialog.PhotoDialog;
+import com.shuangduan.zcy.dialog.BaseBottomSheetDialog;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.event.BankcardUpdateEvent;
 import com.shuangduan.zcy.utils.matisse.Glide4Engine;
-import com.shuangduan.zcy.utils.matisse.MatisseCamera;
+import com.shuangduan.zcy.view.photo.CameraActivity;
 import com.shuangduan.zcy.vm.AuthenticationVm;
 import com.shuangduan.zcy.vm.BankCardVm;
 import com.shuangduan.zcy.vm.PermissionVm;
@@ -50,7 +49,7 @@ import butterknife.OnClick;
  * @chang time
  * @class describe
  */
-public class BindBankCardActivity extends BaseActivity implements BaseDialog.PhotoCallBack {
+public class BindBankCardActivity extends BaseActivity {
 
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
@@ -93,8 +92,7 @@ public class BindBankCardActivity extends BaseActivity implements BaseDialog.Pho
         permissionVm = ViewModelProviders.of(this).get(PermissionVm.class);
         permissionVm.getLiveData().observe(this, integer -> {
             if (integer == PermissionVm.PERMISSION_CAMERA){
-                MatisseCamera.from(this)
-                        .forResult(PermissionVm.REQUEST_CODE_BANK_CARD, "com.shuangduan.zcy.fileprovider");
+                startActivityForResult(new Intent(this, CameraActivity.class), 100);
             }else if (integer == PermissionVm.PERMISSION_STORAGE){
                 Matisse.from(this)
                         .choose(MimeType.ofImage())
@@ -104,8 +102,7 @@ public class BindBankCardActivity extends BaseActivity implements BaseDialog.Pho
                         .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
                         .thumbnailScale(0.85f)
                         .theme(R.style.Matisse_Dracula)
-                        .captureStrategy(
-                                new CaptureStrategy(true, "com.shuangduan.zcy.fileprovider"))
+                        .captureStrategy(new CaptureStrategy(true, "com.shuangduan.zcy.fileprovider"))
                         .imageEngine(new Glide4Engine())
                         .forResult(PermissionVm.REQUEST_CODE_CHOOSE_BANK_CARD);
             }
@@ -171,9 +168,8 @@ public class BindBankCardActivity extends BaseActivity implements BaseDialog.Pho
                 bankCardVm.bankcardAdd(edtBankCardNumber.getText().toString(), edtBankAccount.getText().toString());
                 break;
             case R.id.iv_camera:
-                addDialog(new PhotoDialog(this)
-                        .setPhotoCallBack(this)
-                        .showDialog());
+                BaseBottomSheetDialog baseBottomSheetDialog =new BaseBottomSheetDialog(this,rxPermissions,permissionVm);
+                baseBottomSheetDialog.showPhotoDialog();
                 break;
         }
     }
@@ -186,19 +182,8 @@ public class BindBankCardActivity extends BaseActivity implements BaseDialog.Pho
             uploadPhotoVm.upload(mSelected.get(0));
         }
 
-        if (requestCode == PermissionVm.REQUEST_CODE_BANK_CARD && resultCode == RESULT_OK) {
-            uploadPhotoVm.upload(MatisseCamera.obtainPathResult());
+        if (resultCode == 101) {
+            uploadPhotoVm.upload(data.getStringExtra("path"));
         }
     }
-
-    @Override
-    public void camera() {
-        permissionVm.getPermissionCamera(rxPermissions);
-    }
-
-    @Override
-    public void album() {
-        permissionVm.getPermissionAlbum(rxPermissions);
-    }
-
 }

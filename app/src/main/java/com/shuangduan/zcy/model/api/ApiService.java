@@ -1638,9 +1638,18 @@ public interface ApiService {
     Flowable<BaseResponse<WXLoginBindingBean>> getWeChatBinding(
             @Field("unionid") String unionid,
             @Field("openid") String openid,
+            @Field("headimgurl") String headimgurl,
+            @Field("nickname") String nickname,
             @Field("tel") String tel,
             @Field("code") String code,
             @Field("invite_tel") String invite_tel
+    );
+
+    //微信登录验证(获取unionid/openid)
+    @FormUrlEncoded
+    @POST("api/passport/wxLogin")
+    Flowable<BaseResponse<WXLoginVerificationBean>> wxLogin(
+            @Field("code") String code
     );
 
     //我的工程 --- 工程信息概况

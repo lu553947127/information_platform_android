@@ -37,6 +37,7 @@ import com.shuangduan.zcy.callback.TimeOutCallback;
 import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
 import com.shuangduan.zcy.rongyun.provider.CustomPrivateConversationProvider;
 import com.shuangduan.zcy.utils.LoginUtils;
+import com.shuangduan.zcy.utils.matisse.MatisseCamera;
 import com.shuangduan.zcy.view.projectinfo.ProjectInfoActivity;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -119,7 +120,7 @@ public class AppConfig {
         LogUtils.getConfig().setGlobalTag(context.getString(R.string.app_name)).setLogSwitch(BuildConfig.IS_SHOW_LOG);
         ToastUtils.setGravity(Gravity.BOTTOM, 0, ConvertUtils.dp2px(100));
         ToastUtils.setMsgTextSize(13);
-        if (Build.VERSION.SDK_INT >= 29){
+        if (MatisseCamera.isAndroidQ) {
             ToastUtils.setBgResource(R.drawable.shape_bg_toast_q);
         }else {
             ToastUtils.setBgResource(R.drawable.shape_bg_toast);

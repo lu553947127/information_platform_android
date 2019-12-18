@@ -75,9 +75,11 @@ public class WeChatBindingActivity extends BaseActivity {
             if (aLong == -1) {
                 //重新获取
                 tvSendVerificationCode.setText(getString(R.string.send_again));
+                tvSendVerificationCode.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 tvSendVerificationCode.setClickable(true);
             }else {
                 tvSendVerificationCode.setText(String.format(getString(R.string.format_get_verification_code_again), aLong));
+                tvSendVerificationCode.setBackgroundColor(getResources().getColor(R.color.color_DDDDDD));
                 tvSendVerificationCode.setClickable(false);
             }
         });
@@ -119,8 +121,13 @@ public class WeChatBindingActivity extends BaseActivity {
             return;
         }
         //绑定微信
-        loginVm.getWeChatBinding(getIntent().getStringExtra("union_id"),getIntent().getStringExtra("open_id")
-                ,edtMobile.getText().toString(), edtVerificationCode.getText().toString(), Objects.requireNonNull(edtMobileInvite.getText()).toString());
+        loginVm.getWeChatBinding(getIntent().getStringExtra("union_id")
+                ,getIntent().getStringExtra("open_id")
+                ,getIntent().getStringExtra("headimgurl")
+                ,getIntent().getStringExtra("nickname")
+                ,Objects.requireNonNull(edtMobile.getText()).toString()
+                ,Objects.requireNonNull(edtVerificationCode.getText()).toString()
+                ,Objects.requireNonNull(edtMobileInvite.getText()).toString());
         //绑定微信返回结果
         loginVm.wxLoginBindingBeanMutableLiveData.observe(this,wxLoginBindingBean -> {
 

@@ -21,6 +21,10 @@ public class WXLoginVerificationBean {
     private int info_status;
     private int pay_status;
     private int card_status;
+    private String unionid;
+    private String openid;
+    private String headimgurl;
+    private String nickname;
 
     public int getWechat_status() {
         return wechat_status;
@@ -76,5 +80,37 @@ public class WXLoginVerificationBean {
 
     public void setCard_status(int card_status) {
         this.card_status = card_status;
+    }
+
+    public String getUnionid() {
+        return unionid;
+    }
+
+    public void setUnionid(String unionid) {
+        this.unionid = unionid;
+    }
+
+    public String getOpenid() {
+        return openid;
+    }
+
+    public void setOpenid(String openid) {
+        this.openid = openid;
+    }
+
+    public String getHeadimgurl() {
+        return headimgurl;
+    }
+
+    public void setHeadimgurl(String headimgurl) {
+        this.headimgurl = headimgurl;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 }

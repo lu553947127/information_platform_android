@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -23,9 +24,8 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
-import com.shuangduan.zcy.dialog.BaseDialog;
+import com.shuangduan.zcy.dialog.BaseBottomSheetDialog;
 import com.shuangduan.zcy.dialog.BusinessExpDialog;
-import com.shuangduan.zcy.dialog.PhotoDialog;
 import com.shuangduan.zcy.dialog.SexDialog;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.event.CompanyEvent;
@@ -36,6 +36,7 @@ import com.shuangduan.zcy.model.event.OfficeEvent;
 import com.shuangduan.zcy.model.event.ProductionEvent;
 import com.shuangduan.zcy.model.event.UserNameEvent;
 import com.shuangduan.zcy.rongyun.view.IMAddFriendActivity;
+import com.shuangduan.zcy.utils.image.CompressUtils;
 import com.shuangduan.zcy.utils.image.ImageConfig;
 import com.shuangduan.zcy.utils.image.ImageLoader;
 import com.shuangduan.zcy.utils.matisse.Glide4Engine;
@@ -68,7 +69,7 @@ import io.rong.imkit.RongIM;
  * @chang time
  * @class describe
  */
-public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCallBack {
+public class UserInfoActivity extends BaseActivity {
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
     @BindView(R.id.toolbar)
@@ -256,8 +257,7 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
                         .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
                         .thumbnailScale(0.85f)
                         .theme(R.style.Matisse_Dracula)
-                        .captureStrategy(
-                                new CaptureStrategy(true, "com.shuangduan.zcy.fileprovider"))
+                        .captureStrategy(new CaptureStrategy(true, "com.shuangduan.zcy.fileprovider"))
                         .imageEngine(new Glide4Engine())
                         .forResult(PermissionVm.REQUEST_CODE_CHOOSE_HEAD);
             }
@@ -296,9 +296,8 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
                 finish();
                 break;
             case R.id.iv_user://更换头像
-                new PhotoDialog(this)
-                        .setPhotoCallBack(this)
-                        .showDialog();
+                BaseBottomSheetDialog baseBottomSheetDialog =new BaseBottomSheetDialog(this,rxPermissions,permissionVm);
+                baseBottomSheetDialog.showPhotoDialog();
                 break;
             case R.id.fl_name://修改姓名
                 ActivityUtils.startActivity(UpdateNameActivity.class);
@@ -380,37 +379,23 @@ public class UserInfoActivity extends BaseActivity implements BaseDialog.PhotoCa
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PermissionVm.REQUEST_CODE_CHOOSE_HEAD && resultCode == RESULT_OK) {
 
-//            if (MatisseCamera.isAndroidQ) {
-//                LogUtils.e(Matisse.obtainResult(data).get(0));
-//                uploadPhotoVm.upload(CompressUtils.getRealFilePath(this,Matisse.obtainResult(data).get(0)));
-//            }else {
-//                LogUtils.e(Matisse.obtainPathResult(data).get(0));
-//                uploadPhotoVm.upload(Matisse.obtainPathResult(data).get(0));
-//            }
-
-            uploadPhotoVm.upload(Matisse.obtainPathResult(data).get(0));
+            if (MatisseCamera.isAndroidQ) {
+                LogUtils.e(Matisse.obtainResult(data).get(0));
+                uploadPhotoVm.upload(CompressUtils.getRealFilePath(this,Matisse.obtainResult(data).get(0)));
+            }else {
+                LogUtils.e(Matisse.obtainPathResult(data).get(0));
+                uploadPhotoVm.upload(Matisse.obtainPathResult(data).get(0));
+            }
         }
 
         if (requestCode == PermissionVm.REQUEST_CODE_HEAD && resultCode == RESULT_OK) {
-//            if (MatisseCamera.isAndroidQ) {
-//                LogUtils.e(MatisseCamera.obtainUriResult());
-//                uploadPhotoVm.upload(CompressUtils.getRealFilePath(this,MatisseCamera.obtainUriResult()));
-//            } else {
-//                uploadPhotoVm.upload(MatisseCamera.obtainPathResult());
-//            }
-
-            uploadPhotoVm.upload(MatisseCamera.obtainPathResult());
+            if (MatisseCamera.isAndroidQ) {
+                LogUtils.e(MatisseCamera.obtainUriResult());
+                uploadPhotoVm.upload(CompressUtils.getRealFilePath(this,MatisseCamera.obtainUriResult()));
+            } else {
+                uploadPhotoVm.upload(MatisseCamera.obtainPathResult());
+            }
         }
-    }
-
-    @Override
-    public void camera() {
-        permissionVm.getPermissionCamera(rxPermissions);
-    }
-
-    @Override
-    public void album() {
-        permissionVm.getPermissionAlbum(rxPermissions);
     }
 
     @Subscribe

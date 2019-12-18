@@ -76,9 +76,11 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                     case 1://微信绑定/登录
                         String code = ((SendAuth.Resp) baseResp).code;
                         String state = ((SendAuth.Resp) baseResp).state;
+                        LogUtils.i(code);
                         switch (state){
                             case "we_chat_login"://微信登录
-                                getWeChatLogin(code);
+                                EventBus.getDefault().post(new WxLoginEvent(code));
+                                finish();
                                 break;
                             case "we_chat_set"://微信绑定
                                 ToastUtils.showShort("绑定微信开始了");

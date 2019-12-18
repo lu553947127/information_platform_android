@@ -52,7 +52,12 @@ public class LoginRepository extends BaseRepository {
     }
 
     //微信登录验证
-    public void getWeChatBinding(MutableLiveData<WXLoginBindingBean> liveData, MutableLiveData<String> pageStateLiveData, String unionid, String openid, String tel, String code, String invite_tel){
-        request(apiService.getWeChatBinding(unionid,openid,tel,code,invite_tel)).setData(liveData).setPageState(pageStateLiveData).send();
+    public void getWeChatBinding(MutableLiveData<WXLoginBindingBean> liveData, MutableLiveData<String> pageStateLiveData, String unionid, String openid,String headimgurl,String nickname, String tel, String code, String invite_tel){
+        request(apiService.getWeChatBinding(unionid,openid,headimgurl,nickname,tel,code,invite_tel)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    //微信登录验证
+    public void wxLogin(MutableLiveData<WXLoginVerificationBean> liveData, MutableLiveData<String> pageStateLiveData, String code){
+        request(apiService.wxLogin(code)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 }

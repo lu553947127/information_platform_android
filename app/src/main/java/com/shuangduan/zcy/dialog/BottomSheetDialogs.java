@@ -13,6 +13,8 @@ import androidx.annotation.StyleRes;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.shuangduan.zcy.R;
 
+import java.util.Objects;
+
 /**
  * @ProjectName: information_platform_android
  * @Package: com.shuangduan.zcy.dialog
@@ -44,7 +46,7 @@ public class BottomSheetDialogs extends BottomSheetDialog {
         int screenHeight = getScreenHeight((Activity) context)+ context.getResources().getDimensionPixelSize(R.dimen.dp_55);
         int statusBarHeight = getStatusBarHeight(getContext());
         int dialogHeight = screenHeight - statusBarHeight;
-        getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, dialogHeight == 0 ? ViewGroup.LayoutParams.MATCH_PARENT : dialogHeight);
+        Objects.requireNonNull(getWindow()).setLayout(ViewGroup.LayoutParams.MATCH_PARENT, dialogHeight == 0 ? ViewGroup.LayoutParams.MATCH_PARENT : dialogHeight);
     }
 
     private static int getScreenHeight(Activity activity) {

@@ -16,13 +16,12 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
-import com.shuangduan.zcy.dialog.BaseDialog;
-import com.shuangduan.zcy.dialog.PhotoDialog;
+import com.shuangduan.zcy.dialog.BaseBottomSheetDialog;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.utils.image.ImageConfig;
 import com.shuangduan.zcy.utils.image.ImageLoader;
 import com.shuangduan.zcy.utils.matisse.Glide4Engine;
-import com.shuangduan.zcy.utils.matisse.MatisseCamera;
+import com.shuangduan.zcy.view.photo.CameraActivity;
 import com.shuangduan.zcy.vm.AuthenticationVm;
 import com.shuangduan.zcy.vm.PermissionVm;
 import com.shuangduan.zcy.vm.UploadPhotoVm;
@@ -45,7 +44,7 @@ import butterknife.OnClick;
  * @chang time
  * @class describe
  */
-public class AuthenticationActivity extends BaseActivity implements BaseDialog.PhotoCallBack {
+public class AuthenticationActivity extends BaseActivity{
 
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
@@ -62,12 +61,11 @@ public class AuthenticationActivity extends BaseActivity implements BaseDialog.P
     @BindView(R.id.tv_id_card_negative)
     TextView tvIdCardNegative;
 
-    private String type,toast_type;
+    private String type;
     private PermissionVm permissionVm;
     private RxPermissions rxPermissions;
     private UploadPhotoVm uploadPhotoVm;
     private AuthenticationVm authenticationVm;
-    private BaseDialog photoDialog;
 
     @Override
     protected int initLayoutRes() {
@@ -84,7 +82,7 @@ public class AuthenticationActivity extends BaseActivity implements BaseDialog.P
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarRight.setText(getString(R.string.save));
         type = getIntent().getStringExtra(CustomConfig.UPLOAD_TYPE);
-        toast_type = getIntent().getStringExtra(CustomConfig.AUTHENTICATION_TYPE);
+        String toast_type = getIntent().getStringExtra(CustomConfig.AUTHENTICATION_TYPE);
         //判断当前是否为身份证上传或为名片上传
         switch (type){
             case CustomConfig.uploadTypeIdCard://身份认证
@@ -137,8 +135,7 @@ public class AuthenticationActivity extends BaseActivity implements BaseDialog.P
         permissionVm = ViewModelProviders.of(this).get(PermissionVm.class);
         permissionVm.getLiveData().observe(this, integer -> {
             if (integer == PermissionVm.PERMISSION_CAMERA){
-                MatisseCamera.from(this)
-                        .forResult(PermissionVm.REQUEST_CODE_AUTHENTICATION, "com.shuangduan.zcy.fileprovider");
+                startActivityForResult(new Intent(this, CameraActivity.class), 100);
             }else if (integer == PermissionVm.PERMISSION_STORAGE){
                 Matisse.from(this)
                         .choose(MimeType.ofImage())
@@ -148,8 +145,7 @@ public class AuthenticationActivity extends BaseActivity implements BaseDialog.P
                         .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
                         .thumbnailScale(0.85f)
                         .theme(R.style.Matisse_Dracula)
-                        .captureStrategy(
-                                new CaptureStrategy(true, "com.shuangduan.zcy.fileprovider"))
+                        .captureStrategy(new CaptureStrategy(true, "com.shuangduan.zcy.fileprovider"))
                         .imageEngine(new Glide4Engine())
                         .forResult(PermissionVm.REQUEST_CODE_CHOOSE_AUTHENTICATION);
             }
@@ -199,6 +195,7 @@ public class AuthenticationActivity extends BaseActivity implements BaseDialog.P
 
     @OnClick({R.id.iv_bar_back, R.id.tv_bar_right, R.id.iv_id_card_positive, R.id.iv_id_card_negative})
     void onClick(View view){
+        BaseBottomSheetDialog baseBottomSheetDialog =new BaseBottomSheetDialog(this,rxPermissions,permissionVm);
         switch (view.getId()){
             case R.id.iv_bar_back:
                 finish();
@@ -219,15 +216,11 @@ public class AuthenticationActivity extends BaseActivity implements BaseDialog.P
                 break;
             case R.id.iv_id_card_positive:
                 uploadPhotoVm.type = UploadPhotoVm.ID_CARD_POSITIVE;
-                photoDialog = new PhotoDialog(this)
-                        .setPhotoCallBack(this)
-                        .showDialog();
+                baseBottomSheetDialog.showPhotoDialog();
                 break;
             case R.id.iv_id_card_negative:
                 uploadPhotoVm.type = UploadPhotoVm.ID_CARD_NEGATIVE;
-                photoDialog = new PhotoDialog(this)
-                        .setPhotoCallBack(this)
-                        .showDialog();
+                baseBottomSheetDialog.showPhotoDialog();
                 break;
         }
     }
@@ -240,24 +233,8 @@ public class AuthenticationActivity extends BaseActivity implements BaseDialog.P
             uploadPhotoVm.upload(mSelected.get(0));
         }
 
-        if (requestCode == PermissionVm.REQUEST_CODE_AUTHENTICATION && resultCode == RESULT_OK) {
-            uploadPhotoVm.upload(MatisseCamera.obtainPathResult());
+        if (resultCode == 101) {
+            uploadPhotoVm.upload(data.getStringExtra("path"));
         }
-    }
-
-    @Override
-    public void camera() {
-        permissionVm.getPermissionCamera(rxPermissions);
-    }
-
-    @Override
-    public void album() {
-        permissionVm.getPermissionAlbum(rxPermissions);
-    }
-
-    @Override
-    protected void onDestroy() {
-        if (photoDialog != null) photoDialog.dismiss();
-        super.onDestroy();
     }
 }

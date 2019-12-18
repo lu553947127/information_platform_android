@@ -109,13 +109,13 @@ public class LoginVm extends BaseViewModel {
         new LoginRepository().setPassword(resetPwdLiveData, pageStateLiveData, tel, code, pwd);
     }
 
-    //微信登录验证
-    public void getWeChatVerification(String unionid, String openid) {
-        new LoginRepository().getWeChatVerification(wxLoginVerificationBeanMutableLiveData, unionid, openid);
+    //微信登录绑定
+    public void getWeChatBinding(String unionid, String openid,String headimgurl,String nickname, String tel, String code, String invite_tel) {
+        new LoginRepository().getWeChatBinding(wxLoginBindingBeanMutableLiveData, pageStateLiveData, unionid, openid,headimgurl,nickname, tel, code, invite_tel);
     }
 
-    //微信登录绑定
-    public void getWeChatBinding(String unionid, String openid, String tel, String code, String invite_tel) {
-        new LoginRepository().getWeChatBinding(wxLoginBindingBeanMutableLiveData, pageStateLiveData, unionid, openid, tel, code, invite_tel);
+    //微信登录验证(获取unionid/openid)
+    public void wxLogin(String code) {
+        new LoginRepository().wxLogin(wxLoginVerificationBeanMutableLiveData,pageStateLiveData, code);
     }
 }

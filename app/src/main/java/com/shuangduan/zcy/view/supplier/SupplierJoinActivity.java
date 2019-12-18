@@ -8,7 +8,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,17 +24,15 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
+import com.shuangduan.zcy.dialog.BaseBottomSheetDialog;
 import com.shuangduan.zcy.dialog.BaseDialog;
-import com.shuangduan.zcy.dialog.BottomSheetDialogs;
 import com.shuangduan.zcy.dialog.CustomDialog;
-import com.shuangduan.zcy.dialog.PhotoDialog;
 import com.shuangduan.zcy.dialog.ScaleDialog;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.event.AddressEvent;
 import com.shuangduan.zcy.model.event.MultiAreaEvent;
 import com.shuangduan.zcy.utils.image.PictureEnlargeUtils;
 import com.shuangduan.zcy.utils.matisse.Glide4Engine;
-import com.shuangduan.zcy.utils.matisse.MatisseCamera;
 import com.shuangduan.zcy.view.MultiAreaActivity;
 import com.shuangduan.zcy.view.photo.CameraActivity;
 import com.shuangduan.zcy.vm.PermissionVm;
@@ -66,7 +63,8 @@ import butterknife.OnClick;
  * @chang time
  * @class describe
  */
-public class SupplierJoinActivity extends BaseActivity implements BaseDialog.PhotoCallBack {
+@SuppressLint("SetTextI18n")
+public class SupplierJoinActivity extends BaseActivity {
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
     @BindView(R.id.toolbar)
@@ -107,8 +105,8 @@ public class SupplierJoinActivity extends BaseActivity implements BaseDialog.Pho
 
     public static final int PHOTO = 222;
     private int scale = 0;
-    private String type, authorization, logo;
-    private BottomSheetDialogs btn_dialog;
+    private String type, authorization,logo;
+    private BaseBottomSheetDialog baseBottomSheetDialog;
 
     @Override
     protected int initLayoutRes() {
@@ -144,6 +142,8 @@ public class SupplierJoinActivity extends BaseActivity implements BaseDialog.Pho
         tvAuthorization.setText(Html.fromHtml(str));
         initPhoto();
         photoSet();
+
+        baseBottomSheetDialog =new BaseBottomSheetDialog(this,rxPermissions,permissionVm);
     }
 
     private void initPhoto() {
@@ -151,48 +151,19 @@ public class SupplierJoinActivity extends BaseActivity implements BaseDialog.Pho
         permissionVm = ViewModelProviders.of(this).get(PermissionVm.class);
         permissionVm.getLiveData().observe(this, integer -> {
             if (integer == PermissionVm.PERMISSION_CAMERA) {
-                switch (type){
-                    case "images"://营业执照
-                        MatisseCamera.from(this)
-                                .forResult(PermissionVm.REQUEST_CODE_HEAD, "com.shuangduan.zcy.fileprovider");
-                        break;
-                    case "authorization"://授权申请
-                    case "logo"://公司logo
-                        startActivityForResult(new Intent(this, CameraActivity.class), 100);
-                        btn_dialog.cancel();
-                        break;
-                }
+                startActivityForResult(new Intent(this, CameraActivity.class), 100);
             } else if (integer == PermissionVm.PERMISSION_STORAGE) {
-                switch (type){
-                    case "images"://营业执照
-                        Matisse.from(this)
-                                .choose(MimeType.ofImage())
-                                .showSingleMediaType(true)
-                                .countable(true)
-                                .maxSelectable(1)
-                                .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
-                                .thumbnailScale(0.85f)
-                                .theme(R.style.Matisse_Dracula)
-                                .captureStrategy(new CaptureStrategy(true, "com.shuangduan.zcy.fileprovider"))
-                                .imageEngine(new Glide4Engine())
-                                .forResult(PermissionVm.REQUEST_CODE_CHOOSE_HEAD);
-                        break;
-                    case "authorization"://授权申请
-                    case "logo"://公司logo
-                        Matisse.from(this)
-                                .choose(MimeType.ofImage())
-                                .showSingleMediaType(true)
-                                .countable(true)
-                                .maxSelectable(1)
-                                .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
-                                .thumbnailScale(0.85f)
-                                .theme(R.style.Matisse_Dracula)
-                                .captureStrategy(new CaptureStrategy(true, "com.shuangduan.zcy.fileprovider"))
-                                .imageEngine(new Glide4Engine())
-                                .forResult(PHOTO);
-                        btn_dialog.cancel();
-                        break;
-                }
+                Matisse.from(this)
+                        .choose(MimeType.ofImage())
+                        .showSingleMediaType(true)
+                        .countable(true)
+                        .maxSelectable(1)
+                        .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
+                        .thumbnailScale(0.85f)
+                        .theme(R.style.Matisse_Dracula)
+                        .captureStrategy(new CaptureStrategy(true, "com.shuangduan.zcy.fileprovider"))
+                        .imageEngine(new Glide4Engine())
+                        .forResult(PHOTO);
             }
         });
         uploadPhotoVm = ViewModelProviders.of(this).get(UploadPhotoVm.class);
@@ -230,9 +201,8 @@ public class SupplierJoinActivity extends BaseActivity implements BaseDialog.Pho
         picContentView.setListener(new PicContentView.OnClickListener() {
             @Override
             public void add() {
-                new PhotoDialog(SupplierJoinActivity.this)
-                        .setPhotoCallBack(SupplierJoinActivity.this)
-                        .showDialog();
+                type = "images";
+                baseBottomSheetDialog.showPhotoDialog();
             }
 
             @Override
@@ -266,33 +236,17 @@ public class SupplierJoinActivity extends BaseActivity implements BaseDialog.Pho
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         LogUtils.i(requestCode, resultCode);
-        if (requestCode == PermissionVm.REQUEST_CODE_CHOOSE_HEAD && resultCode == RESULT_OK) {
-            List<Uri> mSelected = Matisse.obtainResult(data);
-            LogUtils.i(mSelected.get(0), Matisse.obtainPathResult(data).get(0), Uri.parse(Matisse.obtainPathResult(data).get(0)));
-            //设置给图片盛放控件
-            List<PicContentView.PicContentBean> list = new ArrayList<>();
-            for (Uri image : mSelected) {
-                list.add(new PicContentView.PicContentBean(image, null, 0));
-            }
-            picContentView.insert(list);
-            uploadPhotoVm.upload(Matisse.obtainPathResult(data).get(0));
-        }
-
-        if (requestCode == PermissionVm.REQUEST_CODE_HEAD && resultCode == RESULT_OK) {
-            //设置给图片盛放控件
-            List<PicContentView.PicContentBean> list = new ArrayList<>();
-            list.add(new PicContentView.PicContentBean(Uri.fromFile(new File(MatisseCamera.obtainPathResult())), null, 0));
-            picContentView.insert(list);
-            uploadPhotoVm.upload(MatisseCamera.obtainPathResult());
-        }
 
         // 从相机返回的数据
         if (resultCode == 101) {
             String path = data.getStringExtra("path");
-
             LogUtils.e(path);
             switch (type){
                 case "images"://营业执照
+                    List<PicContentView.PicContentBean> list = new ArrayList<>();
+                    list.add(new PicContentView.PicContentBean(Uri.fromFile(new File(path)), null, 0));
+                    picContentView.insert(list);
+                    uploadPhotoVm.upload(path);
                     break;
                 case "authorization"://授权申请
                     ivAuthorization.setImageBitmap(BitmapFactory.decodeFile(path));
@@ -313,6 +267,15 @@ public class SupplierJoinActivity extends BaseActivity implements BaseDialog.Pho
             LogUtils.i(Matisse.obtainPathResult(data).get(0));
             switch (type){
                 case "images"://营业执照
+                    List<Uri> mSelected = Matisse.obtainResult(data);
+                    LogUtils.i(mSelected.get(0), Matisse.obtainPathResult(data).get(0), Uri.parse(Matisse.obtainPathResult(data).get(0)));
+                    //设置给图片盛放控件
+                    List<PicContentView.PicContentBean> list = new ArrayList<>();
+                    for (Uri image : mSelected) {
+                        list.add(new PicContentView.PicContentBean(image, null, 0));
+                    }
+                    picContentView.insert(list);
+                    uploadPhotoVm.upload(Matisse.obtainPathResult(data).get(0));
                     break;
                 case "authorization"://授权申请
                     ivAuthorization.setImageBitmap(BitmapFactory.decodeFile(Matisse.obtainPathResult(data).get(0)));
@@ -326,19 +289,6 @@ public class SupplierJoinActivity extends BaseActivity implements BaseDialog.Pho
         }
     }
 
-    @Override
-    public void camera() {
-        type = "images";
-        permissionVm.getPermissionCamera(rxPermissions);
-    }
-
-    @Override
-    public void album() {
-        type = "images";
-        permissionVm.getPermissionAlbum(rxPermissions);
-    }
-
-    @SuppressLint("SetTextI18n")
     @OnClick({R.id.iv_bar_back, R.id.tv_confirm, R.id.tv_scale, R.id.tv_service_area, R.id.iv_authorization, R.id.tv_authorization, R.id.iv_logo})
     void onClick(View v) {
         switch (v.getId()) {
@@ -360,11 +310,11 @@ public class SupplierJoinActivity extends BaseActivity implements BaseDialog.Pho
                 break;
             case R.id.iv_authorization:
                 type = "authorization";
-                getUploadPicture();
+                baseBottomSheetDialog.showPhotoDialog();
                 break;
             case R.id.iv_logo:
                 type = "logo";
-                getUploadPicture();
+                baseBottomSheetDialog.showPhotoDialog();
                 break;
             case R.id.tv_authorization:
                 new CustomDialog(this)
@@ -390,7 +340,6 @@ public class SupplierJoinActivity extends BaseActivity implements BaseDialog.Pho
         }
     }
 
-    @SuppressLint("SetTextI18n")
     @Subscribe
     public void onEventAddressEvent(AddressEvent event) {
         tvScale.setText(event.getProvince() + " " + event.getCity());
@@ -402,29 +351,5 @@ public class SupplierJoinActivity extends BaseActivity implements BaseDialog.Pho
     public void onEventServiceCity(MultiAreaEvent event) {
         supplierVm.serviceArea.postValue(event);
         tvServiceArea.setText(event.getStringResult());
-    }
-
-    //上传图片底部弹出框
-    @SuppressLint("RestrictedApi")
-    private void getUploadPicture() {
-        //底部滑动对话框
-        btn_dialog = new BottomSheetDialogs(this);
-        //设置自定view
-        View dialog_view = this.getLayoutInflater().inflate(R.layout.dialog_photo, null);
-        //把布局添加进去
-        btn_dialog.setContentView(dialog_view);
-        //去除系统默认的背景色
-        try {
-            // hack bg color of the BottomSheetDialog
-            ViewGroup parent = (ViewGroup) dialog_view.getParent();
-            parent.setBackgroundResource(android.R.color.transparent);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        ((ViewGroup.MarginLayoutParams) dialog_view.findViewById(R.id.tv_cancel).getLayoutParams()).bottomMargin = 60;
-        dialog_view.findViewById(R.id.tv_cancel).setOnClickListener(view -> btn_dialog.cancel());
-        dialog_view.findViewById(R.id.tv_photo).setOnClickListener(view -> permissionVm.getPermissionCamera(rxPermissions));
-        dialog_view.findViewById(R.id.tv_select_pic).setOnClickListener(view -> permissionVm.getPermissionAlbum(rxPermissions));
-        btn_dialog.show();
     }
 }

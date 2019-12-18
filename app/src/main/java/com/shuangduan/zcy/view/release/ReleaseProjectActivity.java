@@ -34,9 +34,8 @@ import com.shuangduan.zcy.adapter.ReleaseContactAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
-import com.shuangduan.zcy.dialog.BaseDialog;
+import com.shuangduan.zcy.dialog.BaseBottomSheetDialog;
 import com.shuangduan.zcy.dialog.BottomSheetDialogs;
-import com.shuangduan.zcy.dialog.PhotoDialog;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.ContactBean;
 import com.shuangduan.zcy.model.event.AddressEvent;
@@ -49,8 +48,8 @@ import com.shuangduan.zcy.utils.AndroidBug5497Workaround;
 import com.shuangduan.zcy.utils.KeyboardUtil;
 import com.shuangduan.zcy.utils.image.PictureEnlargeUtils;
 import com.shuangduan.zcy.utils.matisse.Glide4Engine;
-import com.shuangduan.zcy.utils.matisse.MatisseCamera;
 import com.shuangduan.zcy.view.mine.user.AuthenticationActivity;
+import com.shuangduan.zcy.view.photo.CameraActivity;
 import com.shuangduan.zcy.vm.PermissionVm;
 import com.shuangduan.zcy.vm.ReleaseVm;
 import com.shuangduan.zcy.vm.UploadPhotoVm;
@@ -86,7 +85,7 @@ import butterknife.OnClick;
  * @chang time
  * @class describe
  */
-public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.PhotoCallBack {
+public class ReleaseProjectActivity extends BaseActivity {
 
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
@@ -312,9 +311,8 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
         picContentView.setListener(new PicContentView.OnClickListener() {
             @Override
             public void add() {
-                new PhotoDialog(ReleaseProjectActivity.this)
-                        .setPhotoCallBack(ReleaseProjectActivity.this)
-                        .showDialog();
+                BaseBottomSheetDialog baseBottomSheetDialog =new BaseBottomSheetDialog(ReleaseProjectActivity.this,rxPermissions,permissionVm);
+                baseBottomSheetDialog.showPhotoDialog();
             }
 
             @Override
@@ -346,8 +344,7 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
         permissionVm = ViewModelProviders.of(this).get(PermissionVm.class);
         permissionVm.getLiveData().observe(this, integer -> {
             if (integer == PermissionVm.PERMISSION_CAMERA) {
-                MatisseCamera.from(this)
-                        .forResult(PermissionVm.REQUEST_CODE_HEAD, "com.shuangduan.zcy.fileprovider");
+                startActivityForResult(new Intent(this, CameraActivity.class), 100);
             } else if (integer == PermissionVm.PERMISSION_STORAGE) {
                 Matisse.from(this)
                         .choose(MimeType.ofImage())
@@ -357,8 +354,7 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
                         .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
                         .thumbnailScale(0.85f)
                         .theme(R.style.Matisse_Dracula)
-                        .captureStrategy(
-                                new CaptureStrategy(true, "com.shuangduan.zcy.fileprovider"))
+                        .captureStrategy(new CaptureStrategy(true, "com.shuangduan.zcy.fileprovider"))
                         .imageEngine(new Glide4Engine())
                         .forResult(PermissionVm.REQUEST_CODE_CHOOSE_HEAD);
             }
@@ -395,23 +391,14 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
             uploadPhotoVm.upload(Matisse.obtainPathResult(data).get(0));
         }
 
-        if (requestCode == PermissionVm.REQUEST_CODE_HEAD && resultCode == RESULT_OK) {
+        if (resultCode == 101) {
+            String path = data.getStringExtra("path");
             //设置给图片盛放控件
             List<PicContentView.PicContentBean> list = new ArrayList<>();
-            list.add(new PicContentView.PicContentBean(Uri.fromFile(new File(MatisseCamera.obtainPathResult())), null, 0));
+            list.add(new PicContentView.PicContentBean(Uri.fromFile(new File(path)), null, 0));
             picContentView.insert(list);
-            uploadPhotoVm.upload(MatisseCamera.obtainPathResult());
+            uploadPhotoVm.upload(path);
         }
-    }
-
-    @Override
-    public void camera() {
-        permissionVm.getPermissionCamera(rxPermissions);
-    }
-
-    @Override
-    public void album() {
-        permissionVm.getPermissionAlbum(rxPermissions);
     }
 
     @OnClick({R.id.iv_bar_back, R.id.tv_release, R.id.tv_project_type, R.id.tv_project_address, R.id.tv_project_stage, R.id.tv_project_types, R.id.tv_time_start, R.id.tv_time_end, R.id.tv_add, R.id.tv_project_name, R.id.tv_authentication})
@@ -634,7 +621,6 @@ public class ReleaseProjectActivity extends BaseActivity implements BaseDialog.P
     //底部弹出框
     private TextView tv_project;
     private TextView tv_locus;
-
     @SuppressLint({"RestrictedApi", "InflateParams"})
     private void getBottomWindow() {
         //底部滑动对话框

@@ -95,7 +95,6 @@ public class LoginActivity extends BaseActivity {
     private int loginStyle = LOGIN;//默认显示登录页面
     private int isAccount = 0;
     private SharesUtils sharesUtils;
-    private String openid, unionid;
     private int isAgreement = 1;
 
     @Override
@@ -195,8 +194,10 @@ public class LoginActivity extends BaseActivity {
                 }
             } else {
                 Bundle bundle = new Bundle();
-                bundle.putString("open_id", openid);
-                bundle.putString("union_id", unionid);
+                bundle.putString("open_id", wxLoginVerificationBean.getOpenid());
+                bundle.putString("union_id", wxLoginVerificationBean.getUnionid());
+                bundle.putString("headimgurl", wxLoginVerificationBean.getHeadimgurl());
+                bundle.putString("nickname", wxLoginVerificationBean.getNickname());
                 ActivityUtils.startActivity(bundle, WeChatBindingActivity.class);
             }
         });
@@ -426,9 +427,6 @@ public class LoginActivity extends BaseActivity {
 
     @Subscribe
     public void onEventWxLogin(WxLoginEvent event) {
-        openid = event.getOpenId();
-        unionid = event.getUnionId();
-        
-        loginVm.getWeChatVerification(unionid, openid);
+        loginVm.wxLogin(event.getCode());
     }
 }

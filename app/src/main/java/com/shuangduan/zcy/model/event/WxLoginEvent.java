@@ -16,10 +16,15 @@ public class WxLoginEvent {
 
     private String unionid;
     private String openid;
+    private String code;
 
     public WxLoginEvent(String unionid, String openid) {
         this.unionid = unionid;
         this.openid = openid;
+    }
+
+    public WxLoginEvent(String code) {
+        this.code = code;
     }
 
     public String getUnionId() {
@@ -28,5 +33,13 @@ public class WxLoginEvent {
 
     public String getOpenId() {
         return openid;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 }

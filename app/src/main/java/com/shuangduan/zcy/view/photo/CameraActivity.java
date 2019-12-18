@@ -50,7 +50,7 @@ public class CameraActivity extends AppCompatActivity {
         //设置视频保存路径
         jCameraView.setSaveVideoPath(Environment.getExternalStorageDirectory().getPath() + File.separator + "zcy");
         jCameraView.setFeatures(JCameraView.BUTTON_STATE_BOTH);
-        jCameraView.setTip("轻触拍照，按住摄像");
+//        jCameraView.setTip("轻触拍照，按住摄像");
         //设置录制视频的比特率
         jCameraView.setMediaQuality(JCameraView.MEDIA_QUALITY_MIDDLE);
         jCameraView.setErrorLisenter(new ErrorListener() {
@@ -74,7 +74,7 @@ public class CameraActivity extends AppCompatActivity {
             @Override
             public void captureSuccess(Bitmap bitmap) {
                 //获取图片bitmap
-//                Log.i("JCameraView", "bitmap = " + bitmap.getWidth());
+                LogUtils.e(bitmap);
                 String path = FileUtil.saveBitmap("worker", bitmap);
                 Intent intent = new Intent();
                 intent.putExtra("path", path);

@@ -128,8 +128,6 @@ public class DemandReleaseActivity extends BaseActivity {
     FrameLayout flOwner;
     @BindView(R.id.edt_des)
     EditText edtDes;
-    @BindView(R.id.fl_des)
-    FrameLayout flDes;
     @BindView(R.id.ll_authentication)
     LinearLayout llAuthentication;
     @BindView(R.id.marquee)
@@ -501,7 +499,6 @@ public class DemandReleaseActivity extends BaseActivity {
             demandReleaseVm.releaseType = DemandReleaseVm.RELEASE_TYPE_RELATIONSHIP;
             flTitle.setVisibility(View.VISIBLE);
             flCommission.setVisibility(View.VISIBLE);
-            flDes.setVisibility(View.VISIBLE);
             flMaterialName.setVisibility(View.GONE);
             flDemandNum.setVisibility(View.GONE);
             flDemandProject.setVisibility(View.GONE);
@@ -513,6 +510,7 @@ public class DemandReleaseActivity extends BaseActivity {
             flSupplyStyle.setVisibility(View.GONE);
             flSupplyAddress.setVisibility(View.GONE);
             flSupplyPrice.setVisibility(View.GONE);
+            edtDes.setHint("为了更准确地找到您需要的信息，请尽可能详细的描述您的需求");
             btn_dialog.cancel();
         });
         tv_find_substance.setOnClickListener(view -> {
@@ -524,7 +522,6 @@ public class DemandReleaseActivity extends BaseActivity {
             demandReleaseVm.releaseType = DemandReleaseVm.RELEASE_TYPE_SUBSTANCE;
             flTitle.setVisibility(View.GONE);
             flCommission.setVisibility(View.GONE);
-            flDes.setVisibility(View.GONE);
             flMaterialName.setVisibility(View.VISIBLE);
             flDemandNum.setVisibility(View.VISIBLE);
             flDemandProject.setVisibility(View.VISIBLE);
@@ -536,6 +533,7 @@ public class DemandReleaseActivity extends BaseActivity {
             flSupplyStyle.setVisibility(View.GONE);
             flSupplyAddress.setVisibility(View.GONE);
             flSupplyPrice.setVisibility(View.GONE);
+            edtDes.setHint("请输入物资的详细介绍，如规格");
             btn_dialog.cancel();
         });
         tv_find_buyer.setOnClickListener(v -> {
@@ -547,7 +545,6 @@ public class DemandReleaseActivity extends BaseActivity {
             demandReleaseVm.releaseType = DemandReleaseVm.RELEASE_TYPE_BUYER;
             flTitle.setVisibility(View.GONE);
             flCommission.setVisibility(View.GONE);
-            flDes.setVisibility(View.GONE);
             flMaterialName.setVisibility(View.VISIBLE);
             flDemandNum.setVisibility(View.GONE);
             flDemandProject.setVisibility(View.GONE);
@@ -559,6 +556,7 @@ public class DemandReleaseActivity extends BaseActivity {
             flSupplyStyle.setVisibility(View.VISIBLE);
             flSupplyAddress.setVisibility(View.VISIBLE);
             flSupplyPrice.setVisibility(View.VISIBLE);
+            edtDes.setHint("请输入物资的详细介绍，如规格");
             btn_dialog.cancel();
         });
 
