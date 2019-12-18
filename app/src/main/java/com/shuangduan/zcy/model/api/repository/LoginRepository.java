@@ -6,6 +6,7 @@ import com.shuangduan.zcy.model.bean.ReSetPwdBean;
 import com.shuangduan.zcy.model.bean.RegisterBean;
 import com.shuangduan.zcy.model.bean.WXLoginBindingBean;
 import com.shuangduan.zcy.model.bean.WXLoginVerificationBean;
+import com.shuangduan.zcy.model.bean.WXUserInfoBean;
 
 /**
  * @author 徐玉 QQ:876885613
@@ -47,11 +48,6 @@ public class LoginRepository extends BaseRepository {
     }
 
     //微信登录验证
-    public void getWeChatVerification(MutableLiveData<WXLoginVerificationBean> liveData, String unionid, String openid){
-        request(apiService.getWeChatVerification(unionid,openid)).setData(liveData).send();
-    }
-
-    //微信登录验证
     public void getWeChatBinding(MutableLiveData<WXLoginBindingBean> liveData, MutableLiveData<String> pageStateLiveData, String unionid, String openid,String headimgurl,String nickname, String tel, String code, String invite_tel){
         request(apiService.getWeChatBinding(unionid,openid,headimgurl,nickname,tel,code,invite_tel)).setData(liveData).setPageState(pageStateLiveData).send();
     }
@@ -59,5 +55,20 @@ public class LoginRepository extends BaseRepository {
     //微信登录验证
     public void wxLogin(MutableLiveData<WXLoginVerificationBean> liveData, MutableLiveData<String> pageStateLiveData, String code){
         request(apiService.wxLogin(code)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    //微信绑定信息查询
+    public void getWxStatus(MutableLiveData<WXUserInfoBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id){
+        request(apiService.getWxStatus(user_id)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    //微信内部绑定
+    public void userWechatBind(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int user_id, String code){
+        request(apiService.userWechatBind(user_id,code)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    //微信解绑
+    public void userWechatClose(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int user_id){
+        request(apiService.userWechatClose(user_id)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 }

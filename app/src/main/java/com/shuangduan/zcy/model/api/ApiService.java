@@ -1624,14 +1624,6 @@ public interface ApiService {
             @Field("type") int type
     );
 
-    //微信登录验证
-    @FormUrlEncoded
-    @POST("api/passport/wechatLogin")
-    Flowable<BaseResponse<WXLoginVerificationBean>> getWeChatVerification(
-            @Field("unionid") String unionid,
-            @Field("openid") String openid
-    );
-
     //微信登录绑定
     @FormUrlEncoded
     @POST("api/passport/wechatBind")
@@ -1650,6 +1642,28 @@ public interface ApiService {
     @POST("api/passport/wxLogin")
     Flowable<BaseResponse<WXLoginVerificationBean>> wxLogin(
             @Field("code") String code
+    );
+
+    //微信绑定信息查询
+    @FormUrlEncoded
+    @POST("api/Userinfo/getWxStatus")
+    Flowable<BaseResponse<WXUserInfoBean>> getWxStatus(
+            @Field("user_id") int user_id
+    );
+
+    //微信内部绑定
+    @FormUrlEncoded
+    @POST("api/Userinfo/userWechatBind")
+    Flowable<BaseResponse> userWechatBind(
+            @Field("user_id") int user_id,
+            @Field("code") String code
+    );
+
+    //微信解绑
+    @FormUrlEncoded
+    @POST("api/Userinfo/userWechatClose")
+    Flowable<BaseResponse> userWechatClose(
+            @Field("user_id") int user_id
     );
 
     //我的工程 --- 工程信息概况

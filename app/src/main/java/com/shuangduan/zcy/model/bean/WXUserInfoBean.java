@@ -28,6 +28,7 @@ public class WXUserInfoBean {
      * unionid : omO7Z1arlZAZPmZBD0PqF6dWLYyE
      */
 
+    private int wechat_status;
     private String openid;
     private String nickname;
     private int sex;
@@ -38,6 +39,14 @@ public class WXUserInfoBean {
     private String headimgurl;
     private String unionid;
     private List<?> privilege;
+
+    public int getWechat_status() {
+        return wechat_status;
+    }
+
+    public void setWechat_status(int wechat_status) {
+        this.wechat_status = wechat_status;
+    }
 
     public String getOpenid() {
         return openid;

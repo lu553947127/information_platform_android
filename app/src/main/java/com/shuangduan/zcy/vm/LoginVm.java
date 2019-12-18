@@ -5,6 +5,8 @@ import android.annotation.SuppressLint;
 import androidx.lifecycle.MutableLiveData;
 
 import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.SPUtils;
+import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseViewModel;
 import com.shuangduan.zcy.model.api.repository.LoginRepository;
 import com.shuangduan.zcy.model.bean.LoginBean;
@@ -12,6 +14,7 @@ import com.shuangduan.zcy.model.bean.ReSetPwdBean;
 import com.shuangduan.zcy.model.bean.RegisterBean;
 import com.shuangduan.zcy.model.bean.WXLoginBindingBean;
 import com.shuangduan.zcy.model.bean.WXLoginVerificationBean;
+import com.shuangduan.zcy.model.bean.WXUserInfoBean;
 
 import java.util.concurrent.TimeUnit;
 
@@ -30,7 +33,7 @@ import io.reactivex.schedulers.Schedulers;
  * @class describe
  */
 public class LoginVm extends BaseViewModel {
-
+    private int userId;
     public MutableLiveData<Long> timeLiveDataLiveData;
     public MutableLiveData<Long> timeLiveDataLiveDataRegister;
     public MutableLiveData smsDataLiveData;
@@ -40,8 +43,12 @@ public class LoginVm extends BaseViewModel {
     public MutableLiveData<String> pageStateLiveData;
     public MutableLiveData<WXLoginVerificationBean> wxLoginVerificationBeanMutableLiveData;
     public MutableLiveData<WXLoginBindingBean> wxLoginBindingBeanMutableLiveData;
+    public MutableLiveData<WXUserInfoBean> wxLoginLiveData;
+    public MutableLiveData wxLoginBindingLiveData;
+    public MutableLiveData wxLoginCloseLiveData;
 
     public LoginVm() {
+        userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
         accountLoginLiveData = new MutableLiveData<>();
         smsDataLiveData = new MutableLiveData<>();
         resetPwdLiveData = new MutableLiveData<>();
@@ -51,6 +58,9 @@ public class LoginVm extends BaseViewModel {
         timeLiveDataLiveDataRegister = new MutableLiveData<>();
         wxLoginVerificationBeanMutableLiveData = new MutableLiveData<>();
         wxLoginBindingBeanMutableLiveData = new MutableLiveData<>();
+        wxLoginLiveData = new MutableLiveData<>();
+        wxLoginBindingLiveData = new MutableLiveData();
+        wxLoginCloseLiveData = new MutableLiveData();
     }
 
     /**
@@ -117,5 +127,20 @@ public class LoginVm extends BaseViewModel {
     //微信登录验证(获取unionid/openid)
     public void wxLogin(String code) {
         new LoginRepository().wxLogin(wxLoginVerificationBeanMutableLiveData,pageStateLiveData, code);
+    }
+
+    //微信绑定信息查询
+    public void getWxStatus() {
+        new LoginRepository().getWxStatus(wxLoginLiveData,pageStateLiveData, userId);
+    }
+
+    //微信内部绑定
+    public void userWechatBind(String code) {
+        new LoginRepository().userWechatBind(wxLoginBindingLiveData,pageStateLiveData,userId,code);
+    }
+
+    //微信解绑
+    public void userWechatClose() {
+        new LoginRepository().userWechatClose(wxLoginCloseLiveData,pageStateLiveData, userId);
     }
 }
