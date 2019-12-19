@@ -1,5 +1,6 @@
 package com.shuangduan.zcy.view.mine.set;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -21,7 +23,10 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.MaterialPlaceOrderAdapter;
 import com.shuangduan.zcy.adapter.ReceivingAddressAdapter;
 import com.shuangduan.zcy.base.BaseActivity;
+import com.shuangduan.zcy.dialog.BaseDialog;
+import com.shuangduan.zcy.dialog.CustomDialog;
 import com.shuangduan.zcy.factory.EmptyViewFactory;
+import com.shuangduan.zcy.model.bean.ReceivingAddressBean;
 import com.shuangduan.zcy.utils.DensityUtil;
 import com.shuangduan.zcy.vm.AddressVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
@@ -30,6 +35,9 @@ import com.yanzhenjie.recyclerview.SwipeMenuBridge;
 import com.yanzhenjie.recyclerview.SwipeMenuCreator;
 import com.yanzhenjie.recyclerview.SwipeMenuItem;
 import com.yanzhenjie.recyclerview.SwipeRecyclerView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.Objects;
 
@@ -48,7 +56,7 @@ import butterknife.OnClick;
  * @UpdateRemark: 更新说明
  * @Version: 1.0
  */
-public class ReceivingAddressActivity extends BaseActivity implements OnItemMenuClickListener, BaseQuickAdapter.OnItemChildClickListener {
+public class ReceivingAddressActivity extends BaseActivity implements OnItemMenuClickListener, BaseQuickAdapter.OnItemChildClickListener, BaseQuickAdapter.OnItemClickListener {
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
     @BindView(R.id.toolbar)
@@ -88,7 +96,7 @@ public class ReceivingAddressActivity extends BaseActivity implements OnItemMenu
                 .setWidth(DensityUtil.dp2px(80));
         rightMenu.addMenuItem(deleteItem);// 添加一个按钮到右侧侧菜单。.
     };
-    private ReceivingAddressAdapter adapter;
+    private ReceivingAddressAdapter mAdapter;
 
     @Override
     protected int initLayoutRes() {
@@ -97,13 +105,15 @@ public class ReceivingAddressActivity extends BaseActivity implements OnItemMenu
 
     @Override
     public boolean isUseEventBus() {
-        return false;
+        return true;
     }
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(R.string.user_receiving_address);
+
+        int type = getIntent().getIntExtra("type", 0);
 
         vm = ViewModelProviders.of(this).get(AddressVm.class);
 
@@ -112,38 +122,48 @@ public class ReceivingAddressActivity extends BaseActivity implements OnItemMenu
         swipeRecycler.setSwipeMenuCreator(creator);
         swipeRecycler.setOnItemMenuClickListener(this);
 
-        adapter = new ReceivingAddressAdapter(R.layout.adapter_receiving_address_item, null);
-        adapter.setOnItemChildClickListener(this);
-        swipeRecycler.setAdapter(adapter);
+        mAdapter = new ReceivingAddressAdapter(R.layout.adapter_receiving_address_item, null);
+        mAdapter.setOnItemChildClickListener(this);
+        swipeRecycler.setAdapter(mAdapter);
 
-        ivIcon.setImageResource(R.drawable.icon_address_empty);
-        tvTip.setText(R.string.address_empty_hint);
-        tvGoto.setText(R.string.go_setting);
-        tvGoto.setVisibility(View.VISIBLE);
-        flEmpty.setVisibility(View.VISIBLE);
+        if (type != 0) {
+            mAdapter.setOnItemClickListener(this);
+        }
 
         vm.addressLiveData.observe(this, item -> {
-            adapter.setNewData(item.list);
+            if (item.list == null || item.list.size() == 0) {
+                ivIcon.setImageResource(R.drawable.icon_address_empty);
+                tvTip.setText(R.string.address_empty_hint);
+                tvGoto.setText(R.string.go_setting);
+                tvGoto.setVisibility(View.VISIBLE);
+                flEmpty.setVisibility(View.VISIBLE);
+                return;
+            }
+            if (flEmpty.getVisibility() == View.VISIBLE) {
+                flEmpty.setVisibility(View.GONE);
+            }
+
+            mAdapter.setNewData(item.list);
         });
 
         vm.defaultLiveData.observe(this, item -> {
-            adapter.getItem(vm.position).state = 1;
-            adapter.notifyItemChanged(vm.position, adapter.getItem(vm.position));
+            vm.addressList();
         });
 
         vm.deleteLiveData.observe(this, item -> {
-            adapter.remove(vm.position);
+            mAdapter.remove(vm.position);
         });
 
-//        vm.addressList();
+        vm.addressList();
     }
 
-    @OnClick({R.id.iv_bar_back, R.id.tv_goto})
+    @OnClick({R.id.iv_bar_back, R.id.tv_goto, R.id.tv_new})
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_bar_back:
                 finish();
                 break;
+            case R.id.tv_new:
             case R.id.tv_goto:
                 Bundle bundle = new Bundle();
                 bundle.putInt("type", 0);
@@ -155,13 +175,25 @@ public class ReceivingAddressActivity extends BaseActivity implements OnItemMenu
 
     @Override
     public void onItemClick(SwipeMenuBridge menuBridge, int position) {
+        int id = mAdapter.getItem(position).id;
         switch (menuBridge.getPosition()) {
-//            case 0:
-//                vm.setDefaultState();
-//                break;
-//            case 1:
-//                vm.deleteAddress();
-//                break;
+            case 0:
+                vm.setDefaultState(id);
+                break;
+            case 1:
+                new CustomDialog(this)
+                        .setTip(getString(R.string.exit_confirm))
+                        .setCallBack(new BaseDialog.CallBack() {
+                            @Override
+                            public void cancel() {
+                            }
+
+                            @Override
+                            public void ok(String s) {
+                                vm.deleteAddress(id);
+                            }
+                        }).showDialog();
+                break;
         }
     }
 
@@ -172,8 +204,29 @@ public class ReceivingAddressActivity extends BaseActivity implements OnItemMenu
             case R.id.iv_edit:
                 Bundle bundle = new Bundle();
                 bundle.putInt("type", 1);
+                bundle.putParcelable("address", mAdapter.getItem(position));
                 ActivityUtils.startActivity(bundle, EditReceivingAddressActivity.class);
                 break;
         }
+    }
+
+
+    @Override
+    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        EventBus.getDefault().post(mAdapter.getItem(position));
+        finish();
+    }
+
+
+    @Subscribe
+    public void updateAddress(MutableLiveData data) {
+        vm.addressList();
+    }
+
+    //更新删除后的地址
+    @Subscribe
+    public void deleteAddress(ReceivingAddressBean.Address address) {
+        mAdapter.getData().remove(address);
+        mAdapter.notifyDataSetChanged();
     }
 }

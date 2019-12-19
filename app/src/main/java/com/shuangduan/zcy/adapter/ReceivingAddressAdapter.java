@@ -3,6 +3,7 @@ package com.shuangduan.zcy.adapter;
 
 import androidx.annotation.Nullable;
 
+import com.blankj.utilcode.util.StringUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.shuangduan.zcy.R;
@@ -20,7 +21,12 @@ public class ReceivingAddressAdapter extends BaseQuickAdapter<ReceivingAddressBe
 
     @Override
     protected void convert(BaseViewHolder helper, ReceivingAddressBean.Address item) {
-
-        helper.addOnClickListener(R.id.iv_edit);
+        helper.setText(R.id.tv_name, item.name)
+                .setText(R.id.tv_phone, item.phone)
+                .setText(R.id.tv_company, item.company)
+                .setText(R.id.tv_address, item.province + item.city + item.address)
+                .setVisible(R.id.iv_state, item.state == 1)
+                .setGone(R.id.tv_company, !StringUtils.isEmpty(item.company))
+                .addOnClickListener(R.id.iv_edit);
     }
 }

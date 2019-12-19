@@ -1684,49 +1684,54 @@ public interface ApiService {
 
     //用户 --- 收货地址列表
     @FormUrlEncoded
-    @POST()
+    @POST("api/Userinfo/getAddress")
     Flowable<BaseResponse<ReceivingAddressBean>> getReceivingAddress(
             @Field("user_id") int userId
     );
 
     //用户 --- 修改地址状态
     @FormUrlEncoded
-    @POST()
+    @POST("api/Userinfo/defaultAddress")
     Flowable<BaseResponse> setDefaultState(
-            @Field("id") int id,
-            @Field("state") int state
+            @Field("user_id") int userId,
+            @Field("id") int id
     );
 
     //用户 --- 删除地址
     @FormUrlEncoded
-    @POST()
+    @POST("api/Userinfo/deleteAddress")
     Flowable<BaseResponse> deleteAddress(
+            @Field("user_id") int userId,
             @Field("id") int id
     );
 
     //用户 --- 添加地址
     @FormUrlEncoded
-    @POST()
+    @POST("api/Userinfo/addAddress")
     Flowable<BaseResponse> newAddress(
             @Field("user_id") int userId,
-            @Field("name") String name,
-            @Field("phone") String phone,
+            @Field("real_name") String name,
+            @Field("tel") String phone,
             @Field("company") String company,
+            @Field("province") int province,
+            @Field("city") int city,
             @Field("address") String address,
-            @Field("state") int state
+            @Field("is_default") int state
     );
 
     //用户 --- 修改地址
     @FormUrlEncoded
-    @POST()
+    @POST("api/Userinfo/editAddress")
     Flowable<BaseResponse> editAddress(
             @Field("user_id") int userId,
             @Field("id") int id,
-            @Field("name") String name,
-            @Field("phone") String phone,
+            @Field("real_name") String name,
+            @Field("tel") String phone,
             @Field("company") String company,
+            @Field("province") int province,
+            @Field("city") int city,
             @Field("address") String address,
-            @Field("state") int state
+            @Field("is_default") int state
     );
 
     //后台管理 --- 周转材料列表

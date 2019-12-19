@@ -107,7 +107,8 @@ public class SetActivity extends BaseActivity {
                 ActivityUtils.startActivity(ThirdLoginActivity.class);
                 break;
             case R.id.tv_receiving_address://收货地址管理
-                ActivityUtils.startActivity(ReceivingAddressActivity.class);
+                bundle.putInt("type",0);
+                ActivityUtils.startActivity(bundle,ReceivingAddressActivity.class);
                 break;
             case R.id.tv_supplier_msg://供应商信息
                 SupplierUtils.SupplierCustom(this,supplier_status,id,"set");

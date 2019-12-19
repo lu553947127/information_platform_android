@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,9 +22,12 @@ import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BottomSheetDialogs;
 import com.shuangduan.zcy.model.bean.CityBean;
 import com.shuangduan.zcy.model.bean.ProvinceBean;
+import com.shuangduan.zcy.model.bean.ReceivingAddressBean;
 import com.shuangduan.zcy.vm.AddressVm;
 import com.shuangduan.zcy.vm.MultiAreaVm;
 import com.shuangduan.zcy.weight.SwitchView;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,8 +49,11 @@ public class EditReceivingAddressActivity extends BaseActivity {
     EditText etName;
     @BindView(R.id.et_phone)
     EditText etPhone;
+    @BindView(R.id.et_company)
+    EditText etCompany;
     @BindView(R.id.tv_area)
     TextView tvArea;
+
     @BindView(R.id.et_address)
     EditText etAddress;
     @BindView(R.id.sv_address)
@@ -62,6 +69,7 @@ public class EditReceivingAddressActivity extends BaseActivity {
     private SelectorAreaSecondAdapter cityAdapter;
     private BottomSheetDialogs dialog;
     private int type;
+    private ReceivingAddressBean.Address mAddress;
 
     @Override
     protected int initLayoutRes() {
@@ -79,6 +87,8 @@ public class EditReceivingAddressActivity extends BaseActivity {
 
         type = getIntent().getIntExtra("type", 0);
 
+        mAddress = getIntent().getParcelableExtra("address");
+
         tvBarTitle.setText(type == 0 ? R.string.add_receiving_address : R.string.edit_receiving_address);
 
         tvBarRight.setText(type == 0 ? "" : "删除");
@@ -87,6 +97,18 @@ public class EditReceivingAddressActivity extends BaseActivity {
 
         //获取省市数据
         areaVm = ViewModelProviders.of(this).get(MultiAreaVm.class);
+
+        if (mAddress != null) {
+            etName.setText(mAddress.name);
+            etPhone.setText(mAddress.phone);
+            etCompany.setText(mAddress.company);
+            tvArea.setText(mAddress.province + " " + mAddress.city);
+            etAddress.setText(mAddress.address);
+            switchView.setOpened(mAddress.state == 1);
+            areaVm.id = mAddress.provinceId;
+            areaVm.city_id = mAddress.cityId;
+        }
+
         areaVm.provinceLiveData.observe(this, provinceBeans -> {
             provinceList = provinceBeans;
             provinceAdapter.setNewData(provinceList);
@@ -98,20 +120,26 @@ public class EditReceivingAddressActivity extends BaseActivity {
 
         //新建地址
         vm.newAddressLiveData.observe(this, newAddress -> {
+            EventBus.getDefault().post(new MutableLiveData());
             finish();
         });
 
         //编辑地址
         vm.editAddressLiveData.observe(this, editAddress -> {
+            EventBus.getDefault().post(new MutableLiveData());
             finish();
         });
 
+        vm.deleteLiveData.observe(this, deleteAddress -> {
+            EventBus.getDefault().post(mAddress);
+            finish();
+        });
 
         getBottomSheetDialog(R.layout.dialog_depositing_place);
     }
 
 
-    @OnClick({R.id.iv_bar_back, R.id.tv_area, R.id.tv_save})
+    @OnClick({R.id.iv_bar_back, R.id.tv_area, R.id.tv_save, R.id.tv_bar_right})
     void OnClick(View view) {
         switch (view.getId()) {
             case R.id.iv_bar_back:
@@ -121,15 +149,19 @@ public class EditReceivingAddressActivity extends BaseActivity {
                 dialog.show();
                 break;
             case R.id.tv_bar_right:
-//                vm.deleteAddress();
+                vm.deleteAddress(mAddress.id);
                 break;
             case R.id.tv_save:
                 //默认状态
                 int state = !switchView.isOpened() ? 0 : 1;
+                String name = etName.getText().toString();
+                String phone = etPhone.getText().toString();
+                String company = etCompany.getText().toString();
+                String address = etAddress.getText().toString();
                 if (type == 0) {
-//                    vm.newAddress();
+                    vm.newAddress(name, phone, company, areaVm.id, areaVm.city_id, address, state);
                 } else {
-//                    vm.editAddress();
+                    vm.editAddress(mAddress.id, name, phone, company, areaVm.id, areaVm.city_id, address, state);
                 }
                 break;
         }
@@ -171,7 +203,8 @@ public class EditReceivingAddressActivity extends BaseActivity {
 
             areaVm.city_id = cityList.get(position).getId();
             cityAdapter.setIsSelect(cityList.get(position).getId());
-            tvArea.setText(areaVm.provinceResult + " " + cityList.get(position).getName());
+            areaVm.cityResult = cityList.get(position).getName();
+            tvArea.setText(areaVm.provinceResult + " " + areaVm.cityResult);
 
             dialog.dismiss();
         });

@@ -304,23 +304,25 @@ public class UserRepository extends BaseRepository {
     }
 
     //设置地址的默认状态
-    public void setDefaultState(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int id,int state) {
-        request(apiService.setDefaultState(id,state)).setData(liveData).setPageState(pageStateLiveData).send();
+    public void setDefaultState(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int userId,int id) {
+        request(apiService.setDefaultState(userId,id)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
     //删除地址
-    public void deleteAddress(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int id) {
-        request(apiService.deleteAddress(id)).setData(liveData).setPageState(pageStateLiveData).send();
+    public void deleteAddress(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int userId,int id) {
+        request(apiService.deleteAddress(userId,id)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
     //新增地址
-    public void newAddress(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int userId,String name,String phone,String company,String address,int state) {
-        request(apiService.newAddress(userId,name,phone,company,address,state)).setData(liveData).setPageState(pageStateLiveData).send();
+    public void newAddress(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int userId,String name,String phone,String company,
+                           int province,int city,String address,int state) {
+        request(apiService.newAddress(userId,name,phone,company,province,city,address,state)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
     //修改地址
-    public void editAddress(MutableLiveData liveData,MutableLiveData<String> pageStateLiveData,int userId,int id,String name,String phone,String company,String address,int state){
-        request(apiService.editAddress(userId,id,name,phone,company,address,state)).setData(liveData).setPageState(pageStateLiveData).send();
+    public void editAddress(MutableLiveData liveData,MutableLiveData<String> pageStateLiveData,int userId,int id,String name,String phone,
+                            String company,int province,int city,String address,int state){
+        request(apiService.editAddress(userId,id,name,phone,company,province,city,address,state)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
 }

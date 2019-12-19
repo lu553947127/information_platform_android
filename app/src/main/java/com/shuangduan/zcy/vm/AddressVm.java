@@ -49,24 +49,23 @@ public class AddressVm extends BaseViewModel {
     }
 
     //更新默认地址状态
-    public void setDefaultState(int id, int state) {
-        new UserRepository().setDefaultState(defaultLiveData, pageStateLiveData, id, state);
+    public void setDefaultState(int id) {
+        new UserRepository().setDefaultState(defaultLiveData, pageStateLiveData, userId, id);
     }
 
     //删除地址
     public void deleteAddress(int id) {
-        new UserRepository().deleteAddress(deleteLiveData, pageStateLiveData, id);
+        new UserRepository().deleteAddress(deleteLiveData, pageStateLiveData, userId, id);
     }
 
-
     //新建地址
-    public void newAddress(String name, String phone, String company, String address, int state) {
-        new UserRepository().newAddress(newAddressLiveData, pageStateLiveData, userId, name, phone, company, address, state);
+    public void newAddress(String name, String phone, String company, int province, int city, String address, int state) {
+        new UserRepository().newAddress(newAddressLiveData, pageStateLiveData, userId, name, phone, company, province, city, address, state);
     }
 
     //修改地址
-    public void editAddress(int id, String name, String phone, String company, String address, int state) {
-        new UserRepository().editAddress(editAddressLiveData, pageStateLiveData, userId, id, name, phone, company, address, state);
+    public void editAddress(int id, String name, String phone, String company, int province, int city, String address, int state) {
+        new UserRepository().editAddress(editAddressLiveData, pageStateLiveData, userId, id, name, phone, company, province, city, address, state);
     }
 
 }
