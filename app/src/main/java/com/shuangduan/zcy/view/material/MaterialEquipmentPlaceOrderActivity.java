@@ -3,7 +3,6 @@ package com.shuangduan.zcy.view.material;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.InputType;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -20,7 +19,6 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.TimeUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.huawei.android.hms.agent.common.UIUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
@@ -61,7 +59,6 @@ import fj.edittextcount.lib.FJEditTextCount;
  */
 @SuppressLint("SetTextI18n")
 public class MaterialEquipmentPlaceOrderActivity extends BaseActivity {
-
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
     @BindView(R.id.toolbar)

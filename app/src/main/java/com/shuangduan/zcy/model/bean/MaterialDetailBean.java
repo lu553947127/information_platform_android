@@ -51,6 +51,7 @@ public class MaterialDetailBean {
     private String spec;
     private String unit;
     private String company;
+    private String headimg;
     private String address;
     private String company_website;
     private String serve_address;
@@ -177,6 +178,13 @@ public class MaterialDetailBean {
         return company;
     }
 
+    public String getHeadimg() {
+        return headimg;
+    }
+
+    public void setHeadimg(String headimg) {
+        this.headimg = headimg;
+    }
 
     public String getAddress() {
         return address;

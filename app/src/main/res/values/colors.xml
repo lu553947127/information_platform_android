@@ -69,6 +69,7 @@
     <color name="color_F7F5FA">#F7F5FA</color>
     <color name="color_CACACA">#CACACA</color>
     <color name="color_FF0000">#FF0000</color>
+    <color name="color_DF1012">#DF1012</color>
 
     <!--时间选择器颜色-->
     <color name="text1">#6a5ff8</color>

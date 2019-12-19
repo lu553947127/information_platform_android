@@ -9,14 +9,12 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.BarUtils;
-import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.shuangduan.zcy.R;
-import com.shuangduan.zcy.app.CustomConfig;
-import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.CustomDialog;
+import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.event.WxLoginEvent;
 import com.shuangduan.zcy.utils.image.ImageConfig;
 import com.shuangduan.zcy.utils.image.ImageLoader;
@@ -77,13 +75,13 @@ public class ThirdLoginActivity extends BaseActivity {
             wechat_status = wxUserInfoBean.getWechat_status();
             nickName = wxUserInfoBean.getNickname();
             ImageLoader.load(this, new ImageConfig.Builder()
-                    .url(wechat_status ==1 ? wxUserInfoBean.getHeadimgurl() : "")
+                    .url(wechat_status ==0 ? "" : wxUserInfoBean.getHeadimgurl())
                     .placeholder(R.drawable.icon_set_wechat)
                     .errorPic(R.drawable.icon_set_wechat)
                     .imageView(ivWechatCircle)
                     .build());
-            tvWechatName.setText(wechat_status ==1 ? nickName : "微信昵称");
-            tvStatus.setText(wechat_status ==1 ? "解绑": "未绑定");
+            tvWechatName.setText(wechat_status ==0 || StringUtils.isTrimEmpty(nickName) ? "微信昵称" : nickName);
+            tvStatus.setText(wechat_status ==0 ? "未绑定": "解绑");
         });
 
         //获取微信内部绑定后返回结果
@@ -94,6 +92,17 @@ public class ThirdLoginActivity extends BaseActivity {
         //获取微信解绑返回结果
         loginVm.wxLoginCloseLiveData.observe(this, item ->{
             loginVm.getWxStatus();
+        });
+
+        loginVm.pageStateLiveData.observe(this, s -> {
+            switch (s) {
+                case PageState.PAGE_LOADING:
+                    showLoading();
+                    break;
+                default:
+                    hideLoading();
+                    break;
+            }
         });
 
         loginVm.getWxStatus();

@@ -28,7 +28,7 @@ public class WXUserInfoBean {
      * unionid : omO7Z1arlZAZPmZBD0PqF6dWLYyE
      */
 
-    private int wechat_status;
+    private int wechat_status;//1已绑定 0未绑定
     private String openid;
     private String nickname;
     private int sex;

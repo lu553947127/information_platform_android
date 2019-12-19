@@ -106,7 +106,6 @@ public class MaterialDetailActivity extends BaseActivity {
     private String phone, is_collect, enclosure;
     private List<String> pics;
     int supplier_id;
-    private MaterialDetailBean materialDetail;
 
     @Override
     protected int initLayoutRes() {
@@ -128,7 +127,6 @@ public class MaterialDetailActivity extends BaseActivity {
         materialDetailVm.id = getIntent().getIntExtra(CustomConfig.MATERIAL_ID, 0);
         materialDetailVm.detailLiveData.observe(this, materialDetailBean -> {
             if (materialDetailBean == null) return;
-            this.materialDetail = materialDetailBean;
             pics = new ArrayList<>();
             ArrayList<String> titles = new ArrayList<>();
             for (MaterialDetailBean.ImagesBean bean : materialDetailBean.getImages()) {
@@ -260,13 +258,6 @@ public class MaterialDetailActivity extends BaseActivity {
                             }
                         }).showDialog();
                 break;
-//            case R.id.tv_address_list:
-//                bundle.putInt(CustomConfig.MATERIAL_ID, material_id);
-//                bundle.putInt(CustomConfig.SUPPLIER_ID, supplier_id);
-//                bundle.putInt(CustomConfig.METHOD_TYPE, materialDetail.getMethod());
-//                bundle.putInt(CustomConfig.IS_SHELF, materialDetail.getIsShelf());
-//                ActivityUtils.startActivity(bundle, DepositingPlaceActivity.class);
-//                break;
             case R.id.ll_collect:
                 llCollection.setClickable(false);
                 if (is_collect != null && is_collect.equals("1")) {
