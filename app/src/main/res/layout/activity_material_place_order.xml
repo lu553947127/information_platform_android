@@ -228,37 +228,55 @@
                         android:textSize="13sp" />
 
                     <TextView
-                        android:id="@+id/tv_num_left"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_gravity="center_vertical"
-                        android:background="@drawable/circular_background_gray_halt_left"
-                        android:gravity="center"
-                        android:textColor="@color/colorTv"
+                        android:id="@+id/tv_turnover_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorTvHint"
                         android:textSize="13sp"
-                        android:text="-"/>
+                        android:text="请输入"
+                        android:visibility="gone"/>
 
-                    <TextView
-                        android:id="@+id/tv_num"
-                        android:layout_width="40dp"
-                        android:layout_height="25dp"
-                        android:layout_gravity="center_vertical"
-                        android:background="@drawable/circular_background_gray_halt"
-                        android:gravity="center"
-                        android:textColor="@color/colorTv"
-                        android:textSize="13sp"
-                        android:text="1"/>
+                    <LinearLayout
+                        android:id="@+id/ll_equipment_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
-                    <TextView
-                        android:id="@+id/tv_num_right"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_gravity="center_vertical"
-                        android:background="@drawable/circular_background_gray_halt_right"
-                        android:gravity="center"
-                        android:textColor="@color/colorTv"
-                        android:textSize="13sp"
-                        android:text="+"/>
+                        <TextView
+                            android:id="@+id/tv_num_left"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_gravity="center_vertical"
+                            android:background="@drawable/circular_background_gray_halt_left"
+                            android:gravity="center"
+                            android:textColor="@color/colorTv"
+                            android:textSize="13sp"
+                            android:text="-"/>
+
+                        <TextView
+                            android:id="@+id/tv_num"
+                            android:layout_width="40dp"
+                            android:layout_height="25dp"
+                            android:layout_gravity="center_vertical"
+                            android:background="@drawable/circular_background_gray_halt"
+                            android:gravity="center"
+                            android:textColor="@color/colorTv"
+                            android:textSize="13sp"
+                            android:text="1"/>
+
+                        <TextView
+                            android:id="@+id/tv_num_right"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_gravity="center_vertical"
+                            android:background="@drawable/circular_background_gray_halt_right"
+                            android:gravity="center"
+                            android:textColor="@color/colorTv"
+                            android:textSize="13sp"
+                            android:text="+"/>
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -319,7 +337,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="25dp"
                     android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp">
+                    android:layout_marginRight="15dp"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"

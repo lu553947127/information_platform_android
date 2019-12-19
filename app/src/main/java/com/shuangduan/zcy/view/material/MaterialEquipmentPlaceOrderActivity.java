@@ -218,55 +218,55 @@ public class MaterialEquipmentPlaceOrderActivity extends BaseActivity {
                 ActivityUtils.startActivity(bundle, ReleaseAreaSelectActivity.class);
                 break;
             case R.id.tv_submission://提交预订单
-                if (TextUtils.isEmpty(etRealName.getText().toString())) {
-                    ToastUtils.showShort("联系人不能为空");
-                    return;
-                }
-                if (TextUtils.isEmpty(etTel.getText().toString())) {
-                    ToastUtils.showShort("电话不能为空");
-                    return;
-                }
-
-                if (TextUtils.isEmpty(etCompany.getText().toString())) {
-                    ToastUtils.showShort("公司名称不能为空");
-                    return;
-                }
-
-                if (city == 0) {
-                    ToastUtils.showShort("收货省市不能为空");
-                    return;
-                }
-                if (TextUtils.isEmpty(etAddress.getText().toString())) {
-                    ToastUtils.showShort("详细地址不能为空");
-                    return;
-                }
-
-                if (num == 0) {
-                    ToastUtils.showShort("数量不能为0");
-                    return;
-                }
-
-                if (materialDetail.getMethod() == 1 && StringUtils.isTrimEmpty(leaseStartTime)) {
-                    ToastUtils.showShort("请选择租赁开始时间");
-                    return;
-                }
-                if (materialDetail.getMethod() == 1 && StringUtils.isTrimEmpty(leaseEndTime)) {
-                    ToastUtils.showShort("请选择租赁结束时间");
-                    return;
-                }
-
-                if (materialDetail.getMethod() == 1 && day <= 0) {
-                    ToastUtils.showShort("开始时间必须小于结束时间");
-                    return;
-                }
-
-                if (price > 100000000) {
-                    ToastUtils.showShort("订单金额过大，不支持线上交易");
-                    return;
-                }
-
-                materialDetailVm.getAddEquipmentOrder(materialDetail.getId(), etRealName.getText().toString(), etTel.getText().toString()
-                        , etCompany.getText().toString(), province, city, etAddress.getText().toString(), etRemark.getText(), num,  leaseStartTime, leaseEndTime);
+//                if (TextUtils.isEmpty(etRealName.getText().toString())) {
+//                    ToastUtils.showShort("联系人不能为空");
+//                    return;
+//                }
+//                if (TextUtils.isEmpty(etTel.getText().toString())) {
+//                    ToastUtils.showShort("电话不能为空");
+//                    return;
+//                }
+//
+//                if (TextUtils.isEmpty(etCompany.getText().toString())) {
+//                    ToastUtils.showShort("公司名称不能为空");
+//                    return;
+//                }
+//
+//                if (city == 0) {
+//                    ToastUtils.showShort("收货省市不能为空");
+//                    return;
+//                }
+//                if (TextUtils.isEmpty(etAddress.getText().toString())) {
+//                    ToastUtils.showShort("详细地址不能为空");
+//                    return;
+//                }
+//
+//                if (num == 0) {
+//                    ToastUtils.showShort("数量不能为0");
+//                    return;
+//                }
+//
+//                if (materialDetail.getMethod() == 1 && StringUtils.isTrimEmpty(leaseStartTime)) {
+//                    ToastUtils.showShort("请选择租赁开始时间");
+//                    return;
+//                }
+//                if (materialDetail.getMethod() == 1 && StringUtils.isTrimEmpty(leaseEndTime)) {
+//                    ToastUtils.showShort("请选择租赁结束时间");
+//                    return;
+//                }
+//
+//                if (materialDetail.getMethod() == 1 && day <= 0) {
+//                    ToastUtils.showShort("开始时间必须小于结束时间");
+//                    return;
+//                }
+//
+//                if (price > 100000000) {
+//                    ToastUtils.showShort("订单金额过大，不支持线上交易");
+//                    return;
+//                }
+//
+//                materialDetailVm.getAddEquipmentOrder(materialDetail.getId(), etRealName.getText().toString(), etTel.getText().toString()
+//                        , etCompany.getText().toString(), province, city, etAddress.getText().toString(), etRemark.getText(), num,  leaseStartTime, leaseEndTime);
                 break;
             case R.id.tv_time_start:
                 showTimeDialog(tvTimeStart, 0);

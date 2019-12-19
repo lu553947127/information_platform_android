@@ -276,7 +276,8 @@ public class MaterialEquipmentDetailActivity extends BaseActivity {
                 break;
             case R.id.tv_reserve:
                 bundle.putInt(CustomConfig.MATERIAL_ID, getIntent().getIntExtra(CustomConfig.MATERIAL_ID, 0));
-                ActivityUtils.startActivity(bundle, MaterialEquipmentPlaceOrderActivity.class);
+                bundle.putInt("type",2);
+                ActivityUtils.startActivity(bundle, MaterialPlaceOrderActivity.class);
                 break;
         }
     }
