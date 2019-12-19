@@ -1537,16 +1537,11 @@ public interface ApiService {
     Flowable<BaseResponse<MaterialAddBean>> getAddMaterialOrder(
             @Field("user_id") int userId,
             @Field("id") int id,
-            @Field("real_name") String real_name,
-            @Field("tel") String tel,
-            @Field("company") String company,
-            @Field("province") int province,
-            @Field("city") int city,
-            @Field("address") String address,
             @Field("remark") String remark,
-            @Field("buy_stock") String buyStock,
+            @Field("buy_stock") long buyStock,
             @Field("lease_start_time") String leaseStartTime,
-            @Field("lease_end_time") String leaseEndTime
+            @Field("lease_end_time") String leaseEndTime,
+            @Field("address_id") int address_id
     );
 
     //基建物资---设备物资提交预定订单

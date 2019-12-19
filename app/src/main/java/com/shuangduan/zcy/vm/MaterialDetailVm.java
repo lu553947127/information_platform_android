@@ -43,7 +43,7 @@ public class MaterialDetailVm extends BaseViewModel {
     public MutableLiveData<MaterialOrderBean.ListBean> orderDetailLiveData;
     //取消预定订单
     public MutableLiveData mutableLiveDataCancel;
-    public int id, supplier_id;
+    public int id, supplier_id,address_id;
 
     public long turnoverNum = 1;
 
@@ -112,10 +112,8 @@ public class MaterialDetailVm extends BaseViewModel {
     }
 
     //基建物资---周转材料预定订单
-    public void getAddMaterialOrder(int material_id, String real_name, String tel, String company, int province, int city
-            , String address, String remark, String buyStock, String leaseStartTime, String leaseEndTime) {
-        new MaterialRepository().getAddMaterialOrder(mutableLiveAddOrder, pageStateLiveData, userId, material_id, real_name, tel, company, province,
-                city, address, remark, buyStock,leaseStartTime,leaseEndTime);
+    public void getAddMaterialOrder(int material_id, String remark, String leaseStartTime, String leaseEndTime) {
+        new MaterialRepository().getAddMaterialOrder(mutableLiveAddOrder, pageStateLiveData, userId, material_id, remark, turnoverNum,leaseStartTime,leaseEndTime,address_id);
     }
 
     //基建物资---设备物资预定订单

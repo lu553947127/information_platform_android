@@ -23,7 +23,7 @@
             android:background="@drawable/icon_material_background">
 
             <LinearLayout
-                android:id="@+id/ll_address"
+                android:id="@+id/ll_address_top"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -33,58 +33,92 @@
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:id="@+id/ll_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginLeft="15dp"
-                    android:orientation="horizontal">
+                    android:orientation="vertical"
+                    android:visibility="gone">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginLeft="15dp"
+                        android:orientation="horizontal">
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_real_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:textColor="@color/colorTv"
+                            android:textSize="16sp" />
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_tel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="15dp"
+                            android:textColor="@color/color_666666"
+                            android:textSize="13sp" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/iv_is_default"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="5dp"
+                            android:src="@drawable/icon_default_address"/>
+                    </LinearLayout>
+
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_real_company"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:textColor="@color/colorTv"
-                        android:textSize="16sp"
-                        android:text="王美丽"/>
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
+                        android:layout_marginTop="10dp"
                         android:layout_marginLeft="15dp"
                         android:textColor="@color/color_666666"
-                        android:textSize="13sp"
-                        android:text="15057526984"/>
+                        android:textSize="13sp" />
 
-                    <androidx.appcompat.widget.AppCompatImageView
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginBottom="15dp"
+                        android:layout_marginRight="15dp"
+                        android:drawablePadding="10dp"
+                        android:drawableRight="@drawable/icon_next"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/color_666666"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_address_empty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/icon_address_add"/>
+
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="5dp"
-                        android:src="@drawable/icon_default_address"/>
+                        android:layout_marginLeft="10dp"
+                        android:textColor="@color/colorTv"
+                        android:textSize="14sp"
+                        android:text="添加收货地址"/>
+
                 </LinearLayout>
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="15dp"
-                    android:textColor="@color/color_666666"
-                    android:textSize="13sp"
-                    android:text="山东灵思科技有限公司"/>
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginBottom="15dp"
-                    android:layout_marginRight="15dp"
-                    android:drawablePadding="10dp"
-                    android:drawableRight="@drawable/icon_next"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/color_666666"
-                    android:textSize="13sp"
-                    android:text="山东省济南市历下区舜华路街道康虹路2350号牛旺庄小区4号楼"/>
 
             </LinearLayout>
 
@@ -94,7 +128,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:layout_below="@+id/ll_address"
+                android:layout_below="@+id/ll_address_top"
                 android:background="@drawable/circular_background_white_15"
                 android:orientation="vertical">
 
@@ -107,8 +141,7 @@
                     <com.shuangduan.zcy.weight.CircleImageView
                         android:id="@+id/iv_company"
                         android:layout_width="22dp"
-                        android:layout_height="22dp"
-                        android:src="@drawable/no_supplier_logo"/>
+                        android:layout_height="22dp" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_company"
@@ -117,8 +150,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="15dp"
                         android:textColor="@color/color_666666"
-                        android:textSize="14sp"
-                        android:text="莎侬博源中国打火机哈克是"/>
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -154,8 +186,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:textColor="@color/colorTv"
-                                android:textSize="14sp"
-                                android:text="fsdfsdkfhdsfsdfsdkfhdskfsdfsdkfhdskfsdfsdkfhdskfsdfsdkfhdskfsdfsdkfhdskk"/>
+                                android:textSize="14sp" />
 
                             <TextView
                                 android:id="@+id/tv_guidance_price"
@@ -164,8 +195,7 @@
                                 android:layout_marginLeft="5dp"
                                 android:textColor="@color/color_DF1012"
                                 android:textSize="13sp"
-                                tools:ignore="RtlHardcoded"
-                                android:text="299299/dun"/>
+                                tools:ignore="RtlHardcoded" />
 
                         </LinearLayout>
 
@@ -175,8 +205,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:textColor="@color/color_666666"
-                            android:textSize="12sp"
-                            android:text="规格：sfdhsjkfhks"/>
+                            android:textSize="12sp" />
 
                     </LinearLayout>
 
