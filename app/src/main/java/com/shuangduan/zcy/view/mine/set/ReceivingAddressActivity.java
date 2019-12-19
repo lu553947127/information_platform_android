@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -63,7 +64,8 @@ public class ReceivingAddressActivity extends BaseActivity implements OnItemMenu
     Toolbar toolbar;
     @BindView(R.id.swipe_recycler)
     SwipeRecyclerView swipeRecycler;
-
+    @BindView(R.id.fl_content)
+    FrameLayout flContent;
     @BindView(R.id.fl_empty)
     FrameLayout flEmpty;
     @BindView(R.id.iv_icon)
@@ -83,7 +85,7 @@ public class ReceivingAddressActivity extends BaseActivity implements OnItemMenu
                 .setText("设为默认") // 文字。
                 .setTextColor(Color.WHITE) // 文字颜色。
                 .setTextSize(14) // 文字大小。
-                .setHeight(DensityUtil.dp2px(110))
+                .setHeight(ViewGroup.LayoutParams.MATCH_PARENT)
                 .setWidth(DensityUtil.dp2px(80));// 宽度。
         rightMenu.addMenuItem(addItem); // 添加一个按钮到左侧菜单。
 
@@ -92,11 +94,13 @@ public class ReceivingAddressActivity extends BaseActivity implements OnItemMenu
                 .setText("删除") // 文字。
                 .setTextColor(Color.WHITE) // 文字颜色。
                 .setTextSize(14) // 文字大小。
-                .setHeight(DensityUtil.dp2px(110))
+                .setHeight(ViewGroup.LayoutParams.MATCH_PARENT)
                 .setWidth(DensityUtil.dp2px(80));
         rightMenu.addMenuItem(deleteItem);// 添加一个按钮到右侧侧菜单。.
     };
     private ReceivingAddressAdapter mAdapter;
+
+    private SwipeMenuBridge menuBridge;
 
     @Override
     protected int initLayoutRes() {
@@ -115,6 +119,8 @@ public class ReceivingAddressActivity extends BaseActivity implements OnItemMenu
 
         int type = getIntent().getIntExtra("type", 0);
 
+        emptyView();
+
         vm = ViewModelProviders.of(this).get(AddressVm.class);
 
         swipeRecycler.setLayoutManager(new LinearLayoutManager(this));
@@ -130,28 +136,33 @@ public class ReceivingAddressActivity extends BaseActivity implements OnItemMenu
             mAdapter.setOnItemClickListener(this);
         }
 
+
         vm.addressLiveData.observe(this, item -> {
             if (item.list == null || item.list.size() == 0) {
-                ivIcon.setImageResource(R.drawable.icon_address_empty);
-                tvTip.setText(R.string.address_empty_hint);
-                tvGoto.setText(R.string.go_setting);
-                tvGoto.setVisibility(View.VISIBLE);
                 flEmpty.setVisibility(View.VISIBLE);
+                flContent.setVisibility(View.INVISIBLE);
                 return;
             }
-            if (flEmpty.getVisibility() == View.VISIBLE) {
-                flEmpty.setVisibility(View.GONE);
-            }
 
+            if (flEmpty.getVisibility() == View.VISIBLE) {
+                flEmpty.setVisibility(View.INVISIBLE);
+                flContent.setVisibility(View.VISIBLE);
+            }
             mAdapter.setNewData(item.list);
         });
 
         vm.defaultLiveData.observe(this, item -> {
+            menuBridge.closeMenu();
             vm.addressList();
         });
 
         vm.deleteLiveData.observe(this, item -> {
+            menuBridge.closeMenu();
             mAdapter.remove(vm.position);
+            if (mAdapter.getData().size() == 0) {
+                flEmpty.setVisibility(View.VISIBLE);
+                flContent.setVisibility(View.INVISIBLE);
+            }
         });
 
         vm.addressList();
@@ -172,17 +183,25 @@ public class ReceivingAddressActivity extends BaseActivity implements OnItemMenu
         }
     }
 
+    private void emptyView() {
+        ivIcon.setImageResource(R.drawable.icon_address_empty);
+        tvTip.setText(R.string.address_empty_hint);
+        tvGoto.setText(R.string.go_setting);
+        tvGoto.setVisibility(View.VISIBLE);
+
+    }
 
     @Override
     public void onItemClick(SwipeMenuBridge menuBridge, int position) {
         int id = mAdapter.getItem(position).id;
+        this.menuBridge = menuBridge;
         switch (menuBridge.getPosition()) {
             case 0:
                 vm.setDefaultState(id);
                 break;
             case 1:
                 new CustomDialog(this)
-                        .setTip(getString(R.string.exit_confirm))
+                        .setTip(getString(R.string.delete_address))
                         .setCallBack(new BaseDialog.CallBack() {
                             @Override
                             public void cancel() {
@@ -190,11 +209,13 @@ public class ReceivingAddressActivity extends BaseActivity implements OnItemMenu
 
                             @Override
                             public void ok(String s) {
+                                vm.position = position;
                                 vm.deleteAddress(id);
                             }
                         }).showDialog();
                 break;
         }
+
     }
 
 
@@ -202,6 +223,7 @@ public class ReceivingAddressActivity extends BaseActivity implements OnItemMenu
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
         switch (view.getId()) {
             case R.id.iv_edit:
+                vm.position = position;
                 Bundle bundle = new Bundle();
                 bundle.putInt("type", 1);
                 bundle.putParcelable("address", mAdapter.getItem(position));
@@ -226,7 +248,10 @@ public class ReceivingAddressActivity extends BaseActivity implements OnItemMenu
     //更新删除后的地址
     @Subscribe
     public void deleteAddress(ReceivingAddressBean.Address address) {
-        mAdapter.getData().remove(address);
-        mAdapter.notifyDataSetChanged();
+        mAdapter.remove(vm.position);
+        if (mAdapter.getData().size() == 0) {
+            flEmpty.setVisibility(View.VISIBLE);
+            flContent.setVisibility(View.INVISIBLE);
+        }
     }
 }

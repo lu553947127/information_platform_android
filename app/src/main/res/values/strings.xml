@@ -737,5 +737,6 @@
     <string name="go_setting">去设置</string>
     <string name="delete">删除</string>
     <string name="optional">选填</string>
+    <string name="delete_address">确认删除此收货地址</string>
 
 </resources>

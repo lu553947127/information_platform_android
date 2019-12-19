@@ -19,7 +19,9 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adminManage.adapter.SelectorAreaFirstAdapter;
 import com.shuangduan.zcy.adminManage.adapter.SelectorAreaSecondAdapter;
 import com.shuangduan.zcy.base.BaseActivity;
+import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.BottomSheetDialogs;
+import com.shuangduan.zcy.dialog.CustomDialog;
 import com.shuangduan.zcy.model.bean.CityBean;
 import com.shuangduan.zcy.model.bean.ProvinceBean;
 import com.shuangduan.zcy.model.bean.ReceivingAddressBean;
@@ -149,7 +151,17 @@ public class EditReceivingAddressActivity extends BaseActivity {
                 dialog.show();
                 break;
             case R.id.tv_bar_right:
-                vm.deleteAddress(mAddress.id);
+                new CustomDialog(this)
+                        .setTip(getString(R.string.delete_address))
+                        .setCallBack(new BaseDialog.CallBack() {
+                            @Override
+                            public void cancel() {
+                            }
+                            @Override
+                            public void ok(String s) {
+                                vm.deleteAddress(mAddress.id);
+                            }
+                        }).showDialog();
                 break;
             case R.id.tv_save:
                 //默认状态
