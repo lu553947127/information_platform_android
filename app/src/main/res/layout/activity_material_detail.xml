@@ -368,25 +368,56 @@
                 android:id="@+id/ll_collect"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:orientation="vertical"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="20dp"
                 android:background="@drawable/selector_bg_custom">
 
                 <ImageView
                     android:id="@+id/iv_collect"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:layout_gravity="center_vertical" />
+                    android:layout_gravity="center"
+                    android:src="@drawable/icon_new_collection"/>
 
                 <TextView
                     android:id="@+id/tv_collect"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="5dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="5dp"
                     android:text="@string/collection"
                     android:textColor="@color/colorStatusBar"
-                    android:textSize="15sp" />
+                    android:textSize="11sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_chat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/ll_collect"
+                android:orientation="vertical"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/selector_bg_custom">
+
+                <ImageView
+                    android:id="@+id/iv_chat"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/icon_new_chat"/>
+
+                <TextView
+                    android:id="@+id/tv_chat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:text="商家"
+                    android:textColor="@color/colorStatusBar"
+                    android:textSize="11sp" />
 
             </LinearLayout>
 
@@ -395,9 +426,9 @@
                 style="@style/BtnConfirm"
                 android:layout_width="match_parent"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginRight="14dp"
-                android:layout_toRightOf="@+id/ll_collect"
+                android:layout_toRightOf="@+id/ll_chat"
                 android:text="@string/format_reserve" />
         </RelativeLayout>
     </LinearLayout>

@@ -1538,7 +1538,7 @@ public interface ApiService {
             @Field("user_id") int userId,
             @Field("id") int id,
             @Field("remark") String remark,
-            @Field("buy_stock") long buyStock,
+            @Field("buy_stock") double buyStock,
             @Field("lease_start_time") String leaseStartTime,
             @Field("lease_end_time") String leaseEndTime,
             @Field("address_id") int address_id

@@ -18,6 +18,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.TimeUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -132,7 +133,7 @@ public class MaterialPlaceOrderActivity extends BaseActivity {
     private double  price, guidance_price;
     private MaterialDetailBean materialDetail;
     //单位 ,租期开始时间  ,租期结束时间
-    private String unit,leaseStartTime, leaseEndTime;
+    private String leaseStartTime, leaseEndTime;
     private BottomSheetDialogs btn_dialog;
 
     @Override
@@ -161,7 +162,6 @@ public class MaterialPlaceOrderActivity extends BaseActivity {
                 rlNumber.setVisibility(View.VISIBLE);
                 break;
             case 2://设备
-                materialDetailVm.buyStock = 1;
                 llEquipmentNum.setVisibility(View.VISIBLE);
                 materialDetailVm.getEquipmentDetail(getIntent().getIntExtra(CustomConfig.MATERIAL_ID, 0));
                 rlNumber.setVisibility(View.GONE);
@@ -175,6 +175,9 @@ public class MaterialPlaceOrderActivity extends BaseActivity {
                 llAddressEmpty.setVisibility(View.VISIBLE);
                 materialDetailVm.address_id = 0;
             }else {
+                if (materialDetailVm.address_id != 0){
+                    return;
+                }
                 llAddress.setVisibility(View.VISIBLE);
                 llAddressEmpty.setVisibility(View.GONE);
                 materialDetailVm.address_id = item.list.get(0).id;
@@ -212,12 +215,20 @@ public class MaterialPlaceOrderActivity extends BaseActivity {
                     String.format(getString(R.string.format_material_price), materialDetailBean.getGuidance_price(), "天") :
                     String.format(getString(R.string.format_material_price), materialDetailBean.getGuidance_price(), materialDetailBean.getUnit()));
             tvSpec.setText("规格："+materialDetailBean.getSpec());
+            tvSpec.setVisibility(StringUtils.isTrimEmpty(materialDetailBean.getSpec()) ? View.GONE : View.VISIBLE);
             llLease.setVisibility(materialDetail.getMethod() == 1 ? View.VISIBLE : View.GONE);
             tvUnit.setText(materialDetailBean.getUnit());
             tvSupplyMethod.setText(materialDetailBean.getMethod() == 1 ? "出租" : "出售");
             guidance_price = Double.parseDouble(materialDetailBean.getGuidance_price());
-            unit = materialDetailBean.getUnit();
-            getGuidancePrice(materialDetailVm.buyStock);
+
+            switch (type){
+                case 1://周转材料
+                    getGuidancePrice(materialDetailVm.buyStock);
+                    break;
+                case 2://设备
+                    getGuidancePriceInt(materialDetailVm.buyStockEquipment);
+                    break;
+            }
             material_id = materialDetailBean.getId();
         });
 
@@ -225,12 +236,17 @@ public class MaterialPlaceOrderActivity extends BaseActivity {
         materialDetailVm.mutableLiveAddOrder.observe(this, materialAddBean -> {
             Bundle bundle = new Bundle();
             bundle.putString("order_id", materialAddBean.getOrder_id());
-            bundle.putInt(CustomConfig.MATERIALS_TYPE, CustomConfig.FRP);
+            switch (type){
+                case 1://周转材料
+                    bundle.putInt(CustomConfig.MATERIALS_TYPE, CustomConfig.FRP);
+                    break;
+                case 2://设备
+                    bundle.putInt(CustomConfig.MATERIALS_TYPE, CustomConfig.EQUIPMENT);
+                    break;
+            }
             ActivityUtils.startActivity(bundle, MaterialOrderSuccessActivity.class);
             finish();
         });
-
-        addressVm.addressList();
     }
 
 
@@ -251,10 +267,10 @@ public class MaterialPlaceOrderActivity extends BaseActivity {
                     ToastUtils.showShort("请先选择租赁时间");
                     return;
                 }
-                if (materialDetailVm.buyStock > 1){
-                    materialDetailVm.buyStock = materialDetailVm.buyStock - 1;
-                    tvNum.setText(String.valueOf(materialDetailVm.buyStock));
-                    getGuidancePrice(materialDetailVm.buyStock);
+                if (materialDetailVm.buyStockEquipment > 1){
+                    materialDetailVm.buyStockEquipment = materialDetailVm.buyStockEquipment - 1;
+                    tvNum.setText(String.valueOf(materialDetailVm.buyStockEquipment));
+                    getGuidancePriceInt(materialDetailVm.buyStockEquipment);
                 }else {
                     ToastUtils.showShort("亲，不能再减少了");
                 }
@@ -268,9 +284,9 @@ public class MaterialPlaceOrderActivity extends BaseActivity {
                     ToastUtils.showShort("请先选择租赁时间");
                     return;
                 }
-                materialDetailVm.buyStock = materialDetailVm.buyStock + 1;
-                tvNum.setText(String.valueOf(materialDetailVm.buyStock));
-                getGuidancePrice(materialDetailVm.buyStock);
+                materialDetailVm.buyStockEquipment = materialDetailVm.buyStockEquipment + 1;
+                tvNum.setText(String.valueOf(materialDetailVm.buyStockEquipment));
+                getGuidancePriceInt(materialDetailVm.buyStockEquipment);
                 break;
             case R.id.tv_submission://提交预订单
                 if (materialDetailVm.address_id == 0){
@@ -278,10 +294,21 @@ public class MaterialPlaceOrderActivity extends BaseActivity {
                     return;
                 }
 
-                if (materialDetailVm.buyStock == 0){
-                    ToastUtils.showShort("购买数量不能为空");
-                    return;
+                switch (type){
+                    case 1://周转材料
+                        if (materialDetailVm.buyStock == 0){
+                            ToastUtils.showShort("购买数量不能为空");
+                            return;
+                        }
+                        break;
+                    case 2://设备
+                        if (materialDetailVm.buyStockEquipment == 0){
+                            ToastUtils.showShort("购买数量不能为空");
+                            return;
+                        }
+                        break;
                 }
+
                 if (materialDetail.getMethod() == 1 && StringUtils.isTrimEmpty(leaseStartTime)) {
                     ToastUtils.showShort("请选择租赁开始时间");
                     return;
@@ -351,7 +378,7 @@ public class MaterialPlaceOrderActivity extends BaseActivity {
                 xEditText.setKeyListener(DigitsKeyListener.getInstance("0123456789."));
                 break;
             case 2://设备
-                xEditText.setText(String.valueOf(materialDetailVm.buyStock));
+                xEditText.setText(String.valueOf(materialDetailVm.buyStockEquipment));
                 xEditText.setKeyListener(DigitsKeyListener.getInstance("0123456789"));
                 break;
         }
@@ -378,11 +405,19 @@ public class MaterialPlaceOrderActivity extends BaseActivity {
                 ToastUtils.showShort("请先选择租赁时间");
                 return;
             }
-            materialDetailVm.buyStock = Long.parseLong(xEditText.getText().toString());
-            tvNum.setText(String.valueOf(materialDetailVm.buyStock));
-            tvTurnoverNum.setText(String.valueOf(materialDetailVm.buyStock));
-            tvTurnoverNum.setTextColor(getResources().getColor(R.color.colorTv));
-            getGuidancePrice(materialDetailVm.buyStock);
+
+            switch (type){
+                case 1://周转材料
+                    materialDetailVm.buyStock = Double.parseDouble(xEditText.getText().toString());
+                    getGuidancePrice(materialDetailVm.buyStock);
+                    tvTurnoverNum.setText(String.valueOf(materialDetailVm.buyStock));
+                    tvTurnoverNum.setTextColor(getResources().getColor(R.color.colorTv));
+                    break;
+                case 2://设备
+                    materialDetailVm.buyStockEquipment = Long.parseLong(xEditText.getText().toString());
+                    getGuidancePriceInt(materialDetailVm.buyStockEquipment);
+                    break;
+            }
             btn_dialog.dismiss();
         });
         //EditTextView 搜索
@@ -397,11 +432,18 @@ public class MaterialPlaceOrderActivity extends BaseActivity {
                 }else {
                     //关闭软键盘
                     KeyboardUtil.closeKeyboard(this);
-                    materialDetailVm.buyStock = Long.parseLong(xEditText.getText().toString());
-                    tvNum.setText(String.valueOf(materialDetailVm.buyStock));
-                    tvTurnoverNum.setText(String.valueOf(materialDetailVm.buyStock));
-                    tvTurnoverNum.setTextColor(getResources().getColor(R.color.colorTv));
-                    getGuidancePrice(materialDetailVm.buyStock);
+                    switch (type){
+                        case 1://周转材料
+                            materialDetailVm.buyStock = Double.parseDouble(xEditText.getText().toString());
+                            getGuidancePrice(materialDetailVm.buyStock);
+                            tvTurnoverNum.setText(String.valueOf(materialDetailVm.buyStock));
+                            tvTurnoverNum.setTextColor(getResources().getColor(R.color.colorTv));
+                            break;
+                        case 2://设备
+                            materialDetailVm.buyStockEquipment = Long.parseLong(xEditText.getText().toString());
+                            getGuidancePriceInt(materialDetailVm.buyStockEquipment);
+                            break;
+                    }
                     btn_dialog.dismiss();
                 }
                 return true;
@@ -417,7 +459,7 @@ public class MaterialPlaceOrderActivity extends BaseActivity {
     private SimpleDateFormat sdf;
     private Calendar c;
     @SuppressLint("SimpleDateFormat")
-    private void showTimeDialog(TextView tv, int type) {
+    private void showTimeDialog(TextView tv, int typeTime) {
         try {
             if (sdf == null || c == null) {
                 sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -432,7 +474,7 @@ public class MaterialPlaceOrderActivity extends BaseActivity {
         CustomDatePicker customDatePicker = new CustomDatePicker(this, time -> {
             tv.setText(time);
             tv.setTextColor(getResources().getColor(R.color.colorTv));
-            if (type == 0) leaseStartTime = time;
+            if (typeTime == 0) leaseStartTime = time;
             else leaseEndTime = time;
 
             if (!StringUtils.isTrimEmpty(leaseStartTime) && !StringUtils.isTrimEmpty(leaseEndTime)) {
@@ -444,11 +486,19 @@ public class MaterialPlaceOrderActivity extends BaseActivity {
                     tv.setTextColor(getResources().getColor(R.color.color_DDDDDD));
                     return;
                 }
-                getGuidancePrice(materialDetailVm.buyStock);
+
+                switch (type){
+                    case 1://周转材料
+                        getGuidancePrice(materialDetailVm.buyStock);
+                        break;
+                    case 2://设备
+                        getGuidancePriceInt(materialDetailVm.buyStockEquipment);
+                        break;
+                }
             }
         }, "yyyy-MM-dd", TimeUtils.getNowString(), "2040-12-31");
         customDatePicker.showSpecificTime(false);
-        if (type == 0 || StringUtils.isTrimEmpty(leaseStartTime)) {
+        if (typeTime == 0 || StringUtils.isTrimEmpty(leaseStartTime)) {
             customDatePicker.show(TimeUtils.getNowString());
         } else {
             customDatePicker.show(sdf.format(c.getTime()));
@@ -456,17 +506,33 @@ public class MaterialPlaceOrderActivity extends BaseActivity {
     }
 
     //计算价格和数量
-    private void getGuidancePrice(long num) {
+    private void getGuidancePrice(double num) {
         if (materialDetail.getMethod() == 1) {
             price = num * day * guidance_price;
         } else {
             price = num * guidance_price;
         }
         tvNumber.setText("共采购" + num + materialDetail.getUnit() + "，共计");
-        tvPrice.setText(DigitUtils.doubleToString(price));
-
         tvNumber2.setText("共" + num + materialDetail.getUnit() + " 小计");
+        tvPrice.setText(DigitUtils.doubleToString(price));
         tvPrice2.setText(DigitUtils.doubleToString(price));
+    }
+
+    //计算价格和数量
+    private void getGuidancePriceInt(long num) {
+        if (materialDetail.getMethod() == 1) {
+            price = num * day * guidance_price;
+        } else {
+            price = num * guidance_price;
+        }
+        tvNum.setText(String.valueOf(num));
+        tvNumber.setText("共采购" + num + materialDetail.getUnit() + "，共计");
+        tvNumber2.setText("共" + num + materialDetail.getUnit() + " 小计");
+        tvPrice.setText(DigitUtils.doubleToString(price));
+        tvPrice2.setText(DigitUtils.doubleToString(price));
+        LogUtils.e(price);
+        LogUtils.e(day);
+        LogUtils.e(guidance_price);
     }
 
     @Subscribe
@@ -479,5 +545,11 @@ public class MaterialPlaceOrderActivity extends BaseActivity {
         tvAddress.setText(item.province+item.city+item.address);
         llAddress.setVisibility(View.VISIBLE);
         llAddressEmpty.setVisibility(View.GONE);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        addressVm.addressList();
     }
 }

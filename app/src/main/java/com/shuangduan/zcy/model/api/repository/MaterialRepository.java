@@ -101,7 +101,7 @@ public class MaterialRepository extends BaseRepository {
     }
 
     //基建物资---周转材料预定订单
-    public void getAddMaterialOrder(MutableLiveData<MaterialAddBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int material_id, String remark, long buyStock, String leaseStartTime, String leaseEndTime,int address_id) {
+    public void getAddMaterialOrder(MutableLiveData<MaterialAddBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int material_id, String remark, double buyStock, String leaseStartTime, String leaseEndTime,int address_id) {
         request(apiService.getAddMaterialOrder(userId, material_id, remark, buyStock, leaseStartTime, leaseEndTime,address_id)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 

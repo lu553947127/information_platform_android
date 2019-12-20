@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.BrowsePeopleAdapter;
@@ -43,6 +44,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.Conversation;
 
 /**
  * @author 徐玉 QQ:876885613
@@ -153,7 +156,7 @@ public class MaterialEquipmentDetailActivity extends BaseActivity {
             tvSupplyMethod.setText(materialDetailBean.getMethod() == 1 ? "出租" : "出售");
 
             tvSalesVolume.setText(String.format(getString(R.string.format_sales_volume), materialDetailBean.getSales_volume()));
-            tvSpec.setText(String.format(getString(R.string.format_spec), materialDetailBean.getSpec()));
+            tvSpec.setText(StringUtils.isTrimEmpty(materialDetailBean.getSpec()) ? "规格：暂无" : String.format(getString(R.string.format_spec), materialDetailBean.getSpec()));
             tvCompany.setText("供应商：" + materialDetailBean.getCompany());
             tvAddressList.setText(materialDetailBean.getAddress());
 
@@ -217,7 +220,7 @@ public class MaterialEquipmentDetailActivity extends BaseActivity {
         materialDetailVm.getEquipmentDetail(getIntent().getIntExtra(CustomConfig.MATERIAL_ID, 0));
     }
 
-    @OnClick({R.id.iv_bar_back, R.id.tv_enclosure, R.id.tv_tel, R.id.ll_collect, R.id.tv_reserve})
+    @OnClick({R.id.iv_bar_back, R.id.tv_enclosure, R.id.tv_tel, R.id.ll_collect,R.id.ll_chat, R.id.tv_reserve})
     void onClick(View v) {
         Bundle bundle = new Bundle();
         switch (v.getId()) {
@@ -273,6 +276,9 @@ public class MaterialEquipmentDetailActivity extends BaseActivity {
                 } else {
                     materialDetailVm.equipmentCollection();//收藏
                 }
+                break;
+            case R.id.ll_chat://联系商家
+                RongIM.getInstance().startConversation(this, Conversation.ConversationType.SYSTEM, "18", "官方消息");
                 break;
             case R.id.tv_reserve:
                 bundle.putInt(CustomConfig.MATERIAL_ID, getIntent().getIntExtra(CustomConfig.MATERIAL_ID, 0));

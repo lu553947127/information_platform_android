@@ -45,7 +45,8 @@ public class MaterialDetailVm extends BaseViewModel {
     public MutableLiveData mutableLiveDataCancel;
     public int id, supplier_id,address_id;
 
-    public long buyStock;
+    public double buyStock;
+    public long buyStockEquipment = 1;
 
     public AuthGroupBean authGroup;
 
@@ -118,7 +119,7 @@ public class MaterialDetailVm extends BaseViewModel {
 
     //基建物资---设备物资预定订单
     public void getAddEquipmentOrder(int materialId, String remark,String leaseStartTime, String leaseEndTime) {
-        new MaterialRepository().getAddEquipmentOrder(mutableLiveAddOrder, pageStateLiveData, userId, materialId, remark, buyStock,leaseStartTime,leaseEndTime,address_id);
+        new MaterialRepository().getAddEquipmentOrder(mutableLiveAddOrder, pageStateLiveData, userId, materialId, remark, buyStockEquipment,leaseStartTime,leaseEndTime,address_id);
     }
 
     //物资预定---周转材料详情
