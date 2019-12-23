@@ -66,9 +66,10 @@
             android:layout_marginLeft="37dp"
             android:background="@null"
             android:hint="@string/tel_code_hint"
+            android:inputType="number"
+            android:maxLength="11"
             android:textColor="@color/colorTv"
             android:textColorHint="@color/colorTvHint"
-            android:inputType="number"
             android:textSize="@dimen/tvFirstSize" />
     </LinearLayout>
 
