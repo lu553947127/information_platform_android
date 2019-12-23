@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,25 +17,33 @@ import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
+import com.shuangduan.zcy.adminManage.adapter.SelectorAreaFirstAdapter;
+import com.shuangduan.zcy.adminManage.adapter.SelectorAreaSecondAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BaseBottomSheetDialog;
 import com.shuangduan.zcy.dialog.BaseDialog;
+import com.shuangduan.zcy.dialog.BottomSheetDialogs;
 import com.shuangduan.zcy.dialog.CustomDialog;
 import com.shuangduan.zcy.dialog.ScaleDialog;
 import com.shuangduan.zcy.model.api.PageState;
+import com.shuangduan.zcy.model.bean.CityBean;
+import com.shuangduan.zcy.model.bean.ProvinceBean;
 import com.shuangduan.zcy.model.event.AddressEvent;
 import com.shuangduan.zcy.model.event.MultiAreaEvent;
 import com.shuangduan.zcy.utils.image.PictureEnlargeUtils;
 import com.shuangduan.zcy.utils.matisse.Glide4Engine;
 import com.shuangduan.zcy.view.MultiAreaActivity;
 import com.shuangduan.zcy.view.photo.CameraActivity;
+import com.shuangduan.zcy.vm.MultiAreaVm;
 import com.shuangduan.zcy.vm.PermissionVm;
 import com.shuangduan.zcy.vm.SupplierVm;
 import com.shuangduan.zcy.vm.UploadPhotoVm;
@@ -49,6 +58,7 @@ import org.greenrobot.eventbus.Subscribe;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -81,6 +91,8 @@ public class SupplierJoinActivity extends BaseActivity {
     EditText edtCompany;
     @BindView(R.id.tv_scale)
     TextView tvScale;
+    @BindView(R.id.tv_address)
+    TextView tvAddress;
     @BindView(R.id.edt_address_detail)
     EditText edtAddressDetail;
     @BindView(R.id.tv_service_area)
@@ -107,6 +119,7 @@ public class SupplierJoinActivity extends BaseActivity {
     private int scale = 0;
     private String type, authorization,logo;
     private BaseBottomSheetDialog baseBottomSheetDialog;
+    private MultiAreaVm areaVm;
 
     @Override
     protected int initLayoutRes() {
@@ -144,6 +157,7 @@ public class SupplierJoinActivity extends BaseActivity {
         photoSet();
 
         baseBottomSheetDialog =new BaseBottomSheetDialog(this,rxPermissions,permissionVm);
+        getBottomSheetDialog(R.layout.dialog_depositing_place);
     }
 
     private void initPhoto() {
@@ -194,6 +208,16 @@ public class SupplierJoinActivity extends BaseActivity {
                     hideLoading();
                     break;
             }
+        });
+
+        areaVm = ViewModelProviders.of(this).get(MultiAreaVm.class);
+        areaVm.provinceLiveData.observe(this, provinceBeans -> {
+            provinceList = provinceBeans;
+            provinceAdapter.setNewData(provinceList);
+        });
+        areaVm.cityLiveData.observe(this, cityBeans -> {
+            cityList = cityBeans;
+            cityAdapter.setNewData(cityList);
         });
     }
 
@@ -289,7 +313,7 @@ public class SupplierJoinActivity extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.iv_bar_back, R.id.tv_confirm, R.id.tv_scale, R.id.tv_service_area, R.id.iv_authorization, R.id.tv_authorization, R.id.iv_logo})
+    @OnClick({R.id.iv_bar_back, R.id.tv_confirm, R.id.tv_scale, R.id.tv_service_area, R.id.iv_authorization, R.id.tv_authorization, R.id.iv_logo,R.id.tv_address})
     void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_bar_back:
@@ -337,6 +361,9 @@ public class SupplierJoinActivity extends BaseActivity {
                             }
                         }).showDialog();
                 break;
+            case R.id.tv_address:
+                dialog.show();
+                break;
         }
     }
 
@@ -351,5 +378,57 @@ public class SupplierJoinActivity extends BaseActivity {
     public void onEventServiceCity(MultiAreaEvent event) {
         supplierVm.serviceArea.postValue(event);
         tvServiceArea.setText(event.getStringResult());
+    }
+
+    private List<ProvinceBean> provinceList = new ArrayList<>();
+    private List<CityBean> cityList = new ArrayList<>();
+    private SelectorAreaFirstAdapter provinceAdapter;
+    private SelectorAreaSecondAdapter cityAdapter;
+    private BottomSheetDialogs dialog;
+    //省市弹框
+    private void getBottomSheetDialog(int layoutRes) {
+        //底部滑动对话框
+        dialog = new BottomSheetDialogs(Objects.requireNonNull(this), R.style.BottomSheetStyle);
+        //设置自定view
+        View dialog_view = this.getLayoutInflater().inflate(layoutRes, null);
+        //把布局添加进去
+        dialog.setContentView(dialog_view);
+        //去除系统默认的背景色
+        try {
+            // hack bg color of the BottomSheetDialog
+            ViewGroup parent = (ViewGroup) dialog_view.getParent();
+            parent.setBackgroundResource(android.R.color.transparent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        RecyclerView rvProvince = dialog.findViewById(R.id.rv_province);
+        RecyclerView rvCity = dialog.findViewById(R.id.rv_city);
+        Objects.requireNonNull(rvProvince).setLayoutManager(new LinearLayoutManager(this));
+        Objects.requireNonNull(rvCity).setLayoutManager(new LinearLayoutManager(this));
+        provinceAdapter = new SelectorAreaFirstAdapter(R.layout.adapter_selector_area_first, null);
+        cityAdapter = new SelectorAreaSecondAdapter(R.layout.adapter_selector_area_second, null);
+        rvProvince.setAdapter(provinceAdapter);
+        rvCity.setAdapter(cityAdapter);
+        provinceAdapter.setOnItemClickListener((adapter, view, position) -> {
+            areaVm.id = provinceList.get(position).getId();
+            areaVm.provinceResult = provinceList.get(position).getName();
+            areaVm.getCity();
+            provinceAdapter.setIsSelect(provinceList.get(position).getId());
+        });
+        cityAdapter.setOnItemClickListener((adapter, view, position) -> {
+            areaVm.city_id = cityList.get(position).getId();
+            cityAdapter.setIsSelect(cityList.get(position).getId());
+            areaVm.cityResult = cityList.get(position).getName();
+            tvAddress.setText(areaVm.provinceResult + " " + areaVm.cityResult);
+            dialog.dismiss();
+        });
+        areaVm.getProvince();
+        if (areaVm.id != 0) {
+            provinceAdapter.setIsSelect(areaVm.id);
+            areaVm.getCity();
+        }
+        if (areaVm.city_id != 0) {
+            cityAdapter.setIsSelect(areaVm.city_id);
+        }
     }
 }

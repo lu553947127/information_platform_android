@@ -51,8 +51,10 @@ import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BottomSheetDialogs;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.event.LocationEvent;
+import com.shuangduan.zcy.utils.image.CompressUtils;
 import com.shuangduan.zcy.utils.image.PictureEnlargeUtils;
 import com.shuangduan.zcy.utils.matisse.Glide4Engine;
+import com.shuangduan.zcy.utils.matisse.MatisseCamera;
 import com.shuangduan.zcy.view.photo.CameraActivity;
 import com.shuangduan.zcy.view.release.ReleaseAreaSelectActivity;
 import com.shuangduan.zcy.vm.UploadPhotoVm;
@@ -690,7 +692,6 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
     //获取权限
     public static final int CAMERA = 111;
     public static final int PHOTO = 222;
-
     private void getPermissions() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager
@@ -725,10 +726,16 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
         if (resultCode == 103) {
             ToastUtils.showShort("您没有打开相机权限");
         }
+
         //从相册返回的数据
         if (requestCode == PHOTO && resultCode == RESULT_OK) {
-            LogUtils.i(Matisse.obtainPathResult(Objects.requireNonNull(data)).get(0));
-            uploadPhotoVm.upload(Matisse.obtainPathResult(data).get(0));
+            if (MatisseCamera.isAndroidQ) {
+                LogUtils.e(Matisse.obtainResult(Objects.requireNonNull(data)).get(0));
+                uploadPhotoVm.upload(CompressUtils.getRealFilePath(this,Matisse.obtainResult(data).get(0)));
+            }else {
+                LogUtils.e(Matisse.obtainPathResult(Objects.requireNonNull(data)).get(0));
+                uploadPhotoVm.upload(Matisse.obtainPathResult(data).get(0));
+            }
         }
     }
 

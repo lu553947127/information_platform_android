@@ -134,7 +134,6 @@ public class MaterialPlaceOrderActivity extends BaseActivity {
     private MaterialDetailBean materialDetail;
     //单位 ,租期开始时间  ,租期结束时间
     private String leaseStartTime, leaseEndTime;
-    private BottomSheetDialogs btn_dialog;
 
     @Override
     protected int initLayoutRes() {
@@ -351,7 +350,7 @@ public class MaterialPlaceOrderActivity extends BaseActivity {
     @SuppressLint("RestrictedApi,InflateParams")
     private void getBottomSheetDialog() {
         //底部滑动对话框
-        btn_dialog = new BottomSheetDialogs(this, R.style.BottomSheetStyle);
+        BottomSheetDialogs btn_dialog = new BottomSheetDialogs(this, R.style.BottomSheetStyle);
         //设置自定view
         View dialog_view = this.getLayoutInflater().inflate(R.layout.dialog_search_edit, null);
         //把布局添加进去
