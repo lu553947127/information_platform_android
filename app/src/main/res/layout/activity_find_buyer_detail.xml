@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -10,6 +10,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
         android:scrollbars="none">
 
         <LinearLayout
@@ -296,4 +297,14 @@
 
     </androidx.core.widget.NestedScrollView>
 
-</LinearLayout>
+    <ImageView
+        android:id="@+id/iv_cancel"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:visibility="gone"
+        android:src="@drawable/icon_cancel_release"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="53dp"
+        android:layout_marginRight="10dp"/>
+</RelativeLayout>

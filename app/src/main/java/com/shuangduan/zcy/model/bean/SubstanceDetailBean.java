@@ -54,6 +54,7 @@ public class SubstanceDetailBean {
          */
 
         private int id;
+        private int user_id;
         private String material_name;
         private String count;
         private String real_name;
@@ -64,6 +65,7 @@ public class SubstanceDetailBean {
         private String price;
         private String start_time;
         private String end_time;
+        //是否付费 0否 1是
         private int is_pay;
         private String remark;//找物资详情描述
         private int status;
@@ -85,6 +87,10 @@ public class SubstanceDetailBean {
                     ", is_pay=" + is_pay +
                     ", remark='" + remark + '\'' +
                     '}';
+        }
+
+        public int getUser_id() {
+            return user_id;
         }
 
         public int getId() {

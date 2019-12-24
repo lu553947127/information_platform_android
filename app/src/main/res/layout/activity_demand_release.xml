@@ -689,7 +689,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:layout_marginLeft="101dp"
-                    android:paddingTop="16dp"
+                    android:paddingTop="10dp"
                     android:paddingBottom="16dp"
                     android:background="@null"
                     android:textColorHint="@color/colorTvHint"

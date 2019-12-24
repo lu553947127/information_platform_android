@@ -2,6 +2,7 @@ package com.shuangduan.zcy.view.mine.demand;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -12,8 +13,11 @@ import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
+import com.shuangduan.zcy.dialog.BaseDialog;
+import com.shuangduan.zcy.dialog.CustomDialog;
 import com.shuangduan.zcy.model.bean.FindRelationshipReleaseBean;
 import com.shuangduan.zcy.utils.BarUtils;
+import com.shuangduan.zcy.view.mine.set.SetActivity;
 import com.shuangduan.zcy.vm.DemandRelationshipVm;
 
 import butterknife.BindView;
@@ -56,6 +60,12 @@ public class FindRelationshipReleaseDetailActivity extends BaseActivity {
     LinearLayout llFindRelationShip;
     @BindView(R.id.marquee)
     TextView tvMarquee;
+    @BindView(R.id.iv_cancel)
+    ImageView ivCancel;
+    @BindView(R.id.tv_cancel)
+    TextView tvCancel;
+
+    private DemandRelationshipVm demandRelationshipVm;
 
     @Override
     protected int initLayoutRes() {
@@ -72,7 +82,7 @@ public class FindRelationshipReleaseDetailActivity extends BaseActivity {
         BarUtils.setStatusBarColorRes(fakeStatusBar, getResources().getColor(R.color.colorPrimary));
         tvBarTitle.setText(getString(R.string.find_relationship_detail));
 
-        DemandRelationshipVm demandRelationshipVm = ViewModelProviders.of(this).get(DemandRelationshipVm.class);
+        demandRelationshipVm = ViewModelProviders.of(this).get(DemandRelationshipVm.class);
         demandRelationshipVm.id = getIntent().getIntExtra(CustomConfig.DEMAND_ID, 0);
         demandRelationshipVm.relationshipReleaseDetailLiveData.observe(this, findRelationshipReleaseBean -> {
             tvTitle.setText(findRelationshipReleaseBean.getTitle());
@@ -82,20 +92,30 @@ public class FindRelationshipReleaseDetailActivity extends BaseActivity {
             switch (findRelationshipReleaseBean.getReply_status()) {
                 case 1://进行中
                     tvIng.setVisibility(View.VISIBLE);
-                    tvError.setVisibility(View.GONE);
+                    ivCancel.setVisibility(View.VISIBLE);
+//                    tvError.setVisibility(View.GONE);
                     break;
                 case 2://有回复
-                    tvIng.setVisibility(View.GONE);
-                    tvError.setVisibility(View.GONE);
+//                    tvIng.setVisibility(View.GONE);
+//                    tvError.setVisibility(View.GONE);
+//                    ivCancel.setVisibility(View.GONE);
                     FindRelationshipReleaseBean.ReplyBean reply = findRelationshipReleaseBean.getReply();
                     tvName.setText(reply.getName());
                     tvTel.setText(reply.getTel());
                     tvRemarks.setText(reply.getIntro());
                     break;
                 case 3://过期
-                    tvIng.setVisibility(View.GONE);
+//                    tvIng.setVisibility(View.GONE);
+//                    ivCancel.setVisibility(View.GONE);
+//                    tvCancel.setVisibility(View.GONE);
                     tvError.setVisibility(View.VISIBLE);
                     break;
+//                case 4:
+//                    tvIng.setVisibility(View.GONE);
+//                    ivCancel.setVisibility(View.GONE);
+//                    tvError.setVisibility(View.GONE);
+//                    tvCancel.setVisibility(View.VISIBLE);
+//                    break;
             }
         });
         demandRelationshipVm.pageStateLiveData.observe(this, s -> {
@@ -103,15 +123,35 @@ public class FindRelationshipReleaseDetailActivity extends BaseActivity {
         });
         demandRelationshipVm.releaseDetail();
         //提示 只显示一次
-        if (SPUtils.getInstance().getInt("isFindRelationShip")==-1){
-            SPUtils.getInstance().put("isFindRelationShip",1);
+        if (SPUtils.getInstance().getInt("isFindRelationShip") == -1) {
+            SPUtils.getInstance().put("isFindRelationShip", 1);
             llFindRelationShip.setVisibility(View.VISIBLE);
             tvMarquee.setSelected(true);
-        }else {
+        } else {
             llFindRelationShip.setVisibility(View.GONE);
         }
     }
 
-    @OnClick(R.id.iv_bar_back)
-    void onClick(){finish();}
+    @OnClick({R.id.iv_bar_back, R.id.iv_cancel})
+    void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.iv_bar_back:
+                finish();
+                break;
+            case R.id.iv_cancel:
+                new CustomDialog(this)
+                        .setTip(getString(R.string.cancel_release))
+                        .setCallBack(new BaseDialog.CallBack() {
+                            @Override
+                            public void cancel() {
+                            }
+
+                            @Override
+                            public void ok(String s) {
+//                                demandRelationshipVm.cancelRelease();
+                            }
+                        }).showDialog();
+                break;
+        }
+    }
 }

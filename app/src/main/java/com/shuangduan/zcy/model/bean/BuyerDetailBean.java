@@ -48,6 +48,7 @@ public class BuyerDetailBean {
          */
 
         private int id;
+        private int user_id;
         private String material_name;
         private String count;
         private String real_name;
@@ -59,6 +60,7 @@ public class BuyerDetailBean {
         private int way;
         private String start_time;
         private String end_time;
+
         private int is_pay;
         private String remark;//找买家详情
         private int status;
@@ -69,6 +71,14 @@ public class BuyerDetailBean {
 
         public void setId(int id) {
             this.id = id;
+        }
+
+        public int getUser_id() {
+            return user_id;
+        }
+
+        public void setUser_id(int user_id) {
+            this.user_id = user_id;
         }
 
         public String getMaterial_name() {
