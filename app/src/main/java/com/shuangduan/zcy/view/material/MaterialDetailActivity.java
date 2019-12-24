@@ -45,7 +45,11 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.rong.imkit.RongIM;
+import io.rong.imlib.IRongCallback;
+import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.Message;
+import io.rong.message.RichContentMessage;
 
 /**
  * @author 徐玉 QQ:876885613
@@ -106,9 +110,9 @@ public class MaterialDetailActivity extends BaseActivity {
     TextView tvSupplyMethod;
 
     private MaterialDetailVm materialDetailVm;
-    private String phone, is_collect, enclosure;
+    private String phone, is_collect, enclosure ,unitPrice;
     private List<String> pics;
-    int supplier_id;
+    private MaterialDetailBean materialDetailBean;
 
     @Override
     protected int initLayoutRes() {
@@ -130,6 +134,8 @@ public class MaterialDetailActivity extends BaseActivity {
         materialDetailVm.id = getIntent().getIntExtra(CustomConfig.MATERIAL_ID, 0);
         materialDetailVm.detailLiveData.observe(this, materialDetailBean -> {
             if (materialDetailBean == null) return;
+            this.materialDetailBean = materialDetailBean;
+
             pics = new ArrayList<>();
             ArrayList<String> titles = new ArrayList<>();
             for (MaterialDetailBean.ImagesBean bean : materialDetailBean.getImages()) {
@@ -144,9 +150,10 @@ public class MaterialDetailActivity extends BaseActivity {
                 tvMaterialCategory.setText(materialDetailBean.getMaterialName());
             }
 
-            tvUnitPrice.setText(materialDetailBean.getMethod() == 1 ?
+            unitPrice = materialDetailBean.getMethod() == 1 ?
                     String.format(getString(R.string.format_material_price), materialDetailBean.getGuidance_price(), "天") :
-                    String.format(getString(R.string.format_material_price), materialDetailBean.getGuidance_price(), materialDetailBean.getUnit()));
+                    String.format(getString(R.string.format_material_price), materialDetailBean.getGuidance_price(), materialDetailBean.getUnit());
+            tvUnitPrice.setText(unitPrice);
 
             tvStock.setText(String.format(getString(R.string.format_stock), materialDetailBean.getStock(), materialDetailBean.getUnit()));
 
@@ -163,7 +170,6 @@ public class MaterialDetailActivity extends BaseActivity {
             tvProduct.setText(materialDetailBean.getProduct());
             phone = materialDetailBean.getTel();
             enclosure = materialDetailBean.getEnclosure();
-            supplier_id = materialDetailBean.getSupplier_id();
             tvBrowsePeople.setText(materialDetailBean.getBrowseCount() + "人浏览");
             if (materialDetailBean.getIs_collection().equals("1")) {
                 is_collect = materialDetailBean.getIs_collection();
@@ -270,7 +276,8 @@ public class MaterialDetailActivity extends BaseActivity {
                 }
                 break;
             case R.id.ll_chat://联系商家
-                RongIM.getInstance().startConversation(this, Conversation.ConversationType.SYSTEM, "18", "官方消息");
+//                RongIM.getInstance().startConversation(this, Conversation.ConversationType.SYSTEM, "18", "官方消息");
+                imageContentMessage(materialDetailBean.getMaterialName(),unitPrice,materialDetailBean.getImages().get(0).getUrl(),materialDetailBean.getId(), "117");
                 break;
             case R.id.tv_reserve:
                 bundle.putInt(CustomConfig.MATERIAL_ID, getIntent().getIntExtra(CustomConfig.MATERIAL_ID, 0));
@@ -278,6 +285,35 @@ public class MaterialDetailActivity extends BaseActivity {
                 ActivityUtils.startActivity(bundle, MaterialPlaceOrderActivity.class);
                 break;
         }
+    }
+
+    /**
+     * @param title  图文标题。
+     * @param content 图文内容。
+     * @param imageUrl 图文图片地址。
+     * @param id 物资详情id。
+     * @param targetId 供应商id。
+     */
+    private void imageContentMessage(String title, String content, String imageUrl,int id,String targetId){
+        RichContentMessage richContentMessage = RichContentMessage.obtain(title,content,imageUrl);
+        richContentMessage.setExtra(String.valueOf(id));
+        Message myMessage = Message.obtain(targetId, Conversation.ConversationType.PRIVATE, richContentMessage);
+        RongIM.getInstance().sendMessage(myMessage, null, null, new IRongCallback.ISendMessageCallback() {
+            @Override
+            public void onAttached(Message message) {
+                //消息本地数据库存储成功的回调
+            }
+
+            @Override
+            public void onSuccess(Message message) {
+                //消息通过网络发送成功的回调
+            }
+
+            @Override
+            public void onError(Message message, RongIMClient.ErrorCode errorCode) {
+                //消息发送失败的回调
+            }
+        });
     }
 
     @Subscribe

@@ -17,6 +17,7 @@ import com.blankj.utilcode.util.JsonUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.StringUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.google.gson.Gson;
 
 import com.shuangduan.zcy.R;
@@ -24,6 +25,8 @@ import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.rongyun.bean.RongExtraBean;
+import com.shuangduan.zcy.utils.image.PictureEnlargeUtils;
+import com.shuangduan.zcy.view.material.MaterialDetailActivity;
 import com.shuangduan.zcy.view.mine.demand.FindBuyerDetailActivity;
 import com.shuangduan.zcy.view.mine.demand.FindRelationshipReleaseDetailActivity;
 import com.shuangduan.zcy.view.mine.demand.FindSubstanceDetailActivity;
@@ -44,6 +47,11 @@ import io.rong.imkit.fragment.ConversationFragment;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.UserInfo;
+import io.rong.message.ImageMessage;
+import io.rong.message.LocationMessage;
+import io.rong.message.RichContentMessage;
+import io.rong.message.TextMessage;
+import io.rong.push.notification.PushNotificationMessage;
 
 /**
  * @author 鹿鸿祥 QQ:553947127
@@ -56,7 +64,6 @@ import io.rong.imlib.model.UserInfo;
  * @class describe
  */
 public class IMPrivateChatActivity extends BaseActivity implements RongIM.ConversationClickListener {
-
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
     @BindView(R.id.iv_bar_right)
@@ -176,22 +183,6 @@ public class IMPrivateChatActivity extends BaseActivity implements RongIM.Conver
     public boolean onMessageClick(Context context, View view, Message message) {
         LogUtils.i(message);
         LogUtils.i(message.getContent());
-        //文字接收
-//        if (message.getContent() instanceof TextMessage) {
-//            LogUtils.i(((TextMessage) message.getContent()).getExtra());
-//        }
-        //定位接收
-//        if (message.getContent() instanceof LocationMessage) {
-//            LogUtils.i(((LocationMessage) message.getContent()).getLat());
-//            LogUtils.i(((LocationMessage) message.getContent()).getLng());
-//        }
-        //图片接收
-//        if (message.getContent() instanceof ImageMessage) {
-//            LogUtils.i(((ImageMessage) message.getContent()).getThumUri());
-//            LogUtils.i(((ImageMessage) message.getContent()).getLocalUri());
-//            LogUtils.i(((ImageMessage) message.getContent()).getRemoteUri());
-//            PictureEnlargeUtils.getPictureEnlarge(this, String.valueOf(((ImageMessage) message.getContent()).getRemoteUri()));
-//        }
         //接收的系统消息 根据服务器返回的类型跳转对应的页面
         if (mConversationType == Conversation.ConversationType.SYSTEM) {
             //系统消息的id固定为18
@@ -202,6 +193,7 @@ public class IMPrivateChatActivity extends BaseActivity implements RongIM.Conver
             if (StringUtils.isEmpty(extra)) return false;
             LogUtils.i(extra);
             RongExtraBean extraBean = new Gson().fromJson(extra, RongExtraBean.class);
+            if (extraBean.data == null) return false;
             Bundle bundle = new Bundle();
             switch (extraBean.type) {
                 case 3: //工程信息：%s已通过审核
@@ -265,7 +257,37 @@ public class IMPrivateChatActivity extends BaseActivity implements RongIM.Conver
                     break;
             }
             return true;
-        } else {
+        } else if (mConversationType == Conversation.ConversationType.PRIVATE){
+//            //文字接收
+//            if (message.getContent() instanceof TextMessage) {
+//                LogUtils.i(((TextMessage) message.getContent()).getExtra());
+//            }
+            //图文接收
+            if (message.getContent() instanceof RichContentMessage) {
+                if (!StringUtils.isEmpty(((RichContentMessage) message.getContent()).getExtra())) {
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(CustomConfig.MATERIAL_ID, Integer.parseInt(((RichContentMessage) message.getContent()).getExtra()));
+                    ActivityUtils.startActivity(bundle, MaterialDetailActivity.class);
+                }else {
+                    ToastUtils.showShort("找不到当前物资");
+                }
+                return true;
+            }
+//            //定位接收
+//            if (message.getContent() instanceof LocationMessage) {
+//                LogUtils.i(((LocationMessage) message.getContent()).getLat());
+//                LogUtils.i(((LocationMessage) message.getContent()).getLng());
+//            }
+//            //图片接收
+//            if (message.getContent() instanceof ImageMessage) {
+//                LogUtils.i(((ImageMessage) message.getContent()).getThumUri());
+//                LogUtils.i(((ImageMessage) message.getContent()).getLocalUri());
+//                LogUtils.i(((ImageMessage) message.getContent()).getRemoteUri());
+//                PictureEnlargeUtils.getPictureEnlarge(this, String.valueOf(((ImageMessage) message.getContent()).getRemoteUri()));
+//                return true;
+//            }
+            return false;
+        }else {
             return false;
         }
     }

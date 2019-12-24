@@ -15,7 +15,7 @@ import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.CustomDialog;
 import com.shuangduan.zcy.model.api.PageState;
-import com.shuangduan.zcy.model.event.WxLoginEvent;
+import com.shuangduan.zcy.model.event.WxBindEvent;
 import com.shuangduan.zcy.utils.image.ImageConfig;
 import com.shuangduan.zcy.utils.image.ImageLoader;
 import com.shuangduan.zcy.vm.LoginVm;
@@ -142,7 +142,7 @@ public class ThirdLoginActivity extends BaseActivity {
     }
 
     @Subscribe
-    public void onEventWxLogin(WxLoginEvent event) {
+    public void onEventWxLogin(WxBindEvent event) {
         loginVm.userWechatBind(event.getCode());
     }
 }

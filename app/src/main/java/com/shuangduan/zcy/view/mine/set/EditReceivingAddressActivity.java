@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.BarUtils;
-import com.blankj.utilcode.util.LogUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adminManage.adapter.SelectorAreaFirstAdapter;
 import com.shuangduan.zcy.adminManage.adapter.SelectorAreaSecondAdapter;
@@ -45,8 +44,6 @@ public class EditReceivingAddressActivity extends BaseActivity {
     Toolbar toolbar;
     @BindView(R.id.tv_bar_right)
     TextView tvBarRight;
-
-
     @BindView(R.id.et_name)
     EditText etName;
     @BindView(R.id.et_phone)
@@ -55,15 +52,12 @@ public class EditReceivingAddressActivity extends BaseActivity {
     EditText etCompany;
     @BindView(R.id.tv_area)
     TextView tvArea;
-
     @BindView(R.id.et_address)
     EditText etAddress;
     @BindView(R.id.sv_address)
     SwitchView switchView;
-
     private AddressVm vm;
     private MultiAreaVm areaVm;
-
 
     private List<ProvinceBean> provinceList = new ArrayList<>();
     private List<CityBean> cityList = new ArrayList<>();
@@ -101,6 +95,7 @@ public class EditReceivingAddressActivity extends BaseActivity {
         areaVm = ViewModelProviders.of(this).get(MultiAreaVm.class);
 
         if (mAddress != null) {
+            areaVm.provinceResult = mAddress.province;
             etName.setText(mAddress.name);
             etPhone.setText(mAddress.phone);
             etCompany.setText(mAddress.company);

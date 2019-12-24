@@ -12,6 +12,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.AppConfig;
+import com.shuangduan.zcy.model.event.WxBindEvent;
 import com.shuangduan.zcy.model.event.WxLoginEvent;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
@@ -70,11 +71,13 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                         LogUtils.i(code);
                         switch (state){
                             case "we_chat_login"://微信登录
-                            case "we_chat_set"://微信内部绑定
                                 EventBus.getDefault().post(new WxLoginEvent(code));
-                                finish();
+                                break;
+                            case "we_chat_set"://微信内部绑定
+                                EventBus.getDefault().post(new WxBindEvent(code));
                                 break;
                         }
+                        finish();
                         break;
                     case 2://微信分享
                         ToastUtils.showShort(getString(R.string.share_success));

@@ -1,4 +1,4 @@
-package com.shuangduan.zcy.rongyun.view;
+package com.shuangduan.zcy.rongyun.fragment;
 
 import android.annotation.SuppressLint;
 import android.net.Uri;
@@ -25,6 +25,10 @@ import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseFragment;
 import com.shuangduan.zcy.model.bean.SupplierRoleBean;
 import com.shuangduan.zcy.model.event.AvatarEvent;
+import com.shuangduan.zcy.rongyun.adapter.ConversationListAdapterEx;
+import com.shuangduan.zcy.rongyun.view.IMContactsActivity;
+import com.shuangduan.zcy.rongyun.view.IMGroupDetailsActivity;
+import com.shuangduan.zcy.rongyun.view.MineSubActivity;
 import com.shuangduan.zcy.utils.image.ImageConfig;
 import com.shuangduan.zcy.utils.image.ImageLoader;
 import com.shuangduan.zcy.view.mine.user.UserInfoActivity;
@@ -251,7 +255,7 @@ public class CircleFragment extends BaseFragment {
                     }else if (conversationType == Conversation.ConversationType.GROUP){
                         Bundle bundle = new Bundle();
                         bundle.putString("group_id", targetId);
-                        ActivityUtils.startActivity(bundle,IMGroupDetailsActivity.class);
+                        ActivityUtils.startActivity(bundle, IMGroupDetailsActivity.class);
                     }
                 }
             }
@@ -314,7 +318,7 @@ public class CircleFragment extends BaseFragment {
             case R.id.rl_subscribe_children://普通用户订阅信息
             case R.id.rl_subscribe_group://集团用户订阅信息
                 bundle.putInt(CustomConfig.NEWS_TYPE,CustomConfig.SUBSCRIBE);
-                ActivityUtils.startActivity(bundle,MineSubActivity.class);
+                ActivityUtils.startActivity(bundle, MineSubActivity.class);
                 break;
             case R.id.rl_message://通讯录
                 ActivityUtils.startActivity(IMContactsActivity.class);

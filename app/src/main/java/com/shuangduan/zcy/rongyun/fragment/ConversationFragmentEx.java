@@ -1,6 +1,8 @@
-package com.shuangduan.zcy.rongyun.view;
+package com.shuangduan.zcy.rongyun.fragment;
 
 import android.content.Context;
+
+import com.shuangduan.zcy.rongyun.adapter.MessageListAdapterEx;
 
 import io.rong.imkit.fragment.ConversationFragment;
 import io.rong.imkit.widget.adapter.MessageListAdapter;
