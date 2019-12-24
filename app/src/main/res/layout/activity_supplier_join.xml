@@ -128,7 +128,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
                     android:layout_gravity="center_vertical"
-                    android:text="@string/address_detail"
+                    android:text="公司详址"
                     android:textColor="@color/colorTv"
                     android:textSize="14sp" />
 
@@ -139,7 +139,7 @@
                     android:layout_marginLeft="87dp"
                     android:background="@null"
                     android:gravity="center_vertical"
-                    android:hint="请输入公司地址"
+                    android:hint="请输入公司详址"
                     android:singleLine="true"
                     android:textColor="@color/colorTv"
                     android:textColorHint="@color/colorTvHint"

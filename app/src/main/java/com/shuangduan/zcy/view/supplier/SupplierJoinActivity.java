@@ -37,7 +37,6 @@ import com.shuangduan.zcy.dialog.ScaleDialog;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.CityBean;
 import com.shuangduan.zcy.model.bean.ProvinceBean;
-import com.shuangduan.zcy.model.event.AddressEvent;
 import com.shuangduan.zcy.model.event.MultiAreaEvent;
 import com.shuangduan.zcy.utils.image.PictureEnlargeUtils;
 import com.shuangduan.zcy.utils.matisse.Glide4Engine;
@@ -320,7 +319,7 @@ public class SupplierJoinActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_confirm:
-                supplierVm.join(edtName.getText().toString(), edtContactInfo.getText().toString(), edtCompany.getText().toString(), edtAddressDetail.getText().toString(), edtProduction.getText().toString()
+                supplierVm.join(edtName.getText().toString(), edtContactInfo.getText().toString(), edtCompany.getText().toString(),areaVm.id,areaVm.city_id, edtAddressDetail.getText().toString(), edtProduction.getText().toString()
                         , scale, edtCompanyWebsite.getText().toString(), authorization, logo);
                 break;
             case R.id.tv_scale:
@@ -365,13 +364,6 @@ public class SupplierJoinActivity extends BaseActivity {
                 dialog.show();
                 break;
         }
-    }
-
-    @Subscribe
-    public void onEventAddressEvent(AddressEvent event) {
-        tvScale.setText(event.getProvince() + " " + event.getCity());
-        supplierVm.cityId = event.getCityId();
-        supplierVm.provinceId = event.getProvinceId();
     }
 
     @Subscribe

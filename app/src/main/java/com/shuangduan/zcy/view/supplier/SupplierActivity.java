@@ -256,7 +256,7 @@ public class SupplierActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.iv_bar_right:
-                supplier_status = 0;
+//                supplier_status = 0;
                 SupplierUtils.SupplierCustom(this,supplier_status,id,"supplier");
                 break;
         }

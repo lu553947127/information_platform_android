@@ -40,8 +40,6 @@ public class SupplierVm extends BaseViewModel {
     private int userId;
     private int page;
     private List<Integer> imageIds;
-    public int cityId;
-    public int provinceId;
     public MutableLiveData<MultiAreaEvent> serviceArea;
     public MutableLiveData<SupplierStatusBean> supplierStatusLiveData;
 
@@ -95,7 +93,7 @@ public class SupplierVm extends BaseViewModel {
         }
     }
 
-    public void join(String name, String tel, String company, String address, String product,int scale,String company_website
+    public void join(String name, String tel, String company,int province,int city, String address, String product,int scale,String company_website
             ,String authorization,String logo){
         MultiAreaEvent areaValue = serviceArea.getValue();
 
@@ -142,6 +140,6 @@ public class SupplierVm extends BaseViewModel {
         SupplierJoinImageBean supplierJoinImageBean = new SupplierJoinImageBean();
         supplierJoinImageBean.setImages(imageIds);
         supplierJoinImageBean.setServe_address(areaValue.getCityResult());
-        new SupplierRepository().getSupplierJoin(joinLiveData, pageStateLiveData, userId,company, address,scale,company_website, name, tel,product,authorization,logo,supplierJoinImageBean);
+        new SupplierRepository().getSupplierJoin(joinLiveData, pageStateLiveData, userId,company,province,city, address,scale,company_website, name, tel,product,authorization,logo,supplierJoinImageBean);
     }
 }

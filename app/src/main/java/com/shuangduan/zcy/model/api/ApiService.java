@@ -856,6 +856,8 @@ public interface ApiService {
     Flowable<BaseResponse> supplierJoin(
             @Query("user_id") int user_id,
             @Query("company") String company,
+            @Query("province") int province,
+            @Query("city") int city,
             @Query("address") String address,
             @Query("scale") int scale,
             @Query("company_website") String company_website,
