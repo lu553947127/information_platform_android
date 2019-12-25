@@ -27,7 +27,7 @@ import butterknife.OnClick;
  * @author 徐玉 QQ:876885613
  * @name information_platform_android
  * @class name：com.shuangduan.zcy.view.demand
- * @class 我的需求，找关系，我发布的详情
+ * @class 我的需求，找资源，我发布的详情
  * @time 2019/8/22 9:00
  * @change
  * @chang time
@@ -92,7 +92,6 @@ public class FindRelationshipReleaseDetailActivity extends BaseActivity {
             switch (findRelationshipReleaseBean.getReply_status()) {
                 case 1://进行中
                     tvIng.setVisibility(View.VISIBLE);
-                    ivCancel.setVisibility(View.VISIBLE);
 //                    tvError.setVisibility(View.GONE);
                     break;
                 case 2://有回复
@@ -110,12 +109,18 @@ public class FindRelationshipReleaseDetailActivity extends BaseActivity {
 //                    tvCancel.setVisibility(View.GONE);
                     tvError.setVisibility(View.VISIBLE);
                     break;
-//                case 4:
-//                    tvIng.setVisibility(View.GONE);
-//                    ivCancel.setVisibility(View.GONE);
-//                    tvError.setVisibility(View.GONE);
-//                    tvCancel.setVisibility(View.VISIBLE);
-//                    break;
+                case 4://已取消
+                    tvIng.setVisibility(View.GONE);
+                    ivCancel.setVisibility(View.GONE);
+                    tvError.setVisibility(View.GONE);
+                    tvCancel.setVisibility(View.VISIBLE);
+                    break;
+            }
+
+            if (findRelationshipReleaseBean.getClose_status() == 1) {
+                ivCancel.setVisibility(View.VISIBLE);
+            } else {
+                ivCancel.setVisibility(View.INVISIBLE);
             }
         });
         demandRelationshipVm.pageStateLiveData.observe(this, s -> {
@@ -130,6 +135,11 @@ public class FindRelationshipReleaseDetailActivity extends BaseActivity {
         } else {
             llFindRelationShip.setVisibility(View.GONE);
         }
+
+        //取消找关系成功
+        demandRelationshipVm.cancelLiveData.observe(this, item -> {
+            demandRelationshipVm.releaseDetail();
+        });
     }
 
     @OnClick({R.id.iv_bar_back, R.id.iv_cancel})
@@ -148,7 +158,7 @@ public class FindRelationshipReleaseDetailActivity extends BaseActivity {
 
                             @Override
                             public void ok(String s) {
-//                                demandRelationshipVm.cancelRelease();
+                                demandRelationshipVm.closeRelation(demandRelationshipVm.id);
                             }
                         }).showDialog();
                 break;

@@ -157,17 +157,10 @@ public class FindSubstanceDetailActivity extends BaseActivity {
             status = substanceDetailBean.getInfo().getStatus();
             switch (status) {
                 case 1://审核中
-                    if (substanceDetailBean.getInfo().getUser_id() == SPUtils.getInstance().getInt(SpConfig.USER_ID)) {
-                        ivCancel.setVisibility(View.VISIBLE);
-                    }
-
                     ivState.setImageResource(R.drawable.icon_review);
                     getShowDemand(View.GONE, View.VISIBLE, "您发布的需求正在审核中，", R.drawable.icon_tips, "请耐心等待!");
                     break;
                 case 2://审核通过
-                    if (substanceDetailBean.getInfo().getUser_id() == SPUtils.getInstance().getInt(SpConfig.USER_ID) && substanceDetailBean.getInfo().getIs_pay() == 0) {
-                        ivCancel.setVisibility(View.VISIBLE);
-                    }
                     ivState.setImageResource(R.drawable.icon_pass_new);
                     getShowDemand(View.VISIBLE, View.GONE, "", 0, "");
                     break;
@@ -175,15 +168,26 @@ public class FindSubstanceDetailActivity extends BaseActivity {
                     ivState.setImageResource(R.drawable.icon_reject);
                     getShowDemand(View.GONE, View.VISIBLE, "抱歉，您发布的需求未通过审核", R.drawable.icon_invalid, Html.fromHtml("请认真核对后重新<font color=\"#6a5ff8\">发布</font>！"));
                     break;
-                case 4://失效
+                case 4://已取消
+                    ivState.setImageResource(R.drawable.icon_cancel);
+                    getShowDemand(View.GONE, View.VISIBLE, "您的需求已取消！", R.drawable.icon_cancel_logo, "");
+                    break;
+                case 5://失效
                     ivState.setImageResource(R.drawable.icon_invalid_new);
                     getShowDemand(View.VISIBLE, View.GONE, "", 0, "");
                     break;
-//                case 5://取消
-//                    ivState.setImageResource(R.drawable.icon_cancel);
-//                    getShowDemand(View.GONE, View.VISIBLE, "您的需求已取消！", R.drawable.icon_cancel_logo, "");
-//                    break;
             }
+
+            if (info.getClose_status() == 1 && info.getUser_id() == SPUtils.getInstance().getInt(SpConfig.USER_ID)) {
+                ivCancel.setVisibility(View.VISIBLE);
+            } else {
+                ivCancel.setVisibility(View.GONE);
+            }
+        });
+
+        //取消找物资成功
+        demandSubstanceVm.cancelLiveData.observe(this, item -> {
+            demandSubstanceVm.getDetail();
         });
 
         demandSubstanceVm.getDetail();
@@ -229,7 +233,7 @@ public class FindSubstanceDetailActivity extends BaseActivity {
 
                             @Override
                             public void ok(String s) {
-//                                demandRelationshipVm.cancelRelease();
+                                demandSubstanceVm.closeMterial(demandSubstanceVm.id);
                             }
                         }).showDialog();
                 break;

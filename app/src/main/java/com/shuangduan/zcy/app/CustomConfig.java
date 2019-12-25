@@ -85,7 +85,7 @@ public class CustomConfig {
     public static final String PROJECT_SUBSCRIPTION = "project_subscription";
     //优质供应商列表查看详情
     public static final String SUPPLIER_INFO = "supplier_info";
-    //需求广场  发布找关系
+    //需求广场  发布找资源
     public static final String NEED_RELATIONSHIP = "need_relationship";
     //发布信息
     public static final String RELEASE_MESSAGE = "release_message";
@@ -134,7 +134,7 @@ public class CustomConfig {
 
     public static String DEMAND_TYPE = "DEMAND_TYPE";
 
-    //找关系
+    //找资源
     public static int FIND_RELATIONSHIP_TYPE = 0;
     //找物资
     public static int FIND_SUBSTANCE_TYPE = 1;

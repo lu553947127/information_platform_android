@@ -225,7 +225,7 @@ public class IMPrivateChatActivity extends BaseActivity implements RongIM.Conver
                 case 13://发布的工程动态有新的收益
                 case 14://认购的工程信息有新的收益
                 case 16://关系有新的收益
-                case 17://回答的找关系已被采纳，有一笔收益到账
+                case 17://回答的找资源已被采纳，有一笔收益到账
                 case 21://您查看了一条供应商信息消费
                 case 22://您查看了一条找买家需求信息消费
                 case 23://您查看了一条找物资需求信息消费
@@ -241,11 +241,11 @@ public class IMPrivateChatActivity extends BaseActivity implements RongIM.Conver
 //                    bundle.putInt(CustomConfig.SUPPLIER_ID, extraBean.data.id);
 //                    ActivityUtils.startActivity(bundle, SupplierDetailActivity.class);//跳转供应商详情
 //                    break;
-                case 27://找关系发布成功
-                case 28://发布的找关系即将到期
-                case 29://发布的找关系有人回答
+                case 27://找资源发布成功
+                case 28://发布的找资源即将到期
+                case 29://发布的找资源有人回答
                     bundle.putInt(CustomConfig.DEMAND_ID, extraBean.data.id);
-                    ActivityUtils.startActivity(bundle, FindRelationshipReleaseDetailActivity.class);//找关系详情页
+                    ActivityUtils.startActivity(bundle, FindRelationshipReleaseDetailActivity.class);//找资源详情页
                     break;
                 case 30://发布的找物资成功
                     bundle.putInt(CustomConfig.DEMAND_ID, extraBean.data.id);

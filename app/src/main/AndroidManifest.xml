@@ -303,17 +303,17 @@
         <activity
             android:name="com.shuangduan.zcy.view.demand.DemandReleaseActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-        <!-- 找关系详情-->
+        <!-- 找资源详情-->
         <activity android:name="com.shuangduan.zcy.view.demand.FindRelationshipDetailActivity" />
         <!-- 找物资详情-->
         <activity android:name="com.shuangduan.zcy.view.mine.demand.FindSubstanceDetailActivity" />
-        <!-- 需求广场 找关系支付页面-->
+        <!-- 需求广场 找资源支付页面-->
         <activity android:name="com.shuangduan.zcy.view.demand.ReleaseRelationshipOrderActivity" />
         <!-- 找买家详情-->
         <activity android:name="com.shuangduan.zcy.view.mine.demand.FindBuyerDetailActivity" />
-        <!-- 我的需求，找关系， 我接受的， 详情-->
+        <!-- 我的需求，找资源， 我接受的， 详情-->
         <activity android:name="com.shuangduan.zcy.view.mine.demand.FindRelationshipAcceptDetailActivity" />
-        <!-- 我的需求，找关系，我发布的，详情-->
+        <!-- 我的需求，找资源，我发布的，详情-->
         <activity android:name="com.shuangduan.zcy.view.mine.demand.FindRelationshipReleaseDetailActivity" />
         <!--  我的工程 工程信息概况详情页 -->
         <activity android:name=".view.mine.project.MineProjectDetailActivity" />

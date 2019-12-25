@@ -200,7 +200,7 @@ public class HomeFragment extends BaseFragment {
             case R.id.iv_my_income://我的收益
                 ActivityUtils.startActivity(MineIncomeActivity.class);
                 break;
-            case R.id.rl_zgx://发布找关系
+            case R.id.rl_zgx://发布找资源
                 bundle.putString("type", "0");
                 ActivityUtils.startActivity(bundle, DemandReleaseActivity.class);
                 break;
@@ -214,7 +214,7 @@ public class HomeFragment extends BaseFragment {
                 break;
             case R.id.tv_more_need://需求资讯查看更多
                 if (viewPager.getCurrentItem() == 0) {
-                    bundle.putInt(DEMAND_TYPE, FIND_RELATIONSHIP_TYPE);//找关系列表
+                    bundle.putInt(DEMAND_TYPE, FIND_RELATIONSHIP_TYPE);//找资源列表
                     ActivityUtils.startActivity(bundle, DemandActivity.class);
                 } else if (viewPager.getCurrentItem() == 1) {
                     bundle.putInt(DEMAND_TYPE, FIND_SUBSTANCE_TYPE);//找物资列表

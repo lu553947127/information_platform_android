@@ -45,6 +45,10 @@ public class FindMineSubstanceAdapter extends BaseQuickAdapter<DemandSubstanceBe
                         .setTextColor(R.id.tv_status,mContext.getResources().getColor(R.color.colorTvHint));
                 break;
             case 4:
+                helper.setText(R.id.tv_status, "已取消")
+                        .setTextColor(R.id.tv_status,mContext.getResources().getColor(R.color.colorTvHint));
+                break;
+            case 5:
                 helper.setText(R.id.tv_status, "失效")
                         .setTextColor(R.id.tv_status,mContext.getResources().getColor(R.color.colorTvHint));
                 break;

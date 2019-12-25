@@ -44,7 +44,7 @@
                     android:layout_gravity="center"
                     android:textColor="@color/color_666666"
                     android:textSize="13sp"
-                    android:text="我要找关系"/>
+                    android:text="我要找资源"/>
             </LinearLayout>
         </RelativeLayout>
 

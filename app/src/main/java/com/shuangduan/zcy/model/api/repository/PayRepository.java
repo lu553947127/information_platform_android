@@ -67,7 +67,7 @@ public class PayRepository extends BaseRepository {
     }
 
     /**
-     * 元支付发布找关系佣金
+     * 元支付发布找资源佣金
      */
     public void payRelationshipRelease(MutableLiveData<CoinPayResultBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int id, String coin_password){
         request(apiService.payRelationshipRelease(userId, id, coin_password)).setData(liveData).setPageState(pageStateLiveData).send();

@@ -30,7 +30,7 @@ import butterknife.BindView;
  * @author 徐玉 QQ:876885613
  * @name information_platform_android
  * @class name：com.shuangduan.zcy.view.mine
- * @class 需求资讯-找关系
+ * @class 需求资讯-找资源
  * @time 2019/8/13 10:42
  * @change
  * @chang time

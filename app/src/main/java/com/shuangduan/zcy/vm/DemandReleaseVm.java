@@ -28,7 +28,7 @@ import java.util.List;
  * @class describe
  */
 public class DemandReleaseVm extends BaseViewModel {
-    public static final int RELEASE_TYPE_RELATIONSHIP = 1;//找关系发布
+    public static final int RELEASE_TYPE_RELATIONSHIP = 1;//找资源发布
     public static final int RELEASE_TYPE_SUBSTANCE = 2;//找物资发布
     public static final int RELEASE_TYPE_BUYER = 3;//找买家发布
     public MutableLiveData<DemandReleaseBean> releaseLiveData;
@@ -55,7 +55,7 @@ public class DemandReleaseVm extends BaseViewModel {
         startTime = DateUtils.formatTime(year, month, day);
     }
 
-    //找关系
+    //找资源
     public void releaseRelationShip(String title, String intro, String price){
         if (StringUtils.isTrimEmpty(endTime)){
             ToastUtils.showShort(StringUtils.getString(R.string.select_time));

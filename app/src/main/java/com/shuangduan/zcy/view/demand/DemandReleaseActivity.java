@@ -153,7 +153,7 @@ public class DemandReleaseActivity extends BaseActivity {
     @SuppressLint("SetTextI18n,SimpleDateFormat")
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
-        tvBarTitle.setText("我要找关系");
+        tvBarTitle.setText("我要找资源");
         type = getIntent().getStringExtra("type");
 
         cbSell.setChecked(true);
@@ -290,7 +290,7 @@ public class DemandReleaseActivity extends BaseActivity {
                 break;
             case R.id.tv_release:
                 switch (demandReleaseVm.releaseType) {
-                    case DemandReleaseVm.RELEASE_TYPE_RELATIONSHIP://找关系
+                    case DemandReleaseVm.RELEASE_TYPE_RELATIONSHIP://找资源
                         if (TextUtils.isEmpty(edtTitle.getText())) {
                             ToastUtils.showShort(getString(R.string.hint_title));
                             return;

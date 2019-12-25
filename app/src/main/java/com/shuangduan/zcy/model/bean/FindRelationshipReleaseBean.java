@@ -36,7 +36,18 @@ public class FindRelationshipReleaseBean {
     private int reply_id;
     private String validity;
     private int reply_status;
+    //是否可以取消 1是 0否
+    private int close_status;
+
     private ReplyBean reply;
+
+    public int getClose_status() {
+        return close_status;
+    }
+
+    public void setClose_status(int close_status) {
+        this.close_status = close_status;
+    }
 
     public String getPrice() {
         return price;

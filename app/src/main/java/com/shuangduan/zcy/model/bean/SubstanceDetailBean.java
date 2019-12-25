@@ -69,6 +69,20 @@ public class SubstanceDetailBean {
         private int is_pay;
         private String remark;//找物资详情描述
         private int status;
+//        是否可以取消 1是 0否
+        private int close_status;
+
+        public void setUser_id(int user_id) {
+            this.user_id = user_id;
+        }
+
+        public int getClose_status() {
+            return close_status;
+        }
+
+        public void setClose_status(int close_status) {
+            this.close_status = close_status;
+        }
 
         @Override
         public String toString() {

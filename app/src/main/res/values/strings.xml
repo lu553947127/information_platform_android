@@ -65,7 +65,7 @@
     <string name="my_income_explain">收益说明</string>
     <string name="my_project">我的工程</string>
     <string name="my_demand">我的需求</string>
-    <string name="my_demand_zgx">我的需求 — 找关系</string>
+    <string name="my_demand_zgx">我的需求 — 找资源</string>
     <string name="my_demand_zwz">我的需求 — 找物资</string>
     <string name="my_demand_zmj">我的需求 — 找买家</string>
     <string name="mine_subscription">信息认购</string>
@@ -141,7 +141,7 @@
     <string name="share">分享</string>
     <string name="mobile">电话</string>
     <string name="exit_confirm">确认退出登录吗</string>
-    <string name="cancel_release">确认取消发布找关系</string>
+    <string name="cancel_release">确认取消发布找资源</string>
     <string name="cancel_release_substance">确认取消发布找物资</string>
     <string name="cancel_release_buyer">确认取消发布找买家</string>
     <string name="pwd_no_same">两次输入的密码不一致</string>
@@ -377,11 +377,11 @@
     <string name="view_record">查看记录</string>
     <string name="supplier_msg">供应商信息</string>
     <string name="locus_num">动态数量</string>
-    <string name="find_relationship">找关系</string>
+    <string name="find_relationship">找资源</string>
     <string name="find_substance">找物资</string>
     <string name="find_buyer">找买家</string>
     <string name="effective_time">有效时间</string>
-    <string name="find_relationship_detail">找关系详情</string>
+    <string name="find_relationship_detail">找资源详情</string>
     <string name="find_substance_detail">找物资详情</string>
     <string name="find_buyer_detail">找买家详情</string>
     <string name="find_relationship_reply_success">信息提交成功</string>
@@ -567,7 +567,7 @@
     </string-array>
 
     <string-array name="demand">
-        <item>找关系</item>
+        <item>找资源</item>
         <item>找物资</item>
         <item>找买家</item>
     </string-array>
@@ -649,7 +649,7 @@
     <!--    空提示 -->
     <string name="see_all">查看全部</string>
     <string name="go_release">去发布</string>
-    <string name="pull_strings">找关系</string>
+    <string name="pull_strings">找资源</string>
     <string name="to_release">前去发布</string>
     <string name="to_subscribe">前往认购</string>
     <string name="to_reserve">前往预定</string>
@@ -665,14 +665,14 @@
     <string name="empty_get_recruit_info">查看招采信息\n获取更多资讯</string>
 
 
-    <string name="empty_relationship_info">您还没有发布过找关系\n前往发布</string>
+    <string name="empty_relationship_info">您还没有发布过找资源\n前往发布</string>
     <string name="empty_mine_order_info">帮助他人的同时,增加个人收益,快快行动吧！</string>
     <string name="empty_mine_substance_info">您还没有发过找物资\n前往发布</string>
     <string name="empty_mine_buyer_info">您还没有发布过找买家\n前往发布</string>
     <string name="empty_mine_sub_info">认购工程信息,增加个人收益</string>
 
     <string name="empty_depositing_place">暂无存放地数据</string>
-    <string name="empty_pull_strings_info">暂无找关系数据</string>
+    <string name="empty_pull_strings_info">暂无找资源数据</string>
     <string name="empty_substance_info">暂无找物资数据</string>
     <string name="empty_withdraw_info">暂无提现记录</string>
     <string name="empty_recharge_info">暂无充值记录</string>

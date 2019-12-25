@@ -35,6 +35,9 @@ public class DemandRelationshipVm extends BaseViewModel {
     public MutableLiveData<FindRelationshipAcceptBean> relationshipAcceptDetailLiveData;
     public MutableLiveData<String> pageStateLiveData;
     public MutableLiveData replyLiveData;
+
+    public MutableLiveData cancelLiveData;
+
     public int id;
     public int relationships_reply_id;
 
@@ -48,57 +51,70 @@ public class DemandRelationshipVm extends BaseViewModel {
         relationshipDetailLiveData = new MutableLiveData<>();
         relationshipReleaseDetailLiveData = new MutableLiveData<>();
         relationshipAcceptDetailLiveData = new MutableLiveData<>();
+
+        cancelLiveData = new MutableLiveData();
     }
 
-    public void getRelationship(){
+    public void getRelationship() {
         page = 1;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
         new DemandRepository().demandRelationship(relationshipLiveData, pageStateLiveData, userId, page);
     }
 
-    public void getMoreRelationship(){
-        page ++;
+    public void getMoreRelationship() {
+        page++;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
         new DemandRepository().demandRelationship(relationshipLiveData, pageStateLiveData, userId, page);
     }
 
-    public void getReleaseRelationship(){
+    public void getReleaseRelationship() {
         pageRelease = 1;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
         new DemandRepository().demandRelationshipRelease(releaseLiveData, pageStateLiveData, userId, pageRelease);
     }
 
-    public void getMoreReleaseRelationship(){
-        pageRelease ++;
+    public void getMoreReleaseRelationship() {
+        pageRelease++;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
         new DemandRepository().demandRelationshipRelease(releaseLiveData, pageStateLiveData, userId, pageRelease);
     }
 
-    public void getAcceptRelationship(){
+    public void getAcceptRelationship() {
         pageAccept = 1;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
         new DemandRepository().demandRelationshipAccept(acceptLiveData, pageStateLiveData, userId, pageAccept);
     }
 
-    public void getMoreAcceptRelationship(){
-        pageAccept ++;
+    public void getMoreAcceptRelationship() {
+        pageAccept++;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
         new DemandRepository().demandRelationshipAccept(acceptLiveData, pageStateLiveData, userId, pageAccept);
     }
 
-    public void reply(String name, String tel, String remarks){
+    public void reply(String name, String tel, String remarks) {
         new DemandRepository().orderTaking(replyLiveData, pageStateLiveData, userId, id, name, tel, remarks);
     }
 
-    public void relationshipDetail(){
+    public void relationshipDetail() {
         new DemandRepository().relationshipDetail(relationshipDetailLiveData, pageStateLiveData, userId, id);
     }
 
-    public void releaseDetail(){
+    public void releaseDetail() {
         new DemandRepository().mineReleaseRelationshipDetail(relationshipReleaseDetailLiveData, pageStateLiveData, userId, id);
     }
 
-    public void acceptDetail(){
+    public void acceptDetail() {
         new DemandRepository().mineAcceptRelationshipDetail(relationshipAcceptDetailLiveData, pageStateLiveData, userId, relationships_reply_id);
     }
+
+    /**
+     * 取消找关系发布
+     *
+     * @param id
+     */
+    public void closeRelation(int id) {
+        new DemandRepository().closeRelation(cancelLiveData,pageStateLiveData,userId,id);
+    }
+
+
 }

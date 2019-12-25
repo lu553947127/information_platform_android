@@ -160,31 +160,36 @@ public class FindBuyerDetailActivity extends BaseActivity {
             switch (status) {
                 case 1://审核中
                     ivState.setImageResource(R.drawable.icon_review);
-                    if (buyerDetailBean.getInfo().getUser_id() == SPUtils.getInstance().getInt(SpConfig.USER_ID)) {
-                        ivCancel.setVisibility(View.VISIBLE);
-                    }
                     getShowDemand(View.GONE, View.VISIBLE, "您发布的需求正在审核中，", R.drawable.icon_tips, "请耐心等待!");
                     break;
                 case 2://审核通过
                     ivState.setImageResource(R.drawable.icon_pass_new);
-                    if (buyerDetailBean.getInfo().getUser_id() == SPUtils.getInstance().getInt(SpConfig.USER_ID) && info.getIs_pay() == 0) {
-                        ivCancel.setVisibility(View.VISIBLE);
-                    }
                     getShowDemand(View.VISIBLE, View.GONE, "", 0, "");
                     break;
                 case 3://驳回
                     ivState.setImageResource(R.drawable.icon_reject);
                     getShowDemand(View.GONE, View.VISIBLE, "抱歉，您发布的需求未通过审核", R.drawable.icon_invalid, Html.fromHtml("请认真核对后重新<font color=\"#6a5ff8\">发布</font>！"));
                     break;
-                case 4://失效
+                case 4://已取消
+                    ivState.setImageResource(R.drawable.icon_cancel);
+                    getShowDemand(View.GONE, View.VISIBLE, "您的需求已取消！", R.drawable.icon_cancel_logo, "");
+                    break;
+                case 5://失效
                     ivState.setImageResource(R.drawable.icon_invalid_new);
                     getShowDemand(View.VISIBLE, View.GONE, "", 0, "");
                     break;
-                //case 5://取消
-//                    ivState.setImageResource(R.drawable.icon_cancel);
-//                    getShowDemand(View.GONE, View.VISIBLE, "您的需求已取消！", R.drawable.icon_cancel_logo, "");
-//                    break;
             }
+
+            if (buyerDetailBean.getInfo().getClose_status() == 1 && buyerDetailBean.getInfo().getUser_id() == SPUtils.getInstance().getInt(SpConfig.USER_ID)) {
+                ivCancel.setVisibility(View.VISIBLE);
+            } else {
+                ivCancel.setVisibility(View.GONE);
+            }
+        });
+
+        //取消找买家成功
+        demandBuyerVm.cancelLiveData.observe(this, item -> {
+            demandBuyerVm.getDetail();
         });
 
         demandBuyerVm.getDetail();
@@ -230,7 +235,7 @@ public class FindBuyerDetailActivity extends BaseActivity {
 
                             @Override
                             public void ok(String s) {
-//                                demandRelationshipVm.cancelRelease();
+                                demandBuyerVm.closeBuyerRelease(demandBuyerVm.id);
                             }
                         }).showDialog();
                 break;

@@ -31,11 +31,15 @@ public class DemandBuyerVm extends BaseViewModel {
     public int id;
     public int currentPay = 0;
 
+    public MutableLiveData cancelLiveData;
+
     public DemandBuyerVm() {
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
         buyerLiveData = new MutableLiveData<>();
         detailLiveData = new MutableLiveData<>();
         pageStateLiveData = new MutableLiveData<>();
+
+        cancelLiveData = new MutableLiveData();
     }
 
     public void getBuyer(){
@@ -52,5 +56,13 @@ public class DemandBuyerVm extends BaseViewModel {
 
     public void getDetail(){
         new DemandRepository().buyerDetail(detailLiveData, pageStateLiveData, userId, id);
+    }
+
+    /**
+     * 取消找买家
+     * @param id
+     */
+    public void closeBuyerRelease(int id){
+        new DemandRepository().closeBuyerRelease(cancelLiveData,pageStateLiveData,userId,id);
     }
 }

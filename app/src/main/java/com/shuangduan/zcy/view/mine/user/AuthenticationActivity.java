@@ -112,8 +112,8 @@ public class AuthenticationActivity extends BaseActivity{
             case CustomConfig.PROJECT_SUBSCRIPTION://工程信息认购
                 ToastUtils.showShort("请实名认证后认购");
                 break;
-            case CustomConfig.NEED_RELATIONSHIP://需求广场  发布找关系
-                ToastUtils.showShort("请实名认证后发布找关系");
+            case CustomConfig.NEED_RELATIONSHIP://需求广场  发布找资源
+                ToastUtils.showShort("请实名认证后发布找资源");
                 break;
             case CustomConfig.RELEASE_MESSAGE://发布信息
                 ToastUtils.showShort("请实名认证后发布信息");

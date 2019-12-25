@@ -64,6 +64,16 @@ public class BuyerDetailBean {
         private int is_pay;
         private String remark;//找买家详情
         private int status;
+        //是否可以取消 1：是 0：否
+        private int close_status;
+
+        public int getClose_status() {
+            return close_status;
+        }
+
+        public void setClose_status(int close_status) {
+            this.close_status = close_status;
+        }
 
         public int getId() {
             return id;

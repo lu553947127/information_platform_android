@@ -1204,6 +1204,30 @@ public interface ApiService {
             @Field("page") int page
     );
 
+    //取消发布的找资源
+    @FormUrlEncoded
+    @POST("api/Relation/closeRelation")
+    Flowable<BaseResponse> closeRelation(
+            @Field("user_id") int userId,
+            @Field("id") int id
+    );
+    //取消发布的找买家
+    @FormUrlEncoded
+    @POST("api/Relation/closeBuyer")
+    Flowable<BaseResponse> closeBuyer(
+            @Field("user_id") int userId,
+            @Field("id") int id
+    );
+
+    //取消发布的找物资
+    @FormUrlEncoded
+    @POST("api/Relation/closeMterial")
+    Flowable<BaseResponse> closeMterial(
+            @Field("user_id") int userId,
+            @Field("id") int id
+    );
+
+
     @FormUrlEncoded
     @POST("api/Relation/index")
     Flowable<BaseResponse<DemandRelationshipBean>> demandRelationshipAccept(

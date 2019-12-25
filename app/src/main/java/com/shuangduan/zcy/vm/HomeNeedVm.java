@@ -71,7 +71,7 @@ public class HomeNeedVm extends BaseViewModel {
         View view1 = LayoutInflater.from(context).inflate(R.layout.fragment_demand_information, null, false);
         View view2 = LayoutInflater.from(context).inflate(R.layout.fragment_demand_information, null, false);
         View view3 = LayoutInflater.from(context).inflate(R.layout.fragment_demand_information, null, false);
-        titleList.add("找关系");
+        titleList.add("找资源");
         titleList.add("找物资");
         titleList.add("找买家");
         viewList.add(view1);

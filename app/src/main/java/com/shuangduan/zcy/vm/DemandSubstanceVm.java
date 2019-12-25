@@ -30,11 +30,13 @@ public class DemandSubstanceVm extends BaseViewModel {
     public int id;
     public int currentPay = 0;
 
+    public MutableLiveData cancelLiveData;
     public DemandSubstanceVm() {
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
         substanceLiveData = new MutableLiveData<>();
         pageStateLiveData = new MutableLiveData<>();
         detailLiveData = new MutableLiveData<>();
+        cancelLiveData = new MutableLiveData();
     }
 
     public void getSubstance(){
@@ -51,5 +53,13 @@ public class DemandSubstanceVm extends BaseViewModel {
 
     public void getDetail(){
         new DemandRepository().substanceDetail(detailLiveData, pageStateLiveData, userId, id);
+    }
+
+    /**
+     * 取消找物资
+     * @param id
+     */
+    public void closeMterial(int id){
+        new DemandRepository().closeMterial(cancelLiveData,pageStateLiveData,userId,id);
     }
 }

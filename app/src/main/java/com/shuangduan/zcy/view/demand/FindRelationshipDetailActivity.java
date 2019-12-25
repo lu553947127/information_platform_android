@@ -29,7 +29,7 @@ import butterknife.OnClick;
  * @author 徐玉 QQ:876885613
  * @name information_platform_android
  * @class name：com.shuangduan.zcy.view.demand
- * @class 需求资讯-找关系详情
+ * @class 需求资讯-找资源详情
  * @time 2019/8/20 17:04
  * @change
  * @chang time
