@@ -276,8 +276,7 @@ public class MaterialDetailActivity extends BaseActivity {
                 }
                 break;
             case R.id.ll_chat://联系商家
-//                RongIM.getInstance().startConversation(this, Conversation.ConversationType.SYSTEM, "18", "官方消息");
-                imageContentMessage(materialDetailBean.getMaterialName(),unitPrice,materialDetailBean.getImages().get(0).getUrl(),materialDetailBean.getId(), "117");
+                imageContentMessage(materialDetailBean.getMaterialName(),unitPrice,materialDetailBean.getImages().get(0).getUrl(),materialDetailBean.getId(), String.valueOf(materialDetailBean.getTargetId()));
                 break;
             case R.id.tv_reserve:
                 bundle.putInt(CustomConfig.MATERIAL_ID, getIntent().getIntExtra(CustomConfig.MATERIAL_ID, 0));
@@ -296,6 +295,7 @@ public class MaterialDetailActivity extends BaseActivity {
      */
     private void imageContentMessage(String title, String content, String imageUrl,int id,String targetId){
         RichContentMessage richContentMessage = RichContentMessage.obtain(title,content,imageUrl);
+        richContentMessage.setUrl("1");
         richContentMessage.setExtra(String.valueOf(id));
         Message myMessage = Message.obtain(targetId, Conversation.ConversationType.PRIVATE, richContentMessage);
         RongIM.getInstance().sendMessage(myMessage, null, null, new IRongCallback.ISendMessageCallback() {
@@ -307,6 +307,7 @@ public class MaterialDetailActivity extends BaseActivity {
             @Override
             public void onSuccess(Message message) {
                 //消息通过网络发送成功的回调
+                RongIM.getInstance().startPrivateChat(MaterialDetailActivity.this, String.valueOf(materialDetailBean.getTargetId()), materialDetailBean.getCompany());
             }
 
             @Override

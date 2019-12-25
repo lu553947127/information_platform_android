@@ -40,7 +40,7 @@ public class MaterialDetailBean {
     private int id;
     private int category;
     private int supplier_id;
-
+    private int targetId;
 
     private String material_name;
 
@@ -137,7 +137,13 @@ public class MaterialDetailBean {
         return supplier_id;
     }
 
+    public int getTargetId() {
+        return targetId;
+    }
 
+    public void setTargetId(int targetId) {
+        this.targetId = targetId;
+    }
 
     public String getUnit_price() {
         return unit_price;

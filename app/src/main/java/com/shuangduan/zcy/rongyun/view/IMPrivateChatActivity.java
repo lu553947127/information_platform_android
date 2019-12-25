@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -27,6 +28,7 @@ import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.rongyun.bean.RongExtraBean;
 import com.shuangduan.zcy.utils.image.PictureEnlargeUtils;
 import com.shuangduan.zcy.view.material.MaterialDetailActivity;
+import com.shuangduan.zcy.view.material.MaterialEquipmentDetailActivity;
 import com.shuangduan.zcy.view.mine.demand.FindBuyerDetailActivity;
 import com.shuangduan.zcy.view.mine.demand.FindRelationshipReleaseDetailActivity;
 import com.shuangduan.zcy.view.mine.demand.FindSubstanceDetailActivity;
@@ -127,7 +129,11 @@ public class IMPrivateChatActivity extends BaseActivity implements RongIM.Conver
         imAddVm.imUserInfoLiveData.observe(this, imWechatUserInfoBean -> {
             RongIM.getInstance().refreshUserInfoCache(new UserInfo(imWechatUserInfoBean.getUserId(), imWechatUserInfoBean.getName(), Uri.parse(imWechatUserInfoBean.getPortraitUri())));
             if (imWechatUserInfoBean.getUserId().equals(user_id)) {
-                tvBarCompanyOrPost.setText(imWechatUserInfoBean.getCompany() + " " + imWechatUserInfoBean.getPosition());
+                if (!TextUtils.isEmpty(imWechatUserInfoBean.getCompany())&&!TextUtils.isEmpty(imWechatUserInfoBean.getPosition())){
+                    tvBarCompanyOrPost.setText(imWechatUserInfoBean.getCompany() + " " + imWechatUserInfoBean.getPosition());
+                }else {
+                    tvBarCompanyOrPost.setText("");
+                }
             }
         });
     }
@@ -266,8 +272,16 @@ public class IMPrivateChatActivity extends BaseActivity implements RongIM.Conver
             if (message.getContent() instanceof RichContentMessage) {
                 if (!StringUtils.isEmpty(((RichContentMessage) message.getContent()).getExtra())) {
                     Bundle bundle = new Bundle();
-                    bundle.putInt(CustomConfig.MATERIAL_ID, Integer.parseInt(((RichContentMessage) message.getContent()).getExtra()));
-                    ActivityUtils.startActivity(bundle, MaterialDetailActivity.class);
+                    switch (((RichContentMessage) message.getContent()).getUrl()){
+                        case "1"://周转材料
+                            bundle.putInt(CustomConfig.MATERIAL_ID, Integer.parseInt(((RichContentMessage) message.getContent()).getExtra()));
+                            ActivityUtils.startActivity(bundle, MaterialDetailActivity.class);
+                            break;
+                        case "2"://设备
+                            bundle.putInt(CustomConfig.MATERIAL_ID, Integer.parseInt(((RichContentMessage) message.getContent()).getExtra()));
+                            ActivityUtils.startActivity(bundle, MaterialEquipmentDetailActivity.class);
+                            break;
+                    }
                 }else {
                     ToastUtils.showShort("找不到当前物资");
                 }
