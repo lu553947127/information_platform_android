@@ -17,13 +17,14 @@
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/tv_release"
-        style="@style/BtnConfirm"
-        android:layout_width="335dp"
+    <ImageView
+        android:id="@+id/iv_release"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="30dp"
-        android:text="@string/release" />
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="145dp"
+        android:src="@drawable/shopping_cart_order" />
 
 </RelativeLayout>

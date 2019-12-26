@@ -25,9 +25,9 @@ public class PhoneUtils {
             case "HUAWEI":
                 return false;
             case "vivo":
-                return false;
+                return true;
             case "OPPO":
-                return false;
+                return true;
             case "Coolpad":
                 return false;
             case "Meizu":

@@ -2,6 +2,7 @@ package com.shuangduan.zcy.view.demand;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,6 +20,7 @@ import com.shuangduan.zcy.adapter.FindRelationshipFragmentAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseLazyFragment;
 import com.shuangduan.zcy.model.bean.DemandRelationshipBean;
+import com.shuangduan.zcy.utils.AnimationUtils;
 import com.shuangduan.zcy.vm.DemandRelationshipVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
@@ -41,12 +43,11 @@ public class FindRelationshipFragment extends BaseLazyFragment {
     RecyclerView rv;
     @BindView(R.id.refresh)
     SmartRefreshLayout refresh;
+    private ImageView ivRelease;
     private DemandRelationshipVm demandRelationshipVm;
 
     public static FindRelationshipFragment newInstance() {
-
         Bundle args = new Bundle();
-
         FindRelationshipFragment fragment = new FindRelationshipFragment();
         fragment.setArguments(args);
         return fragment;
@@ -102,6 +103,16 @@ public class FindRelationshipFragment extends BaseLazyFragment {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 demandRelationshipVm.getRelationship();
+            }
+        });
+
+        ivRelease = mActivity.findViewById(R.id.iv_release);
+        //滑动监听
+        rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                AnimationUtils.listScrollAnimation(ivRelease,dy);
             }
         });
     }

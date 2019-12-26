@@ -48,10 +48,10 @@ public class SupplierUtils {
                     ActivityUtils.startActivity(SupplierJoinActivity.class);
                 }
                 break;
-            case 1://未通过
+            case 1://审核中
                 new CustomDialog(activity)
-                        .setTipLeftIcon(R.drawable.icon_error,"抱歉，您的审核未通过，\n请核对后重新提交！",R.color.colorTv)
-                        .setOk("重新申请")
+                        .setTipLeftIcon(R.drawable.icon_reject_supplier,"我们正在加急核对您的申请，\n请耐心等待！",R.color.colorTv)
+                        .setOk("确定")
                         .setCallBack(new BaseDialog.CallBack() {
                             @Override
                             public void cancel() {
@@ -60,7 +60,7 @@ public class SupplierUtils {
 
                             @Override
                             public void ok(String s) {
-                                ActivityUtils.startActivity(SupplierJoinActivity.class);
+
                             }
                         }).showDialog();
                 break;
@@ -88,10 +88,10 @@ public class SupplierUtils {
                             }).showDialog();
                 }
                 break;
-            case 3://驳回
+            case 3://未通过
                 new CustomDialog(activity)
-                        .setTipLeftIcon(R.drawable.icon_reject_supplier,"我们正在加急核对您的申请，\n请耐心等待！",R.color.colorTv)
-                        .setOk("确定")
+                        .setTipLeftIcon(R.drawable.icon_error,"抱歉，您的审核未通过，\n请核对后重新提交！",R.color.colorTv)
+                        .setOk("重新申请")
                         .setCallBack(new BaseDialog.CallBack() {
                             @Override
                             public void cancel() {
@@ -100,7 +100,7 @@ public class SupplierUtils {
 
                             @Override
                             public void ok(String s) {
-
+                                ActivityUtils.startActivity(SupplierJoinActivity.class);
                             }
                         }).showDialog();
                 break;

@@ -10,15 +10,16 @@ import android.os.Build;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.util.DisplayMetrics;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.shuangduan.zcy.base.BaseActivity;
 
 import java.util.List;
 import java.util.Objects;
 
+import static android.content.Context.CLIPBOARD_SERVICE;
 import static android.content.Context.INPUT_METHOD_SERVICE;
 
 /**
@@ -165,10 +166,34 @@ public class KeyboardUtil {
     //复制
     public static void copyString(Context context, String str) {
         //获取剪贴板管理器：
-        ClipboardManager cm = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipboardManager cm = (ClipboardManager) context.getSystemService(CLIPBOARD_SERVICE);
         //创建普通字符型ClipData
         ClipData mClipData = ClipData.newPlainText("Label", str);
         //将ClipData内容放到系统剪贴板里。
         Objects.requireNonNull(cm).setPrimaryClip(mClipData);
+    }
+
+    //读取剪切板内容
+    public static void getReadCut(Activity activity) {
+      ClipboardManager clipboardManager = (ClipboardManager) activity.getSystemService(CLIPBOARD_SERVICE);
+        assert clipboardManager != null;
+        ClipData primaryClip = clipboardManager.getPrimaryClip();
+        assert primaryClip != null;
+//        for (int i = 0; i < primaryClip.getItemCount(); i++) {
+//            String data = primaryClip.getItemAt(i).getText().toString();
+//            Log.e("打印剪切板内容", data);
+//            if (data.startsWith("&") && data.endsWith("&")) {
+//                //获取剪切板&&中间的数据
+//                String newData = data.replaceAll("&", "");
+//                Toast.makeText(this, newData, Toast.LENGTH_LONG).show();
+//            }
+//        }
+        String data = primaryClip.getItemAt(0).getText().toString();
+        LogUtils.e("打印剪切板内容"+data);
+        if (data.startsWith("&") && data.endsWith("&")) {
+            //获取剪切板&&中间的数据
+            String newData = data.replaceAll("&", "");
+            LogUtils.e("打印剪切板内容"+newData);
+        }
     }
 }

@@ -62,14 +62,14 @@ public class DemandActivity extends BaseActivity {
         transaction.commit(); // 提交创建Fragment请求
     }
 
-    @OnClick({R.id.iv_bar_back, R.id.tv_release})
+    @OnClick({R.id.iv_bar_back, R.id.iv_release})
     void onClick(View v) {
         Bundle bundle = new Bundle();
         switch (v.getId()) {
             case R.id.iv_bar_back:
                 finish();
                 break;
-            case R.id.tv_release:
+            case R.id.iv_release:
                 if (type == FIND_RELATIONSHIP_TYPE) {
                     bundle.putString("type", "0");
                     ActivityUtils.startActivity(bundle, DemandReleaseActivity.class);

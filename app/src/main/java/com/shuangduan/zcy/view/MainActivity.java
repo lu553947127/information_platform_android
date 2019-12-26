@@ -2,6 +2,7 @@ package com.shuangduan.zcy.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -22,10 +23,12 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.FragmentAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
+import com.shuangduan.zcy.app.MyApplication;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.bean.SupplierRoleBean;
 import com.shuangduan.zcy.rongyun.fragment.CircleFragment;
+import com.shuangduan.zcy.utils.KeyboardUtil;
 import com.shuangduan.zcy.vm.HomeVm;
 import com.shuangduan.zcy.vm.IMAddVm;
 import com.shuangduan.zcy.vm.IMConnectVm;
@@ -64,6 +67,7 @@ public class MainActivity extends BaseActivity {
     private IMAddVm imAddVm;
     private IUnReadMessageObserver observer;
     private int manage_status,order_turnover,order_device;
+    private Handler handler;
 
     @Override
     protected int initLayoutRes() {
@@ -95,6 +99,8 @@ public class MainActivity extends BaseActivity {
         setJPushAlias();
         initBottomNavigation();
         getBadgeViewInitView();
+
+        handler = MyApplication.getMainThreadHandler();
     }
 
     //底部标签栏点击切换
@@ -295,11 +301,22 @@ public class MainActivity extends BaseActivity {
             imAddVm.applyCount();
         };
         RongIM.getInstance().addUnReadMessageCountChangedObserver(observer, Conversation.ConversationType.PRIVATE, Conversation.ConversationType.GROUP, Conversation.ConversationType.SYSTEM);
+        getReadCut();
+    }
+
+    //读取剪切板内容
+    private void getReadCut() {
+        handler.postDelayed(() -> {
+            KeyboardUtil.getReadCut(this);
+        }, 1000);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         RongIM.getInstance().removeUnReadMessageCountChangedObserver(observer);
+        if (handler != null) {
+            handler = null;
+        }
     }
 }

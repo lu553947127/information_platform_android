@@ -2,6 +2,7 @@ package com.shuangduan.zcy.view.demand;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,6 +20,7 @@ import com.shuangduan.zcy.adapter.FindSubstanceFragmentAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseLazyFragment;
 import com.shuangduan.zcy.model.bean.DemandSubstanceBean;
+import com.shuangduan.zcy.utils.AnimationUtils;
 import com.shuangduan.zcy.view.mine.demand.FindSubstanceDetailActivity;
 import com.shuangduan.zcy.vm.DemandSubstanceVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
@@ -42,12 +44,11 @@ public class FindSubstanceFragment extends BaseLazyFragment {
     RecyclerView rv;
     @BindView(R.id.refresh)
     SmartRefreshLayout refresh;
+    private ImageView ivRelease;
     private DemandSubstanceVm demandSubstanceVm;
 
     public static FindSubstanceFragment newInstance() {
-
         Bundle args = new Bundle();
-
         FindSubstanceFragment fragment = new FindSubstanceFragment();
         fragment.setArguments(args);
         return fragment;
@@ -104,6 +105,16 @@ public class FindSubstanceFragment extends BaseLazyFragment {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 demandSubstanceVm.getSubstance();
+            }
+        });
+
+        ivRelease = mActivity.findViewById(R.id.iv_release);
+        //滑动监听
+        rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                AnimationUtils.listScrollAnimation(ivRelease,dy);
             }
         });
     }
