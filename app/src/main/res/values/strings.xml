@@ -482,6 +482,7 @@
     <string name="format_validity_period">有效期: %1$s至%2$s</string>
     <string name="format_validity_period_less">%1$s至%2$s</string>
     <string name="format_demand_num">需求数量: %1$s</string>
+    <string name="format_supply_num">供应数量: %1$s</string>
     <string name="format_commission">佣金: %1$s元</string>
     <string name="format_price_unit">元/%1$s</string>
 

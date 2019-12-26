@@ -29,7 +29,7 @@ public class DemandMineBuyerAdapter extends BaseQuickAdapter<DemandBuyerBean.Lis
         helper.setText(R.id.tv_title, item.getMaterial_name())
                 .setText(R.id.tv_acceptance_price,item.getAcceptance_price().equals("面议") ? item.getAcceptance_price() : String.format(mContext.getString(R.string.format_price_accept), item.getAcceptance_price()))
                 .setText(R.id.tv_time, String.format(mContext.getString(R.string.format_validity_period), item.getStart_time(), item.getEnd_time()))
-                .setText(R.id.tv_count, String.format(mContext.getString(R.string.format_demand_num), item.getCount()))
+                .setText(R.id.tv_count, String.format(mContext.getString(R.string.format_supply_num), item.getCount()))
                 .setText(R.id.tv_way, item.getWay() == 1 ? "出售" : "出租");
 
         switch (item.getStatus()){
@@ -51,7 +51,8 @@ public class DemandMineBuyerAdapter extends BaseQuickAdapter<DemandBuyerBean.Lis
                 break;
             case 5:
                 helper.setText(R.id.tv_status, "失效")
-                        .setTextColor(R.id.tv_status,mContext.getResources().getColor(R.color.colorTvHint));
+                        .setTextColor(R.id.tv_status,mContext.getResources().getColor(R.color.colorTvHint))
+                ;
                 break;
         }
     }
