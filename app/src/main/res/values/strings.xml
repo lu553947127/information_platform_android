@@ -21,6 +21,7 @@
     <string name="empty_locus">目前还没有已发布动态信息</string>
     <string name="empty_consume">目前还没有已消费信息</string>
     <string name="empty_contact">目前还没有联系人信息</string>
+    <string name="no_balance">余额不足</string>
 
     <string name="first_app">跳过</string>
     <string name="positive">确定</string>
@@ -151,6 +152,7 @@
     <string name="hint_company">请输入公司名称</string>
     <string name="edit_success">信息编辑成功</string>
     <string name="hint_production">请输入产品信息</string>
+    <string name="recharge_dialog">充值</string>
     <string name="recharge">充  值</string>
     <string name="recharge_center">充值中心</string>
     <string name="recharge_record">充值记录</string>

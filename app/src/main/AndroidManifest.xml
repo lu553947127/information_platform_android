@@ -93,7 +93,7 @@
         <!-- 用户详情页-->
         <activity android:name="com.shuangduan.zcy.view.mine.user.UserInfoActivity" />
         <!-- 提现页-->
-        <activity android:name="com.shuangduan.zcy.view.mine.wallet.WithdrawActivity" />
+        <activity android:name="com.shuangduan.zcy.view.mine.wallet.WithdrawActivity"/>
         <!-- 编辑用户名页-->
         <activity
             android:name="com.shuangduan.zcy.view.mine.user.UpdateNameActivity"
@@ -137,8 +137,7 @@
         <!-- 收货地址页面-->
         <activity android:name="com.shuangduan.zcy.view.mine.set.ReceivingAddressActivity" />
         <!-- 编辑收货地址 -->
-        <activity android:name="com.shuangduan.zcy.view.mine.set.EditReceivingAddressActivity"
-            android:windowSoftInputMode="stateVisible|adjustResize"/>
+        <activity android:name="com.shuangduan.zcy.view.mine.set.EditReceivingAddressActivity"/>
         <!-- 关于页-->
         <activity android:name="com.shuangduan.zcy.view.mine.set.AboutOursActivity" />
         <!-- 推荐好友页-->
@@ -190,7 +189,7 @@
         <!-- 我的需求-->
         <activity android:name="com.shuangduan.zcy.view.mine.demand.MineDemandActivity" />
         <!-- 充值中心-->
-        <activity android:name="com.shuangduan.zcy.view.recharge.RechargeActivity" />
+        <activity android:name="com.shuangduan.zcy.view.recharge.RechargeActivity"/>
         <!-- 充值记录-->
         <activity android:name="com.shuangduan.zcy.view.recharge.RechargeRecordActivity" />
         <!-- 充值结果-->
@@ -337,7 +336,7 @@
         <activity
             android:name="com.shuangduan.zcy.rongyun.view.IMPrivateChatActivity"
             android:configChanges="orientation|screenSize"
-            android:windowSoftInputMode="stateHidden|adjustResize">
+            android:windowSoftInputMode="stateHidden|adjustUnspecified">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />

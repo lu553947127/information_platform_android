@@ -1,8 +1,6 @@
 package com.shuangduan.zcy.view.recharge;
 
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -113,25 +111,6 @@ public class RechargeActivity extends BaseActivity {
             }
         });
         rechargeVm.getShowData();
-
-        etRecharge.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                if (null != editable) {
-
-                }
-            }
-        });
     }
 
     @OnClick({R.id.iv_bar_back, R.id.tv_bar_right, R.id.tv_confirm})
@@ -151,16 +130,6 @@ public class RechargeActivity extends BaseActivity {
                 Bundle bundle = new Bundle();
                 bundle.putString(CustomConfig.RECHARGE_AMOUNT, etRecharge.getText().toString());
                 ActivityUtils.startActivity(bundle, PayActivity.class);
-
-//                Integer position = rechargeVm.positionLiveData.getValue();
-//                if (position < 0){
-//                    ToastUtils.showShort(getString(R.string.select_recharge_amount));
-//                    return;
-//                }
-//                String price = rechargeShowAdapter.getData().get(position).getPrice();
-//                Bundle bundle = new Bundle();
-//                bundle.putString(CustomConfig.RECHARGE_AMOUNT, price);
-//                ActivityUtils.startActivity(bundle, PayActivity.class);
                 break;
         }
     }

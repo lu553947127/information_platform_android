@@ -182,5 +182,4 @@ public class WithdrawActivity extends BaseActivity {
         withdrawVm.withdrawMsg();
         withdrawVm.bankcardList();
     }
-
 }

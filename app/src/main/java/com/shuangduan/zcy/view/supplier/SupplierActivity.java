@@ -191,7 +191,8 @@ public class SupplierActivity extends BaseActivity {
                 //余额不足
                 addDialog(new CustomDialog(this)
                         .setIcon(R.drawable.icon_error)
-                        .setTip("余额不足")
+                        .setTip(getString(R.string.no_balance))
+                        .setOk(getString(R.string.recharge_dialog))
                         .setCallBack(new BaseDialog.CallBack() {
                             @Override
                             public void cancel() {
