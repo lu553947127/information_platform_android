@@ -378,7 +378,6 @@ public class UserInfoActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PermissionVm.REQUEST_CODE_CHOOSE_HEAD && resultCode == RESULT_OK) {
-
             if (MatisseCamera.isAndroidQ) {
                 LogUtils.e(Matisse.obtainResult(data).get(0));
                 uploadPhotoVm.upload(CompressUtils.getRealFilePath(this,Matisse.obtainResult(data).get(0)));

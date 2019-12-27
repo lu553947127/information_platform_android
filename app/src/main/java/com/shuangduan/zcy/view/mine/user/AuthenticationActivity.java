@@ -10,6 +10,7 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
 import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
@@ -18,9 +19,11 @@ import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BaseBottomSheetDialog;
 import com.shuangduan.zcy.model.api.PageState;
+import com.shuangduan.zcy.utils.image.CompressUtils;
 import com.shuangduan.zcy.utils.image.ImageConfig;
 import com.shuangduan.zcy.utils.image.ImageLoader;
 import com.shuangduan.zcy.utils.matisse.Glide4Engine;
+import com.shuangduan.zcy.utils.matisse.MatisseCamera;
 import com.shuangduan.zcy.view.photo.CameraActivity;
 import com.shuangduan.zcy.vm.AuthenticationVm;
 import com.shuangduan.zcy.vm.PermissionVm;
@@ -30,6 +33,7 @@ import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -229,8 +233,13 @@ public class AuthenticationActivity extends BaseActivity{
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PermissionVm.REQUEST_CODE_CHOOSE_AUTHENTICATION && resultCode == RESULT_OK) {
-            List<String> mSelected = Matisse.obtainPathResult(data);
-            uploadPhotoVm.upload(mSelected.get(0));
+            if (MatisseCamera.isAndroidQ) {
+                LogUtils.e(Matisse.obtainResult(Objects.requireNonNull(data)).get(0));
+                uploadPhotoVm.upload(CompressUtils.getRealFilePath(this,Matisse.obtainResult(data).get(0)));
+            }else {
+                LogUtils.e(Matisse.obtainPathResult(Objects.requireNonNull(data)).get(0));
+                uploadPhotoVm.upload(Matisse.obtainPathResult(data).get(0));
+            }
         }
 
         if (resultCode == 101) {

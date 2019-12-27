@@ -46,8 +46,10 @@ import com.shuangduan.zcy.model.event.StageEvent;
 import com.shuangduan.zcy.model.event.TypesArrayEvent;
 import com.shuangduan.zcy.utils.AndroidBug5497Workaround;
 import com.shuangduan.zcy.utils.KeyboardUtil;
+import com.shuangduan.zcy.utils.image.CompressUtils;
 import com.shuangduan.zcy.utils.image.PictureEnlargeUtils;
 import com.shuangduan.zcy.utils.matisse.Glide4Engine;
+import com.shuangduan.zcy.utils.matisse.MatisseCamera;
 import com.shuangduan.zcy.view.mine.user.AuthenticationActivity;
 import com.shuangduan.zcy.view.photo.CameraActivity;
 import com.shuangduan.zcy.vm.PermissionVm;
@@ -388,7 +390,14 @@ public class ReleaseProjectActivity extends BaseActivity {
                 list.add(new PicContentView.PicContentBean(image, null, 0));
             }
             picContentView.insert(list);
-            uploadPhotoVm.upload(Matisse.obtainPathResult(data).get(0));
+            if (MatisseCamera.isAndroidQ) {
+                LogUtils.e(Matisse.obtainResult(Objects.requireNonNull(data)).get(0));
+                uploadPhotoVm.upload(CompressUtils.getRealFilePath(this,Matisse.obtainResult(data).get(0)));
+            }else {
+                LogUtils.e(Matisse.obtainPathResult(Objects.requireNonNull(data)).get(0));
+                uploadPhotoVm.upload(Matisse.obtainPathResult(data).get(0));
+            }
+//            uploadPhotoVm.upload(Matisse.obtainPathResult(data).get(0));
         }
 
         if (resultCode == 101) {

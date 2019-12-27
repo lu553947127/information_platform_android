@@ -9,11 +9,13 @@ import android.graphics.Rect;
 import android.os.Build;
 import android.text.InputFilter;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.blankj.utilcode.util.LogUtils;
+import com.shuangduan.zcy.app.MyApplication;
 import com.shuangduan.zcy.base.BaseActivity;
 
 import java.util.List;
@@ -163,7 +165,7 @@ public class KeyboardUtil {
         return stringBuffer.toString();
     }
 
-    //复制
+    //复制剪切板内容
     public static void copyString(Context context, String str) {
         //获取剪贴板管理器：
         ClipboardManager cm = (ClipboardManager) context.getSystemService(CLIPBOARD_SERVICE);
@@ -173,27 +175,57 @@ public class KeyboardUtil {
         Objects.requireNonNull(cm).setPrimaryClip(mClipData);
     }
 
+    /**
+     * 清空剪贴板内容
+     */
+    public static void clearClipboard() {
+        ClipboardManager manager = (ClipboardManager) MyApplication.getInstance().getSystemService(Context.CLIPBOARD_SERVICE);
+        if (manager != null) {
+            try {
+                manager.setPrimaryClip(Objects.requireNonNull(manager.getPrimaryClip()));
+                manager.setText(null);
+            } catch (Exception ignored) {
+
+            }
+        }
+    }
+
     //读取剪切板内容
     public static void getReadCut(Activity activity) {
       ClipboardManager clipboardManager = (ClipboardManager) activity.getSystemService(CLIPBOARD_SERVICE);
         assert clipboardManager != null;
         ClipData primaryClip = clipboardManager.getPrimaryClip();
         assert primaryClip != null;
+//        LogUtils.e("打印剪切板内容 i"+primaryClip.getItemCount());
 //        for (int i = 0; i < primaryClip.getItemCount(); i++) {
 //            String data = primaryClip.getItemAt(i).getText().toString();
-//            Log.e("打印剪切板内容", data);
+//            LogUtils.e("打印剪切板内容 i"+data);
 //            if (data.startsWith("&") && data.endsWith("&")) {
 //                //获取剪切板&&中间的数据
 //                String newData = data.replaceAll("&", "");
-//                Toast.makeText(this, newData, Toast.LENGTH_LONG).show();
+//                LogUtils.e("打印剪切板内容 i"+newData);
 //            }
 //        }
-        String data = primaryClip.getItemAt(0).getText().toString();
-        LogUtils.e("打印剪切板内容"+data);
-        if (data.startsWith("&") && data.endsWith("&")) {
-            //获取剪切板&&中间的数据
-            String newData = data.replaceAll("&", "");
-            LogUtils.e("打印剪切板内容"+newData);
+        LogUtils.e("打印剪切板内容"+primaryClip);
+        if (clipboardManager.hasPrimaryClip() && clipboardManager.getPrimaryClip().getItemCount() > 0) {
+            CharSequence addedText = clipboardManager.getPrimaryClip().getItemAt(0).getText();
+            String addedTextString = String.valueOf(addedText);
+            if (!TextUtils.isEmpty(addedTextString)) {
+                LogUtils.e("打印剪切板内容"+addedTextString);
+                if (addedTextString.startsWith("&") && addedTextString.endsWith("&")) {
+                    //获取剪切板&&中间的数据
+                    String newData = addedTextString.replaceAll("&", "");
+                    LogUtils.e("打印剪切板内容"+newData);
+                }
+            }
         }
+//        String data = primaryClip.getItemAt(0).getText().toString();
+//        LogUtils.e("打印剪切板内容"+data);
+//        if (data.startsWith("&") && data.endsWith("&")) {
+//            //获取剪切板&&中间的数据
+//            String newData = data.replaceAll("&", "");
+//            LogUtils.e("打印剪切板内容"+newData);
+//        }
+        clearClipboard();
     }
 }

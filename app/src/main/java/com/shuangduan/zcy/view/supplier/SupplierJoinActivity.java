@@ -38,8 +38,10 @@ import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.CityBean;
 import com.shuangduan.zcy.model.bean.ProvinceBean;
 import com.shuangduan.zcy.model.event.MultiAreaEvent;
+import com.shuangduan.zcy.utils.image.CompressUtils;
 import com.shuangduan.zcy.utils.image.PictureEnlargeUtils;
 import com.shuangduan.zcy.utils.matisse.Glide4Engine;
+import com.shuangduan.zcy.utils.matisse.MatisseCamera;
 import com.shuangduan.zcy.view.MultiAreaActivity;
 import com.shuangduan.zcy.view.photo.CameraActivity;
 import com.shuangduan.zcy.vm.MultiAreaVm;
@@ -298,15 +300,33 @@ public class SupplierJoinActivity extends BaseActivity {
                         list.add(new PicContentView.PicContentBean(image, null, 0));
                     }
                     picContentView.insert(list);
-                    uploadPhotoVm.upload(Matisse.obtainPathResult(data).get(0));
+                    if (MatisseCamera.isAndroidQ) {
+                        LogUtils.e(Matisse.obtainResult(Objects.requireNonNull(data)).get(0));
+                        uploadPhotoVm.upload(CompressUtils.getRealFilePath(this,Matisse.obtainResult(data).get(0)));
+                    }else {
+                        LogUtils.e(Matisse.obtainPathResult(Objects.requireNonNull(data)).get(0));
+                        uploadPhotoVm.upload(Matisse.obtainPathResult(data).get(0));
+                    }
                     break;
                 case "authorization"://授权申请
                     ivAuthorization.setImageBitmap(BitmapFactory.decodeFile(Matisse.obtainPathResult(data).get(0)));
-                    uploadPhotoVm.upload(Matisse.obtainPathResult(data).get(0));
+                    if (MatisseCamera.isAndroidQ) {
+                        LogUtils.e(Matisse.obtainResult(Objects.requireNonNull(data)).get(0));
+                        uploadPhotoVm.upload(CompressUtils.getRealFilePath(this,Matisse.obtainResult(data).get(0)));
+                    }else {
+                        LogUtils.e(Matisse.obtainPathResult(Objects.requireNonNull(data)).get(0));
+                        uploadPhotoVm.upload(Matisse.obtainPathResult(data).get(0));
+                    }
                     break;
                 case "logo"://公司logo
                     ivLogo.setImageBitmap(BitmapFactory.decodeFile(Matisse.obtainPathResult(data).get(0)));
-                    uploadPhotoVm.upload(Matisse.obtainPathResult(data).get(0));
+                    if (MatisseCamera.isAndroidQ) {
+                        LogUtils.e(Matisse.obtainResult(Objects.requireNonNull(data)).get(0));
+                        uploadPhotoVm.upload(CompressUtils.getRealFilePath(this,Matisse.obtainResult(data).get(0)));
+                    }else {
+                        LogUtils.e(Matisse.obtainPathResult(Objects.requireNonNull(data)).get(0));
+                        uploadPhotoVm.upload(Matisse.obtainPathResult(data).get(0));
+                    }
                     break;
             }
         }
