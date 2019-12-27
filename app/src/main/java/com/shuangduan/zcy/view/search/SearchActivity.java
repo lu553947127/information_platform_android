@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
@@ -56,6 +57,10 @@ public class SearchActivity extends BaseActivity {
     FlexboxLayout flHot;
     @BindView(R.id.fl_hot_history)
     FlexboxLayout flHotHistory;
+
+    @BindView(R.id.iv_del)
+    ImageView ivDel;
+
     private SearchVm searchVm;
     private String project_type;
 
@@ -74,7 +79,7 @@ public class SearchActivity extends BaseActivity {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.search));
 
-        project_type=getIntent().getStringExtra(CustomConfig.PROJECT_TYPE);
+        project_type = getIntent().getStringExtra(CustomConfig.PROJECT_TYPE);
 
         searchVm = ViewModelProviders.of(this).get(SearchVm.class);
 
@@ -95,7 +100,7 @@ public class SearchActivity extends BaseActivity {
 
         //搜索历史列表返回数据
         searchVm.historyLiveData.observe(this, history -> {
-            if (history!=null&&history.size() > 0){
+            if (history != null && history.size() > 0) {
                 flHotHistory.removeAllViews();
                 for (String s : history) {
                     TextView itemHotHistory = (TextView) LayoutInflater.from(this).inflate(R.layout.item_search_history, flHotHistory, false);
@@ -108,11 +113,14 @@ public class SearchActivity extends BaseActivity {
                     });
                     flHotHistory.addView(itemHotHistory);
                 }
+                ivDel.setVisibility(View.VISIBLE);
+            }else {
+                ivDel.setVisibility(View.INVISIBLE);
             }
         });
 
         searchVm.pageStateLiveData.observe(this, s -> {
-            switch (s){
+            switch (s) {
                 case PageState.PAGE_LOADING:
                     showLoading();
                     break;
@@ -132,7 +140,7 @@ public class SearchActivity extends BaseActivity {
                         .hideSoftInputFromWindow(Objects.requireNonNull(this.getCurrentFocus()).getWindowToken(),
                                 InputMethodManager.HIDE_NOT_ALWAYS);
 
-                if (StringUtils.isTrimEmpty(edtKeyword.getText().toString())){
+                if (StringUtils.isTrimEmpty(edtKeyword.getText().toString())) {
                     ToastUtils.showShort(getString(R.string.hint_keyword));
                     return true;
                 }
@@ -150,13 +158,13 @@ public class SearchActivity extends BaseActivity {
     }
 
     @OnClick({R.id.iv_bar_back, R.id.tv_positive, R.id.iv_del})
-    void onClick(View view){
-        switch (view.getId()){
+    void onClick(View view) {
+        switch (view.getId()) {
             case R.id.iv_bar_back:
                 finish();
                 break;
             case R.id.tv_positive:
-                if (StringUtils.isTrimEmpty(edtKeyword.getText().toString())){
+                if (StringUtils.isTrimEmpty(edtKeyword.getText().toString())) {
                     ToastUtils.showShort(getString(R.string.hint_keyword));
                     return;
                 }
@@ -173,13 +181,13 @@ public class SearchActivity extends BaseActivity {
     }
 
     @Subscribe
-    public void onEventHistoryChange(SearchHistoryEvent event){
+    public void onEventHistoryChange(SearchHistoryEvent event) {
         searchVm.getHistory();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        KeyboardUtil.showSoftInputFromWindow(this,edtKeyword);
+        KeyboardUtil.showSoftInputFromWindow(this, edtKeyword);
     }
 }

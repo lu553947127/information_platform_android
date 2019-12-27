@@ -84,6 +84,7 @@
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:layout_gravity="end"
+            android:visibility="invisible"
             android:src="@drawable/delete"/>
 
     </FrameLayout>

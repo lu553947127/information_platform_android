@@ -39,6 +39,7 @@ public class FindRelationshipAcceptBean {
     private String reply_intro;
     private String reply_name;
     private String reply_tel;
+    //驳回原因
     private String reason;
     private String status_name;
 

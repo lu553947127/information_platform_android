@@ -8,6 +8,7 @@ import android.widget.TextView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.blankj.utilcode.util.StringUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
@@ -93,6 +94,8 @@ public class FindRelationshipAcceptDetailActivity extends BaseActivity {
                     ivStatus.setImageResource(R.drawable.icon_reject);
                     tvReject.setVisibility(View.VISIBLE);
                     tvRejectTip.setVisibility(View.VISIBLE);
+                    if (!StringUtils.isTrimEmpty(findRelationshipAcceptBean.getReason()))
+                        tvReject.setText(findRelationshipAcceptBean.getReason());
                     break;
             }
         });
@@ -103,5 +106,7 @@ public class FindRelationshipAcceptDetailActivity extends BaseActivity {
     }
 
     @OnClick(R.id.iv_bar_back)
-    void onClick(){finish();}
+    void onClick() {
+        finish();
+    }
 }
