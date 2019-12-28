@@ -185,6 +185,8 @@ public class MaterialPlaceOrderActivity extends BaseActivity {
                 tvTel.setText(item.list.get(0).phone);
                 tvRealCompany.setText(item.list.get(0).company);
                 tvAddress.setText(item.list.get(0).province+item.list.get(0).city+item.list.get(0).address);
+
+                tvRealCompany.setVisibility(StringUtils.isTrimEmpty(item.list.get(0).company)?View.GONE:View.VISIBLE);
             }
         });
 
@@ -543,6 +545,8 @@ public class MaterialPlaceOrderActivity extends BaseActivity {
         tvAddress.setText(item.province+item.city+item.address);
         llAddress.setVisibility(View.VISIBLE);
         llAddressEmpty.setVisibility(View.GONE);
+
+        tvRealCompany.setVisibility(StringUtils.isTrimEmpty(item.company)?View.GONE:View.VISIBLE);
     }
 
     @Override

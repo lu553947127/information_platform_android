@@ -134,16 +134,17 @@ public class SearchActivity extends BaseActivity {
         //重新键盘，改成搜索键盘，点击搜索键即可完成搜索
         edtKeyword.setOnEditorActionListener((textView, i, keyEvent) -> {
             if (i == EditorInfo.IME_ACTION_SEARCH) {
+
+                if (StringUtils.isTrimEmpty(edtKeyword.getText().toString())) {
+                    ToastUtils.showShort(getString(R.string.hint_keyword));
+                    return true;
+                }
                 // 先隐藏键盘
                 ((InputMethodManager) Objects.requireNonNull(edtKeyword.getContext()
                         .getSystemService(Context.INPUT_METHOD_SERVICE)))
                         .hideSoftInputFromWindow(Objects.requireNonNull(this.getCurrentFocus()).getWindowToken(),
                                 InputMethodManager.HIDE_NOT_ALWAYS);
 
-                if (StringUtils.isTrimEmpty(edtKeyword.getText().toString())) {
-                    ToastUtils.showShort(getString(R.string.hint_keyword));
-                    return true;
-                }
                 // 搜索，进行自己要的操作...
                 Bundle bundle = new Bundle();
                 bundle.putString(CustomConfig.KEYWORD, edtKeyword.getText().toString());

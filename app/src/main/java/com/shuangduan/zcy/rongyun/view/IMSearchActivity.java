@@ -18,6 +18,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.StringUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.IMSearchAdapter;
 import com.shuangduan.zcy.adapter.IMSearchGroupAdapter;
@@ -88,32 +90,32 @@ public class IMSearchActivity extends BaseActivity {
         imSearchGroupAdapter.setEmptyView(R.layout.layout_loading, rv);
         rv2.setAdapter(imSearchGroupAdapter);
 
-        imAddVm.searchLiveData.observe(this,imFriendSearchBean -> {
+        imAddVm.searchLiveData.observe(this, imFriendSearchBean -> {
             imSearchAdapter.setKeyword(edtKeyword.getText().toString());
             imSearchAdapter.setNewData(imFriendSearchBean.getFriend());
             imSearchGroupAdapter.setKeyword(edtKeyword.getText().toString());
             imSearchGroupAdapter.setNewData(imFriendSearchBean.getGroup());
 
-            if(imFriendSearchBean.getFriend().size()!=0){
+            if (imFriendSearchBean.getFriend().size() != 0) {
                 rv.setVisibility(View.VISIBLE);
-                if (imFriendSearchBean.getFriend().size()>2){
+                if (imFriendSearchBean.getFriend().size() > 2) {
                     tvFriend.setVisibility(View.VISIBLE);
-                }else {
+                } else {
                     tvFriend.setVisibility(View.GONE);
                 }
-            }else {
+            } else {
                 rv.setVisibility(View.GONE);
                 tvFriend.setVisibility(View.GONE);
             }
 
-            if(imFriendSearchBean.getGroup().size()!=0){
+            if (imFriendSearchBean.getGroup().size() != 0) {
                 rv2.setVisibility(View.VISIBLE);
-                if (imFriendSearchBean.getGroup().size()>2){
+                if (imFriendSearchBean.getGroup().size() > 2) {
                     tvGroup.setVisibility(View.VISIBLE);
-                }else {
+                } else {
                     tvGroup.setVisibility(View.GONE);
                 }
-            }else {
+            } else {
                 rv2.setVisibility(View.GONE);
                 tvGroup.setVisibility(View.GONE);
             }
@@ -141,12 +143,21 @@ public class IMSearchActivity extends BaseActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
+                if (StringUtils.isTrimEmpty(edtKeyword.getText().toString())) {
+                    ToastUtils.showShort("搜索内容不能为空。");
+                    return;
+                }
                 imAddVm.search(edtKeyword.getText().toString());
             }
         });
 
         edtKeyword.setOnEditorActionListener((textView, i, keyEvent) -> {
             if (i == EditorInfo.IME_ACTION_SEARCH) {
+                if (StringUtils.isTrimEmpty(edtKeyword.getText().toString())) {
+                    ToastUtils.showShort("搜索内容不能为空。");
+                    return true;
+                }
+
                 // 先隐藏键盘
                 ((InputMethodManager) Objects.requireNonNull(edtKeyword.getContext()
                         .getSystemService(Context.INPUT_METHOD_SERVICE)))
@@ -158,11 +169,11 @@ public class IMSearchActivity extends BaseActivity {
             }
             return false;
         });
-        imAddVm.search(edtKeyword.getText().toString());
+//        imAddVm.search(edtKeyword.getText().toString());
     }
 
-    @OnClick({R.id.iv_bar_back,R.id.tv_more_friend,R.id.tv_more_group})
-    void onClick(View view){
+    @OnClick({R.id.iv_bar_back, R.id.tv_more_friend, R.id.tv_more_group})
+    void onClick(View view) {
         Bundle bundle = new Bundle();
         switch (view.getId()) {
             case R.id.iv_bar_back:
@@ -170,11 +181,11 @@ public class IMSearchActivity extends BaseActivity {
                 break;
             case R.id.tv_more_friend:
                 bundle.putString("name", edtKeyword.getText().toString());
-                ActivityUtils.startActivity(bundle,IMFriendMoreActivity.class);
+                ActivityUtils.startActivity(bundle, IMFriendMoreActivity.class);
                 break;
             case R.id.tv_more_group:
                 bundle.putString("name", edtKeyword.getText().toString());
-                ActivityUtils.startActivity(bundle,IMGroupMoreActivity.class);
+                ActivityUtils.startActivity(bundle, IMGroupMoreActivity.class);
                 break;
         }
     }
@@ -182,6 +193,6 @@ public class IMSearchActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        KeyboardUtil.showSoftInputFromWindow(this,edtKeyword);
+        KeyboardUtil.showSoftInputFromWindow(this, edtKeyword);
     }
 }
