@@ -117,4 +117,12 @@
         <item name="x_tabMode">fixed</item>
     </style>
 
+    <!--输入框选中状态-->
+    <style name="LoginEditText" parent="Theme.AppCompat.Light">
+        <!--输入框未选中颜色-->
+        <item name="colorControlNormal">@color/colorDivider</item>
+        <!--输入框选择颜色-->
+        <item name="colorControlActivated">@color/colorPrimary</item>
+    </style>
+
 </resources>

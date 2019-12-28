@@ -1,6 +1,8 @@
 package com.shuangduan.zcy.utils;
 
 import android.os.Build;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import com.blankj.utilcode.util.LogUtils;
 
@@ -18,34 +20,52 @@ import com.blankj.utilcode.util.LogUtils;
  */
 public class PhoneUtils {
 
-    public static boolean isPhone(){
+    public static void isPhone(View view){
         String name = Build.MANUFACTURER;
         LogUtils.e(name);
         switch (name) {
             case "HUAWEI":
-                return false;
+                getHeight(view,0);
+                break;
             case "vivo":
-                return true;
+                getHeight(view,65);
+                break;
             case "OPPO":
-                return true;
+                getHeight(view,65);
+                break;
             case "Coolpad":
-                return false;
+                getHeight(view,0);
+                break;
             case "Meizu":
-                return true;
+                getHeight(view,70);
+                break;
             case "Xiaomi":
-                return true;
+                getHeight(view,30);
+                break;
             case "samsung":
-                return false;
+                getHeight(view,25);
+                break;
             case "Sony":
-                return false;
+                getHeight(view,0);
+                break;
             case "LG":
-                return false;
+                getHeight(view,0);
+                break;
             case"OnePlus":
-                return false;
+                getHeight(view,0);
+                break;
             case"Google":
-                return false;
+                getHeight(view,0);
+                break;
             default:
-                return false;
+                break;
         }
+    }
+
+    //设置高度
+    public static void getHeight(View view, int height){
+        LinearLayout.LayoutParams linearParams =(LinearLayout.LayoutParams) view.getLayoutParams();
+        linearParams.height = height;
+        view.setLayoutParams(linearParams);
     }
 }

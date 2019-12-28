@@ -12,18 +12,12 @@
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/edt_mobile"
         style="@style/MessageHint"
+        android:theme="@style/LoginEditText"
         android:layout_marginTop="29dp"
         android:drawableLeft="@drawable/icon_username"
         android:inputType="number"
         android:maxLength="11"
         android:hint="@string/hint_mobile_code"/>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/colorDivider"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"/>
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -33,6 +27,7 @@
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/edt_verification_code_register"
             style="@style/MessageHint"
+            android:theme="@style/LoginEditText"
             android:layout_marginTop="3dp"
             android:drawableLeft="@drawable/icon_verification_code"
             android:inputType="number"
@@ -55,44 +50,25 @@
 
     </FrameLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/colorDivider"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"/>
-
     <com.shuangduan.zcy.weight.XEditText
         android:id="@+id/edt_pwd_register"
         style="@style/MessageHint"
+        android:theme="@style/LoginEditText"
         android:layout_marginTop="14dp"
         android:drawableLeft="@drawable/icon_pwd"
         android:inputType="textPassword"
         android:hint="@string/hint_pwd"
         app:x_disableEmoji="false" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/colorDivider"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"/>
-
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/edt_mobile_invite"
         style="@style/MessageHint"
+        android:theme="@style/LoginEditText"
         android:layout_marginTop="14dp"
         android:drawableLeft="@drawable/icon_fly"
         android:inputType="number"
         android:maxLength="11"
         android:hint="@string/hint_mobile_invite"/>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/colorDivider"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"

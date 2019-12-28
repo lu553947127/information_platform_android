@@ -648,11 +648,7 @@ public class TurnoverMaterialFragment extends BaseNoRefreshFragment {
                 XEditText xEditText = dialog_view.findViewById(R.id.edit);
                 TextView tvSearch = dialog_view.findViewById(R.id.tv_search);
                 View view = dialog_view.findViewById(R.id.view);
-                if(PhoneUtils.isPhone()) {
-                    view.setVisibility(View.VISIBLE);
-                }else {
-                    view.setVisibility(View.GONE);
-                }
+                PhoneUtils.isPhone(view);
                 KeyboardUtil.showSoftInputFromWindow((BaseActivity) getActivity(), xEditText);
                 tvSearch.setOnClickListener(v -> {
                     turnoverVm.material_name = xEditText.getText().toString();

@@ -1,11 +1,8 @@
 package com.shuangduan.zcy.adminManage.view.turnover;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -17,8 +14,6 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -48,6 +43,7 @@ import com.shuangduan.zcy.adminManage.vm.TurnoverAddVm;
 import com.shuangduan.zcy.adminManage.vm.TurnoverVm;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
+import com.shuangduan.zcy.dialog.BaseBottomSheetDialog;
 import com.shuangduan.zcy.dialog.BottomSheetDialogs;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.event.LocationEvent;
@@ -58,12 +54,14 @@ import com.shuangduan.zcy.utils.matisse.Glide4Engine;
 import com.shuangduan.zcy.utils.matisse.MatisseCamera;
 import com.shuangduan.zcy.view.photo.CameraActivity;
 import com.shuangduan.zcy.view.release.ReleaseAreaSelectActivity;
+import com.shuangduan.zcy.vm.PermissionVm;
 import com.shuangduan.zcy.vm.UploadPhotoVm;
 import com.shuangduan.zcy.weight.RoundCheckBox;
 import com.shuangduan.zcy.weight.SwitchView;
 import com.shuangduan.zcy.weight.TurnoverSelectView;
 import com.shuangduan.zcy.weight.XEditText;
 import com.shuangduan.zcy.weight.datepicker.CustomDatePicker;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
@@ -185,6 +183,8 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
     private TurnoverVm turnoverVm;
     private TurnoverAddVm turnoverAddVm;
     private UploadPhotoVm uploadPhotoVm;
+    private PermissionVm permissionVm;
+    private RxPermissions rxPermissions;
     private List<String> picture_list = new ArrayList<>();
     private TurnoverDialogControl dialogControl;
     private SimpleDateFormat f;
@@ -270,6 +270,27 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
         cbShelfTypeOpen.setChecked(true);
         cbLease.setChecked(true);
         cbNo.setChecked(true);
+
+        //获取权限成功返回结果
+        rxPermissions = new RxPermissions(this);
+        permissionVm = ViewModelProviders.of(this).get(PermissionVm.class);
+        permissionVm.getLiveData().observe(this, integer -> {
+            if (integer == PermissionVm.PERMISSION_CAMERA){
+                startActivityForResult(new Intent(this, CameraActivity.class), 100);
+            }else if (integer == PermissionVm.PERMISSION_STORAGE){
+                Matisse.from(this)
+                        .choose(MimeType.ofImage())
+                        .showSingleMediaType(true)
+                        .countable(true)
+                        .maxSelectable(1)
+                        .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
+                        .thumbnailScale(0.85f)
+                        .theme(R.style.Matisse_Dracula)
+                        .captureStrategy(new CaptureStrategy(true, "com.shuangduan.zcy.fileprovider"))
+                        .imageEngine(new Glide4Engine())
+                        .forResult(PermissionVm.PHOTO);
+            }
+        });
 
         //图片上传转换返回地址
         uploadPhotoVm.uploadLiveData.observe(this, uploadBean -> {
@@ -371,7 +392,8 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
                 break;
             case R.id.iv_images://上传图片
                 if (picture_list != null && picture_list.size() < 5) {
-                    getPermissions();
+                    BaseBottomSheetDialog baseBottomSheetDialog =new BaseBottomSheetDialog(this,rxPermissions,permissionVm);
+                    baseBottomSheetDialog.showPhotoDialog();
                 } else {
                     ToastUtils.showShort("最多上传5张照片哦");
                 }
@@ -638,27 +660,6 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
                     groundingAdapter.setIsSelect(turnoverAddVm.is_shelf);
                 }
                 break;
-            case "images"://上传图片
-                dialog_view.findViewById(R.id.tv_cancel).setOnClickListener(view -> btn_dialog.cancel());
-                dialog_view.findViewById(R.id.tv_photo).setOnClickListener(view -> {
-                    startActivityForResult(new Intent(this, CameraActivity.class), 100);
-                    btn_dialog.cancel();
-                });
-                dialog_view.findViewById(R.id.tv_select_pic).setOnClickListener(view -> {
-                    Matisse.from(this)
-                            .choose(MimeType.ofImage())
-                            .showSingleMediaType(true)
-                            .countable(true)
-                            .maxSelectable(1)
-                            .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
-                            .thumbnailScale(0.85f)
-                            .theme(R.style.Matisse_Dracula)
-                            .captureStrategy(new CaptureStrategy(true, "com.shuangduan.zcy.fileprovider"))
-                            .imageEngine(new Glide4Engine())
-                            .forResult(PHOTO);
-                    btn_dialog.cancel();
-                });
-                break;
         }
         btn_dialog.show();
     }
@@ -705,30 +706,6 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
         }
     }
 
-    //获取权限
-    public static final int CAMERA = 111;
-    public static final int PHOTO = 222;
-    private void getPermissions() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager
-                    .PERMISSION_GRANTED &&
-                    ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) == PackageManager
-                            .PERMISSION_GRANTED &&
-                    ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager
-                            .PERMISSION_GRANTED) {
-                getBottomSheetDialog(R.layout.dialog_photo, "images");
-            } else {
-                //不具有获取权限，需要进行权限申请
-                ActivityCompat.requestPermissions(this, new String[]{
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.RECORD_AUDIO,
-                        Manifest.permission.CAMERA}, CAMERA);
-            }
-        } else {
-            getBottomSheetDialog(R.layout.dialog_photo, "images");
-        }
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -743,7 +720,7 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
             ToastUtils.showShort("您没有打开相机权限");
         }
         //从相册返回的数据
-        if (requestCode == PHOTO && resultCode == RESULT_OK) {
+        if (requestCode == PermissionVm.PHOTO && resultCode == RESULT_OK) {
             if (MatisseCamera.isAndroidQ) {
                 LogUtils.e(Matisse.obtainResult(Objects.requireNonNull(data)).get(0));
                 uploadPhotoVm.upload(CompressUtils.getRealFilePath(this,Matisse.obtainResult(data).get(0)));

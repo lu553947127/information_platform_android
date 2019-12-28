@@ -385,11 +385,7 @@ public class MaterialPlaceOrderActivity extends BaseActivity {
         xEditText.setHint("请输入购买数量");
         tvSearch.setText("确定");
         View view = dialog_view.findViewById(R.id.view);
-        if(PhoneUtils.isPhone()) {
-            view.setVisibility(View.VISIBLE);
-        }else {
-            view.setVisibility(View.GONE);
-        }
+        PhoneUtils.isPhone(view);
         KeyboardUtil.showSoftInputFromWindow(this, xEditText);
         tvSearch.setOnClickListener(v -> {
             if (TextUtils.isEmpty(xEditText.getText().toString())) {

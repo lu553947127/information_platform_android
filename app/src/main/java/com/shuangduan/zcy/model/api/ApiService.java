@@ -524,6 +524,7 @@ public interface ApiService {
             @Query("company") String company,
             @Query("province") int province,
             @Query("city") int city,
+            @Query("address") String address,
             @Query("phases") int phases,
             @Query("start_time") String start_time,
             @Query("end_time") String end_time,

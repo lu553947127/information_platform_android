@@ -24,7 +24,6 @@
             android:paddingLeft="12dp"
             android:paddingRight="12dp"
             android:layout_margin="16dp"
-            style="@style/MessageHint"
             android:imeOptions="actionSearch"
             app:x_disableEmoji="false"
             tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry" />

@@ -65,7 +65,7 @@ public class LoginActivity extends BaseActivity {
     @BindView(R.id.edt_account)
     AppCompatEditText edtAccount;
     @BindView(R.id.edt_pwd)
-    AppCompatEditText edtPwd;
+    XEditText edtPwd;
     @BindView(R.id.edt_verification_code)
     AppCompatEditText edtVerificationCode;
     @BindView(R.id.tv_send_verification_code)

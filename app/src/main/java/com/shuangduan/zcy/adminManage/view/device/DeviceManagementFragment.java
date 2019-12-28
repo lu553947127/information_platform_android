@@ -564,11 +564,7 @@ public class DeviceManagementFragment extends BaseNoRefreshFragment {
                 TextView tvSearch = dialog_view.findViewById(R.id.tv_search);
                 xEditText.setHint("请输入设备名称");
                 View view = dialog_view.findViewById(R.id.view);
-                if(PhoneUtils.isPhone()) {
-                    view.setVisibility(View.VISIBLE);
-                }else {
-                    view.setVisibility(View.GONE);
-                }
+                PhoneUtils.isPhone(view);
                 KeyboardUtil.showSoftInputFromWindow((BaseActivity) getActivity(), xEditText);
                 tvSearch.setOnClickListener(v -> {
                     deviceVm.material_name = xEditText.getText().toString();

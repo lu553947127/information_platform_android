@@ -108,7 +108,7 @@ public class ProjectContentFragment extends BaseFragment implements BaseQuickAda
         activity.projectDetailVm.detailLiveData.observe(this, projectDetailBean -> {
             detail = projectDetailBean.getDetail();
             activity.projectDetailVm.titleLiveData.postValue(detail.getTitle());
-            activity.projectDetailVm.locationLiveData.postValue(detail.getProvince() + detail.getCity());
+            activity.projectDetailVm.locationLiveData.postValue(detail.getProvince() + detail.getCity() + detail.getAddress());
             activity.projectDetailVm.latitudeLiveData.postValue(new LatLng(detail.getLatitude(), detail.getLongitude()));
             activity.projectDetailVm.introLiveData.postValue(detail.getIntro());
             activity.projectDetailVm.materialLiveData.postValue(detail.getMaterials());

@@ -557,11 +557,7 @@ public class OrderTurnoverFragment extends BaseNoRefreshFragment implements Base
                 XEditText xEditText = dialog_view.findViewById(R.id.edit);
                 TextView tvSearch = dialog_view.findViewById(R.id.tv_search);
                 View view = dialog_view.findViewById(R.id.view);
-                if(PhoneUtils.isPhone()) {
-                    view.setVisibility(View.VISIBLE);
-                }else {
-                    view.setVisibility(View.GONE);
-                }
+                PhoneUtils.isPhone(view);
                 KeyboardUtil.showSoftInputFromWindow((BaseActivity) getActivity(), xEditText);
                 tvSearch.setOnClickListener(v -> {
                     orderVm.material_name = xEditText.getText().toString();

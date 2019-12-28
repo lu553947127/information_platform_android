@@ -17,19 +17,13 @@
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/edt_mobile"
             style="@style/MessageHint"
+            android:theme="@style/LoginEditText"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:drawableLeft="@drawable/icon_username"
             android:inputType="number"
             android:maxLength="11"
             android:hint="@string/hint_mobile_code"/>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorDivider"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"/>
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -39,6 +33,7 @@
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/edt_verification_code"
                 style="@style/MessageHint"
+                android:theme="@style/LoginEditText"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="3dp"
@@ -50,16 +45,10 @@
 
         </FrameLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorDivider"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"/>
-
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/edt_mobile_invite"
             style="@style/MessageHint"
+            android:theme="@style/LoginEditText"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="14dp"
@@ -67,13 +56,6 @@
             android:inputType="number"
             android:maxLength="11"
             android:hint="@string/hint_mobile_invite"/>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorDivider"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"/>
 
         <TextView
             android:layout_width="wrap_content"

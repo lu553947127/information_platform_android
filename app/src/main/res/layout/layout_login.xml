@@ -11,6 +11,7 @@
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/edt_account"
         style="@style/MessageHint"
+        android:theme="@style/LoginEditText"
         android:layout_marginTop="66dp"
         android:drawableLeft="@drawable/icon_username"
         android:inputType="number"
@@ -31,14 +32,6 @@
         android:text="@string/login_verification_code"
         tools:ignore="RtlHardcoded" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/colorDivider"
-        android:layout_below="@+id/edt_account"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"/>
-
     <LinearLayout
         android:id="@+id/ll"
         android:layout_width="match_parent"
@@ -48,10 +41,11 @@
         android:layout_marginTop="31dp">
 
         <!--密码登录-->
-        <androidx.appcompat.widget.AppCompatEditText
+        <com.shuangduan.zcy.weight.XEditText
             android:id="@+id/edt_pwd"
             android:visibility="visible"
             style="@style/MessageHint"
+            android:theme="@style/LoginEditText"
             android:drawableLeft="@drawable/icon_verification_code"
             android:inputType="textPassword"
             android:maxLength="20"
@@ -67,6 +61,7 @@
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/edt_verification_code"
                 style="@style/MessageHint"
+                android:theme="@style/LoginEditText"
                 android:layout_width="wrap_content"
                 android:drawableLeft="@drawable/icon_verification_code"
                 android:inputType="number"
@@ -89,14 +84,6 @@
         </RelativeLayout>
 
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/colorDivider"
-        android:layout_below="@+id/ll"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"/>
 
     <RelativeLayout
         android:id="@+id/rl"

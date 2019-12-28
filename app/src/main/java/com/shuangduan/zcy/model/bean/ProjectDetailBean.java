@@ -67,6 +67,7 @@ public class ProjectDetailBean {
         private String city;
         private double longitude;
         private double latitude;
+        private String address;
         private String update_time;
         private String phases;
         private String type;
@@ -136,6 +137,14 @@ public class ProjectDetailBean {
 
         public void setCity(String city) {
             this.city = city;
+        }
+
+        public String getAddress() {
+            return address;
+        }
+
+        public void setAddress(String address) {
+            this.address = address;
         }
 
         public double getLongitude() {

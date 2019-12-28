@@ -88,7 +88,6 @@ import butterknife.OnClick;
  * @class describe
  */
 public class ReleaseProjectActivity extends BaseActivity {
-
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
     @BindView(R.id.toolbar)
@@ -542,10 +541,11 @@ public class ReleaseProjectActivity extends BaseActivity {
     public void onEventLocationEvent(LocationEvent event) {
         releaseVm.province = event.getProvinceId();
         releaseVm.city = event.getCityId();
+        releaseVm.address = event.getAddress();
         DecimalFormat df = new DecimalFormat("#.000000");
         releaseVm.longitude = df.format(event.getLongitude());
         releaseVm.latitude = df.format(event.getLatitude());
-        tvProjectAddress.setText(event.getProvince() + event.getCity());
+        tvProjectAddress.setText(event.getProvince() + event.getCity() + event.getAddress());
     }
 
     @Subscribe

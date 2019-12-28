@@ -129,7 +129,6 @@ public class HomeFragment extends BaseFragment {
         return false;
     }
 
-
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState, View v) {
 

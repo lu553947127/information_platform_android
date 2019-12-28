@@ -38,6 +38,8 @@ public class PermissionVm extends BaseViewModel {
     /*定位*/
     public static final int PERMISSION_LOCATION = 3;
 
+    public static final int PHOTO = 222;
+
     private MutableLiveData<Integer> liveData;
 
     public PermissionVm() {

@@ -44,7 +44,7 @@ public class ReleaseVm extends BaseViewModel {
     public int type = 1;//项目类型，1工程2动态
     public int editContactTypePos = 0;
     public int editContactAddressPos = 0;
-    public String longitude, latitude, start_time, end_time;
+    public String longitude, latitude, start_time, end_time ,address;
     public int province, city, phases;
     public List<Integer> types = new ArrayList<>();
     public int projectId;
@@ -132,10 +132,6 @@ public class ReleaseVm extends BaseViewModel {
             ToastUtils.showShort("请输入项目名称");
             return;
         }
-//        if (StringUtils.isTrimEmpty(company)) {
-//            ToastUtils.showShort("请输入甲方公司");
-//            return;
-//        }
         if (province == 0 || city == 0) {
             ToastUtils.showShort("请选择项目地址");
             return;
@@ -156,35 +152,14 @@ public class ReleaseVm extends BaseViewModel {
             ToastUtils.showShort("请选择项目结束时间");
             return;
         }
-//        if (StringUtils.isTrimEmpty(acreage)) {
-//            ToastUtils.showShort("请输入项目面积");
-//            return;
-//        }
-//        if (StringUtils.isTrimEmpty(valuation)) {
-//            ToastUtils.showShort("请输入项目估价");
-//            return;
-//        }
         if (StringUtils.isTrimEmpty(intro)) {
             ToastUtils.showShort("请输入项目详情");
             return;
         }
-//        if (StringUtils.isTrimEmpty(materials)) {
-//            ToastUtils.showShort("请输入项目用材");
-//            return;
-//        }
         List<ContactBean> list = contactLiveData.getValue();
         if (list == null) return;
         for (int i = 0; i < list.size(); i++) {
             ContactBean bean = list.get(i);
-//            if (StringUtils.isTrimEmpty(bean.getPhone_type())
-//                    || bean.getProvince() == 0
-//                    || bean.getCity() == 0
-//                    || StringUtils.isTrimEmpty(bean.getName())
-//                    || StringUtils.isTrimEmpty(bean.getTel())
-//                    || StringUtils.isTrimEmpty(bean.getCompany())) {
-//                ToastUtils.showShort("联系人信息不完整");
-//                return;
-//            }
             if (StringUtils.isTrimEmpty(bean.getName())) {
                 ToastUtils.showShort("请输入联系人");
                 return;
@@ -197,11 +172,8 @@ public class ReleaseVm extends BaseViewModel {
         ContactListBean contactListBean = new ContactListBean();
         contactListBean.setContact(list);
         contactListBean.setType(types);
-
         LogUtils.i(list);
-
-
-        new ProjectRepository().addProject(releaseProjectLiveData, pageStateLiveData, userId, title, company, province, city, phases, start_time, end_time, acreage, valuation, intro, materials, longitude, latitude, contactListBean);
+        new ProjectRepository().addProject(releaseProjectLiveData, pageStateLiveData, userId, title, company, province, city,address, phases, start_time, end_time, acreage, valuation, intro, materials, longitude, latitude, contactListBean);
     }
 
     public void releaseLocus(String remarks, String name, String tel) {
