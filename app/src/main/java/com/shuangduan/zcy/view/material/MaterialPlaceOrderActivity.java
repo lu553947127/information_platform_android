@@ -210,9 +210,6 @@ public class MaterialPlaceOrderActivity extends BaseActivity {
                 }
             }
             tvMaterialCategory.setText(materialDetailBean.getMaterialName());
-            tvGuidancePrice.setText(materialDetailBean.getMethod() == 1 ?
-                    String.format(getString(R.string.format_material_price), materialDetailBean.getGuidance_price(), "天") :
-                    String.format(getString(R.string.format_material_price), materialDetailBean.getGuidance_price(), materialDetailBean.getUnit()));
             tvSpec.setText("规格："+materialDetailBean.getSpec());
             tvSpec.setVisibility(StringUtils.isTrimEmpty(materialDetailBean.getSpec()) ? View.GONE : View.VISIBLE);
             llLease.setVisibility(materialDetail.getMethod() == 1 ? View.VISIBLE : View.GONE);
@@ -223,9 +220,15 @@ public class MaterialPlaceOrderActivity extends BaseActivity {
             switch (type){
                 case 1://周转材料
                     getGuidancePrice(materialDetailVm.buyStock);
+                    tvGuidancePrice.setText(materialDetailBean.getMethod() == 1 ?
+                            String.format(getString(R.string.format_material_price), materialDetailBean.getGuidance_price(), "天") :
+                            String.format(getString(R.string.format_material_price), materialDetailBean.getGuidance_price(), materialDetailBean.getUnit()));
                     break;
                 case 2://设备
                     getGuidancePriceInt(materialDetailVm.buyStockEquipment);
+                    tvGuidancePrice.setText(materialDetailBean.getMethod() == 1 ?
+                            String.format(getString(R.string.format_material_price), materialDetailBean.getGuidance_price(), "天") :
+                            String.format(getString(R.string.format_material_price_no_unit), materialDetailBean.getGuidance_price()));
                     break;
             }
             material_id = materialDetailBean.getId();

@@ -153,8 +153,8 @@ public class MaterialEquipmentDetailActivity extends BaseActivity {
             }
 
             unitPrice = materialDetailBean.getMethod() == 1 ?
-                    String.format(getString(R.string.format_material_price), materialDetailBean.getGuidance_price(), "天") :
-                    String.format(getString(R.string.format_material_price), materialDetailBean.getGuidance_price(), materialDetailBean.getUnit());
+                    String.format(getString(R.string.format_material_price), materialDetailBean.getGuidance_price(), "天"):
+                    String.format(getString(R.string.format_material_price_no_unit), materialDetailBean.getGuidance_price());
             tvUnitPrice.setText(unitPrice);
 
             tvStock.setText(String.format(getString(R.string.format_stock_no_unit), materialDetailBean.getStock()));
