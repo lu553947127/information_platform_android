@@ -1,6 +1,7 @@
 package com.shuangduan.zcy.view.projectinfo;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -12,9 +13,12 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -67,6 +71,7 @@ public class SubInfoActivity extends BaseActivity {
     @BindView(R.id.chart)
     LineChart chart;
     private ArrayList<Entry> values;
+
     private String[] xShow;
 
     @Override
@@ -96,8 +101,8 @@ public class SubInfoActivity extends BaseActivity {
             tvSubTime.setText(info.getCreate_time());
             tvHoldTime.setText(String.format(getString(R.string.format_validity_period_less), info.getStart_time(), info.getEnd_time()));
             tvReadPeopleNum.setText(String.valueOf(info.getCount()));
-            tvExpectedReturn.setText(info.getExpect_price()+"元");
-            tvGenerateRevenue.setText(info.getIncome_price()+"元");
+            tvExpectedReturn.setText(info.getExpect_price() + "元");
+            tvGenerateRevenue.setText(info.getIncome_price() + "元");
 
             List<ProjectSubViewBean.ListBean> list = projectSubViewBean.getList();
             values.clear();
@@ -123,7 +128,10 @@ public class SubInfoActivity extends BaseActivity {
             chart.getXAxis().setValueFormatter(new IndexAxisValueFormatter() {
                 @Override
                 public String getFormattedValue(float value) {
-                    return (int) value + "月";
+                    if (value >= xShow.length) {
+                        return "";
+                    }
+                    return xShow[((int) (value))];
                 }
             });
 
@@ -137,6 +145,9 @@ public class SubInfoActivity extends BaseActivity {
             lineDataSet.setValueFormatter(new ValueFormatter() {
                 @Override
                 public String getFormattedValue(float value) {
+                    if (value == 0) {
+                        return "";
+                    }
                     return String.valueOf(value);
                 }
             });
@@ -184,10 +195,24 @@ public class SubInfoActivity extends BaseActivity {
         chart.getDescription().setEnabled(false);
         //关闭手势
         chart.setTouchEnabled(true);
+        chart.setScaleXEnabled(true);
+
+        //设置X轴 轴间距
+        chart.setScaleMinima(5.0f, 1.0f);
+
+
         //关闭x轴数值显示
         chart.getXAxis().setEnabled(true);
         chart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);//设置x轴的显示位置
         chart.getXAxis().setDrawAxisLine(true);
+        //设置文本倾斜角度
+        chart.getXAxis().setLabelRotationAngle(35f);
+
+        //设置偏移量
+        chart.getXAxis().setXOffset(20);
+        chart.getXAxis().setYOffset(10);
+
+
         //关闭右侧Y轴
         chart.getAxisRight().setEnabled(false);
         chart.setData(new LineData(set));
