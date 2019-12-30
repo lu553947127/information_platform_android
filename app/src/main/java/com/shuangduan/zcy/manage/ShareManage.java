@@ -11,7 +11,6 @@ import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.ShareDialog;
 import com.shuangduan.zcy.listener.BaseUiListener;
 import com.shuangduan.zcy.model.bean.ShareBean;
-import com.shuangduan.zcy.model.event.CompanyEvent;
 import com.shuangduan.zcy.model.event.ShareEvent;
 import com.shuangduan.zcy.utils.ShareUtils;
 import com.shuangduan.zcy.vm.ShareVm;
@@ -44,7 +43,7 @@ import io.reactivex.schedulers.Schedulers;
 public class ShareManage {
 
     //------------------------------------分享类型----------------------------------------------------
-    public static final int SHARE_PROJECT_TYPE = 1;                                         //      基建详情
+    public static final int SHARE_PROJECT_TYPE = 1;                                         //      工程信息
     public static final int SHARE_RECOMMEND_FRIENDS_TYPE = 3;                               //      推荐好友
     public static final int SHARE_TENDERER_TYPE = 2;                                        //      招采信息
     public static final int SHARE_HEADLINES_TYPE = 4;                                        //     基建头条

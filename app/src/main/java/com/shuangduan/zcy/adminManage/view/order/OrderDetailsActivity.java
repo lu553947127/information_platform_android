@@ -34,7 +34,7 @@ import butterknife.OnClick;
  * @author xuyu
  * @Package com.shuangduan.zcy.adminManage.view.order$
  * @class OrderDetails$
- * @class describe
+ * @class 后台管理订单详情
  * @time 2019/11/15 10:46
  * @change
  * @class describe
@@ -118,7 +118,7 @@ public class OrderDetailsActivity extends BaseActivity {
     Group groupVisible;
     //账号角色ID
     private int manageStatus;
-    //订单类型 0:周转物资 1：设备
+    //订单类型 3:周转物资 4：设备
     private int orderType;
 
     @Override
@@ -162,13 +162,10 @@ public class OrderDetailsActivity extends BaseActivity {
         if (orderItem.method == 1) {
             tvPrice.setText(Html.fromHtml("指导单价：<font color=\"#EF583E\">¥" + orderItem.price + "</font>/天"));
         } else {
-
             Spanned turnoverPrice = Html.fromHtml("指导单价：<font color=\"#EF583E\">¥" + orderItem.price + "</font>/" + orderItem.unit);
-
             Spanned devicePrice = Html.fromHtml("指导单价：<font color=\"#EF583E\">¥" + orderItem.price + "</font>");
             //周转材料显示单位，设备不显示单位
-            tvPrice.setText(orderType==0?turnoverPrice:devicePrice);
-
+            tvPrice.setText(orderType==3?turnoverPrice:devicePrice);
         }
         tvSpec.setText(getString(R.string.format_admin_spec, orderItem.spec));
         tvCategory.setText(getString(R.string.format_admin_category, orderItem.categoryName));
@@ -180,7 +177,7 @@ public class OrderDetailsActivity extends BaseActivity {
             tvLeaseTime.setText(getString(R.string.format_admin_lease_time, orderItem.leaseStartTime, orderItem.leaseEndTime));
         }
         //周转材料显示单位，设备不显示单位
-        tvReserveNum.setText(orderType==0?orderItem.number + orderItem.unit:String.valueOf(orderItem.number));
+        tvReserveNum.setText(orderType==3?orderItem.number + orderItem.unit:String.valueOf(orderItem.number));
 
         tvAddress.setText(getString(R.string.format_admin_address, orderItem.province + orderItem.city + orderItem.address));
 

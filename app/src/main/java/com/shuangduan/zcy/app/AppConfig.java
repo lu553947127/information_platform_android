@@ -218,6 +218,8 @@ public class AppConfig {
         RongIM.getInstance().setReadReceiptConversationTypeList(types);
         //注册复写的会话列表布局
         RongIM.getInstance().registerConversationTemplate(new CustomPrivateConversationProvider());
+        //开启高清语音
+        RongIM.getInstance().setVoiceMessageType(RongIM.VoiceMessageType.HighQuality);
     }
 
     /**

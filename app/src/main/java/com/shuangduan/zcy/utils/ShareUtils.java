@@ -2,7 +2,6 @@ package com.shuangduan.zcy.utils;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import com.blankj.utilcode.util.LogUtils;
@@ -16,18 +15,7 @@ import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
-
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
-import java.util.Objects;
 
 /**
  * <pre>
@@ -92,69 +80,4 @@ public class ShareUtils {
     private static String buildTransaction(final String type) {
         return (type == null) ? String.valueOf(System.currentTimeMillis()) : type + System.currentTimeMillis();
     }
-
-    private static Bitmap bitmap;
-    private static Bitmap returnBitMap(final String url){
-        new Thread(() -> {
-            URL imageurl = null;
-            try {
-                imageurl = new URL(url);
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
-            try {
-                HttpURLConnection conn = (HttpURLConnection) Objects.requireNonNull(imageurl).openConnection();
-                conn.setDoInput(true);
-                conn.connect();
-                InputStream is = conn.getInputStream();
-                bitmap = BitmapFactory.decodeStream(is);
-                is.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }).start();
-        return bitmap;
-    }
-
-
-    /**通过图片url生成Bitmap对象
-     * @param urlpath
-     * @return Bitmap
-     * 根据图片url获取图片对象
-     */
-    public static Bitmap getBitMBitmap(String urlpath) {
-        Bitmap map = null;
-        try {
-            URL url = new URL(urlpath);
-            URLConnection conn = url.openConnection();
-            conn.connect();
-            InputStream in;
-            in = conn.getInputStream();
-            map = BitmapFactory.decodeStream(in);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return map;
-    }
-
-    /**
-     * bitmap对象转为图片文件
-     * @param bitmap
-     * @param path
-     * @return
-     */
-    public static File saveBitmapFile(Bitmap bitmap, String path) {
-        File file = new File(path);//将要保存图片的路径
-        try {
-            BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
-            bos.flush();
-            bos.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return file;
-    }
-
 }

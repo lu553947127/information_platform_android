@@ -526,8 +526,8 @@ public class MaterialPlaceOrderActivity extends BaseActivity {
             price = num * guidance_price;
         }
         tvNum.setText(String.valueOf(num));
-        tvNumber.setText("共采购" + num + materialDetail.getUnit() + "，共计");
-        tvNumber2.setText("共" + num + materialDetail.getUnit() + " 小计");
+        tvNumber.setText("采购数量为" + num + "，共计");
+        tvNumber2.setText("小计");
         tvPrice.setText(DigitUtils.doubleToString(price));
         tvPrice2.setText(DigitUtils.doubleToString(price));
         LogUtils.e(price);
