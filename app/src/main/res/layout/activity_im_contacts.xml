@@ -131,8 +131,8 @@
                         android:layout_height="match_parent"
                         android:overScrollMode="never"
                         android:nestedScrollingEnabled="false"
-                        android:visibility="gone"
-                        tools:ignore="UnusedAttribute" />
+                        tools:ignore="UnusedAttribute"
+                        android:visibility="gone"/>
                 </RelativeLayout>
                 <TextView
                     android:id="@+id/tv_more_group"
@@ -141,6 +141,7 @@
                     android:layout_marginTop="10dp"
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
+                    android:background="@drawable/selector_bg_custom"
                     android:gravity="center_vertical"
                     android:drawableRight="@drawable/icon_next"
                     android:textColor="@color/color_40000000"
@@ -191,8 +192,8 @@
                         android:layout_height="match_parent"
                         android:overScrollMode="never"
                         android:nestedScrollingEnabled="false"
-                        android:visibility="gone"
-                        tools:ignore="UnusedAttribute" />
+                        tools:ignore="UnusedAttribute"
+                        android:visibility="gone"/>
                 </RelativeLayout>
                 <TextView
                     android:id="@+id/tv_more_friend"
@@ -201,6 +202,7 @@
                     android:layout_marginTop="10dp"
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
+                    android:background="@drawable/selector_bg_custom"
                     android:gravity="center_vertical"
                     android:drawableRight="@drawable/icon_next"
                     android:textColor="@color/color_40000000"

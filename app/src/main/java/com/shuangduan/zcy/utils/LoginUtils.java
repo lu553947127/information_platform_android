@@ -1,8 +1,11 @@
 package com.shuangduan.zcy.utils;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
@@ -82,6 +85,24 @@ public class LoginUtils {
     }
 
     /**
+     * 获取从js跳转原生app的参数
+     *
+     * @return
+     */
+    public static void getJavaScriptData(Activity activity) {
+        //我们怎样在StartActivity 中获取传过来的参数
+        Intent intent=activity.getIntent();
+        //获取跳转的协议
+        Uri uri=intent.getData();
+        //跳转协会为空，说明应用是正常启动
+        //总结：对协议的书写要求比较高，一定要注意大小写，和规则规范，和前端调用保持一致
+        if(uri!=null) {
+            String param1=uri.getQueryParameter("param1");
+            String param2=uri.getQueryParameter("param2");
+        }
+    }
+
+    /**
      * 判断是否安装微信
      *
      * @return
@@ -93,6 +114,24 @@ public class LoginUtils {
             String pn = packageInfoList.get(i).packageName;
             if (pn.equals("com.tencent.mm")) {
                 return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 判断 用户是否安装QQ客户端
+     */
+    public static boolean isQQClientAvailable(Context context){
+        final PackageManager packageManager = context.getPackageManager();
+        List<PackageInfo> pinfo = packageManager.getInstalledPackages(0);
+        if (pinfo != null) {
+            for (int i = 0; i < pinfo.size(); i++) {
+                String pn = pinfo.get(i).packageName;
+                LogUtils.e("pn = " + pn);
+                if (pn.equalsIgnoreCase("com.tencent.qqlite") || pn.equalsIgnoreCase("com.tencent.mobileqq")) {
+                    return true;
+                }
             }
         }
         return false;

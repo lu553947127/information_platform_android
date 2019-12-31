@@ -62,6 +62,20 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <!-- 从js跳转原生app 协议设置-->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <!-- //协议头部-->
+                <data
+                    android:scheme="https"
+                    android:host="xx.yijijian.com"
+                    android:pathPrefix="/test/"/>
+            </intent-filter>
+
+
         </activity>
         <!-- 引导页-->
         <activity android:name="com.shuangduan.zcy.view.login.FirstStartActivity" />

@@ -20,7 +20,7 @@ import butterknife.BindView;
  * @author 徐玉 QQ:876885613
  * @name ZICAICloudPlatform
  * @class name：com.shuangduan.zicaicloudplatform.dialog
- * @class describe  订阅类型选择
+ * @class 订阅类型选择
  * @time 2019/7/9 8:35
  * @change
  * @chang time
@@ -45,8 +45,8 @@ public class SubscriptionTypeDialog extends BaseDialog {
     @Override
     void initData() {
         DialogUtils.enterCustomAnim(this);
-        setWidth(ConvertUtils.dp2px(260));
-        setHeight(ConvertUtils.dp2px(340));
+        setWidth(ConvertUtils.dp2px(280));
+        setHeight(ConvertUtils.dp2px(360));
         setCancelOutside(false);
         for (int i = 0; i < itemBeans.size(); i++) {
             addItem(i);

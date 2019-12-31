@@ -513,7 +513,7 @@ public class MaterialPlaceOrderActivity extends BaseActivity {
             price = num * guidance_price;
         }
         tvNumber.setText("共采购" + num + materialDetail.getUnit() + "，共计");
-        tvNumber2.setText("共" + num + materialDetail.getUnit() + " 小计");
+        tvNumber2.setText(materialDetail.getMethod() == 1 ? "共"+day+"天，小计" : "共" + num + materialDetail.getUnit() + "，小计");
         tvPrice.setText(DigitUtils.doubleToString(price));
         tvPrice2.setText(DigitUtils.doubleToString(price));
     }
@@ -527,12 +527,9 @@ public class MaterialPlaceOrderActivity extends BaseActivity {
         }
         tvNum.setText(String.valueOf(num));
         tvNumber.setText("采购数量为" + num + "，共计");
-        tvNumber2.setText("小计");
+        tvNumber2.setText(materialDetail.getMethod() == 1 ? "共"+day+"天，小计" : "小计");
         tvPrice.setText(DigitUtils.doubleToString(price));
         tvPrice2.setText(DigitUtils.doubleToString(price));
-        LogUtils.e(price);
-        LogUtils.e(day);
-        LogUtils.e(guidance_price);
     }
 
     @Subscribe
@@ -545,7 +542,6 @@ public class MaterialPlaceOrderActivity extends BaseActivity {
         tvAddress.setText(item.province+item.city+item.address);
         llAddress.setVisibility(View.VISIBLE);
         llAddressEmpty.setVisibility(View.GONE);
-
         tvRealCompany.setVisibility(StringUtils.isTrimEmpty(item.company)?View.GONE:View.VISIBLE);
     }
 

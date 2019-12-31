@@ -7,11 +7,13 @@ import android.graphics.BitmapFactory;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.StringUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.ShareDialog;
 import com.shuangduan.zcy.listener.BaseUiListener;
 import com.shuangduan.zcy.model.bean.ShareBean;
 import com.shuangduan.zcy.model.event.ShareEvent;
+import com.shuangduan.zcy.utils.LoginUtils;
 import com.shuangduan.zcy.utils.ShareUtils;
 import com.shuangduan.zcy.vm.ShareVm;
 import com.tencent.tauth.Tencent;
@@ -161,21 +163,37 @@ public class ShareManage {
                 .setOnShareListener(new ShareDialog.OnShareListener() {
                     @Override
                     public void qq() {
+                        if (!LoginUtils.isQQClientAvailable(activity)) {
+                            ToastUtils.showShort("您还没有安装QQ，请先安装QQ客户端");
+                            return;
+                        }
                         ShareUtils.shareQQ(activity, mTencent, qqListener, url, title, des, image);
                     }
 
                     @Override
                     public void qqStone() {
+                        if (!LoginUtils.isQQClientAvailable(activity)) {
+                            ToastUtils.showShort("您还没有安装QQ，请先安装QQ客户端");
+                            return;
+                        }
                         ShareUtils.shareQQStone(activity, mTencent, qqListener, url, title, des, image);
                     }
 
                     @Override
                     public void weChat() {
+                        if (!LoginUtils.isWeiXinInstall(activity)) {
+                            ToastUtils.showShort("您还没有安装微信，请先安装微信客户端");
+                            return;
+                        }
                         ShareUtils.shareWeChat(ShareUtils.FRIEND, url, title, des, bitmap);
                     }
 
                     @Override
                     public void friendCircle() {
+                        if (!LoginUtils.isWeiXinInstall(activity)) {
+                            ToastUtils.showShort("您还没有安装微信，请先安装微信客户端");
+                            return;
+                        }
                         ShareUtils.shareWeChat(ShareUtils.FRIEND_CIRCLE, url, title, des, bitmap);
                     }
                 });
@@ -200,9 +218,7 @@ public class ShareManage {
      * @return
      */
     private Bitmap returnBitmap(String url) {
-
         if (!StringUtils.isEmpty(url)) {
-
             URL fileUrl = null;
             Bitmap bitmap = null;
             try {
@@ -211,8 +227,7 @@ public class ShareManage {
                 e.printStackTrace();
             }
             try {
-                HttpURLConnection conn = (HttpURLConnection) fileUrl
-                        .openConnection();
+                HttpURLConnection conn = (HttpURLConnection) fileUrl.openConnection();
                 conn.setDoInput(true);
                 conn.connect();
                 InputStream is = conn.getInputStream();
@@ -221,10 +236,8 @@ public class ShareManage {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
             return bitmap;
         }
-
         return null;
     }
 
