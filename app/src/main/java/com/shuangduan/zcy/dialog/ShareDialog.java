@@ -1,9 +1,7 @@
 package com.shuangduan.zcy.dialog;
 
 import android.app.Activity;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 

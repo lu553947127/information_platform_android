@@ -6,17 +6,23 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Bundle;
+import android.text.TextUtils;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.StringUtils;
+import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.view.login.LoginActivity;
+import com.shuangduan.zcy.view.material.MaterialDetailActivity;
+import com.shuangduan.zcy.view.material.MaterialEquipmentDetailActivity;
 
 import java.util.List;
 
 import io.rong.imkit.RongIM;
+import io.rong.message.RichContentMessage;
 
 /**
  * <pre>
@@ -97,8 +103,19 @@ public class LoginUtils {
         //跳转协会为空，说明应用是正常启动
         //总结：对协议的书写要求比较高，一定要注意大小写，和规则规范，和前端调用保持一致
         if(uri!=null) {
-            String param1=uri.getQueryParameter("param1");
-            String param2=uri.getQueryParameter("param2");
+            String type=uri.getQueryParameter("type");
+            String id=uri.getQueryParameter("id");
+            Bundle bundle = new Bundle();
+            switch (type){
+                case "1"://周转材料
+                    bundle.putInt(CustomConfig.MATERIAL_ID, Integer.parseInt(id));
+                    ActivityUtils.startActivity(bundle, MaterialDetailActivity.class);
+                    break;
+                case "2"://设备
+                    bundle.putInt(CustomConfig.MATERIAL_ID, Integer.parseInt(id));
+                    ActivityUtils.startActivity(bundle, MaterialEquipmentDetailActivity.class);
+                    break;
+            }
         }
     }
 

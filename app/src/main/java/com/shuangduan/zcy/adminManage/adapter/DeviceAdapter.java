@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
+import com.blankj.utilcode.util.StringUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.shuangduan.zcy.R;
@@ -40,6 +41,7 @@ public class DeviceAdapter extends BaseQuickAdapter<DeviceBean.ListBean, BaseVie
     protected void convert(BaseViewHolder helper, DeviceBean.ListBean item) {
         String use_status = item.getUse_status();
         TextView tvUseStatus = helper.getView(R.id.tv_use_status);
+        tvUseStatus.setVisibility(StringUtils.isTrimEmpty(use_status) ? View.GONE : View.VISIBLE);
         tvUseStatus.setText(use_status);
         switch (use_status){
             case "在用":

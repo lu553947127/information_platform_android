@@ -70,9 +70,9 @@
                 <category android:name="android.intent.category.BROWSABLE"/>
                 <!-- //协议头部-->
                 <data
-                    android:scheme="https"
+                    android:scheme="yijijian"
                     android:host="xx.yijijian.com"
-                    android:pathPrefix="/test/"/>
+                    android:pathPrefix="/material/"/>
             </intent-filter>
 
 

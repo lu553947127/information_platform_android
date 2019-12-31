@@ -58,7 +58,7 @@ public class StartUpActivity extends BaseActivity {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
-
+        LoginUtils.getJavaScriptData(this);
     }
 
     private void getIntoActivity() {
