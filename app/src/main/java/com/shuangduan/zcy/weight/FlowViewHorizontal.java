@@ -42,7 +42,7 @@ public class FlowViewHorizontal extends View {
     private int textSize;
     private int proStep;
     private int interval;
-    private String[] titles = {"提交订单", "客户确认", "报价投标", "合同签订", "合同执行","结束"};
+    private String[] titles ;
     private Map<String, String> map;
 
     public FlowViewHorizontal(Context context) {

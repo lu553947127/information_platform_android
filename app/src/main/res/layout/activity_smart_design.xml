@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/icon_smart_design_bg">
+
+
+    <com.shuangduan.zcy.weight.AdaptationScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="260dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/circular_background_white_8"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="55dp"
+                android:background="@color/colorFFF"
+                android:orientation="horizontal">
+
+                <TextView style="@style/RedMustText"
+                    android:layout_marginLeft="17dp"/>
+
+                <TextView
+                    style="@style/AdminManageFirstText"
+                    android:layout_width="70dp"
+                    android:text="@string/contacts_info" />
+
+                <com.shuangduan.zcy.weight.XEditText
+                    android:id="@+id/et_phone"
+                    style="@style/AdminManageSecondHint"
+                    android:layout_marginLeft="15dp"
+                    android:gravity="left|center_vertical"
+                    android:hint="@string/hint_contact" />
+            </LinearLayout>
+
+            <View style="@style/DividingLine" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/colorFFF"
+                android:orientation="horizontal">
+
+                <TextView style="@style/RedMustText"
+                    android:layout_marginLeft="17dp"
+                    android:visibility="invisible"/>
+
+                <TextView
+                    style="@style/AdminManageFirstText"
+                    android:layout_width="70dp"
+                    android:text="@string/email" />
+
+                <com.shuangduan.zcy.weight.XEditText
+                    android:id="@+id/et_email"
+                    style="@style/AdminManageSecondHint"
+                    android:layout_marginLeft="15dp"
+                    android:gravity="left|center_vertical"
+                    android:hint="@string/hint_email" />
+            </LinearLayout>
+
+            <View style="@style/DividingLine" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/colorFFF"
+                android:orientation="horizontal">
+
+                <TextView style="@style/RedMustText"
+                    android:layout_marginLeft="17dp"/>
+
+                <TextView
+                    style="@style/AdminManageFirstText"
+                    android:layout_width="70dp"
+                    android:text="@string/product_name" />
+
+                <com.shuangduan.zcy.weight.XEditText
+                    android:id="@+id/et_name"
+                    style="@style/AdminManageSecondHint"
+                    android:layout_marginLeft="15dp"
+                    android:gravity="left|center_vertical"
+                    android:hint="@string/hint_product_name" />
+            </LinearLayout>
+
+            <View style="@style/DividingLine" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/colorFFF"
+                android:orientation="horizontal">
+
+                <TextView style="@style/RedMustText"
+                    android:layout_marginLeft="17dp"/>
+
+                <TextView
+                    style="@style/AdminManageFirstText"
+                    android:layout_width="70dp"
+                    android:text="@string/param" />
+
+                <com.shuangduan.zcy.weight.XEditText
+                    android:id="@+id/et_param"
+                    style="@style/AdminManageSecondHint"
+                    android:layout_marginLeft="15dp"
+                    android:gravity="left|center_vertical"
+                    android:hint="@string/hint_param" />
+            </LinearLayout>
+
+
+            <Button
+                android:id="@+id/tv_event"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="120dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="25dp"
+                android:background="@drawable/selector_btn_bg_e0e0e5_6a5ff8"
+                android:button="@null"
+                android:enabled="true"
+                android:gravity="center"
+                android:text="@string/submit"
+                android:textColor="@drawable/selector_text_color_b1_ff"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </com.shuangduan.zcy.weight.AdaptationScrollView>
+
+
+    <!--头部-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="74dp"
+        android:layout_alignParentTop="true">
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_bar_back"
+            android:layout_width="36dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="35dp"
+            android:layout_marginLeft="15dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/toolbar_back"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:layout_centerHorizontal="true"
+            android:lines="1"
+            android:textColor="@color/colorFFF"
+            android:textSize="18sp"
+            android:text="@string/smart_design"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

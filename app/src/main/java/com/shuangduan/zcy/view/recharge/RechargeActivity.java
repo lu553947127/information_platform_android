@@ -110,6 +110,8 @@ public class RechargeActivity extends BaseActivity {
                     break;
             }
         });
+
+        //获取充值列表数据
         rechargeVm.getShowData();
     }
 
@@ -119,10 +121,10 @@ public class RechargeActivity extends BaseActivity {
             case R.id.iv_bar_back:
                 finish();
                 break;
-            case R.id.tv_bar_right:
+            case R.id.tv_bar_right://充值记录
                 ActivityUtils.startActivity(RechargeRecordActivity.class);
                 break;
-            case R.id.tv_confirm:
+            case R.id.tv_confirm: //确认支付。跳转支付页面
                 if (etRecharge.getText().length()==0){
                     ToastUtils.showShort("充值金额为空");
                     return;

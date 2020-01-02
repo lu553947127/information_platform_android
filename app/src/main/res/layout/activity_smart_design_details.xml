@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBgDark"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/background"
+        android:padding="15dp"
+        tools:ignore="MissingConstraints">
+
+        <TextView
+            android:id="@+id/tv_product_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/product_info"
+            android:textColor="@color/colorTv"
+            android:textSize="14sp" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="3dp"
+            android:layout_marginTop="3dp"
+            android:background="@color/color_6a5ff8"
+            app:layout_constraintLeft_toLeftOf="@id/tv_product_info"
+            app:layout_constraintRight_toRightOf="@id/tv_product_info"
+            app:layout_constraintTop_toBottomOf="@id/tv_product_info" />
+
+        <TextView
+            android:id="@+id/tv_product"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/colorTv"
+            android:textSize="14sp"
+            app:layout_constraintTop_toBottomOf="@id/tv_product_info" />
+
+
+        <TextView
+            android:id="@+id/tv_param"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/param_info"
+            android:textColor="@color/colorTv"
+            android:textSize="13sp"
+            app:layout_constraintTop_toBottomOf="@id/tv_product" />
+
+        <TextView
+            android:id="@+id/tv_param_info"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorTv"
+            android:textSize="13sp"
+            app:layout_constraintLeft_toRightOf="@id/tv_param"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_param" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/background"
+        android:paddingLeft="15dp"
+        android:paddingTop="20dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="15dp"
+        tools:ignore="MissingConstraints">
+
+        <TextView
+            android:id="@+id/tv_order_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/order_info"
+            android:textColor="@color/colorTv"
+            android:textSize="14sp"
+            tools:ignore="MissingConstraints" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="3dp"
+            android:layout_marginTop="3dp"
+            android:background="@color/color_6a5ff8"
+            app:layout_constraintLeft_toLeftOf="@id/tv_order_info"
+            app:layout_constraintRight_toRightOf="@id/tv_order_info"
+            app:layout_constraintTop_toBottomOf="@id/tv_order_info" />
+
+
+        <com.shuangduan.zcy.weight.FlowViewHorizontal
+            android:id="@+id/fh_progress"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="17dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="10dp"
+            app:h_bg_radius="6dp"
+            app:h_bg_width='4dp'
+            app:h_pro_color="@color/colorPrimary"
+            app:h_pro_radius='6dp'
+            app:h_pro_width="4dp"
+            app:h_text_padding='10dp'
+            app:h_textsize='12sp'
+            app:layout_constraintTop_toBottomOf="@id/tv_order_info" />
+
+
+        <TextView
+            android:id="@+id/tv_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/contacts_phone"
+            android:textColor="@color/color_666666"
+            android:textSize="12sp"
+            app:layout_constraintTop_toBottomOf="@id/fh_progress" />
+
+
+        <TextView
+            android:id="@+id/tv_phone_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="45dp"
+            android:textColor="@color/color_666666"
+            android:textSize="12sp"
+            app:layout_constraintLeft_toRightOf="@id/tv_phone"
+            app:layout_constraintTop_toTopOf="@id/tv_phone" />
+
+        <TextView
+            android:id="@+id/tv_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="@string/email"
+            android:textColor="@color/color_666666"
+            android:textSize="12sp"
+            app:layout_constraintTop_toBottomOf="@id/tv_phone"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/tv_email_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_666666"
+            android:textSize="12sp"
+            app:layout_constraintLeft_toLeftOf="@id/tv_phone_value"
+            app:layout_constraintTop_toTopOf="@id/tv_email" />
+
+
+        <TextView
+            android:id="@+id/tv_order_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="@string/order_number"
+            android:textColor="@color/color_666666"
+            android:textSize="12sp"
+            app:layout_constraintTop_toBottomOf="@id/tv_email_value"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/tv_order_number_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_666666"
+            android:textSize="12sp"
+            app:layout_constraintLeft_toLeftOf="@id/tv_phone_value"
+            app:layout_constraintTop_toTopOf="@id/tv_order_number" />
+
+
+        <TextView
+            android:id="@+id/tv_order_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="@string/order_date"
+            android:textColor="@color/color_666666"
+            android:textSize="12sp"
+            app:layout_constraintTop_toBottomOf="@id/tv_order_number"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/tv_order_date_value"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_666666"
+            android:textSize="12sp"
+            app:layout_constraintLeft_toLeftOf="@id/tv_phone_value"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_order_date" />
+
+        <ImageView
+            android:id="@+id/iv_cancel"
+            android:layout_width="40dp"
+            android:layout_height="25dp"
+            android:src="@drawable/icon_cancel"
+            android:visibility="invisible"
+            app:layout_constraintRight_toRightOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+    <Button
+        android:id="@+id/tv_event"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/selector_btn_bg_e0e0e5_6a5ff8"
+        android:button="@null"
+        android:enabled="true"
+        android:gravity="center"
+        android:text="@string/cancel_order"
+        android:textColor="@drawable/selector_text_color_b1_ff"
+        android:textSize="16sp" />
+
+</LinearLayout>
