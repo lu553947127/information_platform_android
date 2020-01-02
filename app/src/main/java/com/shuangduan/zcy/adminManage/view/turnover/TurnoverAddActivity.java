@@ -646,13 +646,13 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
                             llInsideShelf.setVisibility(View.GONE);
                             llMethod.setVisibility(View.VISIBLE);
                             llGuidancePrice.setVisibility(View.VISIBLE);
-                            tvImageRed.setVisibility(View.VISIBLE);
+                            tvImageRed.setVisibility(View.INVISIBLE);
                             break;
                         case "内部上架":
                             llInsideShelf.setVisibility(View.VISIBLE);
                             llMethod.setVisibility(View.VISIBLE);
                             llGuidancePrice.setVisibility(View.VISIBLE);
-                            tvImageRed.setVisibility(View.VISIBLE);
+                            tvImageRed.setVisibility(View.INVISIBLE);
                             break;
                     }
                 });

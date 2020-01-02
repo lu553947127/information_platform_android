@@ -26,9 +26,12 @@ import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.MyApplication;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
+import com.shuangduan.zcy.dialog.BaseDialog;
+import com.shuangduan.zcy.dialog.CustomDialog;
 import com.shuangduan.zcy.model.bean.SupplierRoleBean;
 import com.shuangduan.zcy.rongyun.fragment.CircleFragment;
 import com.shuangduan.zcy.utils.KeyboardUtil;
+import com.shuangduan.zcy.utils.NotificationsUtils;
 import com.shuangduan.zcy.vm.HomeVm;
 import com.shuangduan.zcy.vm.IMAddVm;
 import com.shuangduan.zcy.vm.IMConnectVm;
@@ -302,6 +305,20 @@ public class MainActivity extends BaseActivity {
         };
         RongIM.getInstance().addUnReadMessageCountChangedObserver(observer, Conversation.ConversationType.PRIVATE, Conversation.ConversationType.GROUP, Conversation.ConversationType.SYSTEM);
         getReadCut();
+        if (!NotificationsUtils.isNotificationEnabled(this)){
+            new CustomDialog(this)
+                    .setTip("请打开通知权限，接收消息更及时哦！")
+                    .setCallBack(new BaseDialog.CallBack() {
+                        @Override
+                        public void cancel() {
+                        }
+
+                        @Override
+                        public void ok(String s) {
+                            NotificationsUtils.requestNotify(MainActivity.this);
+                        }
+                    }).showDialog();
+        }
     }
 
     //读取剪切板内容

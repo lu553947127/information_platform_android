@@ -215,42 +215,6 @@
             </FrameLayout>
 
             <FrameLayout
-                android:id="@+id/fl_email"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/selector_bg_custom"
-                android:paddingLeft="14dp"
-                android:paddingRight="14dp"
-                android:visibility="gone">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:text="@string/email"
-                    android:textColor="@color/colorTv"
-                    android:textSize="14sp" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_email"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="87dp"
-                    android:drawableRight="@drawable/icon_next"
-                    android:gravity="center_vertical"
-                    android:singleLine="true"
-                    android:textColor="@color/color_666666"
-                    android:textSize="14sp" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_gravity="bottom"
-                    android:background="@color/colorDivider" />
-
-            </FrameLayout>
-
-            <FrameLayout
                 android:id="@+id/fl_company"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"

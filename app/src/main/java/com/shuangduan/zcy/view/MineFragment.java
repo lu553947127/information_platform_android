@@ -139,7 +139,7 @@ public class MineFragment extends BaseFragment {
         //获取后台管理权限
         homeVm = ViewModelProviders.of(mActivity).get(HomeVm.class);
         homeVm.supplierRoleLiveData.observe(this, supplierRoleBean -> {
-            //获取用户身份 0普通用户 1普通供应商 2子公司 3集团 4子账号
+            //获取用户身份 0普通用户 1普通供应商 2子公司 3集团 4子公司子账号 5集团子账号
             SPUtils.getInstance().put(CustomConfig.MANAGE_STATUS, supplierRoleBean.getManage_status());
             //获取子节点权限
             for (SupplierRoleBean.RoleBean bean : supplierRoleBean.getRole()) {

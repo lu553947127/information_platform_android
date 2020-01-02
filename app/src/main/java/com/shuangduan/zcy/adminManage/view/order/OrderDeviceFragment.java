@@ -141,7 +141,7 @@ public class OrderDeviceFragment extends BaseNoRefreshFragment implements BaseQu
 
         rv.setLayoutManager(new LinearLayoutManager(getActivity()));
         adminOrderListAdapter = new AdminOrderListAdapter(R.layout.adapter_admin_order_item, null
-                , SPUtils.getInstance().getInt(CustomConfig.CONSTRUCTION_ORDER_EDIT, 0), manage_status, 1);
+                , SPUtils.getInstance().getInt(CustomConfig.EQIPMENT_ORDER_EDIT, 0), manage_status, 1);
         rv.setAdapter(adminOrderListAdapter);
 
         adminOrderListAdapter.setOnItemClickListener((adapter, view, position) -> {
@@ -159,7 +159,7 @@ public class OrderDeviceFragment extends BaseNoRefreshFragment implements BaseQu
                     break;
                 case 4://子公司子账号
                 case 5://集团子账号
-                    if (SPUtils.getInstance().getInt(CustomConfig.CONSTRUCTION_ORDER_DETAIL, 0) == 1) {
+                    if (SPUtils.getInstance().getInt(CustomConfig.EQIPMENT_ORDER_DETAIL, 0) == 1) {
                         bundle.putInt(CustomConfig.ADMIN_ORDER_ID, listBean.id);
                         bundle.putInt("manage_status", manage_status);
                         bundle.putInt("order_type", 4);

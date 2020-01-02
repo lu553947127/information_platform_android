@@ -10,7 +10,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.BarUtils;
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
@@ -34,7 +33,6 @@ import butterknife.OnClick;
  * @class describe
  */
 public class IMAddFriendActivity extends BaseActivity {
-
     @BindView(R.id.fake_status_bar)
     View fakeStatusBar;
     @BindView(R.id.tv_bar_title)
@@ -50,7 +48,6 @@ public class IMAddFriendActivity extends BaseActivity {
     @BindView(R.id.edt_msg)
     EditText edtMsg;
     int friend_data;
-    private String id;
     private IMAddVm imAddVm;
 
     @Override
@@ -75,15 +72,10 @@ public class IMAddFriendActivity extends BaseActivity {
 
         imAddVm = ViewModelProviders.of(this).get(IMAddVm.class);
 
-        id = getIntent().getStringExtra("id");
-        String name = getIntent().getStringExtra("name");
-        String msg = getIntent().getStringExtra("msg");
-        String image = getIntent().getStringExtra("image");
-
-        tvName.setText(name);
-        tvContent.setText(msg);
+        tvName.setText(getIntent().getStringExtra("name"));
+        tvContent.setText(getIntent().getStringExtra("msg"));
         ImageLoader.load(this, new ImageConfig.Builder()
-                .url(image)
+                .url(getIntent().getStringExtra("image"))
                 .imageView(ivHeader)
                 .placeholder(R.drawable.default_head)
                 .errorPic(R.drawable.default_head)
@@ -111,9 +103,9 @@ public class IMAddFriendActivity extends BaseActivity {
                 break;
             case R.id.tv_confirm:
                 if (friend_data == 3) {
-                    imAddVm.imFriendApplyOperation(Integer.parseInt(id), 3, edtMsg.getText().toString());
+                    imAddVm.imFriendApplyOperation(getIntent().getIntExtra("id",0), 3, edtMsg.getText().toString());
                 } else {
-                    imAddVm.imFriendApply(Integer.parseInt(id), edtMsg.getText().toString());
+                    imAddVm.imFriendApply(getIntent().getIntExtra("id",0), edtMsg.getText().toString());
                 }
                 break;
         }

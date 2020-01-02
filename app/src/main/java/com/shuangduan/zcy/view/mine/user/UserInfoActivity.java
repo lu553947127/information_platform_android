@@ -28,8 +28,8 @@ import com.shuangduan.zcy.dialog.BaseBottomSheetDialog;
 import com.shuangduan.zcy.dialog.BusinessExpDialog;
 import com.shuangduan.zcy.dialog.SexDialog;
 import com.shuangduan.zcy.model.api.PageState;
+import com.shuangduan.zcy.model.bean.UserInfoBean;
 import com.shuangduan.zcy.model.event.CompanyEvent;
-import com.shuangduan.zcy.model.event.EmailEvent;
 import com.shuangduan.zcy.model.event.MobileEvent;
 import com.shuangduan.zcy.model.event.MultiAreaEvent;
 import com.shuangduan.zcy.model.event.OfficeEvent;
@@ -76,8 +76,12 @@ public class UserInfoActivity extends BaseActivity {
     Toolbar toolbar;
     @BindView(R.id.iv_user)
     CircleImageView ivUser;
+    @BindView(R.id.iv_sgs)
+    AppCompatImageView ivSgs;
     @BindView(R.id.tv_name)
     AppCompatTextView tvName;
+    @BindView(R.id.cb_state)
+    CheckBox cbState;
     @BindView(R.id.iv_name)
     ImageView ivName;
     @BindView(R.id.tv_sex)
@@ -86,8 +90,6 @@ public class UserInfoActivity extends BaseActivity {
     AppCompatTextView tvMobile;
     @BindView(R.id.tv_id_card)
     AppCompatTextView tvIdCard;
-    @BindView(R.id.tv_email)
-    AppCompatTextView tvEmail;
     @BindView(R.id.tv_company)
     AppCompatTextView tvCompany;
     @BindView(R.id.tv_office)
@@ -102,16 +104,12 @@ public class UserInfoActivity extends BaseActivity {
     TextView tvProductionTip;
     @BindView(R.id.tv_add_friend)
     TextView tvAddFriend;
-    @BindView(R.id.iv_sgs)
-    AppCompatImageView ivSgs;
-    @BindView(R.id.cb_state)
-    CheckBox cbState;
 
     private PermissionVm permissionVm;
     private RxPermissions rxPermissions;
     private UserInfoVm userInfoVm;
     private UploadPhotoVm uploadPhotoVm;
-    private String apply_status, id, user_name, company, image;
+    private UserInfoBean userInfoBean;
 
     @Override
     protected int initLayoutRes() {
@@ -123,66 +121,41 @@ public class UserInfoActivity extends BaseActivity {
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.base_info));
-        int uid = getIntent().getIntExtra(CustomConfig.UID, 0);
-
-        if (SPUtils.getInstance().getInt(SpConfig.USER_ID) != uid) {
-            ivUser.setClickable(false);
-            findViewById(R.id.fl_name).setClickable(false);
-            ivName.setVisibility(View.GONE);
-            findViewById(R.id.fl_sex).setClickable(false);
-            tvSex.setCompoundDrawables(null, null, null, null);
-            findViewById(R.id.fl_mobile).setClickable(false);
-            findViewById(R.id.fl_mobile).setVisibility(View.GONE);
-            tvMobile.setCompoundDrawables(null, null, null, null);
-            findViewById(R.id.fl_id_card).setClickable(false);
-            findViewById(R.id.fl_id_card).setVisibility(View.GONE);
-            tvIdCard.setCompoundDrawables(null, null, null, null);
-            findViewById(R.id.fl_email).setClickable(false);
-            tvEmail.setCompoundDrawables(null, null, null, null);
-            findViewById(R.id.fl_company).setClickable(false);
-            tvCompany.setCompoundDrawables(null, null, null, null);
-            findViewById(R.id.fl_office).setClickable(false);
-            tvOffice.setCompoundDrawables(null, null, null, null);
-            findViewById(R.id.fl_business_area).setClickable(false);
-            tvBusinessArea.setCompoundDrawables(null, null, null, null);
-            findViewById(R.id.fl_business_exp).setClickable(false);
-            tvBusinessExp.setCompoundDrawables(null, null, null, null);
-            tvProductionTip.setClickable(false);
-            tvProductionTip.setCompoundDrawables(null, null, null, null);
-            findViewById(R.id.tv_production).setClickable(false);
-        }
 
         uploadPhotoVm = ViewModelProviders.of(this).get(UploadPhotoVm.class);
         userInfoVm = ViewModelProviders.of(this).get(UserInfoVm.class);
-        userInfoVm.uid = uid;
-        userInfoVm.informationLiveData.observe(this, userInfoBean -> {
-            SPUtils.getInstance().put(SpConfig.USERNAME, userInfoBean.getUsername(), true);
-            SPUtils.getInstance().put(SpConfig.MOBILE, userInfoBean.getTel(), true);
-            tvName.setText(userInfoBean.getUsername());
-            tvMobile.setText(userInfoBean.getTel());
 
-            tvIdCard.setText(StringUtils.isTrimEmpty(userInfoBean.getIdentity_card()) ? "请申请实名认证" : userInfoBean.getIdentity_card());
-            tvEmail.setText(userInfoBean.getEmail());
-            tvCompany.setText(userInfoBean.getCompany());
-            tvOffice.setText(userInfoBean.getPosition());
-            tvBusinessArea.setText(StringUtils.isTrimEmpty(userInfoBean.getBusiness_city()) ? "请选择业务地区" : userInfoBean.getBusiness_city());
+        userInfoVm.uid = getIntent().getIntExtra(CustomConfig.UID, 0);
+        if (SPUtils.getInstance().getInt(SpConfig.USER_ID) != userInfoVm.uid) {
+            getNoClickable();
+        }
+
+        //获取用户基本信息
+        userInfoVm.informationLiveData.observe(this, userInfoBean -> {
+            this.userInfoBean = userInfoBean;
 
             //用户认证标识状态显示
             ivSgs.setVisibility(userInfoBean.getCardStatus() == 2 ? View.VISIBLE : View.INVISIBLE);
             cbState.setChecked(userInfoBean.getCardStatus() == 2);
             cbState.setText(userInfoBean.getCardStatus() == 2 ? R.string.real_name : R.string.un_real_name);
 
+            SPUtils.getInstance().put(SpConfig.USERNAME, userInfoBean.getUsername(), true);
+            SPUtils.getInstance().put(SpConfig.MOBILE, userInfoBean.getTel(), true);
+            tvName.setText(userInfoBean.getUsername());
+            tvMobile.setText(userInfoBean.getTel());
+
+            tvIdCard.setText(StringUtils.isTrimEmpty(userInfoBean.getIdentity_card()) ? "请申请实名认证" : userInfoBean.getIdentity_card());
+            tvCompany.setText(userInfoBean.getCompany());
+            tvOffice.setText(userInfoBean.getPosition());
+            tvBusinessArea.setText(StringUtils.isTrimEmpty(userInfoBean.getBusiness_city()) ? "请选择业务地区" : userInfoBean.getBusiness_city());
+
             if (userInfoBean.getExperience() >= 1 && userInfoBean.getExperience() <= 5)
                 tvBusinessExp.setText(getResources().getStringArray(R.array.experience_list)[userInfoBean.getExperience() - 1] + "年");
             tvProduction.setText(userInfoBean.getManaging_products());
 
-            apply_status = userInfoBean.getApply_status();
-            id = String.valueOf(userInfoBean.getId());
-            user_name = userInfoBean.getUsername();
-            company = userInfoBean.getCompany();
-            image = userInfoBean.getImage();
-            if (apply_status != null && apply_status.equals("1")) {
-                if (SPUtils.getInstance().getInt(SpConfig.USER_ID) != uid) {
+            //判断是否为好友
+            if (userInfoBean.getApply_status() != null && userInfoBean.getApply_status().equals("1")) {
+                if (SPUtils.getInstance().getInt(SpConfig.USER_ID) != userInfoVm.uid) {
                     tvAddFriend.setText(getString(R.string.im_add_friend));
                 } else {
                     tvAddFriend.setVisibility(View.GONE);
@@ -192,6 +165,7 @@ public class UserInfoActivity extends BaseActivity {
             }
         });
 
+        //获取用户头像
         userInfoVm.avatarLiveData.observe(this, s -> {
             ImageLoader.load(this, new ImageConfig.Builder()
                     .url(s)
@@ -200,6 +174,8 @@ public class UserInfoActivity extends BaseActivity {
                     .imageView(ivUser)
                     .build());
         });
+
+        //获取用户性别
         userInfoVm.sexLiveData.observe(this, integer -> {
             switch (integer) {
                 case 1:
@@ -213,6 +189,7 @@ public class UserInfoActivity extends BaseActivity {
                     break;
             }
         });
+
         userInfoVm.infoLiveData.observe(this, o -> {
             switch (userInfoVm.changeType) {
                 case 1:
@@ -233,10 +210,13 @@ public class UserInfoActivity extends BaseActivity {
                     break;
             }
         });
+
+        //编辑用户信息
         userInfoVm.areaLiveData.observe(this, o -> {
             ToastUtils.showShort(getString(R.string.edit_success));
             tvBusinessArea.setText(userInfoVm.multiAreaLiveData.getValue().getStringResult());
         });
+
         userInfoVm.expLiveData.observe(this, o -> {
             ToastUtils.showShort(getString(R.string.edit_success));
             if (userInfoVm.experience.getValue() >= 1 && userInfoVm.experience.getValue() <= 5)
@@ -286,7 +266,7 @@ public class UserInfoActivity extends BaseActivity {
         return true;
     }
 
-    @OnClick({R.id.iv_bar_back, R.id.iv_user, R.id.fl_name, R.id.fl_sex, R.id.fl_mobile, R.id.fl_email, R.id.fl_id_card,
+    @OnClick({R.id.iv_bar_back, R.id.iv_user, R.id.fl_name, R.id.fl_sex, R.id.fl_mobile, R.id.fl_id_card,
             R.id.fl_company, R.id.fl_office, R.id.fl_business_area, R.id.fl_business_exp, R.id.tv_production_tip, R.id.tv_production
             , R.id.tv_add_friend})
     void onClick(View view) {
@@ -324,27 +304,23 @@ public class UserInfoActivity extends BaseActivity {
                 bundle.putString(CustomConfig.UPDATE_TYPE, CustomConfig.updateTypePhone);
                 ActivityUtils.startActivity(bundle, UpdateResultActivity.class);
                 break;
-            case R.id.fl_email:
-                bundle.putString(CustomConfig.UPDATE_TYPE, CustomConfig.updateTypeEmail);
-                ActivityUtils.startActivity(bundle, UpdateResultActivity.class);
-                break;
-            case R.id.fl_id_card:
+            case R.id.fl_id_card://身份认证
                 bundle.putString(CustomConfig.UPLOAD_TYPE, CustomConfig.uploadTypeIdCard);
                 bundle.putString(CustomConfig.AUTHENTICATION_TYPE, CustomConfig.ID_USER_INFO);
                 ActivityUtils.startActivity(bundle, AuthenticationActivity.class);
                 break;
-            case R.id.fl_company:
+            case R.id.fl_company://修改公司
                 bundle.putString(CustomConfig.SEARCH_TYPE, CustomConfig.searchTypeCompany);
                 ActivityUtils.startActivity(bundle, CompanySearchActivity.class);
                 break;
-            case R.id.fl_office:
+            case R.id.fl_office://修改职位
                 bundle.putString(CustomConfig.SEARCH_TYPE, CustomConfig.searchTypeOffice);
                 ActivityUtils.startActivity(bundle, CompanySearchActivity.class);
                 break;
-            case R.id.fl_business_area:
+            case R.id.fl_business_area://修改业务地区
                 ActivityUtils.startActivity(MultiAreaActivity.class);
                 break;
-            case R.id.fl_business_exp:
+            case R.id.fl_business_exp://修改业务经验
                 int experience = Objects.requireNonNull(userInfoVm.informationLiveData.getValue()).getExperience();
                 if (experience > 0) {
                     experience = experience - 1;
@@ -355,20 +331,20 @@ public class UserInfoActivity extends BaseActivity {
                         .showDialog();
                 break;
             case R.id.tv_production_tip:
-            case R.id.tv_production:
+            case R.id.tv_production://修改经营产品
                 bundle.putString(CustomConfig.PRODUCTION, tvProduction.getText().toString());
                 ActivityUtils.startActivity(bundle, UpdateProductionActivity.class);
                 break;
-            case R.id.tv_add_friend:
-                if (apply_status != null && apply_status.equals("1")) {
+            case R.id.tv_add_friend://添加好友/发消息
+                if (userInfoBean.getApply_status() != null && userInfoBean.getApply_status().equals("1")) {
                     bundle.putInt(CustomConfig.FRIEND_DATA, 0);
-                    bundle.putString("id", id);
-                    bundle.putString("name", user_name);
-                    bundle.putString("msg", company);
-                    bundle.putString("image", image);
+                    bundle.putInt("id", userInfoBean.getId());
+                    bundle.putString("name", userInfoBean.getUsername());
+                    bundle.putString("msg", userInfoBean.getCompany());
+                    bundle.putString("image", userInfoBean.getImage());
                     ActivityUtils.startActivity(bundle, IMAddFriendActivity.class);
                 } else {
-                    RongIM.getInstance().startPrivateChat(UserInfoActivity.this, id, user_name);
+                    RongIM.getInstance().startPrivateChat(UserInfoActivity.this, String.valueOf(userInfoBean.getId()), userInfoBean.getUsername());
                 }
                 break;
         }
@@ -408,11 +384,6 @@ public class UserInfoActivity extends BaseActivity {
     }
 
     @Subscribe
-    public void onEventUpdateEmail(EmailEvent event) {
-        tvEmail.setText(event.email);
-    }
-
-    @Subscribe
     public void onEventUpdateCompany(CompanyEvent event) {
         tvCompany.setText(event.company);
     }
@@ -430,5 +401,31 @@ public class UserInfoActivity extends BaseActivity {
     @Subscribe
     public void onEventUpdateProduction(ProductionEvent event) {
         tvProduction.setText(event.production);
+    }
+
+    //取消点击监听
+    private void getNoClickable() {
+        ivUser.setClickable(false);
+        findViewById(R.id.fl_name).setClickable(false);
+        ivName.setVisibility(View.GONE);
+        findViewById(R.id.fl_sex).setClickable(false);
+        tvSex.setCompoundDrawables(null, null, null, null);
+        findViewById(R.id.fl_mobile).setClickable(false);
+        findViewById(R.id.fl_mobile).setVisibility(View.GONE);
+        tvMobile.setCompoundDrawables(null, null, null, null);
+        findViewById(R.id.fl_id_card).setClickable(false);
+        findViewById(R.id.fl_id_card).setVisibility(View.GONE);
+        tvIdCard.setCompoundDrawables(null, null, null, null);
+        findViewById(R.id.fl_company).setClickable(false);
+        tvCompany.setCompoundDrawables(null, null, null, null);
+        findViewById(R.id.fl_office).setClickable(false);
+        tvOffice.setCompoundDrawables(null, null, null, null);
+        findViewById(R.id.fl_business_area).setClickable(false);
+        tvBusinessArea.setCompoundDrawables(null, null, null, null);
+        findViewById(R.id.fl_business_exp).setClickable(false);
+        tvBusinessExp.setCompoundDrawables(null, null, null, null);
+        tvProductionTip.setClickable(false);
+        tvProductionTip.setCompoundDrawables(null, null, null, null);
+        findViewById(R.id.tv_production).setClickable(false);
     }
 }

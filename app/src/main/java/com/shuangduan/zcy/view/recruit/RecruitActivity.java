@@ -150,11 +150,6 @@ public class RecruitActivity extends BaseActivity {
                 Bundle bundle = new Bundle();
                 bundle.putString(CustomConfig.PROJECT_TYPE, "1");
                 ActivityUtils.startActivity(bundle, SearchActivity.class);
-
-//                Bundle bundle = new Bundle();
-//                bundle.putString(CustomConfig.KEYWORD, "");
-//                bundle.putString(CustomConfig.PROJECT_TYPE, "1");
-//                ActivityUtils.startActivity(bundle, SearchResultActivity.class);
                 break;
         }
     }

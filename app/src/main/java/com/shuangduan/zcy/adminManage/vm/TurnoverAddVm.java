@@ -154,10 +154,10 @@ public class TurnoverAddVm extends BaseViewModel {
             ToastUtils.showShort(getString(R.string.admin_selector_no_material_shelf_guidance_price));
             return;
         }
-        if (is_shelf!=2&&TextUtils.isEmpty(images)){
-            ToastUtils.showShort(getString(R.string.admin_selector_no_material_shelf_guidance_images));
-            return;
-        }
+//        if (is_shelf!=2&&TextUtils.isEmpty(images)){
+//            ToastUtils.showShort(getString(R.string.admin_selector_no_material_shelf_guidance_images));
+//            return;
+//        }
 
         switch (type){
             case "add"://添加周转材料
