@@ -47,17 +47,18 @@ public class MaterialCollectAdapter extends BaseQuickAdapter<MaterialCollectBean
         }
 
         if (type == 1){
-            helper.setText(R.id.tv_price, item.method == 2 ?
+            helper.setText(R.id.tv_stock, "库存: " + item.stock + item.unit)
+                    .setText(R.id.tv_price, item.method == 2 ?
                     String.format(mContext.getString(R.string.format_material_price), item.guidancePrice, item.unit) :
                     String.format(mContext.getString(R.string.format_material_price), item.guidancePrice, "天"));
         }else {
-            helper.setText(R.id.tv_price, item.method == 2 ?
+            helper.setText(R.id.tv_stock, "库存: " + item.stock)
+                    .setText(R.id.tv_price, item.method == 2 ?
                     String.format(mContext.getString(R.string.format_material_price_no_unit), item.guidancePrice) :
                     String.format(mContext.getString(R.string.format_material_price), item.guidancePrice, "天"));
         }
 
-        helper.setText(R.id.tv_stock, "库存: " + item.stock + item.unit)
-                .setText(R.id.tv_spec, "规格: " + item.spec)
+        helper.setText(R.id.tv_spec, "规格: " + item.spec)
                 .setText(R.id.tv_supplier, "供应商: " + item.company)
                 .setText(R.id.tv_address, "存放地: " + item.address)
                 .setText(R.id.tv_browse_num, String.format(mContext.getString(R.string.format_visitors_num), item.browseCount))

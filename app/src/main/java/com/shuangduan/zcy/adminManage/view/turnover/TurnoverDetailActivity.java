@@ -7,7 +7,6 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.Group;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -103,8 +102,6 @@ public class TurnoverDetailActivity extends BaseActivity {
     TextView tvPutawayTimeKey;
     @BindView(R.id.tv_supply_method_key)
     TextView tvSupplyMethodKey;
-    @BindView(R.id.group)
-    Group group;
     @BindView(R.id.tv_project_value)
     TextView tvProjectValue;
     @BindView(R.id.tv_vulnerable_value)
@@ -134,7 +131,9 @@ public class TurnoverDetailActivity extends BaseActivity {
             tvTitle.setText(turnover.materialIdName);
             tvCategory.setText(turnover.categoryName);
             tvStockNum.setText(turnover.stock+turnover.unitName);
-            tvGuidePrice.setText(turnover.guidancePrice+"/"+turnover.unitName);
+            tvGuidePrice.setText(turnover.method == 1 ?
+                    String.format(getString(R.string.format_material_price), turnover.guidancePrice, "天") :
+                    String.format(getString(R.string.format_material_price), turnover.guidancePrice, turnover.unitName));
             tvSpec.setText(turnover.spec);
             tvUseStatus.setText(StringUtils.isTrimEmpty(turnover.useStatusName) ? "无" : turnover.useStatusName);
             tvMaterialStatus.setText(StringUtils.isTrimEmpty(turnover.materialStatusName) ? "无" : turnover.materialStatusName);
@@ -189,7 +188,7 @@ public class TurnoverDetailActivity extends BaseActivity {
                 tvPutawayTime.setVisibility(View.GONE);
                 tvSupplyMethodKey.setVisibility(View.GONE);
                 tvSupplyMethod.setVisibility(View.GONE);
-                group.setVisibility(View.GONE);
+                tvGuidePrice.setVisibility(View.GONE);
             }
 
             if (turnover.isShelfName.equals("公开上架")) {

@@ -373,7 +373,7 @@
         <TextView
             style="@style/TurnoverDetailTextKeyStyle"
             android:layout_marginTop="0dp"
-            android:textSize="11sp"
+            android:textSize="10sp"
             android:text="@string/admin_device_material_use_month_count" />
 
         <TextView

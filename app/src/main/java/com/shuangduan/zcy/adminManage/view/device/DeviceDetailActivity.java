@@ -7,7 +7,6 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.Group;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -78,13 +77,10 @@ public class DeviceDetailActivity extends BaseActivity {
     TextView tvPutawayTimeKey;
     @BindView(R.id.tv_supply_method_key)
     TextView tvSupplyMethodKey;
-    @BindView(R.id.group)
-    Group group;
     @BindView(R.id.tv_material_photo)
     TextView tvMaterialPhoto;
     @BindView(R.id.rv_photo)
     RecyclerView rvImage;
-
 
     @BindView(R.id.tv_plan)
     TextView tvPlan;
@@ -114,7 +110,6 @@ public class DeviceDetailActivity extends BaseActivity {
     TextView tvEquipmentTime;
     @BindView(R.id.tv_operator_name)
     TextView tvOperatorName;
-
     @BindView(R.id.tv_project_value)
     TextView tvProject;
 
@@ -139,8 +134,10 @@ public class DeviceDetailActivity extends BaseActivity {
         deviceVm.deviceDetailLiveData.observe(this,deviceDetailBean -> {
             tvTitle.setText(deviceDetailBean.getMaterial_name());
             tvCategory.setText(deviceDetailBean.getCategory_name());
-            tvStockNum.setText(deviceDetailBean.getStock()+deviceDetailBean.getUnit_name());
-            tvGuidePrice.setText(deviceDetailBean.getGuidance_price()+"/"+deviceDetailBean.getUnit_name());
+            tvStockNum.setText(deviceDetailBean.getStock());
+            tvGuidePrice.setText(deviceDetailBean.getMethod() == 1 ?
+                    String.format(getString(R.string.format_material_price), deviceDetailBean.getGuidance_price(), "天"):
+                    String.format(getString(R.string.format_material_price_no_unit), deviceDetailBean.getGuidance_price()));
             tvSpec.setText(deviceDetailBean.getSpec());
             tvUseStatus.setText(StringUtils.isTrimEmpty(deviceDetailBean.getUse_status_name()) ? "无" : deviceDetailBean.getUse_status_name());
             tvMaterialStatus.setText(StringUtils.isTrimEmpty(deviceDetailBean.getMaterial_status_name()) ? "无" : deviceDetailBean.getMaterial_status_name());
@@ -180,7 +177,7 @@ public class DeviceDetailActivity extends BaseActivity {
                 tvPutawayTime.setVisibility(View.GONE);
                 tvSupplyMethodKey.setVisibility(View.GONE);
                 tvSupplyMethod.setVisibility(View.GONE);
-                group.setVisibility(View.GONE);
+                tvGuidePrice.setVisibility(View.GONE);
             }
 
             if (deviceDetailBean.getIs_shelf_name().equals("公开上架")) {
