@@ -1,6 +1,5 @@
 package com.shuangduan.zcy.adapter;
 
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -9,8 +8,6 @@ import androidx.annotation.Nullable;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.shuangduan.zcy.R;
-import com.shuangduan.zcy.app.CustomConfig;
-import com.shuangduan.zcy.model.bean.MaterialBean;
 import com.shuangduan.zcy.model.bean.MaterialCollectBean;
 import com.shuangduan.zcy.utils.TextViewUtils;
 import com.shuangduan.zcy.utils.image.ImageConfig;
@@ -39,8 +36,6 @@ public class MaterialCollectAdapter extends BaseQuickAdapter<MaterialCollectBean
     protected void convert(BaseViewHolder helper, MaterialCollectBean.ListBean item) {
         TextView tvTitle = helper.getView(R.id.tv_title);
 
-
-
         if (item.status == 0) {
             TextViewUtils.addDrawableInEnd(tvTitle, mContext.getResources().getDrawable(R.drawable.icon_lose), item.materialName);
         } else {
@@ -51,12 +46,19 @@ public class MaterialCollectAdapter extends BaseQuickAdapter<MaterialCollectBean
             }
         }
 
+        if (type == 1){
+            helper.setText(R.id.tv_price, item.method == 2 ?
+                    String.format(mContext.getString(R.string.format_material_price), item.guidancePrice, item.unit) :
+                    String.format(mContext.getString(R.string.format_material_price), item.guidancePrice, "天"));
+        }else {
+            helper.setText(R.id.tv_price, item.method == 2 ?
+                    String.format(mContext.getString(R.string.format_material_price_no_unit), item.guidancePrice) :
+                    String.format(mContext.getString(R.string.format_material_price), item.guidancePrice, "天"));
+        }
+
         helper.setText(R.id.tv_stock, "库存: " + item.stock + item.unit)
                 .setText(R.id.tv_spec, "规格: " + item.spec)
                 .setText(R.id.tv_supplier, "供应商: " + item.company)
-                .setText(R.id.tv_price, item.method == 2 ?
-                        String.format(mContext.getString(R.string.format_material_price), item.guidancePrice, item.unit) :
-                        String.format(mContext.getString(R.string.format_material_price), item.guidancePrice, "天"))
                 .setText(R.id.tv_address, "存放地: " + item.address)
                 .setText(R.id.tv_browse_num, String.format(mContext.getString(R.string.format_visitors_num), item.browseCount))
                 .setGone(R.id.tv_supply_method, false);

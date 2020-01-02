@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
@@ -25,14 +26,21 @@ import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.CustomDialog;
+import com.shuangduan.zcy.dialog.ShareMaterialDialog;
+import com.shuangduan.zcy.manage.ShareManage;
+import com.shuangduan.zcy.model.bean.IMFriendListBean;
 import com.shuangduan.zcy.model.bean.MaterialDetailBean;
+import com.shuangduan.zcy.model.bean.ShareBean;
 import com.shuangduan.zcy.model.event.MaterialDetailEvent;
 import com.shuangduan.zcy.utils.KeyboardUtil;
 import com.shuangduan.zcy.utils.PhoneFormatCheckUtils;
+import com.shuangduan.zcy.utils.RongIMUtils;
 import com.shuangduan.zcy.utils.TextViewUtils;
 import com.shuangduan.zcy.utils.image.GlideImageLoader;
 import com.shuangduan.zcy.utils.image.PictureEnlargeUtils;
+import com.shuangduan.zcy.vm.IMAddVm;
 import com.shuangduan.zcy.vm.MaterialDetailVm;
+import com.shuangduan.zcy.vm.ShareVm;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -44,12 +52,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import io.rong.imkit.RongIM;
-import io.rong.imlib.IRongCallback;
-import io.rong.imlib.RongIMClient;
-import io.rong.imlib.model.Conversation;
-import io.rong.imlib.model.Message;
-import io.rong.message.RichContentMessage;
 
 /**
  * @author 徐玉 QQ:876885613
@@ -64,6 +66,10 @@ import io.rong.message.RichContentMessage;
 public class MaterialEquipmentDetailActivity extends BaseActivity {
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
+    @BindView(R.id.iv_bar_right)
+    AppCompatImageView ivBarRight;
+    @BindView(R.id.tv_bar_right)
+    TextView tvBarRight;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.banner)
@@ -115,6 +121,8 @@ public class MaterialEquipmentDetailActivity extends BaseActivity {
     private String phone, is_collect, enclosure,unitPrice;
     private List<String> pics;
     private MaterialDetailBean materialDetailBean;
+    private List<IMFriendListBean.ListBean> imFriendList;
+    private ShareBean.DataBean shareBean;
 
     @Override
     protected int initLayoutRes() {
@@ -131,6 +139,8 @@ public class MaterialEquipmentDetailActivity extends BaseActivity {
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.product_detail));
+        ivBarRight.setImageResource(R.drawable.icon_share);
+        tvBarRight.setVisibility(View.GONE);
         tvEnclosure.setVisibility(View.INVISIBLE);
 
         materialDetailVm = ViewModelProviders.of(this).get(MaterialDetailVm.class);
@@ -223,14 +233,30 @@ public class MaterialEquipmentDetailActivity extends BaseActivity {
         });
 
         materialDetailVm.getEquipmentDetail(getIntent().getIntExtra(CustomConfig.MATERIAL_ID, 0));
+
+        //获取好友列表
+        IMAddVm imAddVm = ViewModelProviders.of(this).get(IMAddVm.class);
+        imAddVm.friendListLiveData.observe(this, imFriendListBean -> imFriendList = imFriendListBean.getList());
+        imAddVm.friendList(5);
+        //获取分享信息
+        ShareVm shareVm = ViewModelProviders.of(this).get(ShareVm.class);
+        shareVm.shareLiveData.observe(this, item -> {
+            this.shareBean = item;
+            ShareManage.getNetworkBitmap(item.getImage());
+        });
+        shareVm.materialShare(getIntent().getIntExtra(CustomConfig.MATERIAL_ID, 0));
     }
 
-    @OnClick({R.id.iv_bar_back, R.id.tv_enclosure, R.id.tv_tel, R.id.ll_collect,R.id.ll_chat, R.id.tv_reserve})
+    @OnClick({R.id.iv_bar_back, R.id.iv_bar_right, R.id.tv_enclosure, R.id.tv_tel, R.id.ll_collect,R.id.ll_chat, R.id.tv_reserve})
     void onClick(View v) {
         Bundle bundle = new Bundle();
         switch (v.getId()) {
             case R.id.iv_bar_back:
                 finish();
+                break;
+            case R.id.iv_bar_right://分享
+                ShareMaterialDialog shareMaterialDialog =new ShareMaterialDialog(this,imFriendList,shareBean,"2",materialDetailBean,unitPrice);
+                shareMaterialDialog.showShareDialog();
                 break;
             case R.id.tv_enclosure:
                 if (TextUtils.isEmpty(enclosure)) {
@@ -283,7 +309,14 @@ public class MaterialEquipmentDetailActivity extends BaseActivity {
                 }
                 break;
             case R.id.ll_chat://联系商家
-                imageContentMessage(materialDetailBean.getMaterialName(),unitPrice,materialDetailBean.getImages().get(0).getUrl(),materialDetailBean.getId(), String.valueOf(materialDetailBean.getTargetId()));
+                RongIMUtils.getImageContentMessage(this
+                        ,"2"
+                        ,materialDetailBean.getMaterialName()
+                        ,unitPrice
+                        ,materialDetailBean.getImages().get(0).getUrl()
+                        ,materialDetailBean.getId()
+                        ,String.valueOf(materialDetailBean.getTargetId())
+                        ,materialDetailBean.getCompany());
                 break;
             case R.id.tv_reserve:
                 bundle.putInt(CustomConfig.MATERIAL_ID, getIntent().getIntExtra(CustomConfig.MATERIAL_ID, 0));
@@ -291,37 +324,6 @@ public class MaterialEquipmentDetailActivity extends BaseActivity {
                 ActivityUtils.startActivity(bundle, MaterialPlaceOrderActivity.class);
                 break;
         }
-    }
-
-    /**
-     * @param title  图文标题。
-     * @param content 图文内容。
-     * @param imageUrl 图文图片地址。
-     * @param id 物资详情id。
-     * @param targetId 供应商id。
-     */
-    private void imageContentMessage(String title, String content, String imageUrl,int id,String targetId){
-        RichContentMessage richContentMessage = RichContentMessage.obtain(title,content,imageUrl);
-        richContentMessage.setUrl("2");
-        richContentMessage.setExtra(String.valueOf(id));
-        Message myMessage = Message.obtain(targetId, Conversation.ConversationType.PRIVATE, richContentMessage);
-        RongIM.getInstance().sendMessage(myMessage, null, null, new IRongCallback.ISendMessageCallback() {
-            @Override
-            public void onAttached(Message message) {
-                //消息本地数据库存储成功的回调
-            }
-
-            @Override
-            public void onSuccess(Message message) {
-                //消息通过网络发送成功的回调
-                RongIM.getInstance().startPrivateChat(MaterialEquipmentDetailActivity.this, String.valueOf(materialDetailBean.getTargetId()), materialDetailBean.getCompany());
-            }
-
-            @Override
-            public void onError(Message message, RongIMClient.ErrorCode errorCode) {
-                //消息发送失败的回调
-            }
-        });
     }
 
     @Subscribe

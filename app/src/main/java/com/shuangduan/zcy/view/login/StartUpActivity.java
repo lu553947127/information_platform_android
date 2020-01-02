@@ -9,7 +9,6 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.utils.LoginUtils;
-import com.shuangduan.zcy.view.MainActivity;
 
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
@@ -58,16 +57,18 @@ public class StartUpActivity extends BaseActivity {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
-        LoginUtils.getJavaScriptData(this);
+
     }
 
     private void getIntoActivity() {
         if (LoginUtils.isLogin()){
             //初始化，融云链接服务器
             String token = SPUtils.getInstance().getString(SpConfig.IM_TOKEN);
+            LogUtils.i("融云--token--" + token);
             RongIM.connect(token, new RongIMClient.ConnectCallback() {
                 @Override
                 public void onTokenIncorrect() {
+                    LogUtils.i("融云--token--" + token);
                     LogUtils.i("融云连接失败");
                     ActivityUtils.startActivity(LoginActivity.class);
                     finish();
@@ -76,7 +77,7 @@ public class StartUpActivity extends BaseActivity {
                 public void onSuccess(String userid) {
                     LogUtils.i("融云连接成功" + userid);
                     LogUtils.i("融云--token--" + token);
-                    ActivityUtils.startActivity(MainActivity.class);
+                    LoginUtils.getJavaScriptData(StartUpActivity.this);
                     StartUpActivity.this.finish();
                 }
                 @Override

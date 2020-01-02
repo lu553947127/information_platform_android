@@ -24,9 +24,12 @@ import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.factory.EmptyViewFactory;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.IMFriendListBean;
+import com.shuangduan.zcy.utils.RongIMUtils;
 import com.shuangduan.zcy.view.projectinfo.ProjectInfoListActivity;
 import com.shuangduan.zcy.vm.IMAddVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -45,7 +48,6 @@ import io.rong.imlib.model.Conversation;
  */
 @SuppressLint("Registered")
 public class IMFriendMoreActivity extends BaseActivity implements EmptyViewFactory.EmptyViewCallBack {
-
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
     @BindView(R.id.toolbar)
@@ -57,6 +59,7 @@ public class IMFriendMoreActivity extends BaseActivity implements EmptyViewFacto
     @BindView(R.id.refresh)
     SmartRefreshLayout refresh;
     private View emptyView;
+    private List<IMFriendListBean.ListBean> imFriendList;
 
     @Override
     protected int initLayoutRes() {
@@ -73,7 +76,12 @@ public class IMFriendMoreActivity extends BaseActivity implements EmptyViewFacto
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
 
         emptyView = emptyViewFactory.createEmptyView(R.drawable.icon_empty_circle_contacts, R.string.empty_new_friends_info, R.string.to_look_over, this);
-        tvBarTitle.setText(getString(R.string.search_friends));
+        int flag = getIntent().getIntExtra("flag",0);
+        if (flag == 1){
+            tvBarTitle.setText("基建好友");
+        }else {
+            tvBarTitle.setText(getString(R.string.search_friends));
+        }
         tvTitle.setText(getString(R.string.im_search_friend));
 
         String name = getIntent().getStringExtra("name");
@@ -88,13 +96,25 @@ public class IMFriendMoreActivity extends BaseActivity implements EmptyViewFacto
 
         imFriendListAdapter.setOnItemClickListener((adapter, view, position) -> {
             IMFriendListBean.ListBean listBean = imFriendListAdapter.getData().get(position);
-            if (listBean.getUserId().equals("18")){
-                RongIM.getInstance().startConversation(IMFriendMoreActivity.this, Conversation.ConversationType.SYSTEM, listBean.getUserId(), listBean.getName());
+            if (flag == 1){
+                RongIMUtils.getImageContentMessage(this
+                        ,getIntent().getStringExtra("type")
+                        ,getIntent().getStringExtra("material_name")
+                        ,getIntent().getStringExtra("unitPrice")
+                        ,getIntent().getStringExtra("images")
+                        ,getIntent().getIntExtra("id",0)
+                        ,listBean.getUserId()
+                        ,listBean.getName());
             }else {
-                RongIM.getInstance().startPrivateChat(IMFriendMoreActivity.this, listBean.getUserId(), listBean.getName());
+                if (listBean.getUserId().equals("18")){
+                    RongIM.getInstance().startConversation(IMFriendMoreActivity.this, Conversation.ConversationType.SYSTEM, listBean.getUserId(), listBean.getName());
+                }else {
+                    RongIM.getInstance().startPrivateChat(IMFriendMoreActivity.this, listBean.getUserId(), listBean.getName());
+                }
             }
         });
 
+        //搜索更多好友列表
         imAddVm.imFriendListLiveData.observe(this,imFriendListBean ->{
             if (imFriendListBean.getPage() == 1) {
                 imFriendListAdapter.setNewData(imFriendListBean.getList());
@@ -105,12 +125,17 @@ public class IMFriendMoreActivity extends BaseActivity implements EmptyViewFacto
             setNoMore(imFriendListBean.getPage(), imFriendListBean.getCount());
         });
 
+        //更多好友列表
         imAddVm.friendListLiveData.observe(this,imFriendListBean ->{
+            imFriendList = imFriendListBean.getList();
+            if (flag == 1){
+                if (imFriendList.get(0).getUserId().equals("18"))imFriendList.remove(0);
+            }
             if (imFriendListBean.getPage() == 1) {
-                imFriendListAdapter.setNewData(imFriendListBean.getList());
+                imFriendListAdapter.setNewData(imFriendList);
                 imFriendListAdapter.setEmptyView(emptyView);
             } else {
-                imFriendListAdapter.addData(imFriendListAdapter.getData().size(), imFriendListBean.getList());
+                imFriendListAdapter.addData(imFriendListAdapter.getData().size(), imFriendList);
             }
             setNoMore(imFriendListBean.getPage(), imFriendListBean.getCount());
         });
@@ -185,8 +210,6 @@ public class IMFriendMoreActivity extends BaseActivity implements EmptyViewFacto
         ActivityUtils.startActivity(ProjectInfoListActivity.class);
     }
 
-    @OnClick({R.id.iv_bar_back})
-    void onClick() {
-        finish();
-    }
+    @OnClick(R.id.iv_bar_back)
+    void onClick(){finish();}
 }

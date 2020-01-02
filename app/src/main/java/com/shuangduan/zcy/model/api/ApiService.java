@@ -1632,6 +1632,14 @@ public interface ApiService {
             @Field("id") int id
     );
 
+    //基建物资分享
+    @FormUrlEncoded
+    @POST("api/Material/share")
+    Flowable<BaseResponse<ShareBean.DataBean>> materialShare(
+            @Field("user_id") int userId,
+            @Field("id") int id
+    );
+
     //版本升级
     @FormUrlEncoded
     @POST("api/Passport/versionUpgrade")

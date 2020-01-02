@@ -60,6 +60,11 @@ public class IMFriendListBean {
         private String userId;
         private String name;
         private String portraitUri;
+
+        public ListBean(String name) {
+            this.name = name;
+        }
+
         private String company;
 
         //省份验证状态：0未认证 1审核中 2已认证

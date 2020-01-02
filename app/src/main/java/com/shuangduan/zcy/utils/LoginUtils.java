@@ -15,6 +15,7 @@ import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
+import com.shuangduan.zcy.view.MainActivity;
 import com.shuangduan.zcy.view.login.LoginActivity;
 import com.shuangduan.zcy.view.material.MaterialDetailActivity;
 import com.shuangduan.zcy.view.material.MaterialEquipmentDetailActivity;
@@ -22,7 +23,6 @@ import com.shuangduan.zcy.view.material.MaterialEquipmentDetailActivity;
 import java.util.List;
 
 import io.rong.imkit.RongIM;
-import io.rong.message.RichContentMessage;
 
 /**
  * <pre>
@@ -37,21 +37,7 @@ import io.rong.message.RichContentMessage;
 public class LoginUtils {
 
     /**
-     * 检测登录，未登录则跳转登录界面
-     *
-     * @return
-     */
-    public static boolean checkLogin() {
-        String token = SPUtils.getInstance().getString(SpConfig.TOKEN);
-        if (StringUtils.isTrimEmpty(token)) {
-            ActivityUtils.startActivity(LoginActivity.class);
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * 是否登录
+     * 检测是否登录
      *
      * @return
      */
@@ -103,19 +89,28 @@ public class LoginUtils {
         //跳转协会为空，说明应用是正常启动
         //总结：对协议的书写要求比较高，一定要注意大小写，和规则规范，和前端调用保持一致
         if(uri!=null) {
-            String type=uri.getQueryParameter("type");
+            LogUtils.e(uri);
             String id=uri.getQueryParameter("id");
-            Bundle bundle = new Bundle();
-            switch (type){
-                case "1"://周转材料
-                    bundle.putInt(CustomConfig.MATERIAL_ID, Integer.parseInt(id));
-                    ActivityUtils.startActivity(bundle, MaterialDetailActivity.class);
-                    break;
-                case "2"://设备
-                    bundle.putInt(CustomConfig.MATERIAL_ID, Integer.parseInt(id));
-                    ActivityUtils.startActivity(bundle, MaterialEquipmentDetailActivity.class);
-                    break;
+            String type=uri.getQueryParameter("type");
+            LogUtils.e(id);
+            LogUtils.e(type);
+            if (!TextUtils.isEmpty(type)&&!TextUtils.isEmpty(id)){
+                Bundle bundle = new Bundle();
+                switch (type){
+                    case "1"://周转材料
+                        bundle.putInt(CustomConfig.MATERIAL_ID, Integer.parseInt(id));
+                        ActivityUtils.startActivity(bundle, MaterialDetailActivity.class);
+                        break;
+                    case "2"://设备
+                        bundle.putInt(CustomConfig.MATERIAL_ID, Integer.parseInt(id));
+                        ActivityUtils.startActivity(bundle, MaterialEquipmentDetailActivity.class);
+                        break;
+                }
+            }else {
+                ActivityUtils.startActivity(MainActivity.class);
             }
+        }else {
+            ActivityUtils.startActivity(MainActivity.class);
         }
     }
 

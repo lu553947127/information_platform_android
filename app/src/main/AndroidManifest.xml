@@ -71,8 +71,7 @@
                 <!-- //协议头部-->
                 <data
                     android:scheme="yijijian"
-                    android:host="xx.yijijian.com"
-                    android:pathPrefix="/material/"/>
+                    android:host="yijijian.com" />
             </intent-filter>
 
 

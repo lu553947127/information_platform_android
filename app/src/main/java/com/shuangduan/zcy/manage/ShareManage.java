@@ -12,13 +12,10 @@ import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.ShareDialog;
 import com.shuangduan.zcy.listener.BaseUiListener;
 import com.shuangduan.zcy.model.bean.ShareBean;
-import com.shuangduan.zcy.model.event.ShareEvent;
 import com.shuangduan.zcy.utils.LoginUtils;
 import com.shuangduan.zcy.utils.ShareUtils;
 import com.shuangduan.zcy.vm.ShareVm;
 import com.tencent.tauth.Tencent;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -57,12 +54,12 @@ public class ShareManage {
     private Tencent mTencent;
     private BaseUiListener qqListener;
     private ShareDialog dialog;
-    private Disposable disposable;
+    public static Disposable disposable;
     private ShareVm shareVm;
 
     private ShareBean.DataBean item;
 
-    private Bitmap bitmap;
+    public static Bitmap bitmap;
 
 
     public static ShareManage newInstance(Context context) {
@@ -108,12 +105,11 @@ public class ShareManage {
 
         shareVm.shareLiveData.observe(activity, item -> {
             this.item = item;
-            EventBus.getDefault().post(new ShareEvent(item.getUrl()));
             getNetworkBitmap(item.getImage());
         });
     }
 
-    private void getNetworkBitmap(String image) {
+    public static void getNetworkBitmap(String image) {
         Observable.create((ObservableOnSubscribe<Bitmap>) e -> {
             e.onNext(returnBitmap(image));
             e.onComplete();
@@ -128,7 +124,7 @@ public class ShareManage {
 
                     @Override
                     public void onNext(Bitmap bitmap) {
-                        ShareManage.this.bitmap = bitmap;
+                        ShareManage.bitmap = bitmap;
                     }
 
                     @Override
@@ -217,7 +213,7 @@ public class ShareManage {
      * @param url
      * @return
      */
-    private Bitmap returnBitmap(String url) {
+    public static Bitmap returnBitmap(String url) {
         if (!StringUtils.isEmpty(url)) {
             URL fileUrl = null;
             Bitmap bitmap = null;
