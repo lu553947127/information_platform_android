@@ -2,12 +2,14 @@ package com.shuangduan.zcy.dialog;
 
 import android.app.Activity;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
 import com.blankj.utilcode.util.ConvertUtils;
 import com.shuangduan.zcy.R;
 
+import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
@@ -21,8 +23,13 @@ import butterknife.OnClick;
  * @class describe
  */
 public class ShareDialog extends BaseDialog {
-    public ShareDialog(@NonNull Activity activity) {
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
+    private String title;
+
+    public ShareDialog(@NonNull Activity activity ,String title) {
         super(activity);
+        this.title = title;
     }
 
     @Override
@@ -39,7 +46,7 @@ public class ShareDialog extends BaseDialog {
 
     @Override
     void initEvent() {
-
+        tvTitle.setText(title);
     }
 
     @OnClick({R.id.iv_wechat_friend, R.id.tv_wechat_friend, R.id.tv_wechat_circle, R.id.iv_wechat_circle, R.id.iv_qq_friend, R.id.tv_qq_friend, R.id.iv_qq_stone, R.id.tv_qq_stone})

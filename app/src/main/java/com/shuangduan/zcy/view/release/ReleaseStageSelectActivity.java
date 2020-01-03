@@ -15,6 +15,8 @@ import com.shuangduan.zcy.adapter.SelectorFirstAdapter;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.event.StageEvent;
 import com.shuangduan.zcy.vm.StageVm;
+import com.shuangduan.zcy.weight.DividerItemDecoration;
+
 import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
@@ -31,11 +33,8 @@ import butterknife.OnClick;
  * @class describe
  */
 public class ReleaseStageSelectActivity extends BaseActivity {
-
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
-    @BindView(R.id.tv_bar_right)
-    AppCompatTextView tvBarRight;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.rv_stage)
@@ -56,15 +55,19 @@ public class ReleaseStageSelectActivity extends BaseActivity {
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.project_stage));
-        tvBarRight.setText(getString(R.string.save));
 
         rvStage.setLayoutManager(new LinearLayoutManager(this));
+        rvStage.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
         SelectorFirstAdapter stageFirstAdapter = new SelectorFirstAdapter(R.layout.item_province, null);
         rvStage.setAdapter(stageFirstAdapter);
 
         stageVm = ViewModelProviders.of(this).get(StageVm.class);
         //阶段点击事件
-        stageFirstAdapter.setOnItemClickListener((adapter, view1, position) -> stageVm.clickFirst(position));
+        stageFirstAdapter.setOnItemClickListener((adapter, view1, position) -> {
+            stageVm.clickFirst(position);
+            EventBus.getDefault().post(new StageEvent(stageVm.getFirstName(), stageVm.getFirstId()));
+            finish();
+        });
         stageVm.init();
         stageVm.stageFirstLiveData.observe(this, stageBeans -> {
             stageVm.setProvinceInit();
@@ -72,14 +75,10 @@ public class ReleaseStageSelectActivity extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.iv_bar_back, R.id.tv_bar_right})
+    @OnClick({R.id.iv_bar_back})
     void onClick(View view){
         switch (view.getId()) {
             case R.id.iv_bar_back:
-                finish();
-                break;
-            case R.id.tv_bar_right:
-                EventBus.getDefault().post(new StageEvent(stageVm.getFirstName(), stageVm.getFirstId()));
                 finish();
                 break;
         }

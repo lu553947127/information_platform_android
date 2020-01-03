@@ -43,8 +43,8 @@ public class ShareManage {
 
     //------------------------------------分享类型----------------------------------------------------
     public static final int SHARE_PROJECT_TYPE = 1;                                         //      工程信息
-    public static final int SHARE_RECOMMEND_FRIENDS_TYPE = 3;                               //      推荐好友
     public static final int SHARE_TENDERER_TYPE = 2;                                        //      招采信息
+    public static final int SHARE_RECOMMEND_FRIENDS_TYPE = 3;                               //      推荐好友
     public static final int SHARE_HEADLINES_TYPE = 4;                                        //     基建头条
     //-------------------------------------------------------------------------------------------------------
 
@@ -92,11 +92,11 @@ public class ShareManage {
             case SHARE_PROJECT_TYPE:
                 shareVm.projectShare(id);
                 break;
-            case SHARE_RECOMMEND_FRIENDS_TYPE:
-                shareVm.userInfoShare();
-                break;
             case SHARE_TENDERER_TYPE:
                 shareVm.tendererShare(id);
+                break;
+            case SHARE_RECOMMEND_FRIENDS_TYPE:
+                shareVm.userInfoShare();
                 break;
             case SHARE_HEADLINES_TYPE:
                 shareVm.headlinesShare(id);
@@ -154,8 +154,8 @@ public class ShareManage {
      * @param des
      * @param image
      */
-    public void initDialog(BaseActivity activity, String url, String title, String des, String image, Bitmap bitmap) {
-        dialog = new ShareDialog(activity)
+    public void initDialog(BaseActivity activity, String url, String title, String des, String image, Bitmap bitmap,String type) {
+        dialog = new ShareDialog(activity,type)
                 .setOnShareListener(new ShareDialog.OnShareListener() {
                     @Override
                     public void qq() {

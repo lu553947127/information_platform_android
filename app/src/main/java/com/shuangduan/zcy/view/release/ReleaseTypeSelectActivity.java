@@ -19,6 +19,7 @@ import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.TypeBean;
 import com.shuangduan.zcy.model.event.TypesArrayEvent;
 import com.shuangduan.zcy.vm.TypesVm;
+import com.shuangduan.zcy.weight.DividerItemDecoration;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -45,15 +46,13 @@ public class ReleaseTypeSelectActivity extends BaseActivity {
     AppCompatTextView tvBarRight;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.rv_province)
-    RecyclerView rvProvince;
-    @BindView(R.id.rv_city)
-    RecyclerView rvCity;
+    @BindView(R.id.rv_stage)
+    RecyclerView rvStage;
     private TypesVm typesVm;
 
     @Override
     protected int initLayoutRes() {
-        return R.layout.activity_release_area_select;
+        return R.layout.activity_stage_select;
     }
 
     @Override
@@ -67,23 +66,19 @@ public class ReleaseTypeSelectActivity extends BaseActivity {
         tvBarTitle.setText(getString(R.string.project_types));
         tvBarRight.setText(getString(R.string.save));
 
-        rvCity.setVisibility(View.GONE);
         typesVm = ViewModelProviders.of(this).get(TypesVm.class);
-        rvProvince.setLayoutManager(new LinearLayoutManager(this));
-        rvCity.setLayoutManager(new LinearLayoutManager(this));
+        rvStage.setLayoutManager(new LinearLayoutManager(this));
+        rvStage.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
         SelectorFirstAdapter typeFirstAdapter = new SelectorFirstAdapter(R.layout.item_province, null);
-
-        rvProvince.setAdapter(typeFirstAdapter);
+        rvStage.setAdapter(typeFirstAdapter);
 
         //类型点击事件
         typeFirstAdapter.setOnItemClickListener((adapter, view1, position) -> typesVm.clickFirst(position));
-
 
         typesVm.init();
         typesVm.typeFirstLiveData.observe(this, typeBeans -> {
             LogUtils.i(typeBeans.get(0).getCatname());
             typeFirstAdapter.setNewData(typeBeans);
-//            typesVm.setTypeFirstSingleInit();
         });
 
         typesVm.pageStateLiveData.observe(this, s -> {
@@ -106,25 +101,20 @@ public class ReleaseTypeSelectActivity extends BaseActivity {
                 break;
             case R.id.tv_bar_right:
                 String province = "";
-
                 List<Integer> typeId = new ArrayList<>();
                 List<TypeBean> types = typesVm.typeFirstLiveData.getValue();
-
                 if (types == null || types.size() <= 0) {
                     ToastUtils.showShort(getString(R.string.select_types_correct));
                     return;
                 }
-
                 for (int i = 0; i < types.size(); i++) {
                     if (types.get(i).isSelect == 1) {
                         province += types.get(i).getCatname() + " ";
                         typeId.add(types.get(i).getId());
                     }
                 }
-
                 EventBus.getDefault().post(new TypesArrayEvent(province, typeId));
                 finish();
-
                 break;
         }
     }

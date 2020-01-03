@@ -175,7 +175,7 @@ public class HeadlinesDetailActivity extends BaseActivity {
             case R.id.iv_bar_right:
             case R.id.iv_bar_right_new:
                 shareManage.initDialog(this, shareManage.getItem().getUrl(), shareManage.getItem().getTitle(),
-                        shareManage.getItem().getDes(), shareManage.getItem().getImage(), shareManage.getBitmap());
+                        shareManage.getItem().getDes(), shareManage.getItem().getImage(), shareManage.getBitmap(),"分享基建头条");
                 break;
         }
     }

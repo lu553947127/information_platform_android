@@ -416,25 +416,25 @@ public class ReleaseProjectActivity extends BaseActivity {
             case R.id.iv_bar_back:
                 finish();
                 break;
-            case R.id.tv_project_type:
+            case R.id.tv_project_type://项目类型
                 getBottomWindow();
                 btn_dialog.show();
                 break;
-            case R.id.tv_project_address:
+            case R.id.tv_project_address://项目地址
                 bundle.putInt(CustomConfig.PROJECT_ADDRESS, 1);
                 ActivityUtils.startActivity(bundle, ReleaseAreaSelectActivity.class);
                 break;
-            case R.id.tv_project_stage:
+            case R.id.tv_project_stage://项目阶段
                 ActivityUtils.startActivity(ReleaseStageSelectActivity.class);
                 break;
-            case R.id.tv_project_types:
+            case R.id.tv_project_types://项目类别
                 ActivityUtils.startActivity(ReleaseTypeSelectActivity.class);
                 break;
-            case R.id.tv_time_start:
+            case R.id.tv_time_start://项目周期（起始时间）
                 String startTime = StringUtils.isTrimEmpty(releaseVm.start_time) ? releaseVm.todayTime : releaseVm.start_time;
                 showTimeDialog(tvTimeStart, 0, startTime);
                 break;
-            case R.id.tv_time_end:
+            case R.id.tv_time_end://项目周期（结束时间）
                 if (TextUtils.isEmpty(releaseVm.start_time)) {
                     ToastUtils.showShort("请先选择起始时间");
                     return;
@@ -448,22 +448,21 @@ public class ReleaseProjectActivity extends BaseActivity {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-
                 break;
-            case R.id.tv_add:
+            case R.id.tv_add://联系人添加按钮
                 releaseVm.addContact();
                 break;
-            case R.id.tv_project_name:
+            case R.id.tv_project_name://选择项目名称
                 ActivityUtils.startActivity(ProjectSearchActivity.class);
                 break;
-            case R.id.tv_release:
+            case R.id.tv_release://提交按钮
                 if (releaseVm.type == 1) {
                     releaseVm.releaseProject(edtProjectName.getText().toString(), edtProjectCompany.getText().toString(), edtProjectAcreage.getText().toString(), edtProjectPrice.getText().toString(), edtProjectDetail.getText().toString(), edtProjectMaterial.getText().toString());
                 } else if (releaseVm.type == 2) {
                     releaseVm.releaseLocus(edtProjectDes.getText().toString(), edtVisitor.getText().toString(), edtMobile.getText().toString());
                 }
                 break;
-            case R.id.tv_authentication:
+            case R.id.tv_authentication://身份认证
                 bundle.putString(CustomConfig.UPLOAD_TYPE, CustomConfig.uploadTypeIdCard);
                 bundle.putString(CustomConfig.AUTHENTICATION_TYPE, CustomConfig.ID_USER_INFO);
                 ActivityUtils.startActivity(bundle, AuthenticationActivity.class);

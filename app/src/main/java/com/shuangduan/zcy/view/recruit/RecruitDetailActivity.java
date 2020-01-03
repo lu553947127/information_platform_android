@@ -80,15 +80,11 @@ public class RecruitDetailActivity extends BaseActivity {
     @BindView(R.id.tv_down)
     TextView tvDown;
 
-
-    private int id;
     private RecruitDetailVm recruitDetailVm;
     private UpdatePwdPayVm updatePwdPayVm;
     private CoinPayVm coinPayVm;
     private ShareManage shareManage;
-
     private RecruitDetailBean recruitDetail;
-
 
     @Override
     protected int initLayoutRes() {
@@ -102,7 +98,7 @@ public class RecruitDetailActivity extends BaseActivity {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
-        id = getIntent().getIntExtra(CustomConfig.RECRUIT_ID, 0);
+        int id = getIntent().getIntExtra(CustomConfig.RECRUIT_ID, 0);
         //初始化分享功能
         shareManage = ShareManage.newInstance(getApplicationContext());
         shareManage.init(this, ShareManage.SHARE_TENDERER_TYPE, id);
@@ -212,8 +208,6 @@ public class RecruitDetailActivity extends BaseActivity {
                     break;
             }
         });
-
-
     }
 
     @OnClick({R.id.iv_bar_back, R.id.iv_bar_right, R.id.ll_collect, R.id.ll_read_detail, R.id.tv_down})
@@ -224,7 +218,7 @@ public class RecruitDetailActivity extends BaseActivity {
                 break;
             case R.id.iv_bar_right:
                 shareManage.initDialog(this, shareManage.getItem().getUrl(), shareManage.getItem().getTitle(),
-                        shareManage.getItem().getDes(), shareManage.getItem().getImage(), shareManage.getBitmap());
+                        shareManage.getItem().getDes(), shareManage.getItem().getImage(), shareManage.getBitmap(),"分享招采信息");
                 break;
             case R.id.ll_collect:
                 recruitDetailVm.collect();
@@ -282,12 +276,9 @@ public class RecruitDetailActivity extends BaseActivity {
                 .showDialog());
     }
 
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Tencent.onActivityResultData(requestCode, resultCode, data, shareManage.getQQListener());
     }
-
-
 }

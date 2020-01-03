@@ -68,7 +68,7 @@ public class RecommendFriendsActivity extends BaseActivity {
                 break;
             case R.id.iv_share:
                 shareManage.initDialog(this, shareManage.getItem().getUrl(), shareManage.getItem().getTitle(),
-                        shareManage.getItem().getDes(), shareManage.getItem().getImage(), shareManage.getBitmap());
+                        shareManage.getItem().getDes(), shareManage.getItem().getImage(), shareManage.getBitmap(),"邀请好友");
                 break;
         }
     }
