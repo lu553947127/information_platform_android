@@ -16,7 +16,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.ProjectCollectAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
-import com.shuangduan.zcy.base.BaseFragment;
+import com.shuangduan.zcy.base.BaseLazyFragment;
 import com.shuangduan.zcy.factory.EmptyViewFactory;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.ProjectCollectBean;
@@ -37,7 +37,7 @@ import butterknife.BindView;
  * @chang time
  * @class describe
  */
-public class ProjectCollectFragment extends BaseFragment implements EmptyViewFactory.EmptyViewCallBack {
+public class ProjectCollectFragment extends BaseLazyFragment implements EmptyViewFactory.EmptyViewCallBack {
     @BindView(R.id.rv)
     RecyclerView rv;
     @BindView(R.id.refresh)
@@ -62,7 +62,7 @@ public class ProjectCollectFragment extends BaseFragment implements EmptyViewFac
     }
 
     @Override
-    protected void initDataAndEvent(Bundle savedInstanceState,View v) {
+    protected void initDataAndEvent(Bundle savedInstanceState) {
         View emptyView = createEmptyView(R.drawable.icon_empty_project, R.string.empty_project_collect_info, R.string.to_look_over, this);
 
         rv.setLayoutManager(new LinearLayoutManager(mContext));

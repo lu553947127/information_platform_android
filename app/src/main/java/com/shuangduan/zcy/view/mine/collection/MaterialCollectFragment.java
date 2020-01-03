@@ -16,7 +16,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.MaterialCollectAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
-import com.shuangduan.zcy.base.BaseFragment;
+import com.shuangduan.zcy.base.BaseLazyFragment;
 import com.shuangduan.zcy.factory.EmptyViewFactory;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.MaterialCollectBean;
@@ -37,7 +37,7 @@ import butterknife.BindView;
  * @change
  * @class describe
  */
-public class MaterialCollectFragment extends BaseFragment implements EmptyViewFactory.EmptyViewCallBack {
+public class MaterialCollectFragment extends BaseLazyFragment implements EmptyViewFactory.EmptyViewCallBack {
     @BindView(R.id.rv)
     RecyclerView rv;
     @BindView(R.id.refresh)
@@ -64,7 +64,7 @@ public class MaterialCollectFragment extends BaseFragment implements EmptyViewFa
     }
 
     @Override
-    protected void initDataAndEvent(Bundle savedInstanceState,View v) {
+    protected void initDataAndEvent(Bundle savedInstanceState) {
         type = getArguments().getInt(CustomConfig.MATERIALS_TYPE, 0);
 
         View emptyView = createEmptyView(R.drawable.icon_empty_project, R.string.empty_material_collect_info, R.string.to_look_over, this);

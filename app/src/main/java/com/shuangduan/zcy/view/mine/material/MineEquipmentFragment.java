@@ -16,7 +16,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.MaterialOrderAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
-import com.shuangduan.zcy.base.BaseFragment;
+import com.shuangduan.zcy.base.BaseLazyFragment;
 import com.shuangduan.zcy.factory.EmptyViewFactory;
 import com.shuangduan.zcy.model.bean.MaterialOrderBean;
 import com.shuangduan.zcy.view.material.MaterialActivity;
@@ -34,7 +34,7 @@ import butterknife.BindView;
  * @change
  * @class describe
  */
-public class MineEquipmentFragment extends BaseFragment implements EmptyViewFactory.EmptyViewCallBack {
+public class MineEquipmentFragment extends BaseLazyFragment implements EmptyViewFactory.EmptyViewCallBack {
     @BindView(R.id.rv)
     RecyclerView rv;
     @BindView(R.id.refresh)
@@ -61,7 +61,7 @@ public class MineEquipmentFragment extends BaseFragment implements EmptyViewFact
     }
 
     @Override
-    protected void initDataAndEvent(Bundle savedInstanceState,View v) {
+    protected void initDataAndEvent(Bundle savedInstanceState) {
         //赛选条件列表为空
         emptyView = createEmptyView(R.drawable.icon_empty_project, R.string.empty_substance_screen_info, R.string.see_all, this);
 
