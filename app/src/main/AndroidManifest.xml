@@ -65,13 +65,14 @@
 
             <!-- 从js跳转原生app 协议设置-->
             <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
                 <!-- //协议头部-->
                 <data
-                    android:scheme="yijijian"
-                    android:host="yijijian.com" />
+                    android:host="yijijian.com"
+                    android:scheme="yijijian" />
             </intent-filter>
 
 
@@ -106,7 +107,7 @@
         <!-- 用户详情页-->
         <activity android:name="com.shuangduan.zcy.view.mine.user.UserInfoActivity" />
         <!-- 提现页-->
-        <activity android:name="com.shuangduan.zcy.view.mine.wallet.WithdrawActivity"/>
+        <activity android:name="com.shuangduan.zcy.view.mine.wallet.WithdrawActivity" />
         <!-- 编辑用户名页-->
         <activity
             android:name="com.shuangduan.zcy.view.mine.user.UpdateNameActivity"
@@ -150,7 +151,7 @@
         <!-- 收货地址页面-->
         <activity android:name="com.shuangduan.zcy.view.mine.set.ReceivingAddressActivity" />
         <!-- 编辑收货地址 -->
-        <activity android:name="com.shuangduan.zcy.view.mine.set.EditReceivingAddressActivity"/>
+        <activity android:name="com.shuangduan.zcy.view.mine.set.EditReceivingAddressActivity" />
         <!-- 关于页-->
         <activity android:name="com.shuangduan.zcy.view.mine.set.AboutOursActivity" />
         <!-- 推荐好友页-->
@@ -202,7 +203,7 @@
         <!-- 我的需求-->
         <activity android:name="com.shuangduan.zcy.view.mine.demand.MineDemandActivity" />
         <!-- 充值中心-->
-        <activity android:name="com.shuangduan.zcy.view.recharge.RechargeActivity"/>
+        <activity android:name="com.shuangduan.zcy.view.recharge.RechargeActivity" />
         <!-- 充值记录-->
         <activity android:name="com.shuangduan.zcy.view.recharge.RechargeRecordActivity" />
         <!-- 充值结果-->
@@ -426,6 +427,14 @@
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <!-- 订单详情-->
         <activity android:name="com.shuangduan.zcy.adminManage.view.order.OrderDetailsActivity" />
+
+
+        <!--  智能设计下单      -->
+        <activity android:name="com.shuangduan.zcy.view.design.SmartDesignActivity" />
+        <!--  智能设计订单    -->
+        <activity android:name="com.shuangduan.zcy.view.design.SmartDesignOrderActivity" />
+        <!--  智能设置订单详情      -->
+        <activity android:name="com.shuangduan.zcy.view.design.SmartDesignDetailsActivity" />
 
 
         <!--高德地图appKey-->

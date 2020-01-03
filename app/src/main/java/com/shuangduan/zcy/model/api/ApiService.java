@@ -1212,6 +1212,7 @@ public interface ApiService {
             @Field("user_id") int userId,
             @Field("id") int id
     );
+
     //取消发布的找买家
     @FormUrlEncoded
     @POST("api/Relation/closeBuyer")
@@ -1757,6 +1758,49 @@ public interface ApiService {
             @Field("city") int city,
             @Field("address") String address,
             @Field("is_default") int state
+    );
+
+    //提交智能设计表单
+    @FormUrlEncoded
+    @POST("api/Automate/addPost")
+    Flowable<BaseResponse> addPost(
+            @Field("user_id") int userId,
+            @Field("mobile") String mobile,
+            @Field("email") String email,
+            @Field("automate_name") String automateName,
+            @Field("automate_detail") String automateDetail
+    );
+
+    //智能设计数据列表
+    @FormUrlEncoded
+    @POST("api/Automate/dataList")
+    Flowable<BaseResponse<SmartDesignOrderBean>> dataList(
+            @Field("user_id") int userId,
+            @Field("page") int page
+    );
+
+    //智能设计详情
+    @FormUrlEncoded
+    @POST("api/Automate/getDetail")
+    Flowable<BaseResponse<SmartDesignOrderBean.SmartDesignOrder>> getSmartDesignDetail(
+            @Field("user_id") int userId,
+            @Field("id") int id
+    );
+
+    //智能设计订单阶段数据
+    @FormUrlEncoded
+    @POST("api/Automate/getPhases")
+    Flowable<BaseResponse<List<SmartDesignPhasesBean>>> getPhases(
+            @Field("user_id") int userId
+    );
+
+    //智能设计订单取消或删除
+    @FormUrlEncoded
+    @POST("api/Automate/editPost")
+    Flowable<BaseResponse> editPost(
+            @Field("user_id") int userId,
+            @Field("id") int id,
+            @Field("status") int status
     );
 
     //后台管理 --- 周转材料列表

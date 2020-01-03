@@ -2,6 +2,7 @@ package com.shuangduan.zcy.model.api.repository;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.shuangduan.zcy.adminManage.bean.OrderSearchBean;
 import com.shuangduan.zcy.model.bean.AuthenBean;
 import com.shuangduan.zcy.model.bean.BankCardBean;
 import com.shuangduan.zcy.model.bean.BankCardDisBean;
@@ -13,6 +14,8 @@ import com.shuangduan.zcy.model.bean.PwdPayStateBean;
 import com.shuangduan.zcy.model.bean.ReadHistoryBean;
 import com.shuangduan.zcy.model.bean.ReceivingAddressBean;
 import com.shuangduan.zcy.model.bean.RecruitBean;
+import com.shuangduan.zcy.model.bean.SmartDesignOrderBean;
+import com.shuangduan.zcy.model.bean.SmartDesignPhasesBean;
 import com.shuangduan.zcy.model.bean.SubBean;
 import com.shuangduan.zcy.model.bean.TransRecordBean;
 import com.shuangduan.zcy.model.bean.TransRecordDetailBean;
@@ -304,25 +307,49 @@ public class UserRepository extends BaseRepository {
     }
 
     //设置地址的默认状态
-    public void setDefaultState(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int userId,int id) {
-        request(apiService.setDefaultState(userId,id)).setData(liveData).setPageState(pageStateLiveData).send();
+    public void setDefaultState(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int userId, int id) {
+        request(apiService.setDefaultState(userId, id)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
     //删除地址
-    public void deleteAddress(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int userId,int id) {
-        request(apiService.deleteAddress(userId,id)).setData(liveData).setPageState(pageStateLiveData).send();
+    public void deleteAddress(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int userId, int id) {
+        request(apiService.deleteAddress(userId, id)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
     //新增地址
-    public void newAddress(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int userId,String name,String phone,String company,
-                           int province,int city,String address,int state) {
-        request(apiService.newAddress(userId,name,phone,company,province,city,address,state)).setData(liveData).setPageState(pageStateLiveData).send();
+    public void newAddress(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int userId, String name, String phone, String company,
+                           int province, int city, String address, int state) {
+        request(apiService.newAddress(userId, name, phone, company, province, city, address, state)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
     //修改地址
-    public void editAddress(MutableLiveData liveData,MutableLiveData<String> pageStateLiveData,int userId,int id,String name,String phone,
-                            String company,int province,int city,String address,int state){
-        request(apiService.editAddress(userId,id,name,phone,company,province,city,address,state)).setData(liveData).setPageState(pageStateLiveData).send();
+    public void editAddress(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int userId, int id, String name, String phone,
+                            String company, int province, int city, String address, int state) {
+        request(apiService.editAddress(userId, id, name, phone, company, province, city, address, state)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
+    //提交智能设计
+    public void addSmartDesign(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int userId, String mobile, String email, String automateName, String automateDetail) {
+        request(apiService.addPost(userId, mobile, email, automateName, automateDetail)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    //智能设计订单列表
+    public void dataList(MutableLiveData<SmartDesignOrderBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int page) {
+        request(apiService.dataList(userId, page)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    //智能设计详情
+    public void getSmartDesignDetail(MutableLiveData<SmartDesignOrderBean.SmartDesignOrder> liveData, MutableLiveData<String> pageStateLiveData, int userId, int id) {
+        request(apiService.getSmartDesignDetail(userId, id)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    //智能设计阶段列表
+    public void getPhases(MutableLiveData<List<SmartDesignPhasesBean>> liveData, MutableLiveData<String> pageStateLiveData, int userId) {
+        request(apiService.getPhases(userId)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    //智能设计 取消或删除订单
+    public void editPost(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int userId, int id, int status) {
+        request(apiService.editPost(userId, id, status)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
 }

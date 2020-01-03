@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/icon_smart_design_bg">
 
 
@@ -14,8 +16,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="260dp"
             android:layout_marginLeft="15dp"
+            android:layout_marginTop="230dp"
             android:layout_marginRight="15dp"
             android:background="@drawable/circular_background_white_8"
             android:orientation="vertical">
@@ -28,8 +30,9 @@
                 android:background="@color/colorFFF"
                 android:orientation="horizontal">
 
-                <TextView style="@style/RedMustText"
-                    android:layout_marginLeft="17dp"/>
+                <TextView
+                    style="@style/RedMustText"
+                    android:layout_marginLeft="17dp" />
 
                 <TextView
                     style="@style/AdminManageFirstText"
@@ -41,6 +44,7 @@
                     style="@style/AdminManageSecondHint"
                     android:layout_marginLeft="15dp"
                     android:gravity="left|center_vertical"
+                    android:inputType="number"
                     android:hint="@string/hint_contact" />
             </LinearLayout>
 
@@ -52,9 +56,10 @@
                 android:background="@color/colorFFF"
                 android:orientation="horizontal">
 
-                <TextView style="@style/RedMustText"
+                <TextView
+                    style="@style/RedMustText"
                     android:layout_marginLeft="17dp"
-                    android:visibility="invisible"/>
+                    android:visibility="invisible" />
 
                 <TextView
                     style="@style/AdminManageFirstText"
@@ -66,6 +71,7 @@
                     style="@style/AdminManageSecondHint"
                     android:layout_marginLeft="15dp"
                     android:gravity="left|center_vertical"
+                    android:inputType="textEmailSubject"
                     android:hint="@string/hint_email" />
             </LinearLayout>
 
@@ -77,8 +83,9 @@
                 android:background="@color/colorFFF"
                 android:orientation="horizontal">
 
-                <TextView style="@style/RedMustText"
-                    android:layout_marginLeft="17dp"/>
+                <TextView
+                    style="@style/RedMustText"
+                    android:layout_marginLeft="17dp" />
 
                 <TextView
                     style="@style/AdminManageFirstText"
@@ -95,27 +102,46 @@
 
             <View style="@style/DividingLine" />
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:background="@color/colorFFF"
-                android:orientation="horizontal">
-
-                <TextView style="@style/RedMustText"
-                    android:layout_marginLeft="17dp"/>
+                tools:ignore="MissingConstraints">
 
                 <TextView
+                    android:id="@+id/star"
+                    style="@style/RedMustText"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tv_param"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_param"
+                    android:layout_marginLeft="17dp" />
+
+                <TextView
+                    android:id="@+id/tv_param"
                     style="@style/AdminManageFirstText"
                     android:layout_width="70dp"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/star"
+                    android:gravity="center_vertical"
                     android:text="@string/param" />
 
                 <com.shuangduan.zcy.weight.XEditText
                     android:id="@+id/et_param"
-                    style="@style/AdminManageSecondHint"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginLeft="15dp"
+                    android:background="@null"
                     android:gravity="left|center_vertical"
-                    android:hint="@string/hint_param" />
-            </LinearLayout>
+                    android:hint="@string/hint_param"
+                    android:textColor="@color/colorTv"
+                    android:textColorHint="@color/colorTvHint"
+                    android:textSize="15sp"
+                    app:layout_constraintLeft_toRightOf="@id/tv_param"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tv_param"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
             <Button
@@ -143,24 +169,25 @@
         android:layout_width="match_parent"
         android:layout_height="74dp"
         android:layout_alignParentTop="true">
+
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_bar_back"
             android:layout_width="36dp"
             android:layout_height="25dp"
-            android:layout_marginTop="35dp"
             android:layout_marginLeft="15dp"
+            android:layout_marginTop="35dp"
             android:scaleType="centerInside"
-            android:src="@drawable/toolbar_back"/>
+            android:src="@drawable/toolbar_back" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="35dp"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="35dp"
             android:lines="1"
+            android:text="@string/smart_design"
             android:textColor="@color/colorFFF"
-            android:textSize="18sp"
-            android:text="@string/smart_design"/>
+            android:textSize="18sp" />
 
     </RelativeLayout>
 

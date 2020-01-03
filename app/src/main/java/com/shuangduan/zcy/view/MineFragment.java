@@ -32,6 +32,8 @@ import com.shuangduan.zcy.utils.DensityUtil;
 import com.shuangduan.zcy.utils.image.ImageConfig;
 import com.shuangduan.zcy.utils.image.ImageLoader;
 import com.shuangduan.zcy.adminManage.view.AdminManageActivity;
+import com.shuangduan.zcy.view.design.SmartDesignActivity;
+import com.shuangduan.zcy.view.design.SmartDesignOrderActivity;
 import com.shuangduan.zcy.view.mine.user.AuthenticationActivity;
 import com.shuangduan.zcy.view.mine.wallet.MineWalletActivity;
 import com.shuangduan.zcy.view.mine.HelperActivity;
@@ -50,7 +52,9 @@ import com.shuangduan.zcy.vm.UserInfoVm;
 import com.shuangduan.zcy.weight.AdaptationScrollView;
 import com.shuangduan.zcy.weight.CircleImageView;
 import com.shuangduan.zcy.weight.HeadZoomScrollView;
+
 import org.greenrobot.eventbus.Subscribe;
+
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -196,7 +200,7 @@ public class MineFragment extends BaseFragment {
         return true;
     }
 
-    @OnClick({R.id.iv_help_top,R.id.iv_help, R.id.iv_set_top,R.id.iv_set, R.id.cl_user, R.id.tv_authentication, R.id.tv_wallet, R.id.rl_recommend_friends,
+    @OnClick({R.id.iv_help_top, R.id.iv_help, R.id.iv_set_top, R.id.iv_set, R.id.cl_user, R.id.tv_authentication, R.id.tv_wallet, R.id.rl_recommend_friends,
             R.id.tv_income, R.id.tv_mine_subscription, R.id.tv_read_history, R.id.tv_my_project, R.id.tv_my_demand,
             R.id.tv_my_collection, R.id.tv_my_material, R.id.tv_turnover_material, R.id.tv_device_management, R.id.tv_order_management})
     void onClick(View view) {

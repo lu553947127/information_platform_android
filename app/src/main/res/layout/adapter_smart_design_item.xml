@@ -10,8 +10,11 @@
 
     <TextView
         android:id="@+id/tv_title"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/tv_state"
+        android:layout_marginRight="5dp"
         android:text="挂篮杆件"
         android:textColor="@color/colorTv"
         android:textSize="15sp" />

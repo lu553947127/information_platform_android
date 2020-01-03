@@ -323,6 +323,7 @@
                 android:textSize="13sp"
                 android:textColor="@color/color_4A4A4A"
                 android:text="@string/my_material"/>
+
             <!--后台管理-->
             <LinearLayout
                 android:id="@+id/ll_admin_manage"
