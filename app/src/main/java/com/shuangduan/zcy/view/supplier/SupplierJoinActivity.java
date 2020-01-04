@@ -38,6 +38,7 @@ import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.CityBean;
 import com.shuangduan.zcy.model.bean.ProvinceBean;
 import com.shuangduan.zcy.model.event.MultiAreaEvent;
+import com.shuangduan.zcy.utils.GpsUtils;
 import com.shuangduan.zcy.utils.image.CompressUtils;
 import com.shuangduan.zcy.utils.image.PictureEnlargeUtils;
 import com.shuangduan.zcy.utils.matisse.Glide4Engine;
@@ -165,20 +166,39 @@ public class SupplierJoinActivity extends BaseActivity {
         rxPermissions = new RxPermissions(this);
         permissionVm = ViewModelProviders.of(this).get(PermissionVm.class);
         permissionVm.getLiveData().observe(this, integer -> {
-            if (integer == PermissionVm.PERMISSION_CAMERA) {
-                startActivityForResult(new Intent(this, CameraActivity.class), 100);
-            } else if (integer == PermissionVm.PERMISSION_STORAGE) {
-                Matisse.from(this)
-                        .choose(MimeType.ofImage())
-                        .showSingleMediaType(true)
-                        .countable(true)
-                        .maxSelectable(1)
-                        .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
-                        .thumbnailScale(0.85f)
-                        .theme(R.style.Matisse_Dracula)
-                        .captureStrategy(new CaptureStrategy(true, "com.shuangduan.zcy.fileprovider"))
-                        .imageEngine(new Glide4Engine())
-                        .forResult(PHOTO);
+            switch (integer) {
+                case PermissionVm.PERMISSION_CAMERA:
+                    startActivityForResult(new Intent(this, CameraActivity.class), 100);
+                    break;
+                case PermissionVm.PERMISSION_STORAGE:
+                    Matisse.from(this)
+                            .choose(MimeType.ofImage())
+                            .showSingleMediaType(true)
+                            .countable(true)
+                            .maxSelectable(1)
+                            .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
+                            .thumbnailScale(0.85f)
+                            .theme(R.style.Matisse_Dracula)
+                            .captureStrategy(new CaptureStrategy(true, "com.shuangduan.zcy.fileprovider"))
+                            .imageEngine(new Glide4Engine())
+                            .forResult(PHOTO);
+                    break;
+                case PermissionVm.PERMISSION_CAMERA_NO:
+                case PermissionVm.PERMISSION_STORAGE_NO:
+                    new CustomDialog(this)
+                            .setTip("为了更好的为您服务，请您打开您的相机和存储权限!")
+                            .setCallBack(new BaseDialog.CallBack() {
+                                @Override
+                                public void cancel() {
+
+                                }
+
+                                @Override
+                                public void ok(String s) {
+                                    GpsUtils.toSelfSetting(getApplicationContext());
+                                }
+                            }).showDialog();
+                    break;
             }
         });
         uploadPhotoVm = ViewModelProviders.of(this).get(UploadPhotoVm.class);

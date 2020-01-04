@@ -25,7 +25,9 @@ import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BaseBottomSheetDialog;
+import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.BusinessExpDialog;
+import com.shuangduan.zcy.dialog.CustomDialog;
 import com.shuangduan.zcy.dialog.SexDialog;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.UserInfoBean;
@@ -36,6 +38,7 @@ import com.shuangduan.zcy.model.event.OfficeEvent;
 import com.shuangduan.zcy.model.event.ProductionEvent;
 import com.shuangduan.zcy.model.event.UserNameEvent;
 import com.shuangduan.zcy.rongyun.view.IMAddFriendActivity;
+import com.shuangduan.zcy.utils.GpsUtils;
 import com.shuangduan.zcy.utils.image.CompressUtils;
 import com.shuangduan.zcy.utils.image.ImageConfig;
 import com.shuangduan.zcy.utils.image.ImageLoader;
@@ -226,20 +229,39 @@ public class UserInfoActivity extends BaseActivity {
         rxPermissions = new RxPermissions(this);
         permissionVm = ViewModelProviders.of(this).get(PermissionVm.class);
         permissionVm.getLiveData().observe(this, integer -> {
-            if (integer == PermissionVm.PERMISSION_CAMERA) {
-                MatisseCamera.from(this).forResult(PermissionVm.REQUEST_CODE_HEAD, "com.shuangduan.zcy.fileprovider");
-            } else if (integer == PermissionVm.PERMISSION_STORAGE) {
-                Matisse.from(this)
-                        .choose(MimeType.ofImage())
-                        .showSingleMediaType(true)
-                        .countable(true)
-                        .maxSelectable(1)
-                        .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
-                        .thumbnailScale(0.85f)
-                        .theme(R.style.Matisse_Dracula)
-                        .captureStrategy(new CaptureStrategy(true, "com.shuangduan.zcy.fileprovider"))
-                        .imageEngine(new Glide4Engine())
-                        .forResult(PermissionVm.REQUEST_CODE_CHOOSE_HEAD);
+            switch (integer){
+                case PermissionVm.PERMISSION_CAMERA:
+                    MatisseCamera.from(this).forResult(PermissionVm.REQUEST_CODE_HEAD, "com.shuangduan.zcy.fileprovider");
+                    break;
+                case PermissionVm.PERMISSION_STORAGE:
+                    Matisse.from(this)
+                            .choose(MimeType.ofImage())
+                            .showSingleMediaType(true)
+                            .countable(true)
+                            .maxSelectable(1)
+                            .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
+                            .thumbnailScale(0.85f)
+                            .theme(R.style.Matisse_Dracula)
+                            .captureStrategy(new CaptureStrategy(true, "com.shuangduan.zcy.fileprovider"))
+                            .imageEngine(new Glide4Engine())
+                            .forResult(PermissionVm.REQUEST_CODE_CHOOSE_HEAD);
+                    break;
+                case PermissionVm.PERMISSION_CAMERA_NO:
+                case PermissionVm.PERMISSION_STORAGE_NO:
+                    new CustomDialog(this)
+                            .setTip("为了更好的为您服务，请您打开您的相机和存储权限!")
+                            .setCallBack(new BaseDialog.CallBack() {
+                                @Override
+                                public void cancel() {
+
+                                }
+
+                                @Override
+                                public void ok(String s) {
+                                    GpsUtils.toSelfSetting(getApplicationContext());
+                                }
+                            }).showDialog();
+                    break;
             }
         });
 

@@ -1,11 +1,11 @@
 package com.shuangduan.zcy.utils;
 
 import android.app.Activity;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.Settings;
 
 import com.blankj.utilcode.util.ActivityUtils;
@@ -49,5 +49,23 @@ public class GpsUtils {
         Intent intent = new Intent(
                 Settings.ACTION_LOCATION_SOURCE_SETTINGS);
         ActivityUtils.startActivityForResult(context, intent, 0); // 设置完成后返回到原来的界面
+    }
+
+    /**
+     * 跳转权限设置页
+     * @param context
+     */
+    public static void toSelfSetting(Context context) {
+        Intent mIntent = new Intent();
+        mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        if (Build.VERSION.SDK_INT >= 9) {
+            mIntent.setAction("android.settings.APPLICATION_DETAILS_SETTINGS");
+            mIntent.setData(Uri.fromParts("package", context.getPackageName(), null));
+        } else if (Build.VERSION.SDK_INT <= 8) {
+            mIntent.setAction(Intent.ACTION_VIEW);
+            mIntent.setClassName("com.android.settings", "com.android.setting.InstalledAppDetails");
+            mIntent.putExtra("com.android.settings.ApplicationPkgName", context.getPackageName());
+        }
+        context.startActivity(mIntent);
     }
 }

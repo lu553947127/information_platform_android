@@ -44,9 +44,12 @@ import com.shuangduan.zcy.adminManage.vm.TurnoverVm;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BaseBottomSheetDialog;
+import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.BottomSheetDialogs;
+import com.shuangduan.zcy.dialog.CustomDialog;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.event.LocationEvent;
+import com.shuangduan.zcy.utils.GpsUtils;
 import com.shuangduan.zcy.utils.KeyboardUtil;
 import com.shuangduan.zcy.utils.image.CompressUtils;
 import com.shuangduan.zcy.utils.image.PictureEnlargeUtils;
@@ -275,20 +278,39 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
         rxPermissions = new RxPermissions(this);
         permissionVm = ViewModelProviders.of(this).get(PermissionVm.class);
         permissionVm.getLiveData().observe(this, integer -> {
-            if (integer == PermissionVm.PERMISSION_CAMERA){
-                startActivityForResult(new Intent(this, CameraActivity.class), 100);
-            }else if (integer == PermissionVm.PERMISSION_STORAGE){
-                Matisse.from(this)
-                        .choose(MimeType.ofImage())
-                        .showSingleMediaType(true)
-                        .countable(true)
-                        .maxSelectable(1)
-                        .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
-                        .thumbnailScale(0.85f)
-                        .theme(R.style.Matisse_Dracula)
-                        .captureStrategy(new CaptureStrategy(true, "com.shuangduan.zcy.fileprovider"))
-                        .imageEngine(new Glide4Engine())
-                        .forResult(PermissionVm.PHOTO);
+            switch (integer) {
+                case PermissionVm.PERMISSION_CAMERA:
+                    startActivityForResult(new Intent(this, CameraActivity.class), 100);
+                    break;
+                case PermissionVm.PERMISSION_STORAGE:
+                    Matisse.from(this)
+                            .choose(MimeType.ofImage())
+                            .showSingleMediaType(true)
+                            .countable(true)
+                            .maxSelectable(1)
+                            .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
+                            .thumbnailScale(0.85f)
+                            .theme(R.style.Matisse_Dracula)
+                            .captureStrategy(new CaptureStrategy(true, "com.shuangduan.zcy.fileprovider"))
+                            .imageEngine(new Glide4Engine())
+                            .forResult(PermissionVm.PHOTO);
+                    break;
+                case PermissionVm.PERMISSION_CAMERA_NO:
+                case PermissionVm.PERMISSION_STORAGE_NO:
+                    new CustomDialog(this)
+                            .setTip("为了更好的为您服务，请您打开您的相机和存储权限!")
+                            .setCallBack(new BaseDialog.CallBack() {
+                                @Override
+                                public void cancel() {
+
+                                }
+
+                                @Override
+                                public void ok(String s) {
+                                    GpsUtils.toSelfSetting(getApplicationContext());
+                                }
+                            }).showDialog();
+                    break;
             }
         });
 

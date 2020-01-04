@@ -33,8 +33,10 @@ public class PermissionVm extends BaseViewModel {
 
     /*拍照*/
     public static final int PERMISSION_CAMERA = 1;
+    public static final int PERMISSION_CAMERA_NO = 11;
     /*内存*/
     public static final int PERMISSION_STORAGE = 2;
+    public static final int PERMISSION_STORAGE_NO = 22;
     /*定位*/
     public static final int PERMISSION_LOCATION = 3;
 
@@ -55,6 +57,8 @@ public class PermissionVm extends BaseViewModel {
                 .subscribe(aBoolean -> {
                     if (aBoolean){
                         liveData.postValue(PERMISSION_CAMERA);
+                    }else {
+                        liveData.postValue(PERMISSION_CAMERA_NO);
                     }
                 }, LogUtils::i, () -> LogUtils.i("OnComplete"));
     }
@@ -66,6 +70,8 @@ public class PermissionVm extends BaseViewModel {
                 .subscribe(aBoolean -> {
                     if (aBoolean){
                        liveData.postValue(PERMISSION_STORAGE);
+                    }else {
+                        liveData.postValue(PERMISSION_STORAGE_NO);
                     }
                 }, LogUtils::i, () -> LogUtils.i("OnComplete"));
     }
