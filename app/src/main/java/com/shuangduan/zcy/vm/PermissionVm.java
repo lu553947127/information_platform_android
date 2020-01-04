@@ -9,6 +9,9 @@ import com.blankj.utilcode.util.LogUtils;
 import com.shuangduan.zcy.base.BaseViewModel;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
+import io.reactivex.ObservableSource;
+import io.reactivex.Observer;
+
 /**
  * @author 徐玉 QQ:876885613
  * @name ZICAICloudPlatform
@@ -39,6 +42,9 @@ public class PermissionVm extends BaseViewModel {
     public static final int PERMISSION_STORAGE_NO = 22;
     /*定位*/
     public static final int PERMISSION_LOCATION = 3;
+    public static final int PERMISSION_NO_LOCATION = 4;
+
+
 
     public static final int PHOTO = 222;
 
@@ -76,6 +82,7 @@ public class PermissionVm extends BaseViewModel {
                 }, LogUtils::i, () -> LogUtils.i("OnComplete"));
     }
 
+    
     @SuppressLint("CheckResult")
     public void getPermissionLocation(RxPermissions rxPermissions){
         rxPermissions.request(
@@ -84,8 +91,12 @@ public class PermissionVm extends BaseViewModel {
                 .subscribe(aBoolean -> {
                     if (aBoolean){
                         liveData.postValue(PERMISSION_LOCATION);
+                    }else {
+                        liveData.postValue(PERMISSION_NO_LOCATION);
                     }
                 }, LogUtils::i, () -> LogUtils.i("OnComplete"));
+
+        
     }
 
     public MutableLiveData<Integer> getLiveData() {

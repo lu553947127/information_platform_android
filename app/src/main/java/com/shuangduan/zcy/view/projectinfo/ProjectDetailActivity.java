@@ -45,6 +45,7 @@ import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.event.LocusRefreshEvent;
 import com.shuangduan.zcy.model.event.RefreshViewLocusEvent;
 import com.shuangduan.zcy.model.event.WarrantSuccessEvent;
+import com.shuangduan.zcy.utils.GpsUtils;
 import com.shuangduan.zcy.view.mine.set.SetPwdPayActivity;
 import com.shuangduan.zcy.view.recharge.RechargeActivity;
 import com.shuangduan.zcy.view.release.ReleaseProjectActivity;
@@ -118,6 +119,8 @@ public class ProjectDetailActivity extends BaseActivity {
     //支付
     public CoinPayVm coinPayVm;
 
+    private PermissionVm permissionVm;
+
     @Override
     protected int initLayoutRes() {
         return R.layout.activity_project_detail;
@@ -138,6 +141,24 @@ public class ProjectDetailActivity extends BaseActivity {
         tvBarTitle.setText(getString(R.string.message_detail));
         ivBarRight.setImageResource(R.drawable.icon_share);
         tvBarRight.setVisibility(View.GONE);
+
+
+        permissionVm = ViewModelProviders.of(this).get(PermissionVm.class);
+
+        if (GpsUtils.isOPen(this)) {
+            permissionVm.getPermissionLocation(new RxPermissions(this));
+        } else {
+            showLocationDialog(PermissionVm.PERMISSION_LOCATION);
+        }
+
+        permissionVm.getLiveData().observe(this, integer -> {
+            if (integer == PermissionVm.PERMISSION_LOCATION) {
+                init();
+            } else if (integer == PermissionVm.PERMISSION_NO_LOCATION) {
+                showLocationDialog(integer);
+            }
+        });
+
 
 
         Fragment[] fragments = new Fragment[4];
@@ -301,29 +322,42 @@ public class ProjectDetailActivity extends BaseActivity {
         //加入群聊返回结果
         projectDetailVm.joinGroupData.observe(this, item -> {
             ToastUtils.showShort(getString(R.string.buy_success));
-           if( vp.getCurrentItem()==0){
-               projectDetailVm.getDetail();
-           }else {
-               projectDetailVm.getTrack();
-               //刷新已查看列表
-               EventBus.getDefault().post(new RefreshViewLocusEvent());
-           }
-        });
-
-
-        PermissionVm permissionVm = ViewModelProviders.of(this).get(PermissionVm.class);
-        permissionVm.getLiveData().observe(this, integer -> {
-            if (integer == PermissionVm.PERMISSION_LOCATION) {
-                init();
+            if (vp.getCurrentItem() == 0) {
+                projectDetailVm.getDetail();
+            } else {
+                projectDetailVm.getTrack();
+                //刷新已查看列表
+                EventBus.getDefault().post(new RefreshViewLocusEvent());
             }
         });
-        permissionVm.getPermissionLocation(new RxPermissions(this));
+
 
         if (getIntent().getIntExtra(CustomConfig.LOCATION, 0) != 0) {
             int position = getIntent().getIntExtra(CustomConfig.LOCATION, 0);
             vp.setCurrentItem(position);
             tabLayout.getTabAt(position).select();
         }
+    }
+
+
+    private void showLocationDialog(int locationCode) {
+        new CustomDialog(this)
+                .setTip(locationCode == PermissionVm.PERMISSION_LOCATION ? "为了更好的为您服务，请您打开您的GPS!" : "为了更好的为您服务，请您开启您APP的定位权限！")
+                .setCallBack(new BaseDialog.CallBack() {
+                    @Override
+                    public void cancel() {
+                        finish();
+                    }
+
+                    @Override
+                    public void ok(String s) {
+                        if (locationCode == PermissionVm.PERMISSION_LOCATION) {
+                            GpsUtils.openGPS(ProjectDetailActivity.this);
+                        } else if (locationCode == PermissionVm.PERMISSION_NO_LOCATION) {
+                            GpsUtils.openLocationPermission(ProjectDetailActivity.this);
+                        }
+                    }
+                }).showDialog();
     }
 
     /**
@@ -354,7 +388,11 @@ public class ProjectDetailActivity extends BaseActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Tencent.onActivityResultData(requestCode, resultCode, data, shareManage.getQQListener());
+        if (requestCode == 0) {
+            permissionVm.getPermissionLocation(new RxPermissions(this));
+        } else {
+            Tencent.onActivityResultData(requestCode, resultCode, data, shareManage.getQQListener());
+        }
     }
 
     @Subscribe
@@ -379,7 +417,7 @@ public class ProjectDetailActivity extends BaseActivity {
                 break;
             case R.id.iv_bar_right://分享
                 shareManage.initDialog(this, shareManage.getItem().getUrl(), shareManage.getItem().getTitle(),
-                        shareManage.getItem().getDes(), shareManage.getItem().getImage(), shareManage.getBitmap(),"分享工程信息");
+                        shareManage.getItem().getDes(), shareManage.getItem().getImage(), shareManage.getBitmap(), "分享工程信息");
                 break;
             case R.id.fl_collect://收藏
                 projectDetailVm.collect();

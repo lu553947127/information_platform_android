@@ -225,6 +225,7 @@
     <string name="subscribe_message">订阅信息</string>
     <string name="subscribe_message_group">闲置提醒</string>
     <string name="subscribe_order">订单提醒</string>
+    <string name="subscribe_need">需用匹配</string>
     <string name="close_subscribe_message">关闭订阅</string>
     <string name="close_subscribe_message_group">关闭推送</string>
     <string name="close_subscribe_message_order">关闭订单提醒</string>
@@ -699,6 +700,7 @@
     <string name="empty_project_subscribe_info">您的业务地区暂时没有\n相关工程信息,我们已经尽力了</string>
     <string name="empty_material_subscribe_info">暂无闲置物资提醒,我们已经尽力了</string>
     <string name="empty_material_subscribe_order_info">暂无订单提醒,我们已经尽力了</string>
+    <string name="empty_subscribe_need_info">暂无需用匹配提醒,我们已经尽力了</string>
 
     <string name="empty_deal_info">暂无交易记录</string>
     <string name="empty_contacts_msg_info">暂无消息</string>

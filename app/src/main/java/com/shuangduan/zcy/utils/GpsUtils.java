@@ -9,6 +9,8 @@ import android.os.Build;
 import android.provider.Settings;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.shuangduan.zcy.base.BaseActivity;
+import com.shuangduan.zcy.view.projectinfo.ProjectInfoActivity;
 
 /**
  * @author 徐玉 QQ:876885613
@@ -50,6 +52,16 @@ public class GpsUtils {
                 Settings.ACTION_LOCATION_SOURCE_SETTINGS);
         ActivityUtils.startActivityForResult(context, intent, 0); // 设置完成后返回到原来的界面
     }
+
+    public static void openLocationPermission(Activity activity){
+        //跳转开启APP定位权限功能页面
+        Intent intent = new Intent();
+        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        Uri uri = Uri.fromParts("package", activity.getPackageName(), null);
+        intent.setData(uri);
+        ActivityUtils.startActivityForResult(activity,intent,0);
+    }
+
 
     /**
      * 跳转权限设置页

@@ -1,7 +1,9 @@
 package com.shuangduan.zcy.view.projectinfo;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,6 +77,7 @@ public class ProjectInfoActivity extends BaseActivity {
     private List<MapBean> throughPointList;
     private Marker targetMarker;
     private ProjectInfoVm projectInfoVm;
+    private PermissionVm permissionVm;
 
     @Override
     protected int initLayoutRes() {
@@ -156,7 +159,7 @@ public class ProjectInfoActivity extends BaseActivity {
             public void onCameraChangeFinish(CameraPosition cameraPosition) {
                 LogUtils.i(cameraPosition.target.latitude, cameraPosition.target.longitude);
                 LogUtils.i(cameraPosition.zoom);
-                projectInfoVm.mapList(cameraPosition.target.longitude,cameraPosition.target.latitude);
+                projectInfoVm.mapList(cameraPosition.target.longitude, cameraPosition.target.latitude);
                 if (popupWindow != null) {
                     if (popupWindow.isShowing()) {
                         popupWindow.dismiss();
@@ -176,9 +179,9 @@ public class ProjectInfoActivity extends BaseActivity {
         projectInfoVm.mapLiveData.observe(ProjectInfoActivity.this, mapBeans -> {
             //marker经纬度数据
             throughPointList = mapBeans != null ? mapBeans : new ArrayList<>();
-            if (throughPointList.size()!=0){
+            if (throughPointList.size() != 0) {
                 setMarker();
-            }else {
+            } else {
                 ToastUtils.showShort(getString(R.string.empty_project_address_info));
             }
         });
@@ -206,6 +209,7 @@ public class ProjectInfoActivity extends BaseActivity {
 
     //加载地图马克点
     ArrayList<Marker> markerArrayList;
+
     private void setMarker() {
         clearAllMarker();
         //marker集合
@@ -222,7 +226,7 @@ public class ProjectInfoActivity extends BaseActivity {
 
         //添加marker
         markerArrayList = aMap.addMarkers(markers, false);
-        if (markerArrayList != null){
+        if (markerArrayList != null) {
             for (int i = 0; i < markerArrayList.size(); i++) {
                 //遍历添加的marker,给marker添加额外数据
                 markerArrayList.get(i).setObject(i);
@@ -246,7 +250,7 @@ public class ProjectInfoActivity extends BaseActivity {
 
     //清除所有Marker
     private void clearAllMarker() {
-        if (markerArrayList != null){
+        if (markerArrayList != null) {
             for (Marker marker : markerArrayList) {
                 marker.remove();
             }
@@ -269,6 +273,7 @@ public class ProjectInfoActivity extends BaseActivity {
 
     /**
      * 地图马克点显示信息弹窗
+     *
      * @param title
      * @param position
      */
@@ -278,6 +283,7 @@ public class ProjectInfoActivity extends BaseActivity {
     TextView tvType;
     TextView tvReaders;
     TextView tvTime;
+
     private void showPopWindow(String title, int position) {
         MapBean mapBean = throughPointList.get(position);
         if (popupWindow == null) {
@@ -363,36 +369,53 @@ public class ProjectInfoActivity extends BaseActivity {
 
     //获取定位权限
     private void getLocationPermission() {
-        PermissionVm permissionVm = ViewModelProviders.of(this).get(PermissionVm.class);
-        permissionVm.getLiveData().observe(this, integer -> {
-            if (integer == PermissionVm.PERMISSION_LOCATION){
-                if (GpsUtils.isOPen(this)){
-                    init();
-                }else {
-                    new CustomDialog(this)
-                            .setTip("为了更好的为您服务，请您打开您的GPS!")
-                            .setCallBack(new BaseDialog.CallBack() {
-                                @Override
-                                public void cancel() {
-                                    finish();
-                                }
 
-                                @Override
-                                public void ok(String s) {
-                                    GpsUtils.openGPS(ProjectInfoActivity.this);
-                                }
-                            }).showDialog();
-                }
+
+        permissionVm = ViewModelProviders.of(this).get(PermissionVm.class);
+
+
+        if (GpsUtils.isOPen(this)) {
+            permissionVm.getPermissionLocation(new RxPermissions(this));
+        } else {
+            showLocationDialog(PermissionVm.PERMISSION_LOCATION);
+        }
+
+        permissionVm.getLiveData().observe(this, integer -> {
+            if (integer == PermissionVm.PERMISSION_LOCATION) {
+                init();
+            } else if (integer == PermissionVm.PERMISSION_NO_LOCATION) {
+                showLocationDialog(integer);
             }
         });
-        permissionVm.getPermissionLocation(new RxPermissions(this));
+
+    }
+
+
+    private void showLocationDialog(int locationCode) {
+        new CustomDialog(this)
+                .setTip(locationCode == PermissionVm.PERMISSION_LOCATION ? "为了更好的为您服务，请您打开您的GPS!" : "为了更好的为您服务，请您开启您APP的定位权限！")
+                .setCallBack(new BaseDialog.CallBack() {
+                    @Override
+                    public void cancel() {
+                        finish();
+                    }
+
+                    @Override
+                    public void ok(String s) {
+                        if (locationCode == PermissionVm.PERMISSION_LOCATION) {
+                            GpsUtils.openGPS(ProjectInfoActivity.this);
+                        } else if (locationCode == PermissionVm.PERMISSION_NO_LOCATION) {
+                            GpsUtils.openLocationPermission(ProjectInfoActivity.this);
+                        }
+                    }
+                }).showDialog();
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 0){
-            init();
+        if (requestCode == 0) {
+            permissionVm.getPermissionLocation(new RxPermissions(this));
         }
     }
 
@@ -416,7 +439,7 @@ public class ProjectInfoActivity extends BaseActivity {
                 break;
             case R.id.iv_release:
                 bundle.putInt(CustomConfig.RELEASE_TYPE, 0);
-                ActivityUtils.startActivity(bundle,ReleaseProjectActivity.class);
+                ActivityUtils.startActivity(bundle, ReleaseProjectActivity.class);
                 break;
         }
     }
