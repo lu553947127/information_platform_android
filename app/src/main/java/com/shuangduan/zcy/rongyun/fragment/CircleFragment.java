@@ -89,6 +89,10 @@ public class CircleFragment extends BaseFragment {
     RelativeLayout rlOrder;
     @BindView(R.id.tv_order_number)
     TextView tvOrderNumber;
+    @BindView(R.id.rl_need)
+    RelativeLayout rlNeed;
+    @BindView(R.id.tv_need_number)
+    TextView tvNeedNumber;
 
     private UserInfoVm userInfoVm;
     private IMAddVm imAddVm;
@@ -160,17 +164,20 @@ public class CircleFragment extends BaseFragment {
                     rlIdleReminder.setVisibility(View.VISIBLE);
                     rlOrder.setVisibility(View.VISIBLE);
                     rlUnused.setVisibility(View.GONE);
+                    rlNeed.setVisibility(View.VISIBLE);
                     break;
                 case 2://子公司
                     rlSubscribeChildren.setVisibility(View.GONE);
                     rlIdleReminder.setVisibility(View.VISIBLE);
                     rlOrder.setVisibility(View.VISIBLE);
                     rlUnused.setVisibility(View.VISIBLE);
+                    rlNeed.setVisibility(View.VISIBLE);
                     break;
                 case 4://子公司子账号
                     rlSubscribeChildren.setVisibility(View.GONE);
                     rlIdleReminder.setVisibility(View.VISIBLE);
                     rlUnused.setVisibility(View.VISIBLE);
+                    rlNeed.setVisibility(View.VISIBLE);
                     if (order_device == 1 || order_turnover == 1){
                         rlOrder.setVisibility(View.VISIBLE);
                     }
@@ -308,7 +315,7 @@ public class CircleFragment extends BaseFragment {
                 .build());
     }
 
-    @OnClick({R.id.iv_header,R.id.rl_subscribe_children,R.id.rl_message,R.id.rl_subscribe_group,R.id.rl_unused,R.id.rl_order})
+    @OnClick({R.id.iv_header,R.id.rl_subscribe_children,R.id.rl_message,R.id.rl_subscribe_group,R.id.rl_unused,R.id.rl_order,R.id.rl_need})
     void onClick(View view){
         Bundle bundle = new Bundle();
         switch (view.getId()){
@@ -329,6 +336,10 @@ public class CircleFragment extends BaseFragment {
                 break;
             case R.id.rl_order://订单提醒
                 bundle.putInt(CustomConfig.NEWS_TYPE,CustomConfig.ORDER_TYPE);
+                ActivityUtils.startActivity(bundle,MineSubActivity.class);
+                break;
+            case R.id.rl_need://需用匹配
+                bundle.putInt(CustomConfig.NEWS_TYPE,CustomConfig.NEED_TYPE);
                 ActivityUtils.startActivity(bundle,MineSubActivity.class);
                 break;
                 default:

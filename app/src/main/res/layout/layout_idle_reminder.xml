@@ -32,6 +32,7 @@
             android:layout_weight="1"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:background="@drawable/selector_bg_custom"
             tools:ignore="RtlHardcoded">
             <LinearLayout
@@ -76,6 +77,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:layout_marginRight="15dp"
             android:layout_gravity="center_vertical"
             android:background="@drawable/selector_bg_custom"
             android:visibility="gone">
@@ -154,6 +156,52 @@
                 android:layout_height="17dp"
                 android:layout_marginLeft="-10dp"
                 android:layout_toRightOf="@+id/ll_unused"
+                android:background="@drawable/progressbar_red"
+                android:textColor="@color/colorBgDark"
+                android:gravity="center"
+                android:textSize="11sp"
+                android:visibility="invisible"
+                tools:ignore="RtlHardcoded,SmallSp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_need"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/selector_bg_custom"
+            android:visibility="gone"
+            tools:ignore="RtlHardcoded">
+            <LinearLayout
+                android:id="@+id/ll_need"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_centerInParent="true">
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:scaleType="centerCrop"
+                    android:layout_gravity="center"
+                    android:src="@drawable/icon_need_remind"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColor="@color/color_666666"
+                    android:textSize="12sp"
+                    android:text="需用匹配"
+                    tools:ignore="HardcodedText" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_need_number"
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:layout_marginLeft="-10dp"
+                android:layout_toRightOf="@+id/ll_need"
                 android:background="@drawable/progressbar_red"
                 android:textColor="@color/colorBgDark"
                 android:gravity="center"

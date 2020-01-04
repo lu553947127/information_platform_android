@@ -5,16 +5,13 @@ import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Process;
 import android.view.Gravity;
-import android.view.View;
 
 import androidx.core.content.ContextCompat;
 
-import com.amap.api.maps.MapView;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.CrashUtils;
 import com.blankj.utilcode.util.LogUtils;
@@ -37,20 +34,17 @@ import com.shuangduan.zcy.callback.TimeOutCallback;
 import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
 import com.shuangduan.zcy.rongyun.provider.CustomPrivateConversationProvider;
 import com.shuangduan.zcy.utils.LoginUtils;
+import com.shuangduan.zcy.utils.RongIMUtils;
 import com.shuangduan.zcy.utils.matisse.MatisseCamera;
-import com.shuangduan.zcy.view.projectinfo.ProjectInfoActivity;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
-import cn.bingoogolapple.swipebacklayout.BGASwipeBackHelper;
 import cn.jpush.android.api.JPushInterface;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
@@ -220,6 +214,8 @@ public class AppConfig {
         RongIM.getInstance().registerConversationTemplate(new CustomPrivateConversationProvider());
         //开启高清语音
         RongIM.getInstance().setVoiceMessageType(RongIM.VoiceMessageType.HighQuality);
+        //获取发出去的消息监听
+        RongIMUtils.getSendMessageListener();
     }
 
     /**

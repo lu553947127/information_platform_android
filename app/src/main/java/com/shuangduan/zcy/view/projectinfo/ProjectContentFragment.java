@@ -45,7 +45,6 @@ import butterknife.OnClick;
  * @class describe
  */
 public class ProjectContentFragment extends BaseFragment implements BaseQuickAdapter.OnItemChildClickListener {
-
     @BindView(R.id.tv_update_time)
     TextView tvUpdateTime;
     @BindView(R.id.tv_stage)
@@ -70,11 +69,7 @@ public class ProjectContentFragment extends BaseFragment implements BaseQuickAda
     LinearLayout llMaterial;
     @BindView(R.id.iv_attn)
     ImageView ivAttn;
-
-
     private ContactAdapter contactAdapter;
-
-
     private ProjectDetailActivity activity;
     private ProjectDetailBean.DetailBean detail;
 
@@ -102,7 +97,6 @@ public class ProjectContentFragment extends BaseFragment implements BaseQuickAda
         contactAdapter.setEmptyView(R.layout.layout_loading_top, rvContact);
         contactAdapter.setOnItemChildClickListener(this);
         rvContact.setAdapter(contactAdapter);
-
 
         //基本信息设置
         activity.projectDetailVm.detailLiveData.observe(this, projectDetailBean -> {
@@ -149,16 +143,12 @@ public class ProjectContentFragment extends BaseFragment implements BaseQuickAda
                     tvMaterial.setMovementMethod(LinkMovementMethod.getInstance());
                 }
             }
-
             llMaterial.setVisibility(StringUtils.isTrimEmpty(detail.getMaterials()) ? View.GONE : View.VISIBLE);
-
             setEmpty();
             contactAdapter.setIsPay(detail.getIs_pay());
             contactAdapter.setNewData(projectDetailBean.getContact());
         });
-
     }
-
 
     @Override
     protected void initDataFromService() {
@@ -180,7 +170,6 @@ public class ProjectContentFragment extends BaseFragment implements BaseQuickAda
                 break;
         }
     }
-
 
     @Override
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
