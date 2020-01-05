@@ -135,6 +135,7 @@ public class HomeFragment extends BaseFragment {
         homeVm = ViewModelProviders.of(this).get(HomeVm.class);
         homeNeedVm = ViewModelProviders.of(this).get(HomeNeedVm.class);
         demandRelationshipVm = ViewModelProviders.of(mActivity).get(DemandRelationshipVm.class);
+        UpdateManager manager = new UpdateManager(getActivity());
 
         getChangeLister();
 
@@ -179,8 +180,7 @@ public class HomeFragment extends BaseFragment {
         homeVm.versionUpgradesLiveData.observe(this, versionUpgradesBean -> {
             if (versionUpgradesBean.getStatus().equals("1")) {
                 //版本更新弹出框显示
-                UpdateManager manager = new UpdateManager(getActivity(), versionUpgradesBean);
-                manager.showNoticeDialog();
+                manager.showNoticeDialog(versionUpgradesBean);
             }
         });
     }

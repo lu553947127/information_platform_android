@@ -38,7 +38,7 @@ import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.CityBean;
 import com.shuangduan.zcy.model.bean.ProvinceBean;
 import com.shuangduan.zcy.model.event.MultiAreaEvent;
-import com.shuangduan.zcy.utils.GpsUtils;
+import com.shuangduan.zcy.utils.PermissionUtils;
 import com.shuangduan.zcy.utils.image.CompressUtils;
 import com.shuangduan.zcy.utils.image.PictureEnlargeUtils;
 import com.shuangduan.zcy.utils.matisse.Glide4Engine;
@@ -195,7 +195,7 @@ public class SupplierJoinActivity extends BaseActivity {
 
                                 @Override
                                 public void ok(String s) {
-                                    GpsUtils.toSelfSetting(getApplicationContext());
+                                    PermissionUtils.toSelfSetting(getApplicationContext());
                                 }
                             }).showDialog();
                     break;

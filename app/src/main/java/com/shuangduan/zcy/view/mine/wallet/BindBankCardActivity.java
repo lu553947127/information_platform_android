@@ -23,7 +23,7 @@ import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.CustomDialog;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.event.BankcardUpdateEvent;
-import com.shuangduan.zcy.utils.GpsUtils;
+import com.shuangduan.zcy.utils.PermissionUtils;
 import com.shuangduan.zcy.utils.image.CompressUtils;
 import com.shuangduan.zcy.utils.matisse.Glide4Engine;
 import com.shuangduan.zcy.utils.matisse.MatisseCamera;
@@ -110,7 +110,7 @@ public class BindBankCardActivity extends BaseActivity {
                             .theme(R.style.Matisse_Dracula)
                             .captureStrategy(new CaptureStrategy(true, "com.shuangduan.zcy.fileprovider"))
                             .imageEngine(new Glide4Engine())
-                            .forResult(PermissionVm.REQUEST_CODE_CHOOSE_BANK_CARD);
+                            .forResult(PermissionVm.PHOTO);
                     break;
                 case PermissionVm.PERMISSION_CAMERA_NO:
                 case PermissionVm.PERMISSION_STORAGE_NO:
@@ -124,7 +124,7 @@ public class BindBankCardActivity extends BaseActivity {
 
                                 @Override
                                 public void ok(String s) {
-                                    GpsUtils.toSelfSetting(getApplicationContext());
+                                    PermissionUtils.toSelfSetting(getApplicationContext());
                                 }
                             }).showDialog();
                     break;
@@ -200,7 +200,7 @@ public class BindBankCardActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PermissionVm.REQUEST_CODE_CHOOSE_BANK_CARD && resultCode == RESULT_OK) {
+        if (requestCode == PermissionVm.PHOTO && resultCode == RESULT_OK) {
             if (MatisseCamera.isAndroidQ) {
                 LogUtils.e(Matisse.obtainResult(Objects.requireNonNull(data)).get(0));
                 uploadPhotoVm.upload(CompressUtils.getRealFilePath(this,Matisse.obtainResult(data).get(0)));

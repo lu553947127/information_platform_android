@@ -45,7 +45,7 @@ import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.event.LocusRefreshEvent;
 import com.shuangduan.zcy.model.event.RefreshViewLocusEvent;
 import com.shuangduan.zcy.model.event.WarrantSuccessEvent;
-import com.shuangduan.zcy.utils.GpsUtils;
+import com.shuangduan.zcy.utils.PermissionUtils;
 import com.shuangduan.zcy.view.mine.set.SetPwdPayActivity;
 import com.shuangduan.zcy.view.recharge.RechargeActivity;
 import com.shuangduan.zcy.view.release.ReleaseProjectActivity;
@@ -145,7 +145,7 @@ public class ProjectDetailActivity extends BaseActivity {
 
         permissionVm = ViewModelProviders.of(this).get(PermissionVm.class);
 
-        if (GpsUtils.isOPen(this)) {
+        if (PermissionUtils.isOPen(this)) {
             permissionVm.getPermissionLocation(new RxPermissions(this));
         } else {
             showLocationDialog(PermissionVm.PERMISSION_LOCATION);
@@ -158,7 +158,6 @@ public class ProjectDetailActivity extends BaseActivity {
                 showLocationDialog(integer);
             }
         });
-
 
 
         Fragment[] fragments = new Fragment[4];
@@ -310,7 +309,11 @@ public class ProjectDetailActivity extends BaseActivity {
             ivSubscribe.setImageResource(i == 1 ? R.drawable.icon_shopping_cart_select : R.drawable.icon_shopping_cart);
         });
         projectDetailVm.latitudeLiveData.observe(this, s -> {
-            aMap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(s.latitude, s.longitude)));
+            try {
+                aMap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(s.latitude, s.longitude)));
+            }catch (NullPointerException ignored){
+
+            }
         });
 
         //查询是否可以进入讨论组返回结果
@@ -352,9 +355,9 @@ public class ProjectDetailActivity extends BaseActivity {
                     @Override
                     public void ok(String s) {
                         if (locationCode == PermissionVm.PERMISSION_LOCATION) {
-                            GpsUtils.openGPS(ProjectDetailActivity.this);
+                            PermissionUtils.openGPS(ProjectDetailActivity.this);
                         } else if (locationCode == PermissionVm.PERMISSION_NO_LOCATION) {
-                            GpsUtils.openLocationPermission(ProjectDetailActivity.this);
+                            PermissionUtils.openLocationPermission(ProjectDetailActivity.this);
                         }
                     }
                 }).showDialog();
@@ -383,7 +386,6 @@ public class ProjectDetailActivity extends BaseActivity {
                 .showDialog());
 
     }
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

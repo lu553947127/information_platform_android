@@ -1,10 +1,12 @@
 package com.shuangduan.zcy.view.release;
 
+import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
@@ -34,7 +36,10 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
+import com.shuangduan.zcy.dialog.BaseDialog;
+import com.shuangduan.zcy.dialog.CustomDialog;
 import com.shuangduan.zcy.model.event.LocationEvent;
+import com.shuangduan.zcy.utils.PermissionUtils;
 import com.shuangduan.zcy.vm.PermissionVm;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
@@ -65,6 +70,7 @@ public class LocationMapActivity extends BaseActivity {
     private String cityName,formatAddress;
     private Marker locationMarker;
     private LatLonPoint searchLatlonPoint;
+    private PermissionVm permissionVm;
 
     @Override
     protected int initLayoutRes() {
@@ -86,13 +92,35 @@ public class LocationMapActivity extends BaseActivity {
         mMapView.onCreate(savedInstanceState);// 此方法必须重写
         cityName = getIntent().getStringExtra(CustomConfig.CITY_NAME);
 
-        PermissionVm permissionVm = ViewModelProviders.of(this).get(PermissionVm.class);
+        permissionVm = ViewModelProviders.of(this).get(PermissionVm.class);
         permissionVm.getLiveData().observe(this, integer -> {
             if (integer == PermissionVm.PERMISSION_LOCATION){
                 init();
+            } else if (integer == PermissionVm.PERMISSION_NO_LOCATION) {
+                showLocationDialog(integer);
             }
         });
         permissionVm.getPermissionLocation(new RxPermissions(this));
+    }
+
+    private void showLocationDialog(int locationCode) {
+        new CustomDialog(this)
+                .setTip(locationCode == PermissionVm.PERMISSION_LOCATION ? "为了更好的为您服务，请您打开您的GPS!" : "为了更好的为您服务，请您开启您APP的定位权限！")
+                .setCallBack(new BaseDialog.CallBack() {
+                    @Override
+                    public void cancel() {
+                        finish();
+                    }
+
+                    @Override
+                    public void ok(String s) {
+                        if (locationCode == PermissionVm.PERMISSION_LOCATION) {
+                            PermissionUtils.openGPS(LocationMapActivity.this);
+                        } else if (locationCode == PermissionVm.PERMISSION_NO_LOCATION) {
+                            PermissionUtils.openLocationPermission(LocationMapActivity.this);
+                        }
+                    }
+                }).showDialog();
     }
 
     //初始化
@@ -274,6 +302,14 @@ public class LocationMapActivity extends BaseActivity {
                     ToastUtils.showShort("正在定位,请稍等");
                 }
                 break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 0) {
+            permissionVm.getPermissionLocation(new RxPermissions(this));
         }
     }
 }

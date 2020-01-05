@@ -9,8 +9,6 @@ import android.os.Build;
 import android.provider.Settings;
 
 import com.blankj.utilcode.util.ActivityUtils;
-import com.shuangduan.zcy.base.BaseActivity;
-import com.shuangduan.zcy.view.projectinfo.ProjectInfoActivity;
 
 /**
  * @author 徐玉 QQ:876885613
@@ -22,7 +20,7 @@ import com.shuangduan.zcy.view.projectinfo.ProjectInfoActivity;
  * @chang time
  * @class describe
  */
-public class GpsUtils {
+public class PermissionUtils {
     /**
      * 判断GPS是否开启，GPS或者AGPS开启一个就认为是开启的
      * @param context

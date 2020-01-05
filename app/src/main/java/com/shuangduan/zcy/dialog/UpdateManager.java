@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.king.app.updater.AppUpdater;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.model.bean.VersionUpgradesBean;
@@ -28,22 +27,17 @@ import com.shuangduan.zcy.model.bean.VersionUpgradesBean;
  */
 @SuppressLint({"CutPasteId", "InflateParams", "SetTextI18n"})
 public class UpdateManager {
-
-    private String apk_url;
     private Context mContext;
-    private VersionUpgradesBean versionBean;
     private Dialog dialog;
 
-    public UpdateManager(Context context,VersionUpgradesBean versionBean ) {
+    public UpdateManager(Context context) {
         this.mContext = context;
-        this.apk_url = versionBean.getDownload_url();
-        this.versionBean=versionBean;
+        dialog = new Dialog(context, R.style.custom_dialog);
     }
 
     // 显示软件更新对话框
-    public void showNoticeDialog() {
-        LogUtils.i(apk_url);
-        dialog = new Dialog(mContext, R.style.custom_dialog);
+    public void showNoticeDialog(VersionUpgradesBean versionBean) {
+        if (dialog.isShowing())return;
         View view = LayoutInflater.from(mContext).inflate(R.layout.dialog_version_layout, null);
 //        dialog.setCancelable(false);
         TextView tv_code=view.findViewById(R.id.tv_code);
@@ -55,13 +49,9 @@ public class UpdateManager {
         tv_version_update.setOnClickListener(v -> {
             dialog.dismiss();
             //开始更新
-            new AppUpdater(mContext,apk_url).start();
+            new AppUpdater(mContext,versionBean.getDownload_url()).start();
         });
-        tv_version_cancel.setOnClickListener(v -> {
-            if(dialog!=null){
-                dialog.dismiss();
-            }
-        });
+        tv_version_cancel.setOnClickListener(v -> dialog.dismiss());
         DisplayMetrics displayMetrics = mContext.getResources().getDisplayMetrics();
         dialog.setContentView(view, new ViewGroup.MarginLayoutParams(displayMetrics.widthPixels,ViewGroup.MarginLayoutParams.MATCH_PARENT));
         dialog.show();

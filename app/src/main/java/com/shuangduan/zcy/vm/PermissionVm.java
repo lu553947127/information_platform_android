@@ -9,9 +9,6 @@ import com.blankj.utilcode.util.LogUtils;
 import com.shuangduan.zcy.base.BaseViewModel;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
-import io.reactivex.ObservableSource;
-import io.reactivex.Observer;
-
 /**
  * @author 徐玉 QQ:876885613
  * @name ZICAICloudPlatform
@@ -24,29 +21,20 @@ import io.reactivex.Observer;
  */
 public class PermissionVm extends BaseViewModel {
 
-    /*身份认证部分*/
-    public static final int REQUEST_CODE_CHOOSE_AUTHENTICATION = 100;
-    public static final int REQUEST_CODE_AUTHENTICATION = 101;
-    /*用户头像部分*/
-    public static final int REQUEST_CODE_CHOOSE_HEAD = 200;
-    public static final int REQUEST_CODE_HEAD = 201;
-    /*银行卡上传部分*/
-    public static final int REQUEST_CODE_CHOOSE_BANK_CARD = 300;
-    public static final int REQUEST_CODE_BANK_CARD = 301;
+    /*相机*/
+    public static final int CAMERA = 1111;
+    /*相册*/
+    public static final int PHOTO = 2222;
 
     /*拍照*/
-    public static final int PERMISSION_CAMERA = 1;
-    public static final int PERMISSION_CAMERA_NO = 11;
+    public static final int PERMISSION_CAMERA = 77;
+    public static final int PERMISSION_CAMERA_NO = 777;
     /*内存*/
-    public static final int PERMISSION_STORAGE = 2;
-    public static final int PERMISSION_STORAGE_NO = 22;
+    public static final int PERMISSION_STORAGE = 88;
+    public static final int PERMISSION_STORAGE_NO = 888;
     /*定位*/
-    public static final int PERMISSION_LOCATION = 3;
-    public static final int PERMISSION_NO_LOCATION = 4;
-
-
-
-    public static final int PHOTO = 222;
+    public static final int PERMISSION_LOCATION = 99;
+    public static final int PERMISSION_NO_LOCATION = 999;
 
     private MutableLiveData<Integer> liveData;
 

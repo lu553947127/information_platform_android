@@ -47,7 +47,7 @@ import com.shuangduan.zcy.model.event.ProjectNameEvent;
 import com.shuangduan.zcy.model.event.StageEvent;
 import com.shuangduan.zcy.model.event.TypesArrayEvent;
 import com.shuangduan.zcy.utils.AndroidBug5497Workaround;
-import com.shuangduan.zcy.utils.GpsUtils;
+import com.shuangduan.zcy.utils.PermissionUtils;
 import com.shuangduan.zcy.utils.KeyboardUtil;
 import com.shuangduan.zcy.utils.image.CompressUtils;
 import com.shuangduan.zcy.utils.image.PictureEnlargeUtils;
@@ -362,7 +362,7 @@ public class ReleaseProjectActivity extends BaseActivity {
                             .theme(R.style.Matisse_Dracula)
                             .captureStrategy(new CaptureStrategy(true, "com.shuangduan.zcy.fileprovider"))
                             .imageEngine(new Glide4Engine())
-                            .forResult(PermissionVm.REQUEST_CODE_CHOOSE_HEAD);
+                            .forResult(PermissionVm.PHOTO);
                     break;
                 case PermissionVm.PERMISSION_CAMERA_NO:
                 case PermissionVm.PERMISSION_STORAGE_NO:
@@ -376,7 +376,7 @@ public class ReleaseProjectActivity extends BaseActivity {
 
                                 @Override
                                 public void ok(String s) {
-                                    GpsUtils.toSelfSetting(getApplicationContext());
+                                    PermissionUtils.toSelfSetting(getApplicationContext());
                                 }
                             }).showDialog();
                     break;
@@ -402,7 +402,7 @@ public class ReleaseProjectActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         LogUtils.i(requestCode, resultCode);
-        if (requestCode == PermissionVm.REQUEST_CODE_CHOOSE_HEAD && resultCode == RESULT_OK) {
+        if (requestCode == PermissionVm.PHOTO && resultCode == RESULT_OK) {
             List<Uri> mSelected = Matisse.obtainResult(data);
             LogUtils.i(mSelected.get(0), Matisse.obtainPathResult(data).get(0), Uri.parse(Matisse.obtainPathResult(data).get(0)));
             //设置给图片盛放控件

@@ -49,7 +49,7 @@ import com.shuangduan.zcy.dialog.BottomSheetDialogs;
 import com.shuangduan.zcy.dialog.CustomDialog;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.event.LocationEvent;
-import com.shuangduan.zcy.utils.GpsUtils;
+import com.shuangduan.zcy.utils.PermissionUtils;
 import com.shuangduan.zcy.utils.KeyboardUtil;
 import com.shuangduan.zcy.utils.image.CompressUtils;
 import com.shuangduan.zcy.utils.image.PictureEnlargeUtils;
@@ -307,7 +307,7 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
 
                                 @Override
                                 public void ok(String s) {
-                                    GpsUtils.toSelfSetting(getApplicationContext());
+                                    PermissionUtils.toSelfSetting(getApplicationContext());
                                 }
                             }).showDialog();
                     break;

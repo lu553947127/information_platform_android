@@ -1,9 +1,7 @@
 package com.shuangduan.zcy.view.projectinfo;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +38,7 @@ import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.CustomDialog;
 import com.shuangduan.zcy.dialog.pop.CommonPopupWindow;
 import com.shuangduan.zcy.model.bean.MapBean;
-import com.shuangduan.zcy.utils.GpsUtils;
+import com.shuangduan.zcy.utils.PermissionUtils;
 import com.shuangduan.zcy.view.release.ReleaseProjectActivity;
 import com.shuangduan.zcy.view.search.SearchActivity;
 import com.shuangduan.zcy.vm.PermissionVm;
@@ -374,7 +372,7 @@ public class ProjectInfoActivity extends BaseActivity {
         permissionVm = ViewModelProviders.of(this).get(PermissionVm.class);
 
 
-        if (GpsUtils.isOPen(this)) {
+        if (PermissionUtils.isOPen(this)) {
             permissionVm.getPermissionLocation(new RxPermissions(this));
         } else {
             showLocationDialog(PermissionVm.PERMISSION_LOCATION);
@@ -403,9 +401,9 @@ public class ProjectInfoActivity extends BaseActivity {
                     @Override
                     public void ok(String s) {
                         if (locationCode == PermissionVm.PERMISSION_LOCATION) {
-                            GpsUtils.openGPS(ProjectInfoActivity.this);
+                            PermissionUtils.openGPS(ProjectInfoActivity.this);
                         } else if (locationCode == PermissionVm.PERMISSION_NO_LOCATION) {
-                            GpsUtils.openLocationPermission(ProjectInfoActivity.this);
+                            PermissionUtils.openLocationPermission(ProjectInfoActivity.this);
                         }
                     }
                 }).showDialog();
@@ -428,11 +426,6 @@ public class ProjectInfoActivity extends BaseActivity {
                 break;
             case R.id.iv_bar_right:
                 ActivityUtils.startActivity(SearchActivity.class);
-
-//                Bundle bundle = new Bundle();
-//                bundle.putString(CustomConfig.KEYWORD, "");
-//                bundle.putString(CustomConfig.PROJECT_TYPE, "");
-//                ActivityUtils.startActivity(bundle, SearchResultActivity.class);
                 break;
             case R.id.fl_list:
                 ActivityUtils.startActivity(ProjectInfoListActivity.class);
