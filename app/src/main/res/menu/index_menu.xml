@@ -10,6 +10,10 @@
         android:id="@+id/menu_people"
         android:icon="@drawable/icon_people_normal"
         android:title="@string/people" />
+    <!--添加-->
+    <item
+        android:id="@+id/menu_add"
+        android:title="" />
     <!--工程圈-->
     <item
         android:id="@+id/menu_circle"

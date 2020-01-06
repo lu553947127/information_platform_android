@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".view.MainActivity">
+    tools:context=".view.MainActivity"
+    android:id="@+id/relativeLayout">
 
     <com.shuangduan.zcy.weight.NoScrollViewPager
         android:id="@+id/view_pager"
@@ -16,11 +17,24 @@
         android:id="@+id/navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:background="@color/colorFFF"
+        android:layout_alignParentBottom="true"
         app:itemIconTint="@drawable/bottom_navigation_item_selector"
         app:itemTextColor="@drawable/bottom_navigation_item_selector"
         app:menu="@menu/index_menu"
         app:labelVisibilityMode="labeled" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
+        android:src="@drawable/add"
+        android:tint="@color/colorTvHint"
+        app:backgroundTint="@android:color/white"
+        app:borderWidth="0dp"
+        app:elevation="9dp"/>
 
 </RelativeLayout>

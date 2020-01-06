@@ -28,6 +28,7 @@ import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.CustomDialog;
+import com.shuangduan.zcy.dialog.HomePageAddDialog;
 import com.shuangduan.zcy.model.bean.SupplierRoleBean;
 import com.shuangduan.zcy.rongyun.fragment.CircleFragment;
 import com.shuangduan.zcy.utils.KeyboardUtil;
@@ -41,6 +42,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import cn.jpush.android.api.JPushInterface;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.manager.IUnReadMessageObserver;
@@ -60,6 +62,8 @@ import io.rong.imlib.model.Conversation;
  */
 
 public class MainActivity extends BaseActivity {
+    @BindView(R.id.relativeLayout)
+    RelativeLayout relative;
     @BindView(R.id.navigation)
     BottomNavigationView navigation;
     @BindView(R.id.view_pager)
@@ -71,6 +75,7 @@ public class MainActivity extends BaseActivity {
     private IUnReadMessageObserver observer;
     private int manage_status,order_turnover,order_device;
     private Handler handler;
+    private HomePageAddDialog homePageAddDialog;
 
     @Override
     protected int initLayoutRes() {
@@ -102,8 +107,8 @@ public class MainActivity extends BaseActivity {
         setJPushAlias();
         initBottomNavigation();
         getBadgeViewInitView();
-
         handler = MyApplication.getMainThreadHandler();
+        homePageAddDialog = new HomePageAddDialog(this,handler);
     }
 
     //底部标签栏点击切换
@@ -153,7 +158,10 @@ public class MainActivity extends BaseActivity {
             public void onPageSelected(int position) {
                 //该方法只在滑动停止时调用，position滑动停止所在页面位置
                 //当滑动到某一位置，导航栏对应位置被按下
-                navigation.getMenu().getItem(position).setChecked(true);
+                if (position!=2){
+                    navigation.getMenu().getItem(position).setChecked(true);
+                }
+
                 //这里使用navigation.setSelectedItemId(position);无效，
                 //setSelectedItemId(position)的官网原句：Set the selected
                 //menu item ID. This behaves the same as tapping on an item
@@ -173,6 +181,11 @@ public class MainActivity extends BaseActivity {
         });
     }
 
+    @OnClick(R.id.btn_add)
+    void onClick(){
+        homePageAddDialog.init(relative);
+    }
+
     //设置底部消息提醒数字布局
     private RelativeLayout relativeLayout;
     private TextView number;
@@ -181,7 +194,7 @@ public class MainActivity extends BaseActivity {
         //获取整个的NavigationView
         BottomNavigationMenuView menuView = (BottomNavigationMenuView) navigation.getChildAt(0);
         //这里就是获取所添加的每一个Tab(或者叫menu)，设置在标题栏的位置
-        View tab = menuView.getChildAt(2);
+        View tab = menuView.getChildAt(3);
         BottomNavigationItemView itemView = (BottomNavigationItemView) tab;
         //加载我们的角标View，新创建的一个布局
         View badge = LayoutInflater.from(this).inflate(R.layout.layout_apply_count, menuView, false);
