@@ -210,9 +210,7 @@ public class MainActivity extends BaseActivity {
             public void onPageSelected(int position) {
                 //该方法只在滑动停止时调用，position滑动停止所在页面位置
                 //当滑动到某一位置，导航栏对应位置被按下
-                if (position!=2){
-                    navigation.getMenu().getItem(position).setChecked(true);
-                }
+                navigation.getMenu().getItem(position).setChecked(true);
 
                 //这里使用navigation.setSelectedItemId(position);无效，
                 //setSelectedItemId(position)的官网原句：Set the selected
@@ -397,7 +395,7 @@ public class MainActivity extends BaseActivity {
 
     //首页按钮初始化
     private void getHomeAddDialog() {
-        homePageAddDialog = new HomePageAddDialog(this,handler);
+        homePageAddDialog = new HomePageAddDialog(MainActivity.this,handler);
         animatorRun = new AnimatorRun();
         //红包开启抖动动画
         handler.postDelayed(animatorRun, 1500);

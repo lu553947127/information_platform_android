@@ -32,7 +32,6 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.SpConfig;
-import com.shuangduan.zcy.utils.PhoneUtils;
 import com.shuangduan.zcy.view.WebViewActivity;
 import com.shuangduan.zcy.view.design.SmartDesignActivity;
 import com.shuangduan.zcy.weight.RenderScriptGaussianBlur;
@@ -59,6 +58,7 @@ public class HomePageAddDialog extends PopupWindow implements View.OnClickListen
     private View view;
     private int mWidth;
     private int mHeight;
+    private int statusBarHeight;
     private Handler mHandler;
 
     public HomePageAddDialog(Activity context,Handler mHandler) {
@@ -72,36 +72,17 @@ public class HomePageAddDialog extends PopupWindow implements View.OnClickListen
      */
     @SuppressLint("InflateParams")
     public void init(View view) {
-        getStatusBarHeight();
         relativeLayout = (RelativeLayout) LayoutInflater.from(mContext).inflate(R.layout.dialog_home_page_add, null);
         setContentView(relativeLayout);
-        //设置毛玻璃背景
-        setBackgroundDrawable(new BitmapDrawable(mContext.getResources(), blur()));
         findView(relativeLayout);
+        getIsPhone();
+
         setOutsideTouchable(true);
         setFocusable(true);
         setClippingEnabled(false);//全屏显示
-        showMoreWindow(view);
-    }
 
-    //获取宽高
-    private void getStatusBarHeight() {
-        Rect frame = new Rect();
-        mContext.getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
-        DisplayMetrics metrics = new DisplayMetrics();
-        mContext.getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        mWidth = metrics.widthPixels;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            if(PhoneUtils.isPhone(mContext)) {
-                mHeight = metrics.heightPixels + mContext.getResources().getDimensionPixelSize(R.dimen.dp_55);
-            }else{
-                mHeight = metrics.heightPixels;
-            }
-        } else {
-            mHeight = metrics.heightPixels;
-        }
-        setWidth(mWidth);
-        setHeight(mHeight);
+        showMoreWindow(view);
+        showAtLocation(view, Gravity.BOTTOM, 0, statusBarHeight);
     }
 
     //初始化
@@ -136,6 +117,82 @@ public class HomePageAddDialog extends PopupWindow implements View.OnClickListen
         tv_month.setText(format_month.format(date_month));
 
         tv_weather.setText(SPUtils.getInstance().getString(SpConfig.WEATHER));
+    }
+
+    //适配各大机型
+    private void getIsPhone() {
+        Rect frame = new Rect();
+        mContext.getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
+        statusBarHeight = frame.top;
+        DisplayMetrics metrics = new DisplayMetrics();
+        mContext.getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        mWidth = metrics.widthPixels;
+        mHeight = metrics.heightPixels;
+
+        String name = Build.MANUFACTURER;
+        switch (name) {
+            case "HUAWEI":
+                view.setBackgroundResource(0);
+                mHeight = metrics.heightPixels+ mContext.getResources().getDimensionPixelSize(R.dimen.dp_55);
+                //设置毛玻璃背景
+                setBackgroundDrawable(new BitmapDrawable(mContext.getResources(), blur()));
+                break;
+            case "vivo":
+                view.setBackgroundResource(0);
+                //设置毛玻璃背景
+                setBackgroundDrawable(new BitmapDrawable(mContext.getResources(), blur()));
+                break;
+            case "OPPO":
+                view.setBackgroundResource(0);
+                //设置毛玻璃背景
+                setBackgroundDrawable(new BitmapDrawable(mContext.getResources(), blur()));
+                break;
+            case "Coolpad":
+                view.setBackgroundResource(0);
+                //设置毛玻璃背景
+                setBackgroundDrawable(new BitmapDrawable(mContext.getResources(), blur()));
+                break;
+            case "Meizu":
+                view.setBackgroundResource(0);
+                //设置毛玻璃背景
+                setBackgroundDrawable(new BitmapDrawable(mContext.getResources(), blur()));
+                break;
+            case "Xiaomi":
+                view.setBackgroundResource(R.color.colorFFF);
+                view.getBackground().setAlpha(245);
+                break;
+            case "samsung":
+                view.setBackgroundResource(R.color.colorFFF);
+                view.getBackground().setAlpha(245);
+                break;
+            case "Sony":
+                view.setBackgroundResource(R.color.colorFFF);
+                view.getBackground().setAlpha(245);
+                break;
+            case "LG":
+                view.setBackgroundResource(0);
+                //设置毛玻璃背景
+                setBackgroundDrawable(new BitmapDrawable(mContext.getResources(), blur()));
+                break;
+            case"OnePlus":
+                view.setBackgroundResource(0);
+                //设置毛玻璃背景
+                setBackgroundDrawable(new BitmapDrawable(mContext.getResources(), blur()));
+                break;
+            case"Google":
+                view.setBackgroundResource(0);
+                //设置毛玻璃背景
+                setBackgroundDrawable(new BitmapDrawable(mContext.getResources(), blur()));
+                break;
+            default:
+                view.setBackgroundResource(0);
+                //设置毛玻璃背景
+                setBackgroundDrawable(new BitmapDrawable(mContext.getResources(), blur()));
+                break;
+        }
+
+        setWidth(mWidth);
+        setHeight(mHeight);
     }
 
    //显示window动画
@@ -286,7 +343,7 @@ public class HomePageAddDialog extends PopupWindow implements View.OnClickListen
         Bitmap mBitmap = view.getDrawingCache();
 
         float scaleFactor = 8;//图片缩放比例
-        float radius = 25;//模糊程度
+        float radius = 10;//模糊程度
         int width = mBitmap.getWidth();
         int height = mBitmap.getHeight();
 

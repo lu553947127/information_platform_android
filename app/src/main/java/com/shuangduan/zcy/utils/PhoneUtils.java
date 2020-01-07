@@ -1,6 +1,5 @@
 package com.shuangduan.zcy.utils;
 
-import android.content.Context;
 import android.os.Build;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -68,35 +67,5 @@ public class PhoneUtils {
         LinearLayout.LayoutParams linearParams =(LinearLayout.LayoutParams) view.getLayoutParams();
         linearParams.height = height;
         view.setLayoutParams(linearParams);
-    }
-
-    public static boolean isPhone(Context mContext){
-        String name = Build.MANUFACTURER;
-        switch (name) {
-            case "HUAWEI":
-                return true;
-            case "vivo":
-                return false;
-            case "OPPO":
-                return false;
-            case "Coolpad":
-                return false;
-            case "Meizu":
-                return false;
-            case "Xiaomi":
-                return false;
-            case "samsung":
-                return false;
-            case "Sony":
-                return false;
-            case "LG":
-                return false;
-            case"OnePlus":
-                return true;
-            case"Google":
-                return true;
-            default:
-                return false;
-        }
     }
 }
