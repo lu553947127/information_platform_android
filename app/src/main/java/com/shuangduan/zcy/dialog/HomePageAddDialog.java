@@ -94,6 +94,7 @@ public class HomePageAddDialog extends PopupWindow implements View.OnClickListen
         ivClose =layout.findViewById(R.id.iv_close);
         view = layout.findViewById(R.id.rl);
         ivClose.setOnClickListener(this);
+        view.getBackground().setAlpha(250);
     }
 
    //显示window动画

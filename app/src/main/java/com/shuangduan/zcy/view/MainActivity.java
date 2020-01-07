@@ -1,5 +1,7 @@
 package com.shuangduan.zcy.view;
 
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -31,6 +33,7 @@ import com.shuangduan.zcy.dialog.CustomDialog;
 import com.shuangduan.zcy.dialog.HomePageAddDialog;
 import com.shuangduan.zcy.model.bean.SupplierRoleBean;
 import com.shuangduan.zcy.rongyun.fragment.CircleFragment;
+import com.shuangduan.zcy.utils.AnimationUtils;
 import com.shuangduan.zcy.utils.KeyboardUtil;
 import com.shuangduan.zcy.utils.NotificationsUtils;
 import com.shuangduan.zcy.vm.HomeVm;
@@ -68,14 +71,19 @@ public class MainActivity extends BaseActivity {
     BottomNavigationView navigation;
     @BindView(R.id.view_pager)
     NoScrollViewPager viewPager;
+    @BindView(R.id.tv_remind)
+    TextView tvRemind;
     List<Fragment> mFragments;
     FragmentAdapter fragmentAdapter;
     private HomeVm homeVm;
     private IMAddVm imAddVm;
     private IUnReadMessageObserver observer;
     private int manage_status,order_turnover,order_device;
-    private Handler handler;
+
     private HomePageAddDialog homePageAddDialog;
+    private Handler handler;
+    private AnimatorRun animatorRun;
+    private ObjectAnimator animator;
 
     @Override
     protected int initLayoutRes() {
@@ -109,6 +117,22 @@ public class MainActivity extends BaseActivity {
         getBadgeViewInitView();
         handler = MyApplication.getMainThreadHandler();
         homePageAddDialog = new HomePageAddDialog(this,handler);
+        animatorRun = new AnimatorRun();
+        //红包开启抖动动画
+        handler.postDelayed(animatorRun, 1500);
+    }
+
+    class AnimatorRun implements Runnable {
+        @Override
+        public void run() {
+            try {
+                animator = AnimationUtils.tada(tvRemind);
+                animator.setRepeatCount(ValueAnimator.INFINITE);
+                animator.start();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     //底部标签栏点击切换
@@ -347,6 +371,16 @@ public class MainActivity extends BaseActivity {
         RongIM.getInstance().removeUnReadMessageCountChangedObserver(observer);
         if (handler != null) {
             handler = null;
+        }
+
+        if (animator != null) {
+            animator.cancel();
+            animator.clone();
+            animator = null;
+        }
+
+        if (animatorRun != null) {
+            animatorRun = null;
         }
     }
 }

@@ -5,7 +5,7 @@
     android:id="@+id/rl"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorTvHint">
+    android:background="@color/colorTv">
 
     <LinearLayout
         android:id="@+id/lin"
@@ -25,7 +25,7 @@
         android:layout_height="40dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="50dp"
         android:src="@drawable/ic_action_close" />
 
 </RelativeLayout>

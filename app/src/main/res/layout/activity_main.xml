@@ -24,17 +24,33 @@
         app:menu="@menu/index_menu"
         app:labelVisibilityMode="labeled" />
 
+    <TextView
+        android:id="@+id/tv_remind"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/icon_home_remind"
+        android:layout_above="@+id/btn_add"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:paddingTop="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:textSize="12sp"
+        android:textColor="@color/colorFFF"
+        android:text="点击解锁更多功能" />
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btn_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="16dp"
-        android:src="@drawable/add"
-        android:tint="@color/colorTvHint"
+        android:layout_marginBottom="18dp"
+        app:fabCustomSize="50dp"
+        android:src="@drawable/icon_home_add"
+        android:tint="@color/colorPrimary"
         app:backgroundTint="@android:color/white"
         app:borderWidth="0dp"
-        app:elevation="9dp"/>
+        app:elevation="9dp" />
 
 </RelativeLayout>
