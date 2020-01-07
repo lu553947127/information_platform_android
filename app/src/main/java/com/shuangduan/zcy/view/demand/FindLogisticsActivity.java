@@ -70,6 +70,7 @@ public class FindLogisticsActivity extends BaseActivity {
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_bar_back:
+            case R.id.iv_bar_back_new:
                 finish();
                 break;
         }

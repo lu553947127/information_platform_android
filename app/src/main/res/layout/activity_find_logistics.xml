@@ -360,6 +360,30 @@
         android:alpha="0"
         android:visibility="visible">
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_bar_back_new"
+            android:layout_width="36dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="35dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/toolbar_back" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_bar_title_new"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="35dp"
+            android:lines="1"
+            android:maxEms="13"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:singleLine="true"
+            android:text="@string/find_logistics"
+            android:textColor="@color/colorFFF"
+            android:textSize="18sp" />
+
 
     </RelativeLayout>
 
