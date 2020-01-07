@@ -32,7 +32,10 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.SpConfig;
+import com.shuangduan.zcy.utils.PhoneUtils;
 import com.shuangduan.zcy.view.WebViewActivity;
+import com.shuangduan.zcy.view.demand.FindFoundationActivity;
+import com.shuangduan.zcy.view.demand.FindLogisticsActivity;
 import com.shuangduan.zcy.view.design.SmartDesignActivity;
 import com.shuangduan.zcy.weight.RenderScriptGaussianBlur;
 
@@ -58,8 +61,9 @@ public class HomePageAddDialog extends PopupWindow implements View.OnClickListen
     private View view;
     private int mWidth;
     private int mHeight;
-    private int statusBarHeight;
     private Handler mHandler;
+
+    private int statusBarHeight;
 
     public HomePageAddDialog(Activity context,Handler mHandler) {
         this.mContext = context;
@@ -295,8 +299,10 @@ public class HomePageAddDialog extends PopupWindow implements View.OnClickListen
                 ActivityUtils.startActivity(SmartDesignActivity.class);
                 break;
             case R.id.window_home_add_ll_b://找基地
+                ActivityUtils.startActivity(FindFoundationActivity.class);
                 break;
             case R.id.window_home_add_ll_c://找物流
+                ActivityUtils.startActivity(FindLogisticsActivity.class);
                 break;
             case R.id.window_home_add_ll_d://找方案
                 break;

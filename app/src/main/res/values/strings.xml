@@ -38,6 +38,7 @@
     <string name="send_verification_code">发送验证码</string>
     <string name="send_verification_code_success">验证码已发送</string>
     <string name="hint_pwd">请输入密码</string>
+    <string name="hint_input">请输入</string>
     <string name="hint_mobile_invite">请输入邀请手机号</string>
     <string name="login_account">账号登录</string>
     <string name="login_verification_code">验证码登录</string>
@@ -118,6 +119,7 @@
     <string name="hind_company_website">请输入公司网址</string>
     <string name="scale_select">人员规模</string>
     <string name="unit_select">单位</string>
+
     <string name="upload_business_card">上传名片</string>
     <string name="bank_card_message">银行卡信息</string>
     <string name="account_name">账户名</string>
@@ -188,6 +190,7 @@
     <string name="title">标题</string>
     <string name="commission">佣金</string>
     <string name="material_name">物资名称</string>
+    <string name="material_number">物资数量</string>
     <string name="demand_num">需求数量</string>
     <string name="demand_project">需求项目</string>
     <string name="price_accept">接受价格</string>
@@ -763,4 +766,24 @@
     <string name="affirm_delete_order">确认删除订单</string>
     <string name="delete_order_succeed">删除设计订单成功</string>
     <string name="cancel_order_succeed">取消设计订单成功</string>
+
+
+    <!--   发布需求 -->
+    <string name="find_logistics">找物流</string>
+    <string name="find_foundation">找基地</string>
+    <string name="find_send_address">发货地点</string>
+    <string name="find_receive_address">接收地点</string>
+    <string name="find_receive_time">最晚接收时间</string>
+    <string name="find_address_hint">精确到省、市、街道</string>
+    <string name="find_contact_hint">请输入联系人姓名</string>
+    <string name="find_contact_phone_hint">请输入联系人电话</string>
+    <string name="find_contact">联&#160;&#160;系&#160;&#160;人</string>
+    <string name="find_remark">备&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;注</string>
+
+    <string name="find_existing_address">现存地点</string>
+    <string name="find_need_address">需要地点</string>
+    <string name="find_distance">可接收距离</string>
+    <string name="find_restructuring">是否需要改制</string>
+
+
 </resources>

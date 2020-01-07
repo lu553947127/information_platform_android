@@ -390,6 +390,13 @@
         <activity android:name="com.shuangduan.zcy.view.photo.CameraActivity" />
         <!-- h5加载页-->
         <activity android:name="com.shuangduan.zcy.view.WebViewActivity" />
+
+        <!--   找物流   -->
+        <activity android:name="com.shuangduan.zcy.view.demand.FindLogisticsActivity" />
+        <!--   找基地   -->
+        <activity android:name="com.shuangduan.zcy.view.demand.FindFoundationActivity"/>
+
+
         <!-- 微信支付 返回结果页-->
         <activity
             android:name="com.shuangduan.zcy.wxapi.WXPayEntryActivity"
@@ -435,7 +442,6 @@
         <activity android:name="com.shuangduan.zcy.view.design.SmartDesignOrderActivity" />
         <!--  智能设置订单详情      -->
         <activity android:name="com.shuangduan.zcy.view.design.SmartDesignDetailsActivity" />
-
 
         <!--高德地图appKey-->
         <meta-data

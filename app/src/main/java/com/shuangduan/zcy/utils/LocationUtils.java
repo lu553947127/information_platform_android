@@ -61,21 +61,14 @@ public class LocationUtils {
                     SPUtils.getInstance().put(SpConfig.LONGITUDE, String.valueOf(location.getLongitude()), true);
                     SPUtils.getInstance().put(SpConfig.LATITUDE, String.valueOf(location.getLatitude()), true);
                     getAddressChange(location.getLatitude(),location.getLongitude());
-                } else {
-                    LogUtils.i("location<<<failed", "定位失败\n错误码：" + location.getErrorCode()
-                            + "\n错误信息:" + location.getErrorInfo()
-                            + "\n错误描述:" + location.getLocationDetail());
                 }
             } else {
                 ToastUtils.showShort("定位失败，loc is null");
             }
         });
         mLocationClient.startLocation();
-        mLocationClient.setLocationListener(new AMapLocationListener() {
-            @Override
-            public void onLocationChanged(AMapLocation aMapLocation) {
+        mLocationClient.setLocationListener(aMapLocation -> {
 
-            }
         });
     }
 
