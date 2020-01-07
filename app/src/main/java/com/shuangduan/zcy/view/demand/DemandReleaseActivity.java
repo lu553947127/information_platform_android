@@ -454,11 +454,7 @@ public class DemandReleaseActivity extends BaseActivity {
         String tomorrowDay = StringUtils.isTrimEmpty(tvTimeEnd.getText().toString()) ? tomorrow : tvTimeEnd.getText().toString();
         if (customDatePicker == null) {
             customDatePicker = new CustomDatePicker(this, time -> {
-                int gapDay = DateUtils.getGapCount(demandReleaseVm.startTime, time);
-                if (gapDay > 30) {
-                    ToastUtils.showShort("有效期不能超过30天");
-                    return;
-                }
+
                 demandReleaseVm.endTime = time;
                 tvTimeEnd.setText(time);
             }, "yyyy-MM-dd", tomorrowDay, "2100-12-31");

@@ -154,10 +154,18 @@ public class ProjectDetailActivity extends BaseActivity {
         permissionVm.getLiveData().observe(this, integer -> {
             if (integer == PermissionVm.PERMISSION_LOCATION) {
                 init();
+
+                projectDetailVm.latitudeLiveData.observe(this, s -> {
+                    try {
+                        aMap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(s.latitude, s.longitude)));
+                    }catch (NullPointerException ignored){
+                    }
+                });
             } else if (integer == PermissionVm.PERMISSION_NO_LOCATION) {
                 showLocationDialog(integer);
             }
         });
+
 
 
         Fragment[] fragments = new Fragment[4];
@@ -308,13 +316,7 @@ public class ProjectDetailActivity extends BaseActivity {
             tvSubscribe.setText(getString(i == 1 ? R.string.subscribed : R.string.unsubscribe));
             ivSubscribe.setImageResource(i == 1 ? R.drawable.icon_shopping_cart_select : R.drawable.icon_shopping_cart);
         });
-        projectDetailVm.latitudeLiveData.observe(this, s -> {
-            try {
-                aMap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(s.latitude, s.longitude)));
-            }catch (NullPointerException ignored){
 
-            }
-        });
 
         //查询是否可以进入讨论组返回结果
         projectDetailVm.projectMembersStatusData.observe(this, projectMembersStatusBean -> {
@@ -386,6 +388,7 @@ public class ProjectDetailActivity extends BaseActivity {
                 .showDialog());
 
     }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -481,7 +484,7 @@ public class ProjectDetailActivity extends BaseActivity {
                 }
             });
 
-            aMap.setOnMapLoadedListener(() -> addMarkerInScreenCenter(null));
+            aMap.setOnMapLoadedListener(this::addMarkerInScreenCenter);
         }
     }
 
@@ -500,7 +503,7 @@ public class ProjectDetailActivity extends BaseActivity {
 
     private Marker locationMarker;
 
-    private void addMarkerInScreenCenter(LatLng locationLatLng) {
+    private void addMarkerInScreenCenter() {
         LatLng latLng = aMap.getCameraPosition().target;
         Point screenPosition = aMap.getProjection().toScreenLocation(latLng);
         locationMarker = aMap.addMarker(new MarkerOptions()

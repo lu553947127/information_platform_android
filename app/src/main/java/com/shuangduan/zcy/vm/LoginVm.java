@@ -107,7 +107,7 @@ public class LoginVm extends BaseViewModel {
     }
 
     public void accountLogin(String tel, String pwd, String client_id) {
-        LogUtils.e("登录接口：" + tel + "---" + pwd + "---" + client_id);
+       
         new LoginRepository().accountLogin(accountLoginLiveData, pageStateLiveData, tel, pwd, client_id);
     }
 

@@ -117,8 +117,6 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
 
-        LogUtils.e("启动次数：" + loginStyle);
-
         sharesUtils = new SharesUtils(this);
         loginVm = ViewModelProviders.of(this).get(LoginVm.class);
 
@@ -226,7 +224,7 @@ public class LoginActivity extends BaseActivity {
             }
 
 
-            LogUtils.e("登录类型：" + loginStyle);
+
 
             //获取融云登录token
             if (loginBean.getInfo_status() == 1) {
@@ -251,7 +249,7 @@ public class LoginActivity extends BaseActivity {
         });
 
         loginVm.registerLiveData.observe(this, registerBean -> {
-            LogUtils.e("当前登录111");
+
 
             SPUtils.getInstance().clear(true);
             //注册成功走一遍登录

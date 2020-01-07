@@ -57,7 +57,6 @@ public class CameraActivity extends AppCompatActivity {
             @Override
             public void onError() {
                 //错误监听
-                LogUtils.i("camera error");
                 Intent intent = new Intent();
                 setResult(103, intent);
                 finish();

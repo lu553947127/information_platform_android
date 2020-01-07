@@ -1,6 +1,5 @@
 package com.shuangduan.zcy.view.projectinfo;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RadioButton;
@@ -14,6 +13,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
@@ -24,10 +24,11 @@ import com.shuangduan.zcy.vm.GoToSubVm;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * @author 徐玉 QQ:876885613
+ * @author 宁文强 QQ:858777523
  * @name information_platform_android
  * @class name：com.shuangduan.zcy.view.projectinfo
  * @class describe  去认购
@@ -74,7 +75,6 @@ public class GoToSubActivity extends BaseActivity {
         return false;
     }
 
-    @SuppressLint("SetTextI18n")
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
@@ -89,18 +89,18 @@ public class GoToSubActivity extends BaseActivity {
             switch (checkedId) {
                 case R.id.rb_first:
                     goToSubVm.month = valueSelect.get(0).getMonths();
-                    tvSubPrice.setText(valueSelect.get(0).getPrice()+"元");
-                    tvExpectedReturn.setText(valueSelect.get(0).getExpect_price()+"元");
+                    tvSubPrice.setText(valueSelect.get(0).getPrice());
+                    tvExpectedReturn.setText(valueSelect.get(0).getExpect_price());
                     break;
                 case R.id.rb_second:
                     goToSubVm.month = valueSelect.get(1).getMonths();
-                    tvSubPrice.setText(valueSelect.get(1).getPrice()+"元");
-                    tvExpectedReturn.setText(valueSelect.get(1).getExpect_price()+"元");
+                    tvSubPrice.setText(valueSelect.get(1).getPrice());
+                    tvExpectedReturn.setText(valueSelect.get(1).getExpect_price());
                     break;
                 case R.id.rb_third:
                     goToSubVm.month = valueSelect.get(2).getMonths();
-                    tvSubPrice.setText(valueSelect.get(2).getPrice()+"元");
-                    tvExpectedReturn.setText(valueSelect.get(2).getExpect_price()+"元");
+                    tvSubPrice.setText(valueSelect.get(2).getPrice());
+                    tvExpectedReturn.setText(valueSelect.get(2).getExpect_price());
                     break;
             }
         });
@@ -114,14 +114,14 @@ public class GoToSubActivity extends BaseActivity {
                 for (int i = 0; i < projectSubFirstBean.getSelect().size(); i++) {
                     ProjectSubFirstBean.SelectBean selectBean = projectSubFirstBean.getSelect().get(i);
                     if (i == 0) {
-                        rbFirst.setText(selectBean.getTime());
-                        tvSubPrice.setText(selectBean.getPrice()+"元");
-                        tvExpectedReturn.setText(selectBean.getExpect_price()+"元");
+                        rbFirst.setText(selectBean.getTime()+"收益权");
+                        tvSubPrice.setText(selectBean.getPrice());
+                        tvExpectedReturn.setText(selectBean.getExpect_price());
                         goToSubVm.month = selectBean.getMonths();
                     }else if (i == 1){
-                        rbSecond.setText(selectBean.getTime());
+                        rbSecond.setText(selectBean.getTime()+"收益权");
                     }else if (i == 2){
-                        rbThird.setText(selectBean.getTime());
+                        rbThird.setText(selectBean.getTime()+"收益权");
                     }
                 }
             }

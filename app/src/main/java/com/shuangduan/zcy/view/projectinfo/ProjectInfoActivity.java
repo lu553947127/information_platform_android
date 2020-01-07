@@ -99,7 +99,6 @@ public class ProjectInfoActivity extends BaseActivity {
         mMapView.onCreate(savedInstanceState);// 此方法必须重写
         getLocationPermission();
         projectInfoVm = ViewModelProviders.of(this).get(ProjectInfoVm.class);
-        LogUtils.e("onCreate");
     }
 
     //地图初始化
@@ -107,18 +106,11 @@ public class ProjectInfoActivity extends BaseActivity {
         if (aMap == null) {
             aMap = mMapView.getMap();
             setUpMap();
-            new Thread() {
-                @Override
-                public void run() {
-                    try {
-                        Thread.sleep(500);
-                        //直接设置不生效，做下延迟
-                        aMap.getUiSettings().setZoomControlsEnabled(false);//设置是否允许显示缩放按钮
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }.start();
+            try {
+                aMap.getUiSettings().setZoomControlsEnabled(false);//设置是否允许显示缩放按钮
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -126,8 +118,6 @@ public class ProjectInfoActivity extends BaseActivity {
     private void setUpMap() {
         //地图缩放级别
         double zoom = 14.190743;
-//        LatLng latLng = new LatLng(36.67648360228993,117.13573493840586);
-//        aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, (float) zoom));
         aMap.moveCamera(CameraUpdateFactory.zoomTo((float) zoom));
         aMap.setMyLocationEnabled(true);// 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
         aMap.getUiSettings().setMyLocationButtonEnabled(false);// 设置默认定位按钮是否显示
@@ -331,18 +321,12 @@ public class ProjectInfoActivity extends BaseActivity {
 
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        LogUtils.e("onStop");
-    }
 
     @Override
     protected void onResume() {
         //在activity执行onResume时执行mMapView.onResume ()，重新绘制加载地图
         if (mMapView != null) mMapView.onResume();
         super.onResume();
-        LogUtils.e("onResume");
     }
 
     @Override
@@ -357,12 +341,11 @@ public class ProjectInfoActivity extends BaseActivity {
         //在activity执行onSaveInstanceState时执行mMapView.onSaveInstanceState (outState)，保存地图当前的状态
         if (mMapView != null) mMapView.onSaveInstanceState(outState);
         super.onSaveInstanceState(outState);
-        LogUtils.e("onSaveInstanceState");
     }
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
-        LogUtils.e("initDataAndEvent");
+
     }
 
     //获取定位权限
@@ -385,7 +368,6 @@ public class ProjectInfoActivity extends BaseActivity {
                 showLocationDialog(integer);
             }
         });
-
     }
 
 
