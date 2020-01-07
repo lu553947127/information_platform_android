@@ -32,7 +32,6 @@ import butterknife.OnClick;
  */
 @SuppressLint("Registered")
 public class WebViewActivity extends BaseActivity {
-
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
     @BindView(R.id.toolbar)
@@ -53,15 +52,23 @@ public class WebViewActivity extends BaseActivity {
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
-        if (Objects.requireNonNull(getIntent().getStringExtra("register")).equals("privacy")){
-            tvBarTitle.setText(getString(R.string.register_privacy));
-            webViewUtils.loadUrl(RetrofitHelper.BASE_TEST_URL+ Common.AGREEMENT_PRIVACY);
-        }else if (Objects.requireNonNull(getIntent().getStringExtra("register")).equals("register")){
-            tvBarTitle.setText(getString(R.string.register_register));
-            webViewUtils.loadUrl(RetrofitHelper.BASE_TEST_URL+ Common.AGREEMENT_REGISTER);
-        }else if (Objects.requireNonNull(getIntent().getStringExtra("register")).equals("warrant")){
-            tvBarTitle.setText("认购协议");
-            webViewUtils.loadUrl(RetrofitHelper.BASE_TEST_URL+ Common.AGREEMENT_WARRANT);
+        switch (Objects.requireNonNull(getIntent().getStringExtra("register"))){
+            case "privacy":
+                tvBarTitle.setText(getString(R.string.register_privacy));
+                webViewUtils.loadUrl(RetrofitHelper.BASE_TEST_URL+ Common.AGREEMENT_PRIVACY,0);
+                break;
+            case "register":
+                tvBarTitle.setText(getString(R.string.register_register));
+                webViewUtils.loadUrl(RetrofitHelper.BASE_TEST_URL+ Common.AGREEMENT_REGISTER,0);
+                break;
+            case "warrant":
+                tvBarTitle.setText("认购协议");
+                webViewUtils.loadUrl(RetrofitHelper.BASE_TEST_URL+ Common.AGREEMENT_WARRANT,0);
+                break;
+            case "weather":
+                tvBarTitle.setText("天气详情");
+                webViewUtils.loadUrl(Common.WEATHER_H5,1);
+                break;
         }
     }
 

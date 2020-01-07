@@ -30,9 +30,11 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
+import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.CustomDialog;
@@ -118,16 +120,19 @@ public class ProjectInfoActivity extends BaseActivity {
     private void setUpMap() {
         //地图缩放级别
         double zoom = 14.190743;
-        aMap.moveCamera(CameraUpdateFactory.zoomTo((float) zoom));
+//        aMap.moveCamera(CameraUpdateFactory.zoomTo((float) zoom));
+        aMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Double.valueOf(SPUtils.getInstance().getString(SpConfig.LATITUDE)),Double.valueOf(SPUtils.getInstance().getString(SpConfig.LONGITUDE))), (float) zoom));
         aMap.setMyLocationEnabled(true);// 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
         aMap.getUiSettings().setMyLocationButtonEnabled(false);// 设置默认定位按钮是否显示
         aMap.getUiSettings().setRotateGesturesEnabled(false);//设置地图旋转手势
         aMap.getUiSettings().setTiltGesturesEnabled(false);//设置地图倾斜手势
         aMap.getUiSettings().setZoomPosition(AMapOptions.ZOOM_POSITION_RIGHT_BUTTOM);//设置放缩图标在右下
-        aMap.setOnMyLocationChangeListener(location -> {
-            LogUtils.i(location.getLongitude(), location.getLatitude());
-            projectInfoVm.mapList(location.getLongitude(), location.getLatitude());
-        });
+//        aMap.setOnMyLocationChangeListener(location -> {
+//            LogUtils.i(location.getLongitude(), location.getLatitude());
+//            projectInfoVm.mapList(location.getLongitude(), location.getLatitude());
+//        });
+
+        projectInfoVm.mapList(Double.valueOf(SPUtils.getInstance().getString(SpConfig.LONGITUDE)), Double.valueOf(SPUtils.getInstance().getString(SpConfig.LATITUDE)));
 
 //        //地图点击事件监听接口。当用户点击地图时回调此方法，如果点击在某个覆盖物（如marker、polyline）上，且处理了该点击事件，则不会回调此方法。
 //        aMap.setOnMapClickListener(poi -> {

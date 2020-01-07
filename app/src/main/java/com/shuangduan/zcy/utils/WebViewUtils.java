@@ -33,19 +33,12 @@ import com.shuangduan.zcy.R;
  * @Version: 1.0
  */
 public class WebViewUtils extends LinearLayout {
-
     private Context mContext = null;
     private WebView mWebView = null;
     private View mBrowserControllerView = null;
-    private ImageButton mGoBackBtn = null;
-    private ImageButton mGoForwardBtn = null;
-    private ImageButton mGoBrowserBtn = null;
-    private ImageButton mRefreshBtn = null;
-
-    private int mBarHeight = 5;
     private ProgressBar mProgressBar = null;
-
     private String mLoadUrl;
+    private int type;
 
     public WebViewUtils(Context context) {
         super(context);
@@ -65,6 +58,7 @@ public class WebViewUtils extends LinearLayout {
         mProgressBar = (ProgressBar) LayoutInflater.from(context).inflate(R.layout.progress_horizontal, null);
         mProgressBar.setMax(100);
         mProgressBar.setProgress(0);
+        int mBarHeight = 5;
         addView(mProgressBar, LayoutParams.MATCH_PARENT, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, mBarHeight, getResources().getDisplayMetrics()));
 
         mWebView = new WebView(context);
@@ -135,10 +129,10 @@ public class WebViewUtils extends LinearLayout {
         });
 
         mBrowserControllerView = LayoutInflater.from(context).inflate(R.layout.layout_web_view, null);
-        mGoBackBtn = mBrowserControllerView.findViewById(R.id.browser_controller_back);
-        mGoForwardBtn = mBrowserControllerView.findViewById(R.id.browser_controller_forward);
-        mGoBrowserBtn = mBrowserControllerView.findViewById(R.id.browser_controller_go);
-        mRefreshBtn = mBrowserControllerView.findViewById(R.id.browser_controller_refresh);
+        ImageButton mGoBackBtn = mBrowserControllerView.findViewById(R.id.browser_controller_back);
+        ImageButton mGoForwardBtn = mBrowserControllerView.findViewById(R.id.browser_controller_forward);
+        ImageButton mGoBrowserBtn = mBrowserControllerView.findViewById(R.id.browser_controller_go);
+        ImageButton mRefreshBtn = mBrowserControllerView.findViewById(R.id.browser_controller_refresh);
 
         mGoBackBtn.setOnClickListener(v -> {
             if (canGoBack()) {
@@ -169,9 +163,10 @@ public class WebViewUtils extends LinearLayout {
         addView(mBrowserControllerView, LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
     }
 
-    public void loadUrl(String url) {
+    public void loadUrl(String url,int type) {
         mWebView.loadUrl(url);
         mLoadUrl=url;
+        this.type=type;
     }
 
     public boolean canGoBack() {
@@ -199,7 +194,12 @@ public class WebViewUtils extends LinearLayout {
     }
 
     public void hideBrowserController() {
-        mBrowserControllerView.setVisibility(View.GONE);
+        //判断当前是否是天气页面
+        if (type==1){
+            mBrowserControllerView.setVisibility(View.VISIBLE);
+        }else {
+            mBrowserControllerView.setVisibility(View.GONE);
+        }
     }
 
     public void showBrowserController() {
@@ -209,5 +209,4 @@ public class WebViewUtils extends LinearLayout {
     public interface RefreshInterface{
         void refresh(String value);
     }
-
 }

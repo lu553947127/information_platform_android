@@ -5,9 +5,6 @@ import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.view.View;
 import android.view.ViewConfiguration;
-import android.view.animation.Animation;
-import android.view.animation.CycleInterpolator;
-import android.view.animation.TranslateAnimation;
 
 import com.shuangduan.zcy.R;
 
@@ -43,31 +40,6 @@ public class AnimationUtils {
         view.setClickable(false);
     }
 
-    //开启红包抖动动画
-    public static Animation getShakeAnimation() {
-        Animation animation =new TranslateAnimation(0,10,0,10);
-        animation.setInterpolator(new CycleInterpolator(5));
-        animation.setDuration(1500);
-        animation.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                animation.reset();
-                animation.start();
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
-        return animation;
-    }
-
     //晃动动画
     public static ObjectAnimator nope(View view) {
         int delta = view.getResources().getDimensionPixelOffset(R.dimen.spacing_medium);
@@ -81,7 +53,7 @@ public class AnimationUtils {
                 Keyframe.ofFloat(.90f, delta),
                 Keyframe.ofFloat(1f, 0f)
         );
-        return ObjectAnimator.ofPropertyValuesHolder(view, pvhTranslateX).setDuration(500);
+        return ObjectAnimator.ofPropertyValuesHolder(view, pvhTranslateX).setDuration(2000);
     }
 
     //红包晃动方法动画

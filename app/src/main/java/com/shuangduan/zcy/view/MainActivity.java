@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
@@ -35,11 +36,15 @@ import com.shuangduan.zcy.model.bean.SupplierRoleBean;
 import com.shuangduan.zcy.rongyun.fragment.CircleFragment;
 import com.shuangduan.zcy.utils.AnimationUtils;
 import com.shuangduan.zcy.utils.KeyboardUtil;
+import com.shuangduan.zcy.utils.LocationUtils;
 import com.shuangduan.zcy.utils.NotificationsUtils;
+import com.shuangduan.zcy.utils.PermissionUtils;
 import com.shuangduan.zcy.vm.HomeVm;
 import com.shuangduan.zcy.vm.IMAddVm;
 import com.shuangduan.zcy.vm.IMConnectVm;
+import com.shuangduan.zcy.vm.PermissionVm;
 import com.shuangduan.zcy.weight.NoScrollViewPager;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,6 +90,8 @@ public class MainActivity extends BaseActivity {
     private AnimatorRun animatorRun;
     private ObjectAnimator animator;
 
+    private PermissionVm permissionVm;
+
     @Override
     protected int initLayoutRes() {
         return R.layout.activity_main;
@@ -106,32 +113,53 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
 
+        handler = MyApplication.getMainThreadHandler();
         //初始化，融云链接服务器
         if (SPUtils.getInstance().getInt(SpConfig.INFO_STATUS) == 1) {
             IMConnectVm imConnectVm = ViewModelProviders.of(this).get(IMConnectVm.class);
             imConnectVm.connect(SPUtils.getInstance().getString(SpConfig.IM_TOKEN));
         }
-
         setJPushAlias();
         initBottomNavigation();
         getBadgeViewInitView();
-        handler = MyApplication.getMainThreadHandler();
-        homePageAddDialog = new HomePageAddDialog(this,handler);
-        animatorRun = new AnimatorRun();
-        //红包开启抖动动画
-        handler.postDelayed(animatorRun, 1500);
+        getHomeAddDialog();
+
+        permissionVm = ViewModelProviders.of(this).get(PermissionVm.class);
+        permissionVm.getLiveData().observe(this, integer -> {
+            if (integer == PermissionVm.PERMISSION_LOCATION){
+                LocationUtils.getInstance().startLocalService();
+            } else if (integer == PermissionVm.PERMISSION_NO_LOCATION) {
+                showLocationDialog(integer);
+            }
+        });
+        permissionVm.getPermissionLocation(new RxPermissions(this));
     }
 
-    class AnimatorRun implements Runnable {
-        @Override
-        public void run() {
-            try {
-                animator = AnimationUtils.tada(tvRemind);
-                animator.setRepeatCount(ValueAnimator.INFINITE);
-                animator.start();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+    private void showLocationDialog(int locationCode) {
+        new CustomDialog(this)
+                .setTip(locationCode == PermissionVm.PERMISSION_LOCATION ? "为了更好的为您服务，请您打开您的GPS!" : "为了更好的为您服务，请您开启您APP的定位权限！")
+                .setCallBack(new BaseDialog.CallBack() {
+                    @Override
+                    public void cancel() {
+                        finish();
+                    }
+
+                    @Override
+                    public void ok(String s) {
+                        if (locationCode == PermissionVm.PERMISSION_LOCATION) {
+                            PermissionUtils.openGPS(MainActivity.this);
+                        } else if (locationCode == PermissionVm.PERMISSION_NO_LOCATION) {
+                            PermissionUtils.openLocationPermission(MainActivity.this);
+                        }
+                    }
+                }).showDialog();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 0) {
+            permissionVm.getPermissionLocation(new RxPermissions(this));
         }
     }
 
@@ -207,6 +235,8 @@ public class MainActivity extends BaseActivity {
 
     @OnClick(R.id.btn_add)
     void onClick(){
+        tvRemind.setVisibility(View.GONE);
+        SPUtils.getInstance().put(SpConfig.HOME_FIRST_BUTTON, 1, true);
         homePageAddDialog.init(relative);
     }
 
@@ -365,6 +395,29 @@ public class MainActivity extends BaseActivity {
         }, 1000);
     }
 
+    //首页按钮初始化
+    private void getHomeAddDialog() {
+        homePageAddDialog = new HomePageAddDialog(this,handler);
+        animatorRun = new AnimatorRun();
+        //红包开启抖动动画
+        handler.postDelayed(animatorRun, 1500);
+        tvRemind.setVisibility(SPUtils.getInstance().getInt(SpConfig.HOME_FIRST_BUTTON) == 1 ? View.GONE : View.VISIBLE);
+    }
+
+    //动画
+    class AnimatorRun implements Runnable {
+        @Override
+        public void run() {
+            try {
+                animator = AnimationUtils.tada(tvRemind);
+                animator.setRepeatCount(ValueAnimator.INFINITE);
+                animator.start();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -382,5 +435,7 @@ public class MainActivity extends BaseActivity {
         if (animatorRun != null) {
             animatorRun = null;
         }
+
+        LocationUtils.getInstance().stopLocalService();
     }
 }

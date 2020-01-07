@@ -24,8 +24,8 @@ public class SpConfig {
     /*登录验签*/
     public static final String TOKEN = "token";
 
-    /*用户唯一标识*/
-    public static final String REFRESH_TOKEN = "refresh_token";
+    /*首页按钮点击标识*/
+    public static final String HOME_FIRST_BUTTON = "home_first_button";
 
     /*用户手机号*/
     public static final String MOBILE = "mobile";
@@ -51,11 +51,14 @@ public class SpConfig {
     /*用户头像*/
     public static final String AVATAR = "avatar";
 
-    /*用户性别*/
-    public static final String SEX = "sex";
+    /*天气*/
+    public static final String WEATHER = "weather";
 
-    /*用户简介*/
-    public static final String INTRODUCE = "introduce";
+    /*经度*/
+    public static final String LONGITUDE = "longitude";
+
+    /*纬度*/
+    public static final String LATITUDE = "latitude";
 
     /*是否实名认证（0未认证 1审核中 2认证成功 3认证失败 -1 无会员信息）*/
     public static final String IS_VERIFIED = "is_verified";

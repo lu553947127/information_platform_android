@@ -8,8 +8,13 @@ import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
@@ -21,15 +26,25 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.R;
+import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.utils.PhoneUtils;
+import com.shuangduan.zcy.view.WebViewActivity;
+import com.shuangduan.zcy.view.design.SmartDesignActivity;
+import com.shuangduan.zcy.weight.RenderScriptGaussianBlur;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * @ProjectName: information_platform_android
  * @Package: com.shuangduan.zcy.dialog
  * @ClassName: HomePageAddDialog
- * @Description: java类作用描述
+ * @Description: 首页各种找弹窗
  * @Author: 鹿鸿祥
  * @CreateDate: 2020/1/6 10:07
  * @UpdateUser: 鹿鸿祥
@@ -38,7 +53,6 @@ import com.shuangduan.zcy.utils.PhoneUtils;
  * @Version: 1.0
  */
 public class HomePageAddDialog extends PopupWindow implements View.OnClickListener  {
-
     private Activity mContext;
     private RelativeLayout relativeLayout;
     private ImageView ivClose;
@@ -54,7 +68,6 @@ public class HomePageAddDialog extends PopupWindow implements View.OnClickListen
 
     /**
      * 初始化
-     *
      * @param view 要显示的模糊背景View,一般选择跟布局layout
      */
     @SuppressLint("InflateParams")
@@ -62,6 +75,8 @@ public class HomePageAddDialog extends PopupWindow implements View.OnClickListen
         getStatusBarHeight();
         relativeLayout = (RelativeLayout) LayoutInflater.from(mContext).inflate(R.layout.dialog_home_page_add, null);
         setContentView(relativeLayout);
+        //设置毛玻璃背景
+        setBackgroundDrawable(new BitmapDrawable(mContext.getResources(), blur()));
         findView(relativeLayout);
         setOutsideTouchable(true);
         setFocusable(true);
@@ -90,11 +105,37 @@ public class HomePageAddDialog extends PopupWindow implements View.OnClickListen
     }
 
     //初始化
+    @SuppressLint("SimpleDateFormat")
     private void findView(RelativeLayout layout) {
         ivClose =layout.findViewById(R.id.iv_close);
         view = layout.findViewById(R.id.rl);
+        TextView tv_day = layout.findViewById(R.id.window_add_tv_day);
+        TextView tv_week = layout.findViewById(R.id.window_add_tv_week);
+        TextView tv_month = layout.findViewById(R.id.window_add_tv_month);
+        TextView tv_weather = layout.findViewById(R.id.tv_weather);
+        tv_weather.setOnClickListener(this);
         ivClose.setOnClickListener(this);
-        view.getBackground().setAlpha(250);
+        layout.findViewById(R.id.window_home_add_ll_a).setOnClickListener(this);
+        layout.findViewById(R.id.window_home_add_ll_b).setOnClickListener(this);
+        layout.findViewById(R.id.window_home_add_ll_c).setOnClickListener(this);
+        layout.findViewById(R.id.window_home_add_ll_d).setOnClickListener(this);
+        //设置时间
+        long time_day=System.currentTimeMillis();
+        Date date_day=new Date(time_day);
+        SimpleDateFormat format_day=new SimpleDateFormat("dd");
+        tv_day.setText(format_day.format(date_day));
+
+        long time=System.currentTimeMillis();
+        Date date=new Date(time);
+        SimpleDateFormat format=new SimpleDateFormat("E");
+        tv_week.setText(format.format(date));
+
+        long time_month=System.currentTimeMillis();
+        Date date_month=new Date(time_month);
+        SimpleDateFormat format_month=new SimpleDateFormat("MM/yyyy");
+        tv_month.setText(format_month.format(date_month));
+
+        tv_weather.setText(SPUtils.getInstance().getString(SpConfig.WEATHER));
     }
 
    //显示window动画
@@ -186,14 +227,27 @@ public class HomePageAddDialog extends PopupWindow implements View.OnClickListen
         if (isShowing()) {
             closeAnimation();
         }
+        Bundle bundle = new Bundle();
         switch (v.getId()) {
             case R.id.iv_close://关闭按钮
                 if (isShowing()) {
                     closeAnimation();
                 }
                 break;
+            case R.id.window_home_add_ll_a://智能设计
+                ActivityUtils.startActivity(SmartDesignActivity.class);
+                break;
+            case R.id.window_home_add_ll_b://找基地
+                break;
+            case R.id.window_home_add_ll_c://找物流
+                break;
+            case R.id.window_home_add_ll_d://找方案
+                break;
+            case R.id.tv_weather://天气详情
+                bundle.putString("register", "weather");
+                ActivityUtils.startActivity(bundle, WebViewActivity.class);
+                break;
         }
-
     }
 
     private float fromDpToPx() {
@@ -211,15 +265,39 @@ public class HomePageAddDialog extends PopupWindow implements View.OnClickListen
 
         public Float evaluate(float fraction, Float startValue, Float endValue) {
             float t = mDuration * fraction;
-            float b = startValue.floatValue();
-            float c = endValue.floatValue() - startValue.floatValue();
+            float b = startValue;
+            float c = endValue - startValue;
             float d = mDuration;
-            float result = calculate(t, b, c, d);
-            return result;
+            return calculate(t, b, c, d);
         }
 
-        public Float calculate(float t, float b, float c, float d) {
+        Float calculate(float t, float b, float c, float d) {
             return c * ((t = t / d - 1) * t * ((s + 1) * t + s) + 1) + b;
         }
+    }
+
+    //高斯毛玻璃背景设置
+    private Bitmap blur() {
+        Bitmap overlay = null;
+
+        View view = mContext.getWindow().getDecorView();
+        view.setDrawingCacheEnabled(true);
+        view.buildDrawingCache(true);
+        Bitmap mBitmap = view.getDrawingCache();
+
+        float scaleFactor = 8;//图片缩放比例
+        float radius = 25;//模糊程度
+        int width = mBitmap.getWidth();
+        int height = mBitmap.getHeight();
+
+        overlay = Bitmap.createBitmap((int) (width / scaleFactor), (int) (height / scaleFactor), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(overlay);
+        canvas.scale(1 / scaleFactor, 1 / scaleFactor);
+        Paint paint = new Paint();
+        paint.setFlags(Paint.FILTER_BITMAP_FLAG);
+        canvas.drawBitmap(mBitmap, 0, 0, paint);
+
+        overlay = RenderScriptGaussianBlur.doBlur(overlay, (int) radius, true);
+        return overlay;
     }
 }

@@ -14,4 +14,10 @@ public class Common {
     public static final String WECHAT_LOGIN="https://api.weixin.qq.com/sns/oauth2/access_token";
     //获取微信用户的信息详情
     public static final String WECHAT_LOGIN_USER_INFO="https://api.weixin.qq.com/sns/userinfo";
+    //高德地图web KEY
+    public static final String AMAP_WEB_KEY="f1a1081b9d775e772749d2c5f3e691e9";
+    //高德地图天气请求api
+    public static final String WEATHER_INFO="https://restapi.amap.com/v3/weather/weatherInfo";
+    //天气预报 请求h5标签
+    public static final String WEATHER_H5="https://apip.weatherdt.com/h5.html?id=jczA7zmFOH";
 }
