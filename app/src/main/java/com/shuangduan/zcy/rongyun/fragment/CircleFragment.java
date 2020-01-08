@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
@@ -98,6 +99,7 @@ public class CircleFragment extends BaseFragment {
     private IMAddVm imAddVm;
     private HomeVm homeVm;
     private NoScrollViewPager viewPager;
+    BottomNavigationView navigation;
     private int manage_status,order_turnover,order_device;
 
     public static CircleFragment newInstance() {
@@ -122,6 +124,7 @@ public class CircleFragment extends BaseFragment {
     protected void initDataAndEvent(Bundle savedInstanceState,View view) {
 
         viewPager= Objects.requireNonNull(getActivity()).findViewById(R.id.view_pager);
+        navigation= Objects.requireNonNull(getActivity()).findViewById(R.id.navigation);
 
         FragmentManager fragmentManage = getChildFragmentManager();
         ConversationListFragment conversationListFragment = (ConversationListFragment) fragmentManage.findFragmentById(R.id.conversationlist);
@@ -320,7 +323,8 @@ public class CircleFragment extends BaseFragment {
         Bundle bundle = new Bundle();
         switch (view.getId()){
             case R.id.iv_header://左侧头像
-                viewPager.setCurrentItem(3);
+                viewPager.setCurrentItem(4);
+                navigation.getMenu().getItem(4).setChecked(true);
                 break;
             case R.id.rl_subscribe_children://普通用户订阅信息
             case R.id.rl_subscribe_group://集团用户订阅信息

@@ -32,7 +32,6 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.SpConfig;
-import com.shuangduan.zcy.utils.PhoneUtils;
 import com.shuangduan.zcy.view.WebViewActivity;
 import com.shuangduan.zcy.view.demand.FindFoundationActivity;
 import com.shuangduan.zcy.view.demand.FindLogisticsActivity;

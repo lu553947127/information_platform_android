@@ -108,18 +108,18 @@ public class SupplierDetailActivity extends BaseActivity {
             if (supplierDetailBean.getImages_json()!=null){
                 if (supplierDetailBean.getImages_json().size() >= 1){
                     ivOne.setVisibility(View.VISIBLE);
-                    ImageLoader.load(this, new ImageConfig.Builder().url(supplierDetailBean.getImages_json().get(0).getThumbnail()).placeholder(R.drawable.default_pic).errorPic(R.drawable.default_pic).imageView(ivOne).build());
+                    ImageLoader.load(this, new ImageConfig.Builder().url(supplierDetailBean.getImages_json().get(0).getThumbnail()).placeholder(R.drawable.no_banner).errorPic(R.drawable.no_banner).imageView(ivOne).build());
                 }
                 if (supplierDetailBean.getImages_json().size() >= 2){
                     ivTwo.setVisibility(View.VISIBLE);
-                    ImageLoader.load(this, new ImageConfig.Builder().url(supplierDetailBean.getImages_json().get(1).getThumbnail()).placeholder(R.drawable.default_pic).errorPic(R.drawable.default_pic).imageView(ivTwo).build());
+                    ImageLoader.load(this, new ImageConfig.Builder().url(supplierDetailBean.getImages_json().get(1).getThumbnail()).placeholder(R.drawable.no_banner).errorPic(R.drawable.no_banner).imageView(ivTwo).build());
                 }
                 if (supplierDetailBean.getImages_json().size() >= 3){
                     ivThree.setVisibility(View.VISIBLE);
-                    ImageLoader.load(this, new ImageConfig.Builder().url(supplierDetailBean.getImages_json().get(2).getThumbnail()).placeholder(R.drawable.default_pic).errorPic(R.drawable.default_pic).imageView(ivThree).build());
+                    ImageLoader.load(this, new ImageConfig.Builder().url(supplierDetailBean.getImages_json().get(2).getThumbnail()).placeholder(R.drawable.no_banner).errorPic(R.drawable.no_banner).imageView(ivThree).build());
                 }
             }
-            ImageLoader.load(this, new ImageConfig.Builder().url(supplierDetailBean.getAuthorization()).placeholder(R.drawable.default_pic).errorPic(R.drawable.default_pic).imageView(ivAuthorization).build());
+            ImageLoader.load(this, new ImageConfig.Builder().url(supplierDetailBean.getAuthorization()).placeholder(R.drawable.no_banner).errorPic(R.drawable.no_banner).imageView(ivAuthorization).build());
         });
         supplierVm.pageStateLiveData.observe(this, s -> {
             switch (s){

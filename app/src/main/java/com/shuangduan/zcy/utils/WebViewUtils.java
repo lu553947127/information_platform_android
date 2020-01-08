@@ -194,16 +194,16 @@ public class WebViewUtils extends LinearLayout {
     }
 
     public void hideBrowserController() {
+        mBrowserControllerView.setVisibility(View.GONE);
+    }
+
+    public void showBrowserController() {
         //判断当前是否是天气页面
         if (type==1){
             mBrowserControllerView.setVisibility(View.VISIBLE);
         }else {
             mBrowserControllerView.setVisibility(View.GONE);
         }
-    }
-
-    public void showBrowserController() {
-        mBrowserControllerView.setVisibility(View.GONE);
     }
 
     public interface RefreshInterface{
