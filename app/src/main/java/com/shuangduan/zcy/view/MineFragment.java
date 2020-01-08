@@ -19,6 +19,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.R;
+import com.shuangduan.zcy.adminManage.view.AdminManageActivity;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.MyApplication;
 import com.shuangduan.zcy.app.SpConfig;
@@ -31,22 +32,20 @@ import com.shuangduan.zcy.utils.AnimationUtils;
 import com.shuangduan.zcy.utils.DensityUtil;
 import com.shuangduan.zcy.utils.image.ImageConfig;
 import com.shuangduan.zcy.utils.image.ImageLoader;
-import com.shuangduan.zcy.adminManage.view.AdminManageActivity;
-import com.shuangduan.zcy.view.design.SmartDesignActivity;
 import com.shuangduan.zcy.view.design.SmartDesignOrderActivity;
-import com.shuangduan.zcy.view.mine.user.AuthenticationActivity;
-import com.shuangduan.zcy.view.mine.wallet.MineWalletActivity;
-import com.shuangduan.zcy.view.mine.HelperActivity;
-import com.shuangduan.zcy.view.mine.material.MaterialOrderActivity;
-import com.shuangduan.zcy.view.mine.collection.MineCollectionActivity;
 import com.shuangduan.zcy.view.income.MineIncomeActivity;
-import com.shuangduan.zcy.view.mine.demand.MineDemandActivity;
-import com.shuangduan.zcy.view.mine.history.ViewRecordActivity;
+import com.shuangduan.zcy.view.mine.HelperActivity;
 import com.shuangduan.zcy.view.mine.InformationSubActivity;
 import com.shuangduan.zcy.view.mine.RecommendFriendsActivity;
-import com.shuangduan.zcy.view.mine.set.SetActivity;
-import com.shuangduan.zcy.view.mine.user.UserInfoActivity;
+import com.shuangduan.zcy.view.mine.collection.MineCollectionActivity;
+import com.shuangduan.zcy.view.mine.demand.MineDemandActivity;
+import com.shuangduan.zcy.view.mine.history.ViewRecordActivity;
+import com.shuangduan.zcy.view.mine.material.MaterialOrderActivity;
 import com.shuangduan.zcy.view.mine.project.MineProjectActivity;
+import com.shuangduan.zcy.view.mine.set.SetActivity;
+import com.shuangduan.zcy.view.mine.user.AuthenticationActivity;
+import com.shuangduan.zcy.view.mine.user.UserInfoActivity;
+import com.shuangduan.zcy.view.mine.wallet.MineWalletActivity;
 import com.shuangduan.zcy.vm.HomeVm;
 import com.shuangduan.zcy.vm.UserInfoVm;
 import com.shuangduan.zcy.weight.AdaptationScrollView;
@@ -202,7 +201,7 @@ public class MineFragment extends BaseFragment {
 
     @OnClick({R.id.iv_help_top, R.id.iv_help, R.id.iv_set_top, R.id.iv_set, R.id.cl_user, R.id.tv_authentication, R.id.tv_wallet, R.id.rl_recommend_friends,
             R.id.tv_income, R.id.tv_mine_subscription, R.id.tv_read_history, R.id.tv_my_project, R.id.tv_my_demand,
-            R.id.tv_my_collection, R.id.tv_my_material, R.id.tv_turnover_material, R.id.tv_device_management, R.id.tv_order_management})
+            R.id.tv_my_collection, R.id.tv_my_material,R.id.tv_my_design, R.id.tv_turnover_material, R.id.tv_device_management, R.id.tv_order_management})
     void onClick(View view) {
         Bundle bundle = new Bundle();
         switch (view.getId()) {
@@ -249,6 +248,9 @@ public class MineFragment extends BaseFragment {
                 break;
             case R.id.tv_my_material: //预定订单
                 ActivityUtils.startActivity(MaterialOrderActivity.class);
+                break;
+            case R.id.tv_my_design://设计订单
+                ActivityUtils.startActivity(SmartDesignOrderActivity.class);
                 break;
             case R.id.tv_turnover_material://周转材料
                 bundle.putInt(CustomConfig.IS_ADMIN_MANAGE, 1);

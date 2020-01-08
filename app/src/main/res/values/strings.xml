@@ -70,8 +70,12 @@
     <string name="my_demand_zgx">我的需求 — 找资源</string>
     <string name="my_demand_zwz">我的需求 — 找物资</string>
     <string name="my_demand_zmj">我的需求 — 找买家</string>
+    <string name="my_demand_zjd">我的需求 — 找基地</string>
+    <string name="my_demand_zwl">我的需求 — 找物流</string>
+    <string name="my_demand_ztz">我的需求 — 找图纸</string>
     <string name="mine_subscription">信息认购</string>
     <string name="my_material">预定订单</string>
+    <string name="my_design">设计订单</string>
     <string name="transaction_record">交易记录</string>
     <string name="pwd_pay">支付密码</string>
     <string name="read_history">查看记录</string>
@@ -771,6 +775,7 @@
     <!--   发布需求 -->
     <string name="find_logistics">找物流</string>
     <string name="find_foundation">找基地</string>
+    <string name="find_drawing">找图纸</string>
     <string name="find_send_address">发货地点</string>
     <string name="find_receive_address">接收地点</string>
     <string name="find_receive_time">最晚接收时间</string>

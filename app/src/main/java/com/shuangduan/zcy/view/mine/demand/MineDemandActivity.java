@@ -65,12 +65,24 @@ public class MineDemandActivity extends BaseActivity {
             case 2:
                 tvBarTitle.setText(getString(R.string.my_demand_zmj));
                 break;
+            case 3:
+                tvBarTitle.setText(getString(R.string.my_demand_zjd));
+                break;
+            case 4:
+                tvBarTitle.setText(getString(R.string.my_demand_zwl));
+                break;
+            case 5:
+                tvBarTitle.setText(getString(R.string.my_demand_ztz));
+                break;
         }
 
         Fragment[] fragments = new Fragment[]{
                 FindMineRelationshipFragment.newInstance(),
                 FindMineSubstanceFragment.newInstance(),
-                FindMineBuyerFragment.newInstance()
+                FindMineBuyerFragment.newInstance(),
+                FindMineBaseFragment.newInstance(),
+                FindMineLogisticsFragment.newInstance(),
+                FindMineDrawingFragment.newInstance()
         };
         vp.setOffscreenPageLimit(2);
         vp.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), fragments, null));
@@ -88,17 +100,23 @@ public class MineDemandActivity extends BaseActivity {
                     popupWindow = new CommonPopupWindow.Builder(this)
                             .setView(R.layout.dialog_filter_demand)
                             .setOutsideTouchable(true)
-                            .setWidthAndHeight(ConvertUtils.dp2px(82), ConvertUtils.dp2px(104))
+                            .setWidthAndHeight(ConvertUtils.dp2px(82), ConvertUtils.dp2px(174))
                             .setViewOnclickListener((view, layoutResId) -> {
                                 TextView tvFindRelationship = view.findViewById(R.id.tv_find_relationship);
                                 TextView tvFindSubstance = view.findViewById(R.id.tv_find_substance);
                                 TextView tvFindBuyer = view.findViewById(R.id.tv_find_buyer);
+                                TextView tvFindBase = view.findViewById(R.id.tv_find_base);
+                                TextView tvFindLogistics = view.findViewById(R.id.tv_find_logistics);
+                                TextView tvFindDrawing = view.findViewById(R.id.tv_find_drawing);
                                 //初始颜色
                                 tvFindRelationship.setTextColor(getResources().getColor(R.color.colorPrimary));
                                 tvFindRelationship.setOnClickListener(l ->{
                                     tvFindRelationship.setTextColor(getResources().getColor(R.color.colorPrimary));
                                     tvFindSubstance.setTextColor(getResources().getColor(R.color.color_666666));
                                     tvFindBuyer.setTextColor(getResources().getColor(R.color.color_666666));
+                                    tvFindBase.setTextColor(getResources().getColor(R.color.color_666666));
+                                    tvFindLogistics.setTextColor(getResources().getColor(R.color.color_666666));
+                                    tvFindDrawing.setTextColor(getResources().getColor(R.color.color_666666));
                                     vp.setCurrentItem(0);
                                     tvBarTitle.setText(getString(R.string.my_demand_zgx));
                                     popupWindow.dismiss();
@@ -107,6 +125,9 @@ public class MineDemandActivity extends BaseActivity {
                                     tvFindRelationship.setTextColor(getResources().getColor(R.color.color_666666));
                                     tvFindSubstance.setTextColor(getResources().getColor(R.color.colorPrimary));
                                     tvFindBuyer.setTextColor(getResources().getColor(R.color.color_666666));
+                                    tvFindBase.setTextColor(getResources().getColor(R.color.color_666666));
+                                    tvFindLogistics.setTextColor(getResources().getColor(R.color.color_666666));
+                                    tvFindDrawing.setTextColor(getResources().getColor(R.color.color_666666));
                                     vp.setCurrentItem(1);
                                     tvBarTitle.setText(getString(R.string.my_demand_zwz));
                                     popupWindow.dismiss();
@@ -115,8 +136,44 @@ public class MineDemandActivity extends BaseActivity {
                                     tvFindRelationship.setTextColor(getResources().getColor(R.color.color_666666));
                                     tvFindSubstance.setTextColor(getResources().getColor(R.color.color_666666));
                                     tvFindBuyer.setTextColor(getResources().getColor(R.color.colorPrimary));
+                                    tvFindBase.setTextColor(getResources().getColor(R.color.color_666666));
+                                    tvFindLogistics.setTextColor(getResources().getColor(R.color.color_666666));
+                                    tvFindDrawing.setTextColor(getResources().getColor(R.color.color_666666));
                                     vp.setCurrentItem(2);
                                     tvBarTitle.setText(getString(R.string.my_demand_zmj));
+                                    popupWindow.dismiss();
+                                });
+                                tvFindBase.setOnClickListener(view1 -> {
+                                    tvFindRelationship.setTextColor(getResources().getColor(R.color.color_666666));
+                                    tvFindSubstance.setTextColor(getResources().getColor(R.color.color_666666));
+                                    tvFindBuyer.setTextColor(getResources().getColor(R.color.color_666666));
+                                    tvFindBase.setTextColor(getResources().getColor(R.color.colorPrimary));
+                                    tvFindLogistics.setTextColor(getResources().getColor(R.color.color_666666));
+                                    tvFindDrawing.setTextColor(getResources().getColor(R.color.color_666666));
+                                    vp.setCurrentItem(3);
+                                    tvBarTitle.setText(getString(R.string.my_demand_zjd));
+                                    popupWindow.dismiss();
+                                });
+                                tvFindLogistics.setOnClickListener(view12 -> {
+                                    tvFindRelationship.setTextColor(getResources().getColor(R.color.color_666666));
+                                    tvFindSubstance.setTextColor(getResources().getColor(R.color.color_666666));
+                                    tvFindBuyer.setTextColor(getResources().getColor(R.color.color_666666));
+                                    tvFindBase.setTextColor(getResources().getColor(R.color.color_666666));
+                                    tvFindLogistics.setTextColor(getResources().getColor(R.color.colorPrimary));
+                                    tvFindDrawing.setTextColor(getResources().getColor(R.color.color_666666));
+                                    vp.setCurrentItem(4);
+                                    tvBarTitle.setText(getString(R.string.my_demand_zwl));
+                                    popupWindow.dismiss();
+                                });
+                                tvFindDrawing.setOnClickListener(view13 -> {
+                                    tvFindRelationship.setTextColor(getResources().getColor(R.color.color_666666));
+                                    tvFindSubstance.setTextColor(getResources().getColor(R.color.color_666666));
+                                    tvFindBuyer.setTextColor(getResources().getColor(R.color.color_666666));
+                                    tvFindBase.setTextColor(getResources().getColor(R.color.color_666666));
+                                    tvFindLogistics.setTextColor(getResources().getColor(R.color.color_666666));
+                                    tvFindDrawing.setTextColor(getResources().getColor(R.color.colorPrimary));
+                                    vp.setCurrentItem(5);
+                                    tvBarTitle.setText(getString(R.string.my_demand_ztz));
                                     popupWindow.dismiss();
                                 });
                             })

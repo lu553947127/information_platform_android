@@ -309,20 +309,50 @@
                 android:textSize="15sp"
                 android:textColor="@color/color_313134"
                 android:text="@string/material_services"/>
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_my_material"
-                android:layout_width="wrap_content"
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/selector_bg_custom"
-                android:drawableTop="@drawable/icon_my_material"
-                android:padding="15dp"
-                android:drawablePadding="8dp"
+                android:orientation="horizontal"
                 android:layout_marginTop="16dp"
-                android:layout_marginLeft="30dp"
-                android:gravity="center"
-                android:textSize="13sp"
-                android:textColor="@color/color_4A4A4A"
-                android:text="@string/my_material"/>
+                android:layout_marginLeft="10dp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_my_material"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/selector_bg_custom"
+                    android:drawableTop="@drawable/icon_my_material"
+                    android:padding="15dp"
+                    android:drawablePadding="8dp"
+                    android:gravity="center"
+                    android:textSize="13sp"
+                    android:textColor="@color/color_4A4A4A"
+                    android:text="@string/my_material"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_my_design"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/selector_bg_custom"
+                    android:drawableTop="@drawable/icon_my_design"
+                    android:padding="15dp"
+                    android:drawablePadding="8dp"
+                    android:gravity="center"
+                    android:textSize="13sp"
+                    android:textColor="@color/color_4A4A4A"
+                    android:text="@string/my_design"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:visibility="invisible"/>
+
+            </LinearLayout>
+
 
             <!--后台管理-->
             <LinearLayout

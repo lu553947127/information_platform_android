@@ -1,61 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="82dp"
-    android:layout_height="104dp"
+    android:layout_height="174dp"
     android:background="@drawable/bg_bubble">
 
     <TextView
         android:id="@+id/tv_find_relationship"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_weight="1"
         android:gravity="center"
         android:background="@drawable/selector_bg_custom"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/line1"
         android:textColor="@color/color_666666"
         android:textSize="12sp"
         android:text="@string/find_relationship"/>
 
     <View
-        android:id="@+id/line1"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/colorDivider"
-        app:layout_constraintTop_toBottomOf="@+id/tv_find_relationship"
-        app:layout_constraintBottom_toTopOf="@+id/tv_find_substance"/>
+        android:background="@color/colorDivider" />
 
     <TextView
         android:id="@+id/tv_find_substance"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_weight="1"
         android:gravity="center"
         android:background="@drawable/selector_bg_custom"
-        app:layout_constraintTop_toBottomOf="@+id/line1"
-        app:layout_constraintBottom_toTopOf="@+id/line2"
         android:textColor="@color/color_666666"
         android:textSize="12sp"
         android:text="@string/find_substance"/>
 
     <View
-        android:id="@+id/line2"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/colorDivider"
-        app:layout_constraintTop_toBottomOf="@+id/tv_find_substance"
-        app:layout_constraintBottom_toTopOf="@+id/tv_find_buyer"/>
+        android:background="@color/colorDivider" />
 
     <TextView
         android:id="@+id/tv_find_buyer"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_weight="1"
         android:gravity="center"
         android:background="@drawable/selector_bg_custom"
-        app:layout_constraintTop_toBottomOf="@+id/line2"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:textColor="@color/color_666666"
         android:textSize="12sp"
         android:text="@string/find_buyer"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorDivider" />
+
+    <TextView
+        android:id="@+id/tv_find_base"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:background="@drawable/selector_bg_custom"
+        android:textColor="@color/color_666666"
+        android:textSize="12sp"
+        android:text="@string/find_foundation"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorDivider" />
+
+    <TextView
+        android:id="@+id/tv_find_logistics"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:background="@drawable/selector_bg_custom"
+        android:textColor="@color/color_666666"
+        android:textSize="12sp"
+        android:text="@string/find_logistics"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorDivider" />
+
+    <TextView
+        android:id="@+id/tv_find_drawing"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:background="@drawable/selector_bg_custom"
+        android:textColor="@color/color_666666"
+        android:textSize="12sp"
+        android:text="@string/find_drawing"/>
+
+</LinearLayout>
