@@ -33,6 +33,7 @@ import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.view.WebViewActivity;
+import com.shuangduan.zcy.view.demand.FindBluePrintActivity;
 import com.shuangduan.zcy.view.demand.FindFoundationActivity;
 import com.shuangduan.zcy.view.demand.FindLogisticsActivity;
 import com.shuangduan.zcy.view.design.SmartDesignActivity;
@@ -53,7 +54,7 @@ import java.util.Date;
  * @UpdateRemark: 更新说明
  * @Version: 1.0
  */
-public class HomePageAddDialog extends PopupWindow implements View.OnClickListener  {
+public class HomePageAddDialog extends PopupWindow implements View.OnClickListener {
     private Activity mContext;
     private RelativeLayout relativeLayout;
     private ImageView ivClose;
@@ -64,13 +65,14 @@ public class HomePageAddDialog extends PopupWindow implements View.OnClickListen
 
     private int statusBarHeight;
 
-    public HomePageAddDialog(Activity context,Handler mHandler) {
+    public HomePageAddDialog(Activity context, Handler mHandler) {
         this.mContext = context;
         this.mHandler = mHandler;
     }
 
     /**
      * 初始化
+     *
      * @param view 要显示的模糊背景View,一般选择跟布局layout
      */
     @SuppressLint("InflateParams")
@@ -91,7 +93,7 @@ public class HomePageAddDialog extends PopupWindow implements View.OnClickListen
     //初始化
     @SuppressLint("SimpleDateFormat")
     private void findView(RelativeLayout layout) {
-        ivClose =layout.findViewById(R.id.iv_close);
+        ivClose = layout.findViewById(R.id.iv_close);
         view = layout.findViewById(R.id.rl);
         TextView tv_day = layout.findViewById(R.id.window_add_tv_day);
         TextView tv_week = layout.findViewById(R.id.window_add_tv_week);
@@ -104,19 +106,19 @@ public class HomePageAddDialog extends PopupWindow implements View.OnClickListen
         layout.findViewById(R.id.window_home_add_ll_c).setOnClickListener(this);
         layout.findViewById(R.id.window_home_add_ll_d).setOnClickListener(this);
         //设置时间
-        long time_day=System.currentTimeMillis();
-        Date date_day=new Date(time_day);
-        SimpleDateFormat format_day=new SimpleDateFormat("dd");
+        long time_day = System.currentTimeMillis();
+        Date date_day = new Date(time_day);
+        SimpleDateFormat format_day = new SimpleDateFormat("dd");
         tv_day.setText(format_day.format(date_day));
 
-        long time=System.currentTimeMillis();
-        Date date=new Date(time);
-        SimpleDateFormat format=new SimpleDateFormat("E");
+        long time = System.currentTimeMillis();
+        Date date = new Date(time);
+        SimpleDateFormat format = new SimpleDateFormat("E");
         tv_week.setText(format.format(date));
 
-        long time_month=System.currentTimeMillis();
-        Date date_month=new Date(time_month);
-        SimpleDateFormat format_month=new SimpleDateFormat("MM/yyyy");
+        long time_month = System.currentTimeMillis();
+        Date date_month = new Date(time_month);
+        SimpleDateFormat format_month = new SimpleDateFormat("MM/yyyy");
         tv_month.setText(format_month.format(date_month));
 
         tv_weather.setText(SPUtils.getInstance().getString(SpConfig.WEATHER));
@@ -136,7 +138,7 @@ public class HomePageAddDialog extends PopupWindow implements View.OnClickListen
         switch (name) {
             case "HUAWEI":
                 view.setBackgroundResource(0);
-                mHeight = metrics.heightPixels+ mContext.getResources().getDimensionPixelSize(R.dimen.dp_55);
+                mHeight = metrics.heightPixels + mContext.getResources().getDimensionPixelSize(R.dimen.dp_55);
                 //设置毛玻璃背景
                 setBackgroundDrawable(new BitmapDrawable(mContext.getResources(), blur()));
                 break;
@@ -177,12 +179,12 @@ public class HomePageAddDialog extends PopupWindow implements View.OnClickListen
                 //设置毛玻璃背景
                 setBackgroundDrawable(new BitmapDrawable(mContext.getResources(), blur()));
                 break;
-            case"OnePlus":
+            case "OnePlus":
                 view.setBackgroundResource(0);
                 //设置毛玻璃背景
                 setBackgroundDrawable(new BitmapDrawable(mContext.getResources(), blur()));
                 break;
-            case"Google":
+            case "Google":
                 view.setBackgroundResource(0);
                 //设置毛玻璃背景
                 setBackgroundDrawable(new BitmapDrawable(mContext.getResources(), blur()));
@@ -198,8 +200,8 @@ public class HomePageAddDialog extends PopupWindow implements View.OnClickListen
         setHeight(mHeight);
     }
 
-   //显示window动画
-   private void showMoreWindow(View anchor) {
+    //显示window动画
+    private void showMoreWindow(View anchor) {
         showAtLocation(anchor, Gravity.TOP | Gravity.START, 0, 0);
         mHandler.post(() -> {
             try {
@@ -281,7 +283,7 @@ public class HomePageAddDialog extends PopupWindow implements View.OnClickListen
         }
     }
 
-   //点击事件处理
+    //点击事件处理
     @Override
     public void onClick(View v) {
         if (isShowing()) {
@@ -304,6 +306,7 @@ public class HomePageAddDialog extends PopupWindow implements View.OnClickListen
                 ActivityUtils.startActivity(FindLogisticsActivity.class);
                 break;
             case R.id.window_home_add_ll_d://找方案
+                ActivityUtils.startActivity(FindBluePrintActivity.class);
                 break;
             case R.id.tv_weather://天气详情
                 bundle.putString("register", "weather");

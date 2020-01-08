@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Objects;
 
@@ -37,12 +38,12 @@ public class DateUtils {
 
     /**
      * 获取两个日期之间的间隔天数
-    `* @return 
+     * `* @return 
      */
     @SuppressLint("SimpleDateFormat")
     public static int getGapCount(String startDate, String endDate) {
         try {
-             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             GregorianCalendar cal1 = new GregorianCalendar();
             GregorianCalendar cal2 = new GregorianCalendar();
             cal1.setTime(Objects.requireNonNull(sdf.parse(startDate)));
@@ -52,5 +53,22 @@ public class DateUtils {
             e.printStackTrace();
         }
         return 0;
+    }
+
+    public static String getTodayDate(Calendar calendar) {
+        //设置时间为今天
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        return DateUtils.formatTime(year, month, day);
+    }
+
+    public static String getTodayDate() {
+        //设置时间为今天
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        return DateUtils.formatTime(year, month, day);
     }
 }

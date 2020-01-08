@@ -775,7 +775,7 @@
     <!--   发布需求 -->
     <string name="find_logistics">找物流</string>
     <string name="find_foundation">找基地</string>
-    <string name="find_drawing">找图纸</string>
+    <string name="find_blue_print">找方案</string>
     <string name="find_send_address">发货地点</string>
     <string name="find_receive_address">接收地点</string>
     <string name="find_receive_time">最晚接收时间</string>
@@ -789,6 +789,13 @@
     <string name="find_need_address">需要地点</string>
     <string name="find_distance">可接收距离</string>
     <string name="find_restructuring">是否需要改制</string>
+    <string name="find_project_address">项目地点</string>
+    <string name="find_need_time">需求时间</string>
+    <string name="find_blue_print_info">详细描述</string>
+    <string name="find_blue_print_info_hint">请输入详细信息</string>
 
+    <string name="empty_mine_foundation_info">您还没有发过找基地\n前往发布</string>
+    <string name="empty_mine_logistics_info">您还没有发过找物流\n前往发布</string>
+    <string name="empty_mine_blue_print_info">您还没有发过找方案\n前往发布</string>
 
 </resources>
