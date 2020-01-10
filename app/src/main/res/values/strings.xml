@@ -81,6 +81,7 @@
     <string name="read_history">查看记录</string>
     <string name="feedback">意见反馈</string>
     <string name="invite_friends">邀请好友</string>
+    <string name="share_pictorial">分享图片</string>
     <string name="my_collection">我的收藏</string>
     <string name="set">设置</string>
     <string name="helper">帮助</string>
@@ -186,6 +187,8 @@
     <string name="friend_circle">朋友圈</string>
     <string name="qq_friend">QQ好友</string>
     <string name="qq_stone">QQ空间</string>
+    <string name="download_pictures">保存图片</string>
+    <string name="share_picture">分享图片</string>
     <string name="release_demand">需求广场</string>
     <string name="scale">人员规模</string>
     <string name="hint_scale">请输入人员规模</string>

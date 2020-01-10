@@ -156,6 +156,8 @@
         <activity android:name="com.shuangduan.zcy.view.mine.set.AboutOursActivity" />
         <!-- 推荐好友页-->
         <activity android:name="com.shuangduan.zcy.view.mine.RecommendFriendsActivity" />
+        <!-- 分享画报页面 -->
+        <activity android:name="com.shuangduan.zcy.view.mine.SharePictorialActivity" />
         <!-- 意见反馈页-->
         <activity
             android:name="com.shuangduan.zcy.view.mine.set.FeedbackActivity"

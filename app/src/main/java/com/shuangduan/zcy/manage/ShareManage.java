@@ -3,9 +3,11 @@ package com.shuangduan.zcy.manage;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
 
 import androidx.lifecycle.ViewModelProviders;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.base.BaseActivity;
@@ -14,6 +16,7 @@ import com.shuangduan.zcy.listener.BaseUiListener;
 import com.shuangduan.zcy.model.bean.ShareBean;
 import com.shuangduan.zcy.utils.LoginUtils;
 import com.shuangduan.zcy.utils.ShareUtils;
+import com.shuangduan.zcy.view.mine.SharePictorialActivity;
 import com.shuangduan.zcy.vm.ShareVm;
 import com.tencent.tauth.Tencent;
 
@@ -191,6 +194,13 @@ public class ShareManage {
                             return;
                         }
                         ShareUtils.shareWeChat(ShareUtils.FRIEND_CIRCLE, url, title, des, bitmap);
+                    }
+
+                    @Override
+                    public void sharePicture() {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("url",item.getUrl());
+                        ActivityUtils.startActivity(bundle,SharePictorialActivity.class);
                     }
                 });
 

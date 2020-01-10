@@ -37,6 +37,7 @@ import com.shuangduan.zcy.vm.CoinPayVm;
 import com.shuangduan.zcy.vm.SupplierVm;
 import com.shuangduan.zcy.vm.UpdatePwdPayVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
+import com.shuangduan.zcy.weight.XEditText;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -64,7 +65,8 @@ public class SupplierActivity extends BaseActivity {
     RecyclerView rv;
     @BindView(R.id.refresh)
     SmartRefreshLayout refresh;
-
+    @BindView(R.id.edt_keyword)
+    XEditText edtKeyword;
     private UpdatePwdPayVm updatePwdPayVm;
     private CoinPayVm coinPayVm;
     private int supplier_status,id;
@@ -128,6 +130,7 @@ public class SupplierActivity extends BaseActivity {
 
         SupplierVm supplierVm = ViewModelProviders.of(this).get(SupplierVm.class);
         supplierVm.supplierLiveData.observe(this, supplierBean -> {
+            adapter.setKeyword(edtKeyword.getText().toString());
             if (supplierBean.getPage() == 1) {
                 adapter.setNewData(supplierBean.getList());
                 adapter.setEmptyView(R.layout.layout_empty, rv);

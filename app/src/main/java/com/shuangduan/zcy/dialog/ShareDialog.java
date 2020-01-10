@@ -2,6 +2,7 @@ package com.shuangduan.zcy.dialog;
 
 import android.app.Activity;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -25,6 +26,10 @@ import butterknife.OnClick;
 public class ShareDialog extends BaseDialog {
     @BindView(R.id.tv_title)
     TextView tvTitle;
+    @BindView(R.id.iv_share_picture)
+    ImageView ivSharePicture;
+    @BindView(R.id.tv_share_picture)
+    TextView tvSharePicture;
     private String title;
 
     public ShareDialog(@NonNull Activity activity ,String title) {
@@ -40,16 +45,17 @@ public class ShareDialog extends BaseDialog {
     @Override
     void initData() {
         setWidth(ConvertUtils.dp2px(260));
-        setHeight(ConvertUtils.dp2px(243));
+
         DialogUtils.enterCustomAnim(this);
     }
 
     @Override
     void initEvent() {
         tvTitle.setText(title);
+        if (title.equals("邀请好友")) ivSharePicture.setVisibility(View.VISIBLE);tvSharePicture.setVisibility(View.VISIBLE);
     }
 
-    @OnClick({R.id.iv_wechat_friend, R.id.tv_wechat_friend, R.id.tv_wechat_circle, R.id.iv_wechat_circle, R.id.iv_qq_friend, R.id.tv_qq_friend, R.id.iv_qq_stone, R.id.tv_qq_stone})
+    @OnClick({R.id.iv_wechat_friend, R.id.tv_wechat_friend, R.id.tv_wechat_circle, R.id.iv_wechat_circle, R.id.iv_qq_friend, R.id.tv_qq_friend, R.id.iv_qq_stone, R.id.tv_qq_stone,R.id.iv_share_picture,R.id.tv_share_picture})
     void onClick(View view){
         switch (view.getId()){
             case R.id.iv_wechat_friend:
@@ -68,6 +74,10 @@ public class ShareDialog extends BaseDialog {
             case R.id.tv_qq_stone:
                 if (onShareListener != null) onShareListener.qqStone();
                 break;
+            case R.id.iv_share_picture:
+            case R.id.tv_share_picture:
+                if (onShareListener != null) onShareListener.sharePicture();
+                break;
         }
     }
 
@@ -83,5 +93,6 @@ public class ShareDialog extends BaseDialog {
         void qqStone();
         void weChat();
         void friendCircle();
+        void sharePicture();
     }
 }

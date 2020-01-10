@@ -5,6 +5,30 @@
 
     <include layout="@layout/toolbar"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorFFF">
+        <com.shuangduan.zcy.weight.XEditText
+            android:id="@+id/edt_keyword"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:layout_marginLeft="14dp"
+            android:layout_marginRight="14dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:singleLine="true"
+            android:gravity="center_vertical"
+            android:background="@drawable/shape_bg_search"
+            android:textColorHint="@color/colorTvHint"
+            android:textColor="@color/color_666666"
+            android:textSize="13sp"
+            android:imeOptions="actionSearch"
+            android:hint="@string/hint_keyword"/>
+    </LinearLayout>
+
     <include layout="@layout/layout_refresh_rv"/>
 
 </LinearLayout>

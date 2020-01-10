@@ -1,6 +1,10 @@
 package com.shuangduan.zcy.adapter;
 
 import android.app.Activity;
+import android.graphics.Color;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
@@ -27,18 +31,18 @@ import java.util.List;
  * @class describe
  */
 public class SupplierAdapter extends BaseQuickAdapter<SupplierBean.ListBean, BaseViewHolder> {
-
+    private String keyword;
     public SupplierAdapter(int layoutResId, @Nullable List<SupplierBean.ListBean> data) {
         super(layoutResId, data);
     }
 
     @Override
     protected void convert(BaseViewHolder helper, SupplierBean.ListBean item) {
-        helper.setText(R.id.tv_name, item.getName())
+        helper.setText(R.id.tv_name, setSpan(item.getName()))
                 .setText(R.id.tv_company, item.getCompany())
                 .setText(R.id.tv_mobile, item.getTel())
                 .setText(R.id.tv_area, String.format(mContext.getString(R.string.format_supplier_service_area), item.getServe_address()))
-                .setText(R.id.tv_production, String.format(mContext.getString(R.string.format_supplier_product), item.getProduct()))
+                .setText(R.id.tv_production, String.format(mContext.getString(R.string.format_supplier_product), setSpan(item.getProduct())))
                 .setGone(R.id.iv_pic_first, item.getImages_json() != null && item.getImages_json().size() >= 1)
                 .setGone(R.id.iv_pic_second, item.getImages_json() != null && item.getImages_json().size() >= 2)
                 .setGone(R.id.iv_pic_third, item.getImages_json() != null && item.getImages_json().size() >= 3)
@@ -78,5 +82,36 @@ public class SupplierAdapter extends BaseQuickAdapter<SupplierBean.ListBean, Bas
         helper.getView(R.id.iv_pic_second).setOnClickListener(v -> PictureEnlargeUtils.getPictureEnlargeList((Activity) mContext,list,1));
         helper.getView(R.id.iv_pic_third).setOnClickListener(v -> PictureEnlargeUtils.getPictureEnlargeList((Activity) mContext,list,2));
         helper.getView(R.id.tv_more).setOnClickListener(v -> PictureEnlargeUtils.getPictureEnlargeList((Activity) mContext,list,2));
+    }
+
+    /**
+     * 设置高亮
+     *
+     * @param text
+     * @return
+     */
+    private SpannableString setSpan(String text) {
+        SpannableString sp = new SpannableString(text);
+        // 遍历要显示的文字
+        for (int i = 0; i < text.length(); i++) {
+            // 得到单个文字
+            String s1 = text.charAt(i) + "";
+            // 判断字符串是否包含高亮显示的文字
+            if (keyword.contains(s1)) {
+                // 循环查找字符串中所有该文字并高亮显示
+                ForegroundColorSpan colorSpan = new ForegroundColorSpan(Color.parseColor("#6A5FF8"));
+                sp.setSpan(colorSpan, i, i + 1, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            }
+        }
+        return sp;
+    }
+
+    /**
+     * 设置关键字
+     *
+     * @param keyword
+     */
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
     }
 }

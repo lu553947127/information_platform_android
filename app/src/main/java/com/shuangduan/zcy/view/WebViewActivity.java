@@ -69,6 +69,10 @@ public class WebViewActivity extends BaseActivity {
                 tvBarTitle.setText("天气详情");
                 webViewUtils.loadUrl(Common.WEATHER_H5,1);
                 break;
+            case "friend":
+                tvBarTitle.setText("邀请好友");
+                webViewUtils.loadUrl(getIntent().getStringExtra("url"),0);
+                break;
         }
     }
 

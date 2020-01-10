@@ -4,7 +4,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="15dp">
+    android:padding="15dp"
+    android:background="@color/colorFFF">
 
     <com.shuangduan.zcy.weight.CircleImageView
         android:id="@+id/iv_header"
