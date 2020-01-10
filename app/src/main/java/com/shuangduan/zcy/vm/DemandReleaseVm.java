@@ -35,6 +35,10 @@ public class DemandReleaseVm extends BaseViewModel {
     public MutableLiveData<RelationshipOrderBean> relationshipOrderLiveData;
 
     public MutableLiveData<List<UnitBean>> unitLiveData;
+
+    //找方案
+    public MutableLiveData liveData;
+
     public MutableLiveData<String> pageStateLiveData;
     private int userId;
     public int releaseType = RELEASE_TYPE_RELATIONSHIP;
@@ -48,6 +52,9 @@ public class DemandReleaseVm extends BaseViewModel {
         relationshipOrderLiveData = new MutableLiveData<>();
         pageStateLiveData = new MutableLiveData<>();
         unitLiveData = new MutableLiveData<>();
+
+        liveData = new MutableLiveData();
+
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH) + 1;
@@ -56,8 +63,8 @@ public class DemandReleaseVm extends BaseViewModel {
     }
 
     //找资源
-    public void releaseRelationShip(String title, String intro, String price){
-        if (StringUtils.isTrimEmpty(endTime)){
+    public void releaseRelationShip(String title, String intro, String price) {
+        if (StringUtils.isTrimEmpty(endTime)) {
             ToastUtils.showShort(StringUtils.getString(R.string.select_time));
             return;
         }
@@ -65,21 +72,34 @@ public class DemandReleaseVm extends BaseViewModel {
     }
 
     //找物资
-    public void releaseSubstance(String title, String demandNum, String projectName, String projectAddress, String priceAccept, String tel, String owner,int demand_num,String remark){
-        new DemandRepository().demandSubstanceRelease(releaseLiveData, pageStateLiveData, userId, title, demandNum, projectName, projectAddress, priceAccept, tel, owner, startTime, endTime,demand_num,remark);
+    public void releaseSubstance(String title, String demandNum, String projectName, String projectAddress, String priceAccept, String tel, String owner, int demand_num, String remark) {
+        new DemandRepository().demandSubstanceRelease(releaseLiveData, pageStateLiveData, userId, title, demandNum, projectName, projectAddress, priceAccept, tel, owner, startTime, endTime, demand_num, remark);
     }
 
     //找买家
-    public void releaseBuyer(String title, String demandNum, String projectAddress, String priceAccept, String tel, String owner,int supply_num,String remark){
-        new DemandRepository().demandBuyerRelease(releaseLiveData, pageStateLiveData, userId, title, demandNum, projectAddress, priceAccept, tel, owner, way, startTime, endTime,supply_num,remark);
+    public void releaseBuyer(String title, String demandNum, String projectAddress, String priceAccept, String tel, String owner, int supply_num, String remark) {
+        new DemandRepository().demandBuyerRelease(releaseLiveData, pageStateLiveData, userId, title, demandNum, projectAddress, priceAccept, tel, owner, way, startTime, endTime, supply_num, remark);
     }
 
-    public void relationshipReleaseOrder(int id){
+    public void relationshipReleaseOrder(int id) {
         new DemandRepository().relationshipReleaseOrder(relationshipOrderLiveData, pageStateLiveData, userId, id);
     }
 
     //获取数量单位
-    public void getUnit(){
+    public void getUnit() {
         new DemandRepository().getUnit(unitLiveData, pageStateLiveData, userId);
     }
+
+    //发布找方案
+    public void bluePrintAdd(String projectName, String projectLocation, String remark, String personalName, String tel) {
+        new DemandRepository().bluePrintAdd(liveData, pageStateLiveData, userId, projectName, projectLocation, startTime, endTime, remark, personalName, tel);
+    }
+
+    //发布找物流
+    public void logisticsAdd(String materialName, int materialCount, int unit, String deliveryAddress, String receivingAddress,
+                             String receivingTime, String personalName, String tel, String remark) {
+        new DemandRepository().logisticsAdd(liveData, pageStateLiveData, userId, materialName, materialCount,
+                unit, deliveryAddress, receivingAddress, receivingTime, startTime, endTime, personalName, tel, remark);
+    }
+
 }

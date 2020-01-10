@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -67,18 +68,17 @@ public class FindMineDrawingFragment extends BaseLazyFragment implements EmptyVi
         rv.setAdapter(mAdapter);
 
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
-
+            Bundle bundle = new Bundle();
+            ActivityUtils.startActivity(bundle, FindBluePrintDetailActivity.class);
         });
 
         refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-
             }
         });
     }

@@ -35,7 +35,7 @@
 
                 <TextView
                     style="@style/FindNeedTextStyle"
-                    android:layout_width="95dp"
+                    android:layout_width="100dp"
                     android:text="@string/material_name" />
 
                 <com.shuangduan.zcy.weight.XEditText
@@ -58,7 +58,7 @@
 
                 <TextView
                     style="@style/FindNeedTextStyle"
-                    android:layout_width="95dp"
+                    android:layout_width="100dp"
                     android:text="@string/material_number" />
 
                 <com.shuangduan.zcy.weight.XEditText
@@ -102,7 +102,7 @@
 
                 <TextView
                     style="@style/FindNeedTextStyle"
-                    android:layout_width="95dp"
+                    android:layout_width="100dp"
                     android:text="@string/find_send_address" />
 
                 <com.shuangduan.zcy.weight.XEditText
@@ -128,7 +128,7 @@
 
                 <TextView
                     style="@style/FindNeedTextStyle"
-                    android:layout_width="95dp"
+                    android:layout_width="100dp"
                     android:text="@string/find_receive_address" />
 
                 <com.shuangduan.zcy.weight.XEditText
@@ -152,7 +152,7 @@
 
                 <TextView
                     style="@style/FindNeedTextStyle"
-                    android:layout_width="95dp"
+                    android:layout_width="100dp"
                     android:text="@string/find_receive_time" />
 
                 <TextView
@@ -178,7 +178,7 @@
 
                 <TextView
                     style="@style/FindNeedTextStyle"
-                    android:layout_width="95dp"
+                    android:layout_width="100dp"
                     android:text="@string/effective_time" />
 
                 <TextView
@@ -225,7 +225,7 @@
 
                 <TextView
                     style="@style/FindNeedTextStyle"
-                    android:layout_width="95dp"
+                    android:layout_width="100dp"
                     android:text="@string/find_contact" />
 
                 <com.shuangduan.zcy.weight.XEditText
@@ -250,7 +250,7 @@
 
                 <TextView
                     style="@style/FindNeedTextStyle"
-                    android:layout_width="95dp"
+                    android:layout_width="100dp"
                     android:text="@string/contacts_phone" />
 
                 <com.shuangduan.zcy.weight.XEditText
@@ -281,7 +281,7 @@
                 <TextView
                     android:id="@+id/tv_remark"
                     style="@style/FindNeedTextStyle"
-                    android:layout_width="95dp"
+                    android:layout_width="100dp"
                     android:layout_marginTop="16dp"
                     android:gravity="center_vertical"
                     android:text="@string/find_remark"

@@ -398,7 +398,13 @@
         <!--   找基地   -->
         <activity android:name="com.shuangduan.zcy.view.demand.FindFoundationActivity" />
         <!--   找方案  -->
-        <activity android:name="com.shuangduan.zcy.view.demand.FindBluePrintActivity"/>
+        <activity android:name="com.shuangduan.zcy.view.demand.FindBluePrintActivity" />
+        <!--   找基地详情     -->
+        <activity android:name="com.shuangduan.zcy.view.mine.demand.FindFoundationDetailActivity" />
+        <!--   找物流详情     -->
+        <activity android:name="com.shuangduan.zcy.view.mine.demand.FindLogisticsDetailActivity" />
+        <!--   找方案详情     -->
+        <activity android:name="com.shuangduan.zcy.view.mine.demand.FindBluePrintDetailActivity"/>
 
         <!-- 微信支付 返回结果页-->
         <activity

@@ -72,7 +72,7 @@ public class MineDemandActivity extends BaseActivity {
                 tvBarTitle.setText(getString(R.string.my_demand_zwl));
                 break;
             case 5:
-                tvBarTitle.setText(getString(R.string.my_demand_ztz));
+                tvBarTitle.setText(getString(R.string.my_demand_zfa));
                 break;
         }
 
@@ -80,7 +80,7 @@ public class MineDemandActivity extends BaseActivity {
                 FindMineRelationshipFragment.newInstance(),
                 FindMineSubstanceFragment.newInstance(),
                 FindMineBuyerFragment.newInstance(),
-                FindMineBaseFragment.newInstance(),
+                FindMineFoundationFragment.newInstance(),
                 FindMineLogisticsFragment.newInstance(),
                 FindMineDrawingFragment.newInstance()
         };
@@ -173,7 +173,7 @@ public class MineDemandActivity extends BaseActivity {
                                     tvFindLogistics.setTextColor(getResources().getColor(R.color.color_666666));
                                     tvFindDrawing.setTextColor(getResources().getColor(R.color.colorPrimary));
                                     vp.setCurrentItem(5);
-                                    tvBarTitle.setText(getString(R.string.my_demand_ztz));
+                                    tvBarTitle.setText(getString(R.string.my_demand_zfa));
                                     popupWindow.dismiss();
                                 });
                             })

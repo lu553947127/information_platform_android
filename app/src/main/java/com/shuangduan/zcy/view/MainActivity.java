@@ -433,7 +433,5 @@ public class MainActivity extends BaseActivity {
         if (animatorRun != null) {
             animatorRun = null;
         }
-
-        LocationUtils.getInstance().stopLocalService();
     }
 }

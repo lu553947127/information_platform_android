@@ -1184,6 +1184,40 @@ public interface ApiService {
             @Field("remark") String remark
     );
 
+
+    //发布找方案
+    @FormUrlEncoded
+    @POST("api/Relation/drawingAdd")
+    Flowable<BaseResponse> bluePrintAdd(
+            @Field("user_id") int userId,
+            @Field("project_name") String projectName,
+            @Field("project_location") String projectLocation,
+            @Field("start_time") String startTime,
+            @Field("end_time") String endTime,
+            @Field("remark") String remark,
+            @Field("personal_name") String personalName,
+            @Field("tel") String tel
+    );
+
+    //发布找物流
+    @FormUrlEncoded
+    @POST("api/Relation/logisticsAdd")
+    Flowable<BaseResponse> logisticsAdd(
+            @Field("user_id") int userId,
+            @Field("material_name") String materialName,
+            @Field("material_count") int materialCount,
+            @Field("unit") int unit,
+            @Field("delivery_address") String deliveryAddress,
+            @Field("receiving_address") String receivingAddress,
+            @Field("receiving_time") String receivingTime,
+            @Field("start_time") String startTime,
+            @Field("end_time") String endTime,
+            @Field("personal_name") String personalName,
+            @Field("tel") String tel,
+            @Field("remark") String remark
+    );
+
+
     @FormUrlEncoded
     @POST("api/Relation/waitPay")
     Flowable<BaseResponse<RelationshipOrderBean>> relationshipReleaseOrder(

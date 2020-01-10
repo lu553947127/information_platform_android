@@ -60,7 +60,9 @@ public class LocationUtils {
                 if (location.getErrorCode() == 0) {
                     SPUtils.getInstance().put(SpConfig.LONGITUDE, String.valueOf(location.getLongitude()), true);
                     SPUtils.getInstance().put(SpConfig.LATITUDE, String.valueOf(location.getLatitude()), true);
-                    getAddressChange(location.getLatitude(),location.getLongitude());
+                    getAddressChange(location.getLatitude(), location.getLongitude());
+
+                    stopLocalService();
                 }
             } else {
                 ToastUtils.showShort("定位失败，loc is null");
@@ -131,7 +133,7 @@ public class LocationUtils {
         OkGo.<String>post(Common.WEATHER_INFO)
                 .tag(this)
                 .headers("key", Common.AMAP_WEB_KEY)//key值
-                .params("city",cityCode)//城市编码
+                .params("city", cityCode)//城市编码
                 .execute(new com.lzy.okgo.callback.StringCallback() {//返回值
 
                     @Override
@@ -143,10 +145,10 @@ public class LocationUtils {
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
                         try {
-                            WeatherBean bean=new Gson().fromJson(response.body(),WeatherBean.class);
+                            WeatherBean bean = new Gson().fromJson(response.body(), WeatherBean.class);
                             LogUtils.json(response.body());
                             SPUtils.getInstance().put(SpConfig.WEATHER, bean.getLives().get(0).getTemperature() + "℃\n" + bean.getLives().get(0).getWeather(), true);
-                        }catch (JsonSyntaxException | IllegalStateException ignored){
+                        } catch (JsonSyntaxException | IllegalStateException ignored) {
 
                         }
                     }

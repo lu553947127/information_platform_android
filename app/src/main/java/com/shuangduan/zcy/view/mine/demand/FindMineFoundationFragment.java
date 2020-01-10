@@ -34,7 +34,7 @@ import butterknife.BindView;
  * @UpdateRemark: 更新说明
  * @Version: 1.1.0
  */
-public class FindMineBaseFragment extends BaseLazyFragment implements EmptyViewFactory.EmptyViewCallBack {
+public class FindMineFoundationFragment extends BaseLazyFragment implements EmptyViewFactory.EmptyViewCallBack {
 
     @BindView(R.id.rv)
     RecyclerView rv;
@@ -42,9 +42,9 @@ public class FindMineBaseFragment extends BaseLazyFragment implements EmptyViewF
     SmartRefreshLayout refresh;
     private FindMineNeedAdapter mAdapter;
 
-    public static FindMineBaseFragment newInstance() {
+    public static FindMineFoundationFragment newInstance() {
         Bundle args = new Bundle();
-        FindMineBaseFragment fragment = new FindMineBaseFragment();
+        FindMineFoundationFragment fragment = new FindMineFoundationFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -71,7 +71,8 @@ public class FindMineBaseFragment extends BaseLazyFragment implements EmptyViewF
         rv.setAdapter(mAdapter);
 
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
-
+            Bundle bundle = new Bundle();
+            ActivityUtils.startActivity(bundle, FindFoundationDetailActivity.class);
         });
 
         refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {

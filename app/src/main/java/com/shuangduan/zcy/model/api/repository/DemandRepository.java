@@ -111,24 +111,68 @@ public class DemandRepository extends BaseRepository {
 
     /**
      * 取消找买家
+     *
      * @param liveData
      * @param pageStateLiveData
      * @param userId
      * @param id
      */
-    public void closeBuyerRelease(MutableLiveData<BaseResponse> liveData, MutableLiveData<String> pageStateLiveData, int userId, int id){
+    public void closeBuyerRelease(MutableLiveData<BaseResponse> liveData, MutableLiveData<String> pageStateLiveData, int userId, int id) {
         request(apiService.closeBuyer(userId, id)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
     /**
      * 取消找物资
+     *
      * @param liveData
      * @param pageStateLiveData
      * @param userId
      * @param id
      */
-    public void closeMterial(MutableLiveData<BaseResponse> liveData, MutableLiveData<String> pageStateLiveData, int userId, int id){
+    public void closeMterial(MutableLiveData<BaseResponse> liveData, MutableLiveData<String> pageStateLiveData, int userId, int id) {
         request(apiService.closeMterial(userId, id)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    /**
+     * 发布找方案
+     *
+     * @param liveData
+     * @param pageStateLiveData
+     * @param userId
+     * @param projectName
+     * @param projectLocation
+     * @param startTime
+     * @param endTime
+     * @param remark
+     * @param personalName
+     * @param tel
+     */
+    public void bluePrintAdd(MutableLiveData<BaseResponse> liveData, MutableLiveData<String> pageStateLiveData, int userId, String projectName, String projectLocation,
+                             String startTime, String endTime, String remark, String personalName, String tel) {
+        request(apiService.bluePrintAdd(userId, projectName, projectLocation, startTime, endTime, remark, personalName, tel)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    /**
+     * 发布找物流
+     * @param liveData
+     * @param pageStateLiveData
+     * @param userId
+     * @param materialName
+     * @param materialCount
+     * @param unit
+     * @param deliveryAddress
+     * @param receivingAddress
+     * @param receivingTime
+     * @param startTime
+     * @param endTime
+     * @param personalName
+     * @param tel
+     * @param remark
+     */
+    public void logisticsAdd(MutableLiveData<BaseResponse> liveData, MutableLiveData<String> pageStateLiveData, int userId, String materialName, int materialCount, int unit,
+                             String deliveryAddress, String receivingAddress, String receivingTime, String startTime, String endTime, String personalName, String tel, String remark) {
+        request(apiService.logisticsAdd(userId, materialName, materialCount, unit, deliveryAddress, receivingAddress, receivingTime, startTime, endTime, personalName, tel, remark)).
+                setData(liveData).setPageState(pageStateLiveData).send();
     }
 
 }

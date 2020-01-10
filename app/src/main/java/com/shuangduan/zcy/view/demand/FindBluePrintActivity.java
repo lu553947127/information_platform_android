@@ -20,6 +20,7 @@ import com.shuangduan.zcy.utils.DateUtils;
 import com.shuangduan.zcy.utils.DensityUtil;
 import com.shuangduan.zcy.vm.DemandReleaseVm;
 import com.shuangduan.zcy.weight.AdaptationScrollView;
+import com.shuangduan.zcy.weight.XEditText;
 import com.shuangduan.zcy.weight.datepicker.CustomDatePicker;
 
 import java.text.ParseException;
@@ -47,15 +48,29 @@ public class FindBluePrintActivity extends BaseActivity {
     @BindView(R.id.rl_toolbar)
     RelativeLayout toolbar;
 
+
+    @BindView(R.id.et_project_name)
+    XEditText etProjectName;
+    @BindView(R.id.et_project_address)
+    XEditText etProjectAddress;
+
     @BindView(R.id.tv_start_time)
     TextView tvStartTime;
     @BindView(R.id.tv_end_time)
     TextView tvEndTime;
 
+    @BindView(R.id.et_param)
+    XEditText etParam;
+    @BindView(R.id.et_name)
+    XEditText etName;
+    @BindView(R.id.et_phone)
+    XEditText etPhone;
+
     private DemandReleaseVm vm;
 
     private SimpleDateFormat f;
     private Calendar c;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         isTranslationBar = true;
@@ -105,10 +120,16 @@ public class FindBluePrintActivity extends BaseActivity {
         vm.startTime = DateUtils.getTodayDate(c);
 
         tvStartTime.setText(vm.startTime);
+
+
+        vm.liveData.observe(this, result -> {
+            ToastUtils.showShort("发布找方案成功。");
+            finish();
+        });
     }
 
 
-    @OnClick({R.id.iv_bar_back, R.id.iv_bar_back_new, R.id.tv_start_time, R.id.tv_end_time})
+    @OnClick({R.id.iv_bar_back, R.id.iv_bar_back_new, R.id.tv_start_time, R.id.tv_end_time, R.id.tv_event})
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_bar_back:
@@ -132,6 +153,15 @@ public class FindBluePrintActivity extends BaseActivity {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
+                break;
+            case R.id.tv_event:
+                String projectName = etProjectName.getTrimmedString();
+                String address = etProjectAddress.getTrimmedString();
+                String param = etParam.getTrimmedString();
+                String name = etName.getTrimmedString();
+                String phone = etPhone.getTrimmedString();
+
+                vm.bluePrintAdd(projectName, address, param, name, phone);
                 break;
         }
     }

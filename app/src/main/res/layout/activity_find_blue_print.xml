@@ -31,7 +31,8 @@
                 android:background="@color/colorFFF"
                 android:orientation="horizontal">
 
-                <TextView style="@style/RedMustText" />
+                <TextView style="@style/RedMustText"
+                    android:visibility="invisible"/>
 
                 <TextView
                     style="@style/FindNeedTextStyle"
