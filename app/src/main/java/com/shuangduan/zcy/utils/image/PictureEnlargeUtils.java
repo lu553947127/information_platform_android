@@ -2,6 +2,8 @@ package com.shuangduan.zcy.utils.image;
 
 import android.app.Activity;
 
+import com.shuangduan.zcy.R;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +42,10 @@ public class PictureEnlargeUtils {
                 .setShowDownButton(true)
                 //设置是否显示关闭按钮,在页面左下角。默认显示
                 .setShowCloseButton(true)
+                //设置下载到的文件夹名称
+                .setFolderName("zcy/Image")
+                //设置加载失败的占位图资源id
+                .setErrorPlaceHolder(R.drawable.no_banner)
                 // 开启预览
                 .start();
     }
@@ -68,6 +74,10 @@ public class PictureEnlargeUtils {
                 .setShowDownButton(true)
                 //设置是否显示关闭按钮,在页面左下角。默认显示
                 .setShowCloseButton(true)
+                //设置下载到的文件夹名称
+                .setFolderName("zcy/Image")
+                //设置加载失败的占位图资源id
+                .setErrorPlaceHolder(R.drawable.no_banner)
                 // 开启预览
                 .start();
     }

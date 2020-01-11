@@ -23,14 +23,16 @@
         android:drawableRight="@drawable/icon_next"
         android:textColor="@color/color_666666"
         android:textSize="14sp"
-        android:text="@string/income_release"/>
+        android:text="@string/income_release"
+        android:visibility="gone"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/colorDivider"
         android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"/>
+        android:layout_marginRight="15dp"
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/tv_income_locus"

@@ -54,7 +54,7 @@ public class PicturesUtils {
      */
     public static String saveImageToLocal(Context context, Bitmap bitmap, int type) {
         // 首先保存图片
-        File appDir = new File(Environment.getExternalStorageDirectory(), "zcy");
+        File appDir = new File(Environment.getExternalStorageDirectory(), "zcy/Image");
         if (!appDir.exists()) {
             appDir.mkdir();
         }

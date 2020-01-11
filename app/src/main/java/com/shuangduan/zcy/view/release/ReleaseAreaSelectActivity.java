@@ -143,7 +143,7 @@ public class ReleaseAreaSelectActivity extends BaseActivity {
                 String city = "";
                 int cityId = 0;
                 List<ProvinceBean> types = areaVm.provinceLiveData.getValue();
-                assert types != null;
+                if (types == null) return;
                 for (ProvinceBean bean : types) {
                     if (bean.isSelect == 1) {
                         province = bean.getName();

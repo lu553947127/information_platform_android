@@ -174,6 +174,7 @@ public class HeadlinesDetailActivity extends BaseActivity {
                 break;
             case R.id.iv_bar_right:
             case R.id.iv_bar_right_new:
+                if (shareManage.getItem() == null) return;
                 shareManage.initDialog(this, shareManage.getItem().getUrl(), shareManage.getItem().getTitle(),
                         shareManage.getItem().getDes(), shareManage.getItem().getImage(), shareManage.getBitmap(),"分享基建头条");
                 break;

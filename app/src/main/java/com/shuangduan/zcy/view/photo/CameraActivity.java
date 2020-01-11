@@ -48,7 +48,7 @@ public class CameraActivity extends AppCompatActivity {
         setContentView(R.layout.activity_camera);
         jCameraView =  findViewById(R.id.jc_camera_view);
         //设置视频保存路径
-        jCameraView.setSaveVideoPath(Environment.getExternalStorageDirectory().getPath() + File.separator + "zcy");
+        jCameraView.setSaveVideoPath(Environment.getExternalStorageDirectory().getPath() + File.separator + "zcy/camera");
         jCameraView.setFeatures(JCameraView.BUTTON_STATE_BOTH);
 //        jCameraView.setTip("轻触拍照，按住摄像");
         //设置录制视频的比特率

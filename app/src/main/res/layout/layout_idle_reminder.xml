@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:background="@color/colorFFF"
     android:id="@+id/rl_idle_reminder"
-    android:visibility="visible">
+    android:visibility="gone">
 
     <!--蓝色背景-->
     <RelativeLayout

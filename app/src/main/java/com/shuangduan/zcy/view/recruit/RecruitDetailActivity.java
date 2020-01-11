@@ -217,6 +217,7 @@ public class RecruitDetailActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.iv_bar_right:
+                if (shareManage.getItem() == null) return;
                 shareManage.initDialog(this, shareManage.getItem().getUrl(), shareManage.getItem().getTitle(),
                         shareManage.getItem().getDes(), shareManage.getItem().getImage(), shareManage.getBitmap(),"分享招采信息");
                 break;
