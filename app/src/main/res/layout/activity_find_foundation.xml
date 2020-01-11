@@ -35,7 +35,7 @@
 
                 <TextView
                     style="@style/FindNeedTextStyle"
-                    android:layout_width="95dp"
+                    android:layout_width="100dp"
                     android:text="@string/material_name" />
 
                 <com.shuangduan.zcy.weight.XEditText
@@ -58,11 +58,11 @@
 
                 <TextView
                     style="@style/FindNeedTextStyle"
-                    android:layout_width="95dp"
+                    android:layout_width="100dp"
                     android:text="@string/material_number" />
 
                 <com.shuangduan.zcy.weight.XEditText
-                    android:id="@+id/et_email"
+                    android:id="@+id/et_material_number"
                     style="@style/FindNeedEditStyle"
                     android:layout_width="0dp"
                     android:layout_weight="1"
@@ -102,7 +102,7 @@
 
                 <TextView
                     style="@style/FindNeedTextStyle"
-                    android:layout_width="95dp"
+                    android:layout_width="100dp"
                     android:text="@string/find_existing_address" />
 
                 <com.shuangduan.zcy.weight.XEditText
@@ -128,7 +128,7 @@
 
                 <TextView
                     style="@style/FindNeedTextStyle"
-                    android:layout_width="95dp"
+                    android:layout_width="100dp"
                     android:text="@string/find_need_address" />
 
                 <com.shuangduan.zcy.weight.XEditText
@@ -152,15 +152,16 @@
 
                 <TextView
                     style="@style/FindNeedTextStyle"
-                    android:layout_width="95dp"
+                    android:layout_width="100dp"
                     android:text="@string/find_distance" />
 
                 <com.shuangduan.zcy.weight.XEditText
-                    android:id="@+id/tv_distance"
+                    android:id="@+id/et_distance"
                     style="@style/FindNeedEditStyle"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:paddingRight="5dp"
+                    android:inputType="number"
                     android:gravity="left|center_vertical" />
 
                 <TextView
@@ -186,7 +187,7 @@
 
                 <TextView
                     style="@style/FindNeedTextStyle"
-                    android:layout_width="95dp"
+                    android:layout_width="100dp"
                     android:text="@string/effective_time" />
 
                 <TextView
@@ -231,11 +232,12 @@
 
                 <TextView
                     style="@style/FindNeedTextStyle"
-                    android:layout_width="95dp"
+                    android:layout_width="100dp"
                     android:text="@string/find_restructuring" />
 
 
                 <RadioGroup
+                    android:id="@+id/radio"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
@@ -285,7 +287,7 @@
 
                 <TextView
                     style="@style/FindNeedTextStyle"
-                    android:layout_width="95dp"
+                    android:layout_width="100dp"
                     android:text="@string/find_contact" />
 
                 <com.shuangduan.zcy.weight.XEditText
@@ -310,7 +312,7 @@
 
                 <TextView
                     style="@style/FindNeedTextStyle"
-                    android:layout_width="95dp"
+                    android:layout_width="100dp"
                     android:text="@string/contacts_phone" />
 
                 <com.shuangduan.zcy.weight.XEditText
@@ -341,7 +343,7 @@
                 <TextView
                     android:id="@+id/tv_remark"
                     style="@style/FindNeedTextStyle"
-                    android:layout_width="95dp"
+                    android:layout_width="100dp"
                     android:layout_marginTop="16dp"
                     android:gravity="center_vertical"
                     android:text="@string/find_remark"

@@ -1217,6 +1217,54 @@ public interface ApiService {
             @Field("remark") String remark
     );
 
+    //个人中心-找方案发布列表
+    @FormUrlEncoded
+    @POST("api/Relation/drawingList")
+    Flowable<BaseResponse<NeedBean>> drawingList(
+            @Field("user_id") int user_id,
+            @Field("page") int page
+    );
+
+    //个人中心-找方案详细信息
+    @FormUrlEncoded
+    @POST("api/Relation/drawingDetail")
+    Flowable<BaseResponse<NeedInfoBean>> drawingDetail(
+            @Field("user_id") int userId,
+            @Field("id") int id
+    );
+
+    //个人中心-取消找方案
+    @FormUrlEncoded
+    @POST("api/Relation/drawingClose")
+    Flowable<BaseResponse> drawingClose(
+            @Field("user_id") int userId,
+            @Field("id") int id
+    );
+
+
+    //个人中心-找物流发布列表
+    @FormUrlEncoded
+    @POST("api/Relation/logisticsList")
+    Flowable<BaseResponse<NeedBean>> logisticsList(
+            @Field("user_id") int userId,
+            @Field("page") int page
+    );
+
+    //个人中心-找物流详细信息
+    @FormUrlEncoded
+    @POST("api/Relation/logisticsDetail")
+    Flowable<BaseResponse<NeedInfoBean>> logisticsDetail(
+            @Field("user_id") int userId,
+            @Field("id") int id
+    );
+
+    //个人中心-取消找物流
+    @FormUrlEncoded
+    @POST("api/Relation/logisticsClose")
+    Flowable<BaseResponse> logisticsClose(
+            @Field("user_id") int userId,
+            @Field("id") int id
+    );
 
     @FormUrlEncoded
     @POST("api/Relation/waitPay")

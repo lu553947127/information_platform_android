@@ -229,7 +229,7 @@ public class UserInfoActivity extends BaseActivity {
         rxPermissions = new RxPermissions(this);
         permissionVm = ViewModelProviders.of(this).get(PermissionVm.class);
         permissionVm.getLiveData().observe(this, integer -> {
-            switch (integer){
+            switch (integer) {
                 case PermissionVm.PERMISSION_CAMERA:
                     MatisseCamera.from(this).forResult(PermissionVm.CAMERA, "com.shuangduan.zcy.fileprovider");
                     break;
@@ -298,7 +298,7 @@ public class UserInfoActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.iv_user://更换头像
-                BaseBottomSheetDialog baseBottomSheetDialog =new BaseBottomSheetDialog(this,rxPermissions,permissionVm);
+                BaseBottomSheetDialog baseBottomSheetDialog = new BaseBottomSheetDialog(this, rxPermissions, permissionVm);
                 baseBottomSheetDialog.showPhotoDialog();
                 break;
             case R.id.fl_name://修改姓名
@@ -358,15 +358,19 @@ public class UserInfoActivity extends BaseActivity {
                 ActivityUtils.startActivity(bundle, UpdateProductionActivity.class);
                 break;
             case R.id.tv_add_friend://添加好友/发消息
-                if (userInfoBean.getApply_status() != null && userInfoBean.getApply_status().equals("1")) {
-                    bundle.putInt(CustomConfig.FRIEND_DATA, 0);
-                    bundle.putInt("id", userInfoBean.getId());
-                    bundle.putString("name", userInfoBean.getUsername());
-                    bundle.putString("msg", userInfoBean.getCompany());
-                    bundle.putString("image", userInfoBean.getImage());
-                    ActivityUtils.startActivity(bundle, IMAddFriendActivity.class);
-                } else {
-                    RongIM.getInstance().startPrivateChat(UserInfoActivity.this, String.valueOf(userInfoBean.getId()), userInfoBean.getUsername());
+                try {
+                    if (userInfoBean.getApply_status() != null && userInfoBean.getApply_status().equals("1")) {
+                        bundle.putInt(CustomConfig.FRIEND_DATA, 0);
+                        bundle.putInt("id", userInfoBean.getId());
+                        bundle.putString("name", userInfoBean.getUsername());
+                        bundle.putString("msg", userInfoBean.getCompany());
+                        bundle.putString("image", userInfoBean.getImage());
+                        ActivityUtils.startActivity(bundle, IMAddFriendActivity.class);
+                    } else {
+                        RongIM.getInstance().startPrivateChat(UserInfoActivity.this, String.valueOf(userInfoBean.getId()), userInfoBean.getUsername());
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
                 break;
         }
@@ -378,8 +382,8 @@ public class UserInfoActivity extends BaseActivity {
         if (requestCode == PermissionVm.PHOTO && resultCode == RESULT_OK) {
             if (MatisseCamera.isAndroidQ) {
                 LogUtils.e(Matisse.obtainResult(data).get(0));
-                uploadPhotoVm.upload(CompressUtils.getRealFilePath(this,Matisse.obtainResult(data).get(0)));
-            }else {
+                uploadPhotoVm.upload(CompressUtils.getRealFilePath(this, Matisse.obtainResult(data).get(0)));
+            } else {
                 LogUtils.e(Matisse.obtainPathResult(data).get(0));
                 uploadPhotoVm.upload(Matisse.obtainPathResult(data).get(0));
             }
@@ -388,7 +392,7 @@ public class UserInfoActivity extends BaseActivity {
         if (requestCode == PermissionVm.CAMERA && resultCode == RESULT_OK) {
             if (MatisseCamera.isAndroidQ) {
                 LogUtils.e(MatisseCamera.obtainUriResult());
-                uploadPhotoVm.upload(CompressUtils.getRealFilePath(this,MatisseCamera.obtainUriResult()));
+                uploadPhotoVm.upload(CompressUtils.getRealFilePath(this, MatisseCamera.obtainUriResult()));
             } else {
                 uploadPhotoVm.upload(MatisseCamera.obtainPathResult());
             }

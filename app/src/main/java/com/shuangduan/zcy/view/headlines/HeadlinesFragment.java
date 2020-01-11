@@ -94,6 +94,7 @@ public class HeadlinesFragment extends BaseLazyFragment {
                 headlinesVm.getHeadlines();
             }
         });
+
     }
 
     @Override

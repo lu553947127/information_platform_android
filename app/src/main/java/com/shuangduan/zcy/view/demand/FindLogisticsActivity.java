@@ -27,6 +27,7 @@ import com.shuangduan.zcy.utils.DateUtils;
 import com.shuangduan.zcy.utils.DensityUtil;
 import com.shuangduan.zcy.vm.DemandReleaseVm;
 import com.shuangduan.zcy.weight.AdaptationScrollView;
+import com.shuangduan.zcy.weight.XEditText;
 import com.shuangduan.zcy.weight.datepicker.CustomDatePicker;
 
 import java.text.ParseException;
@@ -56,19 +57,40 @@ public class FindLogisticsActivity extends BaseActivity {
     @BindView(R.id.rl_toolbar)
     RelativeLayout toolbar;
 
+    @BindView(R.id.et_materials_name)
+    XEditText etMaterialsName;
+    @BindView(R.id.et_material_number)
+    XEditText etMaterialsNum;
+    @BindView(R.id.et_send_address)
+    XEditText etSendAddress;
+    @BindView(R.id.et_receive_address)
+    XEditText etReceiveAddress;
+
     @BindView(R.id.tv_unit)
     TextView tvUnit;
+
+    @BindView(R.id.tv_receive_time)
+    TextView tvReceiveTime;
 
     @BindView(R.id.tv_start_time)
     TextView tvStartTime;
     @BindView(R.id.tv_end_time)
     TextView tvEndTime;
+    @BindView(R.id.et_name)
+    XEditText etName;
+    @BindView(R.id.et_phone)
+    XEditText etPhone;
+    @BindView(R.id.et_param)
+    XEditText etParam;
 
 
     private DemandReleaseVm vm;
 
     private SimpleDateFormat f;
     private Calendar c;
+
+    //接收时间
+    private String receiveTime;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -121,17 +143,25 @@ public class FindLogisticsActivity extends BaseActivity {
         vm.startTime = DateUtils.getTodayDate(c);
 
         tvStartTime.setText(vm.startTime);
+        tvReceiveTime.setText(vm.startTime);
 
         //获取数量单位返回数据
         vm.unitLiveData.observe(this, unitBean -> {
             unitList = unitBean;
         });
 
+        //发布找物流成功
+        vm.liveData.observe(this, result -> {
+            ToastUtils.showShort("发布找物流信息成功.");
+            finish();
+        });
+
+
         vm.getUnit();
     }
 
 
-    @OnClick({R.id.iv_bar_back, R.id.iv_bar_back_new, R.id.tv_unit, R.id.tv_start_time, R.id.tv_end_time})
+    @OnClick({R.id.iv_bar_back, R.id.iv_bar_back_new, R.id.tv_unit, R.id.tv_start_time, R.id.tv_end_time, R.id.tv_receive_time, R.id.tv_event})
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_bar_back:
@@ -140,6 +170,9 @@ public class FindLogisticsActivity extends BaseActivity {
                 break;
             case R.id.tv_unit:
                 getBottomSheetDialog(R.layout.dialog_is_grounding);
+                break;
+            case R.id.tv_receive_time:
+                showTimeDialog(tvReceiveTime, 2, vm.startTime);
                 break;
             case R.id.tv_start_time://项目周期（起始时间）
                 showTimeDialog(tvStartTime, 0, vm.startTime);
@@ -158,6 +191,23 @@ public class FindLogisticsActivity extends BaseActivity {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
+                break;
+            case R.id.tv_event:
+                int materialsNum;
+                String materialsName = etMaterialsName.getTrimmedString();
+
+                try {
+                    materialsNum = Integer.valueOf(etMaterialsNum.getTrimmedString());
+                } catch (Exception e) {
+                    materialsNum = 0;
+                }
+
+                String sendAddress = etSendAddress.getTrimmedString();
+                String receiveAddress = etReceiveAddress.getTrimmedString();
+                String name = etName.getTrimmedString();
+                String phone = etPhone.getTrimmedString();
+                String param = etParam.getTrimmedString();
+                vm.logisticsAdd(materialsName, materialsNum, unitId, sendAddress, receiveAddress, receiveTime, name, phone, param);
                 break;
         }
     }
@@ -178,8 +228,10 @@ public class FindLogisticsActivity extends BaseActivity {
                     }
                 }
                 vm.startTime = time;
-            } else {
+            } else if (type == 1) {
                 vm.endTime = time;
+            } else {
+                receiveTime = time;
             }
             tv.setText(time);
         }, "yyyy-MM-dd", showTime, "2040-12-31");

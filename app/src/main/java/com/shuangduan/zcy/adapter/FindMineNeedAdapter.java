@@ -6,6 +6,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.model.bean.DemandSubstanceBean;
+import com.shuangduan.zcy.model.bean.NeedBean;
+import com.shuangduan.zcy.model.bean.NeedInfoBean;
 
 import java.util.List;
 
@@ -19,39 +21,42 @@ import java.util.List;
  * @chang time
  * @class describe
  */
-public class FindMineNeedAdapter extends BaseQuickAdapter<DemandSubstanceBean.ListBean, BaseViewHolder> {
-    public FindMineNeedAdapter(int layoutResId, @Nullable List<DemandSubstanceBean.ListBean> data) {
+public class FindMineNeedAdapter extends BaseQuickAdapter<NeedInfoBean, BaseViewHolder> {
+    private int type;
+
+    public FindMineNeedAdapter(int layoutResId, @Nullable List<NeedInfoBean> data, int type) {
         super(layoutResId, data);
+        this.type = type;
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, DemandSubstanceBean.ListBean item) {
-        helper.setText(R.id.tv_title, item.getMaterial_name())
-                .setText(R.id.tv_acceptance_price,item.getAcceptance_price().equals("面议") ? item.getAcceptance_price() : String.format(mContext.getString(R.string.format_price_accept), item.getAcceptance_price()))
-                .setText(R.id.tv_time, String.format(mContext.getString(R.string.format_validity_period), item.getStart_time(), item.getEnd_time()))
-                .setText(R.id.tv_count, String.format(mContext.getString(R.string.format_demand_num), item.getCount()));
-
-        switch (item.getStatus()){
+    protected void convert(BaseViewHolder helper, NeedInfoBean item) {
+        switch (type) {
             case 1:
-                helper.setText(R.id.tv_status, "审核中")
-                .setTextColor(R.id.tv_status,mContext.getResources().getColor(R.color.color_F88037));
                 break;
             case 2:
-                helper.setText(R.id.tv_status, "审核通过")
-                        .setTextColor(R.id.tv_status,mContext.getResources().getColor(R.color.color_EF583E));
+                helper.setText(R.id.tv_title, item.materialName)
+                        .setText(R.id.tv_status, item.state)
+                        .setGone(R.id.tv_acceptance_price, false)
+                        .setText(R.id.tv_count, String.format(mContext.getString(R.string.format_materials_num_unit), item.materialCount,item.unit))
+                        .setText(R.id.tv_time, String.format(mContext.getString(R.string.format_validity_period), item.startTime, item.endTime));
                 break;
             case 3:
-                helper.setText(R.id.tv_status, "驳回")
-                        .setTextColor(R.id.tv_status,mContext.getResources().getColor(R.color.colorTvHint));
-                break;
-            case 4:
-                helper.setText(R.id.tv_status, "已取消")
-                        .setTextColor(R.id.tv_status,mContext.getResources().getColor(R.color.colorTvHint));
-                break;
-            case 5:
-                helper.setText(R.id.tv_status, "失效")
-                        .setTextColor(R.id.tv_status,mContext.getResources().getColor(R.color.colorTvHint));
+                helper.setText(R.id.tv_title, item.remark)
+                        .setText(R.id.tv_status, item.state)
+                        .setGone(R.id.tv_acceptance_price, false)
+                        .setGone(R.id.tv_count, false)
+                        .setText(R.id.tv_time, String.format(mContext.getString(R.string.format_validity_period), item.startTime, item.endTime));
                 break;
         }
+
+        if (item.state.equals("已提交")) {
+            helper.setTextColor(R.id.tv_status, mContext.getResources().getColor(R.color.color_F88037));
+        } else if (item.state.equals("已完成")) {
+            helper.setTextColor(R.id.tv_status, mContext.getResources().getColor(R.color.color_EF583E));
+        } else {
+            helper.setTextColor(R.id.tv_status, mContext.getResources().getColor(R.color.colorTvHint));
+        }
+
     }
 }

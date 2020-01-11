@@ -65,7 +65,7 @@ public class FindMineFoundationFragment extends BaseLazyFragment implements Empt
 
         rv.setLayoutManager(new LinearLayoutManager(mContext));
         rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
-        mAdapter = new FindMineNeedAdapter(R.layout.item_demand_substance_need, null);
+        mAdapter = new FindMineNeedAdapter(R.layout.item_demand_substance_need, null,1);
 //        mAdapter.setEmptyView(R.layout.layout_loading, rv);
         mAdapter.setEmptyView(emptyView);
         rv.setAdapter(mAdapter);

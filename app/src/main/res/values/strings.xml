@@ -498,6 +498,8 @@
     <string name="format_supply_num">供应数量: %1$s</string>
     <string name="format_commission">佣金: %1$s元</string>
     <string name="format_price_unit">元/%1$s</string>
+    <string name="format_materials_num">物资数量: %1$s</string>
+    <string name="format_materials_num_unit">物资数量: %1$s%2$s</string>
 
     <string name="im_no_friend">暂无更多联系人</string>
     <string name="im_no_group">暂无更多群聊</string>
@@ -777,8 +779,10 @@
 
     <!--   发布需求 -->
     <string name="find_logistics">找物流</string>
+    <string name="find_logistics_details">找物流详情</string>
     <string name="find_foundation">找基地</string>
     <string name="find_blue_print">找方案</string>
+    <string name="find_blue_print_details">找方案详情</string>
     <string name="find_send_address">发货地点</string>
     <string name="colon_send_address">发货地点:</string>
     <string name="find_receive_address">接收地点</string>

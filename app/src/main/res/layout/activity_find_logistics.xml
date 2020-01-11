@@ -62,7 +62,7 @@
                     android:text="@string/material_number" />
 
                 <com.shuangduan.zcy.weight.XEditText
-                    android:id="@+id/et_email"
+                    android:id="@+id/et_material_number"
                     style="@style/FindNeedEditStyle"
                     android:layout_width="0dp"
                     android:layout_weight="1"

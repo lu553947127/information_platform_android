@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -26,6 +27,7 @@ import com.shuangduan.zcy.utils.DateUtils;
 import com.shuangduan.zcy.utils.DensityUtil;
 import com.shuangduan.zcy.vm.DemandReleaseVm;
 import com.shuangduan.zcy.weight.AdaptationScrollView;
+import com.shuangduan.zcy.weight.XEditText;
 import com.shuangduan.zcy.weight.datepicker.CustomDatePicker;
 
 import java.text.ParseException;
@@ -55,13 +57,37 @@ public class FindFoundationActivity extends BaseActivity {
     @BindView(R.id.rl_toolbar)
     RelativeLayout toolbar;
 
+
+    @BindView(R.id.et_materials_name)
+    XEditText etMaterialsName;
+    @BindView(R.id.et_material_number)
+    XEditText etMaterialNum;
+
     @BindView(R.id.tv_unit)
     TextView tvUnit;
+    @BindView(R.id.et_existing_address)
+    XEditText etExistingAddress;
+    @BindView(R.id.et_need_address)
+    XEditText etNeedAddress;
+    @BindView(R.id.et_distance)
+    XEditText etDistance;
+
 
     @BindView(R.id.tv_start_time)
     TextView tvStartTime;
     @BindView(R.id.tv_end_time)
     TextView tvEndTime;
+
+    @BindView(R.id.radio)
+    RadioGroup radioGroup;
+
+    @BindView(R.id.et_name)
+    XEditText etName;
+    @BindView(R.id.et_phone)
+    XEditText etPhone;
+
+    @BindView(R.id.et_param)
+    XEditText etParam;
 
     private DemandReleaseVm vm;
 
@@ -109,6 +135,15 @@ public class FindFoundationActivity extends BaseActivity {
             }
         });
 
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId){
+
+                }
+            }
+        });
+
 
         f = new SimpleDateFormat("yyyy-MM-dd");
         c = Calendar.getInstance();
@@ -128,7 +163,7 @@ public class FindFoundationActivity extends BaseActivity {
         vm.getUnit();
     }
 
-    @OnClick({R.id.iv_bar_back, R.id.iv_bar_back_new, R.id.tv_unit, R.id.tv_start_time, R.id.tv_end_time})
+    @OnClick({R.id.iv_bar_back, R.id.iv_bar_back_new, R.id.tv_unit, R.id.tv_start_time, R.id.tv_end_time, R.id.tv_event})
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_bar_back:
@@ -155,6 +190,9 @@ public class FindFoundationActivity extends BaseActivity {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
+                break;
+            case R.id.tv_event:
+
                 break;
         }
     }

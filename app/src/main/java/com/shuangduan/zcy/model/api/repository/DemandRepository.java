@@ -10,6 +10,8 @@ import com.shuangduan.zcy.model.bean.DemandReleaseBean;
 import com.shuangduan.zcy.model.bean.DemandSubstanceBean;
 import com.shuangduan.zcy.model.bean.FindRelationshipAcceptBean;
 import com.shuangduan.zcy.model.bean.FindRelationshipReleaseBean;
+import com.shuangduan.zcy.model.bean.NeedBean;
+import com.shuangduan.zcy.model.bean.NeedInfoBean;
 import com.shuangduan.zcy.model.bean.RelationshipDetailBean;
 import com.shuangduan.zcy.model.bean.RelationshipOrderBean;
 import com.shuangduan.zcy.model.bean.SubstanceDetailBean;
@@ -154,6 +156,7 @@ public class DemandRepository extends BaseRepository {
 
     /**
      * 发布找物流
+     *
      * @param liveData
      * @param pageStateLiveData
      * @param userId
@@ -173,6 +176,71 @@ public class DemandRepository extends BaseRepository {
                              String deliveryAddress, String receivingAddress, String receivingTime, String startTime, String endTime, String personalName, String tel, String remark) {
         request(apiService.logisticsAdd(userId, materialName, materialCount, unit, deliveryAddress, receivingAddress, receivingTime, startTime, endTime, personalName, tel, remark)).
                 setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    /**
+     * 个人中心-找方案列表
+     *
+     * @param liveData
+     * @param pageStateLiveData
+     * @param userId
+     * @param page
+     */
+    public void drawingList(MutableLiveData<NeedBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int page) {
+        request(apiService.drawingList(userId, page)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    /**
+     * 个人中心-找方案详情
+     *
+     * @param liveData
+     * @param pageStateLiveData
+     * @param userId
+     * @param id
+     */
+    public void drawingDetail(MutableLiveData<NeedInfoBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int id) {
+        request(apiService.drawingDetail(userId, id)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    /**
+     * 个人中心-取消找方案
+     *
+     * @param liveData
+     * @param pageStateLiveData
+     * @param userId
+     * @param id
+     */
+    public void drawingClose(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int userId, int id) {
+        request(apiService.drawingClose(userId, id)).setData(liveData).setData(pageStateLiveData).send();
+    }
+
+
+    /**
+     * 个人中心-找物流列表
+     *
+     * @param liveData
+     * @param pageStateLiveData
+     * @param userId
+     * @param page
+     */
+    public void logisticsList(MutableLiveData<NeedBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int page) {
+        request(apiService.logisticsList(userId, page)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    /**
+     * 个人中心-找物流详细
+     *
+     * @param liveData
+     * @param pageStateLiveData
+     * @param userId
+     * @param id
+     */
+    public void logisticsDetail(MutableLiveData<NeedInfoBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int id) {
+        request(apiService.logisticsDetail(userId, id)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    public void logisticsClose(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int userId, int id) {
+        request(apiService.logisticsClose(userId, id)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
 }

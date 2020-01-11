@@ -4,17 +4,23 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.FindMineNeedAdapter;
 import com.shuangduan.zcy.base.BaseLazyFragment;
 import com.shuangduan.zcy.factory.EmptyViewFactory;
+import com.shuangduan.zcy.model.api.PageState;
+import com.shuangduan.zcy.view.demand.FindBluePrintActivity;
+import com.shuangduan.zcy.vm.DemandReleaseVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
 import butterknife.BindView;
@@ -38,6 +44,7 @@ public class FindMineDrawingFragment extends BaseLazyFragment implements EmptyVi
     @BindView(R.id.refresh)
     SmartRefreshLayout refresh;
     private FindMineNeedAdapter mAdapter;
+    private DemandReleaseVm vm;
 
     public static FindMineDrawingFragment newInstance() {
         Bundle args = new Bundle();
@@ -62,34 +69,84 @@ public class FindMineDrawingFragment extends BaseLazyFragment implements EmptyVi
 
         rv.setLayoutManager(new LinearLayoutManager(mContext));
         rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
-        mAdapter = new FindMineNeedAdapter(R.layout.item_demand_substance_need, null);
-//        mAdapter.setEmptyView(R.layout.layout_loading, rv);
-        mAdapter.setEmptyView(emptyView);
+        mAdapter = new FindMineNeedAdapter(R.layout.item_demand_substance_need, null, 3);
+
         rv.setAdapter(mAdapter);
+
+
+        vm = ViewModelProviders.of(this).get(DemandReleaseVm.class);
+
 
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             Bundle bundle = new Bundle();
+            bundle.putInt("id",mAdapter.getData().get(position).id);
             ActivityUtils.startActivity(bundle, FindBluePrintDetailActivity.class);
         });
 
         refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                vm.moreDrawingList();
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                vm.drawingList();
+            }
+        });
+
+        vm.needLiveData.observe(this, result -> {
+
+            if (result.page == 1) {
+                mAdapter.setNewData(result.list);
+                mAdapter.setEmptyView(emptyView);
+            } else {
+                mAdapter.addData(result.list);
+            }
+
+            setNoMore(result.page,result.count);
+        });
+
+
+        vm.pageStateLiveData.observe(this, s -> {
+            switch (s) {
+                case PageState.PAGE_LOADING:
+                    showLoading();
+                    break;
+                default:
+                    hideLoading();
+                    break;
             }
         });
     }
 
+    private void setNoMore(int page, int count) {
+        if (page == 1) {
+            if (page * 10 >= count) {
+                if (refresh.getState() == RefreshState.None) {
+                    refresh.setNoMoreData(true);
+                } else {
+                    refresh.finishRefreshWithNoMoreData();
+                }
+            } else {
+                refresh.finishRefresh();
+            }
+        } else {
+            if (page * 10 >= count) {
+                refresh.finishLoadMoreWithNoMoreData();
+            } else {
+                refresh.finishLoadMore();
+            }
+        }
+    }
+
     @Override
     protected void initDataFromService() {
-
+        vm.drawingList();
     }
 
     @Override
     public void onEmptyClick() {
-
+        ActivityUtils.startActivity(FindBluePrintActivity.class);
     }
 }

@@ -8,8 +8,11 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseViewModel;
+import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.api.repository.DemandRepository;
 import com.shuangduan.zcy.model.bean.DemandReleaseBean;
+import com.shuangduan.zcy.model.bean.NeedBean;
+import com.shuangduan.zcy.model.bean.NeedInfoBean;
 import com.shuangduan.zcy.model.bean.RelationshipOrderBean;
 import com.shuangduan.zcy.model.bean.UnitBean;
 import com.shuangduan.zcy.utils.DateUtils;
@@ -39,12 +42,22 @@ public class DemandReleaseVm extends BaseViewModel {
     //找方案
     public MutableLiveData liveData;
 
+    //个人中心发布找方案、找物流、找基地列表
+    public MutableLiveData<NeedBean> needLiveData;
+    //个人中心发布找方案、找物流、找基地详情
+    public MutableLiveData<NeedInfoBean> needInfoLiveData;
+
+
     public MutableLiveData<String> pageStateLiveData;
     private int userId;
     public int releaseType = RELEASE_TYPE_RELATIONSHIP;
     public String startTime;
     public String endTime;
     public int way = 1;
+
+    private int drawingPage;
+
+    private int logisticsPage;
 
     public DemandReleaseVm() {
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
@@ -54,6 +67,9 @@ public class DemandReleaseVm extends BaseViewModel {
         unitLiveData = new MutableLiveData<>();
 
         liveData = new MutableLiveData();
+        needLiveData = new MutableLiveData<>();
+
+        needInfoLiveData = new MutableLiveData<>();
 
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
@@ -100,6 +116,58 @@ public class DemandReleaseVm extends BaseViewModel {
                              String receivingTime, String personalName, String tel, String remark) {
         new DemandRepository().logisticsAdd(liveData, pageStateLiveData, userId, materialName, materialCount,
                 unit, deliveryAddress, receivingAddress, receivingTime, startTime, endTime, personalName, tel, remark);
+    }
+
+
+    //个人中心发布找方案列表
+    public void drawingList() {
+        drawingPage = 1;
+        pageStateLiveData.postValue(PageState.PAGE_REFRESH);
+        new DemandRepository().drawingList(needLiveData, pageStateLiveData, userId, drawingPage);
+    }
+
+    public void moreDrawingList() {
+        drawingPage++;
+        pageStateLiveData.postValue(PageState.PAGE_REFRESH);
+        new DemandRepository().drawingList(needLiveData, pageStateLiveData, userId, drawingPage);
+    }
+
+    //个人中心发布找方案详情
+    public void drawingDetail(int id) {
+        pageStateLiveData.postValue(PageState.PAGE_REFRESH);
+        new DemandRepository().drawingDetail(needInfoLiveData, pageStateLiveData, userId, id);
+    }
+
+    //个人中心取消发布方案
+    public void drawingClose(int id) {
+        pageStateLiveData.postValue(PageState.PAGE_REFRESH);
+        new DemandRepository().drawingClose(needLiveData, pageStateLiveData, userId, id);
+    }
+
+
+    //个人中心发布找物流列表
+    public void logisticsList() {
+        logisticsPage = 1;
+        pageStateLiveData.postValue(PageState.PAGE_REFRESH);
+        new DemandRepository().logisticsList(needLiveData, pageStateLiveData, userId, logisticsPage);
+    }
+
+    public void moreLogisticsList() {
+        logisticsPage++;
+        pageStateLiveData.postValue(PageState.PAGE_REFRESH);
+        new DemandRepository().logisticsList(needLiveData, pageStateLiveData, userId, logisticsPage);
+    }
+
+    //个人中心发布找物流详情
+    public void logisticsDetail(int id) {
+        pageStateLiveData.postValue(PageState.PAGE_REFRESH);
+        new DemandRepository().logisticsDetail(needInfoLiveData, pageStateLiveData, userId, id);
+    }
+
+    //个人中心取消发布物流
+    public void logisticsClose(int id) {
+        pageStateLiveData.postValue(PageState.PAGE_REFRESH);
+        new DemandRepository().logisticsClose(needLiveData, pageStateLiveData, userId, id);
     }
 
 }
