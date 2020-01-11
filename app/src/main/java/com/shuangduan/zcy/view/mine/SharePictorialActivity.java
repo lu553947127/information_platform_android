@@ -75,19 +75,19 @@ public class SharePictorialActivity extends BaseActivity {
                 bitmap = PicturesUtils.createViewBitmap(llSharePictures);
                 LogUtils.e(bitmap);
             } else if (integer == PermissionVm.PERMISSION_STORAGE_NO) {
-                showLocationDialog();
+                showStorageDialog();
             }
         });
         permissionVm.getPermissionAlbum(new RxPermissions(this));
     }
 
-    private void showLocationDialog() {
+    private void showStorageDialog() {
         new CustomDialog(this)
                 .setTip("为了更好的为您服务，请您打开您的存储权限!")
                 .setCallBack(new BaseDialog.CallBack() {
                     @Override
                     public void cancel() {
-
+                        finish();
                     }
 
                     @Override

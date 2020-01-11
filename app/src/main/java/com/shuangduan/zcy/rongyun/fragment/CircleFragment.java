@@ -99,7 +99,7 @@ public class CircleFragment extends BaseFragment {
     private IMAddVm imAddVm;
     private HomeVm homeVm;
     private NoScrollViewPager viewPager;
-    BottomNavigationView navigation;
+    private BottomNavigationView navigation;
     private int manage_status,order_turnover,order_device;
 
     public static CircleFragment newInstance() {
