@@ -40,7 +40,6 @@ public class EquipmentFragment extends BaseLazyFragment implements EmptyViewFact
     @BindView(R.id.refresh)
     SmartRefreshLayout refresh;
     private MaterialVm materialVm;
-
     private View emptyView;
 
     public static EquipmentFragment newInstance() {
@@ -143,6 +142,4 @@ public class EquipmentFragment extends BaseLazyFragment implements EmptyViewFact
 
         materialVm.equipmentList(materialVm.materialFlag);
     }
-
-
 }

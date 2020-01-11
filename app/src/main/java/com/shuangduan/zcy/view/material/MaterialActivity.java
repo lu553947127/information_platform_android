@@ -27,7 +27,6 @@ import com.shuangduan.zcy.adapter.ViewPagerAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.pop.CommonPopupWindow;
-import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.SupplierCliqueBean;
 import com.shuangduan.zcy.model.event.SupplierEvent;
 import com.shuangduan.zcy.utils.DensityUtil;
@@ -149,17 +148,6 @@ public class MaterialActivity extends BaseActivity {
         tabLayout.addTab(tabLayout.newTab());
         vp.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), fragments, getResources().getStringArray(R.array.infrastructure)));
         tabLayout.setupWithViewPager(vp);
-
-        materialVm.pageStateLiveData.observe(this, s -> {
-            switch (s) {
-                case PageState.PAGE_LOADING:
-                    showLoading();
-                    break;
-                default:
-                    hideLoading();
-                    break;
-            }
-        });
     }
 
     @OnClick({R.id.iv_bar_back, R.id.iv_back, R.id.tv_open, R.id.tv_default, R.id.over, R.id.ll_name, R.id.ll_spec, R.id.ll_supplier, R.id.ll_supplier_method})

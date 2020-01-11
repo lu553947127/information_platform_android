@@ -140,6 +140,4 @@ public class SellFragment extends BaseLazyFragment implements EmptyViewFactory.E
         ((MaterialActivity) getActivity()).updateFilterStyle();
         materialVm.sellList(materialVm.materialFlag);
     }
-
-
 }
