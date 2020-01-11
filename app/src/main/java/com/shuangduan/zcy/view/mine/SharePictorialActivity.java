@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BaseDialog;
@@ -119,6 +120,10 @@ public class SharePictorialActivity extends BaseActivity {
             case R.id.ll_qq_stone://分享到QQ空间
                 break;
             case R.id.ll_download_pictures://保存图片到手机相册
+                if (bitmap == null){
+                    ToastUtils.showShort("保存图片失败");
+                    return;
+                }
                 PicturesUtils.saveImageToLocal(this,bitmap,1);
                 break;
         }
