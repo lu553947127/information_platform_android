@@ -18,8 +18,8 @@ import com.shuangduan.zcy.model.bean.SupplierStatusBean;
  * @class describe
  */
 public class SupplierRepository extends BaseRepository {
-    public void getSupplier(MutableLiveData<SupplierBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int page){
-        request(apiService.supplierList(userId, page)).setData(liveData).setPageState(pageStateLiveData).send();
+    public void getSupplier(MutableLiveData<SupplierBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, String title, int page){
+        request(apiService.supplierList(userId, title, page)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
     public void getSupplierDetail(MutableLiveData<SupplierDetailBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int id){

@@ -38,11 +38,10 @@ public class SupplierAdapter extends BaseQuickAdapter<SupplierBean.ListBean, Bas
 
     @Override
     protected void convert(BaseViewHolder helper, SupplierBean.ListBean item) {
-        helper.setText(R.id.tv_name, setSpan(item.getName()))
-                .setText(R.id.tv_company, item.getCompany())
-                .setText(R.id.tv_mobile, item.getTel())
+        helper.setText(R.id.tv_company, setSpan(item.getCompany()))
+                .setText(R.id.tv_mobile, setSpan(item.getTel()))
                 .setText(R.id.tv_area, String.format(mContext.getString(R.string.format_supplier_service_area), item.getServe_address()))
-                .setText(R.id.tv_production, String.format(mContext.getString(R.string.format_supplier_product), setSpan(item.getProduct())))
+                .setText(R.id.tv_production, setSpan(String.format(mContext.getString(R.string.format_supplier_product), item.getProduct())))
                 .setGone(R.id.iv_pic_first, item.getImages_json() != null && item.getImages_json().size() >= 1)
                 .setGone(R.id.iv_pic_second, item.getImages_json() != null && item.getImages_json().size() >= 2)
                 .setGone(R.id.iv_pic_third, item.getImages_json() != null && item.getImages_json().size() >= 3)

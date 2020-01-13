@@ -110,7 +110,6 @@ public class CustomConfig {
     public static final int SUBSCRIBE = 1;
     public static final int UNUSED = 2;
     public static final int ORDER_TYPE = 3;
-    public static final int NEED_TYPE = 4;
 
     public static final String PEOPLE_DEGREE = "people_degree";
     public static final int FIRST_DEGREE = 1;//1°关系收益

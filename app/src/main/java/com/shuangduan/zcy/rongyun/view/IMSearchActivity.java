@@ -169,7 +169,6 @@ public class IMSearchActivity extends BaseActivity {
             }
             return false;
         });
-//        imAddVm.search(edtKeyword.getText().toString());
     }
 
     @OnClick({R.id.iv_bar_back, R.id.tv_more_friend, R.id.tv_more_group})

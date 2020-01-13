@@ -21,7 +21,6 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.shuangduan.zcy.R;
-import com.shuangduan.zcy.adapter.SubscribeNeedAdapter;
 import com.shuangduan.zcy.adapter.SubscribeAdapter;
 import com.shuangduan.zcy.adapter.SubscribeOrderAdapter;
 import com.shuangduan.zcy.adminManage.view.order.OrderDetailsActivity;
@@ -40,7 +39,6 @@ import com.shuangduan.zcy.vm.MineSubVm;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-import static com.shuangduan.zcy.app.CustomConfig.NEED_TYPE;
 import static com.shuangduan.zcy.app.CustomConfig.ORDER_TYPE;
 import static com.shuangduan.zcy.app.CustomConfig.SUBSCRIBE;
 import static com.shuangduan.zcy.app.CustomConfig.UNUSED;
@@ -102,11 +100,6 @@ public class MineSubActivity extends BaseActivity {
                 tvBarTitle.setText(getString(R.string.subscribe_order));
                 ivBarRightSelect.setVisibility(View.GONE);
                 getOrder();
-                break;
-            case NEED_TYPE: //需用匹配
-                tvBarTitle.setText(getString(R.string.subscribe_need));
-                ivBarRightSelect.setVisibility(View.GONE);
-                getNeed();
                 break;
         }
 
@@ -271,42 +264,6 @@ public class MineSubActivity extends BaseActivity {
         });
 
         mineSubVm.subscribeOrder();
-    }
-
-
-    //订单提醒
-    private void getNeed() {
-
-        rv.setLayoutManager(new LinearLayoutManager(this));
-        SubscribeNeedAdapter needAdapter = new SubscribeNeedAdapter(R.layout.adapter_need_item, null);
-
-        rv.setAdapter(needAdapter);
-
-        needAdapter.setEmptyView(emptyViewFactory.createEmptyView(R.drawable.icon_empty_subscibe, R.string.empty_subscribe_need_info, 0, null));
-
-
-        needAdapter.setOnItemClickListener((helper, view, position) -> {
-//            mineSubVm.posOrder = position;
-//            SubscribeOrderBean.ListBean listBean = subscribeOrderAdapter.getData().get(position);
-//            Bundle bundle = new Bundle();
-//            bundle.putInt(CustomConfig.ADMIN_ORDER_ID, listBean.getType_id());
-//            bundle.putInt("manage_status", SPUtils.getInstance().getInt(CustomConfig.MANAGE_STATUS, 0));
-//            bundle.putInt("order_type", listBean.getType());
-//            ActivityUtils.startActivityForResult(bundle,this, OrderDetailsActivity.class,300);
-        });
-
-        //获取订单提醒列表数据
-//        mineSubVm.subscribeOrderLiveData.observe(this,subscribeOrderBean -> {
-//            if (subscribeOrderBean.getPage() == 1) {
-//                subscribeOrderAdapter.setNewData(subscribeOrderBean.getList());
-//                subscribeOrderAdapter.setEmptyView(emptyViewFactory.createEmptyView(R.drawable.icon_empty_subscibe, R.string.empty_material_subscribe_order_info, 0, null));
-//            }else {
-//                subscribeOrderAdapter.addData(subscribeOrderBean.getList());
-//            }
-//            setNoMore(subscribeOrderBean.getPage(), subscribeOrderBean.getCount());
-//        });
-
-//        mineSubVm.subscribeOrder();
     }
 
     private void setNoMore(int page, int count) {

@@ -1,7 +1,12 @@
 package com.shuangduan.zcy.view.supplier;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,6 +33,7 @@ import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.CustomDialog;
 import com.shuangduan.zcy.dialog.PayDialog;
+import com.shuangduan.zcy.factory.EmptyViewFactory;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.SupplierBean;
 import com.shuangduan.zcy.utils.SupplierUtils;
@@ -38,6 +44,8 @@ import com.shuangduan.zcy.vm.SupplierVm;
 import com.shuangduan.zcy.vm.UpdatePwdPayVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 import com.shuangduan.zcy.weight.XEditText;
+
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -52,7 +60,7 @@ import butterknife.OnClick;
  * @chang time
  * @class describe
  */
-public class SupplierActivity extends BaseActivity {
+public class SupplierActivity extends BaseActivity implements EmptyViewFactory.EmptyViewCallBack {
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
     @BindView(R.id.tv_bar_right)
@@ -69,6 +77,7 @@ public class SupplierActivity extends BaseActivity {
     XEditText edtKeyword;
     private UpdatePwdPayVm updatePwdPayVm;
     private CoinPayVm coinPayVm;
+    private SupplierVm supplierVm;
     private int supplier_status,id;
 
     @Override
@@ -87,6 +96,9 @@ public class SupplierActivity extends BaseActivity {
         tvBarTitle.setText(getString(R.string.supplier));
         tvBarRight.setVisibility(View.GONE);
         ivBarRight.setImageResource(R.drawable.add_white);
+
+        //筛选条件列表为空
+        View emptyView = emptyViewFactory.createEmptyView(R.drawable.icon_empty_project, R.string.empty_supplier, R.string.see_all, this);
 
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
@@ -128,12 +140,12 @@ public class SupplierActivity extends BaseActivity {
             ActivityUtils.startActivity(bundle, SupplierDetailActivity.class);
         });
 
-        SupplierVm supplierVm = ViewModelProviders.of(this).get(SupplierVm.class);
+        supplierVm = ViewModelProviders.of(this).get(SupplierVm.class);
         supplierVm.supplierLiveData.observe(this, supplierBean -> {
             adapter.setKeyword(edtKeyword.getText().toString());
             if (supplierBean.getPage() == 1) {
                 adapter.setNewData(supplierBean.getList());
-                adapter.setEmptyView(R.layout.layout_empty, rv);
+                adapter.setEmptyView(emptyView);
             } else {
                 adapter.addData(supplierBean.getList());
             }
@@ -150,17 +162,48 @@ public class SupplierActivity extends BaseActivity {
         refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                supplierVm.getMoreSupplier();
+                supplierVm.getMoreSupplier(edtKeyword.getText().toString());
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                supplierVm.getSupplier();
+                supplierVm.getSupplier(edtKeyword.getText().toString());
                 supplierVm.supplierStatus();
             }
         });
-        supplierVm.getSupplier();
+        supplierVm.getSupplier(edtKeyword.getText().toString());
         supplierVm.supplierStatus();
+
+        edtKeyword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                supplierVm.getSupplier(edtKeyword.getText().toString());
+            }
+        });
+
+        edtKeyword.setOnEditorActionListener((textView, i, keyEvent) -> {
+            if (i == EditorInfo.IME_ACTION_SEARCH) {
+                // 先隐藏键盘
+                ((InputMethodManager) Objects.requireNonNull(edtKeyword.getContext()
+                        .getSystemService(Context.INPUT_METHOD_SERVICE)))
+                        .hideSoftInputFromWindow(Objects.requireNonNull(SupplierActivity.this.getCurrentFocus()).getWindowToken(),
+                                InputMethodManager.HIDE_NOT_ALWAYS);
+                // 搜索，进行自己要的操作...
+                supplierVm.getSupplier(edtKeyword.getText().toString());
+                return true;
+            }
+            return false;
+        });
 
 
         //支付密码状态查询
@@ -189,7 +232,7 @@ public class SupplierActivity extends BaseActivity {
         coinPayVm.supplierPayLiveData.observe(this, coinPayResultBean -> {
             if (coinPayResultBean.getPay_status() == 1) {
                 ToastUtils.showShort(getString(R.string.buy_success));
-                supplierVm.getSupplier();
+                supplierVm.getSupplier(edtKeyword.getText().toString());
             } else {
                 //余额不足
                 addDialog(new CustomDialog(this)
@@ -264,5 +307,11 @@ public class SupplierActivity extends BaseActivity {
                 SupplierUtils.SupplierCustom(this,supplier_status,id,"supplier");
                 break;
         }
+    }
+
+    @Override
+    public void onEmptyClick() {
+        edtKeyword.getText().clear();
+        supplierVm.getSupplier("");
     }
 }

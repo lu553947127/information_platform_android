@@ -105,9 +105,12 @@ public class SharePictorialActivity extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.ll_wechat_friend,R.id.ll_wechat_circle,R.id.ll_qq_friend,R.id.ll_qq_stone,R.id.ll_download_pictures})
+    @OnClick({R.id.iv_bar_back,R.id.ll_wechat_friend,R.id.ll_wechat_circle,R.id.ll_qq_friend,R.id.ll_qq_stone,R.id.ll_download_pictures})
     void onClick(View view){
         switch (view.getId()){
+            case R.id.iv_bar_back:
+                finish();
+                break;
             case R.id.ll_wechat_friend://分享到微信朋友
                 ShareUtils.shareWechatFriend(this,new File(PicturesUtils.saveImageToLocal(this,bitmap,0)));
                 break;

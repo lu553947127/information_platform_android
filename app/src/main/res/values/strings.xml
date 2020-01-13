@@ -697,6 +697,7 @@
     <string name="empty_recommend_substance_info">暂无推荐物资</string>
     <string name="empty_recommend_buyer_info">暂无推荐买家</string>
     <string name="empty_buyer_info">暂无找买家数据</string>
+    <string name="empty_supplier">未找到相关的供应商\n查看全部优质供应商信息</string>
     <string name="empty_substance_screen_info">未找到相关的物资信息\n查看全部物资信息</string>
     <string name="empty_project_income_info">您还没有信息\n收益,去发布工程信息吧</string>
     <string name="empty_dynamics_income_info">您还没有动态\n收益,去发布动态信息吧 </string>

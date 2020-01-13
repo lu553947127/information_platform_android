@@ -53,16 +53,16 @@ public class SupplierVm extends BaseViewModel {
         supplierStatusLiveData = new MutableLiveData<>();
     }
 
-    public void getSupplier(){
+    public void getSupplier(String title){
         page = 1;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
-        new SupplierRepository().getSupplier(supplierLiveData, pageStateLiveData, userId, page);
+        new SupplierRepository().getSupplier(supplierLiveData, pageStateLiveData, userId, title, page);
     }
 
-    public void getMoreSupplier(){
+    public void getMoreSupplier(String title){
         page ++;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
-        new SupplierRepository().getSupplier(supplierLiveData, pageStateLiveData, userId, page);
+        new SupplierRepository().getSupplier(supplierLiveData, pageStateLiveData, userId, title, page);
     }
 
     public void getDetail(int id){
