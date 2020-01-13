@@ -129,7 +129,7 @@ public class FindBluePrintDetailActivity extends BaseActivity {
                 break;
             case R.id.iv_cancel:
                 new CustomDialog(FindBluePrintDetailActivity.this)
-                        .setTip(getString(R.string.exit_confirm))
+                        .setTip(getString(R.string.cancel_find_blue_print))
                         .setCallBack(new BaseDialog.CallBack() {
                             @Override
                             public void cancel() {

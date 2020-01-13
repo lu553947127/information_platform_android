@@ -819,5 +819,8 @@
     <string name="empty_mine_foundation_info">您还没有发过找基地\n前往发布</string>
     <string name="empty_mine_logistics_info">您还没有发过找物流\n前往发布</string>
     <string name="empty_mine_blue_print_info">您还没有发过找方案\n前往发布</string>
+    
+    <string name="cancel_find_logistics">确定取消找物流</string>
+    <string name="cancel_find_blue_print">确定取消找方案</string>
 
 </resources>

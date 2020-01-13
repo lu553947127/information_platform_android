@@ -128,7 +128,7 @@ public class FindLogisticsDetailActivity extends BaseActivity {
                 break;
             case R.id.iv_cancel:
                 new CustomDialog(FindLogisticsDetailActivity.this)
-                        .setTip(getString(R.string.exit_confirm))
+                        .setTip(getString(R.string.cancel_find_logistics))
                         .setCallBack(new BaseDialog.CallBack() {
                             @Override
                             public void cancel() {
