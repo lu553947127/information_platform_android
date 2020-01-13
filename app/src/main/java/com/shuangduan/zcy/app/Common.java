@@ -20,4 +20,6 @@ public class Common {
     public static final String WEATHER_INFO="https://restapi.amap.com/v3/weather/weatherInfo";
     //天气预报 请求h5标签
     public static final String WEATHER_H5="https://apip.weatherdt.com/h5.html?id=jczA7zmFOH";
+    //邀请好友二维码图片
+    public static final String QR_CODE="http://information-api.oss-cn-qingdao.aliyuncs.com/apk/1578893863.png";
 }
