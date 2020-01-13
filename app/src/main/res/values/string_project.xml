@@ -34,4 +34,6 @@
 
     <string name="project_dynamics">动态</string>
 
+    <string name="format_project_usufruct">%1$s收益权</string>
+
 </resources>

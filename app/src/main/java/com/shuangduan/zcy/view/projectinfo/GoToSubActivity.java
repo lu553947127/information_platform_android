@@ -114,14 +114,14 @@ public class GoToSubActivity extends BaseActivity {
                 for (int i = 0; i < projectSubFirstBean.getSelect().size(); i++) {
                     ProjectSubFirstBean.SelectBean selectBean = projectSubFirstBean.getSelect().get(i);
                     if (i == 0) {
-                        rbFirst.setText(selectBean.getTime()+"收益权");
+                        rbFirst.setText(getString(R.string.format_project_usufruct,selectBean.getTime()));
                         tvSubPrice.setText(selectBean.getPrice());
                         tvExpectedReturn.setText(selectBean.getExpect_price());
                         goToSubVm.month = selectBean.getMonths();
                     }else if (i == 1){
-                        rbSecond.setText(selectBean.getTime()+"收益权");
+                        rbSecond.setText(getString(R.string.format_project_usufruct,selectBean.getTime()));
                     }else if (i == 2){
-                        rbThird.setText(selectBean.getTime()+"收益权");
+                        rbThird.setText(getString(R.string.format_project_usufruct,selectBean.getTime()));
                     }
                 }
             }

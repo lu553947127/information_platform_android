@@ -85,7 +85,7 @@ public class SubOrderActivity extends BaseActivity {
         tvProjectName.setText(confirmBean.getTitle());
         tvSubAmount.setText(confirmBean.getPrice()+"元");
         tvOrderNum.setText(confirmBean.getOrder_sn());
-        tvSubCycle.setText(confirmBean.getTime());
+        tvSubCycle.setText(getString(R.string.format_project_usufruct,confirmBean.getTime()));
         String price = "<font>共计支付</font><font color = '#EF583E'>" + confirmBean.getPrice() +"</font><font>元</font>";
         tvPrice.setText(Html.fromHtml(price));
         initPay();
