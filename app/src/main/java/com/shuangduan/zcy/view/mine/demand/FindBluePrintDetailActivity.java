@@ -44,8 +44,11 @@ public class FindBluePrintDetailActivity extends BaseActivity {
     @BindView(R.id.iv_state)
     ImageView ivState;
 
+    @BindView(R.id.tv_name_title)
+    TextView tvNameTitle;
     @BindView(R.id.tv_project_name)
     TextView tvProjectName;
+
     @BindView(R.id.tv_project_address)
     TextView tvProjectAddress;
     @BindView(R.id.tv_need_time)
@@ -100,7 +103,7 @@ public class FindBluePrintDetailActivity extends BaseActivity {
 
         });
 
-        vm.needLiveData.observe(this,result->{
+        vm.liveData.observe(this, result -> {
             ToastUtils.showShort("取消找方案成功.");
             finish();
         });
@@ -108,17 +111,6 @@ public class FindBluePrintDetailActivity extends BaseActivity {
 
         vm.drawingDetail(id);
 
-
-        vm.pageStateLiveData.observe(this, s -> {
-            switch (s) {
-                case PageState.PAGE_LOADING:
-                    showLoading();
-                    break;
-                default:
-                    hideLoading();
-                    break;
-            }
-        });
     }
 
     @OnClick({R.id.iv_bar_back, R.id.iv_cancel})

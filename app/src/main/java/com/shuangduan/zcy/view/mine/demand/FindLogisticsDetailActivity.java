@@ -17,6 +17,7 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.CustomDialog;
+import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.view.demand.FindLogisticsActivity;
 import com.shuangduan.zcy.vm.DemandReleaseVm;
 
@@ -90,7 +91,7 @@ public class FindLogisticsDetailActivity extends BaseActivity {
 
         vm.needInfoLiveData.observe(this, result -> {
             tvMaterialName.setText(result.materialName);
-            tvMaterialNum.setText(result.materialCount);
+            tvMaterialNum.setText(result.materialCount + result.unit);
             tvSendAddress.setText(result.deliveryAddress);
             tvReceiveAddress.setText(result.receivingAddress);
             tvReceiveTime.setText(result.receivingTime);
@@ -105,22 +106,34 @@ public class FindLogisticsDetailActivity extends BaseActivity {
                 ivState.setImageResource(R.drawable.icon_cancel);
             } else if (result.state.equals("失效")) {
                 ivState.setImageResource(R.drawable.icon_invalid_new);
-            } else if (result.state.equals("已提交")) {
-                ivCancel.setVisibility(View.VISIBLE);
             }
+
+            ivCancel.setVisibility(result.operaStatus == 1 ? View.VISIBLE : View.INVISIBLE);
 
         });
 
 
-        vm.needLiveData.observe(this,result->{
+        vm.liveData.observe(this, result -> {
             ToastUtils.showShort("取消找物流成功.");
             finish();
+        });
+
+
+        vm.pageStateLiveData.observe(this, s -> {
+            switch (s) {
+                case PageState.PAGE_LOADING:
+                    showLoading();
+                    break;
+                default:
+                    hideLoading();
+                    break;
+            }
         });
 
         vm.logisticsDetail(id);
     }
 
-    @OnClick({R.id.iv_bar_back,R.id.iv_cancel})
+    @OnClick({R.id.iv_bar_back, R.id.iv_cancel})
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_bar_back:

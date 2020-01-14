@@ -200,18 +200,6 @@ public class DemandRepository extends BaseRepository {
         request(apiService.drawingDetail(userId, id)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
-    /**
-     * 个人中心-取消找方案
-     *
-     * @param liveData
-     * @param pageStateLiveData
-     * @param userId
-     * @param id
-     */
-    public void drawingClose(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int userId, int id) {
-        request(apiService.drawingClose(userId, id)).setData(liveData).setData(pageStateLiveData).send();
-    }
-
 
     /**
      * 个人中心-找物流列表
@@ -237,8 +225,91 @@ public class DemandRepository extends BaseRepository {
         request(apiService.logisticsDetail(userId, id)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
+
+    /**
+     * 个人中心-取消找方案详情
+     *
+     * @param liveData
+     * @param pageStateLiveData
+     * @param userId
+     * @param id
+     */
     public void logisticsClose(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int userId, int id) {
         request(apiService.logisticsClose(userId, id)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+
+    /**
+     * 个人中心-取消找方案
+     *
+     * @param liveData
+     * @param pageStateLiveData
+     * @param userId
+     * @param id
+     */
+    public void drawingClose(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int userId, int id) {
+        request(apiService.drawingClose(userId, id)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    /**
+     * 发布找基地
+     *
+     * @param liveData
+     * @param pageStateLiveData
+     * @param userId
+     * @param materialName
+     * @param materialCount
+     * @param unit
+     * @param existingLocation
+     * @param needLocation
+     * @param storageDistance
+     * @param isReform
+     * @param startTime
+     * @param endTime
+     * @param personalName
+     * @param tel
+     * @param remark
+     */
+    public void baseAdd(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int userId, String materialName, int materialCount, int unit,
+                        String existingLocation, String needLocation, String storageDistance, int isReform, String startTime, String endTime, String personalName,
+                        String tel, String remark) {
+        request(apiService.baseAdd(userId, materialName, materialCount, unit, existingLocation, needLocation, storageDistance, isReform, startTime, endTime, personalName,
+                tel, remark)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    /**
+     * 个人需求中心--- 找基地列表
+     *
+     * @param liveData
+     * @param pageStateLiveData
+     * @param userId
+     * @param page
+     */
+    public void baseList(MutableLiveData<NeedBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int page) {
+        request(apiService.baseList(userId, page)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    /**
+     * 个人需求中心 --- 找基地详细
+     *
+     * @param liveData
+     * @param pageStateLiveData
+     * @param userId
+     * @param id
+     */
+    public void baseDetail(MutableLiveData<NeedInfoBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int id) {
+        request(apiService.baseDetail(userId, id)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
+
+    /**
+     * 个人需求中心 --- 取消发布的找基地
+     * @param liveData
+     * @param pageStateLiveData
+     * @param userId
+     * @param id
+     */
+    public void baseClose(MutableLiveData liveData, MutableLiveData<String> pageStateLiveData, int userId, int id) {
+        request(apiService.baseClose(userId, id)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
 }

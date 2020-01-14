@@ -141,6 +141,7 @@ public class FindLogisticsActivity extends BaseActivity {
         vm = ViewModelProviders.of(this).get(DemandReleaseVm.class);
 
         vm.startTime = DateUtils.getTodayDate(c);
+        receiveTime = DateUtils.getTodayDate(c);
 
         tvStartTime.setText(vm.startTime);
         tvReceiveTime.setText(vm.startTime);

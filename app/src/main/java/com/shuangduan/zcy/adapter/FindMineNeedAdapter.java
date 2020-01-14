@@ -33,7 +33,6 @@ public class FindMineNeedAdapter extends BaseQuickAdapter<NeedInfoBean, BaseView
     protected void convert(BaseViewHolder helper, NeedInfoBean item) {
         switch (type) {
             case 1:
-                break;
             case 2:
                 helper.setText(R.id.tv_title, item.materialName)
                         .setText(R.id.tv_status, item.state)

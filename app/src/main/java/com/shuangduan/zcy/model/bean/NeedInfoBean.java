@@ -58,4 +58,19 @@ public class NeedInfoBean {
     //取消状态 1可取消 0不可取消
     @SerializedName("opera_status")
     public int operaStatus;
+
+    //找基地 现存地点
+    @SerializedName("existing_location")
+    public String existingLocation;
+    //找基地 需要地点
+    @SerializedName("need_location")
+    public String needLocation;
+    //找基地 可接受距离
+    @SerializedName("storage_distance")
+    public String storageDistance;
+
+    //找基地 是否需要改制 1是 2否
+    @SerializedName("is_reform")
+    public int isReform;
+
 }

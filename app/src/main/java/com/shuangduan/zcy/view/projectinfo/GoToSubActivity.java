@@ -132,9 +132,7 @@ public class GoToSubActivity extends BaseActivity {
             bundle.putParcelable(CustomConfig.ORDER, projectSubConfirmBean);
             ActivityUtils.startActivity(bundle, SubOrderActivity.class);
         });
-        goToSubVm.pageStateLiveData.observe(this, s -> {
-            showPageState(s);
-        });
+        goToSubVm.pageStateLiveData.observe(this, this::showPageState);
         goToSubVm.startWarrant();
     }
 

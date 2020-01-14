@@ -1,5 +1,6 @@
 package com.shuangduan.zcy.view.demand;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -94,6 +95,9 @@ public class FindFoundationActivity extends BaseActivity {
     private SimpleDateFormat f;
     private Calendar c;
 
+    //是否需要改制 1是 2否
+    private int isReform;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         isTranslationBar = true;
@@ -110,6 +114,7 @@ public class FindFoundationActivity extends BaseActivity {
         return false;
     }
 
+    @SuppressLint("SimpleDateFormat")
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         //滑动布局滑动监听
@@ -123,7 +128,6 @@ public class FindFoundationActivity extends BaseActivity {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
                 if (lastScrollY < h) {
-                    LogUtils.e(lastScrollY);
                     scrollY = Math.min(h, scrollY);
                     mScrollY_2 = scrollY > h ? h : scrollY;
                     toolbar.setAlpha(1f * mScrollY_2 / h);
@@ -135,12 +139,15 @@ public class FindFoundationActivity extends BaseActivity {
             }
         });
 
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId){
-
-                }
+        isReform = 1;
+        radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            switch (checkedId) {
+                case R.id.cb_yes:
+                    isReform = 1;
+                    break;
+                case R.id.cb_no:
+                    isReform = 2;
+                    break;
             }
         });
 
@@ -159,6 +166,14 @@ public class FindFoundationActivity extends BaseActivity {
         vm.unitLiveData.observe(this, unitBean -> {
             unitList = unitBean;
         });
+
+
+        //发布找基地成功
+        vm.liveData.observe(this, result -> {
+            ToastUtils.showShort("发布找基地需求成功.");
+            finish();
+        });
+
 
         vm.getUnit();
     }
@@ -192,7 +207,22 @@ public class FindFoundationActivity extends BaseActivity {
                 }
                 break;
             case R.id.tv_event:
+                int materialsNum;
+                String materialName = etMaterialsName.getTrimmedString();
+                try {
+                    materialsNum = Integer.valueOf(etMaterialNum.getTrimmedString());
+                } catch (Exception e) {
+                    materialsNum = 0;
+                }
 
+                String existingAddress = etExistingAddress.getTrimmedString();
+                String needAddress = etNeedAddress.getTrimmedString();
+                String distance = etDistance.getTrimmedString();
+                String name = etName.getTrimmedString();
+                String phone = etPhone.getTrimmedString();
+                String remark = etParam.getTrimmedString();
+
+                vm.baseAdd(materialName, materialsNum, unitId, existingAddress, needAddress, distance, isReform, name, phone, remark);
                 break;
         }
     }

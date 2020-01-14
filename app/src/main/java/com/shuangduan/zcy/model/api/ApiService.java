@@ -1136,14 +1136,6 @@ public interface ApiService {
             @Field("id") int id
     );
 
-    //个人中心-取消找方案
-    @FormUrlEncoded
-    @POST("api/Relation/drawingClose")
-    Flowable<BaseResponse> drawingClose(
-            @Field("user_id") int userId,
-            @Field("id") int id
-    );
-
 
     //个人中心-找物流发布列表
     @FormUrlEncoded
@@ -1168,6 +1160,60 @@ public interface ApiService {
             @Field("user_id") int userId,
             @Field("id") int id
     );
+
+    //个人中心-取消找方案
+    @FormUrlEncoded
+    @POST("api/Relation/drawingClose")
+    Flowable<BaseResponse> drawingClose(
+            @Field("user_id") int userId,
+            @Field("id") int id
+    );
+
+
+    //发布找基地
+    @FormUrlEncoded
+    @POST("api/Relation/baseAdd")
+    Flowable<BaseResponse> baseAdd(
+            @Field("user_id") int userId,
+            @Field("material_name") String materialName,
+            @Field("material_count") int materialCount,
+            @Field("unit") int unit,
+            @Field("existing_location") String existingLocation,
+            @Field("need_location") String needLocation,
+            @Field("storage_distance") String storageDistance,
+            @Field("is_reform") int isReform,
+            @Field("start_time") String startTime,
+            @Field("end_time") String endTime,
+            @Field("personal_name") String personal_name,
+            @Field("tel") String tel,
+            @Field("remark") String remark
+    );
+
+    //个人中心-找基地发布列表
+    @FormUrlEncoded
+    @POST("api/Relation/baseList")
+    Flowable<BaseResponse<NeedBean>> baseList(
+            @Field("user_id") int userId,
+            @Field("page") int page
+    );
+
+
+    //个人中心-找基地详情
+    @FormUrlEncoded
+    @POST("api/Relation/baseDetail")
+    Flowable<BaseResponse<NeedInfoBean>> baseDetail(
+            @Field("user_id") int userId,
+            @Field("id") int id
+    );
+
+    //个人中心-取消找基地
+    @FormUrlEncoded
+    @POST("api/Relation/baseClose")
+    Flowable<BaseResponse> baseClose(
+            @Field("user_id") int userId,
+            @Field("id") int id
+    );
+
 
     @FormUrlEncoded
     @POST("api/Relation/waitPay")

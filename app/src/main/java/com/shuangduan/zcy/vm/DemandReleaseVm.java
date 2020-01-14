@@ -49,6 +49,9 @@ public class DemandReleaseVm extends BaseViewModel {
 
 
     public MutableLiveData<String> pageStateLiveData;
+
+//    public MutableLiveData cancelBluePrint;
+
     private int userId;
     public int releaseType = RELEASE_TYPE_RELATIONSHIP;
     public String startTime;
@@ -59,6 +62,8 @@ public class DemandReleaseVm extends BaseViewModel {
 
     private int logisticsPage;
 
+    private int basePage;
+
     public DemandReleaseVm() {
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
         releaseLiveData = new MutableLiveData<>();
@@ -67,6 +72,7 @@ public class DemandReleaseVm extends BaseViewModel {
         unitLiveData = new MutableLiveData<>();
 
         liveData = new MutableLiveData();
+//        cancelBluePrint = new MutableLiveData();
         needLiveData = new MutableLiveData<>();
 
         needInfoLiveData = new MutableLiveData<>();
@@ -138,12 +144,6 @@ public class DemandReleaseVm extends BaseViewModel {
         new DemandRepository().drawingDetail(needInfoLiveData, pageStateLiveData, userId, id);
     }
 
-    //个人中心取消发布方案
-    public void drawingClose(int id) {
-        pageStateLiveData.postValue(PageState.PAGE_REFRESH);
-        new DemandRepository().drawingClose(needLiveData, pageStateLiveData, userId, id);
-    }
-
 
     //个人中心发布找物流列表
     public void logisticsList() {
@@ -167,7 +167,47 @@ public class DemandReleaseVm extends BaseViewModel {
     //个人中心取消发布物流
     public void logisticsClose(int id) {
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
-        new DemandRepository().logisticsClose(needLiveData, pageStateLiveData, userId, id);
+        new DemandRepository().logisticsClose(liveData, pageStateLiveData, userId, id);
     }
 
+
+    //个人中心取消发布方案
+    public void drawingClose(int id) {
+        pageStateLiveData.postValue(PageState.PAGE_REFRESH);
+        new DemandRepository().drawingClose(liveData, pageStateLiveData, userId, id);
+    }
+
+
+    //发布找基地
+    public void baseAdd(String materialName, int materialCount, int unit, String existingLocation, String needLocation, String storageDistance, int isReform,
+                        String personalName, String tel, String remark) {
+        pageStateLiveData.postValue(PageState.PAGE_REFRESH);
+        new DemandRepository().baseAdd(liveData, pageStateLiveData, userId, materialName, materialCount, unit, existingLocation, needLocation, storageDistance, isReform, startTime, endTime,
+                personalName, tel, remark);
+    }
+
+    //个人需求中心找基地列表
+    public void baseList() {
+        basePage = 1;
+        pageStateLiveData.postValue(PageState.PAGE_REFRESH);
+        new DemandRepository().baseList(needLiveData, pageStateLiveData, userId, basePage);
+    }
+
+    public void moreBaseList() {
+        basePage++;
+        pageStateLiveData.postValue(PageState.PAGE_REFRESH);
+        new DemandRepository().baseList(needLiveData, pageStateLiveData, userId, basePage);
+    }
+
+    //个人需求中心找基地详情
+    public void baseDetail(int id) {
+        pageStateLiveData.postValue(PageState.PAGE_REFRESH);
+        new DemandRepository().baseDetail(needInfoLiveData, pageStateLiveData, userId, id);
+    }
+
+    //个人需求中心取消找基地
+    public void baseClose(int id) {
+        pageStateLiveData.postValue(PageState.PAGE_REFRESH);
+        new DemandRepository().baseClose(liveData, pageStateLiveData, userId, id);
+    }
 }

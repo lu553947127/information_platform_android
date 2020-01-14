@@ -779,6 +779,7 @@
     <string name="find_logistics">找物流</string>
     <string name="find_logistics_details">找物流详情</string>
     <string name="find_foundation">找基地</string>
+    <string name="find_foundation_details">找基地详情</string>
     <string name="find_blue_print">找方案</string>
     <string name="find_blue_print_details">找方案详情</string>
     <string name="find_send_address">发货地点</string>
@@ -820,5 +821,6 @@
     
     <string name="cancel_find_logistics">确定取消找物流</string>
     <string name="cancel_find_blue_print">确定取消找方案</string>
+    <string name="cancel_find_foundation">确定取消找基地</string>
 
 </resources>
