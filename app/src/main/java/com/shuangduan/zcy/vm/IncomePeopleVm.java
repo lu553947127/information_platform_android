@@ -12,6 +12,7 @@ import com.shuangduan.zcy.model.bean.IncomePeopleBean;
 import com.shuangduan.zcy.model.bean.IncomeRecordBean;
 import com.shuangduan.zcy.model.bean.PeopleBean;
 import com.shuangduan.zcy.model.bean.PeopleDetailBean;
+import com.shuangduan.zcy.model.bean.RankListBean;
 
 /**
  * @author 徐玉 QQ:876885613
@@ -29,6 +30,7 @@ public class IncomePeopleVm extends BaseViewModel {
     public MutableLiveData<PeopleBean> showLiveData;
     public MutableLiveData<PeopleDetailBean> detailLiveData;
     public MutableLiveData<IncomeRecordBean> recordLiveData;
+    public MutableLiveData<RankListBean> rankListLiveData;
     private int userId, page, pageRecord;
     public int type, uid;
 
@@ -39,24 +41,18 @@ public class IncomePeopleVm extends BaseViewModel {
         showLiveData = new MutableLiveData<>();
         detailLiveData = new MutableLiveData<>();
         recordLiveData = new MutableLiveData<>();
+        rankListLiveData = new MutableLiveData<>();
     }
 
     /**
-     * 关系首页展示
-     */
-    public void show(){
-        new PeopleRepository().peopleShow(showLiveData, pageStateLiveData, userId);
-    }
-
-    /**
-     * 关系详情
+     * 邀请好友详情
      */
     public void getDetail(){
         new PeopleRepository().peopleDetail(detailLiveData, pageStateLiveData, userId, uid);
     }
 
     /**
-     * 关系列表
+     * 邀请好友列表
      */
     public void getData(){
         page = 1;
@@ -64,6 +60,9 @@ public class IncomePeopleVm extends BaseViewModel {
         new IncomeRepository().incomePeople(liveData, pageStateLiveData, userId, page, type);
     }
 
+    /**
+     * 邀请好友列表
+     */
     public void getMoreData(){
         page++;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
@@ -83,5 +82,12 @@ public class IncomePeopleVm extends BaseViewModel {
         pageRecord ++;
         pageStateLiveData.postValue(PageState.PAGE_REFRESH);
         new PeopleRepository().incomeRecord(recordLiveData, pageStateLiveData, userId, uid, pageRecord);
+    }
+
+    /**
+     * 榜单列表
+     */
+    public void honorList(int type){
+        new PeopleRepository().honorList(rankListLiveData, pageStateLiveData, userId, type);
     }
 }

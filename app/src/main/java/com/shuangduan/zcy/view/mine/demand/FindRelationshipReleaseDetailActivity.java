@@ -17,7 +17,6 @@ import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.CustomDialog;
 import com.shuangduan.zcy.model.bean.FindRelationshipReleaseBean;
 import com.shuangduan.zcy.utils.BarUtils;
-import com.shuangduan.zcy.view.mine.set.SetActivity;
 import com.shuangduan.zcy.vm.DemandRelationshipVm;
 
 import butterknife.BindView;
@@ -136,7 +135,7 @@ public class FindRelationshipReleaseDetailActivity extends BaseActivity {
             llFindRelationShip.setVisibility(View.GONE);
         }
 
-        //取消找关系成功
+        //取消找资源成功
         demandRelationshipVm.cancelLiveData.observe(this, item -> {
             demandRelationshipVm.releaseDetail();
         });

@@ -5,7 +5,7 @@
     <string name="official_phone">客服电话：4009-987-789</string>
 
     <string name="home">首页</string>
-    <string name="people">关系</string>
+    <string name="people">榜单</string>
     <string name="circle">消息</string>
     <string name="mine">我的</string>
 
@@ -381,7 +381,7 @@
     <string name="income_locus">发布信息动态收益</string>
     <string name="income_msg">认购信息收益</string>
     <string name="income_product_rights">认购品权收益</string>
-    <string name="income_people">关系收益</string>
+    <string name="income_people">推荐好友收益</string>
     <string name="supplier">优质供应商</string>
     <string name="supplier_join">加入供应商</string>
     <string name="supplier_join_success">申请成功，请等待审核...</string>
@@ -432,7 +432,7 @@
     <string name="format_amount_people">%1$s元</string>
     <string name="format_amount_bi">%1$s元</string>
     <string name="format_amount_rmb">￥%1$s元</string>
-    <string name="format_num_of_people">关系数量: %1$d人</string>
+    <string name="format_num_of_people">邀请数量: %1$d人</string>
     <string name="format_num_of_readers">收藏人数: %1$d人</string>
     <string name="format_num_of_collector">收藏人数: %1$d人</string>
     <string name="format_withdraw_no">提现金额不能超过当前余额</string>
@@ -490,7 +490,6 @@
     <string name="format_price_accept">接受价格: %1$s元</string>
     <string name="format_supply_accept">供应价格: %1$s元</string>
     <string name="format_pay">需支付: %1$s元！</string>
-    <string name="format_income_degree">%1$d°关系收益</string>
     <string name="format_trans_time">交易时间: %1$s</string>
     <string name="format_validity_period">有效期: %1$s至%2$s</string>
     <string name="format_validity_period_less">%1$s至%2$s</string>
@@ -702,10 +701,8 @@
     <string name="empty_project_income_info">您还没有信息\n收益,去发布工程信息吧</string>
     <string name="empty_dynamics_income_info">您还没有动态\n收益,去发布动态信息吧 </string>
     <string name="empty_subscribe_income_info">您还没有认购\n收益,去认购信息吧</string>
-    <string name="empty_people_income_info">您还没有关系收益,\n去拓展关系吧</string>
+    <string name="empty_people_income_info">您还没有亲密好友,\n快去邀请吧</string>
     <string name="empty_recommend_friends_info">邀请好友，获取收益</string>
-    <string name="empty_recommend_friends_no">您的熟识关系，还暂未邀请好友哦</string>
-    <string name="empty_recommend_friends_no1">您的相识关系，还暂未邀请好友哦</string>
 
     <string name="empty_material_order_turnover">您当前没有周转材料订单</string>
     <string name="empty_material_order_device">您当前没有设备物资订单</string>

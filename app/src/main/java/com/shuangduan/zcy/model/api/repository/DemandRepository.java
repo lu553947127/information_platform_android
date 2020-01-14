@@ -19,8 +19,6 @@ import com.shuangduan.zcy.model.bean.UnitBean;
 
 import java.util.List;
 
-import io.rong.imageloader.utils.L;
-
 /**
  * @author 徐玉 QQ:876885613
  * @name information_platform_android
@@ -100,7 +98,7 @@ public class DemandRepository extends BaseRepository {
     }
 
     /**
-     * 取消找关系
+     * 取消找资源
      *
      * @param liveData
      * @param pageStateLiveData

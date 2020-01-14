@@ -82,7 +82,7 @@ public class HomeListBean {
     public static class ExplainBean {
         /**
          * id : 1
-         * title : 关系收益说明书
+         * title : 收益说明书
          */
 
         private int id;

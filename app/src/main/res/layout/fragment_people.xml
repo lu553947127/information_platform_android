@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/icon_people_background">
+    android:background="@color/colorFFF">
 
     <View
         android:layout_width="match_parent"
@@ -13,77 +14,35 @@
 
     <include layout="@layout/toolbar_people"/>
 
-    <ImageView
-        android:layout_width="173dp"
-        android:layout_height="182dp"
-        android:layout_marginTop="118dp"
-        android:scaleType="centerCrop"
-        android:layout_gravity="center_horizontal"
-        android:src="@drawable/bg_head_people"/>
-
-    <TextView
-        android:id="@+id/tv_first_degree"
+    <com.shuangduan.zcy.utils.ElasticScrollView
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:gravity="center_vertical"
-        android:layout_marginTop="30dp"
-        android:drawableRight="@drawable/icon_next"
-        android:drawableLeft="@drawable/first_degree"
-        android:drawablePadding="12dp"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:background="@drawable/selector_bg_custom"
-        android:textColor="@color/color_666666"
-        android:textSize="14sp"
-        android:text="熟识关系"/>
+        android:layout_height="match_parent">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@drawable/divider_15"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tv_second_degree"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:gravity="center_vertical"
-        android:drawableRight="@drawable/icon_next"
-        android:drawableLeft="@drawable/second_degree"
-        android:drawablePadding="12dp"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:background="@drawable/selector_bg_custom"
-        android:textColor="@color/color_666666"
-        android:textSize="14sp"
-        android:text="相识关系"/>
+            <include layout="@layout/layout_ranking_type"/>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@drawable/divider_15"/>
+            <include layout="@layout/layout_ranking_places"/>
 
-    <TextView
-        android:id="@+id/tv_three_degree"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:gravity="center_vertical"
-        android:drawableRight="@drawable/icon_next"
-        android:drawableLeft="@drawable/three_degree"
-        android:drawablePadding="12dp"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:background="@drawable/selector_bg_custom"
-        android:textColor="@color/color_666666"
-        android:textSize="14sp"
-        android:text="初识关系"/>
+            <include layout="@layout/layout_ranking_recommend"/>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@drawable/divider_15"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/tv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:nestedScrollingEnabled="false"
+                android:layout_marginTop="15dp"
+                tools:ignore="UnusedAttribute" />
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="60dp"/>
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="60dp"/>
+
+        </LinearLayout>
+
+    </com.shuangduan.zcy.utils.ElasticScrollView>
 
 </LinearLayout>

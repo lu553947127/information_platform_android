@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginTop="21dp"
+    android:layout_marginLeft="18dp"
+    android:layout_marginRight="18dp">
+
+    <TextView
+        android:id="@+id/tv_first"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_weight="1"
+        android:background="@drawable/selector_btn_confirm"
+        android:gravity="center"
+        android:textColor="@color/colorFFF"
+        android:textSize="14sp"
+        android:text="活跃榜"/>
+
+    <TextView
+        android:id="@+id/tv_second"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_weight="1"
+        android:background="@drawable/selector_btn_confirm_gray"
+        android:layout_marginLeft="20dp"
+        android:gravity="center"
+        android:textColor="@color/color_666666"
+        android:textSize="14sp"
+        android:text="推荐榜"/>
+
+    <TextView
+        android:id="@+id/tv_third"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_weight="1"
+        android:background="@drawable/selector_btn_confirm_gray"
+        android:layout_marginLeft="20dp"
+        android:gravity="center"
+        android:textColor="@color/color_666666"
+        android:textSize="14sp"
+        android:text="成交榜"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_weight="1"
+        android:background="@drawable/selector_btn_confirm_gray"
+        android:layout_marginLeft="20dp"
+        android:gravity="center"
+        android:textColor="@color/color_666666"
+        android:textSize="14sp"
+        android:text="信誉榜"
+        android:visibility="invisible"/>
+
+</LinearLayout>

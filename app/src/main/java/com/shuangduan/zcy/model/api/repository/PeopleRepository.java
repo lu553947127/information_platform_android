@@ -3,8 +3,8 @@ package com.shuangduan.zcy.model.api.repository;
 import androidx.lifecycle.MutableLiveData;
 
 import com.shuangduan.zcy.model.bean.IncomeRecordBean;
-import com.shuangduan.zcy.model.bean.PeopleBean;
 import com.shuangduan.zcy.model.bean.PeopleDetailBean;
+import com.shuangduan.zcy.model.bean.RankListBean;
 
 /**
  * @author 徐玉 QQ:876885613
@@ -17,9 +17,6 @@ import com.shuangduan.zcy.model.bean.PeopleDetailBean;
  * @class describe
  */
 public class PeopleRepository extends BaseRepository {
-    public void peopleShow(MutableLiveData<PeopleBean> liveData, MutableLiveData<String> pageStateLiveData, int userId){
-        request(apiService.peopleShow(userId)).setData(liveData).setPageState(pageStateLiveData).send();
-    }
 
     public void peopleDetail(MutableLiveData<PeopleDetailBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int path_user_id){
         request(apiService.peopleDetail(userId, path_user_id)).setData(liveData).setPageState(pageStateLiveData).send();
@@ -29,4 +26,8 @@ public class PeopleRepository extends BaseRepository {
         request(apiService.incomeRecord(userId, path_user_id, page)).setData(liveData).setPageState(pageStateLiveData).send();
     }
 
+    //榜单列表
+    public void honorList(MutableLiveData<RankListBean> liveData, MutableLiveData<String> pageStateLiveData, int userId, int type){
+        request(apiService.honorList(userId, type)).setData(liveData).setPageState(pageStateLiveData).send();
+    }
 }

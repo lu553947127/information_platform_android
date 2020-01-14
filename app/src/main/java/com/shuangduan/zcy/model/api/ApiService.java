@@ -873,16 +873,18 @@ public interface ApiService {
     );
 
     @FormUrlEncoded
-    @POST("api/Profit/socialRelationship")
-    Flowable<BaseResponse<PeopleBean>> peopleShow(
-            @Field("user_id") int user_id
-    );
-
-    @FormUrlEncoded
     @POST("api/Profit/details")
     Flowable<BaseResponse<PeopleDetailBean>> peopleDetail(
             @Field("user_id") int user_id,
             @Field("path_user_id") int path_user_id
+    );
+
+    //榜单列表
+    @FormUrlEncoded
+    @POST("api/Honor/dataList")
+    Flowable<BaseResponse<RankListBean>> honorList(
+            @Field("user_id") int user_id,
+            @Field("type") int type
     );
 
     @FormUrlEncoded

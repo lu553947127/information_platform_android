@@ -220,13 +220,13 @@
         <activity android:name="com.shuangduan.zcy.view.income.IncomeReleaseActivity" />
         <!-- 认购品权收益-->
         <activity android:name="com.shuangduan.zcy.view.income.IncomeProductRightsActivity" />
-        <!-- 关系收益-->
+        <!-- 亲密好友-->
         <activity android:name="com.shuangduan.zcy.view.income.IncomePeopleActivity" />
         <!-- 发布动态收益-->
         <activity android:name="com.shuangduan.zcy.view.income.IncomeLocusActivity" />
         <!-- 认购信息收益-->
         <activity android:name="com.shuangduan.zcy.view.income.IncomeMsgActivity" />
-        <!-- 关系个人详情-->
+        <!-- 邀请好友的个人详情-->
         <activity android:name="com.shuangduan.zcy.view.income.PeopleInfoActivity" />
         <!-- 收益记录-->
         <activity android:name="com.shuangduan.zcy.view.income.IncomeRecordActivity" />

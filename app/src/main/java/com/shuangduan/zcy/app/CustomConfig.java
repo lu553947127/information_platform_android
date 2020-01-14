@@ -1,15 +1,17 @@
 package com.shuangduan.zcy.app;
 
 /**
- * <pre>
- *     author : 徐玉
- *     e-mail : ningwenqiang@lanhuiplay.com
- *     time   : 2018/07/31
- *     desc   : 静态参数集合
- *     version: 1.0
- * </pre>
+ * @ProjectName: information_platform_android
+ * @Package: com.shuangduan.zcy.app
+ * @ClassName: CustomConfig
+ * @Description: 静态参数集合
+ * @Author: 鹿鸿祥
+ * @CreateDate: 2019/9/24 17:50
+ * @UpdateUser: 鹿鸿祥
+ * @UpdateDate: 2019/9/24 17:50
+ * @UpdateRemark: 更新说明
+ * @Version: 1.0
  */
-
 public class CustomConfig {
 
     /*个人信息更新类型：手机，邮箱*/
@@ -130,10 +132,8 @@ public class CustomConfig {
     public static final int PAY_STYLE_ALIPAY = 2;//支付宝支付
     public static final int PAY_STYLE_WECHAT = 1;//微信支付
 
-    public static final int AREA_REQUEST_CODE = 1001;
-
+    //需求资讯类型参数
     public static String DEMAND_TYPE = "DEMAND_TYPE";
-
     //找资源
     public static int FIND_RELATIONSHIP_TYPE = 0;
     //找物资

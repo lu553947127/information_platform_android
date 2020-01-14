@@ -108,7 +108,7 @@ public class DemandRelationshipVm extends BaseViewModel {
     }
 
     /**
-     * 取消找关系发布
+     * 取消找资源发布
      *
      * @param id
      */

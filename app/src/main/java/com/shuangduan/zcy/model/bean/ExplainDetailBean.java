@@ -14,8 +14,8 @@ public class ExplainDetailBean {
 
     /**
      * id : 1
-     * title : 关系收益说明书
-     * content : ,<p>关系收益说明书</p>
+     * title : 收益说明书
+     * content : ,<p>收益说明书</p>
      * create_time : 2019-08-05 16:51:22
      */
 

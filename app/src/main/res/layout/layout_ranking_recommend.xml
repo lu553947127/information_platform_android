@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorFFF"
+    android:id="@+id/ll_recommend"
+    android:visibility="gone">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:layout_marginLeft="15dp"
+        android:textColor="@color/colorTv"
+        android:textSize="16sp"
+        android:text="我的亲密好友"/>
+
+    <TextView
+        android:id="@+id/tv_first_degree"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:layout_marginTop="20dp"
+        android:drawableRight="@drawable/icon_next"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:background="@drawable/selector_bg_custom"
+        android:textColor="@color/colorTv"
+        android:textSize="14sp"
+        android:text="亲密度🔥🔥🔥"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/divider_15"/>
+
+    <TextView
+        android:id="@+id/tv_second_degree"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:drawableRight="@drawable/icon_next"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:background="@drawable/selector_bg_custom"
+        android:textColor="@color/colorTv"
+        android:textSize="14sp"
+        android:text="亲密度🔥🔥"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/divider_15"/>
+
+    <TextView
+        android:id="@+id/tv_three_degree"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:drawableRight="@drawable/icon_next"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:background="@drawable/selector_bg_custom"
+        android:textColor="@color/colorTv"
+        android:textSize="14sp"
+        android:text="亲密度🔥"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/divider_15"/>
+
+</LinearLayout>

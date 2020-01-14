@@ -20,21 +20,19 @@ import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.gson.Gson;
-
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.rongyun.bean.RongExtraBean;
-import com.shuangduan.zcy.utils.image.PictureEnlargeUtils;
 import com.shuangduan.zcy.view.material.MaterialDetailActivity;
 import com.shuangduan.zcy.view.material.MaterialEquipmentDetailActivity;
 import com.shuangduan.zcy.view.mine.demand.FindBuyerDetailActivity;
 import com.shuangduan.zcy.view.mine.demand.FindRelationshipReleaseDetailActivity;
 import com.shuangduan.zcy.view.mine.demand.FindSubstanceDetailActivity;
 import com.shuangduan.zcy.view.mine.material.MaterialOrderDetailActivity;
-import com.shuangduan.zcy.view.mine.wallet.TransRecordDetailActivity;
 import com.shuangduan.zcy.view.mine.user.UserInfoActivity;
+import com.shuangduan.zcy.view.mine.wallet.TransRecordDetailActivity;
 import com.shuangduan.zcy.view.projectinfo.ProjectDetailActivity;
 import com.shuangduan.zcy.view.recruit.RecruitDetailActivity;
 import com.shuangduan.zcy.vm.IMAddVm;
@@ -49,11 +47,7 @@ import io.rong.imkit.fragment.ConversationFragment;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.UserInfo;
-import io.rong.message.ImageMessage;
-import io.rong.message.LocationMessage;
 import io.rong.message.RichContentMessage;
-import io.rong.message.TextMessage;
-import io.rong.push.notification.PushNotificationMessage;
 
 /**
  * @author 鹿鸿祥 QQ:553947127
@@ -227,7 +221,7 @@ public class IMPrivateChatActivity extends BaseActivity implements RongIM.Conver
                 case 12://发布的工程有新的收益
                 case 13://发布的工程动态有新的收益
                 case 14://认购的工程信息有新的收益
-                case 16://关系有新的收益
+                case 16://邀请好友有新的收益
                 case 17://回答的找资源已被采纳，有一笔收益到账
                 case 21://您查看了一条供应商信息消费
                 case 22://您查看了一条找买家需求信息消费

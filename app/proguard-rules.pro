@@ -84,16 +84,12 @@
 -dontnote com.google.android.gms.gcm.**
 -dontnote io.rong.**
 # banner 的混淆代码
--keep class com.youth.banner.** {
-    *;
- }
+-keep class com.youth.banner.** {*;}
 
 #取消后台管理混淆
--keep class com.shuangduan.zcy.adminManage.** {
-     *;
-}
-
--keep class com.shuangduan.zcy.rongyun.** {
-     *;
-}
+-keep class com.shuangduan.zcy.adminManage.** {*;}
+#取消融云自定义文件混淆
+-keep class com.shuangduan.zcy.rongyun.** {*;}
+#适配Android 10 高德地图定位  取消mLocationClient.startLocation();方法混淆
+-keep class com.loc.**{*;}
 

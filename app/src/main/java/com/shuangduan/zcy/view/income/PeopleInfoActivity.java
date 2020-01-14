@@ -33,7 +33,7 @@ import io.rong.imkit.RongIM;
  * @author 徐玉 QQ:876885613
  * @name information_platform_android
  * @class name：com.shuangduan.zcy.view.people
- * @class describe  关系个人详情
+ * @class describe  邀请好友的个人详情
  * @time 2019/8/14 10:48
  * @change
  * @chang time
