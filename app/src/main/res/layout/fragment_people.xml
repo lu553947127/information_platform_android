@@ -14,6 +14,8 @@
 
     <include layout="@layout/toolbar_people"/>
 
+    <include layout="@layout/layout_ranking_type"/>
+
     <com.shuangduan.zcy.utils.ElasticScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -23,26 +25,28 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <include layout="@layout/layout_ranking_type"/>
-
             <include layout="@layout/layout_ranking_places"/>
 
             <include layout="@layout/layout_ranking_recommend"/>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/tv"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:nestedScrollingEnabled="false"
-                android:layout_marginTop="15dp"
-                tools:ignore="UnusedAttribute" />
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="60dp"/>
+                android:layout_height="wrap_content">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:nestedScrollingEnabled="false"
+                    android:layout_marginTop="15dp"
+                    tools:ignore="UnusedAttribute" />
+            </RelativeLayout>
 
         </LinearLayout>
 
     </com.shuangduan.zcy.utils.ElasticScrollView>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="60dp"/>
 
 </LinearLayout>

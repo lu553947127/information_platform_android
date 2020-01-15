@@ -36,7 +36,7 @@ import butterknife.OnClick;
 
 /**
  * @author 徐玉 QQ:876885613
- * @name ZICAICloudPlatform
+ * @name PeopleFragment
  * @class name：com.example.zicaicloudplatform.view.fragment
  * @class 榜单
  * @time 2019/7/5 13:29
@@ -100,7 +100,6 @@ public class PeopleFragment extends BaseFragment {
         return false;
     }
 
-
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState, View view) {
         BarUtils.setStatusBarColorRes(fakeStatusBar, getResources().getColor(R.color.colorPrimary));
@@ -112,14 +111,14 @@ public class PeopleFragment extends BaseFragment {
             this.rankListBean = rankListBean;
             switch (type){
                 case 1://活跃榜
-                    getTopRank();
+                    getTopRank("条");
                     rankList.clear();
                     rankList.addAll(rankListBean.getList());
                     if (rankList.size()>7) rankList.subList(0, 3).clear();
                     rankActiveAdapter.setNewData(rankList);
                     break;
                 case 2://推荐榜
-                    getTopRank();
+                    getTopRank("人");
                     break;
                 case 3://成交榜
                     rankRecommendAdapter.setNewData(rankListBean.getList());
@@ -232,10 +231,10 @@ public class PeopleFragment extends BaseFragment {
     }
 
     //显示讲台数据
-    private void getTopRank() {
-        tvFirstName.setText(rankListBean.getList().get(0).getUsername()+"\n"+rankListBean.getList().get(0).getCount()+"条");
-        tvSecondName.setText(rankListBean.getList().get(1).getUsername()+"\n"+rankListBean.getList().get(1).getCount()+"条");
-        tvThirdName.setText(rankListBean.getList().get(2).getUsername()+"\n"+rankListBean.getList().get(2).getCount()+"条");
+    private void getTopRank(String unit) {
+        tvFirstName.setText(rankListBean.getList().get(0).getUsername()+"\n"+rankListBean.getList().get(0).getCount()+unit);
+        tvSecondName.setText(rankListBean.getList().get(1).getUsername()+"\n"+rankListBean.getList().get(1).getCount()+unit);
+        tvThirdName.setText(rankListBean.getList().get(2).getUsername()+"\n"+rankListBean.getList().get(2).getCount()+unit);
 
         getImageData(rankListBean.getList().get(0).getAvatar(),cvFirst);
         getImageData(rankListBean.getList().get(1).getAvatar(),cvSecond);
