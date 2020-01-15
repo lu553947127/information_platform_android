@@ -2,6 +2,7 @@ package com.shuangduan.zcy.view;
 
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,6 +24,7 @@ import com.blankj.utilcode.util.SPUtils;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.FragmentAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
@@ -39,6 +41,7 @@ import com.shuangduan.zcy.utils.KeyboardUtil;
 import com.shuangduan.zcy.utils.LocationUtils;
 import com.shuangduan.zcy.utils.NotificationsUtils;
 import com.shuangduan.zcy.utils.PermissionUtils;
+import com.shuangduan.zcy.utils.TimeUtils;
 import com.shuangduan.zcy.vm.HomeVm;
 import com.shuangduan.zcy.vm.IMAddVm;
 import com.shuangduan.zcy.vm.IMConnectVm;
@@ -55,6 +58,8 @@ import cn.jpush.android.api.JPushInterface;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.manager.IUnReadMessageObserver;
 import io.rong.imlib.model.Conversation;
+
+import static com.shuangduan.zcy.utils.TimeUtils.THE_LANTERN_FESTIVAL;
 
 /**
  * @ProjectName: information_platform_android
@@ -78,6 +83,10 @@ public class MainActivity extends BaseActivity {
     NoScrollViewPager viewPager;
     @BindView(R.id.tv_remind)
     TextView tvRemind;
+    @BindView(R.id.btn_add)
+    FloatingActionButton btnAdd;
+    @BindView(R.id.btn_add_new)
+    FloatingActionButton btnAddNew;
     List<Fragment> mFragments;
     FragmentAdapter fragmentAdapter;
     private HomeVm homeVm;
@@ -110,6 +119,7 @@ public class MainActivity extends BaseActivity {
         }
     }
 
+    @SuppressLint("ResourceType")
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
 
@@ -133,6 +143,21 @@ public class MainActivity extends BaseActivity {
             }
         });
         permissionVm.getPermissionLocation(new RxPermissions(this));
+
+        //元宵节之前显示新春样式
+        if (Integer.valueOf(TimeUtils.getYearMonthDayTime()) > THE_LANTERN_FESTIVAL){
+            navigation.setItemTextColor(getResources().getColorStateList(R.drawable.bottom_navigation_item_selector));
+            navigation.setItemIconTintList(getResources().getColorStateList(R.drawable.bottom_navigation_item_selector));
+            btnAdd.setVisibility(View.VISIBLE);
+            btnAddNew.setVisibility(View.INVISIBLE);
+            tvRemind.setBackgroundResource(R.drawable.icon_home_remind);
+        }else {
+            navigation.setItemTextColor(getResources().getColorStateList(R.drawable.bottom_navigation_item_selector_new));
+            navigation.setItemIconTintList(getResources().getColorStateList(R.drawable.bottom_navigation_item_selector_new));
+            btnAdd.setVisibility(View.INVISIBLE);
+            btnAddNew.setVisibility(View.VISIBLE);
+            tvRemind.setBackgroundResource(R.drawable.icon_home_remind_new);
+        }
     }
 
     private void showLocationDialog(int locationCode) {
@@ -231,7 +256,7 @@ public class MainActivity extends BaseActivity {
         });
     }
 
-    @OnClick(R.id.btn_add)
+    @OnClick({R.id.btn_add,R.id.btn_add_new})
     void onClick(){
         tvRemind.setVisibility(View.GONE);
         SPUtils.getInstance().put(SpConfig.HOME_FIRST_BUTTON, 1, true);

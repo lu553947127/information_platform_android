@@ -32,15 +32,13 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.SpConfig;
+import com.shuangduan.zcy.utils.TimeUtils;
 import com.shuangduan.zcy.view.WebViewActivity;
 import com.shuangduan.zcy.view.demand.FindBluePrintActivity;
 import com.shuangduan.zcy.view.demand.FindFoundationActivity;
 import com.shuangduan.zcy.view.demand.FindLogisticsActivity;
 import com.shuangduan.zcy.view.design.SmartDesignActivity;
 import com.shuangduan.zcy.weight.RenderScriptGaussianBlur;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * @ProjectName: information_platform_android
@@ -106,21 +104,10 @@ public class HomePageAddDialog extends PopupWindow implements View.OnClickListen
         layout.findViewById(R.id.window_home_add_ll_c).setOnClickListener(this);
         layout.findViewById(R.id.window_home_add_ll_d).setOnClickListener(this);
         //设置时间
-        long time_day = System.currentTimeMillis();
-        Date date_day = new Date(time_day);
-        SimpleDateFormat format_day = new SimpleDateFormat("dd");
-        tv_day.setText(format_day.format(date_day));
-
-        long time = System.currentTimeMillis();
-        Date date = new Date(time);
-        SimpleDateFormat format = new SimpleDateFormat("E");
-        tv_week.setText(format.format(date));
-
-        long time_month = System.currentTimeMillis();
-        Date date_month = new Date(time_month);
-        SimpleDateFormat format_month = new SimpleDateFormat("MM/yyyy");
-        tv_month.setText(format_month.format(date_month));
-
+        tv_day.setText(TimeUtils.getDayTime());
+        tv_week.setText(TimeUtils.getWeekTime());
+        tv_month.setText(TimeUtils.getYearMonthTime());
+        //设置天气
         tv_weather.setText(SPUtils.getInstance().getString(SpConfig.WEATHER));
     }
 

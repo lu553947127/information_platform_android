@@ -74,7 +74,9 @@ public class PeopleFragment extends BaseFragment {
     RelativeLayout rlPlaces;
     @BindView(R.id.ll_recommend)
     LinearLayout llRecommend;
-    @BindView(R.id.tv)
+    @BindView(R.id.rv_active)
+    RecyclerView recyclerViewActive;
+    @BindView(R.id.rv)
     RecyclerView recyclerView;
     private IncomePeopleVm incomePeopleVm;
     private RankActiveAdapter rankActiveAdapter;
@@ -105,6 +107,18 @@ public class PeopleFragment extends BaseFragment {
         BarUtils.setStatusBarColorRes(fakeStatusBar, getResources().getColor(R.color.colorPrimary));
         tvBarTitle.setText(getString(R.string.people));
         incomePeopleVm = ViewModelProviders.of(this).get(IncomePeopleVm.class);
+
+        recyclerViewActive.setLayoutManager(new LinearLayoutManager(mContext));
+        recyclerViewActive.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
+        rankActiveAdapter = new RankActiveAdapter(R.layout.adapter_rank_active, null);
+        rankActiveAdapter.setEmptyView(R.layout.layout_loading, recyclerViewActive);
+        recyclerViewActive.setAdapter(rankActiveAdapter);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+        recyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
+        rankRecommendAdapter = new RankRecommendAdapter(R.layout.adapter_rank_recomend, null);
+        rankRecommendAdapter.setEmptyView(R.layout.layout_loading, recyclerView);
+        recyclerView.setAdapter(rankRecommendAdapter);
 
         //获取榜单列表返回数据
         incomePeopleVm.rankListLiveData.observe(this,rankListBean -> {
@@ -182,15 +196,9 @@ public class PeopleFragment extends BaseFragment {
         tvThird.setTextColor(getResources().getColor(R.color.color_666666));
         tvThird.setBackgroundResource(R.drawable.selector_btn_confirm_gray);
         rlPlaces.setVisibility(View.VISIBLE);
-        recyclerView.setVisibility(View.VISIBLE);
         llRecommend.setVisibility(View.GONE);
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        recyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
-        rankActiveAdapter = new RankActiveAdapter(R.layout.adapter_rank_active, null);
-        rankActiveAdapter.setEmptyView(R.layout.layout_loading, recyclerView);
-        recyclerView.setAdapter(rankActiveAdapter);
-
+        recyclerViewActive.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.GONE);
         incomePeopleVm.honorList(type);
     }
 
@@ -203,9 +211,9 @@ public class PeopleFragment extends BaseFragment {
         tvThird.setTextColor(getResources().getColor(R.color.color_666666));
         tvThird.setBackgroundResource(R.drawable.selector_btn_confirm_gray);
         rlPlaces.setVisibility(View.VISIBLE);
-        recyclerView.setVisibility(View.GONE);
         llRecommend.setVisibility(View.VISIBLE);
-
+        recyclerViewActive.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.GONE);
         incomePeopleVm.honorList(type);
     }
 
@@ -218,15 +226,9 @@ public class PeopleFragment extends BaseFragment {
         tvThird.setTextColor(getResources().getColor(R.color.colorFFF));
         tvThird.setBackgroundResource(R.drawable.selector_btn_confirm);
         rlPlaces.setVisibility(View.GONE);
-        recyclerView.setVisibility(View.VISIBLE);
         llRecommend.setVisibility(View.GONE);
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        recyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
-        rankRecommendAdapter = new RankRecommendAdapter(R.layout.adapter_rank_recomend, null);
-        rankRecommendAdapter.setEmptyView(R.layout.layout_loading, recyclerView);
-        recyclerView.setAdapter(rankRecommendAdapter);
-
+        recyclerViewActive.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.VISIBLE);
         incomePeopleVm.honorList(type);
     }
 

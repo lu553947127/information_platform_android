@@ -2,6 +2,7 @@ package com.shuangduan.zcy.view;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -30,6 +31,7 @@ import com.shuangduan.zcy.model.bean.HomeBannerBean;
 import com.shuangduan.zcy.model.bean.HomeListBean;
 import com.shuangduan.zcy.model.bean.HomePushBean;
 import com.shuangduan.zcy.utils.DensityUtil;
+import com.shuangduan.zcy.utils.TimeUtils;
 import com.shuangduan.zcy.utils.image.GlideImageLoader;
 import com.shuangduan.zcy.view.demand.DemandActivity;
 import com.shuangduan.zcy.view.demand.DemandReleaseActivity;
@@ -64,6 +66,7 @@ import static com.shuangduan.zcy.app.CustomConfig.DEMAND_TYPE;
 import static com.shuangduan.zcy.app.CustomConfig.FIND_BUYER_TYPE;
 import static com.shuangduan.zcy.app.CustomConfig.FIND_RELATIONSHIP_TYPE;
 import static com.shuangduan.zcy.app.CustomConfig.FIND_SUBSTANCE_TYPE;
+import static com.shuangduan.zcy.utils.TimeUtils.THE_LANTERN_FESTIVAL;
 
 /**
  * @author 徐玉 QQ:876885613
@@ -104,7 +107,12 @@ public class HomeFragment extends BaseFragment {
     ViewPager viewPager;
     @BindView(R.id.view)
     View view;
-
+    @BindView(R.id.iv_zzy)
+    ImageView iv_zzy;
+    @BindView(R.id.iv_zwz)
+    ImageView iv_zwz;
+    @BindView(R.id.iv_zmj)
+    ImageView iv_zmj;
     private HomeVm homeVm;
     private HomeNeedVm homeNeedVm;
     private DemandRelationshipVm demandRelationshipVm;
@@ -244,7 +252,12 @@ public class HomeFragment extends BaseFragment {
 
                     sAlpha = 1f * mScrollY_2 / h;
 
-                    sColor = ((255 * mScrollY_2 / h) << 24) | ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.colorPrimary) & 0x00ffffff;
+                    //元宵节之前显示新春样式
+                    if (Integer.valueOf(TimeUtils.getYearMonthDayTime()) > THE_LANTERN_FESTIVAL){
+                        sColor = ((255 * mScrollY_2 / h) << 24) | ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.colorPrimary) & 0x00ffffff;
+                    }else {
+                        sColor = ((255 * mScrollY_2 / h) << 24) | ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.color_f41e13) & 0x00ffffff;
+                    }
 
                     toolbar.setAlpha(sAlpha);
                     //设置折叠标题背景颜色
@@ -258,7 +271,13 @@ public class HomeFragment extends BaseFragment {
         });
         refresh.setEnableLoadMore(false);
         refresh.setEnableRefresh(true);
-        refresh.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);
+        //元宵节之前显示新春样式
+        if (Integer.valueOf(TimeUtils.getYearMonthDayTime()) > THE_LANTERN_FESTIVAL){
+            refresh.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);
+        }else {
+            refresh.setPrimaryColorsId(R.color.color_f41e13, android.R.color.white);
+        }
+
         refresh.setOnRefreshListener(refreshLayout -> {
             homeVm.getInit(getActivity());
             demandRelationshipVm.getRelationship();
@@ -283,7 +302,19 @@ public class HomeFragment extends BaseFragment {
         });
 
         //导航按钮初始化
-        List<ClassifyBean> list = getClassify();
+        List<ClassifyBean> list;
+        //元宵节之前显示新春样式
+        if (Integer.valueOf(TimeUtils.getYearMonthDayTime()) > THE_LANTERN_FESTIVAL){
+            list = getClassify();
+            iv_zzy.setBackgroundResource(R.drawable.classify_zgx);
+            iv_zwz.setBackgroundResource(R.drawable.classify_zwz);
+            iv_zmj.setBackgroundResource(R.drawable.classify_zmj);
+        }else {
+            list = getClassifyNewYear();
+            iv_zzy.setBackgroundResource(R.drawable.classify_zgx_new);
+            iv_zwz.setBackgroundResource(R.drawable.classify_zwz_new);
+            iv_zmj.setBackgroundResource(R.drawable.classify_zmj_new);
+        }
         rvClassify.setLayoutManager(new GridLayoutManager(mContext, 4));
         ClassifyAdapter classifyAdapter = new ClassifyAdapter(list);
         rvClassify.setAdapter(classifyAdapter);
@@ -315,6 +346,16 @@ public class HomeFragment extends BaseFragment {
         return list;
     }
 
+    private List<ClassifyBean> getClassifyNewYear() {
+        List<ClassifyBean> list = new ArrayList<>();
+        String[] classifys = getResources().getStringArray(R.array.classify);
+        list.add(new ClassifyBean(R.drawable.classify_xxgc_new, classifys[0], 1));
+        list.add(new ClassifyBean(R.drawable.classify_zcxx_new, classifys[1], 2));
+        list.add(new ClassifyBean(R.drawable.classify_jjwz_new, classifys[2], 3));
+        list.add(new ClassifyBean(R.drawable.classify_yzgys_new, classifys[3], 4));
+        return list;
+    }
+
     private void initBanner(ArrayList<String> list, ArrayList<String> titles) {
         //设置banner样式
         banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);
@@ -329,7 +370,7 @@ public class HomeFragment extends BaseFragment {
         //设置自动轮播，默认为true
         banner.isAutoPlay(true);
         //设置轮播时间
-        banner.setDelayTime(2500);
+        banner.setDelayTime(4500);
         //设置指示器位置（当banner模式中有指示器时）
         banner.setIndicatorGravity(BannerConfig.CENTER);
         //banner设置方法全部调用完毕时最后调用
