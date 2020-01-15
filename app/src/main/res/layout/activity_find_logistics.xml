@@ -234,7 +234,7 @@
                     style="@style/FindNeedEditStyle"
                     android:layout_marginRight="10dp"
                     android:gravity="left|center_vertical"
-                    android:hint="@string/find_contact_hint" />
+                    android:hint="@string/hint_input" />
 
             </LinearLayout>
 
@@ -260,7 +260,7 @@
                     android:layout_marginRight="10dp"
                     android:gravity="left|center_vertical"
                     android:inputType="number"
-                    android:hint="@string/find_contact_phone_hint" />
+                    android:hint="@string/hint_input" />
 
             </LinearLayout>
 

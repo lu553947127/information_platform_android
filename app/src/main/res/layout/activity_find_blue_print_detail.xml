@@ -51,7 +51,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/tv_name_title"
+                    android:id="@+id/tv_project_name_title"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:text="@string/project_name"
@@ -74,7 +74,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/tv_address_title"
+                    android:id="@+id/tv_project_address_title"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:text="@string/colon_project_address"
@@ -97,7 +97,7 @@
                 android:layout_marginTop="8dp">
 
                 <TextView
-                    android:id="@+id/tv_time_title"
+                    android:id="@+id/tv_need_time_title"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:text="@string/colon_need_time"

@@ -44,19 +44,33 @@ public class FindBluePrintDetailActivity extends BaseActivity {
     @BindView(R.id.iv_state)
     ImageView ivState;
 
-    @BindView(R.id.tv_name_title)
-    TextView tvNameTitle;
+    @BindView(R.id.tv_project_name_title)
+    TextView tvProjectNameTitle;
     @BindView(R.id.tv_project_name)
     TextView tvProjectName;
 
+    @BindView(R.id.tv_project_address_title)
+    TextView tvProjectAddressTitle;
     @BindView(R.id.tv_project_address)
     TextView tvProjectAddress;
+
+    @BindView(R.id.tv_need_time_title)
+    TextView tvNeedTimeTitle;
     @BindView(R.id.tv_need_time)
     TextView tvNeedTime;
+
+    @BindView(R.id.tv_details_title)
+    TextView tvDetailsTitle;
     @BindView(R.id.tv_details)
     TextView tvDetails;
+
+    @BindView(R.id.tv_contact_title)
+    TextView tvContactTitle;
     @BindView(R.id.tv_contact)
     TextView tvContact;
+
+    @BindView(R.id.tv_contact_phone_title)
+    TextView tvContactPhoneTitle;
     @BindView(R.id.tv_contact_phone)
     TextView tvContactPhone;
 
@@ -95,11 +109,15 @@ public class FindBluePrintDetailActivity extends BaseActivity {
 
             if (result.state.equals("已取消")) {
                 ivState.setImageResource(R.drawable.icon_cancel);
+                setTextViewStyle(tvProjectNameTitle,tvProjectName,tvProjectAddressTitle,tvProjectAddress,tvNeedTimeTitle,tvNeedTime,
+                        tvDetailsTitle,tvDetails,tvContactTitle,tvContact,tvContactPhoneTitle,tvContactPhone);
             } else if (result.state.equals("失效")) {
                 ivState.setImageResource(R.drawable.icon_invalid_new);
-            } else if (result.state.equals("已提交")) {
-                ivCancel.setVisibility(View.VISIBLE);
+                setTextViewStyle(tvProjectNameTitle,tvProjectName,tvProjectAddressTitle,tvProjectAddress,tvNeedTimeTitle,tvNeedTime,
+                        tvDetailsTitle,tvDetails,tvContactTitle,tvContact,tvContactPhoneTitle,tvContactPhone);
             }
+
+            ivCancel.setVisibility(result.operaStatus == 1 ? View.VISIBLE : View.INVISIBLE);
 
         });
 
@@ -108,9 +126,28 @@ public class FindBluePrintDetailActivity extends BaseActivity {
             finish();
         });
 
+        vm.pageStateLiveData.observe(this, s -> {
+            switch (s) {
+                case PageState.PAGE_LOADING:
+                    showLoading();
+                    break;
+                default:
+                    hideLoading();
+                    break;
+            }
+        });
+
 
         vm.drawingDetail(id);
 
+    }
+
+
+    //修改页面TextView的字体颜色
+    private void setTextViewStyle(TextView... views) {
+        for (TextView view : views) {
+            view.setTextColor(getResources().getColor(R.color.colorTvHint));
+        }
     }
 
     @OnClick({R.id.iv_bar_back, R.id.iv_cancel})

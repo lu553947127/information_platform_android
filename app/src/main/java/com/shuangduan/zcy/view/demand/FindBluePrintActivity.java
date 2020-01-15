@@ -12,9 +12,11 @@ import androidx.core.widget.NestedScrollView;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
+import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.utils.DateUtils;
 import com.shuangduan.zcy.utils.DensityUtil;
@@ -89,6 +91,8 @@ public class FindBluePrintActivity extends BaseActivity {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
+        String phone = SPUtils.getInstance().getString(SpConfig.MOBILE, "");
+
         scrollView.setOnScrollChangeListener(new AdaptationScrollView.OnScrollChangeListener() {
             private int mScrollY_2 = 0;
             private int lastScrollY = 0;
@@ -121,6 +125,7 @@ public class FindBluePrintActivity extends BaseActivity {
 
         tvStartTime.setText(vm.startTime);
 
+        etPhone.setText(phone);
 
         vm.liveData.observe(this, result -> {
             ToastUtils.showShort("发布找方案成功。");

@@ -52,6 +52,7 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/tv_material_name_title"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:text="@string/colon_material_name"
@@ -74,6 +75,7 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/tv_material_num_title"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:text="@string/colon_material_number"
@@ -96,6 +98,7 @@
                 android:layout_marginTop="8dp">
 
                 <TextView
+                    android:id="@+id/tv_send_address_title"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:text="@string/colon_send_address"
@@ -119,6 +122,7 @@
                 android:layout_marginTop="8dp">
 
                 <TextView
+                    android:id="@+id/tv_receive_address_title"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:text="@string/colon_receive_address"
@@ -141,6 +145,7 @@
                 android:layout_marginTop="8dp">
 
                 <TextView
+                    android:id="@+id/tv_receive_time_title"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:text="@string/colon_receive_time"
@@ -163,6 +168,7 @@
                 android:layout_marginTop="8dp">
 
                 <TextView
+                    android:id="@+id/tv_effective_time_title"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:text="@string/colon_effective_time"
@@ -187,6 +193,7 @@
                 android:layout_marginTop="8dp">
 
                 <TextView
+                    android:id="@+id/tv_contact_title"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:text="@string/material_real_name"
@@ -210,6 +217,7 @@
                 android:layout_marginTop="8dp">
 
                 <TextView
+                    android:id="@+id/tv_contact_phone_title"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:text="@string/colon_contacts_phone"
@@ -232,6 +240,7 @@
                 android:layout_marginTop="8dp">
 
                 <TextView
+                    android:id="@+id/tv_remark_title"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:text="@string/material_remark"

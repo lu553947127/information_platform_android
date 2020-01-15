@@ -16,10 +16,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.DemandReleaseUnitAdapter;
+import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BottomSheetDialogs;
 import com.shuangduan.zcy.model.bean.UnitBean;
@@ -111,6 +113,8 @@ public class FindLogisticsActivity extends BaseActivity {
     @SuppressLint("SimpleDateFormat")
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
+        String phone = SPUtils.getInstance().getString(SpConfig.MOBILE, "");
+
         //滑动布局滑动监听
         scrollView.setOnScrollChangeListener(new AdaptationScrollView.OnScrollChangeListener() {
             private int mScrollY_2 = 0;
@@ -144,7 +148,9 @@ public class FindLogisticsActivity extends BaseActivity {
         receiveTime = DateUtils.getTodayDate(c);
 
         tvStartTime.setText(vm.startTime);
-        tvReceiveTime.setText(vm.startTime);
+        tvReceiveTime.setText(receiveTime);
+
+        etPhone.setText(phone);
 
         //获取数量单位返回数据
         vm.unitLiveData.observe(this, unitBean -> {

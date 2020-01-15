@@ -20,6 +20,8 @@ import com.shuangduan.zcy.dialog.CustomDialog;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.vm.DemandReleaseVm;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -44,25 +46,54 @@ public class FindFoundationDetailActivity extends BaseActivity {
     @BindView(R.id.iv_state)
     ImageView ivState;
 
+
+    @BindView(R.id.tv_material_name_title)
+    TextView tvMaterialNameTitle;
     @BindView(R.id.tv_material_name)
     TextView tvMaterialName;
+
+    @BindView(R.id.tv_material_num_title)
+    TextView tvMaterialNumTitle;
     @BindView(R.id.tv_material_num)
     TextView tvMaterialNum;
 
+    @BindView(R.id.tv_existing_address_title)
+    TextView tvExistingAddressTitle;
     @BindView(R.id.tv_existing_address)
     TextView tvExistingAddress;
+
+    @BindView(R.id.tv_need_address_title)
+    TextView tvNeedAddressTitle;
     @BindView(R.id.tv_need_address)
     TextView tvNeedAddress;
+
+    @BindView(R.id.tv_distance_title)
+    TextView tvDistanceTitle;
     @BindView(R.id.tv_distance)
     TextView tvDistance;
+
+    @BindView(R.id.tv_effective_time_title)
+    TextView tvEffectiveTimeTitle;
     @BindView(R.id.tv_effective_time)
     TextView tvEffectiveTime;
+
+    @BindView(R.id.tv_restructuring_title)
+    TextView tvRestructuringTitle;
     @BindView(R.id.tv_restructuring)
     TextView tvRestructuring;
+
+    @BindView(R.id.tv_contact_title)
+    TextView tvContactTitle;
     @BindView(R.id.tv_contact)
     TextView tvContact;
+
+    @BindView(R.id.tv_contact_phone_title)
+    TextView tvContactPhoneTitle;
     @BindView(R.id.tv_contact_phone)
     TextView tvContactPhone;
+
+    @BindView(R.id.tv_remark_title)
+    TextView tvRemarkTitle;
     @BindView(R.id.tv_remark)
     TextView tvRemark;
 
@@ -71,6 +102,7 @@ public class FindFoundationDetailActivity extends BaseActivity {
 
     private DemandReleaseVm vm;
     private int id;
+
 
     @Override
     protected int initLayoutRes() {
@@ -90,6 +122,7 @@ public class FindFoundationDetailActivity extends BaseActivity {
 
         id = getIntent().getIntExtra("id", 0);
 
+
         vm = ViewModelProviders.of(this).get(DemandReleaseVm.class);
 
         vm.needInfoLiveData.observe(this, result -> {
@@ -97,7 +130,11 @@ public class FindFoundationDetailActivity extends BaseActivity {
             tvMaterialNum.setText(result.materialCount + result.unit);
             tvExistingAddress.setText(result.existingLocation);
             tvNeedAddress.setText(result.needLocation);
-            tvDistance.setText(result.storageDistance+"km");
+
+            if (!result.storageDistance.equals("0")) {
+                tvDistance.setText(result.storageDistance + "km");
+            }
+
             tvEffectiveTime.setText(result.startTime + "至" + result.endTime);
             tvRestructuring.setText(result.isReform == 1 ? "是" : "否");
 
@@ -110,11 +147,20 @@ public class FindFoundationDetailActivity extends BaseActivity {
 
             if (result.state.equals("已取消")) {
                 ivState.setImageResource(R.drawable.icon_cancel);
+                setTextViewStyle(tvMaterialNameTitle, tvMaterialName, tvMaterialNumTitle, tvMaterialNum, tvExistingAddressTitle, tvExistingAddress,
+                        tvNeedAddressTitle, tvNeedAddress, tvDistanceTitle, tvDistance, tvEffectiveTimeTitle, tvEffectiveTime, tvRestructuringTitle,
+                        tvRestructuring, tvContactTitle, tvContact, tvContactPhoneTitle, tvContactPhone, tvRemarkTitle, tvRemark);
+
             } else if (result.state.equals("失效")) {
                 ivState.setImageResource(R.drawable.icon_invalid_new);
+
+                setTextViewStyle(tvMaterialNameTitle, tvMaterialName, tvMaterialNumTitle, tvMaterialNum, tvExistingAddressTitle, tvExistingAddress,
+                        tvNeedAddressTitle, tvNeedAddress, tvDistanceTitle, tvDistance, tvEffectiveTimeTitle, tvEffectiveTime, tvRestructuringTitle,
+                        tvRestructuring, tvContactTitle, tvContact, tvContactPhoneTitle, tvContactPhone, tvRemarkTitle, tvRemark);
             }
 
             ivCancel.setVisibility(result.operaStatus == 1 ? View.VISIBLE : View.INVISIBLE);
+
 
         });
 
@@ -137,6 +183,12 @@ public class FindFoundationDetailActivity extends BaseActivity {
         vm.baseDetail(id);
     }
 
+
+    private void setTextViewStyle(TextView... views) {
+        for (TextView view : views) {
+            view.setTextColor(getResources().getColor(R.color.colorTvHint));
+        }
+    }
 
     @OnClick({R.id.iv_bar_back, R.id.iv_cancel})
     void onClick(View view) {

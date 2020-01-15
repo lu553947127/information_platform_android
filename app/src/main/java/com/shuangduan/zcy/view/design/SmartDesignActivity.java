@@ -10,8 +10,10 @@ import androidx.core.widget.NestedScrollView;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
+import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.utils.DensityUtil;
 import com.shuangduan.zcy.view.demand.FindFoundationActivity;
@@ -56,6 +58,8 @@ public class SmartDesignActivity extends BaseActivity {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
+        String phone = SPUtils.getInstance().getString(SpConfig.MOBILE,"");
+
         //滑动布局滑动监听
         scrollView.setOnScrollChangeListener(new AdaptationScrollView.OnScrollChangeListener() {
             private int mScrollY_2 = 0;
@@ -79,6 +83,7 @@ public class SmartDesignActivity extends BaseActivity {
             }
         });
 
+        etPhone.setText(phone);
 
         vm = ViewModelProviders.of(this).get(SmartDesignVm.class);
         vm.addSmartDesignLiveData.observe(this, item -> {
