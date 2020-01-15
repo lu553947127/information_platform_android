@@ -57,7 +57,7 @@ import butterknife.OnClick;
  * @author 徐玉 QQ:876885613
  * @name information_platform_android
  * @class name：com.shuangduan.zcy.view.material
- * @class describe  基建物质详情
+ * @class 基建物资详情-周转材料
  * @time 2019/8/7 11:39
  * @change
  * @chang time
@@ -160,14 +160,14 @@ public class MaterialDetailActivity extends BaseActivity {
                 tvMaterialCategory.setText(materialDetailBean.getMaterialName());
             }
 
-            unitPrice = materialDetailBean.getMethod() == 1 ?
-                    String.format(getString(R.string.format_material_price), materialDetailBean.getGuidance_price(), "天") :
-                    String.format(getString(R.string.format_material_price), materialDetailBean.getGuidance_price(), materialDetailBean.getUnit());
-
-
+            //判断是否面议
             if (materialDetailBean.getPriceType() == 2) {
-                tvUnitPrice.setText("价格：面议");
+                unitPrice = "价格：面议";
+                tvUnitPrice.setText(unitPrice);
             } else {
+                unitPrice = materialDetailBean.getMethod() == 1 ?
+                        String.format(getString(R.string.format_material_price), materialDetailBean.getGuidance_price(), "天") :
+                        String.format(getString(R.string.format_material_price), materialDetailBean.getGuidance_price(), materialDetailBean.getUnit());
                 tvUnitPrice.setText(unitPrice);
             }
 

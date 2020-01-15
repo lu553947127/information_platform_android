@@ -5,6 +5,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
+import com.blankj.utilcode.util.StringUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.shuangduan.zcy.R;
@@ -32,7 +33,6 @@ public class EquipmentAdapter extends BaseQuickAdapter<MaterialBean.ListBean, Ba
 
     @Override
     protected void convert(BaseViewHolder helper, MaterialBean.ListBean item) {
-
         TextView tvTitle = helper.getView(R.id.tv_title);
 
         if (item.getIs_order() == 1) {
@@ -42,7 +42,7 @@ public class EquipmentAdapter extends BaseQuickAdapter<MaterialBean.ListBean, Ba
         }
 
         helper.setText(R.id.tv_stock, "库存: " + item.getStock())
-                .setText(R.id.tv_spec, "规格: " + item.getSpec())
+                .setText(R.id.tv_spec, StringUtils.isTrimEmpty(item.getSpec()) ? "规格: 暂无" : "规格: " + item.getSpec())
                 .setText(R.id.tv_supplier, "供应商: " + item.getMaterialSupplier())
                 .setText(R.id.tv_price, item.getMethod() == 2 ?
                         String.format(mContext.getString(R.string.format_material_price_no_unit), item.getGuidancePrice()) :
@@ -64,6 +64,5 @@ public class EquipmentAdapter extends BaseQuickAdapter<MaterialBean.ListBean, Ba
             e.printStackTrace();
             ivIcon.setImageResource(R.drawable.wuzhi_default);
         }
-
     }
 }

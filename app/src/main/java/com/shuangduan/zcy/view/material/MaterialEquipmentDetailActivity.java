@@ -57,7 +57,7 @@ import butterknife.OnClick;
  * @author 徐玉 QQ:876885613
  * @name information_platform_android
  * @class name：com.shuangduan.zcy.view.material
- * @class describe  基建物质详情
+ * @class 基建物资详情-设备物资
  * @time 2019/8/7 11:39
  * @change
  * @chang time

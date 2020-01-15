@@ -42,7 +42,7 @@ import butterknife.OnClick;
  * @author 徐玉 QQ:876885613
  * @name information_platform_android
  * @class name：com.shuangduan.zcy.view.material
- * @class describe  基建物资
+ * @class 基建物资列表
  * @time 2019/8/7 10:25
  * @change
  * @chang time

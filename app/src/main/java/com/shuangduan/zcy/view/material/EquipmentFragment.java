@@ -28,7 +28,7 @@ import butterknife.BindView;
  * @author 徐玉 QQ:876885613
  * @name information_platform_android
  * @class name：com.shuangduan.zcy.view.infrastructure
- * @class describe  租赁
+ * @class 基建物资-设备物资
  * @time 2019/8/6 11:17
  * @change
  * @chang time
@@ -43,7 +43,6 @@ public class EquipmentFragment extends BaseLazyFragment implements EmptyViewFact
     private View emptyView;
 
     public static EquipmentFragment newInstance() {
-
         Bundle args = new Bundle();
         EquipmentFragment fragment = new EquipmentFragment();
         fragment.setArguments(args);

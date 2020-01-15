@@ -28,7 +28,7 @@ import butterknife.BindView;
  * @author 徐玉 QQ:876885613
  * @name information_platform_android
  * @class name：com.shuangduan.zcy.view.infrastructure
- * @class describe  售卖
+ * @class 基建物资-周转材料
  * @time 2019/8/6 11:16
  * @change
  * @chang time
@@ -66,7 +66,6 @@ public class SellFragment extends BaseLazyFragment implements EmptyViewFactory.E
         emptyView = createEmptyView(R.drawable.icon_empty_project, R.string.empty_substance_screen_info, R.string.see_all, this);
 
         rv.setLayoutManager(new LinearLayoutManager(mContext));
-//        rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
         rv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_h_5));
         SellAdapter adapter = new SellAdapter(R.layout.item_material_list, null);
         adapter.setEmptyView(R.layout.layout_loading, rv);

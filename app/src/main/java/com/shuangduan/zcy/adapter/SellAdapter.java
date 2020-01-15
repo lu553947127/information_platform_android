@@ -5,6 +5,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
+import com.blankj.utilcode.util.StringUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.shuangduan.zcy.R;
@@ -32,9 +33,7 @@ public class SellAdapter extends BaseQuickAdapter<MaterialBean.ListBean, BaseVie
 
     @Override
     protected void convert(BaseViewHolder helper, MaterialBean.ListBean item) {
-
         TextView tvTitle = helper.getView(R.id.tv_title);
-
 
         if (item.getIs_order() == 1) {
             TextViewUtils.addDrawableInEnd(tvTitle, mContext.getResources().getDrawable(R.drawable.icon_bought), item.getMaterialName());
@@ -43,7 +42,7 @@ public class SellAdapter extends BaseQuickAdapter<MaterialBean.ListBean, BaseVie
         }
 
         helper.setText(R.id.tv_stock, "库存: " + item.getStock() + item.getUnit())
-                .setText(R.id.tv_spec, "规格: " + item.getSpec())
+                .setText(R.id.tv_spec, StringUtils.isTrimEmpty(item.getSpec()) ? "规格: 暂无" : "规格: " + item.getSpec())
                 .setText(R.id.tv_supplier, "供应商: " + item.getMaterialSupplier())
                 .setText(R.id.tv_address, "存放地: " + item.getAddress())
                 .setText(R.id.tv_supply_method, item.getMethod() == 1 ? "出租" : "出售")
@@ -71,6 +70,5 @@ public class SellAdapter extends BaseQuickAdapter<MaterialBean.ListBean, BaseVie
             e.printStackTrace();
             ivIcon.setImageResource(R.drawable.wuzhi_default);
         }
-
     }
 }
