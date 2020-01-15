@@ -11,7 +11,7 @@ import java.util.List;
  * @class describe
  * @time 2019/9/25 16:22
  * @change
- * @class describe
+ * @class 预定订单详情
  */
 public class MaterialOrderBean {
     private int page;
@@ -121,6 +121,12 @@ public class MaterialOrderBean {
         //物资详细地址
         @SerializedName("science_address")
         public String scienceAddress;
+
+        //是否面议 1：显示价格 2：面议
+        @SerializedName("price_type")
+        public int priceType;
+
+
 
         @Override
         public String toString() {

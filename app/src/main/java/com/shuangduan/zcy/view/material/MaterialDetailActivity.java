@@ -116,7 +116,7 @@ public class MaterialDetailActivity extends BaseActivity {
     TextView tvSupplyMethod;
 
     private MaterialDetailVm materialDetailVm;
-    private String phone, is_collect, enclosure ,unitPrice;
+    private String phone, is_collect, enclosure, unitPrice;
     private List<String> pics;
     private MaterialDetailBean materialDetailBean;
     private List<IMFriendListBean.ListBean> imFriendList;
@@ -154,16 +154,22 @@ public class MaterialDetailActivity extends BaseActivity {
             }
             initBanner(pics, titles);
 
-            if(materialDetailBean.getIsShelf()==3){
+            if (materialDetailBean.getIsShelf() == 3) {
                 TextViewUtils.addDrawableInEnd(tvMaterialCategory, getResources().getDrawable(R.drawable.icon_mine_default_material), materialDetailBean.getMaterialName());
-            }else {
+            } else {
                 tvMaterialCategory.setText(materialDetailBean.getMaterialName());
             }
 
             unitPrice = materialDetailBean.getMethod() == 1 ?
                     String.format(getString(R.string.format_material_price), materialDetailBean.getGuidance_price(), "天") :
                     String.format(getString(R.string.format_material_price), materialDetailBean.getGuidance_price(), materialDetailBean.getUnit());
-            tvUnitPrice.setText(unitPrice);
+
+
+            if (materialDetailBean.getPriceType() == 2) {
+                tvUnitPrice.setText("价格：面议");
+            } else {
+                tvUnitPrice.setText(unitPrice);
+            }
 
             tvStock.setText(String.format(getString(R.string.format_stock), materialDetailBean.getStock(), materialDetailBean.getUnit()));
 
@@ -241,7 +247,7 @@ public class MaterialDetailActivity extends BaseActivity {
         shareVm.materialShare(getIntent().getIntExtra(CustomConfig.MATERIAL_ID, 0));
     }
 
-    @OnClick({R.id.iv_bar_back, R.id.iv_bar_right, R.id.tv_enclosure, R.id.tv_tel, R.id.tv_address_list, R.id.ll_collect,R.id.ll_chat, R.id.tv_reserve})
+    @OnClick({R.id.iv_bar_back, R.id.iv_bar_right, R.id.tv_enclosure, R.id.tv_tel, R.id.tv_address_list, R.id.ll_collect, R.id.ll_chat, R.id.tv_reserve})
     void onClick(View v) {
         Bundle bundle = new Bundle();
         switch (v.getId()) {
@@ -249,7 +255,7 @@ public class MaterialDetailActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.iv_bar_right://分享
-                ShareMaterialDialog shareMaterialDialog =new ShareMaterialDialog(this,imFriendList,shareBean,"1",materialDetailBean,unitPrice);
+                ShareMaterialDialog shareMaterialDialog = new ShareMaterialDialog(this, imFriendList, shareBean, "1", materialDetailBean, unitPrice);
                 shareMaterialDialog.showShareDialog();
                 break;
             case R.id.tv_enclosure:
@@ -289,7 +295,7 @@ public class MaterialDetailActivity extends BaseActivity {
 
                             @Override
                             public void ok(String s) {
-                                PhoneFormatCheckUtils.getCallPhone(getApplicationContext(),phone);
+                                PhoneFormatCheckUtils.getCallPhone(getApplicationContext(), phone);
                             }
                         }).showDialog();
                 break;
@@ -303,17 +309,17 @@ public class MaterialDetailActivity extends BaseActivity {
                 break;
             case R.id.ll_chat://联系商家
                 RongIMUtils.getImageContentMessage(this
-                        ,"1"
-                        ,materialDetailBean.getMaterialName()
-                        ,unitPrice
-                        ,materialDetailBean.getImages().get(0).getUrl()
-                        ,materialDetailBean.getId()
-                        ,String.valueOf(materialDetailBean.getTargetId())
-                        ,materialDetailBean.getCompany());
+                        , "1"
+                        , materialDetailBean.getMaterialName()
+                        , unitPrice
+                        , materialDetailBean.getImages().get(0).getUrl()
+                        , materialDetailBean.getId()
+                        , String.valueOf(materialDetailBean.getTargetId())
+                        , materialDetailBean.getCompany());
                 break;
             case R.id.tv_reserve:
                 bundle.putInt(CustomConfig.MATERIAL_ID, getIntent().getIntExtra(CustomConfig.MATERIAL_ID, 0));
-                bundle.putInt("type",1);
+                bundle.putInt("type", 1);
                 ActivityUtils.startActivity(bundle, MaterialPlaceOrderActivity.class);
                 break;
         }

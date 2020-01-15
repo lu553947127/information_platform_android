@@ -447,7 +447,6 @@
                         android:id="@+id/tv_number2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="共2套，小计："
                         android:textColor="@color/colorTv"
                         android:textSize="13sp" />
 
@@ -455,7 +454,6 @@
                         android:id="@+id/tv_price2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="80000000"
                         android:textColor="@color/color_EF583E"
                         android:textSize="17sp" />
 
@@ -489,11 +487,12 @@
                 android:id="@+id/tv_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0"
+                tools:text="0"
                 android:textColor="@color/color_EF583E"
                 android:textSize="17sp" />
 
             <TextView
+                android:id="@+id/tv_price_unit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="元"

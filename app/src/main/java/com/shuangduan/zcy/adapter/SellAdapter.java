@@ -4,6 +4,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.shuangduan.zcy.R;
@@ -44,12 +45,18 @@ public class SellAdapter extends BaseQuickAdapter<MaterialBean.ListBean, BaseVie
         helper.setText(R.id.tv_stock, "库存: " + item.getStock() + item.getUnit())
                 .setText(R.id.tv_spec, "规格: " + item.getSpec())
                 .setText(R.id.tv_supplier, "供应商: " + item.getMaterialSupplier())
-                .setText(R.id.tv_price, item.getMethod() == 2 ?
-                        String.format(mContext.getString(R.string.format_material_price), item.getGuidancePrice(), item.getUnit()) :
-                        String.format(mContext.getString(R.string.format_material_price), item.getGuidancePrice(), "天"))
                 .setText(R.id.tv_address, "存放地: " + item.getAddress())
                 .setText(R.id.tv_supply_method, item.getMethod() == 1 ? "出租" : "出售")
                 .setText(R.id.tv_browse_num, String.format(mContext.getString(R.string.format_visitors_num), item.getBrowseCount()));
+
+        if (item.getPriceType() == 2) {
+            helper.setText(R.id.tv_price, "面议");
+        } else {
+            helper.setText(R.id.tv_price, item.getMethod() == 2 ?
+                    String.format(mContext.getString(R.string.format_material_price), item.getGuidancePrice(), item.getUnit()) :
+                    String.format(mContext.getString(R.string.format_material_price), item.getGuidancePrice(), "天"));
+        }
+
         ImageView ivIcon = helper.getView(R.id.iv_icon);
         try {
             String thumb = item.getImages().get(0).url;

@@ -77,6 +77,18 @@ public class MaterialDetailBean {
     //供应方式 1 出租 2 售卖
     private int method;
 
+    //是否面议 1：显示价格 2：面议
+    @SerializedName("price_type")
+    private int priceType;
+
+
+    public int getPriceType() {
+        return priceType;
+    }
+
+    public MaterialDetailBean() {
+    }
+
     public int getBrowseCount() {
         return browseCount;
     }

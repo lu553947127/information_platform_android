@@ -160,8 +160,6 @@ public class FindFoundationDetailActivity extends BaseActivity {
             }
 
             ivCancel.setVisibility(result.operaStatus == 1 ? View.VISIBLE : View.INVISIBLE);
-
-
         });
 
         vm.liveData.observe(this, result -> {

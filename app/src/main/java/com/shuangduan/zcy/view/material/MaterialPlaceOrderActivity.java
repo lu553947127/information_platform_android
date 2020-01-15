@@ -127,10 +127,14 @@ public class MaterialPlaceOrderActivity extends BaseActivity {
     @BindView(R.id.tv_submission)
     TextView tvSubmission;
 
+    @BindView(R.id.tv_price_unit)
+    TextView tvPriceUnit;
+
+
     private MaterialDetailVm materialDetailVm;
     private AddressVm addressVm;
-    private int  material_id, day,type;
-    private double  price, guidance_price;
+    private int material_id, day, type;
+    private double price, guidance_price;
     private MaterialDetailBean materialDetail;
     //单位 ,租期开始时间  ,租期结束时间
     private String leaseStartTime, leaseEndTime;
@@ -154,11 +158,12 @@ public class MaterialPlaceOrderActivity extends BaseActivity {
         materialDetailVm.id = getIntent().getIntExtra(CustomConfig.MATERIAL_ID, 0);
         type = getIntent().getIntExtra("type", 0);
 
-        switch (type){
+        switch (type) {
             case 1://周转材料
                 tvTurnoverNum.setVisibility(View.VISIBLE);
                 materialDetailVm.getDetail(getIntent().getIntExtra(CustomConfig.MATERIAL_ID, 0));
                 rlNumber.setVisibility(View.VISIBLE);
+
                 break;
             case 2://设备
                 llEquipmentNum.setVisibility(View.VISIBLE);
@@ -173,20 +178,20 @@ public class MaterialPlaceOrderActivity extends BaseActivity {
                 llAddress.setVisibility(View.GONE);
                 llAddressEmpty.setVisibility(View.VISIBLE);
                 materialDetailVm.address_id = 0;
-            }else {
-                if (materialDetailVm.address_id != 0){
+            } else {
+                if (materialDetailVm.address_id != 0) {
                     return;
                 }
                 llAddress.setVisibility(View.VISIBLE);
                 llAddressEmpty.setVisibility(View.GONE);
                 materialDetailVm.address_id = item.list.get(0).id;
                 tvRealName.setText(item.list.get(0).name);
-                ivIsDefault.setVisibility(item.list.get(0).state==1? View.VISIBLE : View.GONE);
+                ivIsDefault.setVisibility(item.list.get(0).state == 1 ? View.VISIBLE : View.GONE);
                 tvTel.setText(item.list.get(0).phone);
                 tvRealCompany.setText(item.list.get(0).company);
-                tvAddress.setText(item.list.get(0).province+item.list.get(0).city+item.list.get(0).address);
+                tvAddress.setText(item.list.get(0).province + item.list.get(0).city + item.list.get(0).address);
 
-                tvRealCompany.setVisibility(StringUtils.isTrimEmpty(item.list.get(0).company)?View.GONE:View.VISIBLE);
+                tvRealCompany.setVisibility(StringUtils.isTrimEmpty(item.list.get(0).company) ? View.GONE : View.VISIBLE);
             }
         });
 
@@ -212,19 +217,27 @@ public class MaterialPlaceOrderActivity extends BaseActivity {
                 }
             }
             tvMaterialCategory.setText(materialDetailBean.getMaterialName());
-            tvSpec.setText("规格："+materialDetailBean.getSpec());
+            tvSpec.setText("规格：" + materialDetailBean.getSpec());
             tvSpec.setVisibility(StringUtils.isTrimEmpty(materialDetailBean.getSpec()) ? View.GONE : View.VISIBLE);
             llLease.setVisibility(materialDetail.getMethod() == 1 ? View.VISIBLE : View.GONE);
             tvUnit.setText(materialDetailBean.getUnit());
             tvSupplyMethod.setText(materialDetailBean.getMethod() == 1 ? "出租" : "出售");
             guidance_price = Double.parseDouble(materialDetailBean.getGuidance_price());
 
-            switch (type){
+            switch (type) {
                 case 1://周转材料
+
+                    if (materialDetailBean.getPriceType() == 2) {
+                        tvGuidancePrice.setText("面议");
+                    } else {
+                        String unitPrice = materialDetailBean.getMethod() == 1 ?
+                                String.format(getString(R.string.format_material_price), materialDetailBean.getGuidance_price(), "天") :
+                                String.format(getString(R.string.format_material_price), materialDetailBean.getGuidance_price(), materialDetailBean.getUnit());
+                        tvGuidancePrice.setText(unitPrice);
+                    }
+
                     getGuidancePrice(materialDetailVm.buyStock);
-                    tvGuidancePrice.setText(materialDetailBean.getMethod() == 1 ?
-                            String.format(getString(R.string.format_material_price), materialDetailBean.getGuidance_price(), "天") :
-                            String.format(getString(R.string.format_material_price), materialDetailBean.getGuidance_price(), materialDetailBean.getUnit()));
+
                     break;
                 case 2://设备
                     getGuidancePriceInt(materialDetailVm.buyStockEquipment);
@@ -240,7 +253,7 @@ public class MaterialPlaceOrderActivity extends BaseActivity {
         materialDetailVm.mutableLiveAddOrder.observe(this, materialAddBean -> {
             Bundle bundle = new Bundle();
             bundle.putString("order_id", materialAddBean.getOrder_id());
-            switch (type){
+            switch (type) {
                 case 1://周转材料
                     bundle.putInt(CustomConfig.MATERIALS_TYPE, CustomConfig.FRP);
                     break;
@@ -254,7 +267,7 @@ public class MaterialPlaceOrderActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.iv_bar_back,R.id.ll_address,R.id.ll_address_empty,R.id.tv_num_left,R.id.tv_num,R.id.tv_turnover_num,R.id.tv_num_right, R.id.tv_submission, R.id.tv_time_start, R.id.tv_time_end})
+    @OnClick({R.id.iv_bar_back, R.id.ll_address, R.id.ll_address_empty, R.id.tv_num_left, R.id.tv_num, R.id.tv_turnover_num, R.id.tv_num_right, R.id.tv_submission, R.id.tv_time_start, R.id.tv_time_end})
     void onClick(View view) {
         Bundle bundle = new Bundle();
         switch (view.getId()) {
@@ -263,19 +276,19 @@ public class MaterialPlaceOrderActivity extends BaseActivity {
                 break;
             case R.id.ll_address:
             case R.id.ll_address_empty:
-                bundle.putInt("type",1);
+                bundle.putInt("type", 1);
                 ActivityUtils.startActivity(bundle, ReceivingAddressActivity.class);
                 break;
             case R.id.tv_num_left://数量减少
-                if (materialDetail.getMethod() == 1 && day == 0){
+                if (materialDetail.getMethod() == 1 && day == 0) {
                     ToastUtils.showShort("请先选择租赁时间");
                     return;
                 }
-                if (materialDetailVm.buyStockEquipment > 1){
+                if (materialDetailVm.buyStockEquipment > 1) {
                     materialDetailVm.buyStockEquipment = materialDetailVm.buyStockEquipment - 1;
                     tvNum.setText(String.valueOf(materialDetailVm.buyStockEquipment));
                     getGuidancePriceInt(materialDetailVm.buyStockEquipment);
-                }else {
+                } else {
                     ToastUtils.showShort("亲，不能再减少了");
                 }
                 break;
@@ -284,7 +297,7 @@ public class MaterialPlaceOrderActivity extends BaseActivity {
                 getBottomSheetDialog();
                 break;
             case R.id.tv_num_right://数量增加
-                if (materialDetail.getMethod() == 1 && day == 0){
+                if (materialDetail.getMethod() == 1 && day == 0) {
                     ToastUtils.showShort("请先选择租赁时间");
                     return;
                 }
@@ -293,20 +306,20 @@ public class MaterialPlaceOrderActivity extends BaseActivity {
                 getGuidancePriceInt(materialDetailVm.buyStockEquipment);
                 break;
             case R.id.tv_submission://提交预订单
-                if (materialDetailVm.address_id == 0){
+                if (materialDetailVm.address_id == 0) {
                     ToastUtils.showShort("请先设置收货地址");
                     return;
                 }
 
-                switch (type){
+                switch (type) {
                     case 1://周转材料
-                        if (materialDetailVm.buyStock == 0){
+                        if (materialDetailVm.buyStock == 0) {
                             ToastUtils.showShort("购买数量不能为空");
                             return;
                         }
                         break;
                     case 2://设备
-                        if (materialDetailVm.buyStockEquipment == 0){
+                        if (materialDetailVm.buyStockEquipment == 0) {
                             ToastUtils.showShort("购买数量不能为空");
                             return;
                         }
@@ -330,7 +343,7 @@ public class MaterialPlaceOrderActivity extends BaseActivity {
                     ToastUtils.showShort("订单金额过大，不支持线上交易");
                     return;
                 }
-                switch (type){
+                switch (type) {
                     case 1://周转材料
                         materialDetailVm.getAddMaterialOrder(material_id, etRemark.getText().toString(), leaseStartTime, leaseEndTime);
                         break;
@@ -369,7 +382,7 @@ public class MaterialPlaceOrderActivity extends BaseActivity {
             e.printStackTrace();
         }
         btn_dialog.setOnDismissListener(dialog -> {
-            if (KeyboardUtil.isSoftShowing(this)){
+            if (KeyboardUtil.isSoftShowing(this)) {
                 KeyboardUtil.showORhideSoftKeyboard(this);
             }
         });
@@ -377,7 +390,7 @@ public class MaterialPlaceOrderActivity extends BaseActivity {
         XEditText xEditText = dialog_view.findViewById(R.id.edit);
         TextView tvSearch = dialog_view.findViewById(R.id.tv_search);
         xEditText.setInputType(InputType.TYPE_CLASS_NUMBER);
-        switch (type){
+        switch (type) {
             case 1://周转材料
                 xEditText.setKeyListener(DigitsKeyListener.getInstance("0123456789."));
                 break;
@@ -401,12 +414,12 @@ public class MaterialPlaceOrderActivity extends BaseActivity {
                 ToastUtils.showShort("数量不能为0");
                 return;
             }
-            if (materialDetail.getMethod() == 1 && day == 0){
+            if (materialDetail.getMethod() == 1 && day == 0) {
                 ToastUtils.showShort("请先选择租赁时间");
                 return;
             }
 
-            switch (type){
+            switch (type) {
                 case 1://周转材料
                     materialDetailVm.buyStock = Double.parseDouble(xEditText.getText().toString());
                     getGuidancePrice(materialDetailVm.buyStock);
@@ -425,14 +438,14 @@ public class MaterialPlaceOrderActivity extends BaseActivity {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 if (TextUtils.isEmpty(xEditText.getText().toString())) {
                     ToastUtils.showShort(getString(R.string.no_mun));
-                }else if (Double.valueOf(xEditText.getText().toString()) == 0) {
+                } else if (Double.valueOf(xEditText.getText().toString()) == 0) {
                     ToastUtils.showShort("数量不能为0");
-                }else if (materialDetail.getMethod() == 1 && day == 0){
+                } else if (materialDetail.getMethod() == 1 && day == 0) {
                     ToastUtils.showShort("请先选择租赁时间");
-                }else {
+                } else {
                     //关闭软键盘
                     KeyboardUtil.closeKeyboard(this);
-                    switch (type){
+                    switch (type) {
                         case 1://周转材料
                             materialDetailVm.buyStock = Double.parseDouble(xEditText.getText().toString());
                             getGuidancePrice(materialDetailVm.buyStock);
@@ -458,6 +471,7 @@ public class MaterialPlaceOrderActivity extends BaseActivity {
      */
     private SimpleDateFormat sdf;
     private Calendar c;
+
     @SuppressLint("SimpleDateFormat")
     private void showTimeDialog(TextView tv, int typeTime) {
         try {
@@ -487,7 +501,7 @@ public class MaterialPlaceOrderActivity extends BaseActivity {
                     return;
                 }
 
-                switch (type){
+                switch (type) {
                     case 1://周转材料
                         getGuidancePrice(materialDetailVm.buyStock);
                         break;
@@ -507,13 +521,21 @@ public class MaterialPlaceOrderActivity extends BaseActivity {
 
     //计算价格和数量
     private void getGuidancePrice(double num) {
+
+        if (materialDetail.getPriceType() == 2) {
+            tvNumber.setText("共采购" + num + materialDetail.getUnit());
+            tvNumber2.setText("共" + num + materialDetail.getUnit());
+            tvPriceUnit.setVisibility(View.INVISIBLE);
+            return;
+        }
+
         if (materialDetail.getMethod() == 1) {
             price = num * day * guidance_price;
         } else {
             price = num * guidance_price;
         }
         tvNumber.setText("共采购" + num + materialDetail.getUnit() + "，共计");
-        tvNumber2.setText(materialDetail.getMethod() == 1 ? "共"+day+"天，小计" : "共" + num + materialDetail.getUnit() + "，小计");
+        tvNumber2.setText(materialDetail.getMethod() == 1 ? "共" + day + "天，小计" : "共" + num + materialDetail.getUnit() + "，小计");
         tvPrice.setText(DigitUtils.doubleToString(price));
         tvPrice2.setText(DigitUtils.doubleToString(price));
     }
@@ -527,7 +549,7 @@ public class MaterialPlaceOrderActivity extends BaseActivity {
         }
         tvNum.setText(String.valueOf(num));
         tvNumber.setText("采购数量为" + num + "，共计");
-        tvNumber2.setText(materialDetail.getMethod() == 1 ? "共"+day+"天，小计" : "小计");
+        tvNumber2.setText(materialDetail.getMethod() == 1 ? "共" + day + "天，小计" : "小计");
         tvPrice.setText(DigitUtils.doubleToString(price));
         tvPrice2.setText(DigitUtils.doubleToString(price));
     }
@@ -536,13 +558,13 @@ public class MaterialPlaceOrderActivity extends BaseActivity {
     public void onEventAddressID(ReceivingAddressBean.Address item) {
         materialDetailVm.address_id = item.id;
         tvRealName.setText(item.name);
-        ivIsDefault.setVisibility(item.state==1? View.VISIBLE : View.GONE);
+        ivIsDefault.setVisibility(item.state == 1 ? View.VISIBLE : View.GONE);
         tvTel.setText(item.phone);
         tvRealCompany.setText(item.company);
-        tvAddress.setText(item.province+item.city+item.address);
+        tvAddress.setText(item.province + item.city + item.address);
         llAddress.setVisibility(View.VISIBLE);
         llAddressEmpty.setVisibility(View.GONE);
-        tvRealCompany.setVisibility(StringUtils.isTrimEmpty(item.company)?View.GONE:View.VISIBLE);
+        tvRealCompany.setVisibility(StringUtils.isTrimEmpty(item.company) ? View.GONE : View.VISIBLE);
     }
 
     @Override

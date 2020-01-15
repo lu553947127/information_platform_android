@@ -124,6 +124,14 @@ public class MaterialBean {
         @SerializedName("browse_count")
         private String browseCount;
 
+        //支付类型
+        @SerializedName("price_type")
+        private int priceType;
+
+
+        public int getPriceType() {
+            return priceType;
+        }
 
 
         public String getBrowseCount() {

@@ -96,7 +96,7 @@ public class MaterialOrderDetailActivity extends BaseActivity {
 
     private MaterialDetailVm materialVm;
     private OrderTurnoverVm orderVm;
-    private int type,inside,method;
+    private int type, inside, method;
     private String phases;
     private List<OrderSearchBean.OrderPhasesBean> orderPhasesBeanList = new ArrayList<>();
 
@@ -141,9 +141,14 @@ public class MaterialOrderDetailActivity extends BaseActivity {
             }
             tvTitle.setText(item.materialName);
             if (type == CustomConfig.FRP) {
-                tvPrice.setText(item.method == 1 ?
-                        Html.fromHtml("商品单价：<font color=#EF583E>¥" + item.price + "<font/>/天") :
-                        Html.fromHtml("商品单价：<font color=#EF583E>¥" + item.price + "<font/>/" + item.unit));
+
+                if (item.priceType == 2) {
+                    tvPrice.setText(Html.fromHtml("<font color=#EF583E>\" 面议 \"<font/>"));
+                } else {
+                    tvPrice.setText(item.method == 1 ?
+                            Html.fromHtml("商品单价：<font color=#EF583E>¥" + item.price + "<font/>/天") :
+                            Html.fromHtml("商品单价：<font color=#EF583E>¥" + item.price + "<font/>/" + item.unit));
+                }
 
                 tvResrveNum.setText(item.number + item.unit);
             } else if (type == CustomConfig.EQUIPMENT) {
@@ -204,9 +209,9 @@ public class MaterialOrderDetailActivity extends BaseActivity {
             List<String> list = new ArrayList<>();
 
             //非公开出售物资 没有投标报价
-            if (inside == 1 && method == 2){
+            if (inside == 1 && method == 2) {
                 orderPhasesBeanList = orderSearchBean.getOrder_phases();
-            }else {
+            } else {
                 orderPhasesBeanList = orderSearchBean.getOrder_phases();
                 orderPhasesBeanList.remove(2);
             }
@@ -257,9 +262,9 @@ public class MaterialOrderDetailActivity extends BaseActivity {
     //取消预定订单
     private void cancelOrder() {
         MaterialOrderBean.ListBean order = materialVm.orderDetailLiveData.getValue();
-        if (order!=null && type == CustomConfig.FRP) {
+        if (order != null && type == CustomConfig.FRP) {
             materialVm.materialOrderCancel(order.orderId);
-        } else if (order!=null && type == CustomConfig.EQUIPMENT) {
+        } else if (order != null && type == CustomConfig.EQUIPMENT) {
             materialVm.cancelEquipmentOrder(order.orderId);
         }
     }
