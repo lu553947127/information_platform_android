@@ -50,12 +50,12 @@
                     android:visibility="gone"/>
             </RelativeLayout>
 
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="70dp"/>
+
         </LinearLayout>
 
     </com.shuangduan.zcy.utils.ElasticScrollView>
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="70dp"/>
 
 </LinearLayout>
