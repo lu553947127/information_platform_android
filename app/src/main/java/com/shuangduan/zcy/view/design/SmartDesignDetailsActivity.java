@@ -93,6 +93,8 @@ public class SmartDesignDetailsActivity extends BaseActivity {
                 btnEvent.setText(R.string.cancel_order);
             } else if (result.operaStatus == 2) {
                 btnEvent.setText(R.string.delete_order);
+            } else {
+                btnEvent.setVisibility(View.INVISIBLE);
             }
 
             vm.getPhases();

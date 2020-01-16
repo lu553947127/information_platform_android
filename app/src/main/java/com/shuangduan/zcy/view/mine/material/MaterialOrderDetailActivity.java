@@ -143,7 +143,7 @@ public class MaterialOrderDetailActivity extends BaseActivity {
             if (type == CustomConfig.FRP) {
 
                 if (item.priceType == 2) {
-                    tvPrice.setText(Html.fromHtml("<font color=#EF583E>\" 面议 \"<font/>"));
+                    tvPrice.setText(Html.fromHtml("商品单价：<font color=#EF583E>面议<font/>"));
                 } else {
                     tvPrice.setText(item.method == 1 ?
                             Html.fromHtml("商品单价：<font color=#EF583E>¥" + item.price + "<font/>/天") :
