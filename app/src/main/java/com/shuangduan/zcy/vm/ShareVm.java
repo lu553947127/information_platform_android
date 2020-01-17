@@ -55,8 +55,13 @@ public class ShareVm extends BaseViewModel {
         new ShareRepository().headlinesShare(shareLiveData,pageStateLiveData,userId,id);
     }
 
-    //基建物资分享
+    //基建物资周转材料分享
     public void materialShare(int id){
         new ShareRepository().materialShare(shareLiveData,pageStateLiveData,userId,id);
+    }
+
+    //基建物资设备物资分享
+    public void equipmentShare(int id){
+        new ShareRepository().equipmentShare(shareLiveData,pageStateLiveData,userId,id);
     }
 }

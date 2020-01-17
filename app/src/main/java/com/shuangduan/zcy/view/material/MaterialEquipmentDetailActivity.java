@@ -244,7 +244,7 @@ public class MaterialEquipmentDetailActivity extends BaseActivity {
             this.shareBean = item;
             ShareManage.getNetworkBitmap(item.getImage());
         });
-        shareVm.materialShare(getIntent().getIntExtra(CustomConfig.MATERIAL_ID, 0));
+        shareVm.equipmentShare(getIntent().getIntExtra(CustomConfig.MATERIAL_ID, 0));
     }
 
     @OnClick({R.id.iv_bar_back, R.id.iv_bar_right, R.id.tv_enclosure, R.id.tv_tel, R.id.ll_collect,R.id.ll_chat, R.id.tv_reserve})

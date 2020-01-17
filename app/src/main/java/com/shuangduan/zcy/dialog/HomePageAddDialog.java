@@ -29,6 +29,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.SpConfig;
@@ -122,6 +123,8 @@ public class HomePageAddDialog extends PopupWindow implements View.OnClickListen
         mHeight = metrics.heightPixels;
 
         String name = Build.MANUFACTURER;
+        String moder = android.os.Build.MODEL;
+        LogUtils.e(moder);
         switch (name) {
             case "HUAWEI":
                 view.setBackgroundResource(0);
@@ -131,6 +134,7 @@ public class HomePageAddDialog extends PopupWindow implements View.OnClickListen
                 break;
             case "vivo":
                 view.setBackgroundResource(0);
+                if (moder.equals("vivo X21A"))mHeight = metrics.heightPixels + mContext.getResources().getDimensionPixelSize(R.dimen.dp_55);
                 //设置毛玻璃背景
                 setBackgroundDrawable(new BitmapDrawable(mContext.getResources(), blur()));
                 break;

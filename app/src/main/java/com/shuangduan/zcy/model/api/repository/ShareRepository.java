@@ -38,8 +38,13 @@ public class ShareRepository extends BaseRepository {
         request(apiService.headlinesShare(userId, id)).setData(liveData).setPageState(pageState).send();
     }
 
-    //基建物资分享
+    //基建物资周转材料分享
     public void materialShare(MutableLiveData<ShareBean.DataBean> liveData, MutableLiveData<String> pageState, int userId, int id) {
         request(apiService.materialShare(userId, id)).setData(liveData).setPageState(pageState).send();
+    }
+
+    //基建物资设备物资分享
+    public void equipmentShare(MutableLiveData<ShareBean.DataBean> liveData, MutableLiveData<String> pageState, int userId, int id) {
+        request(apiService.equipmentShare(userId, id)).setData(liveData).setPageState(pageState).send();
     }
 }
