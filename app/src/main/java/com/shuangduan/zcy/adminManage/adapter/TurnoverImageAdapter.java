@@ -4,6 +4,7 @@ import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 
+import com.blankj.utilcode.util.StringUtils;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -28,7 +29,7 @@ public class TurnoverImageAdapter extends BaseQuickAdapter<TurnoverDetailBean.Im
 
     @Override
     protected void convert(BaseViewHolder helper,TurnoverDetailBean.Images item) {
-        Glide.with(mContext).load(item.heade_url).into(helper.<ImageView>getView(R.id.iv));
+        Glide.with(mContext).load(StringUtils.isEmpty(item.heade_url)?item.url:item.heade_url).into(helper.<ImageView>getView(R.id.iv));
         helper.addOnClickListener(R.id.iv);
     }
 }

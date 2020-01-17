@@ -4,6 +4,7 @@ import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 
+import com.blankj.utilcode.util.StringUtils;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -31,7 +32,7 @@ public class DeviceImageAdapter  extends BaseQuickAdapter<DeviceDetailBean.Image
 
     @Override
     protected void convert(BaseViewHolder helper,DeviceDetailBean.ImagesBean item) {
-        Glide.with(mContext).load(item.getHeade_url()).into(helper.<ImageView>getView(R.id.iv));
+        Glide.with(mContext).load(StringUtils.isTrimEmpty(item.getHeade_url())?item.getUrl():item.getHeade_url()).into(helper.<ImageView>getView(R.id.iv));
         helper.addOnClickListener(R.id.iv);
     }
 }
