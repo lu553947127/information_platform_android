@@ -145,7 +145,7 @@ public class WithdrawActivity extends BaseActivity {
             case R.id.iv_bar_back:
                 finish();
                 break;
-            case R.id.tv_bank_card:
+            case R.id.tv_bank_card://绑定
                 List<BankCardBean> bankCardBeans = withdrawVm.bankcardLiveData.getValue();
                 if (bankCardBeans == null || bankCardBeans.size() == 0){
                     //去绑定
@@ -161,7 +161,7 @@ public class WithdrawActivity extends BaseActivity {
                             .showDialog());
                 }
                 break;
-            case R.id.tv_confirm:
+            case R.id.tv_confirm://提现
                 if (withdrawVm.withdrawBankcardId == 0){
                     ToastUtils.showShort(getString(R.string.please_bind_bank_card));
                     //去绑定

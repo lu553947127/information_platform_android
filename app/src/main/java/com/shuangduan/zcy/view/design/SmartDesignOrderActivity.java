@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
@@ -30,7 +29,18 @@ import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-
+/**
+ * @ProjectName: information_platform_android
+ * @Package: com.shuangduan.zcy.view.mine
+ * @ClassName: SmartDesignOrderActivity
+ * @Description: 智能设置订单列表
+ * @Author: 徐玉
+ * @CreateDate: 2019/12/15 15:14
+ * @UpdateUser: 徐玉
+ * @UpdateDate: 2019/12/15 15:14
+ * @UpdateRemark: 更新说明
+ * @Version: 1.0
+ */
 public class SmartDesignOrderActivity extends BaseActivity implements EmptyViewFactory.EmptyViewCallBack {
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;

@@ -16,7 +16,6 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -42,30 +41,27 @@ import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-
 /**
- * @author 徐玉
- * @name information_platform_android
- * @class name：com.shuangduan.zcy.view.demand
- * @class 需求资讯-找基地
- * @time
- * @change
- * @chang
- * @class
+ * @ProjectName: information_platform_android
+ * @Package: com.shuangduan.zcy.view.mine
+ * @ClassName: FindFoundationActivity
+ * @Description: 需求资讯-找基地
+ * @Author: 徐玉
+ * @CreateDate: 2019/12/15 15:14
+ * @UpdateUser: 徐玉
+ * @UpdateDate: 2019/12/15 15:14
+ * @UpdateRemark: 更新说明
+ * @Version: 1.0
  */
 public class FindFoundationActivity extends BaseActivity {
-
     @BindView(R.id.scroll)
     AdaptationScrollView scrollView;
     @BindView(R.id.rl_toolbar)
     RelativeLayout toolbar;
-
-
     @BindView(R.id.et_materials_name)
     XEditText etMaterialsName;
     @BindView(R.id.et_material_number)
     XEditText etMaterialNum;
-
     @BindView(R.id.tv_unit)
     TextView tvUnit;
     @BindView(R.id.et_existing_address)
@@ -74,29 +70,21 @@ public class FindFoundationActivity extends BaseActivity {
     XEditText etNeedAddress;
     @BindView(R.id.et_distance)
     XEditText etDistance;
-
-
     @BindView(R.id.tv_start_time)
     TextView tvStartTime;
     @BindView(R.id.tv_end_time)
     TextView tvEndTime;
-
     @BindView(R.id.radio)
     RadioGroup radioGroup;
-
     @BindView(R.id.et_name)
     XEditText etName;
     @BindView(R.id.et_phone)
     XEditText etPhone;
-
     @BindView(R.id.et_param)
     XEditText etParam;
-
     private DemandReleaseVm vm;
-
     private SimpleDateFormat f;
     private Calendar c;
-
     //是否需要改制 1是 2否
     private int isReform;
 

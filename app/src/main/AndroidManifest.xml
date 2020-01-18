@@ -285,8 +285,7 @@
         <!-- 发布信息列表-->
         <activity android:name="com.shuangduan.zcy.view.mine.project.MineProjectActivity" />
         <!-- 工程信息 招采信息 发布-->
-        <activity
-            android:name="com.shuangduan.zcy.view.release.ReleaseProjectActivity"
+        <activity android:name="com.shuangduan.zcy.view.release.ReleaseProjectActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <!-- 发布类型选择-->
         <activity android:name="com.shuangduan.zcy.view.release.ReleaseTypeSelectActivity" />
@@ -392,21 +391,20 @@
         <activity android:name="com.shuangduan.zcy.view.photo.CameraActivity" />
         <!-- h5加载页-->
         <activity android:name="com.shuangduan.zcy.view.WebViewActivity" />
-
-        <!--   找物流   -->
+        <!-- 找物流-->
         <activity android:name="com.shuangduan.zcy.view.demand.FindLogisticsActivity" />
-        <!--   找基地   -->
+        <!-- 找基地 -->
         <activity android:name="com.shuangduan.zcy.view.demand.FindFoundationActivity" />
-        <!--   找方案  -->
+        <!-- 找方案 -->
         <activity android:name="com.shuangduan.zcy.view.demand.FindBluePrintActivity" />
-        <!--   找基地详情     -->
+        <!-- 找基地详情-->
         <activity android:name="com.shuangduan.zcy.view.mine.demand.FindFoundationDetailActivity" />
-        <!--   找物流详情     -->
+        <!-- 找物流详情 -->
         <activity android:name="com.shuangduan.zcy.view.mine.demand.FindLogisticsDetailActivity" />
-        <!--   找方案详情     -->
+        <!-- 找方案详情-->
         <activity android:name="com.shuangduan.zcy.view.mine.demand.FindBluePrintDetailActivity"/>
 
-        <!-- 微信支付 返回结果页-->
+        <!-- 微信支付返回结果页-->
         <activity
             android:name="com.shuangduan.zcy.wxapi.WXPayEntryActivity"
             android:exported="true"
@@ -432,24 +430,18 @@
         <!-- 周转材料详情-->
         <activity android:name="com.shuangduan.zcy.adminManage.view.turnover.TurnoverDetailActivity" />
         <!-- 周转材料添加-->
-        <activity
-            android:name="com.shuangduan.zcy.adminManage.view.turnover.TurnoverAddActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity android:name="com.shuangduan.zcy.adminManage.view.turnover.TurnoverAddActivity" android:windowSoftInputMode="stateHidden|adjustResize" />
         <!-- 设备管理详情-->
         <activity android:name="com.shuangduan.zcy.adminManage.view.device.DeviceDetailActivity" />
         <!-- 设备管理添加-->
-        <activity
-            android:name="com.shuangduan.zcy.adminManage.view.device.DeviceAddActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity android:name="com.shuangduan.zcy.adminManage.view.device.DeviceAddActivity" android:windowSoftInputMode="stateHidden|adjustResize" />
         <!-- 订单详情-->
         <activity android:name="com.shuangduan.zcy.adminManage.view.order.OrderDetailsActivity" />
-
-
-        <!--  智能设计下单      -->
+        <!-- 智能设计下单  -->
         <activity android:name="com.shuangduan.zcy.view.design.SmartDesignActivity" />
-        <!--  智能设计订单    -->
+        <!-- 智能设计订单 -->
         <activity android:name="com.shuangduan.zcy.view.design.SmartDesignOrderActivity" />
-        <!--  智能设置订单详情      -->
+        <!-- 智能设计订单详情 -->
         <activity android:name="com.shuangduan.zcy.view.design.SmartDesignDetailsActivity" />
 
         <!--高德地图appKey-->

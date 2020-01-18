@@ -37,6 +37,18 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+/**
+ * @ProjectName: information_platform_android
+ * @Package: com.shuangduan.zcy.view.mine
+ * @ClassName: EditReceivingAddressActivity
+ * @Description: 新建/编辑收货地址页面
+ * @Author: 鹿鸿祥
+ * @CreateDate: 2019/12/15 15:14
+ * @UpdateUser: 鹿鸿祥
+ * @UpdateDate: 2019/12/15 15:14
+ * @UpdateRemark: 更新说明
+ * @Version: 1.0
+ */
 public class EditReceivingAddressActivity extends BaseActivity {
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
@@ -142,10 +154,10 @@ public class EditReceivingAddressActivity extends BaseActivity {
             case R.id.iv_bar_back:
                 finish();
                 break;
-            case R.id.tv_area:
+            case R.id.tv_area://选择省市
                 dialog.show();
                 break;
-            case R.id.tv_bar_right:
+            case R.id.tv_bar_right://删除
                 new CustomDialog(this)
                         .setTip(getString(R.string.delete_address))
                         .setCallBack(new BaseDialog.CallBack() {
@@ -158,7 +170,7 @@ public class EditReceivingAddressActivity extends BaseActivity {
                             }
                         }).showDialog();
                 break;
-            case R.id.tv_save:
+            case R.id.tv_save://保存
                 //默认状态
                 int state = !switchView.isOpened() ? 0 : 1;
                 String name = etName.getText().toString();

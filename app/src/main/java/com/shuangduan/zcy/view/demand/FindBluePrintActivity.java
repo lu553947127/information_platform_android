@@ -32,44 +32,38 @@ import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-
 /**
- * @author 徐玉
- * @name information_platform_android
- * @class name：com.shuangduan.zcy.view.demand
- * @class 需求资讯-找方案
- * @time
- * @change
- * @chang
- * @class
+ * @ProjectName: information_platform_android
+ * @Package: com.shuangduan.zcy.view.mine
+ * @ClassName: FindBluePrintActivity
+ * @Description: 需求资讯-找方案
+ * @Author: 徐玉
+ * @CreateDate: 2019/12/15 15:14
+ * @UpdateUser: 徐玉
+ * @UpdateDate: 2019/12/15 15:14
+ * @UpdateRemark: 更新说明
+ * @Version: 1.0
  */
 public class FindBluePrintActivity extends BaseActivity {
-
     @BindView(R.id.scroll)
     AdaptationScrollView scrollView;
     @BindView(R.id.rl_toolbar)
     RelativeLayout toolbar;
-
-
     @BindView(R.id.et_project_name)
     XEditText etProjectName;
     @BindView(R.id.et_project_address)
     XEditText etProjectAddress;
-
     @BindView(R.id.tv_start_time)
     TextView tvStartTime;
     @BindView(R.id.tv_end_time)
     TextView tvEndTime;
-
     @BindView(R.id.et_param)
     XEditText etParam;
     @BindView(R.id.et_name)
     XEditText etName;
     @BindView(R.id.et_phone)
     XEditText etPhone;
-
     private DemandReleaseVm vm;
-
     private SimpleDateFormat f;
     private Calendar c;
 
@@ -165,7 +159,6 @@ public class FindBluePrintActivity extends BaseActivity {
                 String param = etParam.getTrimmedString();
                 String name = etName.getTrimmedString();
                 String phone = etPhone.getTrimmedString();
-
                 vm.bluePrintAdd(projectName, address, param, name, phone);
                 break;
         }
@@ -194,5 +187,4 @@ public class FindBluePrintActivity extends BaseActivity {
         customDatePicker.showSpecificTime(false);
         customDatePicker.show(showTime);
     }
-
 }

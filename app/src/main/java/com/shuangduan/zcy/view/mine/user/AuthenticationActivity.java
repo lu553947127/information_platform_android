@@ -228,7 +228,7 @@ public class AuthenticationActivity extends BaseActivity{
             case R.id.iv_bar_back:
                 finish();
                 break;
-            case R.id.tv_bar_right:
+            case R.id.tv_bar_right://保存
                 int isVerified = SPUtils.getInstance().getInt(SpConfig.IS_VERIFIED, 0);
                 if (isVerified != 2){
                     switch (type){
@@ -242,11 +242,11 @@ public class AuthenticationActivity extends BaseActivity{
                     ToastUtils.showShort("已认证，请勿重复认证");
                 }
                 break;
-            case R.id.iv_id_card_positive:
+            case R.id.iv_id_card_positive://上传正面
                 uploadPhotoVm.type = UploadPhotoVm.ID_CARD_POSITIVE;
                 baseBottomSheetDialog.showPhotoDialog();
                 break;
-            case R.id.iv_id_card_negative:
+            case R.id.iv_id_card_negative://上传背面
                 uploadPhotoVm.type = UploadPhotoVm.ID_CARD_NEGATIVE;
                 baseBottomSheetDialog.showPhotoDialog();
                 break;

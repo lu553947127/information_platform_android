@@ -41,24 +41,23 @@ import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-
 /**
- * @author 徐玉
- * @name information_platform_android
- * @class name：com.shuangduan.zcy.view.demand
- * @class 需求资讯-找物流
- * @time
- * @change
- * @chang
- * @class
+ * @ProjectName: information_platform_android
+ * @Package: com.shuangduan.zcy.view.mine
+ * @ClassName: FindLogisticsActivity
+ * @Description: 需求资讯-找物流
+ * @Author: 徐玉
+ * @CreateDate: 2019/12/15 15:14
+ * @UpdateUser: 徐玉
+ * @UpdateDate: 2019/12/15 15:14
+ * @UpdateRemark: 更新说明
+ * @Version: 1.0
  */
 public class FindLogisticsActivity extends BaseActivity {
-
     @BindView(R.id.scroll)
     AdaptationScrollView scrollView;
     @BindView(R.id.rl_toolbar)
     RelativeLayout toolbar;
-
     @BindView(R.id.et_materials_name)
     XEditText etMaterialsName;
     @BindView(R.id.et_material_number)
@@ -67,13 +66,10 @@ public class FindLogisticsActivity extends BaseActivity {
     XEditText etSendAddress;
     @BindView(R.id.et_receive_address)
     XEditText etReceiveAddress;
-
     @BindView(R.id.tv_unit)
     TextView tvUnit;
-
     @BindView(R.id.tv_receive_time)
     TextView tvReceiveTime;
-
     @BindView(R.id.tv_start_time)
     TextView tvStartTime;
     @BindView(R.id.tv_end_time)
@@ -84,13 +80,9 @@ public class FindLogisticsActivity extends BaseActivity {
     XEditText etPhone;
     @BindView(R.id.et_param)
     XEditText etParam;
-
-
     private DemandReleaseVm vm;
-
     private SimpleDateFormat f;
     private Calendar c;
-
     //接收时间
     private String receiveTime;
 
@@ -219,7 +211,6 @@ public class FindLogisticsActivity extends BaseActivity {
         }
     }
 
-
     /**
      * 时间选择器
      */
@@ -249,7 +240,6 @@ public class FindLogisticsActivity extends BaseActivity {
 
     private List<UnitBean> unitList = new ArrayList<>();
     private int unitId;
-
     private void getBottomSheetDialog(int layout) {
         //底部滑动对话框
         BottomSheetDialogs btn_dialog = new BottomSheetDialogs(this, R.style.BottomSheetStyle);
@@ -281,7 +271,6 @@ public class FindLogisticsActivity extends BaseActivity {
         if (unitId != 0) {
             unitAdapter.setIsSelect(unitId);
         }
-
         btn_dialog.show();
     }
 }

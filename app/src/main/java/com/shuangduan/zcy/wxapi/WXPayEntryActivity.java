@@ -18,17 +18,18 @@ import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.modelpay.PayResp;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
-
 /**
- * <pre>
- *     author : 徐玉
- *     e-mail : ningwenqiang@lanhuiplay.com
- *     time   : 2018/07/04
- *     desc   : 微信支付返回结果页
- *     version: 1.0
- * </pre>
+ * @ProjectName: information_platform_android
+ * @Package: com.shuangduan.zcy.view.mine
+ * @ClassName: WXPayEntryActivity
+ * @Description: 微信支付返回结果页
+ * @Author: 徐玉
+ * @CreateDate: 2019/12/15 15:14
+ * @UpdateUser: 徐玉
+ * @UpdateDate: 2019/12/15 15:14
+ * @UpdateRemark: 更新说明
+ * @Version: 1.0
  */
-
 public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
 
     @Override

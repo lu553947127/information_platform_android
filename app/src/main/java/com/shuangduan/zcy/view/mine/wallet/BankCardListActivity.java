@@ -1,5 +1,6 @@
 package com.shuangduan.zcy.view.mine.wallet;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +37,7 @@ import butterknife.OnClick;
  * @chang time
  * @class describe
  */
+@SuppressLint("InflateParams")
 public class BankCardListActivity extends BaseActivity {
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
@@ -55,10 +57,10 @@ public class BankCardListActivity extends BaseActivity {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.bank_card));
 
+        //银行卡列表尾部局（添加银行卡按钮）
         View foot = LayoutInflater.from(this).inflate(R.layout.footer_back_card, null);
-        foot.setOnClickListener(v -> {
-            ActivityUtils.startActivity(BindBankCardActivity.class);
-        });
+        foot.setOnClickListener(v -> ActivityUtils.startActivity(BindBankCardActivity.class));
+
         rv.setLayoutManager(new LinearLayoutManager(this));
         BankCardAdapter bankCardAdapter = new BankCardAdapter(R.layout.item_bank_card, null);
         rv.setAdapter(bankCardAdapter);

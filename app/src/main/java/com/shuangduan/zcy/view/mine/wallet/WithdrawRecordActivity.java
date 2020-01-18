@@ -21,7 +21,6 @@ import com.shuangduan.zcy.adapter.WithdrawRecordAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.bean.WithdrawRecordBean;
-import com.shuangduan.zcy.view.mine.wallet.WithdrawDetailActivity;
 import com.shuangduan.zcy.vm.WithdrawVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 

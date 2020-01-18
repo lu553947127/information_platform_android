@@ -20,8 +20,6 @@ import com.shuangduan.zcy.dialog.CustomDialog;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.vm.DemandReleaseVm;
 
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -29,7 +27,7 @@ import butterknife.OnClick;
  * @ProjectName: information_platform_android
  * @Package: com.shuangduan.zcy.view.mine.demand
  * @ClassName: FindFoundationDetailFragment
- * @Description: 个人中心找物流详情
+ * @Description: 个人中心找基地详情
  * @Author: 徐玉
  * @CreateDate: 2020/1/10 10:31
  * @UpdateUser:

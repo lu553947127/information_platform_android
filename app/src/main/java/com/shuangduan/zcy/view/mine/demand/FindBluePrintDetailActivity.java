@@ -16,23 +16,20 @@ import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.CustomDialog;
 import com.shuangduan.zcy.model.api.PageState;
-import com.shuangduan.zcy.view.demand.FindBluePrintActivity;
-import com.shuangduan.zcy.view.mine.set.SetActivity;
 import com.shuangduan.zcy.vm.DemandReleaseVm;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-
 /**
  * @ProjectName: information_platform_android
- * @Package: com.shuangduan.zcy.view.mine.demand
+ * @Package: com.shuangduan.zcy.view.mine
  * @ClassName: FindBluePrintDetailActivity
  * @Description: 个人中心找方案详情
  * @Author: 徐玉
- * @CreateDate: 2020/1/10 14:40
- * @UpdateUser:
- * @UpdateDate:
- * @UpdateRemark:
+ * @CreateDate: 2019/12/15 15:14
+ * @UpdateUser: 徐玉
+ * @UpdateDate: 2019/12/15 15:14
+ * @UpdateRemark: 更新说明
  * @Version: 1.0
  */
 public class FindBluePrintDetailActivity extends BaseActivity {

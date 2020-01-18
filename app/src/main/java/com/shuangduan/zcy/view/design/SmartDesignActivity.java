@@ -16,14 +16,24 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.utils.DensityUtil;
-import com.shuangduan.zcy.view.demand.FindFoundationActivity;
 import com.shuangduan.zcy.vm.SmartDesignVm;
 import com.shuangduan.zcy.weight.AdaptationScrollView;
 import com.shuangduan.zcy.weight.XEditText;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-
+/**
+ * @ProjectName: information_platform_android
+ * @Package: com.shuangduan.zcy.view.mine
+ * @ClassName: SmartDesignActivity
+ * @Description: 智能设计下单/新建
+ * @Author: 徐玉
+ * @CreateDate: 2019/12/15 15:14
+ * @UpdateUser: 徐玉
+ * @UpdateDate: 2019/12/15 15:14
+ * @UpdateRemark: 更新说明
+ * @Version: 1.0
+ */
 public class SmartDesignActivity extends BaseActivity {
     @BindView(R.id.scroll)
     AdaptationScrollView scrollView;

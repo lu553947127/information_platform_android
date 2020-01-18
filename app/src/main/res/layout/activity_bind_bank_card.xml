@@ -152,12 +152,6 @@
             android:textSize="14sp"
             android:hint="@string/please_be_accurate_to_the_branch"/>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_gravity="bottom"
-            android:background="@color/colorDivider"/>
-
     </FrameLayout>
 
 

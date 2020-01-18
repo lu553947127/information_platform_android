@@ -1,6 +1,5 @@
 package com.shuangduan.zcy.view.mine.set;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -11,22 +10,18 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
-import com.blankj.utilcode.util.LogUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.shuangduan.zcy.R;
-import com.shuangduan.zcy.adapter.MaterialPlaceOrderAdapter;
 import com.shuangduan.zcy.adapter.ReceivingAddressAdapter;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.CustomDialog;
-import com.shuangduan.zcy.factory.EmptyViewFactory;
 import com.shuangduan.zcy.model.bean.ReceivingAddressBean;
 import com.shuangduan.zcy.utils.DensityUtil;
 import com.shuangduan.zcy.vm.AddressVm;
@@ -74,8 +69,6 @@ public class ReceivingAddressActivity extends BaseActivity implements OnItemMenu
     TextView tvTip;
     @BindView(R.id.tv_goto)
     TextView tvGoto;
-
-
     private AddressVm vm;
 
     //创建侧滑菜单
@@ -99,7 +92,6 @@ public class ReceivingAddressActivity extends BaseActivity implements OnItemMenu
         rightMenu.addMenuItem(deleteItem);// 添加一个按钮到右侧侧菜单。.
     };
     private ReceivingAddressAdapter mAdapter;
-
     private SwipeMenuBridge menuBridge;
 
     @Override
@@ -175,7 +167,7 @@ public class ReceivingAddressActivity extends BaseActivity implements OnItemMenu
                 finish();
                 break;
             case R.id.tv_new:
-            case R.id.tv_goto:
+            case R.id.tv_goto://新建收货地址
                 Bundle bundle = new Bundle();
                 bundle.putInt("type", 0);
                 ActivityUtils.startActivity(EditReceivingAddressActivity.class, bundle);
@@ -183,23 +175,24 @@ public class ReceivingAddressActivity extends BaseActivity implements OnItemMenu
         }
     }
 
+    //设置空页面
     private void emptyView() {
         ivIcon.setImageResource(R.drawable.icon_address_empty);
         tvTip.setText(R.string.address_empty_hint);
         tvGoto.setText(R.string.go_setting);
         tvGoto.setVisibility(View.VISIBLE);
-
     }
 
+    //侧滑监听
     @Override
     public void onItemClick(SwipeMenuBridge menuBridge, int position) {
         int id = mAdapter.getItem(position).id;
         this.menuBridge = menuBridge;
         switch (menuBridge.getPosition()) {
-            case 0:
+            case 0://设为默认地址
                 vm.setDefaultState(id);
                 break;
-            case 1:
+            case 1://删除
                 new CustomDialog(this)
                         .setTip(getString(R.string.delete_address))
                         .setCallBack(new BaseDialog.CallBack() {
@@ -215,9 +208,7 @@ public class ReceivingAddressActivity extends BaseActivity implements OnItemMenu
                         }).showDialog();
                 break;
         }
-
     }
-
 
     @Override
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
@@ -232,13 +223,11 @@ public class ReceivingAddressActivity extends BaseActivity implements OnItemMenu
         }
     }
 
-
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         EventBus.getDefault().post(mAdapter.getItem(position));
         finish();
     }
-
 
     @Subscribe
     public void updateAddress(MutableLiveData data) {

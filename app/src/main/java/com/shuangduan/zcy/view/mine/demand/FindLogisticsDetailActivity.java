@@ -1,6 +1,5 @@
 package com.shuangduan.zcy.view.mine.demand;
 
-import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -18,7 +17,6 @@ import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.CustomDialog;
 import com.shuangduan.zcy.model.api.PageState;
-import com.shuangduan.zcy.view.demand.FindLogisticsActivity;
 import com.shuangduan.zcy.vm.DemandReleaseVm;
 
 import butterknife.BindView;
@@ -26,14 +24,14 @@ import butterknife.OnClick;
 
 /**
  * @ProjectName: information_platform_android
- * @Package: com.shuangduan.zcy.view.mine.demand
+ * @Package: com.shuangduan.zcy.view.mine
  * @ClassName: FindLogisticsDetailActivity
- * @Description: 个人中心找物流详情
+ * @Description: 找物流详情
  * @Author: 徐玉
- * @CreateDate: 2020/1/10 14:22
- * @UpdateUser:
- * @UpdateDate:
- * @UpdateRemark:
+ * @CreateDate: 2019/12/15 15:14
+ * @UpdateUser: 徐玉
+ * @UpdateDate: 2019/12/15 15:14
+ * @UpdateRemark: 更新说明
  * @Version: 1.0
  */
 public class FindLogisticsDetailActivity extends BaseActivity {

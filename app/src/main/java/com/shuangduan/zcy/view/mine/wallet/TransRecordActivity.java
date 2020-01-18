@@ -156,7 +156,7 @@ public class TransRecordActivity extends BaseActivity {
             case R.id.iv_bar_back:
                 finish();
                 break;
-            case R.id.ll_type:
+            case R.id.ll_type://类型
                 transRecordVm.currentShow = 1;
                 if (popupWindow == null){
                     transRecordVm.getFilter();
@@ -164,7 +164,7 @@ public class TransRecordActivity extends BaseActivity {
                     showPop();
                 }
                 break;
-            case R.id.ll_in_out:
+            case R.id.ll_in_out://收货支出
                 transRecordVm.currentShow = 2;
                 if (popupWindow == null){
                     transRecordVm.getFilter();
@@ -172,7 +172,7 @@ public class TransRecordActivity extends BaseActivity {
                     showPop();
                 }
                 break;
-            case R.id.over:
+            case R.id.over://灰色背景
                 popDismiss();
                 break;
         }

@@ -20,17 +20,18 @@ import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 
 import org.greenrobot.eventbus.EventBus;
-
 /**
- * <pre>
- *     author : 徐玉
- *     e-mail : ningwenqiang@lanhuiplay.com
- *     time   : 2018/05/25
- *     desc   : 微信分享和登录返回结果页
- *     version: 1.0
- * </pre>
+ * @ProjectName: information_platform_android
+ * @Package: com.shuangduan.zcy.view.mine
+ * @ClassName: WXEntryActivity
+ * @Description: 微信分享和登录返回结果页
+ * @Author: 徐玉
+ * @CreateDate: 2019/12/15 15:14
+ * @UpdateUser: 徐玉
+ * @UpdateDate: 2019/12/15 15:14
+ * @UpdateRemark: 更新说明
+ * @Version: 1.0
  */
-
 public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 
     @Override
