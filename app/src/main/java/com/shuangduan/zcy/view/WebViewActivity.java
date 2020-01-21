@@ -1,8 +1,13 @@
 package com.shuangduan.zcy.view;
 
 import android.annotation.SuppressLint;
+import android.os.Build;
 import android.os.Bundle;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 
@@ -49,33 +54,45 @@ public class WebViewActivity extends BaseActivity {
         return false;
     }
 
+    @SuppressLint("ClickableViewAccessibility")
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
-        switch (Objects.requireNonNull(getIntent().getStringExtra("register"))){
+        switch (Objects.requireNonNull(getIntent().getStringExtra("register"))) {
             case "privacy":
                 tvBarTitle.setText(getString(R.string.register_privacy));
-                webViewUtils.loadUrl(RetrofitHelper.BASE_TEST_URL+ Common.AGREEMENT_PRIVACY,0);
+                webViewUtils.loadUrl(RetrofitHelper.BASE_TEST_URL + Common.AGREEMENT_PRIVACY, 0);
                 break;
             case "register":
                 tvBarTitle.setText(getString(R.string.register_register));
-                webViewUtils.loadUrl(RetrofitHelper.BASE_TEST_URL+ Common.AGREEMENT_REGISTER,0);
+                webViewUtils.loadUrl(RetrofitHelper.BASE_TEST_URL + Common.AGREEMENT_REGISTER, 0);
                 break;
             case "warrant":
                 tvBarTitle.setText("认购协议");
-                webViewUtils.loadUrl(RetrofitHelper.BASE_TEST_URL+ Common.AGREEMENT_WARRANT,0);
+                webViewUtils.loadUrl(RetrofitHelper.BASE_TEST_URL + Common.AGREEMENT_WARRANT, 0);
                 break;
             case "weather":
                 tvBarTitle.setText("天气详情");
-                webViewUtils.loadUrl(Common.WEATHER_H5,1);
+                webViewUtils.loadUrl(Common.WEATHER_H5, 1);
+
+                webViewUtils.getWebView().setWebViewClient(new WebViewClient() {
+                    @Override
+                    public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                        return true;
+                    }
+                });
+
                 break;
             case "friend":
                 tvBarTitle.setText("邀请好友");
-                webViewUtils.loadUrl(getIntent().getStringExtra("url"),0);
+                webViewUtils.loadUrl(getIntent().getStringExtra("url"), 0);
                 break;
         }
     }
 
     @OnClick(R.id.iv_bar_back)
-    void onClick(){finish();}
+    void onClick() {
+        finish();
+    }
 }
