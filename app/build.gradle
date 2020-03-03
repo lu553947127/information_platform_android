@@ -218,6 +218,8 @@ dependencies {
     //    oppo推送
     //noinspection GradlePath
     implementation files('libs\\com.coloros.mcssdk.jar')
+    //自定义的应用框架
+    implementation project(path: ':FrameLibrary')
 
     //优化内存
 //    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-alpha-3'

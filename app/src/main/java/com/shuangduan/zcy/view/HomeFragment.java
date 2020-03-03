@@ -1,6 +1,7 @@
 package com.shuangduan.zcy.view;
 
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -54,6 +55,7 @@ import com.shuangduan.zcy.weight.XTabLayout;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
+import com.zcy.framelibrary.dialog.AlertDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -191,6 +193,7 @@ public class HomeFragment extends BaseFragment {
                 manager.showNoticeDialog(versionUpgradesBean);
             }
         });
+
     }
 
     @OnClick({R.id.tv_bar_title, R.id.tv_more, R.id.tv_bar_title_home, R.id.iv_my_income, R.id.rl_zgx, R.id.rl_zwz, R.id.rl_zmj, R.id.tv_more_need})
@@ -253,9 +256,9 @@ public class HomeFragment extends BaseFragment {
                     sAlpha = 1f * mScrollY_2 / h;
 
                     //元宵节之前显示新春样式
-                    if (Integer.valueOf(TimeUtils.getYearMonthDayTime()) > THE_LANTERN_FESTIVAL){
+                    if (Integer.valueOf(TimeUtils.getYearMonthDayTime()) > THE_LANTERN_FESTIVAL) {
                         sColor = ((255 * mScrollY_2 / h) << 24) | ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.colorPrimary) & 0x00ffffff;
-                    }else {
+                    } else {
                         sColor = ((255 * mScrollY_2 / h) << 24) | ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.color_f41e13) & 0x00ffffff;
                     }
 
@@ -272,9 +275,9 @@ public class HomeFragment extends BaseFragment {
         refresh.setEnableLoadMore(false);
         refresh.setEnableRefresh(true);
         //元宵节之前显示新春样式
-        if (Integer.valueOf(TimeUtils.getYearMonthDayTime()) > THE_LANTERN_FESTIVAL){
+        if (Integer.valueOf(TimeUtils.getYearMonthDayTime()) > THE_LANTERN_FESTIVAL) {
             refresh.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);
-        }else {
+        } else {
             refresh.setPrimaryColorsId(R.color.color_f41e13, android.R.color.white);
         }
 
@@ -304,12 +307,12 @@ public class HomeFragment extends BaseFragment {
         //导航按钮初始化
         List<ClassifyBean> list;
         //元宵节之前显示新春样式
-        if (Integer.valueOf(TimeUtils.getYearMonthDayTime()) > THE_LANTERN_FESTIVAL){
+        if (Integer.valueOf(TimeUtils.getYearMonthDayTime()) > THE_LANTERN_FESTIVAL) {
             list = getClassify();
             iv_zzy.setBackgroundResource(R.drawable.classify_zgx);
             iv_zwz.setBackgroundResource(R.drawable.classify_zwz);
             iv_zmj.setBackgroundResource(R.drawable.classify_zmj);
-        }else {
+        } else {
             list = getClassifyNewYear();
             iv_zzy.setBackgroundResource(R.drawable.classify_zgx_new);
             iv_zwz.setBackgroundResource(R.drawable.classify_zwz_new);
@@ -377,7 +380,7 @@ public class HomeFragment extends BaseFragment {
         banner.setOnBannerListener(position -> {
             LogUtils.e(position);
             //测试跳转阿里实时疫情页面
-            if (position == 0){
+            if (position == 0) {
                 Bundle bundle = new Bundle();
                 bundle.putString("register", "ali");
                 ActivityUtils.startActivity(bundle, WebViewActivity.class);
