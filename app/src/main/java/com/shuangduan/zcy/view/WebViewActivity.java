@@ -88,6 +88,10 @@ public class WebViewActivity extends BaseActivity {
                 tvBarTitle.setText("邀请好友");
                 webViewUtils.loadUrl(getIntent().getStringExtra("url"), 0);
                 break;
+            case "ali":
+                tvBarTitle.setText("疫情实时跟踪");
+                webViewUtils.loadUrl("https://alihealth.taobao.com/medicalhealth/influenzamap?spm=a2oua.wuhaninfo.more.wenzhen&chInfo=spring2020-stay-in", 0);
+                break;
         }
     }
 

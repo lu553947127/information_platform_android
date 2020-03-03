@@ -373,6 +373,16 @@ public class HomeFragment extends BaseFragment {
         banner.setDelayTime(4500);
         //设置指示器位置（当banner模式中有指示器时）
         banner.setIndicatorGravity(BannerConfig.CENTER);
+        //轮播图点击事件监听
+        banner.setOnBannerListener(position -> {
+            LogUtils.e(position);
+            //测试跳转阿里实时疫情页面
+            if (position == 0){
+                Bundle bundle = new Bundle();
+                bundle.putString("register", "ali");
+                ActivityUtils.startActivity(bundle, WebViewActivity.class);
+            }
+        });
         //banner设置方法全部调用完毕时最后调用
         banner.start();
     }

@@ -103,7 +103,7 @@ public class WebViewUtils extends LinearLayout {
                     //微信 支付宝 邮件 电话 大众点评 知乎 头条 其他自定义的scheme
                     if(url.startsWith("weixin://")|| url.startsWith("alipays://")|| url.startsWith("mailto://")
                             || url.startsWith("tel://")|| url.startsWith("dianping://")|| url.startsWith("zhihu://")
-                            || url.startsWith("snssdk143://")) {
+                            || url.startsWith("snssdk143://") || url.startsWith("https://alihealth.taobao.com")) {
                         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                         mContext.startActivity(intent);
                         return true;
