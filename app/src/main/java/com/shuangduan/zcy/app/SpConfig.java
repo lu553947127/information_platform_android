@@ -78,4 +78,6 @@ public class SpConfig {
     /*融云token*/
     public static final String IM_TOKEN = "im_token";
 
+    /*第一次打开银行卡页面*/
+    public static final String BANK_AGREEMENT = "bank_agreement";
 }

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="user_bank_agreement">银行卡绑定协议</string>
+    <string name="user_read">我已阅读以上协议</string>
+
+</resources>

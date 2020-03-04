@@ -13,14 +13,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.BankCardAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
+import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.BankCardBean;
 import com.shuangduan.zcy.model.event.BankcardUpdateEvent;
+import com.shuangduan.zcy.utils.LoginUtils;
 import com.shuangduan.zcy.vm.BankCardVm;
+import com.zcy.framelibrary.dialog.AlertDialog;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -47,6 +52,8 @@ public class BankCardListActivity extends BaseActivity {
     RecyclerView rv;
     private BankCardVm bankCardVm;
 
+    private AlertDialog dialog;
+
     @Override
     protected int initLayoutRes() {
         return R.layout.activity_bank_card_list;
@@ -56,6 +63,7 @@ public class BankCardListActivity extends BaseActivity {
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.bank_card));
+
 
         //银行卡列表尾部局（添加银行卡按钮）
         View foot = LayoutInflater.from(this).inflate(R.layout.footer_back_card, null);
@@ -75,12 +83,12 @@ public class BankCardListActivity extends BaseActivity {
         bankCardVm.bankcardLiveData.observe(this, bankCardBeans -> {
             bankCardAdapter.setNewData(bankCardBeans);
             bankCardAdapter.removeAllFooterView();
-            if (bankCardBeans != null && bankCardBeans.size() < 5){
+            if (bankCardBeans != null && bankCardBeans.size() < 5) {
                 bankCardAdapter.addFooterView(foot);
             }
         });
         bankCardVm.pageStateLiveData.observe(this, s -> {
-            switch (s){
+            switch (s) {
                 case PageState.PAGE_LOADING:
                     showLoading();
                     break;
@@ -90,6 +98,22 @@ public class BankCardListActivity extends BaseActivity {
             }
         });
         bankCardVm.bankcardList();
+
+
+        if (SPUtils.getInstance().getInt(SpConfig.BANK_AGREEMENT, 0) == 0) {
+            dialog = new AlertDialog.Builder(this)
+                    .setView(R.layout.dialog_bank_agreement)
+                    .setCancelable(false)
+                    .setOnClickListener(R.id.tv_negative, v -> {
+                        dialog.dismiss();
+                        BankCardListActivity.this.finish();
+                    })
+                    .setOnClickListener(R.id.tv_positive, v -> {
+                        SPUtils.getInstance().put(SpConfig.BANK_AGREEMENT, 1);
+                        dialog.dismiss();
+                    })
+                    .show();
+        }
     }
 
     @Override
@@ -98,10 +122,12 @@ public class BankCardListActivity extends BaseActivity {
     }
 
     @OnClick(R.id.iv_bar_back)
-    void onClick(){finish();}
+    void onClick() {
+        finish();
+    }
 
     @Subscribe
-    public void onEventUpdateBankcard(BankcardUpdateEvent event){
+    public void onEventUpdateBankcard(BankcardUpdateEvent event) {
         bankCardVm.bankcardList();
     }
 }

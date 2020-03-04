@@ -64,16 +64,31 @@ public class AlertDialog extends Dialog {
         mAlert = new AlertController(this, getWindow());
     }
 
-
+    /**
+     * 设置控件文本
+     * @param viewId
+     * @param text
+     */
     public void setText(int viewId, CharSequence text) {
         mAlert.setText(viewId, text);
     }
 
 
+    /**
+     * 设置控件的监听事件
+     * @param viewId
+     * @param listener
+     */
     public void setOnClickListener(int viewId, View.OnClickListener listener) {
         mAlert.setOnClickListener(viewId, listener);
     }
 
+    /**
+     * 获取Dialog 控件
+     * @param id
+     * @param <T>
+     * @return
+     */
     public <T extends View> T getView(int id) {
         return mAlert.getView(id);
     }
@@ -241,9 +256,6 @@ public class AlertDialog extends Dialog {
          */
         public Builder setOnClickListener(int viewId, View.OnClickListener listener) {
 
-
-
-
             P.mClickArray.put(viewId, listener);
             return this;
         }
@@ -300,7 +312,7 @@ public class AlertDialog extends Dialog {
          * @param height
          * @return
          */
-        public Builder setWidthAndHeigh(int width, int height) {
+        public Builder setWidthAndHeight(int width, int height) {
             P.mWidth = width;
             P.mHeight = height;
             return this;
