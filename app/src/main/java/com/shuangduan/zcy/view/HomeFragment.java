@@ -1,7 +1,6 @@
 package com.shuangduan.zcy.view;
 
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -55,7 +54,6 @@ import com.shuangduan.zcy.weight.XTabLayout;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
-import com.zcy.framelibrary.dialog.AlertDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -378,13 +376,12 @@ public class HomeFragment extends BaseFragment {
         banner.setIndicatorGravity(BannerConfig.CENTER);
         //轮播图点击事件监听
         banner.setOnBannerListener(position -> {
-            LogUtils.e(position);
             //测试跳转阿里实时疫情页面
-            if (position == 0) {
-                Bundle bundle = new Bundle();
-                bundle.putString("register", "ali");
-                ActivityUtils.startActivity(bundle, WebViewActivity.class);
-            }
+//            if (position == 0) {
+//                Bundle bundle = new Bundle();
+//                bundle.putString("register", "ali");
+//                ActivityUtils.startActivity(bundle, WebViewActivity.class);
+//            }
         });
         //banner设置方法全部调用完毕时最后调用
         banner.start();

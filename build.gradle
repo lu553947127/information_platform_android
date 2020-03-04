@@ -3,6 +3,7 @@ apply from: "version.gradle"
 
 buildscript {
     repositories {
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
         google()
         mavenCentral()
         jcenter { url "http://jcenter.bintray.com" }
@@ -21,6 +22,7 @@ buildscript {
 
 allprojects {
     repositories {
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
         google()
         mavenCentral()
         jcenter { url "http://jcenter.bintray.com" }

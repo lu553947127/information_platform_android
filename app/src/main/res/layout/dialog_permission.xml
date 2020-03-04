@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:orientation="vertical"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:background="@drawable/circular_background_white_10">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/colorTv"
+            android:textSize="18sp"
+            android:text="“易基建”正在申请以下权限"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="35dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:drawableLeft="@drawable/icon_permission_location"
+                android:drawablePadding="3dp"
+                android:textColor="@color/colorTv"
+                android:textSize="14sp"
+                android:text="位置信息" />
+
+            <com.shuangduan.zcy.weight.SwitchView
+                android:layout_width="35dp"
+                android:layout_height="25dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                app:isOpened="true"/>
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="43dp"
+            android:textColor="@color/colorTvHint"
+            android:textSize="14sp"
+            android:text="根据您的位置为您推荐工程信息" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="35dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:drawableLeft="@drawable/icon_permission_storage"
+                android:drawablePadding="3dp"
+                android:textColor="@color/colorTv"
+                android:textSize="14sp"
+                android:text="存储权限" />
+
+            <com.shuangduan.zcy.weight.SwitchView
+                android:layout_width="35dp"
+                android:layout_height="25dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                app:isOpened="true"/>
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="43dp"
+            android:textColor="@color/colorTvHint"
+            android:textSize="14sp"
+            android:text="方便您对文件进行保存" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="35dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:drawableLeft="@drawable/icon_permission_camera"
+                android:drawablePadding="3dp"
+                android:textColor="@color/colorTv"
+                android:textSize="14sp"
+                android:text="相机权限" />
+
+            <com.shuangduan.zcy.weight.SwitchView
+                android:layout_width="35dp"
+                android:layout_height="25dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                app:isOpened="true"/>
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="43dp"
+            android:textColor="@color/colorTvHint"
+            android:textSize="14sp"
+            android:text="上传工程动态的照片" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_close"
+                android:layout_width="100dp"
+                style="@style/BtnConfirmGray"
+                android:text="暂不"/>
+
+            <TextView
+                android:id="@+id/tv_open"
+                android:layout_width="100dp"
+                android:layout_marginLeft="50dp"
+                style="@style/BtnConfirm"
+                android:text="开启"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

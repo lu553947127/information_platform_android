@@ -1,13 +1,20 @@
 package com.shuangduan.zcy.view.login;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.text.Html;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
@@ -16,7 +23,9 @@ import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
+import com.shuangduan.zcy.view.WebViewActivity;
 import com.shuangduan.zcy.weight.MaterialIndicator;
+import com.zcy.framelibrary.dialog.AlertDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +53,7 @@ public class FirstStartActivity extends BaseActivity implements View.OnClickList
     MaterialIndicator materialIndicator;
     private boolean isScrolled = false;
     private List<View> viewList=new ArrayList<>();
+    private AlertDialog dialog,dialogPermission;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -80,6 +90,100 @@ public class FirstStartActivity extends BaseActivity implements View.OnClickList
         view2.findViewById(R.id.tv_next_two).setOnClickListener(this);
         view3.findViewById(R.id.tv_next_three).setOnClickListener(this);
         view3.findViewById(R.id.rl_experience).setOnClickListener(this);
+        getUserAgreementDialog();
+    }
+
+    //权限弹窗
+    private void getPermissionDialog() {
+        dialogPermission = new AlertDialog.Builder(this)
+                .setView(R.layout.dialog_permission) //Dialog View
+                .setCancelable(false) //点击空白是否取消
+                .setText(R.id.tv_title, "“易基建”正在申请以下权限")//控件的文本
+                .setOnClickListener(R.id.tv_open, v -> {//开启
+                    //检测权限是否开启
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager
+                                .PERMISSION_GRANTED &&
+                                ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager
+                                        .PERMISSION_GRANTED &&
+                                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager
+                                        .PERMISSION_GRANTED &&
+                                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager
+                                        .PERMISSION_GRANTED ){
+                            dialogPermission.dismiss();
+                        } else {
+                            dialogPermission.dismiss();
+                            //不具有获取权限，需要进行权限申请
+                            ActivityCompat.requestPermissions(this, new String[]{
+                                    Manifest.permission.CAMERA,
+                                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                                    Manifest.permission.ACCESS_FINE_LOCATION}, 111);
+                        }
+                    } else {
+                        dialogPermission.dismiss();
+                    }
+                })
+                .setOnClickListener(R.id.tv_close, view -> {//暂不
+                    dialog.dismiss();
+                })
+                .setGravity(Gravity.CENTER)//弹窗显示位置 默认居中
+                .fullWidth()//全屏
+                .show();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        //权限拒绝开启返回监听
+        if (requestCode == 111) {
+            if (grantResults.length > 0) {
+                for (int result : grantResults) {
+                    if (result != PackageManager.PERMISSION_GRANTED) {
+                        //执行相应的逻辑
+                        getPermissionDialog();
+                        return;
+                    }
+                }
+            }
+        }
+    }
+
+    //用户协议 隐私协议弹窗
+    private void getUserAgreementDialog() {
+
+        String content = "欢迎您访问易基建APP，当您使用我们的产品有服务时，我们可能会手机和使用您的相关信息。在使用我们的产品或服务前，请您务必仔细阅读《紫菜云隐私协议政策》了解我们对您信息的处理规则，包括：\n <br>" +
+                "我们如何收集和使用您的个人信息\n <br>" +
+                "我们如何共享、转让、公开披露用户的个人信息\n <br>" +
+                "我们如何存储收集用户信息\n <br>" +
+                "我们如何保证收集用户信息安全\n <br>" +
+                "您如何管理个人信息\n <br>" +
+                "未成年人保护";
+
+        String content2 = "请点击“我知道了”开始使用我们的产品和服务，气门将按照法律法规要求，采取严格的安全保护措施，保护您的个人信息安全！";
+
+        Bundle bundle = new Bundle();
+        dialog = new AlertDialog.Builder(this)
+                .setView(R.layout.dialog_user_agreement) //Dialog View
+                .setCancelable(false) //点击空白是否取消
+                .setText(R.id.tv_title, "紫菜云隐私协议政策")//控件的文本
+                .setText(R.id.tv_content, Html.fromHtml(content))
+                .setText(R.id.tv_content2, content2)
+                .setOnClickListener(R.id.tv_user, v -> {//隐私政策
+                    bundle.putString("register", "register");
+                    ActivityUtils.startActivity(bundle, WebViewActivity.class);
+                })
+                .setOnClickListener(R.id.tv_user2, v -> {//用户注册协议
+                    bundle.putString("register", "privacy");
+                    ActivityUtils.startActivity(bundle, WebViewActivity.class);
+                })
+                .setOnClickListener(R.id.tv_release, view -> {//我知道了
+                    dialog.dismiss();
+                    getPermissionDialog();
+                })
+                .setGravity(Gravity.CENTER)//弹窗显示位置 默认居中
+                .fullWidth()//全屏
+                .show();
     }
 
     @Override
