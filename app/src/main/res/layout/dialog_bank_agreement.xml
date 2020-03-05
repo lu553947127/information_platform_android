@@ -14,56 +14,66 @@
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
+        android:layout_centerHorizontal="true"
         android:text="@string/user_bank_agreement"
+        android:textColor="@color/colorTv"
         android:textSize="@dimen/sp_title" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_content"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/tv_scroll"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
-        android:text="协议内容"
-        android:textSize="12sp"
-        android:layout_below="@id/tv_title"/>
+        android:layout_height="300dp"
+        android:layout_below="@id/tv_title"
+        android:layout_marginTop="15dp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:lineSpacingExtra="3dp"
+            android:scrollbars="vertical"
+            android:textColor="@color/colorTvHint"
+            android:textSize="@dimen/sp_content" />
+
+    </androidx.core.widget.NestedScrollView>
 
 
     <androidx.appcompat.widget.AppCompatCheckBox
         android:id="@+id/checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="@string/user_read"
-        android:textSize="@dimen/tvThreeSize"
-        android:textColor="@color/text1"
+        android:layout_below="@id/tv_scroll"
+        android:layout_marginTop="15dp"
         android:button="@drawable/selector_bank_check_drawable"
         android:checked="true"
         android:paddingLeft="5dp"
-        android:layout_below="@id/tv_content"/>
+        android:text="@string/user_read"
+        android:textColor="@color/text1"
+        android:textSize="@dimen/sp_content" />
 
     <TextView
         android:id="@+id/tv_negative"
         android:layout_width="80dp"
         android:layout_height="30dp"
+        android:layout_below="@id/checkbox"
         android:layout_marginTop="15dp"
         android:background="@drawable/selector_btn_confirm_gray"
         android:gravity="center"
-        android:textColor="@color/color_666666"
-        android:textSize="14sp"
         android:text="@string/negative"
-        android:layout_below="@id/checkbox"/>
+        android:textColor="@color/color_666666"
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/tv_positive"
         android:layout_width="80dp"
         android:layout_height="30dp"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/selector_btn_confirm"
-        android:gravity="center"
-        android:textColor="@color/colorFFF"
-        android:textSize="14sp"
-        android:text="@string/positive"
         android:layout_below="@id/checkbox"
-        android:layout_alignParentRight="true"/>
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/selector_btn_bg_e0e0e5_6a5ff8"
+        android:gravity="center"
+        android:text="@string/positive"
+        android:textColor="@color/colorFFF"
+        android:textSize="14sp" />
 
 </RelativeLayout>

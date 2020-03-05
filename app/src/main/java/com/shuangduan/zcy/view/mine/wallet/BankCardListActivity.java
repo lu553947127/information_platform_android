@@ -1,9 +1,13 @@
 package com.shuangduan.zcy.view.mine.wallet;
 
 import android.annotation.SuppressLint;
+import android.content.res.AssetManager;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
@@ -13,8 +17,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.EncodeUtils;
+import com.blankj.utilcode.util.FileIOUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
+import com.cjt2325.cameralibrary.util.LogUtil;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.BankCardAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
@@ -28,6 +35,8 @@ import com.shuangduan.zcy.vm.BankCardVm;
 import com.zcy.framelibrary.dialog.AlertDialog;
 
 import org.greenrobot.eventbus.Subscribe;
+
+import java.io.InputStream;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -101,9 +110,19 @@ public class BankCardListActivity extends BaseActivity {
 
 
         if (SPUtils.getInstance().getInt(SpConfig.BANK_AGREEMENT, 0) == 0) {
+            String agreement = getTxtFromAssets("bank_agreement.txt");
             dialog = new AlertDialog.Builder(this)
                     .setView(R.layout.dialog_bank_agreement)
                     .setCancelable(false)
+                    .setText(R.id.tv_content, Html.fromHtml(agreement))
+                    .setOnCheckedChangeListener(R.id.checkbox, (buttonView, isChecked) -> {
+                        TextView positiveView = dialog.getView(R.id.tv_positive);
+                        if (buttonView.isChecked()) {
+                            positiveView.setEnabled(true);
+                            return;
+                        }
+                        positiveView.setEnabled(false);
+                    })
                     .setOnClickListener(R.id.tv_negative, v -> {
                         dialog.dismiss();
                         BankCardListActivity.this.finish();
@@ -114,6 +133,21 @@ public class BankCardListActivity extends BaseActivity {
                     })
                     .show();
         }
+
+    }
+
+    private String getTxtFromAssets(String fileName) {
+        String result = "";
+        try {
+            InputStream is = getAssets().open(fileName);
+            int length = is.available();
+            byte[] buffer = new byte[length];
+            is.read(buffer);
+            result = new String(buffer, "utf8");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     @Override

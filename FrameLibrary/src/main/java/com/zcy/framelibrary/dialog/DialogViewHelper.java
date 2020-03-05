@@ -4,7 +4,11 @@ import android.content.Context;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.TextView;
+
+import androidx.appcompat.widget.AppCompatCheckBox;
+import androidx.appcompat.widget.AppCompatRadioButton;
 
 import java.lang.ref.WeakReference;
 
@@ -52,6 +56,17 @@ public class DialogViewHelper {
         }
     }
 
+
+    public void setOnCheckedChangeListener(int viewId, CompoundButton.OnCheckedChangeListener listener) {
+        View view = getView(viewId);
+
+        if (null != view) {
+            if (view instanceof CompoundButton) {
+                ((CompoundButton) view).setOnCheckedChangeListener(listener);
+            }
+        }
+    }
+
     public <T extends View> T getView(int id) {
         WeakReference<View> viewReference = mViews.get(id);
         View view = null;
@@ -86,4 +101,6 @@ public class DialogViewHelper {
     public View getContentView() {
         return mContentView;
     }
+
+
 }

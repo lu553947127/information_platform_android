@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
 
@@ -25,35 +26,31 @@ import com.zcy.framelibrary.R;
 public class AlertDialog extends Dialog {
 
     /**
-     *    使用方法
-     *
-     *    AlertDialog dialog = new AlertDialog.Builder(mContext)
-     *                 .setView(R.layout.dialog_area) //Dialog View
-     *                 .setCancelable(false) //点击空白是否取消
-     *                 .setText(R.id.tv_tip, "测试")//控件的文本
-     *                 .setText(R.id.xx, "测试")//控件的文本
-     *                 .setText(R.id.xx, "测试")//控件的文本
-     *                 .setOnClickListener(R.id.tv_negative, view -> {
-     *
-     *                 }) //控件的点击事件
-     *                 .setOnClickListener(R.id.tv_negative, view -> {
-     *
-     *                 }) //控件的点击事件
-     *                .setOnClickListener(R.id.tv_negative, view -> {
-     *
-     *                 }) //控件的点击事件
-     *                 .setOnKeyListener()//键盘监听事件
-     *                 .setGravity(Gravity.CENTER)//弹窗显示位置 默认居中
-     *                 .setWidthAndHeigh(100, 100)//设置dialog宽高 ： 可不设置
-     *                 .fullWidth()//全屏
-     *                 .setAnimation(R.style.admin)//设置动画
-     *                 .addDefaultAnimation()//默认动画
-     *                 .show();
-     *
-     *
-     *
+     * 使用方法
+     * <p>
+     * AlertDialog dialog = new AlertDialog.Builder(mContext)
+     * .setView(R.layout.dialog_area) //Dialog View
+     * .setCancelable(false) //点击空白是否取消
+     * .setText(R.id.tv_tip, "测试")//控件的文本
+     * .setText(R.id.xx, "测试")//控件的文本
+     * .setText(R.id.xx, "测试")//控件的文本
+     * .setOnClickListener(R.id.tv_negative, view -> {
+     * <p>
+     * }) //控件的点击事件
+     * .setOnClickListener(R.id.tv_negative, view -> {
+     * <p>
+     * }) //控件的点击事件
+     * .setOnClickListener(R.id.tv_negative, view -> {
+     * <p>
+     * }) //控件的点击事件
+     * .setOnKeyListener()//键盘监听事件
+     * .setGravity(Gravity.CENTER)//弹窗显示位置 默认居中
+     * .setWidthAndHeigh(100, 100)//设置dialog宽高 ： 可不设置
+     * .fullWidth()//全屏
+     * .setAnimation(R.style.admin)//设置动画
+     * .addDefaultAnimation()//默认动画
+     * .show();
      */
-
 
 
     private AlertController mAlert;
@@ -66,6 +63,7 @@ public class AlertDialog extends Dialog {
 
     /**
      * 设置控件文本
+     *
      * @param viewId
      * @param text
      */
@@ -76,6 +74,7 @@ public class AlertDialog extends Dialog {
 
     /**
      * 设置控件的监听事件
+     *
      * @param viewId
      * @param listener
      */
@@ -84,7 +83,19 @@ public class AlertDialog extends Dialog {
     }
 
     /**
+     * 选择框的点击事件
+     *
+     * @param viewId
+     * @param listener
+     */
+    public void setOnCheckedChangeListener(int viewId, CompoundButton.OnCheckedChangeListener listener) {
+        mAlert.setOnCheckedChangeListener(viewId, listener);
+    }
+
+
+    /**
      * 获取Dialog 控件
+     *
      * @param id
      * @param <T>
      * @return
@@ -259,6 +270,19 @@ public class AlertDialog extends Dialog {
             P.mClickArray.put(viewId, listener);
             return this;
         }
+
+        /**
+         * 设置CheckBox的选择事件
+         *
+         * @param viewId
+         * @param listener
+         * @return
+         */
+        public Builder setOnCheckedChangeListener(int viewId, CompoundButton.OnCheckedChangeListener listener) {
+            P.mCheckedClickArray.put(viewId, listener);
+            return this;
+        }
+
 
         /**
          * 设置Dialog全屏

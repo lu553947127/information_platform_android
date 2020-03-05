@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.CompoundButton;
 
 /**
  * @ProjectName: information_platform_android
@@ -68,6 +69,12 @@ public class AlertController {
         mViewHelper.setOnClickListener(viewId, listener);
     }
 
+
+    public void setOnCheckedChangeListener(int viewId, CompoundButton.OnCheckedChangeListener listener) {
+        mViewHelper.setOnCheckedChangeListener(viewId, listener);
+    }
+
+
     public <T extends View> T getView(int id) {
         return mViewHelper.getView(id);
     }
@@ -110,6 +117,9 @@ public class AlertController {
         public SparseArray<CharSequence> mTextArray = new SparseArray<>();
         //存放View所有点击事件
         public SparseArray<View.OnClickListener> mClickArray = new SparseArray<>();
+        //存放View所有的Check选择点击事件
+        public SparseArray<CompoundButton.OnCheckedChangeListener> mCheckedClickArray = new SparseArray<>();
+
         //宽度
         public int mWidth = ViewGroup.LayoutParams.WRAP_CONTENT;
         //高度
@@ -164,6 +174,13 @@ public class AlertController {
             for (int i = 0; i < clickArraySize; i++) {
                 viewHelper.setOnClickListener(mClickArray.keyAt(i), mClickArray.valueAt(i));
             }
+
+            //设置选择的点击事件
+            int checkClickArraySize = mCheckedClickArray.size();
+            for (int i = 0; i < checkClickArraySize; i++) {
+                viewHelper.setOnCheckedChangeListener(mCheckedClickArray.keyAt(i), mCheckedClickArray.valueAt(i));
+            }
+
 
             //配置自定义效果
             Window window = alert.getWindow();

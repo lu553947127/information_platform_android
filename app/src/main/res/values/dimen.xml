@@ -18,6 +18,7 @@
     <dimen name="tvThreeSize">12dp</dimen>
 
     <!--  标题字体大小   -->
-    <dimen name="sp_title">16sp</dimen>
-    <dimen name="sp_button">14sp</dimen>
+    <dimen name="sp_title">18sp</dimen>
+    <!--  文本字体大小  -->
+    <dimen name="sp_content">14sp</dimen>
 </resources>
