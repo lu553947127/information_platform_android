@@ -403,7 +403,7 @@
     <string name="hint_owner">请输入联系人</string>
     <string name="hint_relationship_remarks">为了您的信息能尽快通过审核，请按照需求详细填写</string>
     <string name="explain">收益说明书</string>
-    <string name="register_privacy">隐私协议</string>
+    <string name="register_privacy">隐私政策</string>
     <string name="register_register">用户协议</string>
     <string name="material_depositing_place">选择存放地</string>
     <string name="material_place_order">提交预定单</string>

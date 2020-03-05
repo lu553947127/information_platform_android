@@ -43,9 +43,9 @@ android {
         variant.outputs.all {
             def fileName
             if (variant.buildType.name == 'release') {
-                fileName = "app.release.1.2.0.apk"
+                fileName = "app.release.1.3.0.apk"
             } else if (variant.buildType.name == 'debug') {
-                fileName = "zcy.debug.1.2.0.apk"
+                fileName = "zcy.debug.1.3.0.apk"
             }
             outputFileName = fileName
         }
