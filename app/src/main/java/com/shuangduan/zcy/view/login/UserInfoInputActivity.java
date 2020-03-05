@@ -13,7 +13,6 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -33,8 +32,6 @@ import com.shuangduan.zcy.view.MultiAreaActivity;
 import com.shuangduan.zcy.vm.IMConnectVm;
 import com.shuangduan.zcy.vm.MineSubVm;
 import com.shuangduan.zcy.vm.UserInfoVm;
-
-import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 import java.util.Objects;
@@ -64,12 +61,6 @@ public class UserInfoInputActivity extends BaseActivity {
     AppCompatEditText edtName;
     @BindView(R.id.tv_sex)
     AppCompatTextView tvSex;
-    @BindView(R.id.edt_mobile)
-    AppCompatEditText edtMobile;
-    @BindView(R.id.edt_id_card)
-    AppCompatEditText edtIdCard;
-    @BindView(R.id.edt_email)
-    AppCompatEditText edtEmail;
     @BindView(R.id.edt_company)
     AppCompatEditText edtCompany;
     @BindView(R.id.edt_office)
@@ -171,7 +162,7 @@ public class UserInfoInputActivity extends BaseActivity {
             case R.id.iv_bar_back:
                 finish();
                 break;
-            case R.id.tv_bar_right:
+            case R.id.tv_bar_right://保存
                 if (StringUtils.isTrimEmpty(edtName.getText().toString())) {
                     ToastUtils.showShort("请输入姓名");
                     return;
@@ -184,7 +175,7 @@ public class UserInfoInputActivity extends BaseActivity {
                         exp,
                         edtProduction.getText().toString());
                 break;
-            case R.id.tv_sex:
+            case R.id.tv_sex://性别
                 addDialog(new SexDialog(this)
                         .setSex(sex)
                         .setOnSexSelectListener(new SexDialog.OnSexSelectListener() {
@@ -201,10 +192,10 @@ public class UserInfoInputActivity extends BaseActivity {
                             }
                         }).showDialog());
                 break;
-            case R.id.tv_business_area:
+            case R.id.tv_business_area://业务地区
                 ActivityUtils.startActivityForResult(this, MultiAreaActivity.class, 200);
                 break;
-            case R.id.tv_business_exp:
+            case R.id.tv_business_exp://业务经验
                 new BusinessExpDialog(this)
                         .setSingleCallBack((item, position) -> {
                             tvBusinessExp.setText(item);

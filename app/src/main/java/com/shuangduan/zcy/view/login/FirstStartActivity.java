@@ -25,6 +25,7 @@ import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.view.WebViewActivity;
 import com.shuangduan.zcy.weight.MaterialIndicator;
+import com.shuangduan.zcy.weight.SwitchView;
 import com.zcy.framelibrary.dialog.AlertDialog;
 
 import java.util.ArrayList;
@@ -45,7 +46,7 @@ import butterknife.BindView;
  * @UpdateRemark: 更新说明
  * @Version: 1.0
  */
-public class FirstStartActivity extends BaseActivity implements View.OnClickListener, ViewPager.OnPageChangeListener{
+public class FirstStartActivity extends BaseActivity implements View.OnClickListener, ViewPager.OnPageChangeListener, SwitchView.OnStateChangedListener{
 
     @BindView(R.id.view_pager)
     ViewPager viewPager;
@@ -54,6 +55,10 @@ public class FirstStartActivity extends BaseActivity implements View.OnClickList
     private boolean isScrolled = false;
     private List<View> viewList=new ArrayList<>();
     private AlertDialog dialog,dialogPermission;
+    private SwitchView svLocation,svStorage,svCamera;
+    private int isLocation = 1;
+    private int isStorage = 1;
+    private int isCamera = 1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -114,40 +119,75 @@ public class FirstStartActivity extends BaseActivity implements View.OnClickList
                         } else {
                             dialogPermission.dismiss();
                             //不具有获取权限，需要进行权限申请
-                            ActivityCompat.requestPermissions(this, new String[]{
-                                    Manifest.permission.CAMERA,
-                                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                                    Manifest.permission.ACCESS_COARSE_LOCATION,
-                                    Manifest.permission.ACCESS_FINE_LOCATION}, 111);
+                            if (isLocation == 1 && isStorage == 1 && isCamera == 1){
+                                ActivityCompat.requestPermissions(this, new String[]{
+                                        Manifest.permission.CAMERA,
+                                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                        Manifest.permission.ACCESS_COARSE_LOCATION,
+                                        Manifest.permission.ACCESS_FINE_LOCATION}, 111);
+                            }else if (isLocation == 1 && isStorage == 1 && isCamera == 0){
+                                ActivityCompat.requestPermissions(this, new String[]{
+                                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                        Manifest.permission.ACCESS_COARSE_LOCATION,
+                                        Manifest.permission.ACCESS_FINE_LOCATION}, 111);
+                            }else if (isLocation == 1 && isStorage == 0 && isCamera == 1){
+                                ActivityCompat.requestPermissions(this, new String[]{
+                                        Manifest.permission.CAMERA,
+                                        Manifest.permission.ACCESS_COARSE_LOCATION,
+                                        Manifest.permission.ACCESS_FINE_LOCATION}, 111);
+                            }else if (isLocation == 1 && isStorage == 0 && isCamera == 0){
+                                ActivityCompat.requestPermissions(this, new String[]{
+                                        Manifest.permission.ACCESS_COARSE_LOCATION,
+                                        Manifest.permission.ACCESS_FINE_LOCATION}, 111);
+                            }else if (isLocation == 0 && isStorage == 1 && isCamera == 1){
+                                ActivityCompat.requestPermissions(this, new String[]{
+                                        Manifest.permission.CAMERA,
+                                        Manifest.permission.WRITE_EXTERNAL_STORAGE}, 111);
+                            }else if (isLocation == 0 && isStorage == 1 && isCamera == 0){
+                                ActivityCompat.requestPermissions(this, new String[]{
+                                        Manifest.permission.WRITE_EXTERNAL_STORAGE}, 111);
+                            }else if (isLocation == 0 && isStorage == 0 && isCamera == 1){
+                                ActivityCompat.requestPermissions(this, new String[]{
+                                        Manifest.permission.CAMERA}, 111);
+                            }else {
+                                dialogPermission.dismiss();
+                            }
                         }
                     } else {
                         dialogPermission.dismiss();
                     }
                 })
                 .setOnClickListener(R.id.tv_close, view -> {//暂不
-                    dialog.dismiss();
+                    dialogPermission.dismiss();
                 })
                 .setGravity(Gravity.CENTER)//弹窗显示位置 默认居中
                 .fullWidth()//全屏
                 .show();
+
+        svLocation = dialogPermission.getView(R.id.sv_location);
+        svStorage = dialogPermission.getView(R.id.sv_storage);
+        svCamera = dialogPermission.getView(R.id.sv_camera);
+        svLocation.setOnStateChangedListener(this);
+        svStorage.setOnStateChangedListener(this);
+        svCamera.setOnStateChangedListener(this);
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-
-        //权限拒绝开启返回监听
-        if (requestCode == 111) {
-            if (grantResults.length > 0) {
-                for (int result : grantResults) {
-                    if (result != PackageManager.PERMISSION_GRANTED) {
-                        //执行相应的逻辑
-                        getPermissionDialog();
-                        return;
-                    }
-                }
-            }
-        }
-    }
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//
+//        //权限拒绝开启返回监听
+//        if (requestCode == 111) {
+//            if (grantResults.length > 0) {
+//                for (int result : grantResults) {
+//                    if (result != PackageManager.PERMISSION_GRANTED) {
+//                        //执行相应的逻辑
+//                        getPermissionDialog();
+//                        return;
+//                    }
+//                }
+//            }
+//        }
+//    }
 
     //用户协议 隐私协议弹窗
     private void getUserAgreementDialog() {
@@ -160,7 +200,7 @@ public class FirstStartActivity extends BaseActivity implements View.OnClickList
                 "您如何管理个人信息\n <br>" +
                 "未成年人保护";
 
-        String content2 = "请点击“我知道了”开始使用我们的产品和服务，气门将按照法律法规要求，采取严格的安全保护措施，保护您的个人信息安全！";
+        String content2 = "请点击“我知道了”开始使用我们的产品和服务，我们将按照法律法规要求，采取严格的安全保护措施，保护您的个人信息安全！";
 
         Bundle bundle = new Bundle();
         dialog = new AlertDialog.Builder(this)
@@ -234,6 +274,42 @@ public class FirstStartActivity extends BaseActivity implements View.OnClickList
                 SPUtils.getInstance().put(SpConfig.FIRST_APP, 1);
                 ActivityUtils.startActivity(LoginActivity.class);
                 finish();
+                break;
+        }
+    }
+
+    @Override
+    public void toggleToOn(SwitchView view) {
+        switch (view.getId()){
+            case R.id.sv_location:
+                isLocation = 1;
+                svLocation.setOpened(true);
+                break;
+            case R.id.sv_storage:
+                isStorage = 1;
+                svStorage.setOpened(true);
+                break;
+            case R.id.sv_camera:
+                isCamera = 1;
+                svCamera.setOpened(true);
+                break;
+        }
+    }
+
+    @Override
+    public void toggleToOff(SwitchView view) {
+        switch (view.getId()){
+            case R.id.sv_location:
+                isLocation = 0;
+                svLocation.setOpened(false);
+                break;
+            case R.id.sv_storage:
+                isStorage = 0;
+                svStorage.setOpened(false);
+                break;
+            case R.id.sv_camera:
+                isCamera = 0;
+                svCamera.setOpened(false);
                 break;
         }
     }

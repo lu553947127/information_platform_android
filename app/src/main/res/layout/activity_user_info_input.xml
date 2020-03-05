@@ -42,7 +42,7 @@
                     android:textColorHint="@color/colorTvHint"
                     android:textColor="@color/colorTv"
                     android:textSize="14sp"
-                    android:hint="@string/please_hint"/>
+                    android:hint="请输入姓名"/>
 
                 <View
                     android:layout_width="match_parent"
@@ -77,121 +77,7 @@
                     android:textColorHint="@color/colorTvHint"
                     android:textColor="@color/colorTv"
                     android:textSize="14sp"
-                    android:hint="@string/please_select"/>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_gravity="bottom"
-                    android:background="@color/colorDivider"/>
-
-            </FrameLayout>
-
-            <FrameLayout
-                android:visibility="gone"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@color/colorFFF"
-                android:paddingLeft="14dp"
-                android:paddingRight="14dp">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:textColor="@color/colorTv"
-                    android:textSize="14sp"
-                    android:text="@string/phone"/>
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/edt_mobile"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:layout_marginLeft="87dp"
-                    android:background="@null"
-                    android:singleLine="true"
-                    android:inputType="number"
-                    android:textColorHint="@color/colorTvHint"
-                    android:textColor="@color/colorTv"
-                    android:textSize="14sp"
-                    android:hint="@string/please_hint"/>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_gravity="bottom"
-                    android:background="@color/colorDivider"/>
-
-            </FrameLayout>
-
-            <FrameLayout
-                android:visibility="gone"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@color/colorFFF"
-                android:paddingLeft="14dp"
-                android:paddingRight="14dp">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:textColor="@color/colorTv"
-                    android:textSize="14sp"
-                    android:text="@string/idCard"/>
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/edt_id_card"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:layout_marginLeft="87dp"
-                    android:background="@null"
-                    android:inputType="text"
-                    android:singleLine="true"
-                    android:textColorHint="@color/colorTvHint"
-                    android:textColor="@color/colorTv"
-                    android:textSize="14sp"
-                    android:hint="@string/please_hint"/>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_gravity="bottom"
-                    android:background="@color/colorDivider"/>
-
-            </FrameLayout>
-
-            <FrameLayout
-                android:visibility="gone"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@color/colorFFF"
-                android:paddingLeft="14dp"
-                android:paddingRight="14dp">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:textColor="@color/colorTv"
-                    android:textSize="14sp"
-                    android:text="@string/email"/>
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/edt_email"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:layout_marginLeft="87dp"
-                    android:background="@null"
-                    android:singleLine="true"
-                    android:inputType="textEmailSubject"
-                    android:textColorHint="@color/colorTvHint"
-                    android:textColor="@color/colorTv"
-                    android:textSize="14sp"
-                    android:hint="@string/please_hint"/>
+                    android:hint="请选择性别"/>
 
                 <View
                     android:layout_width="match_parent"
@@ -227,7 +113,7 @@
                     android:textColorHint="@color/colorTvHint"
                     android:textColor="@color/colorTv"
                     android:textSize="14sp"
-                    android:hint="@string/please_hint"/>
+                    android:hint="请输入公司名称"/>
 
                 <View
                     android:layout_width="match_parent"
@@ -263,7 +149,7 @@
                     android:textColorHint="@color/colorTvHint"
                     android:textColor="@color/colorTv"
                     android:textSize="14sp"
-                    android:hint="@string/please_hint"/>
+                    android:hint="请输入职位"/>
 
                 <View
                     android:layout_width="match_parent"
@@ -298,7 +184,7 @@
                     android:textColorHint="@color/colorTvHint"
                     android:textColor="@color/colorTv"
                     android:textSize="14sp"
-                    android:hint="@string/please_select"/>
+                    android:hint="请选择业务地区"/>
 
                 <View
                     android:layout_width="match_parent"
@@ -333,7 +219,7 @@
                     android:textColorHint="@color/colorTvHint"
                     android:textColor="@color/colorTv"
                     android:textSize="14sp"
-                    android:hint="@string/please_select"/>
+                    android:hint="请选择业务经验"/>
 
             </FrameLayout>
 
@@ -364,7 +250,7 @@
                 android:textColorHint="@color/colorTvHint"
                 android:textColor="@color/colorTv"
                 android:textSize="14sp"
-                android:hint="@string/please_hint"/>
+                android:hint="请输入经营产品"/>
 
             <Space
                 android:layout_width="match_parent"
