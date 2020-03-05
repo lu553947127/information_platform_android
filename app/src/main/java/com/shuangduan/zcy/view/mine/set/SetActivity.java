@@ -13,14 +13,14 @@ import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
-import com.shuangduan.zcy.dialog.BaseDialog;
-import com.shuangduan.zcy.dialog.CustomDialog;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.utils.LoginUtils;
 import com.shuangduan.zcy.utils.SupplierUtils;
 import com.shuangduan.zcy.view.WebViewActivity;
 import com.shuangduan.zcy.vm.ExitVm;
 import com.shuangduan.zcy.vm.SupplierVm;
+import com.zcy.framelibrary.dialog.AlertDialog;
+import com.zcy.framelibrary.dialog.listener.OnClickListenerWrapper;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -41,7 +41,8 @@ public class SetActivity extends BaseActivity {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     private ExitVm exitVm;
-    private int supplier_status,id;
+    private int supplier_status, id;
+    private AlertDialog alertDialog;
 
     @Override
     protected int initLayoutRes() {
@@ -80,7 +81,7 @@ public class SetActivity extends BaseActivity {
         });
 
         //获取供应商审核状态
-        supplierVm.supplierStatusLiveData.observe(this,supplierStatusBean -> {
+        supplierVm.supplierStatusLiveData.observe(this, supplierStatusBean -> {
             SPUtils.getInstance().put(CustomConfig.SUPPLIER_STATUS, supplierStatusBean.getStatus());
             supplier_status = supplierStatusBean.getStatus();
             id = supplierStatusBean.getId();
@@ -88,9 +89,9 @@ public class SetActivity extends BaseActivity {
         supplierVm.supplierStatus();
     }
 
-    @OnClick({R.id.iv_bar_back, R.id.tv_update_pwd,R.id.tv_pwd_pay,R.id.rl_third_login
-            ,R.id.tv_receiving_address,R.id.tv_supplier_msg,R.id.tv_feedback
-            ,R.id.tv_register_agreement,R.id.tv_privacy_text, R.id.tv_about_ours, R.id.tv_exit})
+    @OnClick({R.id.iv_bar_back, R.id.tv_update_pwd, R.id.tv_pwd_pay, R.id.rl_third_login
+            , R.id.tv_receiving_address, R.id.tv_supplier_msg, R.id.tv_feedback
+            , R.id.tv_register_agreement, R.id.tv_privacy_text, R.id.tv_about_ours, R.id.tv_exit})
     void onClick(View view) {
         Bundle bundle = new Bundle();
         switch (view.getId()) {
@@ -107,11 +108,11 @@ public class SetActivity extends BaseActivity {
                 ActivityUtils.startActivity(ThirdLoginActivity.class);
                 break;
             case R.id.tv_receiving_address://收货地址管理
-                bundle.putInt("type",0);
-                ActivityUtils.startActivity(bundle,ReceivingAddressActivity.class);
+                bundle.putInt("type", 0);
+                ActivityUtils.startActivity(bundle, ReceivingAddressActivity.class);
                 break;
             case R.id.tv_supplier_msg://供应商信息
-                SupplierUtils.SupplierCustom(this,supplier_status,id,"set");
+                SupplierUtils.SupplierCustom(this, supplier_status, id, "set");
                 break;
             case R.id.tv_feedback://意见反馈
                 ActivityUtils.startActivity(FeedbackActivity.class);
@@ -128,18 +129,19 @@ public class SetActivity extends BaseActivity {
                 ActivityUtils.startActivity(AboutOursActivity.class);
                 break;
             case R.id.tv_exit://退出登录
-                new CustomDialog(SetActivity.this)
-                        .setTip(getString(R.string.exit_confirm))
-                        .setCallBack(new BaseDialog.CallBack() {
+                alertDialog = new AlertDialog.Builder(this)
+                        .setView(R.layout.dialog_custom)
+                        .setCancelable(true)
+                        .setText(R.id.tv_tip, R.string.exit_confirm)
+                        .setOnClickListener(R.id.tv_negative, null)//不设置监听事件 ，底层默认赋值关闭Dialog监听事件
+                        .setOnClickListener(R.id.tv_positive, new OnClickListenerWrapper() {
                             @Override
-                            public void cancel() {
-                            }
-
-                            @Override
-                            public void ok(String s) {
+                            public void onClickCall(View v) {
                                 exitVm.exit();
                             }
-                        }).showDialog();
+                        })
+                        .show();
+                
                 break;
         }
     }

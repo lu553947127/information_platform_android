@@ -109,6 +109,7 @@ public class BankCardListActivity extends BaseActivity {
         bankCardVm.bankcardList();
 
 
+
         if (SPUtils.getInstance().getInt(SpConfig.BANK_AGREEMENT, 0) == 0) {
             String agreement = getTxtFromAssets("bank_agreement.txt");
             dialog = new AlertDialog.Builder(this)

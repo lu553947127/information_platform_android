@@ -10,6 +10,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.CompoundButton;
 
+import com.zcy.framelibrary.dialog.listener.OnClickListenerWrapper;
+
 /**
  * @ProjectName: information_platform_android
  * @Package: com.zcy.framelibrary.dialog
@@ -54,21 +56,21 @@ public class AlertController {
         return mWindow;
     }
 
-
     public void setViewHelper(DialogViewHelper helper) {
         this.mViewHelper = helper;
     }
-
 
     public void setText(int viewId, CharSequence text) {
         mViewHelper.setText(viewId, text);
     }
 
-
-    public void setOnClickListener(int viewId, View.OnClickListener listener) {
-        mViewHelper.setOnClickListener(viewId, listener);
+    public void setText(int viewId, int resId) {
+        mViewHelper.setText(viewId, resId);
     }
 
+    public void setOnClickListener(int viewId, OnClickListenerWrapper listener) {
+        mViewHelper.setOnClickListener(mDialog,viewId, listener);
+    }
 
     public void setOnCheckedChangeListener(int viewId, CompoundButton.OnCheckedChangeListener listener) {
         mViewHelper.setOnCheckedChangeListener(viewId, listener);
@@ -105,6 +107,9 @@ public class AlertController {
                 dialog.dismiss();
             }
         };
+
+
+
         //dialog 所有的点击按钮监听
         public DialogInterface.OnKeyListener mOnKeyListener;
 
@@ -115,6 +120,7 @@ public class AlertController {
 
         //存放View所有文本
         public SparseArray<CharSequence> mTextArray = new SparseArray<>();
+        public SparseArray<Integer> mTextResIdArray = new SparseArray<>();
         //存放View所有点击事件
         public SparseArray<View.OnClickListener> mClickArray = new SparseArray<>();
         //存放View所有的Check选择点击事件
@@ -169,10 +175,18 @@ public class AlertController {
             for (int i = 0; i < textArraySize; i++) {
                 viewHelper.setText(mTextArray.keyAt(i), mTextArray.valueAt(i));
             }
+
+            int textResIdArraySize = mTextResIdArray.size();
+
+            for (int i = 0; i < textResIdArraySize; i++) {
+                viewHelper.setText(mTextResIdArray.keyAt(i), mTextResIdArray.valueAt(i));
+            }
+
+
             //设置点击
             int clickArraySize = mClickArray.size();
             for (int i = 0; i < clickArraySize; i++) {
-                viewHelper.setOnClickListener(mClickArray.keyAt(i), mClickArray.valueAt(i));
+                viewHelper.setOnClickListener(alert.getDialog(),mClickArray.keyAt(i), mClickArray.valueAt(i));
             }
 
             //设置选择的点击事件
@@ -180,7 +194,6 @@ public class AlertController {
             for (int i = 0; i < checkClickArraySize; i++) {
                 viewHelper.setOnCheckedChangeListener(mCheckedClickArray.keyAt(i), mCheckedClickArray.valueAt(i));
             }
-
 
             //配置自定义效果
             Window window = alert.getWindow();

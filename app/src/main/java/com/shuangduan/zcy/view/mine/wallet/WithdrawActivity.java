@@ -152,6 +152,9 @@ public class WithdrawActivity extends BaseActivity {
                     ActivityUtils.startActivity(BindBankCardActivity.class);
                 }else {
                     //展示选择弹窗
+
+
+
                     addDialog(new BankCardDialog(this)
                             .setList(bankCardBeans)
                             .setSingleCallBack((item, position) -> {

@@ -7,8 +7,7 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
-import androidx.appcompat.widget.AppCompatCheckBox;
-import androidx.appcompat.widget.AppCompatRadioButton;
+import com.zcy.framelibrary.dialog.listener.OnClickListenerWrapper;
 
 import java.lang.ref.WeakReference;
 
@@ -40,6 +39,12 @@ public class DialogViewHelper {
         this.mContentView = LayoutInflater.from(context).inflate(layoutResId, null);
     }
 
+    /**
+     * 文字赋值
+     *
+     * @param viewId
+     * @param text
+     */
     public void setText(int viewId, CharSequence text) {
         TextView tv = getView(viewId);
 
@@ -49,9 +54,29 @@ public class DialogViewHelper {
     }
 
 
-    public void setOnClickListener(int viewId, View.OnClickListener listener) {
+    /**
+     * 资源文件赋值
+     *
+     * @param viewId
+     * @param resId
+     */
+    public void setText(int viewId, int resId) {
+        TextView tv = getView(viewId);
+
+        if (null != tv) {
+            tv.setText(resId);
+        }
+    }
+
+    public void setOnClickListener(AlertDialog dialog, int viewId, View.OnClickListener listener) {
         View view = getView(viewId);
         if (null != view) {
+            //判断是否使用了自己监听包装类
+            if (listener instanceof OnClickListenerWrapper) {
+                View.OnClickListener listenerWrapper = ((OnClickListenerWrapper) listener).setDialog(dialog);
+                view.setOnClickListener(listenerWrapper);
+                return;
+            }
             view.setOnClickListener(listener);
         }
     }

@@ -2,14 +2,18 @@ package com.zcy.framelibrary.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.StyleRes;
+import androidx.appcompat.app.AppCompatDialog;
 
 import com.zcy.framelibrary.R;
+import com.zcy.framelibrary.dialog.listener.OnClickListenerWrapper;
 
 /**
  * @ProjectName: information_platform_android
@@ -23,7 +27,7 @@ import com.zcy.framelibrary.R;
  * @UpdateRemark:
  * @Version: 1.0
  */
-public class AlertDialog extends Dialog {
+public class AlertDialog extends AppCompatDialog {
 
     /**
      * 使用方法
@@ -61,6 +65,25 @@ public class AlertDialog extends Dialog {
         mAlert = new AlertController(this, getWindow());
     }
 
+
+    /**
+     * 适配Android Dialog的样式
+     *
+     * @param context
+     * @param resId
+     * @return
+     */
+    static int resolveDialogTheme(@NonNull Context context, @StyleRes int resId) {
+        // Check to see if this resourceId has a valid package ID.
+        if (((resId >>> 24) & 0x000000ff) >= 0x00000001) {   // start of real resource IDs.
+            return resId;
+        } else {
+            TypedValue outValue = new TypedValue();
+            context.getTheme().resolveAttribute(R.attr.alertDialogTheme, outValue, true);
+            return outValue.resourceId;
+        }
+    }
+
     /**
      * 设置控件文本
      *
@@ -71,6 +94,10 @@ public class AlertDialog extends Dialog {
         mAlert.setText(viewId, text);
     }
 
+    public void setText(int viewId, int resId) {
+        mAlert.setText(viewId, resId);
+    }
+
 
     /**
      * 设置控件的监听事件
@@ -78,9 +105,12 @@ public class AlertDialog extends Dialog {
      * @param viewId
      * @param listener
      */
-    public void setOnClickListener(int viewId, View.OnClickListener listener) {
+    public void setOnClickListener(int viewId, OnClickListenerWrapper listener) {
         mAlert.setOnClickListener(viewId, listener);
     }
+
+
+
 
     /**
      * 选择框的点击事件
@@ -112,6 +142,7 @@ public class AlertDialog extends Dialog {
 
         private final AlertController.AlertParams P;
 
+
         /**
          * Creates a builder for an alert dialog that uses the default alert
          * dialog theme.
@@ -123,7 +154,7 @@ public class AlertDialog extends Dialog {
          * @param context the parent context
          */
         public Builder(Context context) {
-            this(context, R.style.dialog);
+            this(context, resolveDialogTheme(context, 0));
         }
 
         /**
@@ -258,6 +289,12 @@ public class AlertDialog extends Dialog {
             return this;
         }
 
+
+        public Builder setText(int viewId, int resId) {
+            P.mTextResIdArray.put(viewId, resId);
+            return this;
+        }
+
         /**
          * 设置View点击事件
          *
@@ -266,10 +303,17 @@ public class AlertDialog extends Dialog {
          * @return
          */
         public Builder setOnClickListener(int viewId, View.OnClickListener listener) {
-
+            if(null == listener){
+                listener = new OnClickListenerWrapper() {
+                    @Override
+                    public void onClickCall(View v) {
+                    }
+                };
+            }
             P.mClickArray.put(viewId, listener);
             return this;
         }
+
 
         /**
          * 设置CheckBox的选择事件
