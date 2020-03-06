@@ -2,6 +2,7 @@ package com.zcy.framelibrary.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -108,8 +109,6 @@ public class AlertDialog extends AppCompatDialog {
     public void setOnClickListener(int viewId, OnClickListenerWrapper listener) {
         mAlert.setOnClickListener(viewId, listener);
     }
-
-
 
 
     /**
@@ -296,6 +295,25 @@ public class AlertDialog extends AppCompatDialog {
         }
 
         /**
+         * 设置显示的图片
+         *
+         * @param viewId
+         * @param resId
+         * @return
+         */
+        public Builder setImage(int viewId, int resId) {
+            P.mDrawableResIdArray.put(viewId, resId);
+            return this;
+        }
+
+
+        public Builder setImage(int viewId, Drawable drawable) {
+            P.mDrawableArray.put(viewId, drawable);
+            return this;
+        }
+
+
+        /**
          * 设置View点击事件
          *
          * @param viewId
@@ -303,7 +321,7 @@ public class AlertDialog extends AppCompatDialog {
          * @return
          */
         public Builder setOnClickListener(int viewId, View.OnClickListener listener) {
-            if(null == listener){
+            if (null == listener) {
                 listener = new OnClickListenerWrapper() {
                     @Override
                     public void onClickCall(View v) {

@@ -1,10 +1,12 @@
 package com.zcy.framelibrary.dialog;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zcy.framelibrary.dialog.listener.OnClickListenerWrapper;
@@ -67,6 +69,22 @@ public class DialogViewHelper {
             tv.setText(resId);
         }
     }
+
+
+    public void setImage(int viewId, Integer resId) {
+        ImageView iv = getView(viewId);
+        if (null != iv) {
+            iv.setImageResource(resId);
+        }
+    }
+
+    public void setImage(int viewId, Drawable drawable) {
+        ImageView iv = getView(viewId);
+        if (null != iv) {
+            iv.setImageDrawable(drawable);
+        }
+    }
+
 
     public void setOnClickListener(AlertDialog dialog, int viewId, View.OnClickListener listener) {
         View view = getView(viewId);

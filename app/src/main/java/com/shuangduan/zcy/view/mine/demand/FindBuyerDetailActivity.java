@@ -29,6 +29,7 @@ import com.shuangduan.zcy.dialog.PayDialog;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.BuyerDetailBean;
 import com.shuangduan.zcy.model.bean.CoinPayResultBean;
+import com.shuangduan.zcy.utils.PermissionUtils;
 import com.shuangduan.zcy.view.demand.DemandReleaseActivity;
 import com.shuangduan.zcy.view.mine.set.SetPwdPayActivity;
 import com.shuangduan.zcy.view.recharge.RechargeActivity;
@@ -36,6 +37,8 @@ import com.shuangduan.zcy.vm.CoinPayVm;
 import com.shuangduan.zcy.vm.DemandBuyerVm;
 import com.shuangduan.zcy.vm.UpdatePwdPayVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
+import com.zcy.framelibrary.dialog.AlertDialog;
+import com.zcy.framelibrary.dialog.listener.OnClickListenerWrapper;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -324,23 +327,39 @@ public class FindBuyerDetailActivity extends BaseActivity {
             ToastUtils.showShort(getString(R.string.buy_success));
             demandBuyerVm.getDetail();
         } else {
-            //余额不足
-            addDialog(new CustomDialog(this)
-                    .setIcon(R.drawable.icon_error)
-                    .setTip(getString(R.string.no_balance))
-                    .setOk(getString(R.string.recharge_dialog))
-                    .setCallBack(new BaseDialog.CallBack() {
+            AlertDialog dialog = new AlertDialog.Builder(this)
+                    .setView(R.layout.dialog_custom)
+                    .setImage(R.id.iv_icon, R.drawable.icon_error)
+                    .setText(R.id.tv_tip, R.string.no_balance)
+                    .setText(R.id.tv_positive, R.string.recharge_dialog)
+                    .setOnClickListener(R.id.tv_negative, null)//不设置监听事件 ，底层默认赋值关闭Dialog监听事件
+                    .setOnClickListener(R.id.tv_positive, new OnClickListenerWrapper() {
                         @Override
-                        public void cancel() {
-
-                        }
-
-                        @Override
-                        public void ok(String s) {
+                        public void onClickCall(View v) {
                             ActivityUtils.startActivity(RechargeActivity.class);
                         }
                     })
-                    .showDialog());
+                    .show();
+
+            addDialog(dialog);
+
+//余额不足
+//            addDialog(new CustomDialog(this)
+//                    .setIcon(R.drawable.icon_error)
+//                    .setTip(getString(R.string.no_balance))
+//                    .setOk(getString(R.string.recharge_dialog))
+//                    .setCallBack(new BaseDialog.CallBack() {
+//                        @Override
+//                        public void cancel() {
+//
+//                        }
+//
+//                        @Override
+//                        public void ok(String s) {
+//                            ActivityUtils.startActivity(RechargeActivity.class);
+//                        }
+//                    })
+//                    .showDialog());
         }
     }
 }

@@ -34,6 +34,8 @@ import com.shuangduan.zcy.vm.AuthenticationVm;
 import com.shuangduan.zcy.vm.PermissionVm;
 import com.shuangduan.zcy.vm.UploadPhotoVm;
 import com.tbruyelle.rxpermissions2.RxPermissions;
+import com.zcy.framelibrary.dialog.AlertDialog;
+import com.zcy.framelibrary.dialog.listener.OnClickListenerWrapper;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
@@ -47,13 +49,13 @@ import butterknife.OnClick;
  * @author 徐玉 QQ:876885613
  * @name ZICAICloudPlatform
  * @class name：com.example.zicaicloudplatform.view.activity
- * @class 身份认证,上传名片
+ * @class 身份认证, 上传名片
  * @time 2019/7/8 13:25
  * @change
  * @chang time
  * @class describe
  */
-public class AuthenticationActivity extends BaseActivity{
+public class AuthenticationActivity extends BaseActivity {
 
     @BindView(R.id.tv_bar_title)
     AppCompatTextView tvBarTitle;
@@ -93,7 +95,7 @@ public class AuthenticationActivity extends BaseActivity{
         type = getIntent().getStringExtra(CustomConfig.UPLOAD_TYPE);
         String toast_type = getIntent().getStringExtra(CustomConfig.AUTHENTICATION_TYPE);
         //判断当前是否为身份证上传或为名片上传
-        switch (type){
+        switch (type) {
             case CustomConfig.uploadTypeIdCard://身份认证
                 tvBarTitle.setText(getString(R.string.authentication));
                 tvIdCardPositive.setText(getString(R.string.id_card_positive));
@@ -110,7 +112,7 @@ public class AuthenticationActivity extends BaseActivity{
                 break;
         }
         //判断验证身份证显示的土司类型
-        switch (toast_type){
+        switch (toast_type) {
             case CustomConfig.ID_USER_INFO://用户详情跳转编辑身份证
                 break;
             case CustomConfig.PROJECT_INFO://工程信息查看详情
@@ -162,28 +164,29 @@ public class AuthenticationActivity extends BaseActivity{
                     break;
                 case PermissionVm.PERMISSION_CAMERA_NO:
                 case PermissionVm.PERMISSION_STORAGE_NO:
-                    new CustomDialog(this)
-                            .setTip("为了更好的为您服务，请您打开您的相机和存储权限!")
-                            .setCallBack(new BaseDialog.CallBack() {
-                                @Override
-                                public void cancel() {
 
-                                }
-
+                    new AlertDialog.Builder(this)
+                            .setView(R.layout.dialog_custom)
+                            .setCancelable(true)
+                            .setText(R.id.tv_tip, "为了更好的为您服务，请您打开您的相机和存储权限!")
+                            .setOnClickListener(R.id.tv_negative, null)//不设置监听事件 ，底层默认赋值关闭Dialog监听事件
+                            .setOnClickListener(R.id.tv_positive, new OnClickListenerWrapper() {
                                 @Override
-                                public void ok(String s) {
+                                public void onClickCall(View v) {
                                     PermissionUtils.toSelfSetting(getApplicationContext());
                                 }
-                            }).showDialog();
+                            })
+                            .show();
+
                     break;
             }
         });
 
         uploadPhotoVm.uploadLiveData.observe(this, uploadBean -> {
-            if (uploadPhotoVm.type == UploadPhotoVm.ID_CARD_POSITIVE){
+            if (uploadPhotoVm.type == UploadPhotoVm.ID_CARD_POSITIVE) {
                 authenticationVm.image_front = uploadBean.getSource();
                 ImageLoader.load(this, new ImageConfig.Builder().url(uploadBean.getSource()).imageView(ivIdCardPositive).build());
-            }else if (uploadPhotoVm.type == UploadPhotoVm.ID_CARD_NEGATIVE){
+            } else if (uploadPhotoVm.type == UploadPhotoVm.ID_CARD_NEGATIVE) {
                 authenticationVm.image_reverse_site = uploadBean.getSource();
                 ImageLoader.load(this, new ImageConfig.Builder().url(uploadBean.getSource()).imageView(ivIdCardNegative).build());
             }
@@ -194,7 +197,7 @@ public class AuthenticationActivity extends BaseActivity{
             finish();
         });
         uploadPhotoVm.mPageStateLiveData.observe(this, s -> {
-            switch (s){
+            switch (s) {
                 case PageState.PAGE_LOADING:
                     showLoading();
                     break;
@@ -204,7 +207,7 @@ public class AuthenticationActivity extends BaseActivity{
             }
         });
         authenticationVm.pageStateLiveData.observe(this, s -> {
-            switch (s){
+            switch (s) {
                 case PageState.PAGE_LOADING:
                     showLoading();
                     break;
@@ -215,30 +218,30 @@ public class AuthenticationActivity extends BaseActivity{
         });
 
         authenticationVm.authentication();
-        authenticationVm.authenticationStatusLiveData.observe(this,authenBean -> {
+        authenticationVm.authenticationStatusLiveData.observe(this, authenBean -> {
             ImageLoader.load(this, new ImageConfig.Builder().url(authenBean.getIdentity_image_front()).errorPic(R.drawable.id_card_positive).imageView(ivIdCardPositive).build());
             ImageLoader.load(this, new ImageConfig.Builder().url(authenBean.getIdentity_image_reverse_site()).errorPic(R.drawable.id_card_negative).imageView(ivIdCardNegative).build());
         });
     }
 
     @OnClick({R.id.iv_bar_back, R.id.tv_bar_right, R.id.iv_id_card_positive, R.id.iv_id_card_negative})
-    void onClick(View view){
-        BaseBottomSheetDialog baseBottomSheetDialog =new BaseBottomSheetDialog(this,rxPermissions,permissionVm);
-        switch (view.getId()){
+    void onClick(View view) {
+        BaseBottomSheetDialog baseBottomSheetDialog = new BaseBottomSheetDialog(this, rxPermissions, permissionVm);
+        switch (view.getId()) {
             case R.id.iv_bar_back:
                 finish();
                 break;
             case R.id.tv_bar_right://保存
                 int isVerified = SPUtils.getInstance().getInt(SpConfig.IS_VERIFIED, 0);
-                if (isVerified != 2){
-                    switch (type){
+                if (isVerified != 2) {
+                    switch (type) {
                         case CustomConfig.uploadTypeIdCard://身份认证
                             authenticationVm.idCard();
                             break;
                         case CustomConfig.uploadTypeBusinessCard://上传名片
                             break;
                     }
-                }else {
+                } else {
                     ToastUtils.showShort("已认证，请勿重复认证");
                 }
                 break;
@@ -259,8 +262,8 @@ public class AuthenticationActivity extends BaseActivity{
         if (requestCode == PermissionVm.PHOTO && resultCode == RESULT_OK) {
             if (MatisseCamera.isAndroidQ) {
                 LogUtils.e(Matisse.obtainResult(Objects.requireNonNull(data)).get(0));
-                uploadPhotoVm.upload(CompressUtils.getRealFilePath(this,Matisse.obtainResult(data).get(0)));
-            }else {
+                uploadPhotoVm.upload(CompressUtils.getRealFilePath(this, Matisse.obtainResult(data).get(0)));
+            } else {
                 LogUtils.e(Matisse.obtainPathResult(Objects.requireNonNull(data)).get(0));
                 uploadPhotoVm.upload(Matisse.obtainPathResult(data).get(0));
             }

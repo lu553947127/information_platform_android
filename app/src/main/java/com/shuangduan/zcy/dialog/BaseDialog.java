@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatDialog;
 
 import com.shuangduan.zcy.R;
 
@@ -20,7 +21,7 @@ import butterknife.Unbinder;
  *     version: 1.0
  * </pre>
  */
-public abstract class BaseDialog extends Dialog {
+public abstract class BaseDialog extends AppCompatDialog {
 
     public final String TAG = "BaseDialog";
     public Activity mActivity;

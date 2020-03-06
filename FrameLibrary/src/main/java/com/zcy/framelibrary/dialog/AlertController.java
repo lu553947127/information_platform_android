@@ -2,6 +2,7 @@ package com.zcy.framelibrary.dialog;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.drawable.Drawable;
 import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.View;
@@ -69,7 +70,7 @@ public class AlertController {
     }
 
     public void setOnClickListener(int viewId, OnClickListenerWrapper listener) {
-        mViewHelper.setOnClickListener(mDialog,viewId, listener);
+        mViewHelper.setOnClickListener(mDialog, viewId, listener);
     }
 
     public void setOnCheckedChangeListener(int viewId, CompoundButton.OnCheckedChangeListener listener) {
@@ -109,7 +110,6 @@ public class AlertController {
         };
 
 
-
         //dialog 所有的点击按钮监听
         public DialogInterface.OnKeyListener mOnKeyListener;
 
@@ -121,6 +121,12 @@ public class AlertController {
         //存放View所有文本
         public SparseArray<CharSequence> mTextArray = new SparseArray<>();
         public SparseArray<Integer> mTextResIdArray = new SparseArray<>();
+
+        //存放View显示的图片
+        public SparseArray<Integer> mDrawableResIdArray = new SparseArray<>();
+        public SparseArray<Drawable> mDrawableArray = new SparseArray<>();
+
+
         //存放View所有点击事件
         public SparseArray<View.OnClickListener> mClickArray = new SparseArray<>();
         //存放View所有的Check选择点击事件
@@ -177,16 +183,27 @@ public class AlertController {
             }
 
             int textResIdArraySize = mTextResIdArray.size();
-
             for (int i = 0; i < textResIdArraySize; i++) {
                 viewHelper.setText(mTextResIdArray.keyAt(i), mTextResIdArray.valueAt(i));
+            }
+
+
+            //设置图片
+            int drawableResIdArraySize = mDrawableResIdArray.size();
+            for(int i = 0;i <drawableResIdArraySize;i++){
+                viewHelper.setImage(mDrawableResIdArray.keyAt(i),mDrawableResIdArray.valueAt(i));
+            }
+
+            int drawableArraySize = mDrawableArray.size();
+            for(int i = 0;i <drawableArraySize;i++){
+                viewHelper.setImage(mDrawableResIdArray.keyAt(i),mDrawableArray.valueAt(i));
             }
 
 
             //设置点击
             int clickArraySize = mClickArray.size();
             for (int i = 0; i < clickArraySize; i++) {
-                viewHelper.setOnClickListener(alert.getDialog(),mClickArray.keyAt(i), mClickArray.valueAt(i));
+                viewHelper.setOnClickListener(alert.getDialog(), mClickArray.keyAt(i), mClickArray.valueAt(i));
             }
 
             //设置选择的点击事件

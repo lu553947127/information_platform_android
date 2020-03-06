@@ -1,5 +1,6 @@
 package com.shuangduan.zcy.base;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.util.SparseArray;
 import android.view.MotionEvent;
@@ -8,6 +9,7 @@ import android.widget.EditText;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDialog;
 import androidx.core.content.ContextCompat;
 
 import com.blankj.utilcode.util.BarUtils;
@@ -46,7 +48,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IView, S
     private Unbinder unBinder;
     public boolean isTranslationBar = false;//透明状态栏开关
     private LoadDialog loadDialog;
-    private SparseArray<BaseDialog> dialogArray = new SparseArray<>();
+    private SparseArray<AppCompatDialog> dialogArray = new SparseArray<>();
 
     private SwipeBackActivityHelper mHelper;
     public EmptyViewFactory emptyViewFactory;
@@ -125,7 +127,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IView, S
     /**
      * 保险起见的dialog关闭，防止内存泄漏
      */
-    public void addDialog(BaseDialog dialog) {
+    public void addDialog(AppCompatDialog dialog) {
         dialogArray.put(dialogArray.size(), dialog);
     }
 

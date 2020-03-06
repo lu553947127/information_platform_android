@@ -121,7 +121,7 @@ public class ProjectInfoActivity extends BaseActivity {
         //地图缩放级别
         double zoom = 14.190743;
 //        aMap.moveCamera(CameraUpdateFactory.zoomTo((float) zoom));
-        aMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Double.valueOf(SPUtils.getInstance().getString(SpConfig.LATITUDE)),Double.valueOf(SPUtils.getInstance().getString(SpConfig.LONGITUDE))), (float) zoom));
+        aMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Double.valueOf(SPUtils.getInstance().getString(SpConfig.LATITUDE)), Double.valueOf(SPUtils.getInstance().getString(SpConfig.LONGITUDE))), (float) zoom));
         aMap.setMyLocationEnabled(true);// 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
         aMap.getUiSettings().setMyLocationButtonEnabled(false);// 设置默认定位按钮是否显示
         aMap.getUiSettings().setRotateGesturesEnabled(false);//设置地图旋转手势
@@ -360,11 +360,14 @@ public class ProjectInfoActivity extends BaseActivity {
         permissionVm = ViewModelProviders.of(this).get(PermissionVm.class);
 
 
-        if (PermissionUtils.isOPen(this)) {
-            permissionVm.getPermissionLocation(new RxPermissions(this));
-        } else {
-            showLocationDialog(PermissionVm.PERMISSION_LOCATION);
-        }
+//        if (PermissionUtils.isOPen(this)) {
+//
+//        } else {
+//        showLocationDialog(PermissionVm.PERMISSION_LOCATION);
+//        }
+
+        permissionVm.getPermissionLocation(new RxPermissions(this));
+
 
         permissionVm.getLiveData().observe(this, integer -> {
             if (integer == PermissionVm.PERMISSION_LOCATION) {

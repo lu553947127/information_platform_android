@@ -145,11 +145,14 @@ public class ProjectDetailActivity extends BaseActivity {
 
         permissionVm = ViewModelProviders.of(this).get(PermissionVm.class);
 
-        if (PermissionUtils.isOPen(this)) {
-            permissionVm.getPermissionLocation(new RxPermissions(this));
-        } else {
-            showLocationDialog(PermissionVm.PERMISSION_LOCATION);
-        }
+//        if (PermissionUtils.isOPen(this)) {
+
+//        } else {
+//             showLocationDialog(PermissionVm.PERMISSION_LOCATION);
+//        }
+
+
+        permissionVm.getPermissionLocation(new RxPermissions(this));
 
         permissionVm.getLiveData().observe(this, integer -> {
             if (integer == PermissionVm.PERMISSION_LOCATION) {
@@ -158,14 +161,13 @@ public class ProjectDetailActivity extends BaseActivity {
                 projectDetailVm.latitudeLiveData.observe(this, s -> {
                     try {
                         aMap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(s.latitude, s.longitude)));
-                    }catch (NullPointerException ignored){
+                    } catch (NullPointerException ignored) {
                     }
                 });
             } else if (integer == PermissionVm.PERMISSION_NO_LOCATION) {
                 showLocationDialog(integer);
             }
         });
-
 
 
         Fragment[] fragments = new Fragment[4];
