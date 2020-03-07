@@ -1,12 +1,10 @@
 package com.shuangduan.zcy.view.mine.wallet;
 
 import android.annotation.SuppressLint;
-import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
@@ -17,11 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
-import com.blankj.utilcode.util.EncodeUtils;
-import com.blankj.utilcode.util.FileIOUtils;
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
-import com.cjt2325.cameralibrary.util.LogUtil;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.BankCardAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
@@ -30,7 +24,6 @@ import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.bean.BankCardBean;
 import com.shuangduan.zcy.model.event.BankcardUpdateEvent;
-import com.shuangduan.zcy.utils.LoginUtils;
 import com.shuangduan.zcy.vm.BankCardVm;
 import com.zcy.framelibrary.dialog.AlertDialog;
 
