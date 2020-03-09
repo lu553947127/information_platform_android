@@ -1,7 +1,9 @@
 package com.zcy.framelibrary.dialog;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 import android.util.SparseArray;
 import android.view.Gravity;
@@ -12,6 +14,8 @@ import android.view.WindowManager;
 import android.widget.CompoundButton;
 
 import com.zcy.framelibrary.dialog.listener.OnClickListenerWrapper;
+
+import java.util.concurrent.PriorityBlockingQueue;
 
 /**
  * @ProjectName: information_platform_android
@@ -86,6 +90,7 @@ public class AlertController {
     /**
      * 存放Dialog中所有的参数信息 并设置部分公用参数功能
      */
+    @SuppressLint("UseSparseArrays")
     public static class AlertParams {
 
         public Context mContext;
@@ -125,6 +130,10 @@ public class AlertController {
         //存放View显示的图片
         public SparseArray<Integer> mDrawableResIdArray = new SparseArray<>();
         public SparseArray<Drawable> mDrawableArray = new SparseArray<>();
+
+        //字体颜色
+        public SparseArray<Integer> mTextColorResIdArray = new SparseArray<>();
+        public SparseArray<ColorStateList> mTextColorStateListArray = new SparseArray<>();
 
 
         //存放View所有点击事件
@@ -188,15 +197,27 @@ public class AlertController {
             }
 
 
+            //设置文本颜色
+            int textColorResIdArraySize = mTextColorResIdArray.size();
+            for (int i = 0; i < textColorResIdArraySize; i++) {
+                viewHelper.setTextColor(mTextColorResIdArray.keyAt(i), mTextColorResIdArray.valueAt(i));
+            }
+
+            int textColorStateListArraySize = mTextColorStateListArray.size();
+            for (int i = 0; i < textColorStateListArraySize; i++) {
+                viewHelper.setTextColor(mTextColorStateListArray.keyAt(i),mTextColorStateListArray.valueAt(i));
+            }
+
+
             //设置图片
             int drawableResIdArraySize = mDrawableResIdArray.size();
-            for(int i = 0;i <drawableResIdArraySize;i++){
-                viewHelper.setImage(mDrawableResIdArray.keyAt(i),mDrawableResIdArray.valueAt(i));
+            for (int i = 0; i < drawableResIdArraySize; i++) {
+                viewHelper.setImage(mDrawableResIdArray.keyAt(i), mDrawableResIdArray.valueAt(i));
             }
 
             int drawableArraySize = mDrawableArray.size();
-            for(int i = 0;i <drawableArraySize;i++){
-                viewHelper.setImage(mDrawableResIdArray.keyAt(i),mDrawableArray.valueAt(i));
+            for (int i = 0; i < drawableArraySize; i++) {
+                viewHelper.setImage(mDrawableResIdArray.keyAt(i), mDrawableArray.valueAt(i));
             }
 
 

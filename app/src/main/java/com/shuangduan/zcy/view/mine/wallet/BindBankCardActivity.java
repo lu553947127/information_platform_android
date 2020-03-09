@@ -11,12 +11,14 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.RegexUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
+import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BaseBottomSheetDialog;
 import com.shuangduan.zcy.dialog.BaseDialog;
@@ -27,12 +29,15 @@ import com.shuangduan.zcy.utils.PermissionUtils;
 import com.shuangduan.zcy.utils.image.CompressUtils;
 import com.shuangduan.zcy.utils.matisse.Glide4Engine;
 import com.shuangduan.zcy.utils.matisse.MatisseCamera;
+import com.shuangduan.zcy.view.mine.user.AuthenticationActivity;
 import com.shuangduan.zcy.view.photo.CameraActivity;
 import com.shuangduan.zcy.vm.AuthenticationVm;
 import com.shuangduan.zcy.vm.BankCardVm;
 import com.shuangduan.zcy.vm.PermissionVm;
 import com.shuangduan.zcy.vm.UploadPhotoVm;
 import com.tbruyelle.rxpermissions2.RxPermissions;
+import com.zcy.framelibrary.dialog.AlertDialog;
+import com.zcy.framelibrary.dialog.listener.OnClickListenerWrapper;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
@@ -114,19 +119,21 @@ public class BindBankCardActivity extends BaseActivity {
                     break;
                 case PermissionVm.PERMISSION_CAMERA_NO:
                 case PermissionVm.PERMISSION_STORAGE_NO:
-                    new CustomDialog(this)
-                            .setTip("为了更好的为您服务，请您打开您的相机和存储权限!")
-                            .setCallBack(new BaseDialog.CallBack() {
-                                @Override
-                                public void cancel() {
 
-                                }
-
+                    AlertDialog dialog = new AlertDialog.Builder(this)
+                            .setView(R.layout.dialog_custom)
+                            .setText(R.id.tv_tip, "为了更好的为您服务，请您打开您的相机和存储权限!")
+                            .setOnClickListener(R.id.tv_negative, null)
+                            .setOnClickListener(R.id.tv_positive, new OnClickListenerWrapper() {
                                 @Override
-                                public void ok(String s) {
+                                public void onClickCall(View v) {
                                     PermissionUtils.toSelfSetting(getApplicationContext());
                                 }
-                            }).showDialog();
+                            })
+                            .show();
+
+                    addDialog(dialog);
+
                     break;
             }
         });
@@ -135,7 +142,7 @@ public class BindBankCardActivity extends BaseActivity {
             bankCardVm.bankcardDis();
         });
         uploadPhotoVm.mPageStateLiveData.observe(this, s -> {
-            switch (s){
+            switch (s) {
                 case PageState.PAGE_LOADING:
                     showLoading();
                     break;
@@ -178,20 +185,20 @@ public class BindBankCardActivity extends BaseActivity {
     }
 
     @OnClick({R.id.iv_bar_back, R.id.tv_bar_right, R.id.iv_camera})
-    void onClick(View view){
-        switch (view.getId()){
+    void onClick(View view) {
+        switch (view.getId()) {
             case R.id.iv_bar_back:
                 finish();
                 break;
             case R.id.tv_bar_right:
-                if (StringUtils.isTrimEmpty(edtBankCardNumber.getText().toString()) || StringUtils.isTrimEmpty(edtBankAccount.getText().toString())){
+                if (StringUtils.isTrimEmpty(edtBankCardNumber.getText().toString()) || StringUtils.isTrimEmpty(edtBankAccount.getText().toString())) {
                     ToastUtils.showShort(getString(R.string.bankcard_msg_not));
                     return;
                 }
                 bankCardVm.bankcardAdd(edtBankCardNumber.getText().toString(), edtBankAccount.getText().toString());
                 break;
             case R.id.iv_camera:
-                BaseBottomSheetDialog baseBottomSheetDialog =new BaseBottomSheetDialog(this,rxPermissions,permissionVm);
+                BaseBottomSheetDialog baseBottomSheetDialog = new BaseBottomSheetDialog(this, rxPermissions, permissionVm);
                 baseBottomSheetDialog.showPhotoDialog();
                 break;
         }
@@ -203,8 +210,8 @@ public class BindBankCardActivity extends BaseActivity {
         if (requestCode == PermissionVm.PHOTO && resultCode == RESULT_OK) {
             if (MatisseCamera.isAndroidQ) {
                 LogUtils.e(Matisse.obtainResult(Objects.requireNonNull(data)).get(0));
-                uploadPhotoVm.upload(CompressUtils.getRealFilePath(this,Matisse.obtainResult(data).get(0)));
-            }else {
+                uploadPhotoVm.upload(CompressUtils.getRealFilePath(this, Matisse.obtainResult(data).get(0)));
+            } else {
                 LogUtils.e(Matisse.obtainPathResult(Objects.requireNonNull(data)).get(0));
                 uploadPhotoVm.upload(Matisse.obtainPathResult(data).get(0));
             }
