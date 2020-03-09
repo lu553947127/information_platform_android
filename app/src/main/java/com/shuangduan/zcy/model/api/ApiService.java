@@ -101,6 +101,7 @@ public interface ApiService {
             @Field("user_id") int user_id
     );
 
+    //搜索公司名称
     @FormUrlEncoded
     @POST("api/Userinfo/searchCompany")
     Flowable<BaseListResponse<String>> searchCompany(
@@ -108,6 +109,7 @@ public interface ApiService {
             @Field("title") String title
     );
 
+    //录入信息
     @POST("api/Userinfo/setInfo")
     Flowable<BaseResponse> setInfo(
             @Query("user_id") int user_id,
@@ -120,6 +122,7 @@ public interface ApiService {
             @Query("managing_products") String managing_products
     );
 
+    //更新用户名
     @FormUrlEncoded
     @POST("api/Userinfo/setInfo")
     Flowable<BaseResponse> updateUserName(
@@ -127,6 +130,7 @@ public interface ApiService {
             @Field("username") String username
     );
 
+    //更新性别
     @FormUrlEncoded
     @POST("api/Userinfo/setInfo")
     Flowable<BaseResponse> updateSex(
@@ -134,6 +138,7 @@ public interface ApiService {
             @Field("sex") int sex
     );
 
+    //更新公司
     @FormUrlEncoded
     @POST("api/Userinfo/setInfo")
     Flowable<BaseResponse> updateCompany(
@@ -141,6 +146,7 @@ public interface ApiService {
             @Field("company") String company
     );
 
+    //更新职位
     @FormUrlEncoded
     @POST("api/Userinfo/setInfo")
     Flowable<BaseResponse> updatePosition(
@@ -148,12 +154,14 @@ public interface ApiService {
             @Field("position") String position
     );
 
+    //更新城市
     @POST("api/Userinfo/setInfo")
     Flowable<BaseResponse> updateBusinessCity(
             @Query("user_id") int user_id,
             @Body BusinessAreaBean business_city
     );
 
+    //获取头像
     @FormUrlEncoded
     @POST("api/Userinfo/setInfo")
     Flowable<BaseResponse> updateAvatar(
@@ -161,6 +169,7 @@ public interface ApiService {
             @Field("avatar") String avatar
     );
 
+    //获取经验
     @FormUrlEncoded
     @POST("api/Userinfo/setInfo")
     Flowable<BaseResponse> updateExperience(
@@ -168,6 +177,7 @@ public interface ApiService {
             @Field("experience") int experience
     );
 
+    //获取产品
     @FormUrlEncoded
     @POST("api/Userinfo/setInfo")
     Flowable<BaseResponse> updateProduct(
@@ -175,6 +185,7 @@ public interface ApiService {
             @Field("managing_products") String managing_products
     );
 
+    //旧手机验证
     @FormUrlEncoded
     @POST("api/Userinfo/telUpdate")
     Flowable<BaseResponse> telUpdate(
@@ -185,6 +196,7 @@ public interface ApiService {
             @Field("old_code") String old_code
     );
 
+    //旧手机验证（邮箱）
     @FormUrlEncoded
     @POST("api/Userinfo/telCheck")
     Flowable<BaseResponse> telCheck(
@@ -192,12 +204,14 @@ public interface ApiService {
             @Field("code") String code
     );
 
+    //用户详情
     @FormUrlEncoded
     @POST("api/Userinfo/userInfo")
     Flowable<BaseResponse<UserInfoBean>> userInfo(
             @Field("user_id") int user_id
     );
 
+    //基本信息
     @FormUrlEncoded
     @POST("api/Userinfo/information")
     Flowable<BaseResponse<UserInfoBean>> information(
@@ -212,6 +226,7 @@ public interface ApiService {
             @Field("user_id") int user_id
     );
 
+    //上传附件
     @Multipart
     @POST("api/Upload/uploadImage")
     Flowable<BaseResponse<UploadBean>> upload(
@@ -219,12 +234,14 @@ public interface ApiService {
             @Part MultipartBody.Part file
     );
 
+    //获取省
     @FormUrlEncoded
     @POST("api/District/getProvince")
     Flowable<BaseListResponse<ProvinceBean>> getProvince(
             @Field("user_id") int user_id
     );
 
+    //获取市
     @FormUrlEncoded
     @POST("api/District/getCity")
     Flowable<BaseListResponse<CityBean>> getCity(
@@ -232,6 +249,7 @@ public interface ApiService {
             @Field("id") int id
     );
 
+    //工程地图列表
     @FormUrlEncoded
     @POST("api/Project/mapList")
     Flowable<BaseListResponse<MapBean>> mapList(
@@ -240,6 +258,7 @@ public interface ApiService {
             @Field("lat") double lat
     );
 
+    //工程信息列表
     @POST("api/Project/dataList")
     Flowable<BaseResponse<ProjectInfoBean>> projectList(
             @Query("user_id") int user_id,
@@ -250,6 +269,7 @@ public interface ApiService {
             @Query("page") int page
     );
 
+    //工程类型
     @FormUrlEncoded
     @POST("api/Project/getTypes")
     Flowable<BaseListResponse<TypeBean>> projectTypes(
@@ -257,18 +277,21 @@ public interface ApiService {
             @Field("id") int id
     );
 
+    //工程阶段
     @FormUrlEncoded
     @POST("api/Project/getPhases")
     Flowable<BaseListResponse<StageBean>> projectStage(
             @Field("user_id") int user_id
     );
 
+    //工程阶段
     @FormUrlEncoded
     @POST("api/Project/keywordHot")
     Flowable<BaseListResponse<String>> keywordHot(
             @Field("user_id") int user_id
     );
 
+    //搜索工程信息
     @FormUrlEncoded
     @POST("api/Project/keywordList")
     Flowable<BaseResponse<ProjectInfoBean>> searchProject(
@@ -277,6 +300,7 @@ public interface ApiService {
             @Field("page") int page
     );
 
+    //搜索招采信息
     @FormUrlEncoded
     @POST("api/Tenderer/keywordList")
     Flowable<BaseResponse<RecruitBean>> searchRecruit(
@@ -285,6 +309,7 @@ public interface ApiService {
             @Field("page") int page
     );
 
+    //工程信息详情
     @FormUrlEncoded
     @POST("api/Project/getDetail")
     Flowable<BaseResponse<ProjectDetailBean>> getDetail(
@@ -292,6 +317,7 @@ public interface ApiService {
             @Field("id") int id
     );
 
+    //工程动态列表
     @FormUrlEncoded
     @POST("api/Project/getTrack")
     Flowable<BaseResponse<TrackBean>> getTrack(
@@ -301,6 +327,7 @@ public interface ApiService {
             @Field("type") int type
     );
 
+    //工程信息已查看动态列表
     @FormUrlEncoded
     @POST("api/Project/viewTrack")
     Flowable<BaseResponse<TrackBean>> getViewTrack(
@@ -309,6 +336,7 @@ public interface ApiService {
             @Field("page") int page
     );
 
+    //工程信息消费列表
     @FormUrlEncoded
     @POST("api/Project/consumeList")
     Flowable<BaseResponse<ConsumeBean>> consumeList(
@@ -317,6 +345,7 @@ public interface ApiService {
             @Field("page") int page
     );
 
+    //工程信息收藏
     @FormUrlEncoded
     @POST("api/Project/setCollection")
     Flowable<BaseResponse> collect(
@@ -324,6 +353,7 @@ public interface ApiService {
             @Field("id") int id
     );
 
+    //工程信息取消收藏
     @FormUrlEncoded
     @POST("api/Project/cancelCollection")
     Flowable<BaseResponse> cancelCollection(
@@ -331,6 +361,7 @@ public interface ApiService {
             @Field("id") int id
     );
 
+    //工程信息纠错
     @FormUrlEncoded
     @POST("api/Project/correction")
     Flowable<BaseResponse> correction(
@@ -389,6 +420,7 @@ public interface ApiService {
             @Field("group_id") String group_id
     );
 
+    //我的工程列表
     @FormUrlEncoded
     @POST("api/Userinfo/myProject")
     Flowable<BaseResponse<ProjectMineBean>> myProject(
@@ -396,6 +428,7 @@ public interface ApiService {
             @Field("page") int page
     );
 
+    //我的工程动态列表
     @FormUrlEncoded
     @POST("api/Userinfo/myProjectTrack")
     Flowable<BaseResponse<LocusMineBean>> myProjectTrack(
@@ -403,6 +436,7 @@ public interface ApiService {
             @Field("page") int page
     );
 
+    //获取支付宝和微信的订单信息
     @FormUrlEncoded
     @POST("/api/Userinfo/recharge")
     Flowable<BaseResponse<PayInfoBean>> recharge(
@@ -411,12 +445,14 @@ public interface ApiService {
             @Field("type") int type
     );
 
+    //发布工程信息联系人类型选择
     @FormUrlEncoded
     @POST("api/Project/getPhoneType")
     Flowable<BaseListResponse<ContactTypeBean>> getContactType(
             @Field("user_id") int user_id
     );
 
+    //发布工程信息
     @POST("api/Project/addProject")
     Flowable<BaseResponse> addProject(
             @Query("user_id") int user_id,
@@ -437,6 +473,7 @@ public interface ApiService {
             @Body ContactListBean contact
     );
 
+    //发布工程动态信息
     @POST("api/Project/addTrack")
     Flowable<BaseResponse> addTrack(
             @Query("user_id") int user_id,
@@ -448,6 +485,7 @@ public interface ApiService {
             @Body AddTrackBean image_id
     );
 
+    //工程信息搜索
     @FormUrlEncoded
     @POST("api/Project/keywordTitle")
     Flowable<BaseResponse<ProjectSearchBean>> keywordTitle(
@@ -490,6 +528,7 @@ public interface ApiService {
             @Field("status") int status
     );
 
+    //工程推送阶段选项
     @FormUrlEncoded
     @POST("api/Userinfo/myPhases")
     Flowable<BaseListResponse<MyPhasesBean>> myPhases(
