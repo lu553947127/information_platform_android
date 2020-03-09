@@ -20,8 +20,6 @@ import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.dialog.BaseBottomSheetDialog;
-import com.shuangduan.zcy.dialog.BaseDialog;
-import com.shuangduan.zcy.dialog.CustomDialog;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.utils.PermissionUtils;
 import com.shuangduan.zcy.utils.image.CompressUtils;

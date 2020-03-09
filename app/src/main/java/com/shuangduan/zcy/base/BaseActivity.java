@@ -1,6 +1,5 @@
 package com.shuangduan.zcy.base;
 
-import android.app.Dialog;
 import android.os.Bundle;
 import android.util.SparseArray;
 import android.view.MotionEvent;
@@ -17,7 +16,6 @@ import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.Utils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.MyApplication;
-import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.LoadDialog;
 import com.shuangduan.zcy.factory.EmptyViewFactory;
 import com.shuangduan.zcy.model.api.PageState;
@@ -31,7 +29,6 @@ import org.greenrobot.eventbus.EventBus;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import cn.bingoogolapple.swipebacklayout.BGASwipeBackHelper;
 
 /**
  * <pre>

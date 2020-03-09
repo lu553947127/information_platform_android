@@ -17,6 +17,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
+import com.cjt2325.cameralibrary.util.LogUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
@@ -120,6 +121,7 @@ public class HomeFragment extends BaseFragment {
     private static int sColor;
     private static float sAlpha;
 
+
     public static HomeFragment newInstance() {
         Bundle args = new Bundle();
         HomeFragment fragment = new HomeFragment();
@@ -140,10 +142,12 @@ public class HomeFragment extends BaseFragment {
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState, View v) {
 
+        UpdateManager manager = UpdateManager.getInstance(getContext());
+
         homeVm = ViewModelProviders.of(this).get(HomeVm.class);
         homeNeedVm = ViewModelProviders.of(this).get(HomeNeedVm.class);
         demandRelationshipVm = ViewModelProviders.of(mActivity).get(DemandRelationshipVm.class);
-        UpdateManager manager = new UpdateManager(getActivity());
+
 
         getChangeLister();
 

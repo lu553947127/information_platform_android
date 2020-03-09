@@ -2,7 +2,9 @@ package com.zcy.framelibrary.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -293,6 +295,21 @@ public class AlertDialog extends AppCompatDialog {
             P.mTextResIdArray.put(viewId, resId);
             return this;
         }
+
+
+        public Builder setText(int viewId, CharSequence text,int colorId){
+            P.mTextArray.put(viewId, text);
+            P.mTextColorResIdArray.put(viewId,colorId);
+            return this;
+        }
+
+
+        public Builder setText(int viewId, CharSequence text,ColorStateList colorStateList){
+            P.mTextArray.put(viewId, text);
+            P.mTextColorStateListArray.put(viewId,colorStateList);
+            return this;
+        }
+
 
         /**
          * 设置显示的图片

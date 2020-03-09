@@ -1,6 +1,7 @@
 package com.zcy.framelibrary.dialog;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -56,6 +57,7 @@ public class DialogViewHelper {
     }
 
 
+
     /**
      * 资源文件赋值
      *
@@ -71,9 +73,26 @@ public class DialogViewHelper {
     }
 
 
+    public void setTextColor(int viewId, int resId) {
+        TextView tv = getView(viewId);
+        if (null != tv) {
+            tv.setTextColor(resId);
+        }
+    }
+
+    public void setTextColor(int viewId, ColorStateList colorStateList) {
+        TextView tv = getView(viewId);
+        if (null != tv) {
+            tv.setTextColor(colorStateList);
+        }
+    }
+
     public void setImage(int viewId, Integer resId) {
         ImageView iv = getView(viewId);
         if (null != iv) {
+            if (iv.getVisibility() != View.VISIBLE) {
+                iv.setVisibility(View.VISIBLE);
+            }
             iv.setImageResource(resId);
         }
     }
@@ -81,6 +100,9 @@ public class DialogViewHelper {
     public void setImage(int viewId, Drawable drawable) {
         ImageView iv = getView(viewId);
         if (null != iv) {
+            if (iv.getVisibility() != View.VISIBLE) {
+                iv.setVisibility(View.VISIBLE);
+            }
             iv.setImageDrawable(drawable);
         }
     }
