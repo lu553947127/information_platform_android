@@ -34,7 +34,7 @@ public class IncomeRepository extends BaseRepository {
     }
 
     /**
-     * 邀请好友列表
+     * 亲密好友列表
      */
     public void incomePeople(MutableLiveData<IncomePeopleBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, int page, int type){
         request(apiService.incomePeople(user_id, page, type)).setData(liveData).setPageState(pageStateLiveData).send();

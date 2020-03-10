@@ -535,24 +535,28 @@ public interface ApiService {
             @Field("user_id") int user_id
     );
 
+    //工程推送阶段提交
     @POST("api/Userinfo/setPhases")
     Flowable<BaseResponse> setPhases(
             @Query("user_id") int user_id,
             @Body SubBean id
     );
 
+    //浏览历史-工程信息
     @FormUrlEncoded
     @POST("api/Userinfo/historyProject")
     Flowable<BaseListResponse<ReadHistoryBean>> historyProject(
             @Field("user_id") int user_id
     );
 
+    //浏览历史-招采信息
     @FormUrlEncoded
     @POST("api/Userinfo/historyTenderer")
     Flowable<BaseListResponse<ReadHistoryBean>> historyTenderer(
             @Field("user_id") int user_id
     );
 
+    //意见反馈
     @FormUrlEncoded
     @POST("api/Userinfo/feedback")
     Flowable<BaseResponse> feedback(
@@ -560,6 +564,7 @@ public interface ApiService {
             @Field("content") String content
     );
 
+    //我的收藏-工程信息
     @FormUrlEncoded
     @POST("api/Userinfo/projectCollection")
     Flowable<BaseResponse<ProjectCollectBean>> projectCollection(
@@ -567,6 +572,7 @@ public interface ApiService {
             @Field("page") int page
     );
 
+    //我的收藏-招采信息
     @FormUrlEncoded
     @POST("api/Userinfo/tendererCollection")
     Flowable<BaseResponse<RecruitBean>> recruitCollection(
@@ -574,12 +580,14 @@ public interface ApiService {
             @Field("page") int page
     );
 
+    //实名认证检测
     @FormUrlEncoded
     @POST("api/Userinfo/authentication")
     Flowable<BaseResponse<AuthenBean>> authentication(
             @Field("user_id") int user_id
     );
 
+    //身份认证
     @FormUrlEncoded
     @POST("api/Userinfo/idcard")
     Flowable<BaseResponse> idcard(
@@ -588,12 +596,14 @@ public interface ApiService {
             @Field("image_reverse_site") String image_reverse_site
     );
 
+    //提现信息
     @FormUrlEncoded
     @POST("api/Userinfo/loading")
     Flowable<BaseResponse<WithdrawBean>> withdrawMsg(
             @Field("user_id") int user_id
     );
 
+    //提现记录
     @FormUrlEncoded
     @POST("api/Userinfo/record")
     Flowable<BaseResponse<WithdrawRecordBean>> withdrawRecord(
@@ -601,6 +611,7 @@ public interface ApiService {
             @Field("page") int page
     );
 
+    //提现详情
     @FormUrlEncoded
     @POST("api/Userinfo/detailsRecord")
     Flowable<BaseResponse<WithdrawRecordBean.ListBean>> withdrawRecordDetail(
@@ -608,6 +619,7 @@ public interface ApiService {
             @Field("id") int id
     );
 
+    //提现
     @FormUrlEncoded
     @POST("api/Userinfo/withdrawDeposit")
     Flowable<BaseResponse> withdraw(
@@ -616,12 +628,14 @@ public interface ApiService {
             @Field("price") String price
     );
 
+    //银行卡列表
     @FormUrlEncoded
     @POST("api/Bankcard/bankcardList")
     Flowable<BaseListResponse<BankCardBean>> bankcardList(
             @Field("user_id") int user_id
     );
 
+    //银行卡识别
     @FormUrlEncoded
     @POST("api/Bankcard/ibcard")
     Flowable<BaseResponse<BankCardDisBean>> bankcardDis(
@@ -629,6 +643,7 @@ public interface ApiService {
             @Field("image") String image
     );
 
+    //银行卡添加
     @FormUrlEncoded
     @POST("api/Bankcard/bankcardAdd")
     Flowable<BaseResponse> bankcardAdd(
@@ -637,6 +652,7 @@ public interface ApiService {
             @Field("opening_bank") String opening_bank
     );
 
+    //银行卡解绑
     @FormUrlEncoded
     @POST("api/Bankcard/bankCardDel")
     Flowable<BaseResponse> unbindBankcard(
@@ -644,12 +660,14 @@ public interface ApiService {
             @Field("bankcard_id") int bankcard_id
     );
 
+    //我的收益
     @FormUrlEncoded
     @POST("api/Profit/myProceeds")
     Flowable<BaseResponse<MineIncomeBean>> myProceeds(
             @Field("user_id") int user_id
     );
 
+    //发布信息收益
     @FormUrlEncoded
     @POST("api/Profit/publish")
     Flowable<BaseResponse<IncomeReleaseBean>> incomeRelease(
@@ -657,6 +675,7 @@ public interface ApiService {
             @Field("page") int page
     );
 
+    //亲密好友列表
     @FormUrlEncoded
     @POST("api/Profit/Floor")
     Flowable<BaseResponse<IncomePeopleBean>> incomePeople(
@@ -665,6 +684,7 @@ public interface ApiService {
             @Field("type") int type
     );
 
+    //信息认购收益
     @FormUrlEncoded
     @POST("api/Profit/subscribe")
     Flowable<BaseResponse<IncomeMsgBean>> incomeMsg(
@@ -672,6 +692,7 @@ public interface ApiService {
             @Field("page") int page
     );
 
+    //发布动态收益
     @FormUrlEncoded
     @POST("api/Profit/track")
     Flowable<BaseResponse<IncomeLocusBean>> incomeLocus(
@@ -679,6 +700,7 @@ public interface ApiService {
             @Field("page") int page
     );
 
+    //招采信息列表
     @FormUrlEncoded
     @POST("api/Tenderer/dataList")
     Flowable<BaseResponse<RecruitBean>> recruitList(
@@ -686,6 +708,7 @@ public interface ApiService {
             @Field("page") int page
     );
 
+    //招采信息详情
     @FormUrlEncoded
     @POST("api/Tenderer/getDetail")
     Flowable<BaseResponse<RecruitDetailBean>> recruitDetail(
@@ -693,6 +716,7 @@ public interface ApiService {
             @Field("id") int id
     );
 
+    //招采信息收藏
     @FormUrlEncoded
     @POST("api/Tenderer/setCollection")
     Flowable<BaseResponse> recruitCollect(
@@ -700,6 +724,7 @@ public interface ApiService {
             @Field("id") int id
     );
 
+    //招采信息取消收藏
     @FormUrlEncoded
     @POST("api/Tenderer/cancelCollection")
     Flowable<BaseResponse> recruitCancelCollect(
@@ -770,7 +795,7 @@ public interface ApiService {
             @Field("id") int id
     );
 
-
+    //基建物资-一级二级类别筛选
     @FormUrlEncoded
     @POST("api/Material/getCategory")
     Flowable<BaseListResponse<MaterialCategoryBean>> getCategory(
@@ -778,6 +803,7 @@ public interface ApiService {
             @Field("category_id") int category_id
     );
 
+    //优质供应商列表
     @FormUrlEncoded
     @POST("api/supplier/supplierList")
     Flowable<BaseResponse<SupplierBean>> supplierList(
@@ -786,6 +812,7 @@ public interface ApiService {
             @Field("page") int page
     );
 
+    //优质供应商详情
     @FormUrlEncoded
     @POST("api/supplier/supplierDetails")
     Flowable<BaseResponse<SupplierDetailBean>> supplierDetail(
@@ -793,6 +820,7 @@ public interface ApiService {
             @Field("id") int id
     );
 
+    //加入供应商
     @POST("api/supplier/supplierApply")
     Flowable<BaseResponse> supplierJoin(
             @Query("user_id") int user_id,
@@ -817,6 +845,7 @@ public interface ApiService {
             @Field("user_id") int user_id
     );
 
+    //工程信息订单
     @FormUrlEncoded
     @POST("api/Order/projectOrder")
     Flowable<BaseResponse<OrderListBean>> projectOrder(
@@ -824,6 +853,7 @@ public interface ApiService {
             @Field("page") int page
     );
 
+    //工程动态订单
     @FormUrlEncoded
     @POST("api/Order/trackOrder")
     Flowable<BaseResponse<OrderListBean>> locusOrder(
@@ -831,6 +861,7 @@ public interface ApiService {
             @Field("page") int page
     );
 
+    //招采信息订单
     @FormUrlEncoded
     @POST("api/Order/tendererOrder")
     Flowable<BaseResponse<OrderListBean>> recruitOrder(
@@ -838,6 +869,7 @@ public interface ApiService {
             @Field("page") int page
     );
 
+    //供应商订单
     @FormUrlEncoded
     @POST("api/Order/supplierOrder")
     Flowable<BaseResponse<OrderListBean>> supplierOrder(
@@ -845,6 +877,7 @@ public interface ApiService {
             @Field("page") int page
     );
 
+    //已认购订单
     @FormUrlEncoded
     @POST("api/Order/warrantOrder")
     Flowable<BaseResponse<OrderSubBean>> subOrder(
@@ -852,12 +885,14 @@ public interface ApiService {
             @Field("page") int page
     );
 
+    //充值列表
     @FormUrlEncoded
     @POST("api/Userinfo/rechargeLoading")
     Flowable<BaseResponse<RechargeShowBean>> rechargeShow(
             @Field("user_id") int user_id
     );
 
+    //充值结果
     @FormUrlEncoded
     @POST("/api/Pay/orderStatus")
     Flowable<BaseResponse<RechargeResultBean>> rechargeResult(
@@ -865,6 +900,7 @@ public interface ApiService {
             @Field("order_sn") String order_sn
     );
 
+    //充值记录列表
     @FormUrlEncoded
     @POST("api/Userinfo/rechargeRecord")
     Flowable<BaseResponse<RechargeRecordBean>> rechargeRecord(
@@ -872,6 +908,7 @@ public interface ApiService {
             @Field("page") int page
     );
 
+    //充值记录详情
     @FormUrlEncoded
     @POST("api/Userinfo/rechargeDetails")
     Flowable<BaseResponse<RechargeRecordDetailBean>> rechargeRecordDetail(
@@ -879,6 +916,7 @@ public interface ApiService {
             @Field("id") int id
     );
 
+    //设置支付密码
     @FormUrlEncoded
     @POST("api/Userinfo/coinPassword")
     Flowable<BaseResponse> setPwdPay(
@@ -888,6 +926,7 @@ public interface ApiService {
             @Field("code") String code
     );
 
+    //修改支付密码
     @FormUrlEncoded
     @POST("api/Userinfo/setCoinPassword")
     Flowable<BaseResponse> updatePwdPay(
@@ -896,6 +935,7 @@ public interface ApiService {
             @Field("password") String password
     );
 
+    //忘记支付密码
     @FormUrlEncoded
     @POST("api/Userinfo/forgetPassword")
     Flowable<BaseResponse> forgetPwdPay(
@@ -905,12 +945,14 @@ public interface ApiService {
             @Field("password") String password
     );
 
+    //验证支付密码
     @FormUrlEncoded
     @POST("api/Userinfo/coinPwdStatus")
     Flowable<BaseResponse<PwdPayStateBean>> pwdPayState(
             @Field("user_id") int user_id
     );
 
+    //亲密好友详情
     @FormUrlEncoded
     @POST("api/Profit/details")
     Flowable<BaseResponse<PeopleDetailBean>> peopleDetail(
@@ -926,6 +968,7 @@ public interface ApiService {
             @Field("type") int type
     );
 
+    //邀请好友收益记录列表
     @FormUrlEncoded
     @POST("api/Profit/record")
     Flowable<BaseResponse<IncomeRecordBean>> incomeRecord(
@@ -934,6 +977,7 @@ public interface ApiService {
             @Field("page") int page
     );
 
+    //支付概况
     @FormUrlEncoded
     @POST("api/Project/payDetail")
     Flowable<BaseResponse<CoinPayResultBean>> payProjectContent(
@@ -942,6 +986,7 @@ public interface ApiService {
             @Field("coin_password") String coin_password
     );
 
+    //支付动态
     @FormUrlEncoded
     @POST("api/Project/payTrack")
     Flowable<BaseResponse<CoinPayResultBean>> payLocus(
@@ -950,6 +995,7 @@ public interface ApiService {
             @Field("coin_password") String coin_password
     );
 
+    //支付供应商
     @FormUrlEncoded
     @POST("api/Supplier/payDetail")
     Flowable<BaseResponse<CoinPayResultBean>> paySupplier(
@@ -958,6 +1004,7 @@ public interface ApiService {
             @Field("coin_password") String coin_password
     );
 
+    //支付招采信息
     @FormUrlEncoded
     @POST("api/Tenderer/payDetail")
     Flowable<BaseResponse<CoinPayResultBean>> payRecruit(
@@ -966,6 +1013,7 @@ public interface ApiService {
             @Field("coin_password") String coin_password
     );
 
+    //支付找物资
     @FormUrlEncoded
     @POST("api/Relation/payMaterial")
     Flowable<BaseResponse<CoinPayResultBean>> payFindSubstance(
@@ -974,6 +1022,7 @@ public interface ApiService {
             @Field("coin_password") String coin_password
     );
 
+    //支付找买家
     @FormUrlEncoded
     @POST("api/Relation/payBuyer")
     Flowable<BaseResponse<CoinPayResultBean>> payFindBuyer(
@@ -982,6 +1031,7 @@ public interface ApiService {
             @Field("coin_password") String coin_password
     );
 
+    //支付找资源佣金
     @FormUrlEncoded
     @POST("api/Relation/pay")
     Flowable<BaseResponse<CoinPayResultBean>> payRelationshipRelease(
@@ -990,6 +1040,7 @@ public interface ApiService {
             @Field("coin_password") String coin_password
     );
 
+    //支付工程信息认购
     @FormUrlEncoded
     @POST("api/Project/payWarrant")
     Flowable<BaseResponse<CoinPayResultBean>> payWarrant(
@@ -999,18 +1050,21 @@ public interface ApiService {
             @Field("coin_password") String coin_password
     );
 
+    //首页快讯标题
     @FormUrlEncoded
     @POST("api/index/profitPaper")
     Flowable<BaseListResponse<HomePushBean>> homePush(
             @Field("user_id") int user_id
     );
 
+    //首页轮播图列表
     @FormUrlEncoded
     @POST("api/index/banner")
     Flowable<BaseListResponse<HomeBannerBean>> homeBanner(
             @Field("user_id") int user_id
     );
 
+    //首页基建头条+收益说明列表
     @FormUrlEncoded
     @POST("api/index/explain")
     Flowable<BaseResponse<HomeListBean>> homeList(
@@ -1031,6 +1085,7 @@ public interface ApiService {
             @Field("user_id") int user_id
     );
 
+    //基建头条列表
     @FormUrlEncoded
     @POST("api/Headline/dataList")
     Flowable<BaseResponse<HeadlinesBean>> headlines(
@@ -1039,6 +1094,7 @@ public interface ApiService {
             @Field("page") int page
     );
 
+    //基建头条详情
     @FormUrlEncoded
     @POST("api/Headline/getDetail")
     Flowable<BaseResponse<HeadlinesDetailBean>> headlinesDetail(
@@ -1053,6 +1109,7 @@ public interface ApiService {
             @Field("user_id") int user_id
     );
 
+    //收益说明详情
     @FormUrlEncoded
     @POST("api/index/details")
     Flowable<BaseResponse<ExplainDetailBean>> explainDetail(
@@ -1060,6 +1117,7 @@ public interface ApiService {
             @Field("id") int id
     );
 
+    //交易记录
     @POST("api/Userinfo/cashFlow")
     Flowable<BaseResponse<TransRecordBean>> transactionRecord(
             @Query("user_id") int user_id,
@@ -1068,6 +1126,7 @@ public interface ApiService {
             @Body TransactionFlowTypeBean flow_type
     );
 
+    //交易记录详情
     @FormUrlEncoded
     @POST("/api/Userinfo/cashFlowDetails")
     Flowable<BaseResponse<TransRecordDetailBean>> transRecordDetail(
@@ -1075,12 +1134,14 @@ public interface ApiService {
             @Field("id") int id
     );
 
+    //交易记录类型
     @FormUrlEncoded
     @POST("api/Userinfo/cashSearch")
     Flowable<BaseResponse<TransRecordFilterBean>> transRecordFilter(
             @Field("user_id") int user_id
     );
 
+    //发布找资源
     @FormUrlEncoded
     @POST("api/Relation/add")
     Flowable<BaseResponse<DemandReleaseBean>> demandRelationshipRelease(
@@ -1092,6 +1153,7 @@ public interface ApiService {
             @Field("price") String price
     );
 
+    //发布找物资
     @FormUrlEncoded
     @POST("api/Relation/materialAdd")
     Flowable<BaseResponse<DemandReleaseBean>> demandSubstanceRelease(
@@ -1109,6 +1171,7 @@ public interface ApiService {
             @Field("remark") String remark
     );
 
+    //发布找买家
     @FormUrlEncoded
     @POST("api/Relation/buyerAdd")
     Flowable<BaseResponse<DemandReleaseBean>> demandBuyerRelease(
@@ -1125,7 +1188,6 @@ public interface ApiService {
             @Field("unit") int supply_num,
             @Field("remark") String remark
     );
-
 
     //发布找方案
     @FormUrlEncoded
@@ -1253,7 +1315,7 @@ public interface ApiService {
             @Field("id") int id
     );
 
-
+    //找资源支付订单
     @FormUrlEncoded
     @POST("api/Relation/waitPay")
     Flowable<BaseResponse<RelationshipOrderBean>> relationshipReleaseOrder(
@@ -1268,6 +1330,7 @@ public interface ApiService {
             @Field("user_id") int user_id
     );
 
+    //找资源列表
     @FormUrlEncoded
     @POST("api/Relation/relationList")
     Flowable<BaseResponse<DemandRelationshipBean>> demandRelationship(
@@ -1299,7 +1362,7 @@ public interface ApiService {
             @Field("id") int id
     );
 
-
+    //找资源 我接单的 列表
     @FormUrlEncoded
     @POST("api/Relation/index")
     Flowable<BaseResponse<DemandRelationshipBean>> demandRelationshipAccept(
@@ -1307,6 +1370,7 @@ public interface ApiService {
             @Field("page") int page
     );
 
+    //找资源 我发布的 列表
     @FormUrlEncoded
     @POST("api/Relation/myRelationList")
     Flowable<BaseResponse<DemandRelationshipBean>> demandRelationshipRelease(
@@ -1314,6 +1378,7 @@ public interface ApiService {
             @Field("page") int page
     );
 
+    //找物资列表
     @FormUrlEncoded
     @POST("api/Relation/materialList")
     Flowable<BaseResponse<DemandSubstanceBean>> demandSubstance(
@@ -1322,6 +1387,7 @@ public interface ApiService {
             @Field("is_my") int is_my
     );
 
+    //找买家列表
     @FormUrlEncoded
     @POST("api/Relation/buyerList")
     Flowable<BaseResponse<DemandBuyerBean>> demandBuyer(
@@ -1330,6 +1396,7 @@ public interface ApiService {
             @Field("is_my") int is_my
     );
 
+    //找资源 提供信息
     @FormUrlEncoded
     @POST("api/Relation/orderTaking")
     Flowable<BaseResponse> orderTaking(
@@ -1340,6 +1407,7 @@ public interface ApiService {
             @Field("intro") String intro
     );
 
+    //找资源详情
     @FormUrlEncoded
     @POST("api/Relation/details")
     Flowable<BaseResponse<RelationshipDetailBean>> relationshipDetail(
@@ -1347,6 +1415,7 @@ public interface ApiService {
             @Field("id") int id
     );
 
+    //找物资详情
     @FormUrlEncoded
     @POST("api/Relation/materialDetail")
     Flowable<BaseResponse<SubstanceDetailBean>> substanceDetail(
@@ -1354,6 +1423,7 @@ public interface ApiService {
             @Field("id") int id
     );
 
+    //找买家详情
     @FormUrlEncoded
     @POST("api/Relation/buyerDetail")
     Flowable<BaseResponse<BuyerDetailBean>> buyerDetail(
@@ -1361,6 +1431,7 @@ public interface ApiService {
             @Field("id") int id
     );
 
+    //我的需求，找资源，我发布的详情
     @FormUrlEncoded
     @POST("api/Relation/myDetails")
     Flowable<BaseResponse<FindRelationshipReleaseBean>> mineReleaseRelationshipDetail(
@@ -1368,6 +1439,7 @@ public interface ApiService {
             @Field("id") int id
     );
 
+    //我的需求，找资源， 我接单的详情
     @FormUrlEncoded
     @POST("api/Relation/detail")
     Flowable<BaseResponse<FindRelationshipAcceptBean>> mineAcceptRelationshipDetail(
@@ -1375,6 +1447,7 @@ public interface ApiService {
             @Field("relationships_reply_id") int relationships_reply_id
     );
 
+    //认购信息展示
     @FormUrlEncoded
     @POST("api/Project/startWarrant")
     Flowable<BaseResponse<ProjectSubFirstBean>> startWarrant(
@@ -1382,6 +1455,7 @@ public interface ApiService {
             @Field("id") int id
     );
 
+    //认购信息确认
     @FormUrlEncoded
     @POST("api/Project/confirmWarrant")
     Flowable<BaseResponse<ProjectSubConfirmBean>> confirmWarrant(
@@ -1391,6 +1465,7 @@ public interface ApiService {
             @Field("order_sn") String order_sn
     );
 
+    //已认购信息展示
     @FormUrlEncoded
     @POST("api/Project/viewWarrant")
     Flowable<BaseResponse<ProjectSubViewBean>> viewWarrant(
@@ -1398,6 +1473,7 @@ public interface ApiService {
             @Field("id") int id
     );
 
+    //融云获取token
     @FormUrlEncoded
     @POST("api/WeChat/getToken")
     Flowable<BaseResponse<IMTokenBean>> getIMToken(
@@ -1549,6 +1625,7 @@ public interface ApiService {
             @Field("method") int method
     );
 
+    //获取存放地列表
     @POST("api/Material/addressList")
     Flowable<BaseResponse<List<MaterialDepositingPlaceBean>>> addressList(
             @Query("user_id") int user_id,

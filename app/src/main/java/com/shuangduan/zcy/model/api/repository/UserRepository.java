@@ -181,7 +181,7 @@ public class UserRepository extends BaseRepository {
     }
 
     /**
-     * 我的收藏-工程信息
+     * 我的收藏-招采信息
      */
     public void recruitCollection(MutableLiveData<RecruitBean> liveData, MutableLiveData<String> pageStateLiveData, int user_id, int page) {
         request(apiService.recruitCollection(user_id, page)).setData(liveData).setPageState(pageStateLiveData).send();

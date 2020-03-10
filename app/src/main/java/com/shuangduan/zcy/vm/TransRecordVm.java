@@ -1,6 +1,5 @@
 package com.shuangduan.zcy.vm;
 
-import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
@@ -15,7 +14,6 @@ import com.shuangduan.zcy.model.bean.TransRecordDetailBean;
 import com.shuangduan.zcy.model.bean.TransRecordFilterBean;
 import com.shuangduan.zcy.model.bean.TransactionFlowTypeBean;
 
-import java.util.List;
 
 /**
  * @author 徐玉 QQ:876885613

@@ -52,7 +52,7 @@ public class IncomePeopleVm extends BaseViewModel {
     }
 
     /**
-     * 邀请好友列表
+     * 亲密好友列表
      */
     public void getData(){
         page = 1;
