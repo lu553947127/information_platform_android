@@ -35,8 +35,8 @@ public class BankCardDialogAdapter extends BaseQuickAdapter<BankCardBean, BaseVi
         ImageLoader.load(mContext, new ImageConfig.Builder()
                 .url(item.getIcon())
                 .imageView(ivIcon)
-                .placeholder(R.drawable.default_pic)
-                .errorPic(R.drawable.default_pic)
+                .placeholder(R.drawable.wuzhi_default)
+                .errorPic(R.drawable.wuzhi_default)
                 .build());
     }
 }

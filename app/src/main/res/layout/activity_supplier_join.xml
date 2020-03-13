@@ -513,7 +513,7 @@
                         android:layout_height="55dp"
                         android:layout_marginTop="16dp"
                         android:scaleType="fitXY"
-                        android:src="@drawable/default_pic" />
+                        android:src="@drawable/wuzhi_default" />
 
                     <TextView
                         android:id="@+id/tv_authorization"
@@ -568,7 +568,7 @@
                         android:layout_height="55dp"
                         android:layout_marginTop="16dp"
                         android:scaleType="fitXY"
-                        android:src="@drawable/default_pic" />
+                        android:src="@drawable/wuzhi_default" />
 
                     <TextView
                         android:id="@+id/tv_logo"

@@ -8,7 +8,7 @@
         android:layout_width="55dp"
         android:layout_height="55dp"
         android:layout_centerInParent="true"
-        android:src="@drawable/default_pic"/>
+        android:src="@drawable/wuzhi_default"/>
 
     <ImageView
         android:id="@+id/iv_delete"

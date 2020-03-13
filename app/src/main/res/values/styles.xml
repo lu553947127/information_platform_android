@@ -11,6 +11,8 @@
         <!--（第一级页面不让Activity透明）解决右滑退出黑屏问题,但是并不适用所有系统-->
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowSoftInputMode">stateHidden|adjustPan</item>
+        <!-- 自动适配 Android 10 Force Dark（暗黑模式）-->
+<!--        <item name="android:forceDarkAllowed">true</item>-->
     </style>
 
     <!--Activity进场/出场动画-->

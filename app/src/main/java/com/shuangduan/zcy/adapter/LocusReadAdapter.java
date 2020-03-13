@@ -67,15 +67,15 @@ public class LocusReadAdapter extends BaseQuickAdapter<TrackBean.ListBean, BaseV
         if (item.getImage() != null) {
             if (item.getImage().size() >= 1) {
                 ImageView ivFirst = helper.getView(R.id.iv_pic_first);
-                ImageLoader.load(mContext, new ImageConfig.Builder().url(item.getImage().get(0).getThumbnail()).placeholder(R.drawable.default_pic).errorPic(R.drawable.default_pic).imageView(ivFirst).build());
+                ImageLoader.load(mContext, new ImageConfig.Builder().url(item.getImage().get(0).getThumbnail()).placeholder(R.drawable.wuzhi_default).errorPic(R.drawable.wuzhi_default).imageView(ivFirst).build());
             }
             if (item.getImage().size() >= 2) {
                 ImageView ivFirst = helper.getView(R.id.iv_pic_second);
-                ImageLoader.load(mContext, new ImageConfig.Builder().url(item.getImage().get(1).getThumbnail()).placeholder(R.drawable.default_pic).errorPic(R.drawable.default_pic).imageView(ivFirst).build());
+                ImageLoader.load(mContext, new ImageConfig.Builder().url(item.getImage().get(1).getThumbnail()).placeholder(R.drawable.wuzhi_default).errorPic(R.drawable.wuzhi_default).imageView(ivFirst).build());
             }
             if (item.getImage().size() >= 3) {
                 ImageView ivFirst = helper.getView(R.id.iv_pic_third);
-                ImageLoader.load(mContext, new ImageConfig.Builder().url(item.getImage().get(2).getThumbnail()).placeholder(R.drawable.default_pic).errorPic(R.drawable.default_pic).imageView(ivFirst).build());
+                ImageLoader.load(mContext, new ImageConfig.Builder().url(item.getImage().get(2).getThumbnail()).placeholder(R.drawable.wuzhi_default).errorPic(R.drawable.wuzhi_default).imageView(ivFirst).build());
             }
         }
 

@@ -168,7 +168,7 @@ public class RichText extends AppCompatTextView {
                 throw new NullPointerException("没有注入Glide.with(context)");
             }
             glideRm.asBitmap()
-                    .apply(new RequestOptions().placeholder(R.drawable.default_pic))
+                    .apply(new RequestOptions().placeholder(R.drawable.wuzhi_default))
                     .load(source).into(new SimpleTarget<Bitmap>() {
                 @Override
                 public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {

@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.cjt2325.cameralibrary.util.LogUtil;
 import com.king.app.updater.AppUpdater;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.model.bean.VersionUpgradesBean;
@@ -26,14 +25,11 @@ import com.shuangduan.zcy.model.bean.VersionUpgradesBean;
  * @UpdateRemark: 更新说明
  * @Version: 1.0
  */
-@SuppressLint({"CutPasteId", "InflateParams", "SetTextI18n"})
+@SuppressLint({"CutPasteId", "InflateParams", "SetTextI18n","StaticFieldLeak"})
 public class UpdateManager {
     private Context mContext;
     private Dialog dialog;
-
     private static UpdateManager sManager;
-
-
 
     public static UpdateManager getInstance(Context context) {
         if (null == sManager) {
@@ -46,12 +42,10 @@ public class UpdateManager {
         return sManager;
     }
 
-
     private UpdateManager(Context context) {
         this.mContext = context;
         dialog = new Dialog(context, R.style.custom_dialog);
     }
-
 
     // 显示软件更新对话框
     public void showNoticeDialog(VersionUpgradesBean versionBean) {
@@ -74,6 +68,4 @@ public class UpdateManager {
         dialog.setContentView(view, new ViewGroup.MarginLayoutParams(displayMetrics.widthPixels, ViewGroup.MarginLayoutParams.MATCH_PARENT));
         dialog.show();
     }
-
-
 }

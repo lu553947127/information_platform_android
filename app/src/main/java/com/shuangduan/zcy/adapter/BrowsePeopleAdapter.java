@@ -52,8 +52,8 @@ public class BrowsePeopleAdapter extends BaseQuickAdapter<MaterialDetailBean.Use
             ImageLoader.load(mContext, new ImageConfig.Builder()
                     .url(item.getImage())
                     .imageView(ivIcon)
-                    .placeholder(R.drawable.default_pic)
-                    .errorPic(R.drawable.default_pic)
+                    .placeholder(R.drawable.default_head)
+                    .errorPic(R.drawable.default_head)
                     .build());
         }else if (helper.getPosition()==5){
             ivIcon.setVisibility(View.GONE);

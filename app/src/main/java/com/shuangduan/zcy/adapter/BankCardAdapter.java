@@ -33,8 +33,8 @@ public class BankCardAdapter extends BaseQuickAdapter<BankCardBean, BaseViewHold
         ImageView ivIcon = helper.getView(R.id.iv_icon);
         ImageLoader.load(mContext, new ImageConfig.Builder()
                 .url(item.getIcon())
-                .placeholder(R.drawable.default_pic)
-                .errorPic(R.drawable.default_pic)
+                .placeholder(R.drawable.wuzhi_default)
+                .errorPic(R.drawable.wuzhi_default)
                 .imageView(ivIcon)
                 .build());
         CornerImageView ivBg = helper.getView(R.id.iv_bg);

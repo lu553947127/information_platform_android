@@ -36,8 +36,8 @@ public class HeadlinesListAdapter extends BaseQuickAdapter<HeadlinesBean.ListBea
         ImageView ivIcon = helper.getView(R.id.iv_icon);
         ImageLoader.load(mContext, new ImageConfig.Builder()
                 .url(item.getImage())
-                .placeholder(R.drawable.default_pic)
-                .errorPic(R.drawable.default_pic)
+                .placeholder(R.drawable.wuzhi_default)
+                .errorPic(R.drawable.wuzhi_default)
                 .imageView(ivIcon)
                 .build());
     }

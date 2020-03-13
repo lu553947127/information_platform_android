@@ -61,15 +61,15 @@ public class SupplierAdapter extends BaseQuickAdapter<SupplierBean.ListBean, Bas
         if (item.getImages_json() != null){
             if (item.getImages_json().size() >= 1){
                 ImageView ivFirst = helper.getView(R.id.iv_pic_first);
-                ImageLoader.load(mContext, new ImageConfig.Builder().url(item.getImages_json().get(0).getThumbnail()).placeholder(R.drawable.default_pic).errorPic(R.drawable.default_pic).imageView(ivFirst).build());
+                ImageLoader.load(mContext, new ImageConfig.Builder().url(item.getImages_json().get(0).getThumbnail()).placeholder(R.drawable.wuzhi_default).errorPic(R.drawable.wuzhi_default).imageView(ivFirst).build());
             }
             if (item.getImages_json().size() >= 2){
                 ImageView ivFirst = helper.getView(R.id.iv_pic_second);
-                ImageLoader.load(mContext, new ImageConfig.Builder().url(item.getImages_json().get(1).getThumbnail()).placeholder(R.drawable.default_pic).errorPic(R.drawable.default_pic).imageView(ivFirst).build());
+                ImageLoader.load(mContext, new ImageConfig.Builder().url(item.getImages_json().get(1).getThumbnail()).placeholder(R.drawable.wuzhi_default).errorPic(R.drawable.wuzhi_default).imageView(ivFirst).build());
             }
             if (item.getImages_json().size() >= 3){
                 ImageView ivFirst = helper.getView(R.id.iv_pic_third);
-                ImageLoader.load(mContext, new ImageConfig.Builder().url(item.getImages_json().get(2).getThumbnail()).placeholder(R.drawable.default_pic).errorPic(R.drawable.default_pic).imageView(ivFirst).build());
+                ImageLoader.load(mContext, new ImageConfig.Builder().url(item.getImages_json().get(2).getThumbnail()).placeholder(R.drawable.wuzhi_default).errorPic(R.drawable.wuzhi_default).imageView(ivFirst).build());
             }
         }
 
