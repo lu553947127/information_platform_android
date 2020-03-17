@@ -165,7 +165,7 @@ public class PicContentView extends RecyclerView {
                     holder.ivPic.setScaleType(ImageView.ScaleType.CENTER_CROP);
                     holder.ivDelete.setVisibility(VISIBLE);
                 }else {
-                    holder.ivPic.setImageResource(R.drawable.wuzhi_default);
+                    holder.ivPic.setImageResource(R.drawable.default_pic);
                     holder.ivPic.setScaleType(ImageView.ScaleType.CENTER);
                     holder.ivDelete.setVisibility(GONE);
                 }
