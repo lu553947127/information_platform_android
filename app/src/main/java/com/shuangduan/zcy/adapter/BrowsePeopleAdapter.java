@@ -48,17 +48,22 @@ public class BrowsePeopleAdapter extends BaseQuickAdapter<MaterialDetailBean.Use
             frameLayout.setLayoutParams(layoutParams);
         }
 
-        if (helper.getPosition()<5){
-            ImageLoader.load(mContext, new ImageConfig.Builder()
-                    .url(item.getImage())
-                    .imageView(ivIcon)
-                    .placeholder(R.drawable.default_head)
-                    .errorPic(R.drawable.default_head)
-                    .build());
-        }else if (helper.getPosition()==5){
-            ivIcon.setVisibility(View.GONE);
-            tv_number.setVisibility(View.VISIBLE);
-            tv_number.setText(count);
+        if (item!=null){
+            if (helper.getPosition()<5){
+                ImageLoader.load(mContext, new ImageConfig.Builder()
+                        .url(item.getImage())
+                        .imageView(ivIcon)
+                        .placeholder(R.drawable.default_head)
+                        .errorPic(R.drawable.default_head)
+                        .build());
+            }else if (helper.getPosition()==5){
+                ivIcon.setVisibility(View.GONE);
+                tv_number.setVisibility(View.VISIBLE);
+                tv_number.setText(count);
+            }else {
+                ivIcon.setVisibility(View.GONE);
+                tv_number.setVisibility(View.GONE);
+            }
         }else {
             ivIcon.setVisibility(View.GONE);
             tv_number.setVisibility(View.GONE);
