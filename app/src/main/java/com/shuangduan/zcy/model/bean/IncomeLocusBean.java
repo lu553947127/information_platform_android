@@ -48,11 +48,20 @@ public class IncomeLocusBean {
     }
 
     public static class ListBean{
+        private int id;
         private int type_id;
         private int user_id;
         private String price;
         private String create_time;
         private String title;
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
 
         public String getPrice() {
             return price;

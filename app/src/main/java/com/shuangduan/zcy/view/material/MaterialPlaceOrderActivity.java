@@ -410,6 +410,10 @@ public class MaterialPlaceOrderActivity extends BaseActivity {
                 ToastUtils.showShort(getString(R.string.no_mun));
                 return;
             }
+            if(!KeyboardUtil.isDouble(xEditText.getText().toString())&&!KeyboardUtil.isInteger(xEditText.getText().toString())){
+                ToastUtils.showShort("数量输入格式不正确");
+                return;
+            }
             if (Double.valueOf(xEditText.getText().toString()) == 0) {
                 ToastUtils.showShort("数量不能为0");
                 return;

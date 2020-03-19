@@ -21,6 +21,8 @@ import com.shuangduan.zcy.adapter.IncomeLocusAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.factory.EmptyViewFactory;
+import com.shuangduan.zcy.model.bean.IncomeLocusBean;
+import com.shuangduan.zcy.view.mine.wallet.TransRecordDetailActivity;
 import com.shuangduan.zcy.view.release.ReleaseProjectActivity;
 import com.shuangduan.zcy.vm.IncomeLocusVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
@@ -73,6 +75,12 @@ public class IncomeLocusActivity extends BaseActivity implements EmptyViewFactor
         IncomeLocusAdapter adapter = new IncomeLocusAdapter(R.layout.item_income_release, null);
         adapter.setEmptyView(R.layout.layout_loading, rv);
         rv.setAdapter(adapter);
+        adapter.setOnItemClickListener((adapter1, view, position) -> {
+            IncomeLocusBean.ListBean dataBean = adapter.getData().get(position);
+            Bundle bundle = new Bundle();
+            bundle.putInt(CustomConfig.TRANS_RECORD_ID, dataBean.getId());
+            ActivityUtils.startActivity(bundle, TransRecordDetailActivity.class);
+        });
 
         incomeReleaseVm.liveData.observe(this, incomeLocusBean -> {
             if (incomeLocusBean.getPage() == 1) {
