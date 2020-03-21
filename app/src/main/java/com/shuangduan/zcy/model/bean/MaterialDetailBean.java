@@ -279,9 +279,13 @@ public class MaterialDetailBean {
         }
     }
 
-    public class User {
+    public static class User {
         private int id;
         private String image;
+
+        public User(int id) {
+            this.id = id;
+        }
 
         public int getId() {
             return id;

@@ -123,6 +123,7 @@ public class MaterialEquipmentDetailActivity extends BaseActivity {
     private MaterialDetailBean materialDetailBean;
     private List<IMFriendListBean.ListBean> imFriendList;
     private ShareBean.DataBean shareBean;
+    private List<MaterialDetailBean.User> userList;
 
     @Override
     protected int initLayoutRes() {
@@ -206,10 +207,14 @@ public class MaterialEquipmentDetailActivity extends BaseActivity {
 
             //设置浏览人数
             if (materialDetailBean.getUser() != null && materialDetailBean.getUser().size() != 0) {
+                //添加浏览人数最好计数框
+                userList = materialDetailBean.getUser();
+                userList.add(new MaterialDetailBean.User(10000));
+
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
                 linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
                 rvBrowse.setLayoutManager(linearLayoutManager);
-                BrowsePeopleAdapter adapter = new BrowsePeopleAdapter(R.layout.adapter_browse_people, materialDetailBean.getUser(), materialDetailBean.getBrowseCount());
+                BrowsePeopleAdapter adapter = new BrowsePeopleAdapter(R.layout.adapter_browse_people, userList, materialDetailBean.getBrowseCount());
                 rvBrowse.setAdapter(adapter);
             } else {
                 rvBrowse.setVisibility(View.GONE);

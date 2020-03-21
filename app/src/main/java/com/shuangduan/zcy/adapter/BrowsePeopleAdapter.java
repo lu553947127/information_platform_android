@@ -1,5 +1,6 @@
 package com.shuangduan.zcy.adapter;
 
+import android.annotation.SuppressLint;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -36,6 +37,7 @@ public class BrowsePeopleAdapter extends BaseQuickAdapter<MaterialDetailBean.Use
         this.count=count;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void convert(BaseViewHolder helper, MaterialDetailBean.User item) {
         TextView tv_number = helper.getView(R.id.tv_number);
@@ -49,20 +51,24 @@ public class BrowsePeopleAdapter extends BaseQuickAdapter<MaterialDetailBean.Use
         }
 
         if (item!=null){
-            if (helper.getPosition()<5){
+            //判断是否为计数框
+            if (item.getId()==10000){
+                ivIcon.setVisibility(View.GONE);
+                tv_number.setVisibility(View.VISIBLE);
+                if (count>99){
+                    tv_number.setText("99+");
+                }else {
+                    tv_number.setText(String.valueOf(count));
+                }
+            }else {
+                ivIcon.setVisibility(View.VISIBLE);
+                tv_number.setVisibility(View.GONE);
                 ImageLoader.load(mContext, new ImageConfig.Builder()
                         .url(item.getImage())
                         .imageView(ivIcon)
                         .placeholder(R.drawable.default_head)
                         .errorPic(R.drawable.default_head)
                         .build());
-            }else if (helper.getPosition()==5){
-                ivIcon.setVisibility(View.GONE);
-                tv_number.setVisibility(View.VISIBLE);
-                tv_number.setText(count);
-            }else {
-                ivIcon.setVisibility(View.GONE);
-                tv_number.setVisibility(View.GONE);
             }
         }else {
             ivIcon.setVisibility(View.GONE);
