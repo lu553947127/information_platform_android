@@ -25,15 +25,17 @@ import java.util.List;
 import io.rong.imkit.RongIM;
 
 /**
- * <pre>
- *     author : 徐玉
- *     e-mail : ningwenqiang@lanhuiplay.com
- *     time   : 2018/09/01
- *     desc   : 检测是否登录
- *     version: 1.0
- * </pre>
+ * @ProjectName: information_platform_android
+ * @Package: com.shuangduan.zcy.view.login
+ * @ClassName: LoginUtils
+ * @Description: 登录相关检测工具类
+ * @Author: 鹿鸿祥
+ * @CreateDate: 2020/03/21 13:36
+ * @UpdateUser: 鹿鸿祥
+ * @UpdateDate: 2020/03/21 13:36
+ * @UpdateRemark: 更新说明
+ * @Version: 1.0
  */
-
 public class LoginUtils {
 
     /**

@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/BaseLibrary/BaseLibrary.iml" filepath="$PROJECT_DIR$/BaseLibrary/BaseLibrary.iml" />
-      <module fileurl="file://$PROJECT_DIR$/FrameLibrary/FrameLibrary.iml" filepath="$PROJECT_DIR$/FrameLibrary/FrameLibrary.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/information_platform_android.iml" filepath="$PROJECT_DIR$/information_platform_android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BaseLibrary/BaseLibrary.iml" filepath="$PROJECT_DIR$/BaseLibrary/BaseLibrary.iml" group="information_platform_android/BaseLibrary" />
+      <module fileurl="file://$PROJECT_DIR$/FrameLibrary/FrameLibrary.iml" filepath="$PROJECT_DIR$/FrameLibrary/FrameLibrary.iml" group="information_platform_android/FrameLibrary" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="information_platform_android/app" />
+      <module fileurl="file://$PROJECT_DIR$/information_platform_android.iml" filepath="$PROJECT_DIR$/information_platform_android.iml" group="information_platform_android" />
     </modules>
   </component>
 </project>

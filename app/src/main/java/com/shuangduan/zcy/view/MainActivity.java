@@ -367,6 +367,7 @@ public class MainActivity extends BaseActivity {
         String statueCar = intent.getStringExtra("statueCar");
         if (!TextUtils.isEmpty(statueCar)) {
             viewPager.setCurrentItem(2);
+            navigation.getMenu().getItem(3).setChecked(true);
         }
     }
 

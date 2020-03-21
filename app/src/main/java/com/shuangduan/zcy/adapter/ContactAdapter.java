@@ -2,6 +2,7 @@ package com.shuangduan.zcy.adapter;
 
 import androidx.annotation.Nullable;
 
+import com.blankj.utilcode.util.StringUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.shuangduan.zcy.R;
@@ -32,7 +33,7 @@ public class ContactAdapter extends BaseQuickAdapter<ProjectDetailBean.ContactBe
     @Override
     protected void convert(BaseViewHolder helper, ProjectDetailBean.ContactBean item) {
         helper.setText(R.id.tv_principal, String.format(mContext.getResources().getString(R.string.format_principal), item.getName()))
-                .setText(R.id.tv_unit, String.format(mContext.getResources().getString(R.string.format_unit), item.getCompany()))
+                .setText(R.id.tv_unit, String.format(mContext.getResources().getString(R.string.format_unit), StringUtils.isTrimEmpty(item.getCompany()) ? "暂无" : item.getCompany()))
                 .setText(R.id.tv_type, String.format(mContext.getResources().getString(R.string.format_contacts_type), item.getPhone_type()))
                 .setText(R.id.tv_address, String.format(mContext.getResources().getString(R.string.format_address), item.getProvince() + item.getCity()));
         switch (type) {
