@@ -10,9 +10,9 @@ package com.shuangduan.zcy.app;
  * </pre>
  */
 
-public class BuildConfig {
-
-    public static final boolean IS_DEBUG = true;//debug开关
-    public static final boolean IS_SHOW_LOG = true;//log日志开关
-
-}
+//public class BuildConfig {
+//
+//    public static final boolean IS_DEBUG = true;//debug开关
+//    public static final boolean IS_SHOW_LOG = true;//log日志开关
+//
+//}

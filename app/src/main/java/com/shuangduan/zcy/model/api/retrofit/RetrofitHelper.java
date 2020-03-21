@@ -1,11 +1,13 @@
 package com.shuangduan.zcy.model.api.retrofit;
 
 import com.blankj.utilcode.util.SPUtils;
-import com.shuangduan.zcy.app.BuildConfig;
+import com.shuangduan.zcy.BuildConfig;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.model.api.ApiService;
+
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
+
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import retrofit2.Retrofit;
@@ -27,10 +29,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitHelper {
 
-    public static String BASE_TEST_URL = "http://xx.yijijian.com";//测试服
-//    public static String BASE_TEST_URL = "https://app.zicai365.com";//正式服
-    public static String RONG_YUN_APP_KEY = "pwe86ga5p43i6";//测试服
-//    public static String RONG_YUN_APP_KEY = "uwd1c0sxuqb81";//正式服
+
     private static ApiService apiService;
 
     private static void init(){
@@ -51,16 +50,17 @@ public class RetrofitHelper {
                     return chain.proceed(request);
                 });
 
-        if (BuildConfig.IS_SHOW_LOG){
+        if (BuildConfig.SHOW_LOG){
             builder.addInterceptor(new LoggingIntercepter());
         }
 
-        String BASE_URL = "https://app.zicai365.com";
+
+
         Retrofit build = new Retrofit.Builder()
                 .client(builder.build())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(BuildConfig.IS_DEBUG ? BASE_TEST_URL : BASE_URL)
+                .baseUrl(BuildConfig.BASE_URL)
                 .build();
 
         apiService = build.create(ApiService.class);

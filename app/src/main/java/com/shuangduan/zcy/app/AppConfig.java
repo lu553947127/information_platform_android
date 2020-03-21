@@ -26,12 +26,12 @@ import com.lzy.okgo.interceptor.HttpLoggingInterceptor;
 import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
+import com.shuangduan.zcy.BuildConfig;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.callback.EmptyCallback;
 import com.shuangduan.zcy.callback.ErrorCallback;
 import com.shuangduan.zcy.callback.LoadingCallback;
 import com.shuangduan.zcy.callback.TimeOutCallback;
-import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
 import com.shuangduan.zcy.rongyun.provider.CustomPrivateConversationProvider;
 import com.shuangduan.zcy.utils.LoginUtils;
 import com.shuangduan.zcy.utils.RongIMUtils;
@@ -84,7 +84,7 @@ public class AppConfig {
         initUtils(context);
         initLoadSir();
         initWX(context);
-        if (BuildConfig.IS_DEBUG) {
+        if (BuildConfig.DEBUG) {
             initCrash(context);
         }
         initJPush(context);
@@ -111,7 +111,7 @@ public class AppConfig {
      */
     private static void initUtils(Application context) {
         Utils.init(context);
-        LogUtils.getConfig().setGlobalTag(context.getString(R.string.app_name)).setLogSwitch(BuildConfig.IS_SHOW_LOG);
+        LogUtils.getConfig().setGlobalTag(context.getString(R.string.app_name)).setLogSwitch(BuildConfig.SHOW_LOG);
         ToastUtils.setGravity(Gravity.BOTTOM, 0, ConvertUtils.dp2px(100));
         ToastUtils.setMsgTextSize(13);
         if (MatisseCamera.isAndroidQ) {
@@ -163,7 +163,7 @@ public class AppConfig {
      * 极光推送初始化配置
      */
     private static void initJPush(Context context) {
-        JPushInterface.setDebugMode(BuildConfig.IS_DEBUG);
+        JPushInterface.setDebugMode(BuildConfig.DEBUG);
         JPushInterface.init(context);
     }
 
@@ -180,7 +180,7 @@ public class AppConfig {
 //        RongPushClient.setPushConfig(builder.build());
 
         //融云初始化
-        RongIM.init(context, RetrofitHelper.RONG_YUN_APP_KEY);
+        RongIM.init(context, BuildConfig.RONG_YUN_APP_KEY);
         //融云推送初始化
         PushConfig config = new PushConfig
                 .Builder()

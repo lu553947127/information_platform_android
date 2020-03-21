@@ -12,10 +12,10 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 
 import com.blankj.utilcode.util.BarUtils;
+import com.shuangduan.zcy.BuildConfig;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.Common;
 import com.shuangduan.zcy.base.BaseActivity;
-import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
 import com.shuangduan.zcy.utils.WebViewUtils;
 
 import java.util.Objects;
@@ -62,15 +62,15 @@ public class WebViewActivity extends BaseActivity {
         switch (Objects.requireNonNull(getIntent().getStringExtra("register"))) {
             case "privacy":
                 tvBarTitle.setText(getString(R.string.register_privacy));
-                webViewUtils.loadUrl(RetrofitHelper.BASE_TEST_URL + Common.AGREEMENT_PRIVACY, 0);
+                webViewUtils.loadUrl(BuildConfig.BASE_URL + Common.AGREEMENT_PRIVACY, 0);
                 break;
             case "register":
                 tvBarTitle.setText(getString(R.string.register_register));
-                webViewUtils.loadUrl(RetrofitHelper.BASE_TEST_URL + Common.AGREEMENT_REGISTER, 0);
+                webViewUtils.loadUrl(BuildConfig.BASE_URL + Common.AGREEMENT_REGISTER, 0);
                 break;
             case "warrant":
                 tvBarTitle.setText("认购协议");
-                webViewUtils.loadUrl(RetrofitHelper.BASE_TEST_URL + Common.AGREEMENT_WARRANT, 0);
+                webViewUtils.loadUrl(BuildConfig.BASE_URL + Common.AGREEMENT_WARRANT, 0);
                 break;
             case "weather":
                 tvBarTitle.setText("天气详情");

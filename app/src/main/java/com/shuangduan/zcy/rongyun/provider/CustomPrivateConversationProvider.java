@@ -5,6 +5,7 @@ import android.text.InputFilter;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -12,10 +13,10 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
+import com.shuangduan.zcy.BuildConfig;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.Common;
 import com.shuangduan.zcy.app.SpConfig;
-import com.shuangduan.zcy.model.api.retrofit.RetrofitHelper;
 import com.shuangduan.zcy.model.bean.IMWechatUserInfoBean;
 
 import io.rong.imkit.model.ConversationProviderTag;
@@ -58,7 +59,7 @@ public class CustomPrivateConversationProvider extends PrivateConversationProvid
     //会话列表头像名称显示
     private void getFriendData(String userId, View v) {
 
-        OkGo.<String>post(RetrofitHelper.BASE_TEST_URL+ Common.WECHAT_USER_INFO)
+        OkGo.<String>post(BuildConfig.BASE_URL + Common.WECHAT_USER_INFO)
                 .tag(this)
                 .headers("token", SPUtils.getInstance().getString(SpConfig.TOKEN))//请求头
                 .params("id",userId)//对应的用户编号

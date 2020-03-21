@@ -3,25 +3,25 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
         release {
-            storeFile file('D:\\Android\\work\\information_platform_android\\app\\zcy.jks')
+            storeFile file('./zcy.jks')
             storePassword 'boyuan123456'
             keyAlias = 'boyuan'
             keyPassword 'boyuan123456'
         }
         debug {
-            storeFile file('D:\\Android\\work\\information_platform_android\\app\\zcy.jks')
+            storeFile file('./zcy.jks')
             storePassword 'boyuan123456'
             keyAlias = 'boyuan'
             keyPassword 'boyuan123456'
         }
     }
-    compileSdkVersion rootProject.ext.targetSdkVersion
+    compileSdkVersion rootProject.ext.android.targetSdkVersion
     defaultConfig {
-        applicationId "com.shuangduan.zcy"
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode rootProject.ext.versionCode
-        versionName rootProject.ext.versionName
+        applicationId rootProject.ext.android.applicationId
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         ndk {
@@ -37,6 +37,7 @@ android {
 
         resConfigs "zh-rCN", "zh-rHK", "zh-rTW", "en"
         multiDexEnabled true
+        flavorDimensions rootProject.ext.android.versionName
     }
     //设置apk的打包名称(as3.5版本后不能带中文)
     applicationVariants.all { variant ->
@@ -64,6 +65,9 @@ android {
         }
     }
 
+
+
+
     // ButterKnife requires Java 8.
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -75,151 +79,157 @@ android {
         checkReleaseBuilds false
         abortOnError false
     }
+
+
+
+    //打包渠道
+    productFlavors {
+        //测试环境
+        dev {
+            buildConfigField "String", "BASE_URL", rootProject.ext.url.devUrl
+            buildConfigField "boolean", "SHOW_LOG", "true"
+            buildConfigField "String", "RONG_YUN_APP_KEY", rootProject.ext.config.rongyun_dev
+            applicationId rootProject.ext.android.applicationId
+            manifestPlaceholders = [APP_NAME     : "zcy.debug."]
+        }
+
+        //正式环境
+        prod {
+            buildConfigField "String", "BASE_URL", rootProject.ext.url.prodUrl
+            buildConfigField "boolean", "SHOW_LOG", "false"
+            buildConfigField "String", "RONG_YUN_APP_KEY", rootProject.ext.config.rongyun_prod
+            applicationId rootProject.ext.android.applicationId
+            manifestPlaceholders = [APP_NAME     : "app.release."]
+        }
+    }
+
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    //noinspection GradleDependency
-    implementation 'androidx.appcompat:appcompat:1.0.2'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    implementation rootProject.ext.dependencies.appcompat
+    testImplementation rootProject.ext.dependencies.junit
+    androidTestImplementation rootProject.ext.dependencies.testRunner
+    androidTestImplementation rootProject.ext.dependencies.testEspresso
 
     /** 网络架包 **/
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    //noinspection GradleDependency
-    implementation 'androidx.recyclerview:recyclerview:1.1.0-beta01'
-    implementation 'com.android.support:design:28.0.0'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
-    //noinspection GradleDependency
-    implementation 'io.reactivex.rxjava2:rxjava:2.1.12'
-    //noinspection GradleDependency
-    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
-    //noinspection GradleDependency
-    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
-    //Gson解析
-    //noinspection GradleDependency
-    implementation 'com.google.code.gson:gson:2.7'
+    implementation rootProject.ext.dependencies.legacySupport
+    implementation rootProject.ext.dependencies.recyclerview
+    implementation rootProject.ext.dependencies.design
+    implementation rootProject.ext.dependencies.rxandroid
+
+    implementation rootProject.ext.dependencies.rxjava2
+
+    implementation rootProject.ext.dependencies.retrofit2
+
+    implementation rootProject.ext.dependencies.retrofit2ConverterGson
+    implementation rootProject.ext.dependencies.retrofit2Adapter
+
+    implementation rootProject.ext.dependencies.gson
 
     //多功能网络请求框架(方便上传附件)
-    implementation 'com.lzy.net:okgo:3.0.4'
+    implementation rootProject.ext.dependencies.okgo
 
     //解决超过65546代码的问题
-    implementation 'com.android.support:multidex:1.0.3'
+    implementation rootProject.ext.dependencies.multidex
 
     //下拉刷新 上拉加载
-    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-andx-15'
-    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-andx-15'
-    implementation 'android.arch.lifecycle:extensions:1.1.1'
+    implementation rootProject.ext.dependencies.SmartRefreshLayout
+    implementation rootProject.ext.dependencies.SmartRefreshHeader
+    implementation rootProject.ext.dependencies.lifecycle
 
-    //noinspection GradleDependency
-    implementation 'androidx.appcompat:appcompat:1.1.0-alpha04'
 
     //图片加载——Glide
-
-    //noinspection GradleDependency
-    implementation 'com.github.bumptech.glide:glide:4.10.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
-    implementation 'com.blankj:utilcode:1.23.6'
-    implementation 'com.github.chrisbanes:PhotoView:2.1.3'
-    implementation 'org.greenrobot:eventbus:3.1.1'
+    implementation rootProject.ext.dependencies.glide
+    annotationProcessor rootProject.ext.dependencies.glideCompiler
+    implementation rootProject.ext.dependencies.utilcode
+    implementation rootProject.ext.dependencies.PhotoView
+    implementation rootProject.ext.dependencies.eventbus
 
     //知乎图片选择器
-    implementation 'com.zhihu.android:matisse:0.5.3-beta3'
+    implementation rootProject.ext.dependencies.matisse
 
     //权限工具
-    implementation 'com.github.tbruyelle:rxpermissions:0.10.2'
+    implementation rootProject.ext.dependencies.rxpermissions
 
     //鲁班压缩
-    implementation 'top.zibin:Luban:1.1.8'
-    implementation 'com.kingja.loadsir:loadsir:1.3.6'
+    implementation rootProject.ext.dependencies.Luban
+    implementation rootProject.ext.dependencies.loadsir
 
     //黄油刀
-    implementation 'com.jakewharton:butterknife:10.1.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
-    implementation 'com.google.android:flexbox:1.1.0'
-    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.45-androidx'
+    implementation rootProject.ext.dependencies.butterknife
+    annotationProcessor rootProject.ext.dependencies.butterknifeCompiler
+    implementation rootProject.ext.dependencies.flexbox
+    implementation rootProject.ext.dependencies.BaseRecyclerViewAdapterHelper
 
     //轮播图
-    implementation 'com.youth.banner:banner:1.4.10'
+    implementation rootProject.ext.dependencies.banner
 
     //高德地图
-    //noinspection GradleDependency
-    implementation 'com.amap.api:3dmap:latest.integration'
-    //noinspection GradleDependency
-    implementation 'com.amap.api:location:latest.integration'
+    implementation rootProject.ext.dependencies.map
 
-    //noinspection GradleDependency
-    implementation 'com.amap.api:search:latest.integration'
-    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+    implementation rootProject.ext.dependencies.location
+
+
+    implementation rootProject.ext.dependencies.search
+    implementation rootProject.ext.dependencies.MPAndroidChart
+
+    //微信支付
+    implementation rootProject.ext.dependencies.wechat
+
+    //带侧滑删除的列表
+    implementation rootProject.ext.dependencies.recyclerview_yanzhenjie
+
+    //app版本更新 后台通知下载
+    implementation rootProject.ext.dependencies.appUpdater
+
+    //仿微信小视频拍照
+    implementation rootProject.ext.dependencies.camera
+
+    //支持手势放大、下拉关闭 查看图片框架
+    implementation rootProject.ext.dependencies.BigImageViewPager
+
+    //带右下角计数的输入框
+    implementation rootProject.ext.dependencies.FJEditTextCount
+
+    //RecyclerView 流式布局
+    implementation rootProject.ext.dependencies.LayoutManagerFlowLayout
+
+    //条件选择器
+    implementation rootProject.ext.dependencies.wheelview
+
+    //Android Activity 滑动返回。支持微信滑动返回样式、横屏滑动返回、全屏滑动返回
+    implementation rootProject.ext.dependencies.swipebacklayout
+    //极光推送
+    implementation rootProject.ext.dependencies.jpush
+    //华为推送模块
+    implementation rootProject.ext.dependencies.hmsBase
+    implementation rootProject.ext.dependencies.hmsPush
+
+    implementation rootProject.ext.dependencies.supportV4
+    //极光推送
+    implementation rootProject.ext.dependencies.jcore
+    //融云即时通讯
+    implementation rootProject.ext.dependencies.im_kit
+    //im_kit必须依赖im_lib，所以需要加入对应依赖
+    implementation rootProject.ext.dependencies.im_lib
+
 
     //支付宝支付
     implementation(name: 'alipaySdk-15.6.5-20190718211159-noUtdid', ext: 'aar')
 
-    //微信支付
-    //noinspection GradleDynamicVersion
-    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
-
-    //带侧滑删除的列表
-    implementation 'com.yanzhenjie.recyclerview:x:1.3.2'
-
-    //app版本更新 后台通知下载
-    implementation 'com.king.app:app-updater:1.0.6-androidx'
-
-    //仿微信小视频拍照
-    implementation 'cjt.library.wheel:camera:1.1.9'
-
-    //支持手势放大、下拉关闭 查看图片框架
-    implementation 'com.github.SherlockGougou:BigImageViewPager:androidx-5.0.4'
-
-    //带右下角计数的输入框
-    implementation 'com.github.FJ917:FJEditTextCount:v1.0.3'
-
-    //RecyclerView 流式布局
-    implementation 'com.github.1002326270xc:LayoutManager-FlowLayout:v1.7'
-
-    //条件选择器
-    implementation 'com.contrarywind:wheelview:4.1.0'
-
-    //Android Activity 滑动返回。支持微信滑动返回样式、横屏滑动返回、全屏滑动返回
-    implementation 'cn.bingoogolapple:bga-swipebacklayout:2.0.1'
-
-    //极光推送
-    implementation 'cn.jiguang.sdk:jpush:3.3.4'
-
-    //华为推送模块
-    implementation 'com.huawei.android.hms:base:2.6.1.301'
-    implementation 'com.huawei.android.hms:push:2.6.1.301'
-
-    //noinspection GradleDependency
-    api 'com.android.support:support-v4:26.0.0'
-
-    //极光推送
-    api 'cn.jiguang.sdk:jcore:2.1.2'
-
-    //融云即时通讯
-    api 'cn.rongcloud.sdk:im_kit:2.9.22'
-
-    //im_kit必须依赖im_lib，所以需要加入对应依赖
-    api 'cn.rongcloud.sdk:im_lib:2.9.22'
-
     /** 本地架包 **/
-
     //qq和空间分享
     //noinspection GradlePath
     implementation files('libs\\open_sdk_r6019_lite.jar')
 
     //小米厂商通道
-    //noinspection GradlePath
     implementation files('libs\\MiPush_SDK_Client_3_6_19.jar')
 
     //    oppo推送
-    //noinspection GradlePath
     implementation files('libs\\com.coloros.mcssdk.jar')
     //自定义的应用框架
     implementation project(path: ':FrameLibrary')
 
-    //优化内存
-//    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-alpha-3'
 }

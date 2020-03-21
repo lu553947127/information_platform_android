@@ -1,0 +1,205 @@
+ext {
+    android = [
+            compileSdkVersion: 28,
+            minSdkVersion    : 19,
+            targetSdkVersion : 28,
+            versionCode      : 130,
+            versionName      : "1.3.0",
+            dependVersion    : "28.0.0",
+            applicationId    : "com.shuangduan.zcy",
+    ]
+
+
+    url = [
+            devUrl : '"http://xx.yijijian.com"',
+            prodUrl: '"https://app.zicai365.com"',
+    ]
+
+    config = [
+            rongyun_dev : '"pwe86ga5p43i6"',
+            rongyun_prod: '"uwd1c0sxuqb81"'
+    ]
+
+    versions = [
+            appcompat                    : "1.1.0-alpha04",
+            junit                        : "4.12",
+            testRunner                   : "1.2.0",
+            testEspresso                 : "3.2.0",
+            constraintlayout             : "1.1.3",
+            legacySupport                : "1.0.0",
+            recyclerview                 : "1.1.0-beta01",
+            design                       : "28.0.0",
+            rxandroid                    : "2.0.2",
+            rxjava2                      : "2.1.12",
+            retrofit2                    : "2.4.0",
+            retrofit2ConverterGson       : "2.4.0",
+            retrofit2Adapter             : "2.4.0",
+            gson                         : "2.7",
+            okgo                         : "3.0.4",
+            multidex                     : "1.0.3",
+            SmartRefreshLayout           : "1.1.0-andx-15",
+            SmartRefreshHeader           : "1.1.0-andx-15",
+            lifecycle                    : "1.1.1",
+            glide                        : "4.10.0",
+            glideCompiler                : "4.10.0",
+            utilcode                     : "1.23.6",
+            PhotoView                    : "2.1.3",
+            eventbus                     : "3.1.1",
+            matisse                      : "0.5.3-beta3",
+            rxpermissions                : "0.10.2",
+            Luban                        : "1.1.8",
+            loadsir                      : "1.3.6",
+            butterknife                  : "10.1.0",
+            butterknifeCompiler          : "10.1.0",
+            flexbox                      : "1.1.0",
+            BaseRecyclerViewAdapterHelper: "2.9.45-androidx",
+            banner                       : "1.4.10",
+            MPAndroidChart               : "v3.1.0",
+            recyclerview_yanzhenjie      : "1.3.2",
+            appUpdater                   : "1.0.6-androidx",
+            camera                       : "1.1.9",
+            BigImageViewPager            : "androidx-5.0.4",
+            FJEditTextCount              : "v1.0.3",
+            LayoutManagerFlowLayout      : "v1.7",
+            wheelview                    : "4.1.0",
+            swipebacklayout              : "2.0.1",
+            jpush                        : "3.3.4",
+            hmsBase                      : "2.6.1.301",
+            hmsPush                      : "2.6.1.301",
+            supportV4                    : "26.0.0",
+            jcore                        : "2.1.2",
+            im_kit                       : "2.9.22",
+            im_lib                       : "2.9.22",
+    ]
+
+    dependencies = [
+
+            appcompat                    : "androidx.appcompat:appcompat:${versions.appcompat}",
+            junit                        : "junit:junit:${versions.junit}",
+            testRunner                   : "androidx.test:runner:${versions.testRunner}",
+            testEspresso                 : "androidx.test.espresso:espresso-core:${versions.testEspresso}",
+
+            constraintlayout             : "androidx.constraintlayout:constraintlayout:${versions.constraintlayout}",
+
+            legacySupport                : "androidx.legacy:legacy-support-v4:${versions.legacySupport}",
+            //noinspection GradleDependency
+            recyclerview                 : "androidx.recyclerview:recyclerview:${versions.recyclerview}",
+            design                       : "com.android.support:design:${versions.design}",
+
+            /** 网络架包 **/
+            rxandroid                    : "io.reactivex.rxjava2:rxandroid:${versions.rxandroid}",
+            //noinspection GradleDependency
+            rxjava2                      : "io.reactivex.rxjava2:rxjava:${versions.rxjava2}",
+            //noinspection GradleDependency
+            retrofit2                    : "com.squareup.retrofit2:retrofit:${versions.retrofit2}",
+            //noinspection GradleDependency
+            retrofit2ConverterGson       : "com.squareup.retrofit2:converter-gson:${versions.retrofit2ConverterGson}",
+            retrofit2Adapter             : "com.squareup.retrofit2:adapter-rxjava2:${versions.retrofit2Adapter}",
+            //Gson解析
+            //noinspection GradleDependency
+            gson                         : "com.google.code.gson:gson:${versions.gson}",
+
+            //多功能网络请求框架(方便上传附件)
+            okgo                         : "com.lzy.net:okgo:${versions.okgo}",
+
+            //解决超过65546代码的问题
+            multidex                     : "com.android.support:multidex:${versions.multidex}",
+
+            //下拉刷新 上拉加载
+            SmartRefreshLayout           : "com.scwang.smartrefresh:SmartRefreshLayout:${versions.SmartRefreshLayout}",
+            SmartRefreshHeader           : "com.scwang.smartrefresh:SmartRefreshHeader:${versions.SmartRefreshHeader}",
+
+            //Activity生命周期管理
+            lifecycle                    : "android.arch.lifecycle:extensions:${versions.lifecycle}",
+
+
+            //图片加载——Glide
+            //noinspection GradleDependency
+            glide                        : "com.github.bumptech.glide:glide:${versions.glide}",
+            glideCompiler                : "com.github.bumptech.glide:compiler:${versions.glideCompiler}",
+            utilcode                     : "com.blankj:utilcode:${versions.utilcode}",
+            PhotoView                    : "com.github.chrisbanes:PhotoView:${versions.PhotoView}",
+            eventbus                     : "org.greenrobot:eventbus:${versions.eventbus}",
+
+            //知乎图片选择器
+            matisse                      : "com.zhihu.android:matisse:${versions.matisse}",
+
+            //权限工具
+            rxpermissions                : "com.github.tbruyelle:rxpermissions:${versions.rxpermissions}",
+
+            //鲁班压缩
+            Luban                        : "top.zibin:Luban:${versions.Luban}",
+
+            //页面状态管理器
+            loadsir                      : "com.kingja.loadsir:loadsir:${versions.loadsir}",
+
+            //黄油刀
+            butterknife                  : "com.jakewharton:butterknife:${versions.butterknife}",
+            butterknifeCompiler          : "com.jakewharton:butterknife-compiler:${versions.butterknifeCompiler}",
+            flexbox                      : "com.google.android:flexbox:${versions.flexbox}",
+            BaseRecyclerViewAdapterHelper: "com.github.CymChad:BaseRecyclerViewAdapterHelper:${versions.BaseRecyclerViewAdapterHelper}",
+
+            //轮播图
+            banner                       : "com.youth.banner:banner:${versions.banner}",
+
+            //高德地图
+            //noinspection GradleDependency
+            map                          : "com.amap.api:3dmap:latest.integration",
+            //noinspection GradleDependency
+            location                     : "com.amap.api:location:latest.integration",
+
+            //noinspection GradleDependency
+            search                       : "com.amap.api:search:latest.integration",
+            MPAndroidChart               : "com.github.PhilJay:MPAndroidChart:${versions.MPAndroidChart}",
+
+            //微信支付
+            //noinspection GradleDynamicVersion
+            wechat                       : "com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+",
+
+            //带侧滑删除的列表
+            recyclerview_yanzhenjie      : "com.yanzhenjie.recyclerview:x:${versions.recyclerview_yanzhenjie}",
+
+            //app版本更新 后台通知下载
+            appUpdater                   : "com.king.app:app-updater:${versions.appUpdater}",
+
+            //仿微信小视频拍照
+            camera                       : "cjt.library.wheel:camera:${versions.camera}",
+
+            //支持手势放大、下拉关闭 查看图片框架
+            BigImageViewPager            : "com.github.SherlockGougou:BigImageViewPager:${versions.BigImageViewPager}",
+
+            //带右下角计数的输入框
+            FJEditTextCount              : "com.github.FJ917:FJEditTextCount:${versions.FJEditTextCount}",
+
+            //RecyclerView 流式布局
+            LayoutManagerFlowLayout      : "com.github.1002326270xc:LayoutManager-FlowLayout:${versions.LayoutManagerFlowLayout}",
+
+            //条件选择器
+            wheelview                    : "com.contrarywind:wheelview:${versions.wheelview}",
+
+            //Android Activity 滑动返回。支持微信滑动返回样式、横屏滑动返回、全屏滑动返回
+            swipebacklayout              : "cn.bingoogolapple:bga-swipebacklayout:${versions.swipebacklayout}",
+
+            //极光推送
+            jpush                        : "cn.jiguang.sdk:jpush:${versions.jpush}",
+
+            //华为推送模块
+            hmsBase                      : "com.huawei.android.hms:base:${versions.hmsBase}",
+            hmsPush                      : "com.huawei.android.hms:push:${versions.hmsPush}",
+
+            //noinspection GradleDependency
+            supportV4                    : "com.android.support:support-v4:${versions.supportV4}",
+
+            //极光推送
+            jcore                        : "cn.jiguang.sdk:jcore:${versions.jcore}",
+
+            //融云即时通讯
+            im_kit                       : "cn.rongcloud.sdk:im_kit:${versions.im_kit}",
+
+            //im_kit必须依赖im_lib，所以需要加入对应依赖
+            im_lib                       : "cn.rongcloud.sdk:im_lib:${versions.im_lib}",
+
+            //优化内存
+            //    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-alpha-3'
+    ]
+}
