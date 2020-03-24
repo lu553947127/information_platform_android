@@ -4,6 +4,7 @@ import android.content.Context;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.app.SpConfig;
 import com.shuangduan.zcy.base.BaseViewModel;
@@ -43,6 +44,9 @@ public class HomeVm extends BaseViewModel {
     public MutableLiveData<String> pageStateLiveData;
 
     public HomeVm() {
+        LogUtils.e("运行了....");
+
+
         userId = SPUtils.getInstance().getInt(SpConfig.USER_ID);
         pushLiveData = new MutableLiveData<>();
         bannerLiveData = new MutableLiveData<>();

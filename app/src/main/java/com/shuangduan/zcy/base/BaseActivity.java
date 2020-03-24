@@ -1,15 +1,20 @@
 package com.shuangduan.zcy.base;
 
+import android.app.Application;
 import android.os.Bundle;
 import android.util.SparseArray;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDialog;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.KeyboardUtils;
@@ -27,6 +32,8 @@ import com.shuangduan.zcy.utils.AutoUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.lang.reflect.InvocationTargetException;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -40,7 +47,7 @@ import butterknife.Unbinder;
  */
 //BGASwipeBackHelper.Delegate
 //SwipeBackActivityBase
-public abstract class BaseActivity extends AppCompatActivity implements IView, SwipeBackActivityBase {
+public abstract class BaseActivity extends AppCompatActivity implements IView, SwipeBackActivityBase, ViewModelProvider.Factory {
 
     private Unbinder unBinder;
     public boolean isTranslationBar = false;//透明状态栏开关
@@ -209,6 +216,50 @@ public abstract class BaseActivity extends AppCompatActivity implements IView, S
         SwipeBackUtils.convertActivityToTranslucent(this);
         getSwipeBackLayout().scrollToFinishActivity();
     }
+
+
+
+
+    @NonNull
+    @Override
+    public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
+        ViewModel viewModel = MyApplication.getModelCache().get(modelClass.getCanonicalName());
+
+        if (null != viewModel) {
+            return (T) viewModel;
+        }
+
+        if (AndroidViewModel.class.isAssignableFrom(modelClass)) {
+            //noinspection TryWithIdenticalCatches
+            try {
+                viewModel = modelClass.getConstructor(Application.class).newInstance(getApplication());
+                MyApplication.getModelCache().put(modelClass.getCanonicalName(), viewModel);
+                return (T) viewModel;
+            } catch (NoSuchMethodException e) {
+                throw new RuntimeException("Cannot create an instance of " + modelClass, e);
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException("Cannot create an instance of " + modelClass, e);
+            } catch (java.lang.InstantiationException e) {
+                throw new RuntimeException("Cannot create an instance of " + modelClass, e);
+            } catch (InvocationTargetException e) {
+                throw new RuntimeException("Cannot create an instance of " + modelClass, e);
+            }
+        }
+
+        //noinspection TryWithIdenticalCatches
+        try {
+            ViewModel model = modelClass.newInstance();
+            MyApplication.getModelCache().put(modelClass.getCanonicalName(), model);
+            return (T) model;
+        } catch (java.lang.InstantiationException e) {
+            throw new RuntimeException("Cannot create an instance of " + modelClass, e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException("Cannot create an instance of " + modelClass, e);
+        }
+
+    }
+
+
 
 //    /**
 //     * 初始化滑动返回。在 super.onCreate(savedInstanceState) 之前调用该方法

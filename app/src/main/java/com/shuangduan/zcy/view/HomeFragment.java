@@ -143,9 +143,9 @@ public class HomeFragment extends BaseFragment {
 
         UpdateManager manager = UpdateManager.getInstance(getContext());
 
-        homeVm = ViewModelProviders.of(this).get(HomeVm.class);
+        homeVm = ViewModelProviders.of(this,this).get(HomeVm.class);
         homeNeedVm = ViewModelProviders.of(this).get(HomeNeedVm.class);
-        demandRelationshipVm = ViewModelProviders.of(mActivity).get(DemandRelationshipVm.class);
+        demandRelationshipVm = ViewModelProviders.of(mActivity,this).get(DemandRelationshipVm.class);
 
 
         getChangeLister();

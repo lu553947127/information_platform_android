@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.util.ArrayMap;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModel;
 import androidx.multidex.MultiDex;
 
 import com.blankj.utilcode.util.LogUtils;
@@ -31,10 +33,16 @@ public class MyApplication extends Application {
 
     private static String TAG = "MyApplication";
 
+    //
+    private static ArrayMap<String, ViewModel> sModelCache;
+
     @Override
     public void onCreate() {
         super.onCreate();
         instance = this;
+
+        sModelCache = new ArrayMap<>();
+
         registerActivityLifecycleCallbacks(mCallbacks);
         AppConfig.init(this);
     }
@@ -43,6 +51,9 @@ public class MyApplication extends Application {
         return instance;
     }
 
+    public static ArrayMap<String, ViewModel> getModelCache() {
+        return sModelCache;
+    }
 
     @Override
     protected void attachBaseContext(Context base) {

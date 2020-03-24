@@ -288,7 +288,7 @@ public class MainActivity extends BaseActivity {
     //设置角标数量
     private void getApplyCounts() {
 
-        homeVm = ViewModelProviders.of(this).get(HomeVm.class);
+        homeVm = ViewModelProviders.of(this,this).get(HomeVm.class);
         imAddVm = ViewModelProviders.of(this).get(IMAddVm.class);
 
         //后台管理权限

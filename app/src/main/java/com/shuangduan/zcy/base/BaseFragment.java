@@ -1,5 +1,6 @@
 package com.shuangduan.zcy.base;
 
+import android.app.Application;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.SparseArray;
@@ -11,13 +12,18 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 
+import com.shuangduan.zcy.app.MyApplication;
 import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.LoadDialog;
 import com.shuangduan.zcy.factory.EmptyViewFactory;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Objects;
 
 import butterknife.ButterKnife;
@@ -32,7 +38,7 @@ import butterknife.Unbinder;
  * </pre>
  */
 
-public abstract class BaseFragment extends Fragment implements IView {
+public abstract class BaseFragment extends Fragment implements IView, ViewModelProvider.Factory {
 
     public Context mContext;
     public FragmentActivity mActivity;
@@ -151,6 +157,48 @@ public abstract class BaseFragment extends Fragment implements IView {
 
     public View createEmptyView(int iconRes, int strRes, int btnStrRes, int background, EmptyViewFactory.EmptyViewCallBack callBack) {
         BaseActivity activity = (BaseActivity) getActivity();
-        return Objects.requireNonNull(activity).emptyViewFactory.createEmptyView(iconRes, strRes, btnStrRes,background, callBack);
+        return Objects.requireNonNull(activity).emptyViewFactory.createEmptyView(iconRes, strRes, btnStrRes, background, callBack);
     }
+
+
+
+    @NonNull
+    @Override
+    public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
+        ViewModel viewModel = MyApplication.getModelCache().get(modelClass.getCanonicalName());
+
+        if (null != viewModel) {
+            return (T) viewModel;
+        }
+
+        if (AndroidViewModel.class.isAssignableFrom(modelClass)) {
+            //noinspection TryWithIdenticalCatches
+            try {
+                viewModel = modelClass.getConstructor(Application.class).newInstance(getActivity().getApplication());
+                MyApplication.getModelCache().put(modelClass.getCanonicalName(), viewModel);
+                return (T) viewModel;
+            } catch (NoSuchMethodException e) {
+                throw new RuntimeException("Cannot create an instance of " + modelClass, e);
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException("Cannot create an instance of " + modelClass, e);
+            } catch (java.lang.InstantiationException e) {
+                throw new RuntimeException("Cannot create an instance of " + modelClass, e);
+            } catch (InvocationTargetException e) {
+                throw new RuntimeException("Cannot create an instance of " + modelClass, e);
+            }
+        }
+
+        //noinspection TryWithIdenticalCatches
+        try {
+            ViewModel model = modelClass.newInstance();
+            MyApplication.getModelCache().put(modelClass.getCanonicalName(), model);
+            return (T) model;
+        } catch (java.lang.InstantiationException e) {
+            throw new RuntimeException("Cannot create an instance of " + modelClass, e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException("Cannot create an instance of " + modelClass, e);
+        }
+
+    }
+
 }
