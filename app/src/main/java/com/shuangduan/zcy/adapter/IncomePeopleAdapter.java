@@ -4,6 +4,7 @@ import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 
+import com.blankj.utilcode.util.StringUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.shuangduan.zcy.R;
@@ -34,21 +35,18 @@ public class IncomePeopleAdapter extends BaseQuickAdapter<IncomePeopleBean.ListB
 
     @Override
     protected void convert(BaseViewHolder helper, IncomePeopleBean.ListBean item) {
-        helper.setText(R.id.tv_name, item.getUsername())
-                .setText(R.id.tv_time, item.getCreate_time())
+        helper.setText(R.id.tv_name, StringUtils.isTrimEmpty(item.getUsername()) ? "" : item.getUsername())
+                .setText(R.id.tv_time, StringUtils.isTrimEmpty(item.getCreate_time()) ? "" : item.getCreate_time())
                 .setText(R.id.tv_price, item.getPrice() + "元")
                 .setVisible(R.id.iv_sgs, item.getCardStatus() == 2);
-//                .setVisible(R.id.tv_add_friends, type != 1 && type != 7);
-
 
         if (type == CustomConfig.FIRST_DEGREE) {
             helper.setVisible(R.id.cb_add, false);
         } else {
-            helper.setChecked(R.id.cb_add, item.getApplyStatus() == 1 ? true : false);
+            helper.setChecked(R.id.cb_add, item.getApplyStatus() == 1);
             helper.setText(R.id.cb_add, item.getApplyStatus() == 1 ? "加好友" : "已添加");
             helper.addOnClickListener(R.id.cb_add);
-
-            helper.setEnabled(R.id.cb_add, item.getApplyStatus() == 1 ? true : false);
+            helper.setEnabled(R.id.cb_add, item.getApplyStatus() == 1);
         }
 
         ImageView ivHead = helper.getView(R.id.iv_header);

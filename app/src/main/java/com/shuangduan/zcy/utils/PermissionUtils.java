@@ -1,5 +1,6 @@
 package com.shuangduan.zcy.utils;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -65,6 +66,7 @@ public class PermissionUtils {
      * 跳转权限设置页
      * @param context
      */
+    @SuppressLint("ObsoleteSdkInt")
     public static void toSelfSetting(Context context) {
         Intent mIntent = new Intent();
         mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

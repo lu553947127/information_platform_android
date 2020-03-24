@@ -72,6 +72,12 @@ public class SharePictorialActivity extends BaseActivity {
         permissionVm = ViewModelProviders.of(this).get(PermissionVm.class);
         permissionVm.getLiveData().observe(this, integer -> {
             if (integer == PermissionVm.PERMISSION_STORAGE){
+//                // 获取图片某布局
+//                llSharePictures.setDrawingCacheEnabled(true);
+//                llSharePictures.buildDrawingCache();
+//                //获取图片
+//                bitmap = llSharePictures.getDrawingCache();
+
                 bitmap = PicturesUtils.createViewBitmap(llSharePictures);
                 LogUtils.e(bitmap);
             } else if (integer == PermissionVm.PERMISSION_STORAGE_NO) {
@@ -128,6 +134,8 @@ public class SharePictorialActivity extends BaseActivity {
                     return;
                 }
                 PicturesUtils.saveImageToLocal(this,bitmap,1);
+//                //释放资源
+//                llSharePictures.destroyDrawingCache();
                 break;
         }
     }

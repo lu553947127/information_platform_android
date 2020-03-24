@@ -225,9 +225,11 @@ dependencies {
     implementation files('libs\\open_sdk_r6019_lite.jar')
 
     //小米厂商通道
+    //noinspection GradlePath
     implementation files('libs\\MiPush_SDK_Client_3_6_19.jar')
 
     //    oppo推送
+    //noinspection GradlePath
     implementation files('libs\\com.coloros.mcssdk.jar')
     //自定义的应用框架
     implementation project(path: ':FrameLibrary')
