@@ -16,7 +16,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
 import com.blankj.utilcode.util.LogUtils;
@@ -126,7 +125,10 @@ public class MainActivity extends BaseActivity {
         handler = MyApplication.getMainThreadHandler();
         //初始化，融云链接服务器
         if (SPUtils.getInstance().getInt(SpConfig.INFO_STATUS) == 1) {
-            IMConnectVm imConnectVm = ViewModelProviders.of(this).get(IMConnectVm.class);
+//            IMConnectVm imConnectVm = ViewModelProviders.of(this).get(IMConnectVm.class);
+
+            IMConnectVm imConnectVm = getViewModel(IMConnectVm.class);
+
             imConnectVm.connect(SPUtils.getInstance().getString(SpConfig.IM_TOKEN));
         }
         setJPushAlias();
@@ -134,7 +136,10 @@ public class MainActivity extends BaseActivity {
         getBadgeViewInitView();
         getHomeAddDialog();
 
-        permissionVm = ViewModelProviders.of(this).get(PermissionVm.class);
+//        permissionVm = ViewModelProviders.of(this).get(PermissionVm.class);
+
+        permissionVm = getViewModel(PermissionVm.class);
+
         permissionVm.getLiveData().observe(this, integer -> {
             if (integer == PermissionVm.PERMISSION_LOCATION){
                 LocationUtils.getInstance().startLocalService();
@@ -288,8 +293,12 @@ public class MainActivity extends BaseActivity {
     //设置角标数量
     private void getApplyCounts() {
 
-        homeVm = ViewModelProviders.of(this,this).get(HomeVm.class);
-        imAddVm = ViewModelProviders.of(this).get(IMAddVm.class);
+//        homeVm = ViewModelProviders.of(this).get(HomeVm.class);
+//        imAddVm = ViewModelProviders.of(this).get(IMAddVm.class);
+
+        homeVm = getViewModel(HomeVm.class);
+
+        imAddVm = getViewModel(IMAddVm.class);
 
         //后台管理权限
         homeVm.supplierRoleLiveData.observe(this, supplierRoleBean -> {

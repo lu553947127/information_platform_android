@@ -1,6 +1,5 @@
 package com.shuangduan.zcy.base;
 
-import android.app.Application;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.SparseArray;
@@ -11,19 +10,13 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
 
-import com.shuangduan.zcy.app.MyApplication;
 import com.shuangduan.zcy.dialog.BaseDialog;
 import com.shuangduan.zcy.dialog.LoadDialog;
 import com.shuangduan.zcy.factory.EmptyViewFactory;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.Objects;
 
 import butterknife.ButterKnife;
@@ -38,20 +31,26 @@ import butterknife.Unbinder;
  * </pre>
  */
 
-public abstract class BaseFragment extends Fragment implements IView, ViewModelProvider.Factory {
+public abstract class BaseFragment extends Fragment implements IView{
 
     public Context mContext;
-    public FragmentActivity mActivity;
-    private Unbinder unBinder;
+    public BaseActivity mActivity;
+
     public Bundle arguments;
-    private LoadDialog loadDialog;
-    private SparseArray<BaseDialog> dialogArray = new SparseArray<>();
+
+    protected Unbinder unBinder;
+    protected LoadDialog loadDialog;
+
+    protected boolean isPrepared = false;//页面ui初始化完成
+    protected boolean isInited = false;//数据是否已从服务器拉取，拉取成功后设为true
+
+    protected SparseArray<BaseDialog> dialogArray = new SparseArray<>();
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         this.mContext = context;
-        this.mActivity = (FragmentActivity) context;
+        this.mActivity = (BaseActivity) context;
     }
 
     @Override
@@ -145,6 +144,7 @@ public abstract class BaseFragment extends Fragment implements IView, ViewModelP
      */
     protected abstract void initDataAndEvent(Bundle savedInstanceState, View view);
 
+
     /**
      * 从服务器获取数据
      */
@@ -158,47 +158,6 @@ public abstract class BaseFragment extends Fragment implements IView, ViewModelP
     public View createEmptyView(int iconRes, int strRes, int btnStrRes, int background, EmptyViewFactory.EmptyViewCallBack callBack) {
         BaseActivity activity = (BaseActivity) getActivity();
         return Objects.requireNonNull(activity).emptyViewFactory.createEmptyView(iconRes, strRes, btnStrRes, background, callBack);
-    }
-
-
-
-    @NonNull
-    @Override
-    public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        ViewModel viewModel = MyApplication.getModelCache().get(modelClass.getCanonicalName());
-
-        if (null != viewModel) {
-            return (T) viewModel;
-        }
-
-        if (AndroidViewModel.class.isAssignableFrom(modelClass)) {
-            //noinspection TryWithIdenticalCatches
-            try {
-                viewModel = modelClass.getConstructor(Application.class).newInstance(getActivity().getApplication());
-                MyApplication.getModelCache().put(modelClass.getCanonicalName(), viewModel);
-                return (T) viewModel;
-            } catch (NoSuchMethodException e) {
-                throw new RuntimeException("Cannot create an instance of " + modelClass, e);
-            } catch (IllegalAccessException e) {
-                throw new RuntimeException("Cannot create an instance of " + modelClass, e);
-            } catch (java.lang.InstantiationException e) {
-                throw new RuntimeException("Cannot create an instance of " + modelClass, e);
-            } catch (InvocationTargetException e) {
-                throw new RuntimeException("Cannot create an instance of " + modelClass, e);
-            }
-        }
-
-        //noinspection TryWithIdenticalCatches
-        try {
-            ViewModel model = modelClass.newInstance();
-            MyApplication.getModelCache().put(modelClass.getCanonicalName(), model);
-            return (T) model;
-        } catch (java.lang.InstantiationException e) {
-            throw new RuntimeException("Cannot create an instance of " + modelClass, e);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException("Cannot create an instance of " + modelClass, e);
-        }
-
     }
 
 }

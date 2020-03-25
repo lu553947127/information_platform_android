@@ -9,7 +9,6 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -143,9 +142,15 @@ public class HomeFragment extends BaseFragment {
 
         UpdateManager manager = UpdateManager.getInstance(getContext());
 
-        homeVm = ViewModelProviders.of(this,this).get(HomeVm.class);
-        homeNeedVm = ViewModelProviders.of(this).get(HomeNeedVm.class);
-        demandRelationshipVm = ViewModelProviders.of(mActivity,this).get(DemandRelationshipVm.class);
+
+        homeVm = mActivity.getViewModel(HomeVm.class);
+
+        homeNeedVm = mActivity.getViewModel(HomeNeedVm.class);
+        demandRelationshipVm = mActivity.getViewModel(DemandRelationshipVm.class);
+
+//        homeVm = ViewModelProviders.of(this).get(HomeVm.class);
+//        homeNeedVm = ViewModelProviders.of(this).get(HomeNeedVm.class);
+//        demandRelationshipVm = ViewModelProviders.of(mActivity).get(DemandRelationshipVm.class);
 
 
         getChangeLister();
@@ -283,7 +288,7 @@ public class HomeFragment extends BaseFragment {
         }
 
         refresh.setOnRefreshListener(refreshLayout -> {
-            homeVm.getInit(getActivity());
+            homeVm.getInit(mContext);
             demandRelationshipVm.getRelationship();
             refreshLayout.finishRefresh(1000);
         });

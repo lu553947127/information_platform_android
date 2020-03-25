@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.KeyboardUtils;
@@ -223,7 +224,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IView, S
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        ViewModel viewModel = MyApplication.getModelCache().get(modelClass.getCanonicalName());
+        ViewModel viewModel = MyApplication.getViewModelCache().get(modelClass.getCanonicalName());
 
         if (null != viewModel) {
             return (T) viewModel;
@@ -233,7 +234,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IView, S
             //noinspection TryWithIdenticalCatches
             try {
                 viewModel = modelClass.getConstructor(Application.class).newInstance(getApplication());
-                MyApplication.getModelCache().put(modelClass.getCanonicalName(), viewModel);
+                MyApplication.getViewModelCache().put(modelClass.getCanonicalName(), viewModel);
                 return (T) viewModel;
             } catch (NoSuchMethodException e) {
                 throw new RuntimeException("Cannot create an instance of " + modelClass, e);
@@ -249,7 +250,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IView, S
         //noinspection TryWithIdenticalCatches
         try {
             ViewModel model = modelClass.newInstance();
-            MyApplication.getModelCache().put(modelClass.getCanonicalName(), model);
+            MyApplication.getViewModelCache().put(modelClass.getCanonicalName(), model);
             return (T) model;
         } catch (java.lang.InstantiationException e) {
             throw new RuntimeException("Cannot create an instance of " + modelClass, e);
@@ -259,6 +260,11 @@ public abstract class BaseActivity extends AppCompatActivity implements IView, S
 
     }
 
+
+
+    public <V extends ViewModel> V getViewModel(Class clazz){
+        return (V) ViewModelProviders.of(this,this).get(clazz);
+    }
 
 
 //    /**

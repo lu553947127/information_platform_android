@@ -34,14 +34,14 @@ public class MyApplication extends Application {
     private static String TAG = "MyApplication";
 
     //
-    private static ArrayMap<String, ViewModel> sModelCache;
+    private static ArrayMap<String, ViewModel> sViewModelCache;
 
     @Override
     public void onCreate() {
         super.onCreate();
         instance = this;
 
-        sModelCache = new ArrayMap<>();
+        sViewModelCache = new ArrayMap<>();
 
         registerActivityLifecycleCallbacks(mCallbacks);
         AppConfig.init(this);
@@ -51,8 +51,8 @@ public class MyApplication extends Application {
         return instance;
     }
 
-    public static ArrayMap<String, ViewModel> getModelCache() {
-        return sModelCache;
+    public static ArrayMap<String, ViewModel> getViewModelCache() {
+        return sViewModelCache;
     }
 
     @Override

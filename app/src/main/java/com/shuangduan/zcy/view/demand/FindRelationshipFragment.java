@@ -106,7 +106,7 @@ public class FindRelationshipFragment extends BaseLazyFragment {
             }
         });
 
-        ivRelease = mActivity.findViewById(R.id.iv_release);
+        ivRelease = (ImageView) mActivity.findViewById(R.id.iv_release);
         //滑动监听
         rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override

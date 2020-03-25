@@ -12,8 +12,8 @@ import com.shuangduan.zcy.model.api.repository.HomeRepository;
 import com.shuangduan.zcy.model.bean.HelpBean;
 import com.shuangduan.zcy.model.bean.HomeBannerBean;
 import com.shuangduan.zcy.model.bean.HomeListBean;
-import com.shuangduan.zcy.model.bean.SupplierCliqueBean;
 import com.shuangduan.zcy.model.bean.HomePushBean;
+import com.shuangduan.zcy.model.bean.SupplierCliqueBean;
 import com.shuangduan.zcy.model.bean.SupplierRoleBean;
 import com.shuangduan.zcy.model.bean.VersionUpgradesBean;
 import com.shuangduan.zcy.utils.VersionUtils;
@@ -43,6 +43,7 @@ public class HomeVm extends BaseViewModel {
     public MutableLiveData<VersionUpgradesBean> versionUpgradesLiveData;
     public MutableLiveData<String> pageStateLiveData;
 
+
     public HomeVm() {
         LogUtils.e("运行了....");
 
@@ -60,6 +61,7 @@ public class HomeVm extends BaseViewModel {
 
     public void getInit(Context context){
         this.context = context;
+
         getPush();
         getBanner();
         getList();
