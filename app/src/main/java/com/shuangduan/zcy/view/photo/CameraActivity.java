@@ -1,5 +1,6 @@
 package com.shuangduan.zcy.view.photo;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
@@ -18,7 +19,7 @@ import com.cjt2325.cameralibrary.JCameraView;
 import com.cjt2325.cameralibrary.listener.ErrorListener;
 import com.cjt2325.cameralibrary.listener.JCameraListener;
 import com.cjt2325.cameralibrary.util.FileUtil;
-import com.shuangduan.zcy.R;
+import com.shuangduan.zcy.databinding.ActivityCameraBinding;
 
 import java.io.File;
 
@@ -36,24 +37,29 @@ import java.io.File;
  */
 public class CameraActivity extends AppCompatActivity {
 
-    JCameraView jCameraView;
+    private ActivityCameraBinding binding;
 
+    @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //全屏显示
         if (Build.VERSION.SDK_INT != Build.VERSION_CODES.O) {
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
-        setContentView(R.layout.activity_camera);
-        jCameraView =  findViewById(R.id.jc_camera_view);
+
+        binding = ActivityCameraBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
         //设置视频保存路径
-        jCameraView.setSaveVideoPath(Environment.getExternalStorageDirectory().getPath() + File.separator + "zcy/camera");
-        jCameraView.setFeatures(JCameraView.BUTTON_STATE_BOTH);
+        binding.jcCameraView.setSaveVideoPath(Environment.getExternalStorageDirectory().getPath() + File.separator + "zcy/camera");
+        binding.jcCameraView.setFeatures(JCameraView.BUTTON_STATE_BOTH);
 //        jCameraView.setTip("轻触拍照，按住摄像");
         //设置录制视频的比特率
-        jCameraView.setMediaQuality(JCameraView.MEDIA_QUALITY_MIDDLE);
-        jCameraView.setErrorLisenter(new ErrorListener() {
+        binding.jcCameraView.setMediaQuality(JCameraView.MEDIA_QUALITY_MIDDLE);
+        binding.jcCameraView.setErrorLisenter(new ErrorListener() {
             @Override
             public void onError() {
                 //错误监听
@@ -69,7 +75,7 @@ public class CameraActivity extends AppCompatActivity {
         });
 
         //点击上传拍照/录制小视频
-        jCameraView.setJCameraLisenter(new JCameraListener() {
+        binding.jcCameraView.setJCameraLisenter(new JCameraListener() {
             @Override
             public void captureSuccess(Bitmap bitmap) {
                 //获取图片bitmap
@@ -95,7 +101,7 @@ public class CameraActivity extends AppCompatActivity {
         });
 
         //退出按钮
-        jCameraView.setLeftClickListener(CameraActivity.this::finish);
+        binding.jcCameraView.setLeftClickListener(CameraActivity.this::finish);
 
 //        //相册按钮
 //        jCameraView.setRightClickListener(new ClickListener() {
@@ -129,12 +135,12 @@ public class CameraActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        jCameraView.onResume();
+        binding.jcCameraView.onResume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        jCameraView.onPause();
+        binding.jcCameraView.onPause();
     }
 }

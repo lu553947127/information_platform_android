@@ -102,6 +102,10 @@ android {
         }
     }
 
+    //AS3.6.1视图绑定
+    viewBinding {
+        enabled = true
+    }
 }
 
 dependencies {
