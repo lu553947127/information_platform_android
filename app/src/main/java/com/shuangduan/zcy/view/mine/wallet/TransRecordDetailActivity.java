@@ -5,7 +5,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+;
 
 import com.blankj.utilcode.util.BarUtils;
 import com.shuangduan.zcy.R;
@@ -63,7 +63,7 @@ public class TransRecordDetailActivity extends BaseActivity {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.transaction_record));
 
-        transRecordVm = ViewModelProviders.of(this).get(TransRecordVm.class);
+        transRecordVm = getViewModel(TransRecordVm.class);
         transRecordVm.detailLiveData.observe(this, transRecordDetailBean -> {
             if (transRecordDetailBean!=null){
                 if (transRecordDetailBean.getType() == 1){

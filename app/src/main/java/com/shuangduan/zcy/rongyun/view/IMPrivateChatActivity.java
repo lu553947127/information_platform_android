@@ -11,7 +11,6 @@ import android.widget.LinearLayout;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.JsonUtils;
@@ -91,7 +90,7 @@ public class IMPrivateChatActivity extends BaseActivity implements RongIM.Conver
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
 
-        imAddVm = ViewModelProviders.of(this).get(IMAddVm.class);
+        imAddVm = getViewModel(IMAddVm.class);
 
         mConversationType = Conversation.ConversationType.valueOf(Objects.requireNonNull(Objects.requireNonNull(getIntent().getData()).getLastPathSegment()).toUpperCase(Locale.US));
         user_id = getIntent().getData().getQueryParameter("targetId");

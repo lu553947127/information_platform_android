@@ -5,7 +5,6 @@ import android.view.View;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -85,7 +84,7 @@ public class BusinessAreaActivity extends BaseActivity {
             areaVm.clickSecond(i);
         });
 
-        areaVm = ViewModelProviders.of(this).get(AreaVm.class);
+        areaVm = getViewModel(AreaVm.class);
         areaVm.init();
         areaVm.provinceLiveData.observe(this, provinceBeans -> {
             //刷新省份

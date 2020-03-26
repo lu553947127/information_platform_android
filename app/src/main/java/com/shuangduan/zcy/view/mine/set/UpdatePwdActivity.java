@@ -7,7 +7,6 @@ import android.view.View;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -57,7 +56,7 @@ public class UpdatePwdActivity extends BaseActivity {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.update_pwd));
 
-        updatePwdVm = ViewModelProviders.of(this).get(UpdatePwdVm.class);
+        updatePwdVm = getViewModel(UpdatePwdVm.class);
         updatePwdVm.resultLiveData.observe(this, o -> {
             ToastUtils.showShort(getString(R.string.pwd_reset_success));
             finish();

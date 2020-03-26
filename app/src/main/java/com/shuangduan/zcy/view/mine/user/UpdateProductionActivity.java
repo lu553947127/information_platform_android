@@ -6,7 +6,6 @@ import android.widget.EditText;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.StringUtils;
@@ -59,7 +58,7 @@ public class UpdateProductionActivity extends BaseActivity {
         tvBarTitle.setText(getString(R.string.product));
         edtProduction.setText(getIntent().getStringExtra(CustomConfig.PRODUCTION));
 
-        userInfoVm = ViewModelProviders.of(this).get(UserInfoVm.class);
+        userInfoVm = getViewModel(UserInfoVm.class);
         userInfoVm.infoLiveData.observe(this, o -> {
             EventBus.getDefault().post(new ProductionEvent(edtProduction.getText().toString()));
             finish();

@@ -5,7 +5,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -69,7 +68,7 @@ public class IMGroupMembersActivity extends BaseActivity {
         tvBarTitle.setText(getString(R.string.im_group_group_members));
         group_id=getIntent().getStringExtra("group_id");
 
-        imAddVm = ViewModelProviders.of(this).get(IMAddVm.class);
+        imAddVm = getViewModel(IMAddVm.class);
 
         recyclerView.setLayoutManager(new GridLayoutManager(IMGroupMembersActivity.this, 5));
         IMGroupInfoAdapter imGroupInfoAdapter = new IMGroupInfoAdapter(R.layout.adapter_im_group_info, null);

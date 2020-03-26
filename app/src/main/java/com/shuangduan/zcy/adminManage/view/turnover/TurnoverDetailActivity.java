@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -125,7 +125,7 @@ public class TurnoverDetailActivity extends BaseActivity {
 
         int constructionId = getIntent().getIntExtra(CustomConfig.CONSTRUCTION_ID, 0);
 
-        TurnoverVm turnoverDetailVm = ViewModelProviders.of(this).get(TurnoverVm.class);
+        TurnoverVm turnoverDetailVm = getViewModel(TurnoverVm.class);
         turnoverDetailVm.getTurnoverDetail(constructionId);
         turnoverDetailVm.turnoverDetailLiveData.observe(this, turnover -> {
             tvTitle.setText(turnover.materialIdName);

@@ -8,7 +8,7 @@ import android.widget.TextView;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
@@ -82,7 +82,7 @@ public class LocusOwnerDetailActivity extends BaseActivity {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.base_info));
 
-        userInfoVm = ViewModelProviders.of(this).get(UserInfoVm.class);
+        userInfoVm = getViewModel(UserInfoVm.class);
         userInfoVm.uid = getIntent().getIntExtra(CustomConfig.UID, 0);
         userInfoVm.informationLiveData.observe(this, userInfoBean -> {
             tvName.setText(userInfoBean.getUsername());

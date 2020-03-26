@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+;
 
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.StringUtils;
@@ -112,7 +112,7 @@ public class FindLogisticsDetailActivity extends BaseActivity {
 
         id = getIntent().getIntExtra("id", 0);
 
-        vm = ViewModelProviders.of(this).get(DemandReleaseVm.class);
+        vm = getViewModel(DemandReleaseVm.class);
 
         vm.needInfoLiveData.observe(this, result -> {
             tvMaterialName.setText(result.materialName);

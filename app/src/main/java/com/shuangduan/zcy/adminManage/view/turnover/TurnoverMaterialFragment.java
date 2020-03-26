@@ -15,7 +15,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -154,7 +154,7 @@ public class TurnoverMaterialFragment extends BaseNoRefreshFragment {
                 , SPUtils.getInstance().getInt(CustomConfig.CONSTRUCTION_DELETE,0),manage_status);
         recyclerView.setAdapter(turnoverAdapter);
 
-        turnoverVm = ViewModelProviders.of(this).get(TurnoverVm.class);
+        turnoverVm = mActivity.getViewModel(TurnoverVm.class);
 
         //获取周转材料列表数据
         turnoverVm.turnoverLiveData.observe(this,turnoverBean -> {
@@ -256,7 +256,7 @@ public class TurnoverMaterialFragment extends BaseNoRefreshFragment {
         });
 
         //获取省市数据
-        areaVm = ViewModelProviders.of(this).get(MultiAreaVm.class);
+        areaVm = mActivity.getViewModel(MultiAreaVm.class);
         areaVm.provinceLiveData.observe(this, provinceBeans -> {
             provinceList = provinceBeans;
             provinceAdapter.setNewData(provinceList);

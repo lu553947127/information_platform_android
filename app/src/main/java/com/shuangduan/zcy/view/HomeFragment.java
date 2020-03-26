@@ -148,17 +148,14 @@ public class HomeFragment extends BaseFragment {
         homeNeedVm = mActivity.getViewModel(HomeNeedVm.class);
         demandRelationshipVm = mActivity.getViewModel(DemandRelationshipVm.class);
 
-//        homeVm = ViewModelProviders.of(this).get(HomeVm.class);
-//        homeNeedVm = ViewModelProviders.of(this).get(HomeNeedVm.class);
-//        demandRelationshipVm = ViewModelProviders.of(mActivity).get(DemandRelationshipVm.class);
-
 
         getChangeLister();
 
-        homeNeedVm.HomeNeedVm(getActivity(), view, viewPager, tabLayout, materialIndicator, demandRelationshipVm);
+        homeNeedVm.HomeNeedVm(mActivity, view, viewPager, tabLayout, materialIndicator, demandRelationshipVm);
 
         //快讯滚动标题返回数据
         homeVm.pushLiveData.observe(this, homePushBeans -> {
+            LogUtils.e("pushLiveData");
             List<String> marquee = new ArrayList<>();
             for (HomePushBean bean : homePushBeans) {
                 marquee.add(bean.getTitle());
@@ -416,6 +413,7 @@ public class HomeFragment extends BaseFragment {
         homeNeedVm.recyclerView1.stop();
         homeNeedVm.recyclerView2.stop();
         homeNeedVm.recyclerView3.stop();
+
     }
 
     @Override
@@ -427,6 +425,17 @@ public class HomeFragment extends BaseFragment {
             toolbar.setBackgroundColor(sColor);
             toolbar.setVisibility(View.VISIBLE);
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        homeVm.pushLiveData.removeObservers(this);
+        homeVm.bannerLiveData.removeObservers(this);
+        homeVm.listLiveData.removeObservers(this);
+        homeVm.versionUpgradesLiveData.removeObservers(this);
+
+
+        super.onDestroyView();
     }
 
     @Override

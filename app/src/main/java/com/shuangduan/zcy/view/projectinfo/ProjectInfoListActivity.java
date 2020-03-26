@@ -15,7 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -130,10 +130,10 @@ public class ProjectInfoListActivity extends BaseActivity implements EmptyViewFa
         tvBarTitle.setText(getResources().getStringArray(R.array.classify)[0]);
         ivBarRight.setImageResource(R.drawable.icon_search);
         tvBarRight.setVisibility(View.GONE);
-        projectListVm = ViewModelProviders.of(this).get(ProjectListVm.class);
-        areaVm = ViewModelProviders.of(this).get(MultiAreaVm.class);
-        stageVm = ViewModelProviders.of(this).get(MultiStageVm.class);
-        typeVm = ViewModelProviders.of(this).get(MultiTypeVm.class);
+        projectListVm = getViewModel(ProjectListVm.class);
+        areaVm = getViewModel(MultiAreaVm.class);
+        stageVm = getViewModel(MultiStageVm.class);
+        typeVm = getViewModel(MultiTypeVm.class);
         initArea();
         initStage();
         initTypes();

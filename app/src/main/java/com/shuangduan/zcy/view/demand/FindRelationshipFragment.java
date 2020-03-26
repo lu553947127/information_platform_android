@@ -6,7 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.ViewModelProviders;
+;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -82,7 +82,7 @@ public class FindRelationshipFragment extends BaseLazyFragment {
             ActivityUtils.startActivity(bundle, FindRelationshipDetailActivity.class);
         });
 
-        demandRelationshipVm = ViewModelProviders.of(mActivity).get(DemandRelationshipVm.class);
+        demandRelationshipVm = mActivity.getViewModel(DemandRelationshipVm.class);
         demandRelationshipVm.relationshipLiveData.observe(this, relationshipBean -> {
             isInited = true;
             if (relationshipBean.getPage() == 1) {

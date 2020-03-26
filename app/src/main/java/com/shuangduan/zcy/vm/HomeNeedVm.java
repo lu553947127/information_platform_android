@@ -1,7 +1,6 @@
 package com.shuangduan.zcy.vm;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,9 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.viewpager.widget.ViewPager;
 
@@ -22,12 +19,13 @@ import com.shuangduan.zcy.adapter.FindRelationshipAdapter;
 import com.shuangduan.zcy.adapter.FindSubstanceAdapter;
 import com.shuangduan.zcy.adapter.XTabLayoutAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
+import com.shuangduan.zcy.base.BaseActivity;
 import com.shuangduan.zcy.base.BaseViewModel;
 import com.shuangduan.zcy.model.bean.DemandBuyerBean;
 import com.shuangduan.zcy.model.bean.DemandRelationshipBean;
 import com.shuangduan.zcy.model.bean.DemandSubstanceBean;
-import com.shuangduan.zcy.view.mine.demand.FindBuyerDetailActivity;
 import com.shuangduan.zcy.view.demand.FindRelationshipDetailActivity;
+import com.shuangduan.zcy.view.mine.demand.FindBuyerDetailActivity;
 import com.shuangduan.zcy.view.mine.demand.FindSubstanceDetailActivity;
 import com.shuangduan.zcy.weight.AutoScrollRecyclerView;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
@@ -59,7 +57,7 @@ public class HomeNeedVm extends BaseViewModel {
     private List<View> viewList = new ArrayList<>();
     private List<String> titleList = new ArrayList<>();
 
-    public void HomeNeedVm(Context context, View views, ViewPager viewPager, XTabLayout tabLayout, MaterialIndicator materialIndicator
+    public void HomeNeedVm(BaseActivity activity, View views, ViewPager viewPager, XTabLayout tabLayout, MaterialIndicator materialIndicator
             , DemandRelationshipVm demandRelationshipVm) {
         if (titleList != null && titleList.size() > 0) {
             titleList.clear();
@@ -68,9 +66,9 @@ public class HomeNeedVm extends BaseViewModel {
             viewList.clear();
         }
         views.getBackground().mutate().setAlpha(10);
-        View view1 = LayoutInflater.from(context).inflate(R.layout.fragment_demand_information, null, false);
-        View view2 = LayoutInflater.from(context).inflate(R.layout.fragment_demand_information, null, false);
-        View view3 = LayoutInflater.from(context).inflate(R.layout.fragment_demand_information, null, false);
+        View view1 = LayoutInflater.from(activity).inflate(R.layout.fragment_demand_information, null, false);
+        View view2 = LayoutInflater.from(activity).inflate(R.layout.fragment_demand_information, null, false);
+        View view3 = LayoutInflater.from(activity).inflate(R.layout.fragment_demand_information, null, false);
         titleList.add("找资源");
         titleList.add("找物资");
         titleList.add("找买家");
@@ -99,18 +97,18 @@ public class HomeNeedVm extends BaseViewModel {
         recyclerView2.setNestedScrollingEnabled(false);
         recyclerView3.setNestedScrollingEnabled(false);
 
-        recyclerView1.setLayoutManager(new LinearLayoutManager(context));
-        recyclerView1.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
+        recyclerView1.setLayoutManager(new LinearLayoutManager(activity));
+        recyclerView1.addItemDecoration(new DividerItemDecoration(activity, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
         FindRelationshipAdapter relationshipAdapter = new FindRelationshipAdapter(R.layout.item_demand_relationship, null);
         recyclerView1.setAdapter(relationshipAdapter);
 
-        recyclerView2.setLayoutManager(new LinearLayoutManager(context));
-        recyclerView2.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
+        recyclerView2.setLayoutManager(new LinearLayoutManager(activity));
+        recyclerView2.addItemDecoration(new DividerItemDecoration(activity, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
         FindSubstanceAdapter substanceAdapter = new FindSubstanceAdapter(R.layout.item_demand_substance, null);
         recyclerView2.setAdapter(substanceAdapter);
 
-        recyclerView3.setLayoutManager(new LinearLayoutManager(context));
-        recyclerView3.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
+        recyclerView3.setLayoutManager(new LinearLayoutManager(activity));
+        recyclerView3.addItemDecoration(new DividerItemDecoration(activity, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
         DemandBuyerAdapter buyerAdapter = new DemandBuyerAdapter(R.layout.item_demand_buyer, null);
         recyclerView3.setAdapter(buyerAdapter);
 
@@ -136,12 +134,12 @@ public class HomeNeedVm extends BaseViewModel {
         });
 
         demandRelationshipVm.getRelationship();
-        DemandSubstanceVm demandSubstanceVm = ViewModelProviders.of((FragmentActivity) context).get(DemandSubstanceVm.class);
+        DemandSubstanceVm demandSubstanceVm = activity.getViewModel(DemandSubstanceVm.class);
         demandSubstanceVm.getSubstance();
-        DemandBuyerVm demandBuyerVm = ViewModelProviders.of((FragmentActivity) context).get(DemandBuyerVm.class);
+        DemandBuyerVm demandBuyerVm = activity.getViewModel(DemandBuyerVm.class);
         demandBuyerVm.getBuyer();
 
-        demandRelationshipVm.relationshipLiveData.observe((LifecycleOwner) context, relationshipBean -> {
+        demandRelationshipVm.relationshipLiveData.observe((LifecycleOwner) activity, relationshipBean -> {
             if (relationshipBean.getList() != null && relationshipBean.getList().size() != 0) {
                 cl_empty1.setVisibility(View.GONE);
                 if (relationshipBean.getPage() == 1) {
@@ -155,7 +153,7 @@ public class HomeNeedVm extends BaseViewModel {
                 tv_empty1.setText(R.string.empty_pull_strings_info);
             }
         });
-        demandSubstanceVm.substanceLiveData.observe((LifecycleOwner) context, demandSubstanceBean -> {
+        demandSubstanceVm.substanceLiveData.observe((LifecycleOwner) activity, demandSubstanceBean -> {
             if (demandSubstanceBean.getList() != null && demandSubstanceBean.getList().size() != 0) {
                 cl_empty2.setVisibility(View.GONE);
                 if (demandSubstanceBean.getPage() == 1) {
@@ -169,7 +167,7 @@ public class HomeNeedVm extends BaseViewModel {
                 tv_empty2.setText(R.string.empty_substance_info);
             }
         });
-        demandBuyerVm.buyerLiveData.observe((LifecycleOwner) context, demandBuyerBean -> {
+        demandBuyerVm.buyerLiveData.observe((LifecycleOwner) activity, demandBuyerBean -> {
             if (demandBuyerBean.getList() != null && demandBuyerBean.getList().size() != 0) {
                 cl_empty3.setVisibility(View.GONE);
                 if (demandBuyerBean.getPage() == 1) {

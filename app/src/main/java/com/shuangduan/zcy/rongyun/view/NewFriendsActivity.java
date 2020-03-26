@@ -6,7 +6,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -72,7 +72,7 @@ public class NewFriendsActivity extends BaseActivity implements EmptyViewFactory
 
         tvBarTitle.setText(getString(R.string.friends_new_notice));
 
-        imAddVm = ViewModelProviders.of(this).get(IMAddVm.class);
+        imAddVm = getViewModel(IMAddVm.class);
 
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));

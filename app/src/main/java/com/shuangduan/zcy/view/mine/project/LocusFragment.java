@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.ViewModelProviders;
+;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -71,7 +71,7 @@ public class LocusFragment extends BaseLazyFragment {
             ActivityUtils.startActivity(bundle, MineLocusActivity.class);
         });
 
-        mineReleaseVm = ViewModelProviders.of(this).get(MineReleaseVm.class);
+        mineReleaseVm = mActivity.getViewModel(MineReleaseVm.class);
         mineReleaseVm.trackLiveData.observe(this, locusMineBean -> {
             isInited = true;
             if (locusMineBean.getPage() == 1) {

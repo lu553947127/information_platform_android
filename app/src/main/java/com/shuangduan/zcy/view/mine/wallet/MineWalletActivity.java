@@ -5,7 +5,7 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.lifecycle.ViewModelProviders;
+;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -57,7 +57,7 @@ public class MineWalletActivity extends BaseActivity {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
-        userInfoVm = ViewModelProviders.of(this).get(UserInfoVm.class);
+        userInfoVm = getViewModel(UserInfoVm.class);
         userInfoVm.getInfoLiveData.observe(this, userInfoBean -> {
             tvBalance.setNumberString(userInfoBean.getCoin());
             tvBalance.setDuration(500);

@@ -6,7 +6,6 @@ import android.widget.EditText;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.SPUtils;
@@ -61,7 +60,7 @@ public class UpdateNameActivity extends BaseActivity {
         String username = SPUtils.getInstance().getString(SpConfig.USERNAME);
         edtName.setText(username);
 
-        userInfoVm = ViewModelProviders.of(this).get(UserInfoVm.class);
+        userInfoVm = getViewModel(UserInfoVm.class);
         userInfoVm.infoLiveData.observe(this, s -> {
             SPUtils.getInstance().put(SpConfig.USERNAME, edtName.getText().toString());
             EventBus.getDefault().post(new UserNameEvent(edtName.getText().toString()));

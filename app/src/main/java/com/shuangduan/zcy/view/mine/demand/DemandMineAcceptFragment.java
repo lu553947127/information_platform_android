@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -76,7 +75,7 @@ public class DemandMineAcceptFragment extends BaseLazyFragment implements EmptyV
             ActivityUtils.startActivity(bundle, FindRelationshipAcceptDetailActivity.class);
         });
 
-        demandRelationshipVm = ViewModelProviders.of(mActivity).get(DemandRelationshipVm.class);
+        demandRelationshipVm = mActivity.getViewModel(DemandRelationshipVm.class);
         demandRelationshipVm.acceptLiveData.observe(this, demandRelationshipBean -> {
             isInited = true;
             if (demandRelationshipBean.getPage() == 1) {

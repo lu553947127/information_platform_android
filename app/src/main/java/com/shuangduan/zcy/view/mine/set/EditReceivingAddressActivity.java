@@ -9,7 +9,6 @@ import android.widget.TextView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -101,10 +100,10 @@ public class EditReceivingAddressActivity extends BaseActivity {
 
         tvBarRight.setText(type == 0 ? "" : "删除");
 
-        vm = ViewModelProviders.of(this).get(AddressVm.class);
+        vm = getViewModel(AddressVm.class);
 
         //获取省市数据
-        areaVm = ViewModelProviders.of(this).get(MultiAreaVm.class);
+        areaVm = getViewModel(MultiAreaVm.class);
 
         if (mAddress != null) {
             areaVm.provinceResult = mAddress.province;

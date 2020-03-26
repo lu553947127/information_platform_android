@@ -11,7 +11,6 @@ import android.widget.TextView;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -142,7 +141,7 @@ public class MaterialDetailActivity extends BaseActivity {
         ivBarRight.setImageResource(R.drawable.icon_share);
         tvBarRight.setVisibility(View.GONE);
 
-        materialDetailVm = ViewModelProviders.of(this).get(MaterialDetailVm.class);
+        materialDetailVm = getViewModel(MaterialDetailVm.class);
         materialDetailVm.id = getIntent().getIntExtra(CustomConfig.MATERIAL_ID, 0);
         materialDetailVm.detailLiveData.observe(this, materialDetailBean -> {
             if (materialDetailBean == null) return;
@@ -241,11 +240,11 @@ public class MaterialDetailActivity extends BaseActivity {
         materialDetailVm.getDetail(getIntent().getIntExtra(CustomConfig.MATERIAL_ID, 0));
 
         //获取好友列表
-        IMAddVm imAddVm = ViewModelProviders.of(this).get(IMAddVm.class);
+        IMAddVm imAddVm = getViewModel(IMAddVm.class);
         imAddVm.friendListLiveData.observe(this, imFriendListBean -> imFriendList = imFriendListBean.getList());
         imAddVm.friendList(4);
         //获取分享信息
-        ShareVm shareVm = ViewModelProviders.of(this).get(ShareVm.class);
+        ShareVm shareVm = getViewModel(ShareVm.class);
         shareVm.shareLiveData.observe(this, item -> {
             this.shareBean = item;
             ShareManage.getNetworkBitmap(item.getImage());

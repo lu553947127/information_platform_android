@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
@@ -90,7 +90,7 @@ public class PeopleInfoActivity extends BaseActivity {
         tvBarTitle.setText(getString(R.string.base_info));
         int uid = getIntent().getIntExtra(CustomConfig.UID, 0);
 
-        incomePeopleVm = ViewModelProviders.of(this).get(IncomePeopleVm.class);
+        incomePeopleVm = getViewModel(IncomePeopleVm.class);
         incomePeopleVm.uid = uid;
         incomePeopleVm.detailLiveData.observe(this, peopleDetailBean -> {
             tvName.setText(peopleDetailBean.getUsername());

@@ -5,7 +5,6 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -67,7 +66,7 @@ public class AboutOursActivity extends BaseActivity {
 
         tvAppVersion.setText(String.format(getString(R.string.format_version_name), VersionUtils.getVerName(this)));
 
-        HomeVm homeVm = ViewModelProviders.of(this).get(HomeVm.class);
+        HomeVm homeVm = getViewModel(HomeVm.class);
         homeVm.listLiveData.observe(this, homeListBean -> {
             if (incomeStatementAdapter == null){
                 rvIncomeStatement.setLayoutManager(new LinearLayoutManager(this));

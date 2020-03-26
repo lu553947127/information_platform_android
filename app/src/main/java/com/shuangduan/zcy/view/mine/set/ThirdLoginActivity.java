@@ -6,7 +6,6 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.StringUtils;
@@ -68,7 +67,7 @@ public class ThirdLoginActivity extends BaseActivity {
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText("社交账号绑定");
-        loginVm = ViewModelProviders.of(this).get(LoginVm.class);
+        loginVm = getViewModel(LoginVm.class);
 
         //获取微信绑定信息返回结果
         loginVm.wxLoginLiveData.observe(this,wxUserInfoBean -> {

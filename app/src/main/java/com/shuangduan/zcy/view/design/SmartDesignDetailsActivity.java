@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -86,7 +85,7 @@ public class SmartDesignDetailsActivity extends BaseActivity {
 
         int id = getIntent().getIntExtra("id", 0);
 
-        vm = ViewModelProviders.of(this).get(SmartDesignVm.class);
+        vm = getViewModel(SmartDesignVm.class);
 
         vm.orderDetailsLiveData.observe(this, result -> {
             this.orderDetails = result;

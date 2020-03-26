@@ -11,7 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
-import androidx.lifecycle.ViewModelProviders;
+;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -134,7 +134,7 @@ public class FindLogisticsActivity extends BaseActivity {
         c = Calendar.getInstance();
 
 
-        vm = ViewModelProviders.of(this).get(DemandReleaseVm.class);
+        vm = getViewModel(DemandReleaseVm.class);
 
         vm.startTime = DateUtils.getTodayDate(c);
         receiveTime = DateUtils.getTodayDate(c);

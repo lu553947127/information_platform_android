@@ -5,7 +5,7 @@ import android.view.View;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -63,7 +63,7 @@ public class ContactTypeActivity extends BaseActivity {
         tvBarTitle.setText(getString(R.string.contact_type));
         tvBarRight.setText(R.string.save);
 
-        releaseVm = ViewModelProviders.of(this).get(ReleaseVm.class);
+        releaseVm = getViewModel(ReleaseVm.class);
         releaseVm.contactTypeLiveData.observe(this, contactTypeBeans -> {
             if (contactTypeAdapter == null){
                 rv.setLayoutManager(new LinearLayoutManager(this));

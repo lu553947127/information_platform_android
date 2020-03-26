@@ -6,7 +6,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.ViewModelProviders;
+;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -80,7 +80,7 @@ public class RecruitSearchFragment extends BaseLazyFragment {
             ActivityUtils.startActivity(bundle, RecruitDetailActivity.class);
         });
 
-        searchVm = ViewModelProviders.of(mActivity).get(SearchVm.class);
+        searchVm = mActivity.getViewModel(SearchVm.class);
         searchVm.searchRecruitLiveData.observe(this, recruitBean -> {
             recruitAdapter.setKeyword(searchVm.keyword);
             if (recruitBean.getPage() == 1) {

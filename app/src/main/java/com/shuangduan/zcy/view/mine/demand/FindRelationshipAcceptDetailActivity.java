@@ -6,8 +6,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
-import androidx.lifecycle.ViewModelProviders;
+;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
@@ -69,9 +70,11 @@ public class FindRelationshipAcceptDetailActivity extends BaseActivity {
         BarUtils.setStatusBarColorRes(fakeStatusBar, getResources().getColor(R.color.colorPrimary));
         tvBarTitle.setText(getString(R.string.find_relationship_detail));
 
-        DemandRelationshipVm demandRelationshipVm = ViewModelProviders.of(this).get(DemandRelationshipVm.class);
+        DemandRelationshipVm demandRelationshipVm = getViewModel(DemandRelationshipVm.class);
         demandRelationshipVm.relationships_reply_id = getIntent().getIntExtra(CustomConfig.DEMAND_ID, 0);
         demandRelationshipVm.relationshipAcceptDetailLiveData.observe(this, findRelationshipAcceptBean -> {
+
+
             tvTitle.setText(findRelationshipAcceptBean.getTitle());
             tvCommission.setText(String.format(getString(R.string.format_amount_bi), findRelationshipAcceptBean.getPrice()));
             tvTime.setText(String.format(getString(R.string.format_validity_period_less), findRelationshipAcceptBean.getStart_time(), findRelationshipAcceptBean.getEnd_time()));

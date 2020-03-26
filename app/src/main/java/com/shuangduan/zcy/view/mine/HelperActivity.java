@@ -6,7 +6,6 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -68,7 +67,7 @@ public class HelperActivity extends BaseActivity {
         refresh.setEnableLoadMore(false);
         refresh.setEnableRefresh(false);
 
-        HomeVm homeVm = ViewModelProviders.of(this).get(HomeVm.class);
+        HomeVm homeVm = getViewModel(HomeVm.class);
         homeVm.helpLiveData.observe(this,helpBean -> {
             adapter.setNewData(helpBean.getList());
             String str="关于易基建平台的<font color=\"#6a5ff8\">"+helpBean.getCount()+"</font>个问题";

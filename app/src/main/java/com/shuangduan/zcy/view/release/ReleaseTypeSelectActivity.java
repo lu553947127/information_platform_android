@@ -5,7 +5,7 @@ import android.view.View;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -66,7 +66,7 @@ public class ReleaseTypeSelectActivity extends BaseActivity {
         tvBarTitle.setText(getString(R.string.project_types));
         tvBarRight.setText(getString(R.string.save));
 
-        typesVm = ViewModelProviders.of(this).get(TypesVm.class);
+        typesVm = getViewModel(TypesVm.class);
         rvStage.setLayoutManager(new LinearLayoutManager(this));
         rvStage.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));
         SelectorFirstAdapter typeFirstAdapter = new SelectorFirstAdapter(R.layout.item_province, null);

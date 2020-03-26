@@ -7,7 +7,6 @@ import android.view.View;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -64,7 +63,7 @@ public class ForgetPwdActivity extends BaseActivity {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.forget_pwd_title));
 
-        loginVm = ViewModelProviders.of(this).get(LoginVm.class);
+        loginVm = getViewModel(LoginVm.class);
         loginVm.timeLiveDataLiveData.observe(this, aLong -> {
             if (aLong == -1) {
                 //重新获取

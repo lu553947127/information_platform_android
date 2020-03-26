@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
@@ -81,7 +81,7 @@ public class SearchActivity extends BaseActivity {
 
         project_type = getIntent().getStringExtra(CustomConfig.PROJECT_TYPE);
 
-        searchVm = ViewModelProviders.of(this).get(SearchVm.class);
+        searchVm = getViewModel(SearchVm.class);
 
         //热门搜索列表返回数据
         searchVm.hotLiveData.observe(this, list -> {

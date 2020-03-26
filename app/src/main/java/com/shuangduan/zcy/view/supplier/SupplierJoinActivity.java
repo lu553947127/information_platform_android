@@ -16,7 +16,7 @@ import android.widget.TextView;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -138,7 +138,7 @@ public class SupplierJoinActivity extends BaseActivity {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.supplier_join));
 
-        supplierVm = ViewModelProviders.of(this).get(SupplierVm.class);
+        supplierVm = getViewModel(SupplierVm.class);
         supplierVm.joinLiveData.observe(this, o -> {
             ToastUtils.showShort(getString(R.string.supplier_join_success));
             finish();
@@ -164,7 +164,7 @@ public class SupplierJoinActivity extends BaseActivity {
 
     private void initPhoto() {
         rxPermissions = new RxPermissions(this);
-        permissionVm = ViewModelProviders.of(this).get(PermissionVm.class);
+        permissionVm = getViewModel(PermissionVm.class);
         permissionVm.getLiveData().observe(this, integer -> {
             switch (integer) {
                 case PermissionVm.PERMISSION_CAMERA:
@@ -201,7 +201,7 @@ public class SupplierJoinActivity extends BaseActivity {
                     break;
             }
         });
-        uploadPhotoVm = ViewModelProviders.of(this).get(UploadPhotoVm.class);
+        uploadPhotoVm = getViewModel(UploadPhotoVm.class);
 
         uploadPhotoVm.uploadLiveData.observe(this, uploadBean -> {
             switch (type){
@@ -231,7 +231,7 @@ public class SupplierJoinActivity extends BaseActivity {
             }
         });
 
-        areaVm = ViewModelProviders.of(this).get(MultiAreaVm.class);
+        areaVm = getViewModel(MultiAreaVm.class);
         areaVm.provinceLiveData.observe(this, provinceBeans -> {
             provinceList = provinceBeans;
             provinceAdapter.setNewData(provinceList);

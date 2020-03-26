@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -250,7 +250,7 @@ public class SelectTypeActivity extends BaseActivity {
         tvAll.setText("全部材料");
         etSearch.setHint("请输入材料名称");
         llType.setVisibility(View.VISIBLE);
-        turnoverVm = ViewModelProviders.of(this).get(TurnoverVm.class);
+        turnoverVm = getViewModel(TurnoverVm.class);
         turnoverVm.constructionCategoryHistory();
         turnoverVm.constructionCategoryParent();
         turnoverVm.constructionCategoryList("",0);
@@ -291,7 +291,7 @@ public class SelectTypeActivity extends BaseActivity {
         tvAll.setText("全部设备");
         etSearch.setHint("请输入设备名称");
         llType.setVisibility(View.VISIBLE);
-        deviceVm = ViewModelProviders.of(this).get(DeviceVm.class);
+        deviceVm = getViewModel(DeviceVm.class);
         deviceVm.equipmentCategoryHistory();
         deviceVm.equipmentCategoryParent();
         deviceVm.equipmentCategoryList("",0);

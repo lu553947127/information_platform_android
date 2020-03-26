@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+;
 
 import com.blankj.utilcode.util.BarUtils;
 import com.shuangduan.zcy.R;
@@ -59,7 +59,7 @@ public class RechargeResultActivity extends BaseActivity {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.pay));
 
-        rechargeVm = ViewModelProviders.of(this).get(RechargeVm.class);
+        rechargeVm = getViewModel(RechargeVm.class);
         rechargeVm.resultLiveData.observe(this, rechargeResultBean -> {
             tvPayResult.setText(rechargeResultBean.getStatus() == 1? getString(R.string.recharge_success):getString(R.string.recharge_fail));
             tvPayStyle.setText(getIntent().getIntExtra(CustomConfig.PAY_STYLE, 2) == CustomConfig.PAY_STYLE_ALIPAY? getString(R.string.ali_pay):getString(R.string.wechat_pay));

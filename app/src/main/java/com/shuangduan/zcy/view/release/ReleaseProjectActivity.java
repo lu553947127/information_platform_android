@@ -19,7 +19,7 @@ import android.widget.TextView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.widget.NestedScrollView;
-import androidx.lifecycle.ViewModelProviders;
+;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -210,7 +210,7 @@ public class ReleaseProjectActivity extends BaseActivity {
         initPhoto();
         photoSet();
 
-        releaseVm = ViewModelProviders.of(this).get(ReleaseVm.class);
+        releaseVm = getViewModel(ReleaseVm.class);
         releaseVm.contactLiveData.observe(this, contactBeans -> {
             if (releaseContactAdapter == null) {
                 rvContact.setLayoutManager(new LinearLayoutManager(this));
@@ -345,7 +345,7 @@ public class ReleaseProjectActivity extends BaseActivity {
 
     private void initPhoto() {
         rxPermissions = new RxPermissions(this);
-        permissionVm = ViewModelProviders.of(this).get(PermissionVm.class);
+        permissionVm = getViewModel(PermissionVm.class);
         permissionVm.getLiveData().observe(this, integer -> {
             switch (integer) {
                 case PermissionVm.PERMISSION_CAMERA:
@@ -382,7 +382,7 @@ public class ReleaseProjectActivity extends BaseActivity {
                     break;
             }
         });
-        uploadPhotoVm = ViewModelProviders.of(this).get(UploadPhotoVm.class);
+        uploadPhotoVm = getViewModel(UploadPhotoVm.class);
         uploadPhotoVm.uploadLiveData.observe(this, uploadBean -> {
             releaseVm.addImage(uploadBean.getImage_id());
         });

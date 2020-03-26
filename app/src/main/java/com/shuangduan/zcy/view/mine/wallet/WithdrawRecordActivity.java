@@ -6,7 +6,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -78,7 +78,7 @@ public class WithdrawRecordActivity extends BaseActivity {
             ActivityUtils.startActivity(bundle, WithdrawDetailActivity.class);
         });
 
-        withdrawVm = ViewModelProviders.of(this).get(WithdrawVm.class);
+        withdrawVm = getViewModel(WithdrawVm.class);
         withdrawVm.recordLiveData.observe(this, withdrawRecordBean -> {
             if (withdrawRecordBean.getPage() == 1) {
                 adapter.setNewData(withdrawRecordBean.getList());

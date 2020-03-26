@@ -6,7 +6,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -66,7 +66,7 @@ public class IncomeReleaseActivity extends BaseActivity implements EmptyViewFact
 
         View emptyView = emptyViewFactory.createEmptyView(R.drawable.icon_empty_income, R.string.empty_project_income_info, R.string.to_release, this);
 
-        incomeReleaseVm = ViewModelProviders.of(this).get(IncomeReleaseVm.class);
+        incomeReleaseVm = getViewModel(IncomeReleaseVm.class);
 
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));

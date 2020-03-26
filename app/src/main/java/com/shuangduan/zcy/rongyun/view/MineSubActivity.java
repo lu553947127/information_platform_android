@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -83,7 +83,7 @@ public class MineSubActivity extends BaseActivity {
 
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
 
-        mineSubVm = ViewModelProviders.of(this).get(MineSubVm.class);
+        mineSubVm = getViewModel(MineSubVm.class);
 
         switch (getIntent().getIntExtra(CustomConfig.NEWS_TYPE, 0)) {
             case SUBSCRIBE://订阅消息

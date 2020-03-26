@@ -6,7 +6,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -70,7 +70,7 @@ public class IncomeMsgActivity extends BaseActivity implements EmptyViewFactory.
 
         tvBarTitle.setText(getString(R.string.income_msg));
 
-        incomeReleaseVm = ViewModelProviders.of(this).get(IncomeMsgVm.class);
+        incomeReleaseVm = getViewModel(IncomeMsgVm.class);
 
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));

@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.ViewModelProviders;
+;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -75,7 +75,7 @@ public class FindMineBuyerFragment extends BaseLazyFragment implements EmptyView
             ActivityUtils.startActivity(bundle, FindBuyerDetailActivity.class);
         });
 
-        demandBuyerVm = ViewModelProviders.of(mActivity).get(DemandBuyerVm.class);
+        demandBuyerVm = mActivity.getViewModel(DemandBuyerVm.class);
         demandBuyerVm.isMy = 1;
         demandBuyerVm.buyerLiveData.observe(this, demandBuyerBean -> {
             isInited = true;

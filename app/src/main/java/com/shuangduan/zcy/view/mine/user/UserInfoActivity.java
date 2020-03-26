@@ -12,7 +12,6 @@ import android.widget.TextView;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
@@ -125,8 +124,8 @@ public class UserInfoActivity extends BaseActivity {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.base_info));
 
-        uploadPhotoVm = ViewModelProviders.of(this).get(UploadPhotoVm.class);
-        userInfoVm = ViewModelProviders.of(this).get(UserInfoVm.class);
+        uploadPhotoVm = getViewModel(UploadPhotoVm.class);
+        userInfoVm = getViewModel(UserInfoVm.class);
 
         userInfoVm.uid = getIntent().getIntExtra(CustomConfig.UID, 0);
         if (SPUtils.getInstance().getInt(SpConfig.USER_ID) != userInfoVm.uid) {
@@ -227,7 +226,7 @@ public class UserInfoActivity extends BaseActivity {
         });
 
         rxPermissions = new RxPermissions(this);
-        permissionVm = ViewModelProviders.of(this).get(PermissionVm.class);
+        permissionVm = getViewModel(PermissionVm.class);
         permissionVm.getLiveData().observe(this, integer -> {
             switch (integer) {
                 case PermissionVm.PERMISSION_CAMERA:

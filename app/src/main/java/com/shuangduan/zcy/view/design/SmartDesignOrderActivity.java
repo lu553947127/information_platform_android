@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -92,7 +92,7 @@ public class SmartDesignOrderActivity extends BaseActivity implements EmptyViewF
         });
 
 
-        vm = ViewModelProviders.of(this).get(SmartDesignVm.class);
+        vm = getViewModel(SmartDesignVm.class);
 
         refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override

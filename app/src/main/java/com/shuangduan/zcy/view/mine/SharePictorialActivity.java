@@ -9,7 +9,6 @@ import android.widget.RelativeLayout;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
@@ -69,7 +68,7 @@ public class SharePictorialActivity extends BaseActivity {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.share_pictorial));
 
-        permissionVm = ViewModelProviders.of(this).get(PermissionVm.class);
+        permissionVm = getViewModel(PermissionVm.class);
         permissionVm.getLiveData().observe(this, integer -> {
             if (integer == PermissionVm.PERMISSION_STORAGE){
 //                // 获取图片某布局

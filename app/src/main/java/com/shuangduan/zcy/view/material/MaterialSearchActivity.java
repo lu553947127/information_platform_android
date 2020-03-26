@@ -2,8 +2,6 @@ package com.shuangduan.zcy.view.material;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -12,7 +10,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,7 +20,6 @@ import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.adapter.SearchMaterialAdapter;
 import com.shuangduan.zcy.app.CustomConfig;
 import com.shuangduan.zcy.base.BaseActivity;
-import com.shuangduan.zcy.listener.TextWatcherWrapper;
 import com.shuangduan.zcy.model.api.PageState;
 import com.shuangduan.zcy.model.event.MaterialEvent;
 import com.shuangduan.zcy.model.event.SupplierEvent;
@@ -79,7 +75,7 @@ public class MaterialSearchActivity extends BaseActivity {
         searchType = getIntent().getIntExtra(CustomConfig.SEARCH_MATERIAL_TYPE, -1);
         materialsType = getIntent().getIntExtra(CustomConfig.MATERIALS_TYPE, 0);
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
-        SearchVm searchVm = ViewModelProviders.of(this).get(SearchVm.class);
+        SearchVm searchVm = getViewModel(SearchVm.class);
 
 
         rvMaterial.setLayoutManager(new LinearLayoutManager(this));

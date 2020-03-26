@@ -5,7 +5,7 @@ import android.view.View;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -61,7 +61,7 @@ public class ReleaseStageSelectActivity extends BaseActivity {
         SelectorFirstAdapter stageFirstAdapter = new SelectorFirstAdapter(R.layout.item_province, null);
         rvStage.setAdapter(stageFirstAdapter);
 
-        stageVm = ViewModelProviders.of(this).get(StageVm.class);
+        stageVm = getViewModel(StageVm.class);
         //阶段点击事件
         stageFirstAdapter.setOnItemClickListener((adapter, view1, position) -> {
             stageVm.clickFirst(position);

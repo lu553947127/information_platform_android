@@ -4,7 +4,7 @@ import android.os.Bundle;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
+;
 import androidx.viewpager.widget.ViewPager;
 
 import com.blankj.utilcode.util.BarUtils;
@@ -56,7 +56,7 @@ public class HeadlinesActivity extends BaseActivity {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.headlines));
 
-        HeadlinesVm headlinesVm = ViewModelProviders.of(this).get(HeadlinesVm.class);
+        HeadlinesVm headlinesVm = getViewModel(HeadlinesVm.class);
         headlinesVm.headlinesGetCategoryLiveData.observe(this, headlinesGetCategoryBean -> {
             headlinesGetCategoryBean.add(0,new HeadlinesGetCategoryBean(0,"全部"));
             String[] titleList = new String[headlinesGetCategoryBean.size()];

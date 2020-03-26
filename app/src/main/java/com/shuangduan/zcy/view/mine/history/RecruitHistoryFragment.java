@@ -3,7 +3,7 @@ package com.shuangduan.zcy.view.mine.history;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.lifecycle.ViewModelProviders;
+;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -69,7 +69,7 @@ public class RecruitHistoryFragment extends BaseLazyFragment implements EmptyVie
             ActivityUtils.startActivity(bundle, RecruitDetailActivity.class);
         });
 
-        readHistoryVm = ViewModelProviders.of(this).get(ReadHistoryVm.class);
+        readHistoryVm = mActivity.getViewModel(ReadHistoryVm.class);
         readHistoryVm.recruitHistoryLiveData.observe(this, readHistoryBeans -> {
             isInited = true;
             readHistoryAdapter.setNewData(readHistoryBeans);

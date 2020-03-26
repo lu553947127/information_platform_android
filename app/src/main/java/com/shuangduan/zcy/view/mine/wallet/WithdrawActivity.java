@@ -11,7 +11,7 @@ import android.widget.TextView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
-import androidx.lifecycle.ViewModelProviders;
+;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
@@ -77,7 +77,7 @@ public class WithdrawActivity extends BaseActivity {
         AndroidBug5497Workaround.assistActivity(findViewById(android.R.id.content));
         edtMoney.addTextChangedListener(new MoneyTextWatcher(edtMoney).setDigits(2));
 
-        withdrawVm = ViewModelProviders.of(this).get(WithdrawVm.class);
+        withdrawVm = getViewModel(WithdrawVm.class);
         withdrawVm.withdrawLiveData.observe(this, withdrawBean -> {
             tvWithdrawalAmount.setText(String.format(getString(R.string.format_withdraw_now), withdrawBean.getCoin()));
             coin= Double.parseDouble(withdrawBean.getCoin());

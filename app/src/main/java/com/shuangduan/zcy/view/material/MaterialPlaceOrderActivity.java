@@ -15,10 +15,8 @@ import android.widget.TextView;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.ActivityUtils;
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.TimeUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -153,8 +151,8 @@ public class MaterialPlaceOrderActivity extends BaseActivity {
     protected void initDataAndEvent(Bundle savedInstanceState) {
 
         tvBarTitle.setText(getString(R.string.material_place_order));
-        materialDetailVm = ViewModelProviders.of(this).get(MaterialDetailVm.class);
-        addressVm = ViewModelProviders.of(this).get(AddressVm.class);
+        materialDetailVm = getViewModel(MaterialDetailVm.class);
+        addressVm = getViewModel(AddressVm.class);
         materialDetailVm.id = getIntent().getIntExtra(CustomConfig.MATERIAL_ID, 0);
         type = getIntent().getIntExtra("type", 0);
 
@@ -410,7 +408,7 @@ public class MaterialPlaceOrderActivity extends BaseActivity {
                 ToastUtils.showShort(getString(R.string.no_mun));
                 return;
             }
-            if(!KeyboardUtil.isDouble(xEditText.getText().toString())&&!KeyboardUtil.isInteger(xEditText.getText().toString())){
+            if (!KeyboardUtil.isDouble(xEditText.getText().toString()) && !KeyboardUtil.isInteger(xEditText.getText().toString())) {
                 ToastUtils.showShort("数量输入格式不正确");
                 return;
             }

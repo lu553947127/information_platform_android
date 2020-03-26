@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -82,7 +82,7 @@ public class IMGroupDetailsActivity extends BaseActivity implements SwitchView.O
         group_id=getIntent().getStringExtra("group_id");
         switchView.setOnStateChangedListener(this);
 
-        imAddVm = ViewModelProviders.of(this).get(IMAddVm.class);
+        imAddVm = getViewModel(IMAddVm.class);
 
         recyclerView.setLayoutManager(new GridLayoutManager(IMGroupDetailsActivity.this, 5));
         IMGroupInfoAdapter imGroupInfoAdapter = new IMGroupInfoAdapter(R.layout.adapter_im_group_info, null);

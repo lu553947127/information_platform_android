@@ -4,12 +4,10 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ActivityUtils;
-import com.blankj.utilcode.util.LogUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
@@ -24,6 +22,8 @@ import com.shuangduan.zcy.vm.DemandReleaseVm;
 import com.shuangduan.zcy.weight.DividerItemDecoration;
 
 import butterknife.BindView;
+
+;
 
 /**
  * @ProjectName: information_platform_android
@@ -74,7 +74,7 @@ public class FindMineDrawingFragment extends BaseLazyFragment implements EmptyVi
         rv.setAdapter(mAdapter);
 
 
-        vm = ViewModelProviders.of(this).get(DemandReleaseVm.class);
+        vm = mActivity.getViewModel(DemandReleaseVm.class);
 
 
         mAdapter.setOnItemClickListener((adapter, view, position) -> {

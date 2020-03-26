@@ -6,7 +6,6 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -82,7 +81,7 @@ public class InformationSubActivity extends BaseActivity implements EmptyViewFac
             ActivityUtils.startActivity(bundle, ProjectDetailActivity.class);
         });
 
-        orderVm = ViewModelProviders.of(this).get(OrderVm.class);
+        orderVm = getViewModel(OrderVm.class);
         orderVm.subLiveData.observe(this, orderSubBean -> {
             if (orderSubBean.getPage() == 1) {
                 subOrderAdapter.setNewData(orderSubBean.getList());

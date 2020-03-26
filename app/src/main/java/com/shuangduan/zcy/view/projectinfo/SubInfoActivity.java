@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
@@ -93,7 +93,7 @@ public class SubInfoActivity extends BaseActivity {
         ivBarRight.setImageResource(R.drawable.icon_help_white);
         initChart();
 
-        GoToSubVm goToSubVm = ViewModelProviders.of(this).get(GoToSubVm.class);
+        GoToSubVm goToSubVm = getViewModel(GoToSubVm.class);
         goToSubVm.projectId = getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0);
         goToSubVm.viewLiveData.observe(this, projectSubViewBean -> {
             ProjectSubViewBean.InfoBean info = projectSubViewBean.getInfo();

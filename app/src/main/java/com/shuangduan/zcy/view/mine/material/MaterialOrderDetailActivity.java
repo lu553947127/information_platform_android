@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+;
 
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -123,7 +123,7 @@ public class MaterialOrderDetailActivity extends BaseActivity {
         tvUnit.setVisibility(type == CustomConfig.EQUIPMENT ? View.INVISIBLE : View.VISIBLE);
 
 
-        materialVm = ViewModelProviders.of(this).get(MaterialDetailVm.class);
+        materialVm = getViewModel(MaterialDetailVm.class);
         materialVm.orderDetailLiveData.observe(this, item -> {
             if (item == null) {
                 return;
@@ -203,7 +203,7 @@ public class MaterialOrderDetailActivity extends BaseActivity {
             materialVm.equipmentOrderDetail(orderId);
         }
 
-        orderVm = ViewModelProviders.of(this).get(OrderTurnoverVm.class);
+        orderVm = getViewModel(OrderTurnoverVm.class);
         //获取搜索筛选条件数据
         orderVm.orderSearchLiveData.observe(this, orderSearchBean -> {
             List<String> list = new ArrayList<>();

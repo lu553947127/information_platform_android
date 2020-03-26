@@ -11,7 +11,6 @@ import android.widget.TextView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.blankj.utilcode.util.ActivityUtils;
@@ -113,7 +112,7 @@ public class ReceivingAddressActivity extends BaseActivity implements OnItemMenu
 
         emptyView();
 
-        vm = ViewModelProviders.of(this).get(AddressVm.class);
+        vm = getViewModel(AddressVm.class);
 
         swipeRecycler.setLayoutManager(new LinearLayoutManager(this));
         swipeRecycler.addItemDecoration(new DividerItemDecoration(Objects.requireNonNull(this), DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));

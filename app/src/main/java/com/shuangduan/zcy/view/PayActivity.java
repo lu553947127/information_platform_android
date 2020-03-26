@@ -10,7 +10,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.alipay.sdk.app.PayTask;
 import com.blankj.utilcode.util.ActivityUtils;
@@ -71,7 +70,7 @@ public class PayActivity extends BaseActivity {
         tvBarTitle.setText(getString(R.string.pay));
 
         tvPrice.setText(String.format(getString(R.string.format_pay), getIntent().getStringExtra(CustomConfig.RECHARGE_AMOUNT)));
-        payVm = ViewModelProviders.of(this).get(PayVm.class);
+        payVm = getViewModel(PayVm.class);
         payVm.amount = getIntent().getStringExtra(CustomConfig.RECHARGE_AMOUNT);
         payVm.payInfoLiveData.observe(this, payInfoBean -> {
             if (StringUtils.isTrimEmpty(payInfoBean.getAlipay())) {

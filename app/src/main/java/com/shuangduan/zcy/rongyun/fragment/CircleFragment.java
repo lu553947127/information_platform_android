@@ -10,7 +10,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
@@ -54,6 +53,8 @@ import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Group;
 import io.rong.imlib.model.UserInfo;
+
+;
 
 /**
  * @author 徐玉 QQ:876885613
@@ -137,7 +138,7 @@ public class CircleFragment extends BaseFragment {
         conversationListFragment.setUri(uri);
 
         //获取后台管理权限
-        homeVm = ViewModelProviders.of(mActivity).get(HomeVm.class);
+        homeVm = mActivity.getViewModel(HomeVm.class);
         homeVm.supplierRoleLiveData.observe(this, supplierRoleBean -> {
             //获取订单权限
             for (SupplierRoleBean.RoleBean bean : supplierRoleBean.getRole()) {
@@ -187,7 +188,7 @@ public class CircleFragment extends BaseFragment {
             }
         });
 
-        userInfoVm = ViewModelProviders.of(mActivity).get(UserInfoVm.class);
+        userInfoVm = mActivity.getViewModel(UserInfoVm.class);
         userInfoVm.getInfoLiveData.observe(this, userInfoBean -> {
             SPUtils.getInstance().put(SpConfig.AVATAR, userInfoBean.getImage_thumbnail());
             ImageLoader.load(mContext, new ImageConfig.Builder()
@@ -198,7 +199,7 @@ public class CircleFragment extends BaseFragment {
                     .build());
         });
 
-        imAddVm = ViewModelProviders.of(this).get(IMAddVm.class);
+        imAddVm = mActivity.getViewModel(IMAddVm.class);
         //订阅消息/订单提醒/闲置提醒/新朋友添加 未读消息数量返回数据
         imAddVm.applyCountData.observe(this,friendApplyCountBean -> {
             getCountNumbers(friendApplyCountBean.getCount(),tvContactsNumbers);

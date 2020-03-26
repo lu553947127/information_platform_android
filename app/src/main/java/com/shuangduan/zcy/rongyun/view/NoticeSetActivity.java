@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+;
 
 import com.blankj.utilcode.util.BarUtils;
 import com.shuangduan.zcy.R;
@@ -55,7 +55,7 @@ public class NoticeSetActivity extends BaseActivity {
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
 
-        mineSubVm = ViewModelProviders.of(this).get(MineSubVm.class);
+        mineSubVm = getViewModel(MineSubVm.class);
 
         switch (getIntent().getIntExtra(CustomConfig.NEWS_TYPE,0)){
             case SUBSCRIBE://订阅消息

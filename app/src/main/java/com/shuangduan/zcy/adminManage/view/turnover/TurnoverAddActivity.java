@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
-import androidx.lifecycle.ViewModelProviders;
+;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -207,9 +207,9 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
     protected void initDataAndEvent(Bundle savedInstanceState) {
 
         int constructionId = getIntent().getIntExtra(CustomConfig.CONSTRUCTION_ID, 0);
-        turnoverVm = ViewModelProviders.of(this).get(TurnoverVm.class);
-        turnoverAddVm = ViewModelProviders.of(this).get(TurnoverAddVm.class);
-        uploadPhotoVm = ViewModelProviders.of(this).get(UploadPhotoVm.class);
+        turnoverVm = getViewModel(TurnoverVm.class);
+        turnoverAddVm = getViewModel(TurnoverAddVm.class);
+        uploadPhotoVm = getViewModel(UploadPhotoVm.class);
 
         //判断时添加还是编辑
         switch (getIntent().getIntExtra(CustomConfig.HANDLE_TYPE, 0)) {
@@ -276,7 +276,7 @@ public class TurnoverAddActivity extends BaseActivity implements TurnoverDialogC
 
         //获取权限成功返回结果
         rxPermissions = new RxPermissions(this);
-        permissionVm = ViewModelProviders.of(this).get(PermissionVm.class);
+        permissionVm = getViewModel(PermissionVm.class);
         permissionVm.getLiveData().observe(this, integer -> {
             switch (integer) {
                 case PermissionVm.PERMISSION_CAMERA:

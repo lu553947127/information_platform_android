@@ -6,7 +6,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -69,7 +69,7 @@ public class IncomeRecordActivity extends BaseActivity {
         adapter.setEmptyView(R.layout.layout_loading, rv);
         rv.setAdapter(adapter);
 
-        incomePeopleVm = ViewModelProviders.of(this).get(IncomePeopleVm.class);
+        incomePeopleVm = getViewModel(IncomePeopleVm.class);
         incomePeopleVm.uid = getIntent().getIntExtra(CustomConfig.UID, 0);
         incomePeopleVm.recordLiveData.observe(this, incomeRecordBean -> {
             if (incomeRecordBean.getPage() == 1) {

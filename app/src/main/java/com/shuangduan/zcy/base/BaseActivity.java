@@ -38,6 +38,8 @@ import java.lang.reflect.InvocationTargetException;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
+;
+
 /**
  * <pre>
  *     author : nwq
@@ -263,7 +265,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IView, S
 
 
     public <V extends ViewModel> V getViewModel(Class clazz){
-        return (V) ViewModelProviders.of(this,this).get(clazz);
+        return (V) ViewModelProviders.of(this).get(clazz);
     }
 
 

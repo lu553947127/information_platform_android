@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.ViewModelProviders;
+;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -82,7 +82,7 @@ public class FindMineLogisticsFragment extends BaseLazyFragment implements Empty
         });
 
 
-        vm = ViewModelProviders.of(this).get(DemandReleaseVm.class);
+        vm = mActivity.getViewModel(DemandReleaseVm.class);
 
         refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override

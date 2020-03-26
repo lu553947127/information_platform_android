@@ -125,7 +125,7 @@ public class MainActivity extends BaseActivity {
         handler = MyApplication.getMainThreadHandler();
         //初始化，融云链接服务器
         if (SPUtils.getInstance().getInt(SpConfig.INFO_STATUS) == 1) {
-//            IMConnectVm imConnectVm = ViewModelProviders.of(this).get(IMConnectVm.class);
+//            IMConnectVm imConnectVm = getViewModel(IMConnectVm.class);
 
             IMConnectVm imConnectVm = getViewModel(IMConnectVm.class);
 
@@ -136,7 +136,7 @@ public class MainActivity extends BaseActivity {
         getBadgeViewInitView();
         getHomeAddDialog();
 
-//        permissionVm = ViewModelProviders.of(this).get(PermissionVm.class);
+//        permissionVm = getViewModel(PermissionVm.class);
 
         permissionVm = getViewModel(PermissionVm.class);
 
@@ -293,8 +293,8 @@ public class MainActivity extends BaseActivity {
     //设置角标数量
     private void getApplyCounts() {
 
-//        homeVm = ViewModelProviders.of(this).get(HomeVm.class);
-//        imAddVm = ViewModelProviders.of(this).get(IMAddVm.class);
+//        homeVm = getViewModel(HomeVm.class);
+//        imAddVm = getViewModel(IMAddVm.class);
 
         homeVm = getViewModel(HomeVm.class);
 

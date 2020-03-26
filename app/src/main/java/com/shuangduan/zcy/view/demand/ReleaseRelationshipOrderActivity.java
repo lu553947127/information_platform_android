@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
@@ -75,7 +75,7 @@ public class ReleaseRelationshipOrderActivity extends BaseActivity {
         tvBarTitle.setText(getString(R.string.release));
 
         initPay();
-        demandReleaseVm = ViewModelProviders.of(this).get(DemandReleaseVm.class);
+        demandReleaseVm = getViewModel(DemandReleaseVm.class);
         demandReleaseVm.relationshipOrderLiveData.observe(this, relationshipOrderBean -> {
             tvTitle.setText(relationshipOrderBean.getTitle());
             tvCommission.setText(String.format(getString(R.string.format_amount_bi), relationshipOrderBean.getPrice()));
@@ -105,7 +105,7 @@ public class ReleaseRelationshipOrderActivity extends BaseActivity {
 
     private void initPay(){
         //支付密码状态查询
-        updatePwdPayVm = ViewModelProviders.of(this).get(UpdatePwdPayVm.class);
+        updatePwdPayVm = getViewModel(UpdatePwdPayVm.class);
         updatePwdPayVm.stateLiveData.observe(this, pwdPayStateBean -> {
             int status = pwdPayStateBean.getStatus();
             SPUtils.getInstance().put(SpConfig.PWD_PAY_STATUS, status);
@@ -127,7 +127,7 @@ public class ReleaseRelationshipOrderActivity extends BaseActivity {
         });
 
 
-        coinPayVm = ViewModelProviders.of(this).get(CoinPayVm.class);
+        coinPayVm = getViewModel(CoinPayVm.class);
         coinPayVm.releaseRelationshipPayLiveData.observe(this, this::payResult);
         coinPayVm.pageStateLiveData.observe(this, s -> {
             switch (s){

@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -129,7 +129,7 @@ public class DeviceDetailActivity extends BaseActivity {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(R.string.admin_device_material_details);
 
-        DeviceVm deviceVm = ViewModelProviders.of(this).get(DeviceVm.class);
+        DeviceVm deviceVm = getViewModel(DeviceVm.class);
         deviceVm.equipmentDetail(getIntent().getIntExtra(CustomConfig.EQIPMENT_ID, 0));
         deviceVm.deviceDetailLiveData.observe(this,deviceDetailBean -> {
             tvTitle.setText(deviceDetailBean.getMaterial_name());

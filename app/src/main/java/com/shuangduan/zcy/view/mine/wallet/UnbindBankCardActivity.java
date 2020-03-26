@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shuangduan.zcy.R;
@@ -56,7 +56,7 @@ public class UnbindBankCardActivity extends BaseActivity {
         tvBarTitle.setText(getString(R.string.unbind));
 
         tvBankcardName.setText(getIntent().getStringExtra(CustomConfig.BANKCARD_NAME));
-        bankCardVm = ViewModelProviders.of(this).get(BankCardVm.class);
+        bankCardVm = getViewModel(BankCardVm.class);
         bankCardVm.unbindLiveData.observe(this, o -> {
             ToastUtils.showShort("解绑成功");
             EventBus.getDefault().post(new BankcardUpdateEvent());

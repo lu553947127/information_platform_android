@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -86,7 +86,7 @@ public class RecruitActivity extends BaseActivity {
             ActivityUtils.startActivity(bundle, RecruitDetailActivity.class);
         });
 
-        recruitVm = ViewModelProviders.of(this).get(RecruitVm.class);
+        recruitVm = getViewModel(RecruitVm.class);
         recruitVm.recruitMutableLiveData.observe(this, recruitBean -> {
             if (recruitBean.getPage() == 1) {
                 recruitAdapter.setNewData(recruitBean.getList());

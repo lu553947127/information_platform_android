@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+;
 
 import com.blankj.utilcode.util.BarUtils;
 import com.shuangduan.zcy.R;
@@ -87,7 +87,7 @@ public class SupplierDetailActivity extends BaseActivity {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText("供应商信息");
 
-        SupplierVm supplierVm = ViewModelProviders.of(this).get(SupplierVm.class);
+        SupplierVm supplierVm = getViewModel(SupplierVm.class);
         supplierVm.detailLiveData.observe(this, supplierDetailBean -> {
             listBean = supplierDetailBean;
             tvCompany.setText(supplierDetailBean.getCompany());

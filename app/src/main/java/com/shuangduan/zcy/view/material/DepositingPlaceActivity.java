@@ -6,7 +6,7 @@ import android.view.View;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -75,14 +75,14 @@ public class DepositingPlaceActivity extends BaseActivity {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.material_depositing_place));
         empty = emptyViewFactory.createEmptyView(R.drawable.icon_empty_project, R.string.empty_depositing_place, 0, null);
-        materialDetailVm = ViewModelProviders.of(this).get(MaterialDetailVm.class);
+        materialDetailVm = getViewModel(MaterialDetailVm.class);
         materialDetailVm.id = getIntent().getIntExtra(CustomConfig.MATERIAL_ID, 0);
         materialDetailVm.supplier_id = getIntent().getIntExtra(CustomConfig.SUPPLIER_ID, 0);
         this.list = (List<MaterialPlaceOrderBean>) DataHolder.getInstance().getData("list");
 
 
         //获取内定物资显示权限
-        HomeVm homeVm = ViewModelProviders.of(this).get(HomeVm.class);
+        HomeVm homeVm = getViewModel(HomeVm.class);
         homeVm.supplierCliqueLiveData.observe(this, supplierCliqueBean -> {
             initViewAndData(supplierCliqueBean);
         });

@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
@@ -104,7 +104,7 @@ public class GoToSubActivity extends BaseActivity {
                     break;
             }
         });
-        goToSubVm = ViewModelProviders.of(this).get(GoToSubVm.class);
+        goToSubVm = getViewModel(GoToSubVm.class);
         goToSubVm.projectId = getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0);
         goToSubVm.startLiveData.observe(this, projectSubFirstBean -> {
             tvProjectName.setText(projectSubFirstBean.getTitle());

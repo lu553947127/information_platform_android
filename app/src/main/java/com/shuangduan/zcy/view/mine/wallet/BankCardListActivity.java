@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -81,7 +81,7 @@ public class BankCardListActivity extends BaseActivity {
             bundle.putString(CustomConfig.BANKCARD_NAME, bankCardBean.getType_name());
             ActivityUtils.startActivity(bundle, UnbindBankCardActivity.class);
         });
-        bankCardVm = ViewModelProviders.of(this).get(BankCardVm.class);
+        bankCardVm = getViewModel(BankCardVm.class);
         bankCardVm.bankcardLiveData.observe(this, bankCardBeans -> {
             bankCardAdapter.setNewData(bankCardBeans);
             bankCardAdapter.removeAllFooterView();

@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.ViewModelProviders;
+;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -77,7 +77,7 @@ public class HistoryContentFragment extends BaseLazyFragment implements EmptyVie
             ActivityUtils.startActivity(bundle, ProjectDetailActivity.class);
         });
 
-        orderVm = ViewModelProviders.of(mActivity).get(OrderVm.class);
+        orderVm = mActivity.getViewModel(OrderVm.class);
         orderVm.projectLiveData.observe(this, orderListBean -> {
             isInited = true;
             if (orderListBean.getPage() == 1) {

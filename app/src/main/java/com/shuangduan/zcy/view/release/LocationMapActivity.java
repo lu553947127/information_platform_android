@@ -9,7 +9,7 @@ import android.view.View;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+;
 
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
@@ -92,7 +92,7 @@ public class LocationMapActivity extends BaseActivity {
         mMapView.onCreate(savedInstanceState);// 此方法必须重写
         cityName = getIntent().getStringExtra(CustomConfig.CITY_NAME);
 
-        permissionVm = ViewModelProviders.of(this).get(PermissionVm.class);
+        permissionVm = getViewModel(PermissionVm.class);
         permissionVm.getLiveData().observe(this, integer -> {
             if (integer == PermissionVm.PERMISSION_LOCATION){
                 init();

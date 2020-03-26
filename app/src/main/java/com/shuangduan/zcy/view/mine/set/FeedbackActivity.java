@@ -6,7 +6,6 @@ import android.widget.EditText;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.StringUtils;
@@ -54,7 +53,7 @@ public class FeedbackActivity extends BaseActivity {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.feedback));
 
-        feedbackVm = ViewModelProviders.of(this).get(FeedbackVm.class);
+        feedbackVm = getViewModel(FeedbackVm.class);
         feedbackVm.feedbackLiveData.observe(this, o -> {
             ToastUtils.showShort("提交意见反馈成功.");
             finish();

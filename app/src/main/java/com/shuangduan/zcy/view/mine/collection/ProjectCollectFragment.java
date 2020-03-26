@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.ViewModelProviders;
+;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -78,7 +78,7 @@ public class ProjectCollectFragment extends BaseLazyFragment implements EmptyVie
             ActivityUtils.startActivity(bundle, ProjectDetailActivity.class);
         });
 
-        mineCollectionVm = ViewModelProviders.of(this).get(MineCollectionVm.class);
+        mineCollectionVm = mActivity.getViewModel(MineCollectionVm.class);
         mineCollectionVm.projectCollectLiveData.observe(this, projectCollectBean -> {
             if (projectCollectBean.getPage() == 1) {
                 adapter.setNewData(projectCollectBean.getList());

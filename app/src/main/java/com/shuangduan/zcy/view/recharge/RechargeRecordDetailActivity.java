@@ -5,7 +5,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+;
 
 import com.blankj.utilcode.util.BarUtils;
 import com.shuangduan.zcy.R;
@@ -60,7 +60,7 @@ public class RechargeRecordDetailActivity extends BaseActivity {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.recharge_record));
 
-        RechargeRecordVm rechargeRecordVm = ViewModelProviders.of(this).get(RechargeRecordVm.class);
+        RechargeRecordVm rechargeRecordVm = getViewModel(RechargeRecordVm.class);
         rechargeRecordVm.detailLiveData.observe(this, rechargeRecordDetailBean -> {
             tvAmount.setText(String.format(getString(R.string.format_amount_bi), rechargeRecordDetailBean.getCoin()));
             tvPrice.setText(String.format(getString(R.string.format_amount), rechargeRecordDetailBean.getPrice()));

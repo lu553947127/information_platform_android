@@ -13,7 +13,7 @@ import android.widget.TextView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
-import androidx.lifecycle.ViewModelProviders;
+;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.StringUtils;
@@ -135,7 +135,7 @@ public class MaterialEquipmentPlaceOrderActivity extends BaseActivity {
         tvAddressStar.setVisibility(View.INVISIBLE);
 
 
-        materialDetailVm = ViewModelProviders.of(this).get(MaterialDetailVm.class);
+        materialDetailVm = getViewModel(MaterialDetailVm.class);
         materialDetailVm.id = getIntent().getIntExtra(CustomConfig.MATERIAL_ID, 0);
 
         materialDetailVm.detailLiveData.observe(this, materialDetailBean -> {

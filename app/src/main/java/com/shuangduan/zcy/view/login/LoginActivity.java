@@ -10,7 +10,6 @@ import android.widget.RelativeLayout;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatTextView;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.DeviceUtils;
@@ -118,7 +117,7 @@ public class LoginActivity extends BaseActivity {
     protected void initDataAndEvent(Bundle savedInstanceState) {
 
         sharesUtils = new SharesUtils(this);
-        loginVm = ViewModelProviders.of(this).get(LoginVm.class);
+        loginVm = getViewModel(LoginVm.class);
 
         //登录验证码获取成功返回结果
         loginVm.timeLiveDataLiveData.observe(this, aLong -> getCode(aLong, tvSendVerificationCode));
@@ -127,7 +126,7 @@ public class LoginActivity extends BaseActivity {
         loginVm.timeLiveDataLiveDataRegister.observe(this, aLong -> getCode(aLong, tvSendVerificationCodeRegister));
 
         //初始化，融云链接服务器
-        imConnectVm = ViewModelProviders.of(this).get(IMConnectVm.class);
+        imConnectVm = getViewModel(IMConnectVm.class);
         imConnectVm.tokenLiveData.observe(this, imTokenBean -> {
             String token = imTokenBean.getToken();
             SPUtils.getInstance().put(SpConfig.IM_TOKEN, token);

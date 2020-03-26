@@ -8,7 +8,7 @@ import android.widget.TextView;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
@@ -85,7 +85,7 @@ public class MobileVerificationActivity extends BaseActivity {
                 break;
         }
 
-        loginVm = ViewModelProviders.of(this).get(LoginVm.class);
+        loginVm = getViewModel(LoginVm.class);
         loginVm.smsDataLiveData.observe(this, o -> {
             loginVm.sendVerificationCode();
         });
@@ -114,7 +114,7 @@ public class MobileVerificationActivity extends BaseActivity {
             }
         });
 
-        userInfoVm = ViewModelProviders.of(this).get(UserInfoVm.class);
+        userInfoVm = getViewModel(UserInfoVm.class);
         userInfoVm.checkTelLiveData.observe(this, o -> {
             Bundle bundle = new Bundle();
             bundle.putString(CustomConfig.VERIFICATION_CODE, Objects.requireNonNull(edtPwd.getText()).toString());

@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+;
 
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -70,7 +70,7 @@ public class IMAddFriendActivity extends BaseActivity {
             tvBarTitle.setText(getString(R.string.add_friends));
         }
 
-        imAddVm = ViewModelProviders.of(this).get(IMAddVm.class);
+        imAddVm = getViewModel(IMAddVm.class);
 
         tvName.setText(getIntent().getStringExtra("name"));
         tvContent.setText(getIntent().getStringExtra("msg"));

@@ -8,7 +8,6 @@ import android.widget.TextView;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.SPUtils;
@@ -67,8 +66,8 @@ public class ForgetPwdPayActivity extends BaseActivity {
         tvBarTitle.setText(getString(R.string.update_pwd));
         tvAccount.setText(SPUtils.getInstance().getString(SpConfig.MOBILE));
 
-        smsCodeVm = ViewModelProviders.of(this).get(SmsCodeVm.class);
-        updatePwdPayVm = ViewModelProviders.of(this).get(UpdatePwdPayVm.class);
+        smsCodeVm = getViewModel(SmsCodeVm.class);
+        updatePwdPayVm = getViewModel(UpdatePwdPayVm.class);
         updatePwdPayVm.forgetPwdLiveData.observe(this, o -> {
             ToastUtils.showShort(getString(R.string.pwd_pay_set_success));
             finish();

@@ -8,7 +8,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -76,7 +76,7 @@ public class IMGroupMoreActivity extends BaseActivity implements EmptyViewFactor
 
         String name = getIntent().getStringExtra("name");
 
-        IMAddVm imAddVm = ViewModelProviders.of(this).get(IMAddVm.class);
+        IMAddVm imAddVm = getViewModel(IMAddVm.class);
 
         rvGroup.setLayoutManager(new LinearLayoutManager(this));
         rvGroup.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));

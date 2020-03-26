@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.ViewModelProviders;
+;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -77,7 +77,7 @@ public class RecruitCollectFragment extends BaseLazyFragment implements EmptyVie
             ActivityUtils.startActivity(bundle, RecruitDetailActivity.class);
         });
 
-        mineCollectionVm = ViewModelProviders.of(this).get(MineCollectionVm.class);
+        mineCollectionVm = mActivity.getViewModel(MineCollectionVm.class);
         mineCollectionVm.recruitCollectLiveData.observe(this, recruitBean -> {
             if (recruitBean.getPage() == 1) {
                 recruitAdapter.setNewData(recruitBean.getList());

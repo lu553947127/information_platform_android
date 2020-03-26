@@ -6,7 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.ViewModelProviders;
+;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -82,7 +82,7 @@ public class FindBuyerFragment extends BaseLazyFragment {
             ActivityUtils.startActivity(bundle, FindBuyerDetailActivity.class);
         });
 
-        demandBuyerVm = ViewModelProviders.of(mActivity).get(DemandBuyerVm.class);
+        demandBuyerVm = mActivity.getViewModel(DemandBuyerVm.class);
         demandBuyerVm.buyerLiveData.observe(this, demandBuyerBean -> {
             isInited = true;
             if (demandBuyerBean.getPage() == 1) {

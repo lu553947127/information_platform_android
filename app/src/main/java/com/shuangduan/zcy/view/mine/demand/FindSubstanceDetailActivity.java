@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -132,7 +131,7 @@ public class FindSubstanceDetailActivity extends BaseActivity {
             showPayDialog(listBean.getPrice());
         });
 
-        demandSubstanceVm = ViewModelProviders.of(this).get(DemandSubstanceVm.class);
+        demandSubstanceVm = getViewModel(DemandSubstanceVm.class);
         demandSubstanceVm.id = getIntent().getIntExtra(CustomConfig.DEMAND_ID, 0);
         demandSubstanceVm.detailLiveData.observe(this, substanceDetailBean -> {
             SubstanceDetailBean.InfoBean info = substanceDetailBean.getInfo();
@@ -242,7 +241,7 @@ public class FindSubstanceDetailActivity extends BaseActivity {
 
     private void initPay() {
         //支付密码状态查询
-        updatePwdPayVm = ViewModelProviders.of(this).get(UpdatePwdPayVm.class);
+        updatePwdPayVm = getViewModel(UpdatePwdPayVm.class);
         updatePwdPayVm.stateLiveData.observe(this, pwdPayStateBean -> {
             int status = pwdPayStateBean.getStatus();
             SPUtils.getInstance().put(SpConfig.PWD_PAY_STATUS, status);
@@ -264,7 +263,7 @@ public class FindSubstanceDetailActivity extends BaseActivity {
         });
 
 
-        coinPayVm = ViewModelProviders.of(this).get(CoinPayVm.class);
+        coinPayVm = getViewModel(CoinPayVm.class);
         coinPayVm.findSubstancePayLiveData.observe(this, this::payResult);
         coinPayVm.findBuyerPayLiveData.observe(this, this::payResult);
         coinPayVm.pageStateLiveData.observe(this, s -> {

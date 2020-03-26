@@ -8,7 +8,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -86,7 +86,7 @@ public class IMFriendMoreActivity extends BaseActivity implements EmptyViewFacto
 
         String name = getIntent().getStringExtra("name");
 
-        IMAddVm imAddVm = ViewModelProviders.of(this).get(IMAddVm.class);
+        IMAddVm imAddVm = getViewModel(IMAddVm.class);
 
         rvFriend.setLayoutManager(new LinearLayoutManager(this));
         rvFriend.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));

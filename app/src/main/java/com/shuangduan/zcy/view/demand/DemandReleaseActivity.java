@@ -15,7 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
-import androidx.lifecycle.ViewModelProviders;
+;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -167,7 +167,7 @@ public class DemandReleaseActivity extends BaseActivity {
         tomorrow = f.format(tomorrowDate);
 
 
-        demandReleaseVm = ViewModelProviders.of(this).get(DemandReleaseVm.class);
+        demandReleaseVm = getViewModel(DemandReleaseVm.class);
         tvTimeStart.setText(demandReleaseVm.startTime + " 至");
         demandReleaseVm.releaseLiveData.observe(this, demandReleaseBean -> {
             if (demandReleaseVm.releaseType == DemandReleaseVm.RELEASE_TYPE_RELATIONSHIP) {

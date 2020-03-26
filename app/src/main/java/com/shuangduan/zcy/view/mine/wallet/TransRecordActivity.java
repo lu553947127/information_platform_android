@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -100,7 +100,7 @@ public class TransRecordActivity extends BaseActivity {
             ActivityUtils.startActivity(bundle, TransRecordDetailActivity.class);
         });
 
-        transRecordVm = ViewModelProviders.of(this).get(TransRecordVm.class);
+        transRecordVm = getViewModel(TransRecordVm.class);
         transRecordVm.transRecordLiveData.observe(this, transRecordBean -> {
             if (transRecordBean.getPage() == 1) {
                 transRecordAdapter.setNewData(transRecordBean.getList());

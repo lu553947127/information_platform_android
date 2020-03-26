@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
@@ -99,13 +99,13 @@ public class UserInfoInputActivity extends BaseActivity {
 
         IMConnectVm imConnectVm;
         //初始化，融云链接服务器
-        imConnectVm = ViewModelProviders.of(this).get(IMConnectVm.class);
+        imConnectVm = getViewModel(IMConnectVm.class);
         imConnectVm.tokenLiveData.observe(this, imTokenBean -> {
             String token = imTokenBean.getToken();
             SPUtils.getInstance().put(SpConfig.IM_TOKEN, token);
         });
 
-        userInfoVm = ViewModelProviders.of(this).get(UserInfoVm.class);
+        userInfoVm = getViewModel(UserInfoVm.class);
         userInfoVm.infoLiveData.observe(this, o -> {
             SPUtils.getInstance().put(SpConfig.INFO_STATUS, 1);
             //获取融云token
@@ -122,7 +122,7 @@ public class UserInfoInputActivity extends BaseActivity {
                     break;
             }
         });
-        mineSubVm = ViewModelProviders.of(this).get(MineSubVm.class);
+        mineSubVm = getViewModel(MineSubVm.class);
         mineSubVm.phasesLiveData.observe(this, myPhasesBean -> {
             new SubscriptionTypeDialog(this)
                     .setItems(myPhasesBean)

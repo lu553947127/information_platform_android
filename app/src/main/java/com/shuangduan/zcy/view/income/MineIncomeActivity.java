@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
@@ -77,7 +77,7 @@ public class MineIncomeActivity extends BaseActivity {
         tvBarRight.setText(getString(R.string.my_income_explain));
         initChart();
 
-        mineIncomeVm = ViewModelProviders.of(this).get(MineIncomeVm.class);
+        mineIncomeVm = getViewModel(MineIncomeVm.class);
         mineIncomeVm.incomeLiveData.observe(this, mineIncomeBean -> {
             MineIncomeBean.ProceedsBean proceeds = mineIncomeBean.getProceeds();
             tvExpectedReturn.setText(proceeds.getAll_funds() + "元");

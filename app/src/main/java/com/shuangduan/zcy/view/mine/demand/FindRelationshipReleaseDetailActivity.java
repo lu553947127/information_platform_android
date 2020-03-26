@@ -7,8 +7,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
-import androidx.lifecycle.ViewModelProviders;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.shuangduan.zcy.R;
 import com.shuangduan.zcy.app.CustomConfig;
@@ -21,6 +21,8 @@ import com.shuangduan.zcy.vm.DemandRelationshipVm;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
+;
 
 /**
  * @author 徐玉 QQ:876885613
@@ -66,6 +68,8 @@ public class FindRelationshipReleaseDetailActivity extends BaseActivity {
 
     private DemandRelationshipVm demandRelationshipVm;
 
+
+
     @Override
     protected int initLayoutRes() {
         return R.layout.activity_find_relationship_release_detail;
@@ -81,9 +85,11 @@ public class FindRelationshipReleaseDetailActivity extends BaseActivity {
         BarUtils.setStatusBarColorRes(fakeStatusBar, getResources().getColor(R.color.colorPrimary));
         tvBarTitle.setText(getString(R.string.find_relationship_detail));
 
-        demandRelationshipVm = ViewModelProviders.of(this).get(DemandRelationshipVm.class);
+        demandRelationshipVm = getViewModel(DemandRelationshipVm.class);
         demandRelationshipVm.id = getIntent().getIntExtra(CustomConfig.DEMAND_ID, 0);
         demandRelationshipVm.relationshipReleaseDetailLiveData.observe(this, findRelationshipReleaseBean -> {
+            LogUtils.e("relationshipReleaseDetailLiveData...");
+
             tvTitle.setText(findRelationshipReleaseBean.getTitle());
             tvCommission.setText(String.format(getString(R.string.format_amount_bi), findRelationshipReleaseBean.getPrice()));
             tvTime.setText(String.format(getString(R.string.format_validity_period_less), findRelationshipReleaseBean.getStart_time(), findRelationshipReleaseBean.getEnd_time()));
@@ -97,6 +103,7 @@ public class FindRelationshipReleaseDetailActivity extends BaseActivity {
 //                    tvIng.setVisibility(View.GONE);
 //                    tvError.setVisibility(View.GONE);
 //                    ivCancel.setVisibility(View.GONE);
+//                    tvCancel.setVisibility(View.GONE);
                     FindRelationshipReleaseBean.ReplyBean reply = findRelationshipReleaseBean.getReply();
                     tvName.setText(reply.getName());
                     tvTel.setText(reply.getTel());
@@ -162,5 +169,10 @@ public class FindRelationshipReleaseDetailActivity extends BaseActivity {
                         }).showDialog();
                 break;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

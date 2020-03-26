@@ -5,7 +5,6 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.BarUtils;
 import com.bumptech.glide.Glide;
@@ -58,7 +57,7 @@ public class ExplainDetailActivity extends BaseActivity {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.explain));
 
-        explainVm = ViewModelProviders.of(this).get(ExplainVm.class);
+        explainVm = getViewModel(ExplainVm.class);
         explainVm.id = getIntent().getIntExtra(CustomConfig.EXPLAIN_ID, 0);
         explainVm.detailLiveData.observe(this, explainDetailBean -> {
             tvTitle.setText(explainDetailBean.getTitle());

@@ -7,7 +7,6 @@ import android.view.View;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.SPUtils;
@@ -70,7 +69,7 @@ public class UpdateMobileActivity extends BaseActivity {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.update_mobile));
 
-        loginVm = ViewModelProviders.of(this).get(LoginVm.class);
+        loginVm = getViewModel(LoginVm.class);
         loginVm.timeLiveDataLiveData.observe(this, aLong -> {
             if (aLong == -1) {
                 //重新获取
@@ -87,7 +86,7 @@ public class UpdateMobileActivity extends BaseActivity {
         });
         loginVm.smsDataLiveData.observe(this, o -> loginVm.sendVerificationCode());
 
-        userInfoVm = ViewModelProviders.of(this).get(UserInfoVm.class);
+        userInfoVm = getViewModel(UserInfoVm.class);
         userInfoVm.updateTelLiveData.observe(this, o -> {
             SPUtils.getInstance().put(SpConfig.MOBILE, Objects.requireNonNull(edtAccount.getText()).toString());
             EventBus.getDefault().post(new MobileEvent(Objects.requireNonNull(edtAccount.getText()).toString()));

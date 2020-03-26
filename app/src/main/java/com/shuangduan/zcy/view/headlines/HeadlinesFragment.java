@@ -3,7 +3,7 @@ package com.shuangduan.zcy.view.headlines;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.ViewModelProviders;
+;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -72,7 +72,7 @@ public class HeadlinesFragment extends BaseLazyFragment {
             ActivityUtils.startActivity(bundle, HeadlinesDetailActivity.class);
         });
 
-        headlinesVm = ViewModelProviders.of(this).get(HeadlinesVm.class);
+        headlinesVm = mActivity.getViewModel(HeadlinesVm.class);
         headlinesVm.headlinesLiveData.observe(this, headlinesBean -> {
             if (headlinesBean.getPage() == 1) {
                 headlinesCategoryAdapter.setNewData(headlinesBean.getList());

@@ -14,7 +14,6 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.SPUtils;
@@ -123,7 +122,7 @@ public class MineFragment extends BaseFragment {
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState, View v) {
 
-        userInfoVm = ViewModelProviders.of(mActivity).get(UserInfoVm.class);
+        userInfoVm = mActivity.getViewModel(UserInfoVm.class);
         userInfoVm.getInfoLiveData.observe(this, userInfoBean -> {
             SPUtils.getInstance().put(SpConfig.USERNAME, userInfoBean.getUsername());
             tvUsername.setText(userInfoBean.getUsername());
@@ -140,7 +139,7 @@ public class MineFragment extends BaseFragment {
         });
 
         //获取后台管理权限
-        homeVm = ViewModelProviders.of(mActivity).get(HomeVm.class);
+        homeVm = mActivity.getViewModel(HomeVm.class);
         homeVm.supplierRoleLiveData.observe(this, supplierRoleBean -> {
             //获取用户身份 0普通用户 1普通供应商 2子公司 3集团 4子公司子账号 5集团子账号
             SPUtils.getInstance().put(CustomConfig.MANAGE_STATUS, supplierRoleBean.getManage_status());

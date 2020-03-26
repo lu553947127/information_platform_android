@@ -13,7 +13,7 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.blankj.utilcode.util.BarUtils;
@@ -81,7 +81,7 @@ public class ProjectSearchActivity extends BaseActivity {
         String type = getIntent().getStringExtra(CustomConfig.SEARCH_TYPE);
         tvBarTitle.setText(getString(R.string.project_names));
 
-        projectSearchVm = ViewModelProviders.of(this).get(ProjectSearchVm.class);
+        projectSearchVm = getViewModel(ProjectSearchVm.class);
         projectSearchVm.searchLiveData.observe(this, projectSearchBean -> {
             noMoreData(projectSearchBean.getPage(), projectSearchBean.getCount());
             if (projectSearchBean.getPage() == 1){

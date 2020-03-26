@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.ViewModelProviders;
+;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -77,7 +77,7 @@ public class EquipmentFragment extends BaseLazyFragment implements EmptyViewFact
             ActivityUtils.startActivity(bundle, MaterialEquipmentDetailActivity.class);
         });
 
-        materialVm = ViewModelProviders.of(mActivity).get(MaterialVm.class);
+        materialVm = mActivity.getViewModel(MaterialVm.class);
         materialVm.equipmentLiveData.observe(this, materialBean -> {
 
             isInited = true;

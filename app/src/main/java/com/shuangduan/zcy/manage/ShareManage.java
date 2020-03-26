@@ -5,8 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
-import androidx.lifecycle.ViewModelProviders;
-
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -89,7 +87,7 @@ public class ShareManage {
      * @param type     分享类型 1：基建详情
      */
     public void init(BaseActivity activity, int type, int id) {
-        shareVm = ViewModelProviders.of(activity).get(ShareVm.class);
+        shareVm = activity.getViewModel(ShareVm.class);
 
         switch (type) {
             case SHARE_PROJECT_TYPE:

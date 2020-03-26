@@ -12,7 +12,7 @@ import android.widget.EditText;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
+;
 import androidx.viewpager.widget.ViewPager;
 
 import com.blankj.utilcode.util.BarUtils;
@@ -82,7 +82,7 @@ public class SearchResultActivity extends BaseActivity {
         if (!TextUtils.isEmpty(project_type)){
             vp.setCurrentItem(1);
         }
-        searchVm = ViewModelProviders.of(this).get(SearchVm.class);
+        searchVm = getViewModel(SearchVm.class);
         searchVm.historyLiveData.observe(this, history -> {
             EventBus.getDefault().post(new SearchHistoryEvent());
         });

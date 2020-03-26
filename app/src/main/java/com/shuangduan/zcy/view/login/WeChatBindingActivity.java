@@ -7,7 +7,7 @@ import android.view.View;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
@@ -70,7 +70,7 @@ public class WeChatBindingActivity extends BaseActivity {
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText("绑定手机号");
-        loginVm = ViewModelProviders.of(this).get(LoginVm.class);
+        loginVm = getViewModel(LoginVm.class);
         loginVm.timeLiveDataLiveData.observe(this, aLong -> {
             if (aLong == -1) {
                 //重新获取
@@ -85,7 +85,7 @@ public class WeChatBindingActivity extends BaseActivity {
         });
 
         //初始化，融云链接服务器
-        imConnectVm = ViewModelProviders.of(this).get(IMConnectVm.class);
+        imConnectVm = getViewModel(IMConnectVm.class);
         imConnectVm.tokenLiveData.observe(this, imTokenBean -> {
             String token = imTokenBean.getToken();
             SPUtils.getInstance().put(SpConfig.IM_TOKEN, token);

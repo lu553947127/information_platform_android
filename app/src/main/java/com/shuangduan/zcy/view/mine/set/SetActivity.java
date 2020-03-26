@@ -5,7 +5,6 @@ import android.view.View;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
@@ -59,8 +58,8 @@ public class SetActivity extends BaseActivity {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.set));
 
-        exitVm = ViewModelProviders.of(this).get(ExitVm.class);
-        SupplierVm supplierVm = ViewModelProviders.of(this).get(SupplierVm.class);
+        exitVm = getViewModel(ExitVm.class);
+        SupplierVm supplierVm = getViewModel(SupplierVm.class);
 
         //退出登录返回结果
         exitVm.exitLiveData.observe(this, o -> {

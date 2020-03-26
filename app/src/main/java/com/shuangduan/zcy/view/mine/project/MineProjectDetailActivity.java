@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -108,7 +108,7 @@ public class MineProjectDetailActivity extends BaseActivity implements CompoundB
 
         cbLoad.setOnCheckedChangeListener(this);
         //基本信息设置
-        projectDetailVm = ViewModelProviders.of(this).get(ProjectDetailVm.class);
+        projectDetailVm = getViewModel(ProjectDetailVm.class);
 
         projectDetailVm.init(getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0));
         projectDetailVm.detailLiveData.observe(this, projectDetailBean -> {

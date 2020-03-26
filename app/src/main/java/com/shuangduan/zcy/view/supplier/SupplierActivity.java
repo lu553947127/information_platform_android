@@ -13,7 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -140,7 +140,7 @@ public class SupplierActivity extends BaseActivity implements EmptyViewFactory.E
             ActivityUtils.startActivity(bundle, SupplierDetailActivity.class);
         });
 
-        supplierVm = ViewModelProviders.of(this).get(SupplierVm.class);
+        supplierVm = getViewModel(SupplierVm.class);
         supplierVm.supplierLiveData.observe(this, supplierBean -> {
             adapter.setKeyword(edtKeyword.getText().toString());
             if (supplierBean.getPage() == 1) {
@@ -207,7 +207,7 @@ public class SupplierActivity extends BaseActivity implements EmptyViewFactory.E
 
 
         //支付密码状态查询
-        updatePwdPayVm = ViewModelProviders.of(this).get(UpdatePwdPayVm.class);
+        updatePwdPayVm = getViewModel(UpdatePwdPayVm.class);
         updatePwdPayVm.stateLiveData.observe(this, pwdPayStateBean -> {
             int status = pwdPayStateBean.getStatus();
             SPUtils.getInstance().put(SpConfig.PWD_PAY_STATUS, status);
@@ -228,7 +228,7 @@ public class SupplierActivity extends BaseActivity implements EmptyViewFactory.E
             }
         });
 
-        coinPayVm = ViewModelProviders.of(this).get(CoinPayVm.class);
+        coinPayVm = getViewModel(CoinPayVm.class);
         coinPayVm.supplierPayLiveData.observe(this, coinPayResultBean -> {
             if (coinPayResultBean.getPay_status() == 1) {
                 ToastUtils.showShort(getString(R.string.buy_success));

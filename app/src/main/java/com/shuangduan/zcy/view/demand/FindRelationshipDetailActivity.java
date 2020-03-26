@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+;
 
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.SPUtils;
@@ -75,7 +75,7 @@ public class FindRelationshipDetailActivity extends BaseActivity {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.find_relationship_detail));
 
-        demandRelationshipVm = ViewModelProviders.of(this).get(DemandRelationshipVm.class);
+        demandRelationshipVm = getViewModel(DemandRelationshipVm.class);
         demandRelationshipVm.id = getIntent().getIntExtra(CustomConfig.DEMAND_ID, 0);
         demandRelationshipVm.replyLiveData.observe(this, o -> {
             ToastUtils.showShort(getString(R.string.find_relationship_reply_success));

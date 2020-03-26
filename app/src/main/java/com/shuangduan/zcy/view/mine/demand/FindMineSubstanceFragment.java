@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.ViewModelProviders;
+;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -76,7 +76,7 @@ public class FindMineSubstanceFragment extends BaseLazyFragment implements Empty
             ActivityUtils.startActivity(bundle, FindSubstanceDetailActivity.class);
         });
 
-        demandSubstanceVm = ViewModelProviders.of(mActivity).get(DemandSubstanceVm.class);
+        demandSubstanceVm = mActivity.getViewModel(DemandSubstanceVm.class);
         demandSubstanceVm.isMy = 1;
         demandSubstanceVm.substanceLiveData.observe(this, demandSubstanceBean -> {
             isInited = true;

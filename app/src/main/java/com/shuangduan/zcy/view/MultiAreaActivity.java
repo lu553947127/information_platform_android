@@ -6,7 +6,6 @@ import android.view.View;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,7 +21,6 @@ import com.shuangduan.zcy.vm.MultiAreaVm;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -67,7 +65,7 @@ public class MultiAreaActivity extends BaseActivity {
         tvBarTitle.setText(getString(R.string.business_area));
         tvBarRight.setText(getString(R.string.save));
 
-        areaVm = ViewModelProviders.of(this).get(MultiAreaVm.class);
+        areaVm = getViewModel(MultiAreaVm.class);
         areaVm.selectAll = false;
 
         rvProvince.setLayoutManager(new LinearLayoutManager(this));

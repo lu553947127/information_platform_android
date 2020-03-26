@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -83,7 +83,7 @@ public class MineLocusActivity extends BaseActivity implements BaseQuickAdapter.
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.project_locus));
-        projectDetailVm = ViewModelProviders.of(this).get(ProjectDetailVm.class);
+        projectDetailVm = getViewModel(ProjectDetailVm.class);
         projectDetailVm.init(getIntent().getIntExtra(CustomConfig.DYNAMICS_ID, 0));
         projectDetailVm.getMyTrackDateil();
 

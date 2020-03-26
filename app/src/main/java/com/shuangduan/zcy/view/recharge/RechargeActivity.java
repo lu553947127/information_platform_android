@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -70,7 +70,7 @@ public class RechargeActivity extends BaseActivity {
         tvBarTitle.setText(getString(R.string.recharge_center));
         tvBarRight.setText(getString(R.string.recharge_record));
 
-        rechargeVm = ViewModelProviders.of(this).get(RechargeVm.class);
+        rechargeVm = getViewModel(RechargeVm.class);
         rechargeVm.showLiveData.observe(this, rechargeShowBean -> {
             tvMobile.setText(rechargeShowBean.getTel());
             if (rechargeShowAdapter == null){

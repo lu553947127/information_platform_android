@@ -6,7 +6,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -68,7 +68,7 @@ public class IncomeLocusActivity extends BaseActivity implements EmptyViewFactor
 
         tvBarTitle.setText(getString(R.string.income_locus));
 
-        incomeReleaseVm = ViewModelProviders.of(this).get(IncomeLocusVm.class);
+        incomeReleaseVm = getViewModel(IncomeLocusVm.class);
 
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));

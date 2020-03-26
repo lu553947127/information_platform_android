@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -106,7 +105,7 @@ public class PeopleFragment extends BaseFragment {
     protected void initDataAndEvent(Bundle savedInstanceState, View view) {
         BarUtils.setStatusBarColorRes(fakeStatusBar, getResources().getColor(R.color.colorPrimary));
         tvBarTitle.setText(getString(R.string.people));
-        incomePeopleVm = ViewModelProviders.of(this).get(IncomePeopleVm.class);
+        incomePeopleVm = mActivity.getViewModel(IncomePeopleVm.class);
 
         recyclerViewActive.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerViewActive.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));

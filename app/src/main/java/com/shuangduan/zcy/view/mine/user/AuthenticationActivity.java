@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.LogUtils;
@@ -138,10 +137,10 @@ public class AuthenticationActivity extends BaseActivity {
             case CustomConfig.SET_PAYMENT_PASSWORD://设置支付密码页
                 break;
         }
-        authenticationVm = ViewModelProviders.of(this).get(AuthenticationVm.class);
-        uploadPhotoVm = ViewModelProviders.of(this).get(UploadPhotoVm.class);
+        authenticationVm = getViewModel(AuthenticationVm.class);
+        uploadPhotoVm = getViewModel(UploadPhotoVm.class);
         rxPermissions = new RxPermissions(this);
-        permissionVm = ViewModelProviders.of(this).get(PermissionVm.class);
+        permissionVm = getViewModel(PermissionVm.class);
         permissionVm.getLiveData().observe(this, integer -> {
             switch (integer) {
                 case PermissionVm.PERMISSION_CAMERA:

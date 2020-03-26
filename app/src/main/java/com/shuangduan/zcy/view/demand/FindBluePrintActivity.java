@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
-import androidx.lifecycle.ViewModelProviders;
+;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
@@ -113,7 +113,7 @@ public class FindBluePrintActivity extends BaseActivity {
         c = Calendar.getInstance();
 
 
-        vm = ViewModelProviders.of(this).get(DemandReleaseVm.class);
+        vm = getViewModel(DemandReleaseVm.class);
 
         vm.startTime = DateUtils.getTodayDate(c);
 

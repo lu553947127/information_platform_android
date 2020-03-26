@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
@@ -109,7 +109,7 @@ public class RecruitDetailActivity extends BaseActivity {
         ivBarRight.setImageResource(R.drawable.icon_share);
 
 
-        recruitDetailVm = ViewModelProviders.of(this).get(RecruitDetailVm.class);
+        recruitDetailVm = getViewModel(RecruitDetailVm.class);
         recruitDetailVm.id = id;
         recruitDetailVm.detailLiveData.observe(this, recruitDetailBean -> {
             this.recruitDetail = recruitDetailBean;
@@ -150,7 +150,7 @@ public class RecruitDetailActivity extends BaseActivity {
         recruitDetailVm.getDetail();
 
         //支付密码状态查询
-        updatePwdPayVm = ViewModelProviders.of(this).get(UpdatePwdPayVm.class);
+        updatePwdPayVm = getViewModel(UpdatePwdPayVm.class);
         updatePwdPayVm.stateLiveData.observe(this, pwdPayStateBean -> {
             int status = pwdPayStateBean.getStatus();
             SPUtils.getInstance().put(SpConfig.PWD_PAY_STATUS, status);
@@ -172,7 +172,7 @@ public class RecruitDetailActivity extends BaseActivity {
         });
 
 
-        coinPayVm = ViewModelProviders.of(this).get(CoinPayVm.class);
+        coinPayVm = getViewModel(CoinPayVm.class);
         coinPayVm.recruitId = id;
         coinPayVm.recruitPayLiveData.observe(this, coinPayResultBean -> {
             if (coinPayResultBean.getPay_status() == 1) {

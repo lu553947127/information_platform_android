@@ -12,7 +12,7 @@ import android.widget.TextView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.Group;
-import androidx.lifecycle.ViewModelProviders;
+;
 
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.StringUtils;
@@ -142,11 +142,11 @@ public class OrderDetailsActivity extends BaseActivity {
         orderType = getIntent().getIntExtra("order_type", 0);
 
         if (orderType == 3) {
-            OrderTurnoverVm vm = ViewModelProviders.of(this).get(OrderTurnoverVm.class);
+            OrderTurnoverVm vm = getViewModel(OrderTurnoverVm.class);
             vm.constructionOrderDetail(orderId);
             vm.orderDetailsLiveData.observe(this, this::initViewData);
         } else {
-            OrderDeviceVm vm = ViewModelProviders.of(this).get(OrderDeviceVm.class);
+            OrderDeviceVm vm = getViewModel(OrderDeviceVm.class);
             vm.equipmentOrderDetail(orderId);
             vm.orderDetailsLiveData.observe(this, this::initViewData);
         }

@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
-import androidx.lifecycle.ViewModelProviders;
+;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -210,11 +210,11 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
 
         int eqipmentId = getIntent().getIntExtra(CustomConfig.EQIPMENT_ID, 0);
 
-        TurnoverVm turnoverVm = ViewModelProviders.of(this).get(TurnoverVm.class);
+        TurnoverVm turnoverVm = getViewModel(TurnoverVm.class);
 
-        deviceVm = ViewModelProviders.of(this).get(DeviceVm.class);
-        deviceAddVm = ViewModelProviders.of(this).get(DeviceAddVm.class);
-        uploadPhotoVm = ViewModelProviders.of(this).get(UploadPhotoVm.class);
+        deviceVm = getViewModel(DeviceVm.class);
+        deviceAddVm = getViewModel(DeviceAddVm.class);
+        uploadPhotoVm = getViewModel(UploadPhotoVm.class);
 
         //判断时添加还是编辑
         switch (getIntent().getIntExtra(CustomConfig.HANDLE_TYPE, 0)) {
@@ -279,7 +279,7 @@ public class DeviceAddActivity extends BaseActivity implements DeviceDialogContr
 
         //获取权限成功返回结果
         rxPermissions = new RxPermissions(this);
-        permissionVm = ViewModelProviders.of(this).get(PermissionVm.class);
+        permissionVm = getViewModel(PermissionVm.class);
         permissionVm.getLiveData().observe(this, integer -> {
             switch (integer) {
                 case PermissionVm.PERMISSION_CAMERA:

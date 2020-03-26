@@ -6,7 +6,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -72,7 +72,7 @@ public class IncomePeopleActivity extends BaseActivity implements BaseQuickAdapt
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
 
-        incomePeopleVm = ViewModelProviders.of(this).get(IncomePeopleVm.class);
+        incomePeopleVm = getViewModel(IncomePeopleVm.class);
         incomePeopleVm.type = getIntent().getIntExtra(CustomConfig.PEOPLE_DEGREE, 0);
 
         switch (incomePeopleVm.type){

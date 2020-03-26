@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.ViewModelProviders;
+;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -79,7 +79,7 @@ public class MineEquipmentFragment extends BaseLazyFragment implements EmptyView
             ActivityUtils.startActivity(bundle, MaterialOrderDetailActivity.class);
         });
 
-        materialVm = ViewModelProviders.of(mActivity).get(MaterialVm.class);
+        materialVm = mActivity.getViewModel(MaterialVm.class);
         materialVm.equipmentOrderLiveData.observe(this, materialBean -> {
 
             if (materialBean.getPage() == 1) {

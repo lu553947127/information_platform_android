@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BarUtils;
@@ -97,8 +97,8 @@ public class BindBankCardActivity extends BaseActivity {
         tvBarRight.setText(getString(R.string.save));
 
         rxPermissions = new RxPermissions(this);
-        uploadPhotoVm = ViewModelProviders.of(this).get(UploadPhotoVm.class);
-        permissionVm = ViewModelProviders.of(this).get(PermissionVm.class);
+        uploadPhotoVm = getViewModel(UploadPhotoVm.class);
+        permissionVm = getViewModel(PermissionVm.class);
         permissionVm.getLiveData().observe(this, integer -> {
             switch (integer) {
                 case PermissionVm.PERMISSION_CAMERA:
@@ -153,14 +153,14 @@ public class BindBankCardActivity extends BaseActivity {
         });
 
         //若实名认证成功直接获取姓名和身份证号
-        AuthenticationVm authenticationVm = ViewModelProviders.of(this).get(AuthenticationVm.class);
+        AuthenticationVm authenticationVm = getViewModel(AuthenticationVm.class);
         authenticationVm.authenticationStatusLiveData.observe(this, authenBean -> {
             tvRealName.setText(authenBean.getReal_name());
             tvIdentityNumber.setText(authenBean.getIdentity_card());
         });
         authenticationVm.authentication();
 
-        bankCardVm = ViewModelProviders.of(this).get(BankCardVm.class);
+        bankCardVm = getViewModel(BankCardVm.class);
         bankCardVm.disLiveData.observe(this, bankCardDisBean -> {
             String cardNum = RegexUtils.getReplaceAll(bankCardDisBean.getCard_num(), " ", "");
             edtBankAccount.setText(bankCardDisBean.getType_name());

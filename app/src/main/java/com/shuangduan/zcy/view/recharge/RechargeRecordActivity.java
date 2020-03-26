@@ -6,7 +6,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -64,7 +64,7 @@ public class RechargeRecordActivity extends BaseActivity {
 
         tvBarTitle.setText(getString(R.string.recharge_record));
 
-        RechargeRecordVm rechargeRecordVm = ViewModelProviders.of(this).get(RechargeRecordVm.class);
+        RechargeRecordVm rechargeRecordVm = getViewModel(RechargeRecordVm.class);
 
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, R.drawable.divider_15));

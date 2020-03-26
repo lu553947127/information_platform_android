@@ -12,7 +12,7 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
+;
 import androidx.viewpager.widget.ViewPager;
 
 import com.amap.api.maps.AMap;
@@ -143,7 +143,7 @@ public class ProjectDetailActivity extends BaseActivity {
         tvBarRight.setVisibility(View.GONE);
 
 
-        permissionVm = ViewModelProviders.of(this).get(PermissionVm.class);
+        permissionVm = getViewModel(PermissionVm.class);
 
 //        if (PermissionUtils.isOPen(this)) {
 
@@ -217,8 +217,8 @@ public class ProjectDetailActivity extends BaseActivity {
         shareManage.init(this, ShareManage.SHARE_PROJECT_TYPE, getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0));
 
         //支付密码状态查询
-        updatePwdPayVm = ViewModelProviders.of(this).get(UpdatePwdPayVm.class);
-        coinPayVm = ViewModelProviders.of(this).get(CoinPayVm.class);
+        updatePwdPayVm = getViewModel(UpdatePwdPayVm.class);
+        coinPayVm = getViewModel(CoinPayVm.class);
         coinPayVm.projectId = getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0);
 
         updatePwdPayVm.stateLiveData.observe(this, pwdPayStateBean -> {
@@ -306,7 +306,7 @@ public class ProjectDetailActivity extends BaseActivity {
         });
 
 
-        projectDetailVm = ViewModelProviders.of(this).get(ProjectDetailVm.class);
+        projectDetailVm = getViewModel(ProjectDetailVm.class);
         projectDetailVm.init(getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0));
         projectDetailVm.titleLiveData.observe(this, s -> tvTitle.setText(s));
         projectDetailVm.locationLiveData.observe(this, s -> tvLocation.setText(s));

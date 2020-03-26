@@ -6,7 +6,7 @@ import android.widget.EditText;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+;
 
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.StringUtils;
@@ -55,7 +55,7 @@ public class ProjectErrorActivity extends BaseActivity {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.error_correction));
 
-        projectDetailVm = ViewModelProviders.of(this).get(ProjectDetailVm.class);
+        projectDetailVm = getViewModel(ProjectDetailVm.class);
         projectDetailVm.init(getIntent().getIntExtra(CustomConfig.PROJECT_ID, 0));
     }
 

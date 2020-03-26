@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.ViewModelProviders;
+;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -78,7 +78,7 @@ public class ProjectInfoFragment extends BaseLazyFragment{
             ActivityUtils.startActivity(bundle, MineProjectDetailActivity.class);
         });
 
-        mineReleaseVm = ViewModelProviders.of(this).get(MineReleaseVm.class);
+        mineReleaseVm = mActivity.getViewModel(MineReleaseVm.class);
         mineReleaseVm.projectLiveData.observe(this, projectMineBean -> {
             isInited = true;
             if (projectMineBean.getPage() == 1) {

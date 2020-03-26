@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
-import androidx.lifecycle.ViewModelProviders;
+;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.bumptech.glide.Glide;
@@ -109,7 +109,7 @@ public class HeadlinesDetailActivity extends BaseActivity {
 
         tvTitle.setSelected(true);
 
-        headlinesVm = ViewModelProviders.of(this).get(HeadlinesVm.class);
+        headlinesVm = getViewModel(HeadlinesVm.class);
         headlinesVm.id = id;
         headlinesVm.detailLiveData.observe(this, headlinesDetailBean -> {
             tvTitle.setText(headlinesDetailBean.getTitle());

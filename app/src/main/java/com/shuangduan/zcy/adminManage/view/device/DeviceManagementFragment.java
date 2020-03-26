@@ -14,7 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -147,7 +147,7 @@ public class DeviceManagementFragment extends BaseNoRefreshFragment {
         manage_status = SPUtils.getInstance().getInt(CustomConfig.MANAGE_STATUS, 0);
         getAdminEntrance(manage_status);
 
-        deviceVm = ViewModelProviders.of(this).get(DeviceVm.class);
+        deviceVm = mActivity.getViewModel(DeviceVm.class);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         deviceAdapter = new DeviceAdapter(R.layout.item_device, null,SPUtils.getInstance().getInt(CustomConfig.EQIPMENT_EDIT,0)
@@ -239,7 +239,7 @@ public class DeviceManagementFragment extends BaseNoRefreshFragment {
         });
 
         //获取省市数据
-        areaVm = ViewModelProviders.of(this).get(MultiAreaVm.class);
+        areaVm = mActivity.getViewModel(MultiAreaVm.class);
         areaVm.provinceLiveData.observe(this, provinceBeans -> {
             provinceList = provinceBeans;
             provinceAdapter.setNewData(provinceList);

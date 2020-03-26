@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -89,7 +88,7 @@ public class CompanySearchActivity extends BaseActivity {
     protected void initDataAndEvent(Bundle savedInstanceState) {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         type = getIntent().getStringExtra(CustomConfig.SEARCH_TYPE);
-        SearchVm searchVm = ViewModelProviders.of(this).get(SearchVm.class);
+        SearchVm searchVm = getViewModel(SearchVm.class);
         switch (type) {
             case CustomConfig.searchTypeCompany:
                 tvBarTitle.setText(getString(R.string.company_name));
@@ -184,7 +183,7 @@ public class CompanySearchActivity extends BaseActivity {
 
                 break;
         }
-        userInfoVm = ViewModelProviders.of(this).get(UserInfoVm.class);
+        userInfoVm = getViewModel(UserInfoVm.class);
         userInfoVm.companyLiveData.observe(this, o -> {
             ToastUtils.showShort(getString(R.string.edit_success));
             EventBus.getDefault().post(new CompanyEvent(userInfoVm.company.getValue()));

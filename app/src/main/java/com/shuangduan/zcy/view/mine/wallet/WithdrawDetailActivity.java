@@ -5,7 +5,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+;
 
 import com.blankj.utilcode.util.BarUtils;
 import com.shuangduan.zcy.R;
@@ -59,7 +59,7 @@ public class WithdrawDetailActivity extends BaseActivity {
         BarUtils.addMarginTopEqualStatusBarHeight(toolbar);
         tvBarTitle.setText(getString(R.string.withdraw_record));
 
-        withdrawVm = ViewModelProviders.of(this).get(WithdrawVm.class);
+        withdrawVm = getViewModel(WithdrawVm.class);
         withdrawVm.recordDetailLiveData.observe(this, detailBean -> {
             tvAmount.setText(String.format(getString(R.string.format_amount), detailBean.getPrice()));
             tvTime.setText(detailBean.getCreate_time());

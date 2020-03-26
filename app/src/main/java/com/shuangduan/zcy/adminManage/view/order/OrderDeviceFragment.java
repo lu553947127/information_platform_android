@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
-import androidx.lifecycle.ViewModelProviders;
+;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -171,7 +171,7 @@ public class OrderDeviceFragment extends BaseNoRefreshFragment implements BaseQu
 
         adminOrderListAdapter.setOnItemChildClickListener(this);
 
-        orderVm = ViewModelProviders.of(this).get(OrderDeviceVm.class);
+        orderVm = mActivity.getViewModel(OrderDeviceVm.class);
 
         //订单列表返回数据
         orderVm.orderListLiveData.observe(this, item -> {
