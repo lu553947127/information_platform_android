@@ -65,8 +65,8 @@ public class FindRelationshipFragment extends BaseLazyFragment {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
-        TextView tvBarTitle = Objects.requireNonNull(getActivity()).findViewById(R.id.tv_bar_title);
-        tvBarTitle.setText(R.string.find_relationship);
+//        TextView tvBarTitle = Objects.requireNonNull(getActivity()).findViewById(R.id.tv_bar_title);
+//        tvBarTitle.setText(R.string.find_relationship);
 
         View emptyView = createEmptyView(R.drawable.icon_empty_project, R.string.empty_pull_strings_info, 0, null);
 
@@ -106,15 +106,15 @@ public class FindRelationshipFragment extends BaseLazyFragment {
             }
         });
 
-        ivRelease = (ImageView) mActivity.findViewById(R.id.iv_release);
-        //滑动监听
-        rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                AnimationUtils.listScrollAnimation(ivRelease,dy);
-            }
-        });
+//        ivRelease = (ImageView) mActivity.findViewById(R.id.iv_release);
+//        //滑动监听
+//        rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//            @Override
+//            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+//                super.onScrolled(recyclerView, dx, dy);
+//                AnimationUtils.listScrollAnimation(ivRelease,dy);
+//            }
+//        });
     }
 
     @Override
