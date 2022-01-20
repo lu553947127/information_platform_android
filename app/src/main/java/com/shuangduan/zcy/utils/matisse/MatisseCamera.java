@@ -98,6 +98,7 @@ public class MatisseCamera {
             }
 
             if (photoURI != null) {
+                //android11以后强制分区存储，外部资源无法访问，所以添加一个输出保存位置，然后取值操作
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 takePictureIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
                 activity.startActivityForResult(takePictureIntent, requestCode);

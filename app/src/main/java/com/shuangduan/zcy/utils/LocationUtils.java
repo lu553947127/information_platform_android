@@ -58,6 +58,9 @@ public class LocationUtils {
                 if (location.getErrorCode() == 0) {
                     SPUtils.getInstance().put(SpConfig.LONGITUDE, String.valueOf(location.getLongitude()), true);
                     SPUtils.getInstance().put(SpConfig.LATITUDE, String.valueOf(location.getLatitude()), true);
+
+                    LogUtils.e("formatAddress", "getLongitude"+location.getLongitude());
+                    LogUtils.e("formatAddress", "getLatitude"+location.getLatitude());
                     getAddressChange(location.getLatitude(), location.getLongitude());
                 }
             } else {

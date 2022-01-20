@@ -196,7 +196,7 @@ dependencies {
     //带右下角计数的输入框
     implementation rootProject.ext.dependencies.FJEditTextCount
 
-    //RecyclerView 流式布局
+    //RecyclerView PickerView
     implementation rootProject.ext.dependencies.LayoutManagerFlowLayout
 
     //条件选择器

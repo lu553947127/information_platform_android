@@ -8,7 +8,7 @@
             <gradient
                 android:startColor="@color/color_F42121"
                 android:endColor="@color/color_F42121"
-                android:angle="45"/>
+                android:angle="45"/>progressbar_red
             <size android:width="170dp" android:height="170dp"/>
         </shape>
     </item>

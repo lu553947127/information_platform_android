@@ -54,8 +54,6 @@ import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Group;
 import io.rong.imlib.model.UserInfo;
 
-;
-
 /**
  * @author 徐玉 QQ:876885613
  * @name information_platform_android
@@ -254,7 +252,7 @@ public class CircleFragment extends BaseFragment {
                         if (Integer.parseInt(targetId)!= SPUtils.getInstance().getInt(SpConfig.USER_ID)) {
                             Bundle bundle = new Bundle();
                             bundle.putInt(CustomConfig.UID, Integer.parseInt(targetId));
-                            ActivityUtils.startActivity(bundle, UserInfoActivity.class);
+                            ActivityUtils.startActivity(bundle, UserInfoActivity.class) ;
                         }
                     }else if (conversationType == Conversation.ConversationType.GROUP){
                         Bundle bundle = new Bundle();

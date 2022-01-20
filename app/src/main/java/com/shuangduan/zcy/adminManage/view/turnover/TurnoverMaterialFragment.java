@@ -731,14 +731,14 @@ public class TurnoverMaterialFragment extends BaseNoRefreshFragment {
             case 3://集团
             case 5://集团子账号
                 tvCompany.setText("公司/项目");
-                ivAdd.setVisibility(View.GONE);
+                ivAdd.setVisibility(View.VISIBLE);
                 break;
             case 4://子公司子账号
                 tvCompany.setText("项目名称");
                 if (SPUtils.getInstance().getInt(CustomConfig.CONSTRUCTION_ADD,0) ==1){
                     ivAdd.setVisibility(View.VISIBLE);
                 }else {
-                    ivAdd.setVisibility(View.GONE);
+                    ivAdd.setVisibility(View.VISIBLE);
                 }
                 break;
         }

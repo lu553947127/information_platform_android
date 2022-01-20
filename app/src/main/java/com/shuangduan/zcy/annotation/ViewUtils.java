@@ -12,7 +12,7 @@ public class ViewUtils {
         Class clazz = activity.getClass();
         OnNetwork annotation = (OnNetwork) clazz.getAnnotation(OnNetwork.class);
         if (annotation != null && !isNetWorkAvailable(activity)) {
-            activity.setContentView(R.layout.layout_empty);
+            activity.setContentView(R.layout.layout_time_out);
             return;
         }
     }

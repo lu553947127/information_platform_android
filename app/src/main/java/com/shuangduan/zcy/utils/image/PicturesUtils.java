@@ -39,6 +39,8 @@ public class PicturesUtils {
      * @return
      */
     public static Bitmap createViewBitmap(View v) {
+        LogUtils.e(v.getWidth());
+        LogUtils.e(v.getHeight());
         //如果上面那个布局不在屏幕上找到的话，这里就会报，宽高为0的异常
         Bitmap bitmap = Bitmap.createBitmap(v.getWidth(), v.getHeight(),Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
